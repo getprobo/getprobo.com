@@ -14,23 +14,27 @@ markup:
 
 menu:
   main:
-    - name: Chat with us ↗
+    - identifier: "blog"
+      name: "Blog"
+      pageRef: "/blog"
+      weight: 1
+    - name: "Chat with us ↗"
       url: "https://cal.com/antoine-bouchardy-vg8ej3/30-min-demo"
       weight: 1
-    - name: Discord
+    - name: "Discord"
       weight: 2
       url: "https://discord.gg/8qfdJYfvpY"
       params:
-        icon: discord
-    - name: GitHub
+        icon: "discord"
+    - name: "GitHub"
       weight: 3
       url: "https://github.com/getprobo/probo"
       params:
-        icon: github
+        icon: "github"
 
 params:
   page:
-    width: full
+    width: "full"
 
   theme:
     default: "dark"
