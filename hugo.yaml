@@ -29,6 +29,9 @@ menu:
         icon: github
 
 params:
+  page:
+    width: full
+
   theme:
     default: "dark"
     displayToggle: false
