@@ -47,3 +47,6 @@ params:
   editURL:
     enable: true
     base: "https://github.com/getprobo/getprobo.com/edit/main/content"
+
+  displayUpdatedDate: true
+  dateFormat: "January 2, 2006"
