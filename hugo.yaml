@@ -17,8 +17,13 @@ menu:
     - name: Chat with us ↗
       url: "https://cal.com/antoine-bouchardy-vg8ej3/30-min-demo"
       weight: 1
-    - name: GitHub
+    - name: Discord
       weight: 2
+      url: "https://discord.gg/8qfdJYfvpY"
+      params:
+        icon: discord
+    - name: GitHub
+      weight: 3
       url: "https://github.com/getprobo/probo"
       params:
         icon: github
