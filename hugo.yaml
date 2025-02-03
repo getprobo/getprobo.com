@@ -18,16 +18,20 @@ menu:
       name: "Blog"
       pageRef: "/blog"
       weight: 1
+    - identifier: "about"
+      name: "About"
+      pageRef: "/about"
+      weight: 2
     - name: "Chat with us ↗"
       url: "https://cal.com/antoine-bouchardy-vg8ej3/30-min-demo"
-      weight: 1
+      weight: 3
     - name: "Discord"
-      weight: 2
+      weight: 4
       url: "https://discord.gg/8qfdJYfvpY"
       params:
         icon: "discord"
     - name: "GitHub"
-      weight: 3
+      weight: 5
       url: "https://github.com/getprobo/probo"
       params:
         icon: "github"
