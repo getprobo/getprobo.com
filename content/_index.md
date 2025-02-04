@@ -19,7 +19,7 @@ Open-source platform that helps startups navigate <br>compliance with confidence
 </div>
 
 <div class="hx-mb-6">
-	<a href="#todo-replace-me"
+	<a href="https://hexacc.typeform.com/to/HEabWsbN"
 		class="not-prose hx-font-medium hx-cursor-pointer hx-px-6 hx-py-3 hx-rounded-full hx-text-center hx-text-white hx-inline-block hx-bg-green-100 hover:hx-bg-green-200 focus:hx-outline-none focus:hx-ring-4 focus:hx-ring-primary-300 dark:hx-bg-green-100 dark:hover:hx-bg-green-200 dark:focus:hx-ring-primary-800 hx-transition-all hx-ease-in hx-duration-200">
 		Join the waitlist
 	</a>
