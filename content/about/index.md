@@ -4,19 +4,14 @@ width: normal
 toc: false
 ---
 
-Our mission is to make compliance accessible for everyone without
-paying an unfair premium. Compliance should be simple, not a painful
-journey. We are building the best possible product to make compliance
-enjoyable. We'll help you embrace compliance!
+We're transforming compliance from a complex burden into an intuitive
+journey. Our platform makes compliance straightforward and
+cost-effective, empowering businesses of all sizes to meet regulatory
+requirements with confidence. Let us guide you toward effortless
+compliance management.
 
-Antoine is an ISO 27001 auditor and Bryan is a YC alumnus software
-engineer who led SOC2/ISO27001 compliance at his previous startup. We
-started Probo because we were tired of expensive compliance tools that
-offer basic templates behind sales calls and unpredictable
-pricing. Based in Paris, we're building the open-source alternative we
-needed ourselves.
-
-## Credits
-
-Probo cannot be built without the support of
-[Hexa](https://www.hexa.com/).
+Antoine, an ISO 27001 auditor, and Bryan, a YC alumnus and engineer
+who managed SOC2/ISO27001 compliance at his previous startup, founded
+Probo in Paris. Frustrated by expensive compliance tools with opaque
+pricing and basic templates hidden behind sales calls, we built the
+open-source solution we wished existed.
