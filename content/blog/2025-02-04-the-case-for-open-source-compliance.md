@@ -1,5 +1,5 @@
 ---
-title: "Why open-source solution for compliance matter?"
+title: "The case for open-source compliance"
 date: 2025-02-04
 tags:
   - announce
