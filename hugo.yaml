@@ -1,5 +1,6 @@
 title: "Probo"
 enableGitInfo: true
+baseURL: "https://www.getprobo.com"
 
 module:
   imports:
