@@ -54,7 +54,7 @@ params:
     displayPoweredBy: true
 
   editURL:
-    enable: true
+    enable: false
     base: "https://github.com/getprobo/getprobo.com/edit/main/content"
 
   displayUpdatedDate: true
