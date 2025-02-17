@@ -5,8 +5,8 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import Image from "next/image";
-import type { Metadata } from "next"
-import type { BlogPost } from "@/lib/blog"
+import type { Metadata } from "next";
+import type { BlogPost } from "@/lib/blog";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -23,10 +23,10 @@ type Props = {
 // Generate metadata for each blog post
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(params.slug);
-  
+
   if (!post) {
     return {
-      title: 'Post Not Found',
+      title: "Post Not Found",
     };
   }
 
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      type: 'article',
+      type: "article",
       authors: [post.author.name],
       images: [
         {
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
       images: [post.coverImage],
@@ -58,24 +58,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export async function generateStructuredData(post: BlogPost) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
     image: post.coverImage,
     datePublished: post.date,
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: post.author.name,
     },
     publisher: {
-      '@type': 'Organization',
-      name: 'Probo',
+      "@type": "Organization",
+      name: "Probo",
       logo: {
-        '@type': 'ImageObject',
-        url: 'https://getprobo.com/logo.png'
-      }
-    }
+        "@type": "ImageObject",
+        url: "https://getprobo.com/logo.png",
+      },
+    },
   };
 }
 

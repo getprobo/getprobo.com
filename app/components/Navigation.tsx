@@ -47,7 +47,9 @@ export function Navigation() {
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-      <div className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+      <div
+        className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0 overflow-hidden"}`}
+      >
         <div className="flex flex-col gap-4">
           <Link href="/" className="text-white hover:text-[#D1FF4C]">
             Home

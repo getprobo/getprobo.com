@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
 export default function AboutPage() {
   return (
@@ -99,10 +99,12 @@ export default function AboutPage() {
 
 export const metadata: Metadata = {
   title: "About Us | Probo",
-  description: "Meet the team behind Probo, the open-source compliance platform transforming how startups handle regulatory requirements.",
+  description:
+    "Meet the team behind Probo, the open-source compliance platform transforming how startups handle regulatory requirements.",
   openGraph: {
     title: "About Probo",
-    description: "Meet the team behind Probo, the open-source compliance platform transforming how startups handle regulatory requirements.",
+    description:
+      "Meet the team behind Probo, the open-source compliance platform transforming how startups handle regulatory requirements.",
     type: "website",
     images: [
       {

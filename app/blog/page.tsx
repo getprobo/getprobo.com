@@ -2,7 +2,7 @@ import { getAllPosts } from "@/lib/blog";
 import Link from "next/link";
 import Image from "next/image";
 import { CalendarIcon } from "lucide-react";
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
 export default function BlogPage() {
   const posts = getAllPosts();
@@ -20,12 +20,12 @@ export default function BlogPage() {
               className="group relative overflow-hidden rounded-lg"
             >
               <div className="aspect-[16/9] relative">
-                <Image 
-                  src={post.coverImage} 
-                  alt={post.title} 
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
                   fill
                   priority={index < 2}
-                  className="object-cover border border-white/10 rounded-lg" 
+                  className="object-cover border border-white/10 rounded-lg"
                 />
               </div>
               <div className="py-4">
@@ -45,8 +45,8 @@ export default function BlogPage() {
                   <div className="flex items-center text-sm text-zinc-400">
                     {new Date(post.date).toLocaleDateString("en-US", {
                       month: "short",
-                      day: "numeric", 
-                      year: "numeric"
+                      day: "numeric",
+                      year: "numeric",
                     })}
                   </div>
                 </div>
@@ -57,7 +57,9 @@ export default function BlogPage() {
 
         {posts.slice(2).length > 0 && (
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-zinc-400">Latest Posts</h2>
+            <h2 className="text-xl font-semibold text-zinc-400">
+              Latest Posts
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {posts.slice(2).map((post, index) => (
                 <Link
@@ -109,10 +111,12 @@ export default function BlogPage() {
 
 export const metadata: Metadata = {
   title: "Blog | Probo",
-  description: "Latest insights and updates about compliance, security, and open source from the Probo team.",
+  description:
+    "Latest insights and updates about compliance, security, and open source from the Probo team.",
   openGraph: {
     title: "Probo Blog",
-    description: "Latest insights and updates about compliance, security, and open source from the Probo team.",
+    description:
+      "Latest insights and updates about compliance, security, and open source from the Probo team.",
     type: "website",
     images: [
       {
