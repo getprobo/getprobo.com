@@ -1,14 +1,10 @@
 import type React from "react";
-import { ArrowLeft, Mail, type LucideProps } from "lucide-react";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import type { BlogPost } from "@/lib/blog";
-import { ContributeButton } from "@/app/components/ContributeButton";
-import { motion } from "framer-motion";
 import { BlogCTA } from "@/app/components/BlogCTA";
 
 export async function generateStaticParams() {

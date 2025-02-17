@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import type { Metadata } from "next";
 import { motion } from "framer-motion";
 
 export default function AboutPage() {
@@ -32,7 +31,7 @@ export default function AboutPage() {
             Our Mission
           </h1>
           <p className="text-gray-200 text-lg leading-relaxed mb-6">
-            We're transforming compliance from a complex burden into an
+            We{"'"}re transforming compliance from a complex burden into an
             intuitive journey. Our platform makes compliance straightforward and
             cost-effective, empowering businesses of all sizes to meet
             regulatory requirements with confidence.
@@ -117,7 +116,7 @@ export default function AboutPage() {
           </h2>
           <p className="text-gray-200 text-lg leading-relaxed mb-6">
             We believe in transparency and community-driven development. By
-            making Probo open-source, we're ensuring that quality compliance
+            making Probo open-source, we{"'"}re ensuring that quality compliance
             tools are accessible to everyone, not just those who can afford
             expensive enterprise solutions.
           </p>

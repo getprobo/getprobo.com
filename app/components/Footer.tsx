@@ -1,12 +1,11 @@
 import Link from "next/link";
 import {
   Twitter,
-  Youtube,
   Linkedin,
   MessageSquare,
   Github,
 } from "lucide-react";
-
+import Image from "next/image";
 export function Footer() {
   return (
     <footer className="bg-black text-white py-16">
@@ -24,10 +23,12 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img
+                <Image
                   src="/hexa.svg"
                   alt="Hexa"
-                  className="inline-block w-5 h-5"
+                  width={20}
+                  height={20}
+                  className="inline-block"
                 />
               </a>
             </div>
