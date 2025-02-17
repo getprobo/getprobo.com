@@ -1,11 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import type { Metadata } from "next";
+import { motion } from "framer-motion";
 
 export default function AboutPage() {
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  };
+
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-20">
-      <div className="max-w-4xl mx-auto">
-        <section className="mb-20">
+      <motion.div
+        initial="initial"
+        animate="animate"
+        variants={staggerChildren}
+        className="max-w-4xl mx-auto"
+      >
+        <motion.section variants={fadeIn} className="mb-20">
           <h1 className="text-4xl font-light font-geist-alt text-white mb-6">
             Our Mission
           </h1>
@@ -18,14 +40,18 @@ export default function AboutPage() {
           <p className="text-gray-200 text-lg leading-relaxed">
             Let us guide you toward effortless compliance management.
           </p>
-        </section>
+        </motion.section>
 
-        <section className="mb-20">
+        <motion.section variants={fadeIn} className="mb-20">
           <h2 className="text-3xl font-light font-geist-alt text-white mb-8">
             Meet the Team
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-[#1A1A1A] rounded-lg p-6">
+            <motion.div
+              variants={fadeIn}
+              whileHover={{ scale: 1.02 }}
+              className="bg-[#1A1A1A] rounded-lg p-6"
+            >
               <div className="mb-4">
                 <Image
                   src="/team/antoine.jpeg"
@@ -44,9 +70,13 @@ export default function AboutPage() {
                 implementation. Passionate about making compliance accessible
                 and straightforward.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-[#1A1A1A] rounded-lg p-6">
+            <motion.div
+              variants={fadeIn}
+              whileHover={{ scale: 1.02 }}
+              className="bg-[#1A1A1A] rounded-lg p-6"
+            >
               <div className="mb-4">
                 <Image
                   src="/team/bryan.jpeg"
@@ -65,11 +95,11 @@ export default function AboutPage() {
                 his previous startup. Experienced in building scalable solutions
                 for complex problems.
               </p>
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="mb-20">
+        <motion.section variants={fadeIn} className="mb-20">
           <h2 className="text-3xl font-light font-geist-alt text-white mb-6">
             Our Story
           </h2>
@@ -79,9 +109,9 @@ export default function AboutPage() {
             basic templates hidden behind sales calls, we built the open-source
             solution we wished existed.
           </p>
-        </section>
+        </motion.section>
 
-        <section>
+        <motion.section variants={fadeIn}>
           <h2 className="text-3xl font-light font-geist-alt text-white mb-6">
             Open Source First
           </h2>
@@ -91,28 +121,8 @@ export default function AboutPage() {
             tools are accessible to everyone, not just those who can afford
             expensive enterprise solutions.
           </p>
-        </section>
-      </div>
+        </motion.section>
+      </motion.div>
     </div>
   );
 }
-
-export const metadata: Metadata = {
-  title: "About Us | Probo",
-  description:
-    "Meet the team behind Probo, the open-source compliance platform transforming how startups handle regulatory requirements.",
-  openGraph: {
-    title: "About Probo",
-    description:
-      "Meet the team behind Probo, the open-source compliance platform transforming how startups handle regulatory requirements.",
-    type: "website",
-    images: [
-      {
-        url: "/og-about.png",
-        width: 1200,
-        height: 630,
-        alt: "About Probo",
-      },
-    ],
-  },
-};
