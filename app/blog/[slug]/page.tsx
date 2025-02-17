@@ -15,11 +15,9 @@ export async function generateStaticParams() {
 }
 
 type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
 };
 
-// Generate metadata for each blog post
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
@@ -56,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export async function generateStructuredData(post: BlogPost) {
+async function generateStructuredData(post: BlogPost) {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
