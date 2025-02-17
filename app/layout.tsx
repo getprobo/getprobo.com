@@ -5,61 +5,42 @@ import { Inter } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import siteConfig from "./metadata.config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Probo - Compliance, minus the clutter",
-    template: "%s | Probo",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Open-source platform that helps startups navigate compliance with confidence",
-  keywords: [
-    "compliance",
-    "open source",
-    "security",
-    "SOC2",
-    "ISO27001",
-    "startup",
-    "regulatory compliance",
-    "regulatory reporting",
-    "regulatory reporting software",
-    "regulatory reporting platform",
-    "regulatory reporting software",
-    "regulatory reporting platform",
-    "regulatory reporting software",
-    "regulatory reporting platform",
-  ],
-  authors: [
-    { name: "Antoine", url: "https://linkedin.com/in/antoine" },
-    { name: "Bryan", url: "https://linkedin.com/in/bryan" },
-  ],
-  creator: "Probo Team",
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: siteConfig.authors,
+  creator: siteConfig.creator,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.getprobo.com",
-    title: "Probo - Compliance, minus the clutter",
-    description:
-      "Open-source platform that helps startups navigate compliance with confidence",
-    siteName: "Probo",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
     images: [
       {
-        url: "/og-image.png",
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Probo - Compliance Platform",
+        alt: siteConfig.name,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Probo - Compliance, minus the clutter",
-    description:
-      "Open-source platform that helps startups navigate compliance with confidence",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
     creator: "@getprobo",
-    images: ["/twitter-image.png"],
   },
   icons: {
     icon: [
@@ -81,8 +62,13 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
+  },
+  verification: {
+    google: "your-google-site-verification",
   },
 };
 
@@ -93,6 +79,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="canonical" href={siteConfig.url} />
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
       <body className={cn(inter.className, GeistSans.variable)}>
         <div className="min-h-screen bg-black flex flex-col">
           <div className="max-w-[1250px] mx-auto w-full px-4">
