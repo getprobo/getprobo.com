@@ -5,7 +5,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import type { Metadata } from "next";
 import type { BlogPost } from "@/lib/blog";
-import { BlogCTA } from "@/app/components/BlogCTA";
+import { BlogCTA } from "@/components/BlogCTA";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();

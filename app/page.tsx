@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Clock, Shield, User2, SmileIcon } from "lucide-react";
-import { Button } from "./components/ui/button";
-import { ContributeButton } from "./components/ContributeButton";
+import { Button } from "@/components/ui/button";
+import { ContributeButton } from "@/components/ContributeButton";
 import { cn } from "@/lib/utils";
 
 const features = [
