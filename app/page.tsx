@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { Clock, Shield, User2, SmileIcon } from "lucide-react";
 import { Button } from "./components/ui/button";
@@ -54,64 +57,100 @@ const clients = [
   },
 ];
 
-export default function HomePage() {
+export default function Home() {
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  };
+
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
   return (
-    <div>
-      <div className="relative">
-        <div className="absolute sm:bottom-[-46px] bottom-[-30px] left-1/2 transform -translate-x-1/2 z-10">
-          <Image
-            src="/merkat.png"
-            alt="Probo mascot"
-            width={304}
-            height={288}
-            className="w-[200px] sm:w-[304px]"
-            priority
-          />
-        </div>
+    <div className="min-h-screen bg-black text-white">
+      <motion.div
+        initial="initial"
+        animate="animate"
+        variants={staggerChildren}
+        className="relative"
+      >
+        <div className="relative">
+          <div className="absolute sm:bottom-[-46px] bottom-[-30px] left-1/2 transform -translate-x-1/2 z-10">
+            <motion.div variants={fadeIn}>
+              <Image
+                src="/merkat.png"
+                alt="Probo mascot"
+                width={304}
+                height={288}
+                className="w-[200px] sm:w-[304px]"
+                priority
+              />
+            </motion.div>
+          </div>
 
-        <div className="relative overflow-hidden rounded-b-[2rem] min-h-[650px]">
-          <Image
-            src="/bg.png"
-            alt="Background gradient"
-            width={2000}
-            height={1000}
-            className="absolute inset-0 w-full h-full object-cover"
-            priority
-          />
+          <motion.div 
+            className="relative overflow-hidden rounded-b-[2rem] min-h-[650px]"
+          >
+            <Image
+              src="/bg.png"
+              alt="Background gradient"
+              width={2000}
+              height={1000}
+              className="absolute inset-0 w-full h-full object-cover"
+              priority
+            />
 
-          <div className="relative h-full flex flex-col">
-            <div className="mx-auto px-4 flex-grow flex flex-col justify-start items-center pt-[50px]">
-              <div className="max-w-4xl mx-auto text-center">
-                <h1
-                  className={cn(
-                    "font-medium text-4xl sm:text-5xl md:text-[72px] leading-tight sm:leading-[79.2px] text-center text-white mb-6",
-                    "font-geist-alt tracking-[0%] leading-trim-cap",
-                  )}
-                >
-                  Compliance,
-                  <br />
-                  minus the clutter.
-                </h1>
-                <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-12 px-4">
-                  Probo is an open-source platform that helps startups navigate
-                  compliance with confidence.
-                </p>
-                <div className="flex flex-col md:flex-row gap-4 justify-center items-center px-4">
-                  <ContributeButton />
-                  <a
-                    href="https://hexacc.typeform.com/to/HEabWsbN"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-[#D1FF4C] text-black px-8 py-3 rounded-full font-medium hover:bg-[#bfff1a] transition-colors w-full md:w-auto text-center"
+            <div className="relative h-full flex flex-col">
+              <div className="mx-auto px-4 flex-grow flex flex-col justify-start items-center pt-[50px]">
+                <div className="max-w-4xl mx-auto text-center">
+                  <motion.h1
+                    variants={fadeIn}
+                    className={cn(
+                      "font-medium text-4xl sm:text-5xl md:text-[72px] leading-tight sm:leading-[79.2px] text-center text-white mb-6",
+                      "font-geist-alt tracking-[0%] leading-trim-cap",
+                    )}
                   >
-                    Join the waitlist
-                  </a>
+                    Compliance,
+                    <br />
+                    minus the clutter.
+                  </motion.h1>
+
+                  <motion.p
+                    variants={fadeIn}
+                    className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-12 px-4"
+                  >
+                    Probo is an open-source platform that helps startups navigate
+                    compliance with confidence.
+                  </motion.p>
+
+                  <motion.div
+                    variants={fadeIn}
+                    className="flex flex-col md:flex-row gap-4 justify-center items-center px-4"
+                  >
+                    <ContributeButton />
+                    <motion.a
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      href="https://hexacc.typeform.com/to/HEabWsbN"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#D1FF4C] text-black px-8 py-3 rounded-full font-medium hover:bg-[#bfff1a] transition-colors w-full md:w-auto text-center"
+                    >
+                      Join the waitlist
+                    </motion.a>
+                  </motion.div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       <section className="bg-black px-4 py-16">
         <div className="mx-auto max-w-7xl">
