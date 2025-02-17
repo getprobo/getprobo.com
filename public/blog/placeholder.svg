@@ -1,36 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 600">
-  <!-- Background gradient -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3838 2014">
+  <!-- Definitions -->
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#2a3f0c;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#c1ff47;stop-opacity:1" />
-    </linearGradient>
-    
-    <!-- Meerkat shadow gradient -->
-    <radialGradient id="shadowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-      <stop offset="0%" style="stop-color:rgba(0,0,0,0.3)" />
-      <stop offset="100%" style="stop-color:rgba(0,0,0,0)" />
-    </radialGradient>
+    <!-- Grid pattern -->
+    <pattern id="grid" width="384" height="384" patternUnits="userSpaceOnUse">
+      <path d="M 384 0 L 0 0 0 384" fill="none" stroke="#444444" stroke-width="1.5"/>
+    </pattern>
   </defs>
 
-  <!-- Main background -->
-  <rect width="1250" height="600" fill="url(#bgGradient)" />
+  <!-- Dark background with grid -->
+  <rect width="3838" height="2014" fill="#1a1a1a" />
+  <rect width="3838" height="2014" fill="url(#grid)" />
 
-  <!-- Decorative circles -->
-  <circle cx="150" cy="150" r="120" fill="rgba(255,255,255,0.15)" />
-  <circle cx="1100" cy="450" r="100" fill="rgba(255,255,255,0.15)" />
-  <circle cx="300" cy="480" r="80" fill="rgba(255,255,255,0.12)" />
+  <!-- Title placeholder -->
+  <rect x="919" y="600" width="2000" height="180" fill="#ffffff" opacity="0.9" />
+  
+  <!-- Subtitle placeholder -->
+  <rect x="919" y="850" width="1500" height="90" fill="#ffffff" opacity="0.6" />
 
-  <!-- Content placeholder lines -->
-  <rect x="300" y="150" width="650" height="60" fill="rgba(255,255,255,0.9)" />
-  <rect x="300" y="240" width="500" height="30" fill="rgba(255,255,255,0.7)" />
-  <rect x="300" y="290" width="400" height="30" fill="rgba(255,255,255,0.7)" />
-
-  <!-- Meerkat character (simplified) -->
-  <ellipse cx="625" cy="575" rx="60" ry="15" fill="url(#shadowGradient)" />
-  <path d="M595 455 Q625 385 655 455 L655 530 L595 530 Z" fill="#ffffff" />
-  <circle cx="625" cy="410" r="40" fill="#ffffff" />
-  <circle cx="614" cy="402" r="9" fill="#222222" />
-  <circle cx="636" cy="402" r="9" fill="#222222" />
-  <path d="M625 415 Q625 430 625 423" stroke="#555555" fill="none" stroke-width="2.5" />
+  <!-- Geometric shapes -->
+  <!-- Circle -->
+  <circle cx="1519" cy="1300" r="120" fill="#d4ff4a" />
+  
+  <!-- Triangle -->
+  <path d="M 1919 1180 L 2039 1420 L 1799 1420 Z" fill="#d4ff4a" />
+  
+  <!-- Square -->
+  <rect x="2119" y="1180" width="240" height="240" fill="#d4ff4a" />
 </svg>
