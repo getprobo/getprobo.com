@@ -2,37 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Clock, Shield, User2, SmileIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { ContributeButton } from "@/components/ContributeButton";
 import { cn } from "@/lib/utils";
-
-const features = [
-  {
-    icon: Clock,
-    title: "Save time with a solution tailored to you",
-    description:
-      "Cut through the noise. Probo identifies and helps you act only on the security measures your business actually needs, saving you time and resources.",
-  },
-  {
-    icon: Shield,
-    title: "Own and protect your sensitive data",
-    description:
-      "Your data belongs to you. Probo ensures you maintain full ownership and control, with easy export options and no hidden restrictions.",
-  },
-  {
-    icon: User2,
-    title: "Understand every step with full transparency",
-    description:
-      "Probo's open-source setup gives you complete visibility into the tools and processes, so you can stay informed at every step.",
-  },
-  {
-    icon: SmileIcon,
-    title: "Navigate with expert guidance",
-    description:
-      "Human support alongside smart tools means you'll have a trusted partner guiding you every step of the way, taking the confusion out of compliance.",
-  },
-];
 
 const clients = [
   {
