@@ -19,7 +19,8 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-20">
+    <div>
+        <div className="container mx-auto px-4 py-20">
       <motion.div
         initial="initial"
         animate="animate"
@@ -122,6 +123,22 @@ export default function AboutPage() {
           </p>
         </motion.section>
       </motion.div>
+    </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2 }}
+        >
+          <Image 
+            src="/merkat-bottom.webp" 
+            alt="Probo mascot" 
+            className="relative md:bottom-[-38px] bottom-[-12px] left-0" 
+            width={1250} 
+            height={200} 
+            priority 
+          />
+        </motion.div>
     </div>
   );
 }
