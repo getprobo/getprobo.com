@@ -5,6 +5,19 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  trailingSlash: false,
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/:path*/',
+          destination: '/:path*',
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
 };
 
 export default nextConfig;
