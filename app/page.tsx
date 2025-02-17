@@ -150,7 +150,7 @@ export default function Home() {
             {clients.map((client) => (
               <div
                 key={client.name}
-                className="flex items-center justify-center col-span-1 px-8"
+                className="flex items-center justify-center col-span-1 px-8 group relative"
               >
                 <a
                   href={client.url}
@@ -163,8 +163,11 @@ export default function Home() {
                     alt={client.name}
                     width={140}
                     height={40}
-                    className="max-h-12 w-auto opacity-50 hover:opacity-100 transition-opacity invert brightness-0"
+                    className="max-h-12 w-auto opacity-50 group-hover:opacity-100 transition-opacity invert brightness-0"
                   />
+                  <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-sm text-gray-400">
+                    {client.name}
+                  </span>
                 </a>
               </div>
             ))}
