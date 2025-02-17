@@ -6,7 +6,7 @@ export const revalidate = false
 
 export async function GET() {
   const posts = getAllPosts();
-  const baseUrl = 'https://getprobo.com';
+  const baseUrl = 'https://www.getprobo.com';
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -74,4 +74,4 @@ export async function GET() {
       'Cache-Control': 'public, max-age=3600, s-maxage=3600'
     },
   });
-} 
+}
