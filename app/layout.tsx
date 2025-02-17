@@ -6,6 +6,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import siteConfig from "./metadata.config";
+import { Analytics } from '@/components/Analytics';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -108,6 +109,7 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>
+          <Analytics />
         </div>
       </body>
     </html>
