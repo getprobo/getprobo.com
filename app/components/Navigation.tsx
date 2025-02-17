@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MessageSquare, Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +31,9 @@ export function Navigation() {
           <Link href="/blog" className="text-white hover:text-[#D1FF4C]">
             Blog
           </Link>
-          <Link
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             href="https://discord.gg/8qfdJYfvpY"
             target="_blank"
             rel="noopener noreferrer"
@@ -38,7 +41,7 @@ export function Navigation() {
           >
             <MessageSquare className="w-4 h-4" />
             Join our community
-          </Link>
+          </motion.a>
         </div>
         <button
           className="md:hidden text-white"
@@ -60,7 +63,9 @@ export function Navigation() {
           <Link href="/blog" className="text-white hover:text-[#D1FF4C]">
             Blog
           </Link>
-          <Link
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             href="https://discord.gg/8qfdJYfvpY"
             target="_blank"
             rel="noopener noreferrer"
@@ -68,7 +73,7 @@ export function Navigation() {
           >
             <MessageSquare className="w-4 h-4" />
             Join our community
-          </Link>
+          </motion.a>
         </div>
       </div>
     </nav>
