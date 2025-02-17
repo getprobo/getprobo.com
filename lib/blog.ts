@@ -10,7 +10,7 @@ interface Author {
   image: string;
 }
 
-interface BlogPost {
+export interface BlogPost {
   slug: string;
   title: string;
   date: string;
