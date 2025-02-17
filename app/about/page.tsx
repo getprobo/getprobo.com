@@ -5,7 +5,7 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 py-20">
       <div className="max-w-4xl mx-auto">
         <section className="mb-20">
-          <h1 className="text-4xl font-bold font-geist-alt text-white mb-6">
+          <h1 className="text-4xl font-light font-geist-alt text-white mb-6">
             Our Mission
           </h1>
           <p className="text-gray-200 text-lg leading-relaxed mb-6">
@@ -20,7 +20,7 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-20">
-          <h2 className="text-3xl font-bold font-geist-alt text-white mb-8">
+          <h2 className="text-3xl font-light font-geist-alt text-white mb-8">
             Meet the Team
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -69,7 +69,7 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-20">
-          <h2 className="text-3xl font-bold font-geist-alt text-white mb-6">
+          <h2 className="text-3xl font-light font-geist-alt text-white mb-6">
             Our Story
           </h2>
           <p className="text-gray-200 text-lg leading-relaxed">
@@ -81,7 +81,7 @@ export default function AboutPage() {
         </section>
 
         <section>
-          <h2 className="text-3xl font-bold font-geist-alt text-white mb-6">
+          <h2 className="text-3xl font-light font-geist-alt text-white mb-6">
             Open Source First
           </h2>
           <p className="text-gray-200 text-lg leading-relaxed mb-6">
