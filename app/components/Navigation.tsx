@@ -47,27 +47,28 @@ export function Navigation() {
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-      {isOpen && (
-        <div className="md:hidden mt-4">
-          <div className="flex flex-col gap-4">
-            <Link href="/about" className="text-white hover:text-[#D1FF4C]">
-              About
-            </Link>
-            <Link href="/blog" className="text-white hover:text-[#D1FF4C]">
-              Blog
-            </Link>
-            <Link
-              href="https://discord.gg/8qfdJYfvpY"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#5865F2] text-white px-6 py-2 rounded-full font-medium hover:bg-[#4752C4] transition-colors flex items-center gap-2 justify-center"
-            >
-              <MessageSquare className="w-4 h-4" />
-              Join our community
-            </Link>
-          </div>
+      <div className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
+        <div className="flex flex-col gap-4">
+          <Link href="/" className="text-white hover:text-[#D1FF4C]">
+            Home
+          </Link>
+          <Link href="/about" className="text-white hover:text-[#D1FF4C]">
+            About
+          </Link>
+          <Link href="/blog" className="text-white hover:text-[#D1FF4C]">
+            Blog
+          </Link>
+          <Link
+            href="https://discord.gg/8qfdJYfvpY"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#5865F2] text-white px-6 py-2 rounded-full font-medium hover:bg-[#4752C4] transition-colors flex items-center gap-2 justify-center"
+          >
+            <MessageSquare className="w-4 h-4" />
+            Join our community
+          </Link>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
