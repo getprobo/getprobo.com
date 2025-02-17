@@ -7,6 +7,9 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import type { BlogPost } from "@/lib/blog";
+import { ContributeButton } from "@/app/components/ContributeButton";
+import { motion } from "framer-motion";
+import { BlogCTA } from "@/app/components/BlogCTA";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -142,6 +145,7 @@ export default async function BlogPost(props: Props) {
           <div className="prose prose-invert max-w-none">
             <MDXRemote source={post.content} />
           </div>
+          <BlogCTA />
         </div>
       </div>
     </>
