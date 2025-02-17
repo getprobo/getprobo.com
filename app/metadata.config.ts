@@ -19,7 +19,7 @@ const siteConfig = {
     },
     {
       name: "Bryan Frimin",
-      url: "https://linkedin.com/in/bryanfrimin",
+      url: "https://linkedin.com/in/gearnode",
     },
   ],
   creator: "Probo",
