@@ -33,10 +33,12 @@ jobs:
         uses: actions/configure-pages@v5
       - run: "npm ci"
       - run: "npm run build"
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./out
 
   deploy:
     environment:
