@@ -6,18 +6,6 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   trailingSlash: false,
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/:path*/',
-          destination: '/:path*',
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    };
-  },
 };
 
 export default nextConfig;
