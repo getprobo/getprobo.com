@@ -22,7 +22,7 @@ const siteConfig = {
       url: "https://linkedin.com/in/bryanfrimin",
     },
   ],
-  creator: "Probo Team",
+  creator: "Probo",
   ogImage: "/og.png",
   links: {
     twitter: "https://twitter.com/getprobo",
