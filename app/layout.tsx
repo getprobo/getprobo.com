@@ -7,6 +7,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import siteConfig from "./metadata.config";
 import { Analytics } from '@/components/Analytics';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -109,7 +110,9 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>
-          <Analytics />
+          <Suspense>
+            <Analytics />
+          </Suspense>
         </div>
       </body>
     </html>
