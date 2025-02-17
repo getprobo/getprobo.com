@@ -3,7 +3,7 @@ import { Twitter, Linkedin, MessageSquare, Github } from "lucide-react";
 import Image from "next/image";
 export function Footer() {
   return (
-    <footer className="bg-black text-white py-16">
+    <footer className="bg-black text-white py-16 border-t border-white/10">
       <div className="mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="space-y-6">
