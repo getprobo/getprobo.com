@@ -12,7 +12,8 @@ export function BlogCTA() {
           Ready to streamline your compliance?
         </h2>
         <p className="text-gray-400 text-center mb-8 max-w-xl mx-auto">
-          Join our open-source community and start managing your compliance with confidence.
+          Join our open-source community and start managing your compliance with
+          confidence.
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <ContributeButton org="getprobo" repo="probo" defaultStars={2} />
@@ -30,4 +31,4 @@ export function BlogCTA() {
       </div>
     </div>
   );
-} 
+}

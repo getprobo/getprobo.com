@@ -9,7 +9,7 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 }
+    transition: { duration: 0.5 },
   };
 
   return (
@@ -30,7 +30,7 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
             className="object-cover border border-white/10 transition-transform duration-300 group-hover:scale-105"
           />
         </div>
-        <motion.div 
+        <motion.div
           className="py-4"
           initial={{ opacity: 0.8 }}
           whileHover={{ opacity: 1 }}
@@ -60,4 +60,4 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
       </Link>
     </motion.article>
   );
-} 
+}

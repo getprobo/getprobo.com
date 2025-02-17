@@ -61,15 +61,15 @@ export default function Home() {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 }
+    transition: { duration: 0.5 },
   };
 
   const staggerChildren = {
     animate: {
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   return (
@@ -94,9 +94,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <motion.div 
-            className="relative overflow-hidden rounded-b-[2rem] min-h-[650px]"
-          >
+          <motion.div className="relative overflow-hidden rounded-b-[2rem] min-h-[650px]">
             <Image
               src="/bg.png"
               alt="Background gradient"
@@ -125,15 +123,19 @@ export default function Home() {
                     variants={fadeIn}
                     className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-12 px-4"
                   >
-                    Probo is an open-source platform that helps startups navigate
-                    compliance with confidence.
+                    Probo is an open-source platform that helps startups
+                    navigate compliance with confidence.
                   </motion.p>
 
                   <motion.div
                     variants={fadeIn}
                     className="flex flex-col md:flex-row gap-4 justify-center items-center px-4"
                   >
-                    <ContributeButton org="getprobo" repo="probo" defaultStars={2}/>
+                    <ContributeButton
+                      org="getprobo"
+                      repo="probo"
+                      defaultStars={2}
+                    />
                     <motion.a
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}

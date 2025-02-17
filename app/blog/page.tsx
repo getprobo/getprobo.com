@@ -5,10 +5,12 @@ import siteConfig from "../metadata.config";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Latest insights and updates about compliance, security, and open source from the Probo team.",
+  description:
+    "Latest insights and updates about compliance, security, and open source from the Probo team.",
   openGraph: {
     title: "Probo Blog",
-    description: "Latest insights and updates about compliance, security, and open source from the Probo team.",
+    description:
+      "Latest insights and updates about compliance, security, and open source from the Probo team.",
     type: "website",
     images: [
       {
@@ -29,7 +31,8 @@ export default function BlogPage() {
     "@context": "https://schema.org",
     "@type": "Blog",
     name: "Probo Blog",
-    description: "Latest insights and updates about compliance, security, and open source",
+    description:
+      "Latest insights and updates about compliance, security, and open source",
     url: `${siteConfig.url}/blog`,
     publisher: {
       "@type": "Organization",
@@ -71,7 +74,9 @@ export default function BlogPage() {
 
           {posts.slice(2).length > 0 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-zinc-400">Latest Posts</h2>
+              <h2 className="text-xl font-semibold text-zinc-400">
+                Latest Posts
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {posts.slice(2).map((post, index) => (
                   <ClientBlog key={post.slug} post={post} index={index + 2} />
