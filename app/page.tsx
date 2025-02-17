@@ -133,7 +133,7 @@ export default function Home() {
                     variants={fadeIn}
                     className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-12 px-4"
                   >
-                    Probo is an open-source platform that helps startups
+                    Probo is the open-source platform that helps startups
                     navigate compliance with confidence.
                   </motion.p>
 
