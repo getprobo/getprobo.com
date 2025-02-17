@@ -37,23 +37,33 @@ const features = [
 const clients = [
   {
     name: "Kor",
-    logo: "/clients/kor.svg",
+    logo: "/clients/kor.png",
+    url: "https://www.kor.care",
   },
   {
     name: "Marble",
-    logo: "/clients/marble.svg",
+    logo: "/clients/marble.png",
+    url: "https://www.checkmarble.com",
+  },
+  {
+    name: "Photoroom",
+    logo: "/clients/photoroom.png",
+    url: "https://www.photoroom.com",
   },
   {
     name: "Axolo",
     logo: "/clients/axolo.png",
+    url: "https://www.axolo.co",
   },
   {
     name: "Shipfox",
     logo: "/clients/shipfox.png",
+    url: "https://www.shipfox.io",
   },
   {
     name: "Deja Blue",
     logo: "/clients/dejablue.png",
+    url: "https://www.dejablue.energy",
   },
 ];
 
@@ -154,7 +164,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <section className="bg-black px-4 py-16">
+      <section className="bg-black px-4 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-[#D1FF4C]">
@@ -165,61 +175,28 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
             {clients.map((client) => (
               <div
                 key={client.name}
                 className="flex items-center justify-center col-span-1 px-8"
               >
-                <Image
-                  src={client.logo}
-                  alt={client.name}
-                  width={140}
-                  height={40}
-                  className="max-h-12 w-auto opacity-50 hover:opacity-100 transition-opacity invert brightness-0"
-                />
+                <a
+                  href={client.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity duration-200"
+                >
+                  <Image
+                    src={client.logo}
+                    alt={client.name}
+                    width={140}
+                    height={40}
+                    className="max-h-12 w-auto opacity-50 hover:opacity-100 transition-opacity invert brightness-0"
+                  />
+                </a>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-black px-4 py-8 text-white md:py-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-[#D1FF4C]">
-              About Probo
-            </h2>
-            <h3 className="mt-2 text-3xl font-semibold sm:text-4xl">
-              Medium length section heading
-            </h3>
-          </div>
-
-          <div className="mt-8">
-            <div className="grid gap-6 sm:grid-cols-2 lg:gap-8">
-              {features.map((feature, index) => (
-                <div key={index} className="mx-auto text-center max-w-[420px]">
-                  <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-[#D1FF4C]/10 text-[#D1FF4C]">
-                    <feature.icon className="h-5 w-5" />
-                  </div>
-                  <h4 className="mt-3 text-lg font-semibold text-center">
-                    {feature.title}
-                  </h4>
-                  <p className="mt-1 text-sm text-gray-400 text-center">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Button
-              size="lg"
-              className="rounded-full bg-[#D1FF4C] text-base font-semibold text-black hover:bg-[#D1FF4C]/90"
-            >
-              Book a demo
-            </Button>
           </div>
         </div>
       </section>
