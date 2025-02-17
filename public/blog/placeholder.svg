@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 500">
   <!-- Background gradient -->
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -14,22 +14,23 @@
   </defs>
 
   <!-- Main background -->
-  <rect width="800" height="400" fill="url(#bgGradient)" rx="20" />
+  <rect width="1250" height="500" fill="url(#bgGradient)" rx="25" />
 
   <!-- Decorative circles -->
-  <circle cx="100" cy="100" r="80" fill="rgba(255,255,255,0.1)" />
-  <circle cx="700" cy="300" r="60" fill="rgba(255,255,255,0.1)" />
+  <circle cx="150" cy="120" r="100" fill="rgba(255,255,255,0.1)" />
+  <circle cx="1100" cy="380" r="80" fill="rgba(255,255,255,0.1)" />
+  <circle cx="300" cy="400" r="60" fill="rgba(255,255,255,0.08)" />
 
   <!-- Content placeholder lines -->
-  <rect x="200" y="100" width="400" height="40" rx="8" fill="rgba(255,255,255,0.9)" />
-  <rect x="200" y="160" width="300" height="20" rx="6" fill="rgba(255,255,255,0.7)" />
-  <rect x="200" y="190" width="250" height="20" rx="6" fill="rgba(255,255,255,0.7)" />
+  <rect x="300" y="120" width="650" height="50" rx="10" fill="rgba(255,255,255,0.9)" />
+  <rect x="300" y="190" width="500" height="25" rx="8" fill="rgba(255,255,255,0.7)" />
+  <rect x="300" y="235" width="400" height="25" rx="8" fill="rgba(255,255,255,0.7)" />
 
   <!-- Meerkat character (simplified) -->
-  <ellipse cx="400" cy="380" rx="40" ry="10" fill="url(#shadowGradient)" />
-  <path d="M380 300 Q400 250 420 300 L420 350 L380 350 Z" fill="#f0f0f0" />
-  <circle cx="400" cy="270" r="25" fill="#f0f0f0" />
-  <circle cx="393" cy="265" r="6" fill="#333" />
-  <circle cx="407" cy="265" r="6" fill="#333" />
-  <path d="M400 275 Q400 285 400 280" stroke="#666" fill="none" stroke-width="2" />
+  <ellipse cx="625" cy="475" rx="55" ry="12" fill="url(#shadowGradient)" />
+  <path d="M595 375 Q625 315 655 375 L655 440 L595 440 Z" fill="#f0f0f0" />
+  <circle cx="625" cy="340" r="35" fill="#f0f0f0" />
+  <circle cx="614" cy="332" r="8" fill="#333" />
+  <circle cx="636" cy="332" r="8" fill="#333" />
+  <path d="M625 345 Q625 358 625 352" stroke="#666" fill="none" stroke-width="2.5" />
 </svg>
