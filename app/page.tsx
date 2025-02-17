@@ -133,7 +133,7 @@ export default function Home() {
                     variants={fadeIn}
                     className="flex flex-col md:flex-row gap-4 justify-center items-center px-4"
                   >
-                    <ContributeButton />
+                    <ContributeButton org="getprobo" repo="probo" defaultStars={2}/>
                     <motion.a
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
