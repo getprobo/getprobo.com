@@ -161,8 +161,7 @@ export default function Home() {
               Trusted by innovative companies
             </h2>
             <p className="mt-2 text-lg text-gray-400">
-              Join hundreds of companies using Probo to streamline their
-              compliance
+              Join companies using Probo to streamline their compliance
             </p>
           </div>
 

@@ -1,8 +1,8 @@
-import fs from "fs"
-import path from "path"
-import matter from "gray-matter"
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-const postsDirectory = path.join(process.cwd(), "content/blog")
+const postsDirectory = path.join(process.cwd(), "content/blog");
 
 interface Author {
   name: string;
@@ -21,14 +21,14 @@ export interface BlogPost {
 }
 
 export function getAllPosts(): BlogPost[] {
-  const fileNames = fs.readdirSync(postsDirectory)
+  const fileNames = fs.readdirSync(postsDirectory);
   const posts = fileNames
     .filter((fileName) => fileName.endsWith(".mdx"))
     .map((fileName) => {
-      const slug = fileName.replace(/\.mdx$/, "")
-      const fullPath = path.join(postsDirectory, fileName)
-      const fileContents = fs.readFileSync(fullPath, "utf8")
-      const { data, content } = matter(fileContents)
+      const slug = fileName.replace(/\.mdx$/, "");
+      const fullPath = path.join(postsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, "utf8");
+      const { data, content } = matter(fileContents);
 
       return {
         slug,
@@ -38,17 +38,17 @@ export function getAllPosts(): BlogPost[] {
         author: data.author,
         coverImage: data.coverImage || "/blog/placeholder.svg",
         content,
-      }
-    })
+      };
+    });
 
-  return posts.sort((a, b) => (a.date > b.date ? -1 : 1))
+  return posts.sort((a, b) => (a.date > b.date ? -1 : 1));
 }
 
 export function getPostBySlug(slug: string) {
   try {
-    const fullPath = path.join(postsDirectory, `${slug}.mdx`)
-    const fileContents = fs.readFileSync(fullPath, "utf8")
-    const { data, content } = matter(fileContents)
+    const fullPath = path.join(postsDirectory, `${slug}.mdx`);
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const { data, content } = matter(fileContents);
 
     return {
       slug,
@@ -58,8 +58,8 @@ export function getPostBySlug(slug: string) {
       excerpt: data.excerpt,
       coverImage: data.coverImage || "/blog/placeholder.svg",
       content,
-    }
+    };
   } catch {
-    return null
+    return null;
   }
-} 
+}
