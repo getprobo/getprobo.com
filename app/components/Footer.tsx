@@ -3,7 +3,7 @@ import {
   Twitter,
   Youtube,
   Linkedin,
-  MessageCircle,
+  MessageSquare,
   Github,
 } from "lucide-react";
 
@@ -37,7 +37,7 @@ export function Footer() {
                 href="https://x.com/getprobo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-400"
+                className="hover:text-[#1DA1F2]"
               >
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
@@ -46,16 +46,16 @@ export function Footer() {
                 href="https://discord.gg/8qfdJYfvpY"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-400"
+                className="hover:text-[#7289DA]"
               >
-                <MessageCircle className="h-5 w-5" />
+                <MessageSquare className="h-5 w-5" />
                 <span className="sr-only">Discord</span>
               </Link>
               <Link
                 href="https://linkedin.com/in/getprobo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-400"
+                className="hover:text-[#0077B5]"
               >
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
@@ -64,10 +64,10 @@ export function Footer() {
                 href="https://github.com/getprobo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-400"
+                className="hover:text-[#333]"
               >
                 <Github className="h-5 w-5" />
-                <span className="sr-only">YouTube</span>
+                <span className="sr-only">GitHub</span>
               </Link>
             </div>
           </div>
@@ -78,7 +78,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Changelog
                 </Link>
@@ -86,7 +86,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Status
                 </Link>
@@ -100,7 +100,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   About
                 </Link>
@@ -108,7 +108,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/blog"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Blog
                 </Link>
@@ -116,7 +116,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Careers
                 </Link>
@@ -130,7 +130,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/cookie-policy"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Cookie Policy
                 </Link>
@@ -138,7 +138,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Privacy Policy
                 </Link>
@@ -146,7 +146,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/terms"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Terms of Service
                 </Link>
@@ -154,7 +154,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/subprocessors"
-                  className="text-gray-400 hover:text-white text-sm"
+                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
                 >
                   Subprocessors
                 </Link>
