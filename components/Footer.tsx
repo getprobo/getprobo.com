@@ -48,7 +48,7 @@ export function Footer() {
                 <span className="sr-only">Discord</span>
               </Link>
               <Link
-                href="https://linkedin.com/in/getprobo"
+                href="https://linkedin.com/company/getprobo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#0077B5]"
