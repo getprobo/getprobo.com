@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 interface ContributeButtonProps {
   org?: string;
   repo?: string;
-  defaultStars?: number;
+  defaultStars: number;
 }
 
 export function ContributeButton({
-  org = "getprobo",
-  repo = "probo",
-  defaultStars = 123,
+  org,
+  repo,
+  defaultStars,
 }: ContributeButtonProps) {
   const [stars, setStars] = useState(defaultStars);
 
@@ -43,7 +43,7 @@ export function ContributeButton({
       className="bg-[#4A5334] text-white px-8 py-3 rounded-full font-medium hover:bg-[#5a6340] transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
     >
       <Github className="w-5 h-5" />
-      Contribute
+      Star us
       <span className="bg-[#3A4324] px-2 py-1 rounded-full text-sm ml-2">
         ★ {stars}
       </span>

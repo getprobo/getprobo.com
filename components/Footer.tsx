@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-black text-white py-16 border-t border-white/10">
       <div className="mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="flex flex-col items-center sm:flex-row justify-around">
           <div className="space-y-6">
             <div className="space-y-2">
               <p className="text-sm">12 Rue Martel, Paris</p>
@@ -68,29 +68,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
-            <h2 className="font-semibold mb-4">Resources</h2>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Changelog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Status
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
+          <div className="hidden sm:block">
             <h2 className="font-semibold mb-4">Company</h2>
             <ul className="space-y-3">
               <li>
@@ -109,18 +87,10 @@ export function Footer() {
                   Blog
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Careers
-                </Link>
-              </li>
             </ul>
           </div>
 
-          <div>
+          <div className="hidden sm:block">
             <h2 className="font-semibold mb-4">Legal</h2>
             <ul className="space-y-3">
               <li>

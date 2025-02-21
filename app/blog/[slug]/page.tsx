@@ -123,13 +123,13 @@ export default async function BlogPost(props: Props) {
         <section className="relative h-[500px] my-16 flex items-center justify-center overflow-hidden">
           <div className="absolute w-[300px] h-[300px] rounded-full bg-white/5 blur-[100px]" />
           <div className="relative z-10 w-full h-full">
-              <Image
-                src={post.coverImage}
-                alt={post.title}
-                fill
-                priority
-                className="object-cover border border-white/20 rounded-lg w-full h-full"
-              />
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              priority
+              className="object-cover border border-white/20 rounded-lg w-full h-full"
+            />
           </div>
         </section>
 
