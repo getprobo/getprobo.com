@@ -107,7 +107,7 @@ export default async function BlogPost(props: Props) {
               {post.title}
             </h1>
             <p className="mt-2 text-neutral-400">{post.excerpt}</p>
-            <div className="flex items-center gap-2 mt-4 justify-center mt-10">
+            <div className="flex items-center gap-2 justify-center mt-10">
               <Image
                 src={post.author.image}
                 alt={post.author.name}
