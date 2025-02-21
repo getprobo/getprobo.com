@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { posthog } from '@/lib/posthog';
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { posthog } from "@/lib/posthog";
 
 export function Analytics() {
   const pathname = usePathname();
@@ -15,4 +15,4 @@ export function Analytics() {
   }, [pathname, searchParams]);
 
   return null;
-} 
+}
