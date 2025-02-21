@@ -5,7 +5,7 @@ compliance management platform.
 </p>
 
 <p align="center">
-  <img src=".github/probo.png" alt="Probo Website" style="max-height: 250px;">
+  <img src=".github/probo.png" alt="Probo Website" height="250">
 </p>
 
 ## About Probo
