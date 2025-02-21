@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-black text-white py-16 border-t border-white/10">
       <div className="mx-auto px-4">
-        <div className="flex flex-col items-center sm:flex-row justify-around">
+        <div className="flex flex-col items-center sm:items-start sm:flex-row justify-around">
           <div className="space-y-6">
             <div className="space-y-2">
               <p className="text-sm">12 Rue Martel, Paris</p>
