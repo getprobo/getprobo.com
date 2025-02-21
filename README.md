@@ -1,8 +1,7 @@
 # Probo Website
 
 This repository contains the marketing website for Probo - an open-source
-compliance management platform. For the main Probo platform repository, stay
-tuned - we'll be open-sourcing it soon!
+compliance management platform.
 
 ![Probo Website](.github/screenshot.jpg)
 
