@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ContributeButton } from "@/components/ContributeButton";
-import { cn } from "@/lib/utils";
 import { Clock, SmilePlus, Award, DollarSign } from "lucide-react";
 
 const clients = [
@@ -165,7 +164,7 @@ export default function Home() {
           <h2 className="text-lime text-sm font-medium mb-4">BENEFITS</h2>
           <div className="text-4xl md:text-5xl font-geist-alt space-y-2">
             <p>Everything you need.</p>
-            <p>Nothing you don't.</p>
+            <p>Nothing you don{"'"}t.</p>
           </div>
         </div>
 
@@ -340,7 +339,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="bg-[#CEF521] text-black px-8 py-3 rounded-full font-medium hover:bg-[#B9DB21] transition-colors w-full md:w-auto text-center"
             >
-              Don't see yours? Let us know
+              Don{"'"}t see yours? Let us know
             </motion.a>
           </div>
         </div>
