@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Probo Website
 
-## Getting Started
+This repository contains the marketing website for Probo - an open-source
+compliance management platform. For the main Probo platform repository, stay
+tuned - we'll be open-sourcing it soon!
 
-First, run the development server:
+![Probo Website](.github/screenshot.jpg)
+
+## About Probo
+
+Probo is an open-source platform that helps startups get SOC-2 certified in just
+one week. No paywalls, no vendor lock-in - just simple, fast compliance.
+
+- Get SOC-2 certified in just 20 hours
+- Expert guidance at every step
+- Pay only for what you need - no hidden fees
+- Open source and built for startups
+- Supports multiple frameworks (SOC-2, ISO 27001, GDPR)
+
+## Tech Stack
+
+- [Next.js 14](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [MDX](https://mdxjs.com/) for blog posts
+- [PostHog](https://posthog.com/) for analytics
+
+## Development
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/getprobo/website.git
+cd website
+```
+
+2. Install dependencies:
+
+```bash
+npm ci
+```
+
+3. Create a `.env.local` file:
+
+```bash
+NEXT_PUBLIC_POSTHOG_KEY=your_key
+NEXT_PUBLIC_POSTHOG_HOST=your_host
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+While this is just our website repository, we welcome contributions! Please feel
+free to submit issues and pull requests.
 
-## Learn More
+## Stay Updated
 
-To learn more about Next.js, take a look at the following resources:
+- Join the waitlist: [getprobo.com](https://www.getprobo.com)
+- Follow us: [@getprobo](https://twitter.com/getprobo)
+- Join our Discord: [Probo Community](https://discord.gg/8qfdJYfvpY)
+- Main project: [github.com/getprobo/probo](https://github.com/getprobo/probo)
+- Contact: [hello@getprobo.com](mailto:hello@getprobo.com)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License - see [LICENSE](LICENSE) for details.
