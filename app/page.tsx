@@ -286,7 +286,9 @@ export default function Home() {
                 and privacy.
               </p>
               <a
-                href="#"
+                href="https://hexacc.typeform.com/to/HEabWsbN"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-lime flex items-center hover:opacity-80"
               >
                 Book a demo →
@@ -334,7 +336,7 @@ export default function Home() {
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="#"
+              href="https://hexacc.typeform.com/to/HEabWsbN"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#CEF521] text-black px-8 py-3 rounded-full font-medium hover:bg-[#B9DB21] transition-colors w-full md:w-auto text-center"
@@ -359,7 +361,9 @@ export default function Home() {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="#"
+                href="https://hexacc.typeform.com/to/HEabWsbN"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-3 bg-lime text-black font-medium rounded-full hover:opacity-90 transition-opacity w-fit"
               >
                 Join the waitlist
