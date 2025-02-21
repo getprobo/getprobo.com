@@ -36,7 +36,7 @@ export function getAllPosts(): BlogPost[] {
         date: data.date,
         excerpt: data.excerpt,
         author: data.author,
-        coverImage: data.coverImage || "/blog/placeholder.svg",
+        coverImage: data.coverImage || "/blog/placeholder.png",
         content,
       };
     });
@@ -56,7 +56,7 @@ export function getPostBySlug(slug: string) {
       date: data.date,
       author: data.author,
       excerpt: data.excerpt,
-      coverImage: data.coverImage || "/blog/placeholder.svg",
+      coverImage: data.coverImage || "/blog/placeholder.png",
       content,
     };
   } catch {
