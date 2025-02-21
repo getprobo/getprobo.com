@@ -1,9 +1,12 @@
-# Probo Website
-
-This repository contains the marketing website for Probo - an open-source
+<h1 align="center">Probo Website</h1>
+<p align="center">
+This repository contains the marketing website for Probo - the open-source
 compliance management platform.
+</p>
 
-![Probo Website](.github/screenshot.jpg)
+<p align="center">
+  <img src=".github/probo.png" alt="Probo Website" style="max-height: 250px;">
+</p>
 
 ## About Probo
 
@@ -18,7 +21,7 @@ one week. No paywalls, no vendor lock-in - just simple, fast compliance.
 
 ## Tech Stack
 
-- [Next.js 14](https://nextjs.org/)
+- [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Framer Motion](https://www.framer.com/motion/)
@@ -30,8 +33,8 @@ one week. No paywalls, no vendor lock-in - just simple, fast compliance.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/getprobo/website.git
-cd website
+git clone https://github.com/getprobo/getprobo.com.git
+cd getprobo.com
 ```
 
 2. Install dependencies:
