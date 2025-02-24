@@ -34,7 +34,7 @@ export function Navigation() {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="https://discord.gg/8qfdJYfvpY"
+            href="https://hexacc.typeform.com/to/HEabWsbN"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#CEF521] text-black px-6 py-2 rounded-full font-medium hover:bg-[#B9DB21] transition-colors flex items-center gap-2"
