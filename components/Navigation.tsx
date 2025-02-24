@@ -37,10 +37,9 @@ export function Navigation() {
             href="https://discord.gg/8qfdJYfvpY"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#5865F2] text-white px-6 py-2 rounded-full font-medium hover:bg-[#4752C4] transition-colors flex items-center gap-2"
+            className="bg-[#CEF521] text-black px-6 py-2 rounded-full font-medium hover:bg-[#B9DB21] transition-colors flex items-center gap-2"
           >
-            <MessageSquare className="w-4 h-4" />
-            Join our community
+            Join the waitlist
           </motion.a>
         </div>
         <button
@@ -51,7 +50,11 @@ export function Navigation() {
         </button>
       </div>
       <div
-        className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0 overflow-hidden"}`}
+        className={`md:hidden mt-4 transition-all duration-300 ease-in-out ${
+          isOpen
+            ? "opacity-100 max-h-[500px]"
+            : "opacity-0 max-h-0 overflow-hidden"
+        }`}
       >
         <div className="flex flex-col gap-4">
           <Link href="/" className="text-white hover:text-[#D1FF4C]">
