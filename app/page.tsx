@@ -22,6 +22,11 @@ const clients = [
     url: "https://www.photoroom.com",
   },
   {
+    name: "Dotblocks",
+    logo: "/clients/dotblocks.png",
+    url: "https://dotblocks.com",
+  },
+  {
     name: "Axolo",
     logo: "/clients/axolo.png",
     url: "https://www.axolo.co",
@@ -128,7 +133,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-7">
             {clients.map((client) => (
               <div
                 key={client.name}
