@@ -22,7 +22,7 @@ const clients = [
     url: "https://www.photoroom.com",
   },
   {
-    name: "Dot Blocks",
+    name: "DotBlocks",
     logo: "/clients/dotblocks.png",
     url: "https://dotblocks.com",
   },
