@@ -102,7 +102,7 @@ export default function Home() {
                     <ContributeButton
                       org="getprobo"
                       repo="probo"
-                      defaultStars={140}
+                      defaultStars={183}
                     />
                     <motion.a
                       whileHover={{ scale: 1.05 }}
