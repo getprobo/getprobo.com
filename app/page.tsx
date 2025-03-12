@@ -7,11 +7,6 @@ import { Clock, SmilePlus, Award, DollarSign } from "lucide-react";
 
 const clients = [
   {
-    name: "Kor",
-    logo: "/clients/kor.png",
-    url: "https://www.kor.care",
-  },
-  {
     name: "Marble",
     logo: "/clients/marble.png",
     url: "https://www.checkmarble.com",
