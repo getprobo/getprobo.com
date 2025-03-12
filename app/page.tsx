@@ -128,7 +128,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-7">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
             {clients.map((client) => (
               <div
                 key={client.name}
