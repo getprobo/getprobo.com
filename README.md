@@ -53,7 +53,7 @@ NEXT_PUBLIC_POSTHOG_HOST=your_host
 4. Start the development server:
 
 ```bash
-npm run dev
+make dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
