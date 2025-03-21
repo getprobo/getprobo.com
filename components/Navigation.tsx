@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageSquare, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { SignInDropdown } from "./SignInDropdown";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,23 +25,14 @@ export function Navigation() {
             />
           </Link>
         </div>
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-4">
           <Link href="/about" className="text-white hover:text-[#D1FF4C]">
             About
           </Link>
           <Link href="/blog" className="text-white hover:text-[#D1FF4C]">
             Blog
           </Link>
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="https://hexacc.typeform.com/to/HEabWsbN"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#CEF521] text-black px-6 py-2 rounded-full font-medium hover:bg-[#B9DB21] transition-colors flex items-center gap-2"
-          >
-            Join the waitlist
-          </motion.a>
+          <SignInDropdown />
         </div>
         <button
           className="md:hidden text-white"
@@ -66,6 +58,7 @@ export function Navigation() {
           <Link href="/blog" className="text-white hover:text-[#D1FF4C]">
             Blog
           </Link>
+          <SignInDropdown />
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

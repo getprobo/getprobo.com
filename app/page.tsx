@@ -63,6 +63,7 @@ export default function Home() {
       >
         <div className="bg-[url(/bg-big.webp)] bg-cover bg-center bg-no-repeat overflow-hidden rounded-b-[2rem] min-h-[700px] md:min-h-[750px] ">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/10 to-transparent" />
+
           <div className="absolute sm:bottom-[-46px] bottom-[-30.5px] left-1/2 transform -translate-x-1/2 z-10">
             <motion.div variants={fadeIn}>
               <div className="bg-[url(/merkat.png)] bg-cover bg-center bg-no-repeat w-[200px] h-[190px] sm:w-[304px] sm:h-[288px]" />
@@ -85,7 +86,7 @@ export default function Home() {
                     variants={fadeIn}
                     className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto px-4 mb-20 md:mb-24"
                   >
-                    Don{"’"}t spend weeks negotiating a contract and wasting
+                    Don{"'"}t spend weeks negotiating a contract and wasting
                     time. Probo is open-source and built for startups — so you
                     can start for free, now.
                   </motion.p>
