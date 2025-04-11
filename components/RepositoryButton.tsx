@@ -37,7 +37,7 @@ export function RepositoryButton({
     <motion.a
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      href={`https://github.com/${org}/${repo}`}
+      href={`https://github.com/${org}/${repo}?ref=www.getprobo.com`}
       target="_blank"
       rel="noopener noreferrer"
       className="bg-[#4A5334] text-white px-8 py-3 rounded-full font-medium hover:bg-[#5a6340] transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
