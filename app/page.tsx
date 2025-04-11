@@ -204,19 +204,18 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="border border-[#52525B]/50 rounded-lg p-8 space-y-4">
+            <div className="bg-[#18181b] border border-[#52525B]/50 rounded-lg p-8 space-y-4">
               <div className="flex items-center justify-between gap-2">
                 <h4 className="text-2xl font-geist-alt">ISO 27001</h4>
-                <span className="text-sm bg-[#18181B] px-4 py-1 rounded-full">
-                  soon
-                </span>
               </div>
               <p className="text-gray-400">
                 Meet the global standard for information security management.
               </p>
               <a
-                href="#"
-                className="text-zinc-600 flex items-center pointer-events-none"
+                href="https://hexacc.typeform.com/to/HEabWsbN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-lime flex items-center hover:opacity-80"
               >
                 Book a demo →
               </a>
