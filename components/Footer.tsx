@@ -8,8 +8,9 @@ export function Footer() {
         <div className="flex flex-col items-center sm:items-start sm:flex-row justify-around">
           <div className="space-y-6">
             <div className="space-y-2">
-              <p className="text-sm">12 Rue Martel, Paris</p>
-              <p className="text-sm">France</p>
+              <p className="text-sm">490 Post St, Suite 640</p>
+              <p className="text-sm">San Francisco, CA 94102</p>
+              <p className="text-sm">United States</p>
             </div>
             <div className="text-sm">
               Backed by {"  "}
