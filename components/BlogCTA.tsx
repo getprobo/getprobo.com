@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ContributeButton } from "./ContributeButton";
+import { RepositoryButton } from "./RepositoryButton";
 
 export function BlogCTA() {
   return (
@@ -16,7 +16,7 @@ export function BlogCTA() {
           confidence.
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <ContributeButton org="getprobo" repo="probo" defaultStars={183} />
+          <RepositoryButton org="getprobo" repo="probo" defaultStars={292} />
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ContributeButton } from "@/components/ContributeButton";
+import { RepositoryButton } from "@/components/RepositoryButton";
 import { Clock, SmilePlus, Award, DollarSign } from "lucide-react";
 
 const clients = [
@@ -95,10 +95,10 @@ export default function Home() {
                     variants={fadeIn}
                     className="flex flex-col md:flex-row gap-4 justify-center items-center px-4"
                   >
-                    <ContributeButton
+                    <RepositoryButton
                       org="getprobo"
                       repo="probo"
-                      defaultStars={183}
+                      defaultStars={292}
                     />
                     <motion.a
                       whileHover={{ scale: 1.05 }}
