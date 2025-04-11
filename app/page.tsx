@@ -5,39 +5,6 @@ import Image from "next/image";
 import { RepositoryButton } from "@/components/RepositoryButton";
 import { Clock, SmilePlus, Award, DollarSign } from "lucide-react";
 
-const clients = [
-  {
-    name: "Marble",
-    logo: "/clients/marble.png",
-    url: "https://www.checkmarble.com",
-  },
-  {
-    name: "Photoroom",
-    logo: "/clients/photoroom.png",
-    url: "https://www.photoroom.com",
-  },
-  {
-    name: "DotBlocks",
-    logo: "/clients/dotblocks.png",
-    url: "https://dotblocks.com",
-  },
-  {
-    name: "Axolo",
-    logo: "/clients/axolo.png",
-    url: "https://www.axolo.co",
-  },
-  {
-    name: "Shipfox",
-    logo: "/clients/shipfox.png",
-    url: "https://www.shipfox.io",
-  },
-  {
-    name: "Deja Blue",
-    logo: "/clients/dejablue.png",
-    url: "https://www.dejablue.energy",
-  },
-];
-
 export default function Home() {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -117,48 +84,6 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.div>
-
-      <section className="bg-black px-4 py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center mb-12">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-[#CEF521]">
-              Trusted by innovative companies
-            </h2>
-            <p className="mt-2 text-lg text-gray-400">
-              Join the companies using Probo
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-6">
-            {clients.map((client) => (
-              <div
-                key={client.name}
-                className="flex items-center justify-center col-span-1 p-5 group relative"
-              >
-                <a
-                  href={client.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-opacity duration-200"
-                >
-                  <Image
-                    src={client.logo}
-                    alt={client.name}
-                    width={140}
-                    height={40}
-                    className="max-h-12 w-auto opacity-50 group-hover:opacity-100 transition-opacity invert brightness-0"
-                  />
-                  <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 md:opacity-0 group-hover:opacity-100 transition-opacity text-sm text-gray-400">
-                    {client.name}
-                  </span>
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="w-full h-[0.5px] bg-[#52525B]" />
 
       <section className="py-24">
         <div className="text-center mb-16">
