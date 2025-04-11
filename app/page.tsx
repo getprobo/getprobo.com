@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { RepositoryButton } from "@/components/RepositoryButton";
 import { Clock, SmilePlus, Award, DollarSign } from "lucide-react";
+import { JoinOurPrivateBetaButton } from "@/components/JoinOurPrivateBetaButton";
 
 export default function Home() {
   const fadeIn = {
@@ -67,16 +68,7 @@ export default function Home() {
                       repo="probo"
                       defaultStars={292}
                     />
-                    <motion.a
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      href="https://hexacc.typeform.com/to/HEabWsbN"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-[#CEF521] text-black px-8 py-3 rounded-full font-medium hover:bg-[#B9DB21] transition-colors w-full md:w-auto text-center"
-                    >
-                      Join the waitlist
-                    </motion.a>
+                    <JoinOurPrivateBetaButton />
                   </motion.div>
                 </div>
               </div>
@@ -165,16 +157,7 @@ export default function Home() {
         </div>
 
         <div className="flex justify-center mt-[5rem]">
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="https://hexacc.typeform.com/to/HEabWsbN"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#CEF521] text-black px-8 py-3 rounded-full font-medium hover:bg-[#B9DB21] transition-colors w-full md:w-auto text-center"
-          >
-            Join the waitlist
-          </motion.a>
+          <JoinOurPrivateBetaButton />
         </div>
       </section>
 
@@ -283,17 +266,7 @@ export default function Home() {
               <h1 className="text-5xl font-geist-alt max-w-3xl mb-12">
                 Compliance, made simple.
               </h1>
-
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="https://hexacc.typeform.com/to/HEabWsbN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-3 bg-lime text-black font-medium rounded-full hover:opacity-90 transition-opacity w-fit"
-              >
-                Join the waitlist
-              </motion.a>
+              <JoinOurPrivateBetaButton />
             </div>
 
             <div className="absolute bottom-0 right-0 bg-[url(/paw.png)] bg-cover bg-center bg-no-repeat w-[200px] hidden sm:block min-h-[200px] lg:w-[350px] lg:min-h-[350px]"></div>

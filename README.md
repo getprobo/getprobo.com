@@ -65,7 +65,7 @@ free to submit issues and pull requests.
 
 ## Stay Updated
 
-- Join the waitlist: [getprobo.com](https://www.getprobo.com)
+- Join our private beta: [getprobo.com](https://www.getprobo.com)
 - Follow us: [@getprobo](https://twitter.com/getprobo)
 - Join our Discord: [Probo Community](https://discord.gg/8qfdJYfvpY)
 - Main project: [github.com/getprobo/probo](https://github.com/getprobo/probo)

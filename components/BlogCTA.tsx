@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { RepositoryButton } from "./RepositoryButton";
+import { JoinOurPrivateBetaButton } from "./JoinOurPrivateBetaButton";
 
 export function BlogCTA() {
   return (
@@ -17,16 +17,7 @@ export function BlogCTA() {
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
           <RepositoryButton org="getprobo" repo="probo" defaultStars={292} />
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="https://hexacc.typeform.com/to/HEabWsbN"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#D1FF4C] text-black px-8 py-3 rounded-full font-medium hover:bg-[#bfff1a] transition-colors w-full md:w-auto text-center"
-          >
-            Join the waitlist
-          </motion.a>
+          <JoinOurPrivateBetaButton />
         </div>
       </div>
     </div>
