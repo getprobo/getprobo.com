@@ -102,6 +102,21 @@ export default function RootLayout({
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+	<script>
+	(function () {
+		var w = window;
+		var swan = (w.swan = w.swan || []);
+		if (swan.isLoaded) return;
+		swan.isLoaded = true;
+		swan.pk = 'cm9go0t8m0005l4053nfhk3ac';
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.async = true;
+		script.src = 'https://swan-scripts.s3.amazonaws.com/bundle.js';
+		var head = document.getElementsByTagName('head')[0];
+		head.appendChild(script);
+	})();
+	</script>
       </head>
       <body className={cn(inter.className, GeistSans.variable)}>
         <div className="min-h-screen bg-black flex flex-col">
