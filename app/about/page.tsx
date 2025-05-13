@@ -42,7 +42,7 @@ export default function AboutPage() {
               className="text-dark-900 font-light text-3xl"
               style={{ lineHeight: "50px" }}
             >
-              We're transforming compliance from a complex burden into an
+              We{"'"}re transforming compliance from a complex burden into an
               intuitive journey. <br />
               Our platform makes compliance straightforward and cost-effective,
               empowering businesses of all sizes to meet regulatory requirements
