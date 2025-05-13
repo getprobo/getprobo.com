@@ -50,7 +50,7 @@ function TailoredNotTemplated() {
   return (
     <div className="bg-white rounded-2xl w-full h-full p-5">
       <h3 className="uppercase text-sm font-medium text-dark-600 pb-4">
-        Your Customized checliskt
+        Your customized checklist
       </h3>
       <div className="flex flex-col gap-4">
         {customizedChecklist.map((item, index) => (
