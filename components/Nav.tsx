@@ -20,7 +20,7 @@ export function Nav() {
       </nav>
       <Link
         className="bg-dark-300 px-6 py-3 rounded-full flex gap-3 items-center text-dark-900 not-italic font-medium text-base md:invisible visible"
-        href="/"
+        href="https://hexacc.typeform.com/getstarted"
       >
         Get Started <ArrowRight />
       </Link>
