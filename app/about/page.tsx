@@ -36,8 +36,8 @@ export default function AboutPage() {
           Our mission
         </h2>
 
-        <div className="flex gap-12">
-          <div className="border border-dark-600 rounded-2xl p-12 max-w-[755px] h-[580px] flex items-center justify-center">
+        <div className="grid grid-cols-2 lg:grid-cols-1 gap-12">
+          <div className="border border-dark-600 rounded-2xl p-12 max-w-[755px] min-h-[580px] flex items-center justify-center">
             <p
               className="text-dark-900 font-light text-3xl"
               style={{ lineHeight: "50px" }}
@@ -50,7 +50,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="h-[580px] flex items-center justify-center bg-dark-900 rounded-2xl p-12">
+          <div className="min-h-[580px] flex items-center justify-center bg-dark-900 rounded-2xl p-12">
             <p className=" text-yellow font-light text-5xl text-center">
               Let us guide you toward effortless compliance management.
             </p>
@@ -63,7 +63,7 @@ export default function AboutPage() {
           Meet the team
         </h2>
 
-        <div className="flex gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-1 gap-12">
           <TeamMember
             name="Antoine Bouchardy"
             role="Co-founder & CEO"
