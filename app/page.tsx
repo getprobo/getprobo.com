@@ -48,7 +48,7 @@ function TailoredNotTemplated() {
   ];
 
   return (
-    <div className="bg-white rounded-2xl w-full h-full p-5">
+    <div className="bg-white rounded-2xl w-full h-full p-5 sm:px-2">
       <h3 className="uppercase text-sm font-medium text-dark-600 pb-4">
         Your customized checklist
       </h3>
@@ -271,11 +271,11 @@ function FeatureCard({
   return (
     <div>
       <div
-        className={`bg-dark-300 rounded-2xl w-[420px] h-[420px] mb-6 ${className}`}
+        className={`bg-dark-300 rounded-2xl max-w-[420px] h-[420px] mb-6 ${className}`}
       >
         {children}
       </div>
-      <div className="w-[420px] pr-6">
+      <div className="max-w-[420px] pr-6">
         <h3 className="text-dark-900 font-medium not-italic text-xl">
           {title}
         </h3>
@@ -361,7 +361,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
-      <Section className="bg-dark-50">
+      <Section className="bg-dark-50 sm:px-2">
         <h2 className="text-dark-900 font-normal text-5xl sm:text-4xl text-center not-italic">
           What sets Probo apart
         </h2>
@@ -388,7 +388,7 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <Link
-            className="bg-dark-900 px-6 py-3 font-normal text-yellow text-base rounded-full gap-2 items-center w-fit"
+            className="bg-dark-900 px-6 py-3 font-normal text-yellow text-base rounded-full gap-2 items-center w-fit flex"
             href="https://hexacc.typeform.com/getstarted"
           >
             Get Started <ArrowRightIcon className="w-4 h-4" />
