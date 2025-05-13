@@ -330,8 +330,10 @@ export default function Home() {
       <section className="my-4 py-32 flex justify-center flex-col items-center">
         <BackedBy />
         <div className="flex flex-col gap-2 text-6xl font-normal text-center mt-10 mb-10">
-          <p className="text-dark-900">Compliance for Startups</p>
-          <div className="text-dark-600 flex justify-center items-center">
+          <p className="text-dark-900 md:text-5xl sm:text-4xl">
+            Compliance for Startups
+          </p>
+          <div className="text-dark-600 md:text-5xl sm:text-4xl flex justify-center items-center">
             <TypewriterEffect
               words={[
                 "SOC 2",
@@ -361,10 +363,10 @@ export default function Home() {
         </div>
       </section>
       <Section className="bg-dark-50">
-        <h2 className="text-dark-900 font-normal text-5xl text-center not-italic">
+        <h2 className="text-dark-900 font-normal text-5xl sm:text-4xl text-center not-italic">
           What sets Probo apart
         </h2>
-        <div className="flex gap-6 mt-16 mb-16 justify-center">
+        <div className="grid grid-cols-3 xl:grid-cols-1 xl:place-items-center gap-4 mt-16 mb-16">
           <FeatureCard
             title="Tailored, not templated"
             description="No non-sense or fluff. We fit compliance to your business, not the other way."
@@ -387,7 +389,7 @@ export default function Home() {
         </div>
         <div className="flex justify-center">
           <Link
-            className="bg-dark-900 px-6 py-3 font-normal text-yellow text-base rounded-full flex gap-2 items-center w-fit"
+            className="bg-dark-900 px-6 py-3 font-normal text-yellow text-base rounded-full gap-2 items-center w-fit"
             href="https://hexacc.typeform.com/getstarted"
           >
             Get Started <ArrowRightIcon className="w-4 h-4" />
@@ -395,8 +397,11 @@ export default function Home() {
         </div>
       </Section>
       <Section className="bg-dark-900">
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-28 relative">
-          <div className="sticky top-10" style={{ height: "fit-content" }}>
+        <div className="grid grid-cols-[1fr_auto_1fr] lg:grid-cols-1 gap-28 relative">
+          <div
+            className="sticky lg:static top-10"
+            style={{ height: "fit-content" }}
+          >
             <h1 className="text-dark-50 font-light not-italic text-5xl mb-6">
               Keep working on your company. We do the compliance for you.
             </h1>
@@ -414,7 +419,8 @@ export default function Home() {
               Start <ArrowRightIcon className="w-4 h-4" />
             </Link>
           </div>
-          <div className="flex justify-center">
+
+          <div className="justify-center lg:invisible visible">
             <div className="relative flex flex-col items-center h-full">
               <div
                 className="w-0.5 h-full bg-dark-300"
@@ -468,7 +474,7 @@ export default function Home() {
           We designed Probo to help startups and small businesses where needed
         </p>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6">
           <BadgeCard
             icon="/badges/soc2.svg"
             description="Unlocks enterprise deals and accelerates sales cycles."
