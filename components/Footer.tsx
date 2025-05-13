@@ -24,23 +24,24 @@ export function Footer() {
       <div className="border-t border-solid border-1 border-[rgba(250,250,250,0.20)] my-20" />
 
       <div
-        className="flex justify-between items-start text-base not-italic font-light"
+        className="flex sm:flex-col justify-between items-start sm:items-center text-base not-italic font-light sm:gap-8"
         style={{ color: "rgba(250, 250, 250, 0.70)" }}
       >
-        <Image src="/probo-text.svg" alt="logo" width={191} height={80} />
-        <div className="grid grid-cols-2 gap-x-16">
+        <Image src="/probo-text.svg" alt="logo" width={191} height={80} className="sm:mb-8" />
+        <div className="grid grid-cols-2 gap-x-16 sm:w-full sm:text-center">
           <div className="flex flex-col gap-4">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
             <Link href="/blog">Blog</Link>
           </div>
-          <div className="flex flex-col gap-4 mr-20">
+          <div className="flex flex-col gap-4 mr-20 sm:mr-0">
             <Link href="/cookie-policy">Cookie Policy</Link>
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="/terms">Terms of Service</Link>
             <Link href="/subprocessors">Subprocessors</Link>
           </div>
         </div>
+        <Image src="/probo-text.svg" alt="logo" width={191} height={80} className="hidden sm:block mt-8" />
       </div>
     </footer>
   );
