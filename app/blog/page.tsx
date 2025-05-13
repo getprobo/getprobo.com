@@ -68,7 +68,7 @@ export default function BlogPage() {
         <h1 className="text-6xl font-light text-center mb-8">Blog</h1>
       </Section>
 
-      <div className="grid grid-cols-2 gap-6 mb-12 bg-dark-900 rounded-2xl p-12 text-white">
+      <div className="grid grid-cols-2 lg:grid-cols-1 gap-6 mb-12 bg-dark-900 rounded-2xl p-12 text-white">
         {posts.slice(0, 2).map((post, index) => (
           <ClientBlog key={post.slug} post={post} index={index} />
         ))}
@@ -77,7 +77,7 @@ export default function BlogPage() {
       {posts.slice(2).length > 0 && (
         <div className="bg-dark-50 rounded-2xl p-12">
           <h2 className="text-4xl font-light mb-8">Latest Posts</h2>
-          <div className="grid grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-3 lg:grid-cols-1 gap-6 mb-12">
             {posts.slice(2).map((post, index) => (
               <ClientBlog key={post.slug} post={post} index={index} />
             ))}
