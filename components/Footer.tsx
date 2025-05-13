@@ -41,7 +41,6 @@ export function Footer() {
             <Link href="/subprocessors">Subprocessors</Link>
           </div>
         </div>
-        <Image src="/probo-text.svg" alt="logo" width={191} height={80} className="hidden sm:block mt-8" />
       </div>
     </footer>
   );
