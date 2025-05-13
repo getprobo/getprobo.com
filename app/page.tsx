@@ -470,7 +470,7 @@ export default function Home() {
 
         <div className="grid grid-cols-3 gap-6">
           <BadgeCard
-            icon="/badges/SOC2.svg"
+            icon="/badges/soc2.svg"
             description="Unlocks enterprise deals and accelerates sales cycles."
           />
           <BadgeCard
