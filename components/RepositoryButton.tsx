@@ -21,7 +21,7 @@ export function RepositoryButton({
     async function fetchStars() {
       try {
         const response = await fetch(
-          `https://api.github.com/repos/${org}/${repo}`
+          `https://api.github.com/repos/${org}/${repo}`,
         );
         const data = await response.json();
         setStars(data.stargazers_count);

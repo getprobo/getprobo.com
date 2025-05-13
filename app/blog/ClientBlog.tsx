@@ -27,7 +27,7 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
             src={post.coverImage}
             alt={post.title}
             fill
-            className="object-cover border border-white/10 transition-transform duration-300 group-hover:scale-105"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
         <motion.div
@@ -35,7 +35,7 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
           initial={{ opacity: 0.8 }}
           whileHover={{ opacity: 1 }}
         >
-          <h2 className="text-lg font-geist-alt font-light mb-3 text-white">
+          <h2 className="text-lg font-geist-alt font-light mb-3">
             {post.title}
           </h2>
           <div className="flex items-center">
@@ -48,7 +48,7 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
             />
             <span className="text-sm">{post.author.name}</span>
             <span className="px-2 text-xs">•</span>
-            <div className="flex items-center text-sm text-zinc-400">
+            <div className="flex items-center text-sm">
               {new Date(post.date).toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",

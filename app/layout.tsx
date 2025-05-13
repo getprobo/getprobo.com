@@ -1,4 +1,4 @@
-import { Navigation } from "@/components/Navigation";
+import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -123,16 +123,16 @@ export default function RootLayout({
         />
       </head>
       <body className={cn(inter.className, GeistSans.variable)}>
-        <div className="min-h-screen bg-black flex flex-col">
-          <div className="max-w-[1250px] mx-auto w-full px-4">
-            <Navigation />
-            <main className="flex-grow">{children}</main>
+        <div className="w-full bg-dark-100">
+          <div className="w-full max-w-[1440px] mx-auto px-4">
+            <Nav />
+            <main>{children}</main>
             <Footer />
           </div>
-          <Suspense>
-            <Analytics />
-          </Suspense>
         </div>
+        <Suspense>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );

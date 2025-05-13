@@ -2,6 +2,7 @@ import { getAllPosts } from "@/lib/blog";
 import type { Metadata } from "next";
 import { ClientBlog } from "./ClientBlog";
 import siteConfig from "../metadata.config";
+import { Section } from "@/components/Section";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -57,35 +58,32 @@ export default function BlogPage() {
   };
 
   return (
-    <>
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="min-h-screen bg-black text-white p-6">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-light font-geist-alt mb-8">Blog</h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {posts.slice(0, 2).map((post, index) => (
+      <Section>
+        <h1 className="text-6xl font-light text-center mb-8">Blog</h1>
+      </Section>
+
+      <div className="grid grid-cols-2 gap-6 mb-12 bg-dark-900 rounded-2xl p-12 text-white">
+        {posts.slice(0, 2).map((post, index) => (
+          <ClientBlog key={post.slug} post={post} index={index} />
+        ))}
+      </div>
+
+      {posts.slice(2).length > 0 && (
+        <div className="bg-dark-50 rounded-2xl p-12">
+          <h2 className="text-4xl font-light mb-8">Latest Posts</h2>
+          <div className="grid grid-cols-3 gap-6 mb-12">
+            {posts.slice(2).map((post, index) => (
               <ClientBlog key={post.slug} post={post} index={index} />
             ))}
           </div>
-
-          {posts.slice(2).length > 0 && (
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-zinc-400">
-                Latest Posts
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {posts.slice(2).map((post, index) => (
-                  <ClientBlog key={post.slug} post={post} index={index + 2} />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }

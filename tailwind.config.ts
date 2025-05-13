@@ -8,6 +8,14 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      '2xl': {max: '1440px'},
+      'xl': {max: '1280px'},
+      'lg': {max: '1024px'},
+      'md': {max: '768px'},
+      'sm': {max: '640px'},
+      'xs': {max: '480px'},
+    },
     extend: {
       colors: {
         background: "hsl(var(--background))",
@@ -53,6 +61,16 @@ export default {
         lime: {
           DEFAULT: "#CEF521",
           hover: "#bfff1a",
+        },
+        yellow: {
+          DEFAULT: "#E6FF03",
+        },
+        dark: {
+          "50": "#FAFAFA",
+          "100": "#F1EFED",
+          "300": "#E4E2DD",
+          "600": "#6A7270",
+          "900": "#101E1C",
         },
       },
       borderRadius: {

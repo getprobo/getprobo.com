@@ -5,7 +5,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import type { Metadata } from "next";
 import type { BlogPost } from "@/lib/blog";
-import { BlogCTA } from "@/components/BlogCTA";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -93,7 +92,7 @@ export default async function BlogPost(props: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="min-h-screen bg-black text-white">
+      <div className="min-h-screen bg-dark-900 text-white rounded-2xl">
         <header className="container mx-auto px-4 pt-16">
           <div className="text-center">
             <time className="text-neutral-500 text-sm">
@@ -137,7 +136,6 @@ export default async function BlogPost(props: Props) {
           <div className="prose prose-invert max-w-none">
             <MDXRemote source={post.content} />
           </div>
-          <BlogCTA />
         </div>
       </div>
     </>

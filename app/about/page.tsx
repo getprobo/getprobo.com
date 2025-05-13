@@ -1,144 +1,84 @@
-"use client";
-
+import { Section } from "@/components/Section";
 import Image from "next/image";
-import { motion } from "framer-motion";
+
+function TeamMember({
+  name,
+  role,
+  image,
+  description,
+}: {
+  name: string;
+  role: string;
+  image: string;
+  description: string;
+}) {
+  return (
+    <div className="rounded-2xl bg-dark-100 p-12 flex flex-col gap-2">
+      <Image
+        src={image}
+        alt={name}
+        className="rounded-full"
+        width={100}
+        height={100}
+      />
+      <h2 className="text-dark-900 font-normal text-2xl">{name}</h2>
+      <h3 className="text-dark-900 font-light text-xl">{role}</h3>
+      <p className="text-dark-900 font-light text-xl">{description}</p>
+    </div>
+  );
+}
 
 export default function AboutPage() {
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 },
-  };
-
-  const staggerChildren = {
-    animate: {
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
   return (
     <div>
-      <div className="container mx-auto px-4 py-20">
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={staggerChildren}
-          className="max-w-4xl mx-auto"
-        >
-          <motion.section variants={fadeIn} className="mb-20">
-            <h1 className="text-4xl font-light font-geist-alt text-white mb-6">
-              Our Mission
-            </h1>
-            <p className="text-gray-200 text-lg leading-relaxed mb-6">
-              We{"'"}re transforming compliance from a complex burden into an
-              intuitive journey. Our platform makes compliance straightforward
-              and cost-effective, empowering businesses of all sizes to meet
-              regulatory requirements with confidence.
+      <Section>
+        <h2 className="text-dark-900 font-normal text-5xl text-center not-italic mb-16">
+          Our mission
+        </h2>
+
+        <div className="flex gap-12">
+          <div className="border border-dark-600 rounded-2xl p-12 max-w-[755px] h-[580px] flex items-center justify-center">
+            <p
+              className="text-dark-900 font-light text-3xl"
+              style={{ lineHeight: "50px" }}
+            >
+              We're transforming compliance from a complex burden into an
+              intuitive journey. <br />
+              Our platform makes compliance straightforward and cost-effective,
+              empowering businesses of all sizes to meet regulatory requirements
+              with confidence.
             </p>
-            <p className="text-gray-200 text-lg leading-relaxed">
+          </div>
+
+          <div className="h-[580px] flex items-center justify-center bg-dark-900 rounded-2xl p-12">
+            <p className=" text-yellow font-light text-5xl text-center">
               Let us guide you toward effortless compliance management.
             </p>
-          </motion.section>
+          </div>
+        </div>
+      </Section>
 
-          <motion.section variants={fadeIn} className="mb-20">
-            <h2 className="text-3xl font-light font-geist-alt text-white mb-8">
-              Meet the Team
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <motion.div
-                variants={fadeIn}
-                whileHover={{ scale: 1.02 }}
-                className="bg-[#1A1A1A] rounded-lg p-6"
-              >
-                <div className="mb-4">
-                  <Image
-                    src="/team/antoine.jpeg"
-                    alt="Antoine"
-                    width={80}
-                    height={80}
-                    className="rounded-full"
-                  />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">
-                  Antoine Bouchardy
-                </h3>
-                <p className="text-[#D1FF4C] mb-2">Co-founder & CEO</p>
-                <p className="text-gray-300">
-                  ISO 27001 auditor with experience in compliance assessment and
-                  implementation. Passionate about making compliance accessible
-                  and straightforward.
-                </p>
-              </motion.div>
+      <Section className="bg-dark-50">
+        <h2 className="text-dark-900 font-normal text-5xl text-center not-italic mb-16">
+          Meet the team
+        </h2>
 
-              <motion.div
-                variants={fadeIn}
-                whileHover={{ scale: 1.02 }}
-                className="bg-[#1A1A1A] rounded-lg p-6"
-              >
-                <div className="mb-4">
-                  <Image
-                    src="/team/bryan.jpeg"
-                    alt="Bryan"
-                    width={80}
-                    height={80}
-                    className="rounded-full"
-                  />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">
-                  Bryan Frimin
-                </h3>
-                <p className="text-[#D1FF4C] mb-2">Co-founder & CTO</p>
-                <p className="text-gray-300">
-                  YC alumnus and engineer who managed SOC2/ISO27001 compliance
-                  at his previous startup. Experienced in building scalable
-                  solutions for complex problems.
-                </p>
-              </motion.div>
-            </div>
-          </motion.section>
+        <div className="flex gap-12">
+          <TeamMember
+            name="Antoine Bouchardy"
+            role="Co-founder & CEO"
+            image="/team/antoine.jpeg"
+            description="ISO 27001 auditor with experience in compliance assessment and implementation. Passionate about making compliance accessible and straightforward."
+          />
 
-          <motion.section variants={fadeIn} className="mb-20">
-            <h2 className="text-3xl font-light font-geist-alt text-white mb-6">
-              Our Story
-            </h2>
-            <p className="text-gray-200 text-lg leading-relaxed">
-              Founded in Paris, Probo was born from frustration with the status
-              quo. Tired of expensive compliance tools with opaque pricing and
-              basic templates hidden behind sales calls, we built the
-              open-source solution we wished existed.
-            </p>
-          </motion.section>
-
-          <motion.section variants={fadeIn}>
-            <h2 className="text-3xl font-light font-geist-alt text-white mb-6">
-              Open Source First
-            </h2>
-            <p className="text-gray-200 text-lg leading-relaxed mb-6">
-              We believe in transparency and community-driven development. By
-              making Probo open-source, we{"'"}re ensuring that quality
-              compliance tools are accessible to everyone, not just those who
-              can afford expensive enterprise solutions.
-            </p>
-          </motion.section>
-        </motion.div>
-      </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2 }}
-      >
-        <Image
-          src="/merkat-bottom.webp"
-          alt="Probo mascot"
-          className="relative md:bottom-[-38px] bottom-[-12px] left-0"
-          width={1250}
-          height={200}
-          priority
-        />
-      </motion.div>
+          <TeamMember
+            name="Bryan Frimin"
+            role="Co-founder & CTO"
+            image="/team/bryan.jpeg"
+            description="YC alumnus and engineer who managed SOC2/ISO27001 compliance at his previous startup. Experienced in building scalable solutions for complex problems."
+          />
+        </div>
+      </Section>
     </div>
   );
 }

@@ -1,132 +1,44 @@
 import Link from "next/link";
-import { Twitter, Linkedin, MessageSquare, Github } from "lucide-react";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+
 export function Footer() {
   return (
-    <footer className="bg-black text-white py-16 border-t border-white/10">
-      <div className="mx-auto px-4">
-        <div className="flex flex-col items-center sm:items-start sm:flex-row justify-around">
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <p className="text-sm">490 Post St, Suite 640</p>
-              <p className="text-sm">San Francisco, CA 94102</p>
-              <p className="text-sm">United States</p>
-            </div>
-            <div className="text-sm">
-              Backed by {"  "}
-              <a
-                href="https://www.hexa.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/hexa.svg"
-                  alt="Hexa"
-                  width={20}
-                  height={20}
-                  className="inline-block"
-                />
-              </a>
-            </div>
+    <footer className="bg-dark-900 text-dark-100 py-20 px-12 rounded-tl-3xl rounded-tr-3xl mt-4">
+      <div className="flex justify-between items-center">
+        <p className="text-yellow text-5xl not-italic font-light">
+          Forget compliance,
+          <br />
+          focus on your business
+        </p>
+        <div className="self-end">
+          <Link
+            className="bg-yellow px-4 py-2 rounded-full flex gap-2 items-center text-dark-900"
+            href="https://hexacc.typeform.com/getstarted"
+          >
+            Start <ArrowRight />
+          </Link>
+        </div>
+      </div>
 
-            <div className="flex gap-4">
-              <Link
-                href="https://x.com/getprobo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#1DA1F2]"
-              >
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link
-                href="https://discord.gg/8qfdJYfvpY"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#7289DA]"
-              >
-                <MessageSquare className="h-5 w-5" />
-                <span className="sr-only">Discord</span>
-              </Link>
-              <Link
-                href="https://linkedin.com/company/getprobo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#0077B5]"
-              >
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
-              <Link
-                href="https://github.com/getprobo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#333]"
-              >
-                <Github className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
-              </Link>
-            </div>
+      <div className="border-t border-solid border-1 border-[rgba(250,250,250,0.20)] my-20" />
+
+      <div
+        className="flex justify-between items-start text-base not-italic font-light"
+        style={{ color: "rgba(250, 250, 250, 0.70)" }}
+      >
+        <Image src="/probo-text.svg" alt="logo" width={191} height={80} />
+        <div className="grid grid-cols-2 gap-x-16">
+          <div className="flex flex-col gap-4">
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/blog">Blog</Link>
           </div>
-
-          <div className="hidden sm:block">
-            <h2 className="font-semibold mb-4">Company</h2>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Blog
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="hidden sm:block">
-            <h2 className="font-semibold mb-4">Legal</h2>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/cookie-policy"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Cookie Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/subprocessors"
-                  className="text-gray-400 hover:text-[#D1FF4C] text-sm"
-                >
-                  Subprocessors
-                </Link>
-              </li>
-            </ul>
+          <div className="flex flex-col gap-4 mr-20">
+            <Link href="/cookie-policy">Cookie Policy</Link>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms of Service</Link>
+            <Link href="/subprocessors">Subprocessors</Link>
           </div>
         </div>
       </div>
