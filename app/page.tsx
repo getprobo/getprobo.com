@@ -269,7 +269,6 @@ function FeatureCard({
   className?: string;
 }) {
   return (
-    // TODO: move to grid
     <div>
       <div
         className={`bg-dark-300 rounded-2xl w-[420px] h-[420px] mb-6 ${className}`}

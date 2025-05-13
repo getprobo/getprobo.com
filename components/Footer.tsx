@@ -5,15 +5,15 @@ import { ArrowRight } from "lucide-react";
 export function Footer() {
   return (
     <footer className="bg-dark-900 text-dark-100 py-20 px-12 rounded-tl-3xl rounded-tr-3xl mt-4">
-      <div className="flex justify-between items-center">
-        <p className="text-yellow text-5xl not-italic font-light">
+      <div className="grid grid-cols-2 lg:grid-cols-1">
+        <p className="text-yellow text-5xl sm:text-4xl not-italic font-light">
           Forget compliance,
           <br />
           focus on your business
         </p>
-        <div className="self-end">
+        <div className="justify-self-end sm:mt-10 sm:justify-self-center">
           <Link
-            className="bg-yellow px-4 py-2 rounded-full flex gap-2 items-center text-dark-900"
+            className="bg-yellow w-fit px-4 py-2 rounded-full flex gap-2 items-center text-dark-900"
             href="https://hexacc.typeform.com/getstarted"
           >
             Start <ArrowRight />
