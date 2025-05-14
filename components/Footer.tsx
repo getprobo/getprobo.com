@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="bg-dark-900 text-dark-100 py-20 px-12 rounded-tl-3xl rounded-tr-3xl mt-4">
       <div className="grid grid-cols-2 lg:grid-cols-1">
-        <p className="text-yellow text-5xl sm:text-4xl not-italic font-light">
+        <p className="text-yellow text-5xl sm:text-3xl not-italic font-light">
           Forget compliance,
           <br />
           focus on your business
