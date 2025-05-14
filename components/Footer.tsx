@@ -33,6 +33,7 @@ export function Footer() {
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
             <Link href="/blog">Blog</Link>
+            <Link href="https://github.com/getprobo/probo">GitHub</Link>
           </div>
           <div className="flex flex-col gap-4 mr-20 sm:mr-0">
             <Link href="/cookie-policy">Cookie Policy</Link>
