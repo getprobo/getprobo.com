@@ -174,7 +174,7 @@ function Transparency() {
     async function fetchStars() {
       try {
         const response = await fetch(
-          "https://api.github.com/repos/getprobo/probo",
+          "https://api.github.com/repos/getprobo/probo"
         );
         const data = await response.json();
         setStarsCount(data.stargazers_count);
@@ -188,21 +188,25 @@ function Transparency() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-4">
-      <Image
-        src="/logo-github-invertocat.svg"
-        alt="github"
-        width={150}
-        height={150}
-        style={{ width: "150px", height: "150px" }}
-      />
-      <div className="flex bg-black rounded-full px-3 py-2 text-white not-italic font-normal text-sm">
-        <div className="flex items-center gap-2">
-          Repository{" "}
-          <div className="flex items-center gap-1 text-black bg-yellow rounded-full px-2 py-1">
-            {starsCount} <Star className="w-4 h-4" />
-          </div>{" "}
+      <Link href="https://github.com/getprobo/probo">
+        <Image
+          src="/logo-github-invertocat.svg"
+          alt="github"
+          width={150}
+          height={150}
+          style={{ width: "150px", height: "150px" }}
+        />
+      </Link>
+      <Link href="https://github.com/getprobo/probo">
+        <div className="flex bg-black rounded-full px-3 py-2 text-white not-italic font-normal text-sm">
+          <div className="flex items-center gap-2">
+            Repository{" "}
+            <div className="flex items-center gap-1 text-black bg-yellow rounded-full px-2 py-1">
+              {starsCount} <Star className="w-4 h-4" />
+            </div>{" "}
+          </div>
         </div>
-      </div>
+      </Link>
       <div className="flex items-center gap-2 bg-white py-4 pr-6 pl-4 rounded-2xl shadow-xl w-[340px]">
         <Database className="w-4 h-4" />
         <p className="text-black font-medium text-base not-italic">
