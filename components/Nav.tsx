@@ -18,6 +18,7 @@ export function Nav() {
         <Link href="/">Home</Link>
         <Link href="/about">About</Link>
         <Link href="/blog">Blog</Link>
+        <Link href="https://github.com/getprobo/probo">GitHub</Link>
       </nav>
       <Link
         className="bg-dark-300 px-6 py-3 rounded-full flex gap-3 items-center text-dark-900 not-italic font-medium text-base w-fit justify-self-end visible md:invisible"
