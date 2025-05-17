@@ -1,15 +1,10 @@
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import siteConfig from "./metadata.config";
 import { Analytics } from "@/components/Analytics";
 import { Suspense } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -104,17 +99,16 @@ export default function RootLayout({
         />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={cn(inter.className, GeistSans.variable)}>
-        <div className="w-full bg-dark-100">
-          <div className="w-full max-w-[1440px] mx-auto px-4">
+      <body>
+        <div className="bg-dark-100 w-full">
+          <div className="mx-auto w-full max-w-[1440px] px-4">
             <Nav />
             <main>{children}</main>
             <Footer />
           </div>
         </div>
-        <Suspense>
-          <Analytics />
-        </Suspense>
+
+        <Analytics />
       </body>
     </html>
   );

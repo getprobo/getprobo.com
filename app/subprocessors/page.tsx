@@ -19,7 +19,7 @@ export default function SubprocessorsPage() {
   return (
     <Section className="bg-dark-50">
       <div className="mb-20">
-        <h2 className="text-dark-900 font-normal text-5xl text-center not-italic mb-16">
+        <h2 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
           Subprocessors
         </h2>
         <p className="text-dark-900 text-center">
@@ -28,7 +28,7 @@ export default function SubprocessorsPage() {
       </div>
 
       <section className="mb-10">
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           Probo uses certain subprocessors to assist in providing our services.
           A subprocessor is a third party data processor who has or potentially
           will have access to or process Service Data (which may contain
@@ -37,19 +37,19 @@ export default function SubprocessorsPage() {
         </p>
 
         <div className="mt-8 overflow-x-auto">
-          <table className="w-full border-collapse bg-dark-900 rounded-2xl overflow-hidden">
+          <table className="bg-dark-900 w-full border-collapse overflow-hidden rounded-2xl">
             <thead>
-              <tr className="text-dark-50 border-b border-dark-700">
-                <th className="py-3 px-4 text-left font-normal text-xl">
+              <tr className="text-dark-50 border-dark-700 border-b">
+                <th className="px-4 py-3 text-left text-xl font-normal">
                   Name
                 </th>
-                <th className="py-3 px-4 text-left font-normal text-xl">
+                <th className="px-4 py-3 text-left text-xl font-normal">
                   Purpose
                 </th>
-                <th className="py-3 px-4 text-left font-normal text-xl">
+                <th className="px-4 py-3 text-left text-xl font-normal">
                   Location
                 </th>
-                <th className="py-3 px-4 text-left font-normal text-xl">
+                <th className="px-4 py-3 text-left text-xl font-normal">
                   Privacy Policy
                 </th>
               </tr>
@@ -58,12 +58,12 @@ export default function SubprocessorsPage() {
               {subprocessors.map((processor, idx) => (
                 <tr
                   key={processor.name}
-                  className={`text-dark-50 ${idx < subprocessors.length - 1 ? "border-b border-dark-700" : ""}`}
+                  className={`text-dark-50 ${idx < subprocessors.length - 1 ? "border-dark-700 border-b" : ""}`}
                 >
-                  <td className="py-3 px-4 font-medium">{processor.name}</td>
-                  <td className="py-3 px-4 font-light">{processor.purpose}</td>
-                  <td className="py-3 px-4 font-light">{processor.location}</td>
-                  <td className="py-3 px-4">
+                  <td className="px-4 py-3 font-medium">{processor.name}</td>
+                  <td className="px-4 py-3 font-light">{processor.purpose}</td>
+                  <td className="px-4 py-3 font-light">{processor.location}</td>
+                  <td className="px-4 py-3">
                     <a
                       href={processor.link}
                       target="_blank"
@@ -81,10 +81,10 @@ export default function SubprocessorsPage() {
       </section>
 
       <section className="mb-10">
-        <h2 className="text-dark-900 font-normal text-3xl not-italic mb-4">
+        <h2 className="text-dark-900 mb-4 text-3xl font-normal not-italic">
           Updates to this List
         </h2>
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           We may update this list from time to time as our business needs change
           and as we engage new subprocessors or terminate existing ones. We will
           post any such updates here. If you have questions about our
@@ -97,10 +97,10 @@ export default function SubprocessorsPage() {
       </section>
 
       <section className="mb-10">
-        <h2 className="text-dark-900 font-normal text-3xl not-italic mb-4">
+        <h2 className="text-dark-900 mb-4 text-3xl font-normal not-italic">
           Security and Compliance
         </h2>
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           We carefully review the security and privacy practices of
           subprocessors we engage to ensure they provide a level of security and
           privacy appropriate to their access to data and the scope of the

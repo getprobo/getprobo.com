@@ -43,7 +43,7 @@ export function SignInDropdown() {
       </button>
 
       <div
-        className={`absolute right-0 mt-2 w-64 p-0 border-0 bg-[#212121] backdrop-blur-sm shadow-lg rounded-md z-10 
+        className={`absolute right-0 mt-2 w-64 p-0 border-0 bg-[#212121] backdrop-blur-xs shadow-lg rounded-md z-10 
                     transition-all duration-200 ease-in-out transform origin-top-right
                     ${
                       isHovering

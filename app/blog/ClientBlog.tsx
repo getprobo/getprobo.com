@@ -19,10 +19,10 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
       variants={fadeIn}
-      className="group relative overflow-hidden rounded-lg block"
+      className="group relative block overflow-hidden rounded-lg"
     >
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="aspect-[16/9] relative overflow-hidden rounded-lg">
+        <div className="relative aspect-video overflow-hidden rounded-lg">
           <Image
             src={post.coverImage}
             alt={post.title}
@@ -35,7 +35,7 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
           initial={{ opacity: 0.8 }}
           whileHover={{ opacity: 1 }}
         >
-          <h2 className="text-lg font-geist-alt font-light mb-3">
+          <h2 className="font-geist-alt mb-3 text-lg font-light">
             {post.title}
           </h2>
           <div className="flex items-center">
@@ -44,7 +44,7 @@ export function ClientBlog({ post }: { post: BlogPost; index: number }) {
               alt={post.author.name}
               width={20}
               height={20}
-              className="rounded-full mr-2"
+              className="mr-2 rounded-full"
             />
             <span className="text-sm">{post.author.name}</span>
             <span className="px-2 text-xs">•</span>

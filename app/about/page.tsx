@@ -13,7 +13,7 @@ function TeamMember({
   description: string;
 }) {
   return (
-    <div className="rounded-2xl bg-dark-100 p-12 flex flex-col gap-2">
+    <div className="bg-dark-100 flex flex-col gap-2 rounded-2xl p-12">
       <Image
         src={image}
         alt={name}
@@ -21,9 +21,9 @@ function TeamMember({
         width={100}
         height={100}
       />
-      <h2 className="text-dark-900 font-normal text-2xl">{name}</h2>
-      <h3 className="text-dark-900 font-light text-xl">{role}</h3>
-      <p className="text-dark-900 font-light text-xl">{description}</p>
+      <h2 className="text-dark-900 text-2xl font-normal">{name}</h2>
+      <h3 className="text-dark-900 text-xl font-light">{role}</h3>
+      <p className="text-dark-900 text-xl font-light">{description}</p>
     </div>
   );
 }
@@ -32,14 +32,14 @@ export default function AboutPage() {
   return (
     <div>
       <Section>
-        <h2 className="text-dark-900 font-normal text-5xl text-center not-italic mb-16">
+        <h2 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
           Our mission
         </h2>
 
-        <div className="grid grid-cols-2 lg:grid-cols-1 gap-12">
-          <div className="border border-dark-600 rounded-2xl p-12 max-w-[755px] min-h-[580px] flex items-center justify-center">
+        <div className="grid grid-cols-2 gap-12 lg:grid-cols-1">
+          <div className="border-dark-600 flex min-h-[580px] max-w-[755px] items-center justify-center rounded-2xl border p-12">
             <p
-              className="text-dark-900 font-light text-3xl"
+              className="text-dark-900 text-3xl font-light"
               style={{ lineHeight: "50px" }}
             >
               We{"'"}re transforming compliance from a complex burden into an
@@ -50,8 +50,8 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="min-h-[580px] flex items-center justify-center bg-dark-900 rounded-2xl p-12">
-            <p className=" text-yellow font-light text-5xl text-center">
+          <div className="bg-dark-900 flex min-h-[580px] items-center justify-center rounded-2xl p-12">
+            <p className="text-yellow text-center text-5xl font-light">
               Let us guide you toward effortless compliance management.
             </p>
           </div>
@@ -59,11 +59,11 @@ export default function AboutPage() {
       </Section>
 
       <Section className="bg-dark-50">
-        <h2 className="text-dark-900 font-normal text-5xl text-center not-italic mb-16">
+        <h2 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
           Meet the team
         </h2>
 
-        <div className="grid grid-cols-2 lg:grid-cols-1 gap-12">
+        <div className="grid grid-cols-2 gap-12 lg:grid-cols-1">
           <TeamMember
             name="Antoine Bouchardy"
             role="Co-founder & CEO"

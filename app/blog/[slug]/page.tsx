@@ -92,21 +92,21 @@ export default async function BlogPost(props: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="min-h-screen bg-dark-900 text-white rounded-2xl">
+      <div className="bg-dark-900 min-h-screen rounded-2xl text-white">
         <header className="container mx-auto px-4 pt-16">
           <div className="text-center">
-            <time className="text-neutral-500 text-sm">
+            <time className="text-sm text-neutral-500">
               {new Date(post.date).toLocaleDateString("en-US", {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
               })}
             </time>
-            <h1 className="mt-8 text-4xl font-geist-alt md:text-5xl">
+            <h1 className="font-geist-alt mt-8 text-4xl md:text-5xl">
               {post.title}
             </h1>
             <p className="mt-2 text-neutral-400">{post.excerpt}</p>
-            <div className="flex items-center gap-2 justify-center mt-10">
+            <div className="mt-10 flex items-center justify-center gap-2">
               <Image
                 src={post.author.image}
                 alt={post.author.name}
@@ -119,20 +119,20 @@ export default async function BlogPost(props: Props) {
           </div>
         </header>
 
-        <section className="relative h-[500px] my-16 flex items-center justify-center overflow-hidden">
-          <div className="absolute w-[300px] h-[300px] rounded-full bg-white/5 blur-[100px]" />
-          <div className="relative z-10 w-full h-full">
+        <section className="relative my-16 flex h-[500px] items-center justify-center overflow-hidden">
+          <div className="absolute h-[300px] w-[300px] rounded-full bg-white/5 blur-[100px]" />
+          <div className="relative z-10 h-full w-full">
             <Image
               src={post.coverImage}
               alt={post.title}
               fill
               priority
-              className="object-cover border border-white/20 rounded-lg w-full h-full"
+              className="h-full w-full rounded-lg border border-white/20 object-cover"
             />
           </div>
         </section>
 
-        <div className="container mx-auto px-4 max-w-3xl space-y-24 pb-24">
+        <div className="container mx-auto max-w-3xl space-y-24 px-4 pb-24">
           <div className="prose prose-invert max-w-none">
             <MDXRemote source={post.content} />
           </div>

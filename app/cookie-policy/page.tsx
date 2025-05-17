@@ -36,7 +36,7 @@ export default function CookiePolicyPage() {
   return (
     <Section className="bg-dark-50">
       <div className="mb-20">
-        <h2 className="text-dark-900 font-normal text-5xl text-center not-italic mb-16">
+        <h2 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
           Cookie Policy
         </h2>
         <p className="text-dark-900 text-center">
@@ -45,10 +45,10 @@ export default function CookiePolicyPage() {
       </div>
 
       <section className="mb-10">
-        <h2 className="text-dark-900 font-normal text-3xl not-italic mb-4">
+        <h2 className="text-dark-900 mb-4 text-3xl font-normal not-italic">
           What are Cookies?
         </h2>
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           Cookies are small text files that are placed on your computer or
           mobile device when you visit a website. They are widely used to make
           websites work more efficiently and provide a better browsing
@@ -58,10 +58,10 @@ export default function CookiePolicyPage() {
       </section>
 
       <section>
-        <h2 className="text-dark-900 font-normal text-3xl not-italic mb-4">
+        <h2 className="text-dark-900 mb-4 text-3xl font-normal not-italic">
           How We Use Cookies
         </h2>
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           We use cookies for several purposes, including to provide essential
           website functionality, improve website performance, and offer you a
           better browsing experience. Here&apos;s an overview of the types of
@@ -71,23 +71,23 @@ export default function CookiePolicyPage() {
         <div className="mt-8 space-y-12">
           {cookieTypes.map((type) => (
             <div key={type.name}>
-              <h3 className="text-dark-900 font-normal text-3xl not-italic mb-4">
+              <h3 className="text-dark-900 mb-4 text-3xl font-normal not-italic">
                 {type.name}
               </h3>
-              <p className="mb-4 text-dark-900 font-light text-xl">
+              <p className="text-dark-900 mb-4 text-xl font-light">
                 {type.description}
               </p>
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse bg-dark-900 rounded-2xl overflow-hidden">
+                <table className="bg-dark-900 w-full border-collapse overflow-hidden rounded-2xl">
                   <thead>
-                    <tr className="text-dark-50 border-b border-dark-700">
-                      <th className="py-3 px-4 text-left font-normal text-xl">
+                    <tr className="text-dark-50 border-dark-700 border-b">
+                      <th className="px-4 py-3 text-left text-xl font-normal">
                         Cookie Name
                       </th>
-                      <th className="py-3 px-4 text-left font-normal text-xl">
+                      <th className="px-4 py-3 text-left text-xl font-normal">
                         Purpose
                       </th>
-                      <th className="py-3 px-4 text-left font-normal text-xl">
+                      <th className="px-4 py-3 text-left text-xl font-normal">
                         Duration
                       </th>
                     </tr>
@@ -96,13 +96,13 @@ export default function CookiePolicyPage() {
                     {type.examples.map((cookie, idx) => (
                       <tr
                         key={cookie.name}
-                        className={`text-dark-50 ${idx < type.examples.length - 1 ? "border-b border-dark-700" : ""}`}
+                        className={`text-dark-50 ${idx < type.examples.length - 1 ? "border-dark-700 border-b" : ""}`}
                       >
-                        <td className="py-3 px-4 font-medium">{cookie.name}</td>
-                        <td className="py-3 px-4 font-light">
+                        <td className="px-4 py-3 font-medium">{cookie.name}</td>
+                        <td className="px-4 py-3 font-light">
                           {cookie.purpose}
                         </td>
-                        <td className="py-3 px-4 font-light">
+                        <td className="px-4 py-3 font-light">
                           {cookie.duration}
                         </td>
                       </tr>
@@ -116,10 +116,10 @@ export default function CookiePolicyPage() {
       </section>
 
       <section className="mb-10">
-        <h2 className="text-dark-900 font-normal text-3xl not-italic mb-4">
+        <h2 className="text-dark-900 mb-4 text-3xl font-normal not-italic">
           Managing Cookies
         </h2>
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           Most web browsers allow you to control cookies through their settings
           preferences. However, if you limit the ability of websites to set
           cookies, you may worsen your overall user experience, as it will no
@@ -129,16 +129,16 @@ export default function CookiePolicyPage() {
       </section>
 
       <section className="mb-10">
-        <h2 className="text-dark-900 font-normal text-3xl not-italic mb-4">
+        <h2 className="text-dark-900 mb-4 text-3xl font-normal not-italic">
           Updates to This Policy
         </h2>
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           We may update this Cookie Policy from time to time in order to reflect
           changes to the cookies we use or for other operational, legal, or
           regulatory reasons. Please re-visit this Cookie Policy regularly to
           stay informed about our use of cookies and related technologies.
         </p>
-        <p className="text-dark-900 font-light text-xl">
+        <p className="text-dark-900 text-xl font-light">
           If you have any questions about our use of cookies or other
           technologies, please email us at{" "}
           <a className="text-dark-900" href="mailto:privacy@getprobo.com">

@@ -15,9 +15,9 @@ export default function NotFound() {
   }, [pathname, router]);
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center bg-black text-white">
       <div className="text-center">
-        <h1 className="text-4xl font-geist-alt mb-4">Page Not Found</h1>
+        <h1 className="font-geist-alt mb-4 text-4xl">Page Not Found</h1>
         <p className="text-gray-400">
           The page you{"'"}re looking for doesn{"'"}t exist.
         </p>

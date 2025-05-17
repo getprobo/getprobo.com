@@ -21,7 +21,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-solid border-1 border-[rgba(250,250,250,0.20)] my-20" />
+      <div className="border-t border-solid border border-[rgba(250,250,250,0.20)] my-20" />
 
       <div
         className="flex sm:flex-col justify-between items-start sm:items-center text-base not-italic font-light sm:gap-8"
