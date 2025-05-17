@@ -64,9 +64,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-site-verification",
-  },
 };
 
 export default function RootLayout({
