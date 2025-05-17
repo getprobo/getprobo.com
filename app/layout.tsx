@@ -97,12 +97,10 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
-        <div className="bg-dark-100 w-full">
-          <div className="mx-auto w-full max-w-[1440px] px-4">
-            <Nav />
-            <main>{children}</main>
-            <Footer />
-          </div>
+        <div className="bg-dark-100 px-2">
+          {/* <Nav /> */}
+          {/* <main>{children}</main> */}
+          <Footer />
         </div>
 
         <Analytics />

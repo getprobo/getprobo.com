@@ -4,43 +4,34 @@ import { ArrowRight } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-dark-900 text-dark-100 py-20 px-12 rounded-tl-3xl rounded-tr-3xl mt-4">
-      <div className="grid grid-cols-2 lg:grid-cols-1">
-        <p className="text-yellow text-5xl sm:text-3xl not-italic font-light">
-          Forget compliance,
-          <br />
-          focus on your business
-        </p>
-        <div className="justify-self-end sm:mt-10 sm:justify-self-center">
-          <Link
-            className="bg-yellow w-fit px-4 py-2 rounded-full flex gap-2 items-center text-dark-900"
-            href="https://hexacc.typeform.com/getstarted"
-          >
-            Start <ArrowRight />
-          </Link>
+    <footer className="bg-dark-900 grid gap-20 rounded-tl-3xl rounded-tr-3xl px-5 py-20">
+      <div className="grid gap-20 md:grid-cols-2 md:gap-0">
+        <div className="text-3xl leading-15 font-normal text-yellow-400 not-italic md:text-5xl">
+          <span className="block whitespace-nowrap">Forget compliance,</span>
+          <span className="whitespace-nowrap">focus on your business</span>
         </div>
+
+        <Link
+          className="text-dark-900 mx-auto flex min-w-[255px] items-center justify-center gap-3 rounded-full bg-yellow-400 px-6 py-5 text-base leading-5 font-semibold md:mx-0 md:w-fit md:min-w-[115px] md:self-end md:justify-self-end"
+          href="https://hexacc.typeform.com/getstarted"
+        >
+          Start <ArrowRight height={16} width={16} />
+        </Link>
       </div>
 
-      <div className="border-t border-solid border border-[rgba(250,250,250,0.20)] my-20" />
+      <div className="border-dark-600 border border-solid" />
 
-      <div
-        className="flex sm:flex-col justify-between items-start sm:items-center text-base not-italic font-light sm:gap-8"
-        style={{ color: "rgba(250, 250, 250, 0.70)" }}
-      >
-        <Image src="/probo-text.svg" alt="logo" width={191} height={80} className="sm:mb-8" />
-        <div className="grid grid-cols-2 gap-x-16 sm:w-full sm:text-center">
-          <div className="flex flex-col gap-4">
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/blog">Blog</Link>
-            <Link href="https://github.com/getprobo/probo">GitHub</Link>
-          </div>
-          <div className="flex flex-col gap-4 mr-20 sm:mr-0">
-            <Link href="/cookie-policy">Cookie Policy</Link>
-            <Link href="/privacy">Privacy Policy</Link>
-            <Link href="/terms">Terms of Service</Link>
-            <Link href="/subprocessors">Subprocessors</Link>
-          </div>
+      <div className="grid gap-12 md:grid-cols-2 md:gap-0">
+        <Image src="/probo-text.svg" alt="logo" width={191} height={80} />
+        <div className="text-dark-400 grid gap-6 text-base md:mr-30 md:grid-flow-col md:grid-cols-2 md:grid-rows-4 md:justify-self-end">
+          <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
+          <Link href="/blog">Blog</Link>
+          <Link href="https://github.com/getprobo/probo">GitHub</Link>
+          <Link href="/cookie-policy">Cookie Policy</Link>
+          <Link href="/privacy">Privacy Policy</Link>
+          <Link href="/terms">Terms of Service</Link>
+          <Link href="/subprocessors">Subprocessors</Link>
         </div>
       </div>
     </footer>

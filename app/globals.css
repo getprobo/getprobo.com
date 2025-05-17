@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+    --color-dark-50: #FAFAFA;
+    --color-dark-100: #F1EFED;
+    --color-dark-300: #E4E2DD;
+    --color-dark-400: #A0A4A3;
+    --color-dark-600: #6A7270;
+    --color-dark-900: #101E1C;
+
+    --color-yellow-400: #E6FF03;
+
+    --breakpoint-md: 51rem;
+}
