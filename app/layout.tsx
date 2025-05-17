@@ -82,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="canonical" href={siteConfig.url} />
         <link rel="icon" href="/favicon.ico" />
         <link
@@ -103,25 +103,6 @@ export default function RootLayout({
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function () {
-              var w = window;
-              var swan = (w.swan = w.swan || []);
-              if (swan.isLoaded) return;
-              swan.isLoaded = true;
-              swan.pk = 'cm9go0t8m0005l4053nfhk3ac';
-              var script = document.createElement('script');
-              script.type = 'text/javascript';
-              script.async = true;
-              script.src = 'https://swan-scripts.s3.amazonaws.com/bundle.js';
-              var head = document.getElementsByTagName('head')[0];
-              head.appendChild(script);
-            })();
-            `,
-          }}
-        />
       </head>
       <body className={cn(inter.className, GeistSans.variable)}>
         <div className="w-full bg-dark-100">
