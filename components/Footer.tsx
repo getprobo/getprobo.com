@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-dark-900 grid gap-20 rounded-tl-3xl rounded-tr-3xl px-5 py-20">
+    <footer className="bg-dark-900 grid gap-20 rounded-tl-3xl rounded-tr-3xl px-5 py-20 md:px-12">
       <div className="grid gap-20 md:grid-cols-2 md:gap-0">
         <div className="text-3xl leading-15 font-normal text-yellow-400 not-italic md:text-5xl">
           <span className="block whitespace-nowrap">Forget compliance,</span>
