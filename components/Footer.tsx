@@ -12,7 +12,7 @@ export function Footer() {
         </div>
 
         <Link
-          className="text-dark-900 mx-auto flex min-w-[255px] items-center justify-center gap-3 rounded-full bg-yellow-400 px-6 py-5 text-base leading-5 font-semibold md:mx-0 md:w-fit md:min-w-[115px] md:self-end md:justify-self-end"
+          className="text-dark-900 mx-auto flex min-w-[255px] items-center justify-center gap-3 rounded-full bg-yellow-400 px-6 py-5 text-base leading-[100%] font-semibold md:mx-0 md:w-fit md:min-w-[115px] md:self-end md:justify-self-end"
           href="https://hexacc.typeform.com/getstarted"
         >
           Start <ArrowRight height={16} width={16} />

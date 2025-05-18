@@ -29,7 +29,7 @@ export function Nav() {
         <div className="flex items-center gap-4">
           <Link
             href="https://hexacc.typeform.com/getstarted"
-            className="text-dark-900 bg-dark-300 hidden w-fit rounded-full px-6 py-5 text-base leading-tight font-semibold md:flex md:items-center md:gap-2.5"
+            className="text-dark-900 bg-dark-300 hidden w-fit rounded-full px-6 py-5 text-base leading-[100%] font-semibold md:flex md:items-center md:gap-2.5"
           >
             Get started <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
           </Link>
