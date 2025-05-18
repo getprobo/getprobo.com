@@ -12,6 +12,7 @@
     --color-yellow-400: #E6FF03;
 
     --breakpoint-md: 51rem;
+    --breakpoint-lg: 80rem;
 }
 
 :root {
