@@ -99,7 +99,7 @@ export default function RootLayout({
       <body>
         <div className="bg-dark-100 px-2">
           {/* <Nav /> */}
-          {/* <main>{children}</main> */}
+          <main>{children}</main>
           <Footer />
         </div>
 
