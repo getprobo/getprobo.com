@@ -19,7 +19,7 @@ export function Footer() {
         </Link>
       </div>
 
-      <div className="border-dark-600 border border-solid" />
+      <div className="bg-dark-600 h-px w-full" />
 
       <div className="grid gap-12 md:grid-cols-2 md:gap-0">
         <Image src="/probo-text.svg" alt="logo" width={191} height={80} />
