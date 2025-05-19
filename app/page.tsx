@@ -447,8 +447,9 @@ export default function Home() {
           className="pointer-events-none absolute h-0 w-0 opacity-0 lg:pointer-events-auto lg:relative lg:h-auto lg:w-auto lg:opacity-100"
         ></div>
         <Image
-          src="/hero.png"
+          src="/hero.webp"
           alt="hero image"
+          priority
           width={320}
           height={320}
           className="h-80 w-80 rounded-[20px] object-cover md:h-125 md:w-125 lg:h-150 lg:w-225"
