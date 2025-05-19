@@ -14,76 +14,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Section } from "@/components/Section";
 import { TypewriterEffect } from "@/components/TypewriterEffect";
 import { useEffect, useState } from "react";
-
-function TailoredNotTemplated() {
-  const customizedChecklist = [
-    {
-      checked: true,
-      description: "List all your computers",
-      person: "/people/person-1.png",
-    },
-    {
-      checked: true,
-      description: "Grant access only when necessary",
-      person: "/people/person-2.png",
-    },
-    {
-      checked: false,
-      description: "Enforce 2FA on all your tools",
-      person: "/people/person-3.png",
-    },
-    {
-      checked: false,
-      description: "Encrypt data at rest",
-      person: "/people/person-4.png",
-    },
-    {
-      checked: false,
-      description: "Test before pushing to production",
-      person: "/people/person-5.png",
-    },
-  ];
-
-  return (
-    <div className="h-full w-full rounded-2xl bg-white p-5 sm:px-2">
-      <h3 className="text-dark-600 pb-4 text-sm font-medium uppercase">
-        Your customized checklist
-      </h3>
-      <div className="flex flex-col gap-4">
-        {customizedChecklist.map((item, index) => (
-          <div className="flex items-center justify-between" key={index}>
-            <div className="flex items-center gap-2">
-              <div
-                className={`flex h-5 w-5 items-center justify-center rounded-full ${
-                  item.checked ? "bg-dark-900" : "border-dark-400 border"
-                }`}
-              >
-                {item.checked && <Check className="h-3 w-3 text-white" />}
-              </div>
-              <p
-                className={`text-dark-600 text-sm ${
-                  item.checked ? "decoration-dark-600 line-through" : ""
-                }`}
-              >
-                {item.description}
-              </p>
-            </div>
-            <Image
-              src={item.person}
-              alt="icon-1"
-              width={24}
-              height={24}
-              style={{ width: "auto", height: "auto" }}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function HandsOff() {
   return (
@@ -167,8 +99,105 @@ function HandsOff() {
   );
 }
 
-function Transparency() {
-  const [starsCount, setStarsCount] = useState(360);
+const steps = [
+  {
+    icon: "/icons/talk-to-us.svg",
+    title: "1. Talk to us",
+    description: "Tell us exactly what you do - no bad or good answer.",
+  },
+  {
+    icon: "/icons/we-do-it-for-you.svg",
+    title: "2. We do it for you",
+    description:
+      "We create the right documents (policies, inventories, risk analysis, etc..) to match your ways of working. You only handle what absolutely requires your input.",
+  },
+  {
+    icon: "/icons/audit.svg",
+    title: "3. Audit",
+    description:
+      "We go find the adequate independent auditor for your company and manage the audit on your behalf.",
+  },
+  {
+    icon: "/icons/we-run-it.svg",
+    title: "4. We run it",
+    description:
+      "We proactively maintain your compliance in the background and help you improve over time.",
+  },
+];
+
+const certifications = [
+  {
+    icon: "/badges/soc2.svg",
+    description: "Unlocks enterprise deals and accelerates sales cycles.",
+  },
+  {
+    icon: "/badges/GDPR.svg",
+    description:
+      "Opens EU markets and boosts trust with privacy-minded buyers.",
+  },
+  {
+    icon: "/badges/HIPAA.svg",
+    description: "Wins U.S. healthcare deals and clears regulatory barriers.",
+  },
+  {
+    icon: "/badges/ISO-27001.svg",
+    description: "Earns global enterprise trust.",
+  },
+  {
+    icon: "/badges/ISO-42001.svg",
+    description:
+      "Proves responsible AI and smooths adoption in regulated sectors.",
+  },
+  {
+    icon: "/badges/ISO-27701.svg",
+    description:
+      "Showcases privacy governance and attracts data-sensitive customers.",
+  },
+];
+
+export default function Home() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    let animationFrameId: number | null = null;
+
+    const handleScroll = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
+      animationFrameId = requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const scrollHeight =
+          document.documentElement.scrollHeight - window.innerHeight;
+
+        const progress = Math.min(
+          100,
+          Math.max(0, (scrollTop / scrollHeight) * 120),
+        );
+        setScrollProgress(progress);
+      });
+    };
+
+    const handleResize = () => {
+      handleScroll();
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, []);
+
+  const [starsCount, setStarsCount] = useState(400);
 
   useEffect(() => {
     async function fetchStars() {
@@ -179,164 +208,213 @@ function Transparency() {
         const data = await response.json();
         setStarsCount(data.stargazers_count);
       } catch (error) {
-        console.error("Error fetching stars:", error);
+        console.error("cannot fetch github stars:", error);
       }
     }
 
     fetchStars();
   }, []);
 
-  return (
-    <div className="flex h-full flex-col items-center justify-center gap-4">
-      <Link href="https://github.com/getprobo/probo">
-        <Image
-          src="/logo-github-invertocat.svg"
-          alt="github"
-          width={150}
-          height={150}
-          style={{ width: "150px", height: "150px" }}
-        />
-      </Link>
-      <Link href="https://github.com/getprobo/probo">
-        <div className="flex rounded-full bg-black px-3 py-2 text-sm font-normal text-white not-italic">
-          <div className="flex items-center gap-2">
-            Repository{" "}
-            <div className="bg-yellow flex items-center gap-1 rounded-full px-2 py-1 text-black">
-              {starsCount} <Star className="h-4 w-4" />
-            </div>{" "}
+  const features = [
+    {
+      title: "Tailored, not templated",
+      description:
+        "No non-sense or fluff. We fit compliance to your business, not the other way.",
+      illustration: (
+        <div className="bg-dark-300 rounded-xl px-7.5 py-16 md:px-10 md:py-20">
+          <div className="bg-dark-50 flex flex-col gap-3 rounded-xl p-4 md:min-w-[320px] md:gap-4 md:p-5">
+            <h3 className="text-dark-900 text-[9px] font-semibold uppercase md:text-xs">
+              Your tailored checklist
+            </h3>
+            <div className="flex items-center gap-2">
+              <div className="bg-dark-900 rounded-full p-0.5 text-white md:p-1">
+                <Check className="h-2 w-2 md:h-3 md:w-3" />
+              </div>
+              <p className="text-dark-400 text-[11px] leading-[100%] font-normal whitespace-nowrap line-through md:text-sm">
+                List all your computers
+              </p>
+              <Image
+                src="people/person-1.png"
+                alt="icon-1"
+                width={18}
+                height={18}
+                className="ml-auto h-4.5 w-4.5 md:h-6 md:w-6"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="bg-dark-900 rounded-full p-0.5 text-white md:p-1">
+                <Check className="h-2 w-2 md:h-3 md:w-3" />
+              </div>
+              <p className="text-dark-400 text-[11px] leading-[100%] font-normal whitespace-nowrap line-through md:text-sm">
+                Grant acces only when necessary
+              </p>
+              <Image
+                src="people/person-2.png"
+                alt="icon-1"
+                width={18}
+                height={18}
+                className="ml-auto h-4.5 w-4.5 md:h-6 md:w-6"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="text-dark-50 border-dark-300 h-3 w-3 rounded-full border md:h-5 md:w-5"></div>
+              <p className="text-dark-900 text-[11px] leading-[100%] font-normal whitespace-nowrap md:text-sm">
+                Grant acces only when necessary
+              </p>
+              <Image
+                src="people/person-3.png"
+                alt="icon-1"
+                width={18}
+                height={18}
+                className="ml-auto h-4.5 w-4.5 md:h-6 md:w-6"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="text-dark-50 border-dark-300 h-3 w-3 rounded-full border md:h-5 md:w-5"></div>
+              <p className="text-dark-900 text-[11px] leading-[100%] font-normal whitespace-nowrap md:text-sm">
+                Encrypt data at rest
+              </p>
+              <Image
+                src="people/person-4.png"
+                alt="icon-1"
+                width={18}
+                height={18}
+                className="ml-auto h-4.5 w-4.5 md:h-6 md:w-6"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="text-dark-50 border-dark-300 h-3 w-3 rounded-full border md:h-5 md:w-5"></div>
+              <p className="text-dark-900 text-[11px] leading-[100%] font-normal whitespace-nowrap md:text-sm">
+                Test before pushing to production
+              </p>
+              <Image
+                src="people/person-5.png"
+                alt="icon-1"
+                width={18}
+                height={18}
+                className="ml-auto h-4.5 w-4.5 md:h-6 md:w-6"
+              />
+            </div>
           </div>
         </div>
-      </Link>
-      <div className="flex w-[340px] items-center gap-2 rounded-2xl bg-white py-4 pr-6 pl-4 shadow-xl">
-        <Database className="h-4 w-4" />
-        <p className="text-base font-medium text-black not-italic">
-          Export your data
-        </p>
-        <ChevronRight className="ml-auto h-4 w-4" />
-      </div>
-    </div>
-  );
-}
+      ),
+    },
+    {
+      title: "Hands-off journey",
+      description:
+        "Compliance is done by us, so you stay focused on your business",
+      illustration: (
+        <div className="bg-dark-300 relative flex h-full w-full items-center justify-center rounded-xl">
+          <div className="absolute h-[85%] w-[85%] rounded-full border border-[#6A7270] opacity-10"></div>
+          <div className="absolute h-[70%] w-[70%] rounded-full border border-[#6A7270] opacity-20"></div>
+          <div className="absolute h-[55%] w-[55%] rounded-full border border-[#6A7270] opacity-30"></div>
+          <div className="absolute h-[40%] w-[40%] rounded-full border border-[#6A7270] opacity-40"></div>
 
-function StepCard({
-  title,
-  description,
-  icon,
-}: {
-  title: string;
-  description: string;
-  icon: string;
-}) {
-  return (
-    <div>
-      <div className="border-dark-600 rounded-2xl border p-10">
-        <Image
-          src={icon}
-          alt={title}
-          width={56}
-          height={56}
-          style={{ width: "56px", height: "56px" }}
-          className="mb-20"
-        />
-        <h2 className="text-yellow mb-6 text-xl font-medium">{title}</h2>
-        <p className="text-dark-600 text-lg font-light">{description}</p>
-      </div>
-    </div>
-  );
-}
+          <div className="absolute z-10">
+            <Image
+              src="/probo-logo.svg"
+              alt="Probo"
+              width={56}
+              height={56}
+              className="rounded-2xl"
+            />
+          </div>
 
-function BackedBy() {
-  return (
-    <div className="text-dark-600 flex w-fit rounded-full border border-solid border-[rgba(16,30,28,0.20)] px-6 py-3 font-medium">
-      Backed by{" "}
-      <Image
-        src="/yc-logo-with-name.svg"
-        alt="ycombinator logo"
-        width={116}
-        height={24}
-        style={{ width: "116px", height: "24px" }}
-        className="ml-2"
-      />
-    </div>
-  );
-}
+          <div className="absolute top-[11%] left-[40%] md:top-[12%] md:left-[38%]">
+            <div className="flex items-center gap-2 rounded-full bg-white p-2 whitespace-nowrap shadow-md md:px-4 md:py-2">
+              <Store className="h-4 w-4 md:h-5 md:w-5" />
+              <span className="text-dark-900 text-xs md:text-sm">
+                Vendor assessment
+              </span>
+            </div>
+            <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-yellow-400"></div>
+          </div>
 
-function FeatureCard({
-  title,
-  description,
-  children,
-  className = "",
-}: {
-  title: string;
-  description: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div>
-      <div
-        className={`bg-dark-300 mb-6 h-[420px] max-w-[420px] rounded-2xl ${className}`}
-      >
-        {children}
-      </div>
-      <div className="max-w-[420px] pr-6">
-        <h3 className="text-dark-900 text-xl font-medium not-italic">
-          {title}
-        </h3>
-        <p className="text-dark-600 text-lg font-normal not-italic">
-          {description}
-        </p>
-      </div>
-    </div>
-  );
-}
+          <div className="absolute top-[40%] left-[68%] md:top-[38%] md:left-[62%]">
+            <div className="flex items-center gap-2 rounded-full bg-white p-2 whitespace-nowrap shadow-md md:px-4 md:py-2">
+              <FileText className="h-4 w-4 md:h-5 md:w-5" />
+              <span className="text-dark-900 text-xs md:text-sm">Policies</span>
+            </div>
+            <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-yellow-400"></div>
+          </div>
 
-function BadgeCard({
-  icon,
-  description,
-}: {
-  icon: string;
-  description: string;
-}) {
-  return (
-    <div className="bg-dark-100 flex flex-col items-center gap-8 rounded-2xl px-10 py-14">
-      <Image
-        src={icon}
-        alt="icon-4"
-        width={120}
-        height={120}
-        style={{ width: "auto", height: "auto" }}
-      />
-      <p className="text-dark-600 text-center text-base">{description}</p>
-    </div>
-  );
-}
+          <div className="absolute bottom-[12%] left-[52%] md:bottom-[12%] md:left-[42%]">
+            <div className="flex items-center gap-2 rounded-full bg-white p-2 whitespace-nowrap shadow-md md:px-4 md:py-2">
+              <Users className="h-4 w-4 md:h-5 md:w-5" />
+              <span className="text-dark-900 text-xs md:text-sm">
+                Auditor relations
+              </span>
+            </div>
+            <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-yellow-400"></div>
+          </div>
 
-export default function Home() {
-  const [scrollProgress, setScrollProgress] = useState(0);
+          <div className="absolute bottom-[20%] left-[2%] md:bottom-[28%] md:left-[5%]">
+            <div className="flex items-center gap-2 rounded-full bg-white p-2 whitespace-nowrap shadow-md md:px-4 md:py-2">
+              <Flame className="h-4 w-4 md:h-5 md:w-5" />
+              <span className="text-dark-900 text-xs md:text-sm">
+                Risk assessment
+              </span>
+            </div>
+            <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-yellow-400"></div>
+          </div>
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min(100, (scrollTop / scrollHeight) * 120);
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <div>
-      <section className="my-4 flex flex-col items-center justify-center py-32">
-        <BackedBy />
-        <div className="mt-10 mb-10 flex flex-col gap-2 text-center text-6xl font-normal">
-          <p className="text-dark-900 sm:text-4xl md:text-5xl">
-            Compliance for Startups
+          <div className="absolute bottom-[58%] left-[9%] md:bottom-[58%] md:left-[13%]">
+            <div className="flex items-center gap-2 rounded-full bg-white p-2 whitespace-nowrap shadow-md md:px-4 md:py-2">
+              <Settings className="h-4 w-4 md:h-5 md:w-5" />
+              <span className="text-dark-900 text-xs md:text-sm">
+                Processes
+              </span>
+            </div>
+            <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-yellow-400"></div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Transparency",
+      description: "No vendor lock-in and no paywall. We are open-source.",
+      illustration: (
+        <Link
+          className="flex flex-col items-center gap-3"
+          href="https://github.com/getprobo/probo"
+        >
+          <Image
+            src="/logo-github-invertocat.svg"
+            alt="github"
+            width={115}
+            height={115}
+            className="h-28.5 w-28.5"
+          />
+          <p className="text-dark-50 bg-dark-900 flex w-fit items-center gap-[5px] rounded-full px-3 py-1.5 text-xs leading-[100%]">
+            Repository{" "}
+            <span className="text-dark-900 flex items-center gap-[5px] rounded-full bg-yellow-400 px-1.5 py-1.5 text-xs leading-[100%]">
+              {starsCount}{" "}
+              <Star className="text-dark-900 fill-dark-900 h-3 w-3" />
+            </span>
           </p>
-          <div className="text-dark-600 flex items-center justify-center sm:text-4xl md:text-5xl">
+        </Link>
+      ),
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 gap-6">
+      <section className="grid grid-cols-1 place-items-center gap-10 px-5 py-10 md:py-20 lg:px-12 lg:py-30">
+        <div className="flex max-w-fit items-center justify-center gap-2.5 rounded-full px-6 py-3 outline-1 outline-neutral-400">
+          <p className="text-base leading-tight font-medium text-neutral-500">
+            Backed by
+          </p>
+          <Image
+            src="/yc-logo-with-name.svg"
+            alt="ycombinator logo"
+            width={116}
+            height={24}
+            className="h-6 w-29"
+          />
+        </div>
+        <div className="gap-0.2 grid grid-cols-1 text-center text-[28px] leading-[200%] font-normal whitespace-nowrap md:text-[56px] md:leading-[120%] lg:text-[64px]">
+          <p className="text-dark-900">Compliance for Startups</p>
+          <div className="text-dark-600">
             <TypewriterEffect
               words={[
                 "SOC 2",
@@ -347,163 +425,179 @@ export default function Home() {
                 "ISO 27701",
               ]}
             />
-            <span className="ml-3">in one week</span>
+            <span>in one week</span>
           </div>
         </div>
-        <div className="flex gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Link
-            className="bg-dark-300 text-dark-900 flex items-center gap-2 rounded-full px-6 py-3 text-base font-normal"
+            className="bg-dark-300 text-dark-900 min-w-64 rounded-full px-6 py-5 text-center leading-[100%] font-semibold md:w-fit md:min-w-0"
             href="https://github.com/getprobo/probo"
           >
             Open-source
           </Link>
           <Link
-            className="bg-dark-900 text-yellow flex items-center gap-2 rounded-full px-6 py-3 text-base font-normal"
+            className="bg-dark-900 flex min-w-64 justify-center gap-2.5 rounded-full px-6 py-5 text-center leading-[100%] font-semibold text-yellow-400 md:w-fit md:min-w-0"
             href="https://hexacc.typeform.com/getstarted"
           >
-            Get Started <ArrowRight />
+            Get started <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
           </Link>
         </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute h-0 w-0 opacity-0 lg:pointer-events-auto lg:relative lg:h-auto lg:w-auto lg:opacity-100"
+        ></div>
+        <Image
+          src="/hero.png"
+          alt="hero image"
+          width={320}
+          height={320}
+          className="h-80 w-80 rounded-[20px] object-cover md:h-125 md:w-125 lg:h-150 lg:w-225"
+        />
       </section>
-      <Section className="bg-dark-50 sm:px-2">
-        <h2 className="text-dark-900 text-center text-5xl font-normal not-italic sm:text-4xl">
+
+      <section className="bg-dark-50 grid gap-16 rounded-3xl px-5 py-20 md:px-12">
+        <h2 className="text-center text-3xl leading-9 font-normal text-zinc-900 md:text-5xl md:leading-[62.40px]">
           What sets Probo apart
         </h2>
-        <div className="mt-16 mb-16 grid grid-cols-3 gap-4 xl:grid-cols-1 xl:place-items-center">
-          <FeatureCard
-            title="Tailored, not templated"
-            description="No non-sense or fluff. We fit compliance to your business, not the other way."
-            className="px-10 py-[80px]"
-          >
-            <TailoredNotTemplated />
-          </FeatureCard>
-          <FeatureCard
-            title="Hands-off journey"
-            description="Compliance is done by us, so you stay focused on your business"
-          >
-            <HandsOff />
-          </FeatureCard>
-          <FeatureCard
-            title="Transparency"
-            description="No vendor lock-in and no paywall. We are open-source."
-          >
-            <Transparency />
-          </FeatureCard>
-        </div>
-        <div className="flex justify-center">
-          <Link
-            className="bg-dark-900 text-yellow flex w-fit items-center gap-2 rounded-full px-6 py-3 text-base font-normal"
-            href="https://hexacc.typeform.com/getstarted"
-          >
-            Get Started <ArrowRightIcon className="h-4 w-4" />
-          </Link>
-        </div>
-      </Section>
-      <Section className="bg-dark-900">
-        <div className="relative grid grid-cols-[1fr_auto_1fr] gap-28 lg:grid-cols-1">
-          <div
-            className="sticky top-10 lg:static"
-            style={{ height: "fit-content" }}
-          >
-            <h1 className="text-dark-50 mb-6 text-5xl font-light not-italic">
-              Keep working on your company. We do the compliance for you.
-            </h1>
-            <p className="text-dark-600 mb-8 text-lg font-light not-italic">
-              Compliance shouldn{"'"}t feel like a burden you carry alone.
-              <br /> Audits, regulations, and endless paperwork steal focus from
-              your actual business. <br /> <br /> Think Probo as your dedicated
-              compliance team. We handle the maze efficiently so you get back
-              your focus.
-            </p>
-            <Link
-              href="https://hexacc.typeform.com/getstarted"
-              className="bg-yellow text-dark-900 flex w-fit items-center gap-2 rounded-full px-6 py-3 text-base font-normal"
-            >
-              Start <ArrowRightIcon className="h-4 w-4" />
-            </Link>
-          </div>
 
-          <div className="visible justify-center lg:invisible">
-            <div className="relative flex h-full flex-col items-center">
-              <div
-                className="bg-dark-300 h-full w-0.5"
-                style={{
-                  background: `linear-gradient(to bottom, #a3e635 ${scrollProgress}%, #555 ${scrollProgress}%)`,
-                }}
-              ></div>
-              <div className="bg-dark-900 absolute top-0 flex h-4 w-4 items-center justify-center rounded-full border-2 border-lime-400">
-                <div className="h-2 w-2 rounded-full bg-lime-400"></div>
+        <div className="mx-auto grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {features.map((feature) => (
+            <div
+              key={feature.title}
+              className="flex max-w-80 flex-col gap-4 md:max-w-105"
+            >
+              <div className="bg-dark-300 flex h-80 items-center justify-center rounded-xl md:h-105">
+                {feature.illustration}
               </div>
-              <div className="bg-dark-900 absolute top-1/3 flex h-4 w-4 items-center justify-center rounded-full border-2 border-lime-400">
-                <div className="h-2 w-2 rounded-full bg-lime-400"></div>
-              </div>
-              <div className="bg-dark-900 absolute top-2/3 flex h-4 w-4 items-center justify-center rounded-full border-2 border-lime-400">
-                <div className="h-2 w-2 rounded-full bg-lime-400"></div>
-              </div>
-              <div className="bg-dark-900 absolute bottom-0 flex h-4 w-4 items-center justify-center rounded-full border-2 border-lime-400">
-                <div className="h-2 w-2 rounded-full bg-lime-400"></div>
+              <div className="grid grid-cols-1 gap-2">
+                <h3 className="text-dark-900 text-xl leading-[100%] font-medium">
+                  {feature.title}
+                </h3>
+                <p className="text-dark-600 leading-[150%] font-normal">
+                  {feature.description}
+                </p>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-6">
-            <StepCard
-              title="1. Talk to us"
-              description="Tell us exactly what you do - no bad or good answer."
-              icon="/icons/talk-to-us.svg"
-            />
-            <StepCard
-              title="2. We do it for you"
-              description="We create the right documents (policies, inventories, risk analysis, etc..) to match your ways of working. You only handle what absolutely requires your input."
-              icon="/icons/we-do-it-for-you.svg"
-            />
-            <StepCard
-              title="3. Audit"
-              description="We go find the adequate independent auditor for your company and manage the audit on your behalf."
-              icon="/icons/audit.svg"
-            />
-            <StepCard
-              title="4. We run it"
-              description="We proactively maintain your compliance in the background and help you improve over time."
-              icon="/icons/we-run-it.svg"
-            />
-          </div>
+          ))}
         </div>
-      </Section>
-      <Section className="bg-dark-50">
-        <h2 className="text-dark-900 mb-6 text-center text-5xl font-normal not-italic">
-          Where Probo helps
-        </h2>
-        <p className="text-dark-600 mb-16 text-center text-lg font-light not-italic">
-          We designed Probo to help startups and small businesses where needed
-        </p>
 
-        <div className="grid grid-cols-3 gap-6 md:grid-cols-1 lg:grid-cols-2">
-          <BadgeCard
-            icon="/badges/soc2.svg"
-            description="Unlocks enterprise deals and accelerates sales cycles."
-          />
-          <BadgeCard
-            icon="/badges/GDPR.svg"
-            description="Opens EU markets and boosts trust with privacy‑minded buyers."
-          />
-          <BadgeCard
-            icon="/badges/HIPAA.svg"
-            description="Wins U.S. healthcare deals and clears regulatory barriers."
-          />
-          <BadgeCard
-            icon="/badges/ISO-27001.svg"
-            description="Earns global enterprise trust."
-          />
-          <BadgeCard
-            icon="/badges/ISO-42001.svg"
-            description="Proves responsible AI and smooths adoption in regulated sectors."
-          />
-          <BadgeCard
-            icon="/badges/ISO-27701.svg"
-            description="Showcases privacy governance and attracts data‑sensitive customers."
-          />
+        <Link
+          className="bg-dark-900 mx-auto flex min-w-54 justify-center gap-2.5 rounded-full px-6 py-5 text-center leading-[100%] font-semibold text-yellow-400 md:w-fit md:min-w-0"
+          href="https://hexacc.typeform.com/getstarted"
+        >
+          Get started <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+        </Link>
+      </section>
+
+      <section className="bg-dark-900 flex flex-col gap-20 rounded-3xl px-5 py-20 md:px-12 md:py-30 lg:flex-row">
+        <div className="flex flex-col gap-8 lg:sticky lg:top-8 lg:self-start">
+          <div className="grid gap-6">
+            <h2 className="text-dark-50 text-3xl leading-9 font-normal md:text-5xl md:leading-[120%] lg:whitespace-nowrap">
+              Keep working on your
+              <br /> company. We do the <br /> compliance for you.
+            </h2>
+            <p className="text-dark-300 text-base leading-[150%] font-normal md:text-lg md:leading-relaxed">
+              Compliance shouldn't feel like a burden you carry alone. Audits,
+              regulations, and <br /> endless paperwork steal focus from your
+              actual business. <br />
+              <br />
+              Think Probo as your dedicated compliance team. We handle the maze
+              efficiently <br /> so you get back your focus.
+            </p>
+          </div>
+          <Link
+            href="https://hexacc.typeform.com/getstarted"
+            className="text-dark-900 mx-auto flex w-fit min-w-52 items-center justify-center gap-2 rounded-full bg-yellow-400 px-6 py-5 text-base leading-[100%] font-medium md:mx-0 md:min-w-0"
+          >
+            Start <ArrowRightIcon className="h-4 w-4" strokeWidth={2.5} />
+          </Link>
         </div>
-      </Section>
+        <div className="flex flex-col justify-center gap-16 md:flex-row">
+          <div className="relative hidden flex-col items-center self-center md:flex">
+            <div className="bg-dark-600 absolute h-full w-0.5"></div>
+
+            <div
+              className="absolute w-0.5 bg-yellow-400"
+              style={{
+                height: `${scrollProgress}%`,
+                maxHeight: "100%",
+                transition: "height 0.2s ease-out",
+              }}
+            ></div>
+
+            <div
+              className={`z-10 h-3 w-3 rounded-full border-2 ${scrollProgress >= 10 ? "border-yellow-400 bg-yellow-400" : "bg-dark-900 border-dark-600"}`}
+            ></div>
+            <div className="h-70 w-0.5"></div>
+            <div
+              className={`z-10 h-3 w-3 rounded-full border-2 ${scrollProgress >= 40 ? "border-yellow-400 bg-yellow-400" : "bg-dark-900 border-dark-600"}`}
+            ></div>
+            <div className="h-70 w-0.5"></div>
+            <div
+              className={`z-10 h-3 w-3 rounded-full border-2 ${scrollProgress >= 66 ? "border-yellow-400 bg-yellow-400" : "bg-dark-900 border-dark-600"}`}
+            ></div>
+            <div className="h-70 w-0.5"></div>
+            <div
+              className={`z-10 h-3 w-3 rounded-full border-2 ${scrollProgress >= 99 ? "border-yellow-400 bg-yellow-400" : "bg-dark-900 border-dark-600"}`}
+            ></div>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            {steps.map((step) => (
+              <div key={step.title}>
+                <div className="border-dark-600 mx-auto flex w-80 flex-col gap-10 rounded-2xl border px-5 py-10 md:w-133 md:px-10">
+                  <Image
+                    src={step.icon}
+                    alt={step.title}
+                    width={56}
+                    height={56}
+                    className="h-14 w-14"
+                  />
+                  <div className="flex flex-col gap-6">
+                    <h3 className="text-base leading-tight font-semibold text-yellow-400">
+                      {step.title}
+                    </h3>
+                    <p className="text-dark-300 text-sm leading-[140%] font-normal">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-dark-50 grid gap-16 rounded-3xl px-5 py-20 md:px-12">
+        <div className="grid gap-6">
+          <h2 className="text-dark-900 text-center text-3xl leading-9 font-normal md:text-5xl md:leading-[62.40px]">
+            Where Probo helps
+          </h2>
+          <p className="text-center text-base leading-normal font-normal text-neutral-500 md:text-lg md:leading-relaxed">
+            We designed Probo to help startups and small businesses where needed
+          </p>
+        </div>
+
+        <div className="mx-auto grid max-w-fit grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {certifications.map((certification) => (
+            <div
+              key={certification.icon}
+              className="bg-dark-100 grid max-w-80 justify-items-center gap-8 rounded-2xl px-5 py-14 md:max-w-85 md:px-10 lg:max-w-100"
+            >
+              <Image
+                src={certification.icon}
+                alt={certification.description}
+                width={120}
+                height={120}
+                className="h-auto w-auto"
+              />
+              <p className="text-center text-base leading-snug font-normal text-neutral-500">
+                {certification.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
