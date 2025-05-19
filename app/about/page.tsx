@@ -1,84 +1,70 @@
-import { Section } from "@/components/Section";
 import Image from "next/image";
 
-function TeamMember({
-  name,
-  role,
-  image,
-  description,
-}: {
-  name: string;
-  role: string;
-  image: string;
-  description: string;
-}) {
-  return (
-    <div className="bg-dark-100 flex flex-col gap-2 rounded-2xl p-12">
-      <Image
-        src={image}
-        alt={name}
-        className="rounded-full"
-        width={100}
-        height={100}
-      />
-      <h2 className="text-dark-900 text-2xl font-normal">{name}</h2>
-      <h3 className="text-dark-900 text-xl font-light">{role}</h3>
-      <p className="text-dark-900 text-xl font-light">{description}</p>
-    </div>
-  );
-}
+const teamMembers = [
+  {
+    name: "Antoine Bouchardy",
+    role: "Co-founder & CEO",
+    image: "/team/antoine.jpeg",
+    bio: "ISO 27001 auditor with experience in compliance assessment and implementation. Passionate about making compliance accessible and straightforward.",
+  },
+  {
+    name: "Bryan Frimin",
+    role: "Co-founder & CTO",
+    image: "/team/bryan.jpeg",
+    bio: "ISO 27001 auditor with experience in compliance assessment and implementation. Passionate about making compliance accessible and straightforward.",
+  },
+];
 
 export default function AboutPage() {
   return (
     <div>
-      <Section>
-        <h2 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
+      <section className="flex flex-col items-center gap-8 py-10 md:gap-14 md:py-20 lg:gap-16 lg:py-30">
+        <h1 className="text-dark-900 text-3xl leading-[120%] md:text-[56px] lg:text-[64px]">
           Our mission
-        </h2>
-
-        <div className="grid grid-cols-2 gap-12 lg:grid-cols-1">
-          <div className="border-dark-600 flex min-h-[580px] max-w-[755px] items-center justify-center rounded-2xl border p-12">
-            <p
-              className="text-dark-900 text-3xl font-light"
-              style={{ lineHeight: "50px" }}
-            >
-              We{"'"}re transforming compliance from a complex burden into an
-              intuitive journey. <br />
-              Our platform makes compliance straightforward and cost-effective,
-              empowering businesses of all sizes to meet regulatory requirements
-              with confidence.
-            </p>
-          </div>
-
-          <div className="bg-dark-900 flex min-h-[580px] items-center justify-center rounded-2xl p-12">
-            <p className="text-yellow text-center text-5xl font-light">
-              Let us guide you toward effortless compliance management.
-            </p>
-          </div>
+        </h1>
+        <div className="flex flex-col gap-5 md:flex-row">
+          <p className="text-dark-900 border-dark-400 max-w-85.5 rounded-2xl border px-5 py-6 text-base leading-[150%] font-normal md:max-w-104.5 md:p-8 md:text-xl lg:max-w-197 lg:p-22 lg:text-[32px]">
+            We're transforming compliance from a complex burden into an
+            intuitive journey. Our platform makes compliance straightforward and
+            cost-effective, empowering businesses of all sizes to meet
+            regulatory requirements with confidence.
+          </p>
+          <p className="bg-dark-900 max-w-85.5 rounded-2xl px-5 py-6 text-center text-xl leading-9 font-normal text-yellow-400 md:flex md:max-w-75 md:items-center md:justify-center md:py-12 md:text-[32px] lg:max-w-125 lg:p-12 lg:text-5xl lg:leading-[64px]">
+            Let us guide you toward effortless compliance management.
+          </p>
         </div>
-      </Section>
+      </section>
 
-      <Section className="bg-dark-50">
-        <h2 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
+      <section className="bg-dark-50 flex flex-col items-center gap-10 rounded-3xl py-10 md:gap-16 md:py-20 lg:py-30">
+        <h1 className="text-dark-900 text-3xl leading-[120%] md:text-[32px] md:leading-[130%] lg:text-5xl">
           Meet the team
-        </h2>
-
-        <div className="grid grid-cols-2 gap-12 lg:grid-cols-1">
-          <TeamMember
-            name="Antoine Bouchardy"
-            role="Co-founder & CEO"
-            image="/team/antoine.jpeg"
-            description="ISO 27001 auditor with experience in compliance assessment and implementation. Passionate about making compliance accessible and straightforward."
-          />
-
-          <TeamMember
-            name="Bryan Frimin"
-            role="Co-founder & CTO"
-            image="/team/bryan.jpeg"
-            description="YC alumnus and engineer who managed SOC2/ISO27001 compliance at his previous startup. Experienced in building scalable solutions for complex problems."
-          />
+        </h1>
+        <div className="flex flex-col gap-10 lg:flex-row">
+          {teamMembers.map((member) => (
+            <div
+              key={member.name}
+              className="bg-dark-300 flex max-w-84 flex-col gap-2 rounded-3xl p-8 md:max-w-184 lg:max-w-148"
+            >
+              <Image
+                src={member.image}
+                alt={member.name}
+                className="h-25 w-25 rounded-full"
+                width={100}
+                height={100}
+              />
+              <h3 className="text-dark-900 text-2xl leading-[150%] font-semibold">
+                {member.name}
+              </h3>
+              <h4 className="text-dark-900 text-xl leading-[150%] font-medium">
+                {member.role}
+              </h4>
+              <p className="text-dark-900 text-xl leading-[150%] font-normal">
+                {member.bio}
+              </p>
+            </div>
+          ))}
         </div>
-      </Section>
+      </section>
     </div>
   );
 }
