@@ -46,13 +46,24 @@ export function Nav() {
       {isOpen && (
         <div className="flex h-screen items-start justify-center p-6 lg:hidden">
           <nav className="flex w-full flex-col gap-6 text-center text-base font-medium">
-            <Link href="/">Home</Link>
+            <Link href="/" onClick={() => setIsOpen(false)}>
+              Home
+            </Link>
             <div className="bg-dark-300 h-px w-full" />
-            <Link href="/about">About</Link>
+            <Link href="/about" onClick={() => setIsOpen(false)}>
+              About
+            </Link>
             <div className="bg-dark-300 h-px w-full" />
-            <Link href="/blog">Blog</Link>
+            <Link href="/blog" onClick={() => setIsOpen(false)}>
+              Blog
+            </Link>
             <div className="bg-dark-300 h-px w-full" />
-            <Link href="https://github.com/getprobo/probo">GitHub</Link>
+            <Link
+              href="https://github.com/getprobo/probo"
+              onClick={() => setIsOpen(false)}
+            >
+              GitHub
+            </Link>
           </nav>
         </div>
       )}
