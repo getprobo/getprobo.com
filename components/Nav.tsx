@@ -36,6 +36,7 @@ export function Nav() {
           <button
             className="bg-dark-900 w-fit rounded-full p-4 text-yellow-400 lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             {isOpen ? <X /> : <Menu />}
           </button>
