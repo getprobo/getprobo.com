@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ClientBlog } from "./ClientBlog";
 import siteConfig from "../metadata.config";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -70,8 +71,9 @@ export default function BlogPage() {
 
       <section className="bg-dark-50 flex flex-col items-center gap-10 rounded-3xl py-10 md:gap-16 lg:flex-row lg:flex-wrap lg:justify-center">
         {posts.map((post) => (
-          <article
+          <Link
             key={post.slug}
+            href={`/blog/${post.slug}`}
             className="flex w-80 flex-col gap-5 md:w-156"
           >
             <Image
@@ -106,7 +108,7 @@ export default function BlogPage() {
                 </p>
               </div>
             </div>
-          </article>
+          </Link>
         ))}
         <div className="w-80 flex-col gap-5 sm:hidden md:w-156 lg:flex"></div>
         <div className="w-80 flex-col gap-5 sm:hidden md:w-156 lg:flex"></div>
