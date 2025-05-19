@@ -509,7 +509,7 @@ export default function Home() {
             href="https://hexacc.typeform.com/getstarted"
             className="text-dark-900 mx-auto flex w-fit min-w-52 items-center justify-center gap-2 rounded-full bg-yellow-400 px-6 py-5 text-base leading-[100%] font-medium md:mx-0 md:min-w-0"
           >
-            Start <ArrowRightIcon className="h-4 w-4" strokeWidth={2.5} />
+            Start today <ArrowRightIcon className="h-4 w-4" strokeWidth={2.5} />
           </Link>
         </div>
         <div className="flex flex-col justify-center gap-16 md:flex-row">
