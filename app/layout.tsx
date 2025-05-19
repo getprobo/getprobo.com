@@ -97,7 +97,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
-        <div className="bg-dark-100 px-2 md:px-4">
+        <div className="bg-dark-100 md:px-4">
           <div className="mx-auto grid max-w-[1480px] grid-cols-1 gap-6">
             <Nav />
             <main>{children}</main>
