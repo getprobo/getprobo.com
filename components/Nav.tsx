@@ -13,8 +13,8 @@ export function Nav() {
           <Image
             src="/probo-logo-with-name.svg"
             alt="logo"
-            className="h-8.5 w-auto"
-            width={123}
+            className="h-8.5 w-31"
+            width={124}
             height={34}
           />
         </Link>
