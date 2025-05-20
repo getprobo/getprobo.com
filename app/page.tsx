@@ -454,7 +454,10 @@ export default function Home() {
           <div className="flex flex-col gap-6">
             {steps.map((step) => (
               <div key={step.title}>
-                <div className="border-dark-600 mx-auto flex w-80 flex-col gap-10 rounded-2xl border px-5 py-10 md:w-133 md:px-10">
+                <Link
+                  href="https://github.com/getprobo/probo"
+                  className="border-dark-600 mx-auto flex w-80 flex-col gap-10 rounded-2xl border px-5 py-10 md:w-133 md:px-10"
+                >
                   <Image
                     src={step.icon}
                     alt={step.title}
@@ -470,7 +473,7 @@ export default function Home() {
                       {step.description}
                     </p>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>
