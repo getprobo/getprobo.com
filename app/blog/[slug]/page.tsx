@@ -84,60 +84,43 @@ export default async function BlogPost(props: Props) {
     notFound();
   }
 
-  const structuredData = await generateStructuredData(post);
-
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-      <div className="bg-dark-900 min-h-screen rounded-2xl text-white">
-        <header className="container mx-auto px-4 pt-16">
-          <div className="text-center">
-            <time className="text-sm text-neutral-500">
-              {new Date(post.date).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </time>
-            <h1 className="font-geist-alt mt-8 text-4xl md:text-5xl">
-              {post.title}
-            </h1>
-            <p className="mt-2 text-neutral-400">{post.excerpt}</p>
-            <div className="mt-10 flex items-center justify-center gap-2">
-              <Image
-                src={post.author.image}
-                alt={post.author.name}
-                width={28}
-                height={28}
-                className="rounded-full"
-              />
-              <p className="font-light text-neutral-400">{post.author.name}</p>
-            </div>
-          </div>
-        </header>
-
-        <section className="relative my-16 flex h-[500px] items-center justify-center overflow-hidden">
-          <div className="absolute h-[300px] w-[300px] rounded-full bg-white/5 blur-[100px]" />
-          <div className="relative z-10 h-full w-full">
-            <Image
-              src={post.coverImage}
-              alt={post.title}
-              fill
-              priority
-              className="h-full w-full rounded-lg border border-white/20 object-cover"
-            />
-          </div>
-        </section>
-
-        <div className="container mx-auto max-w-3xl space-y-24 px-4 pb-24">
-          <div className="prose prose-invert max-w-none">
-            <MDXRemote source={post.content} />
-          </div>
+    <section>
+      <header className="flex flex-col items-center gap-5 px-5 py-10">
+        <div className="mx-auto flex max-w-lg flex-col gap-4 md:max-w-3xl md:gap-10 lg:max-w-5xl">
+          <h1 className="text-dark-900 text-center text-3xl leading-[120%] font-normal md:text-5xl lg:text-6xl">
+            {post.title}
+          </h1>
+          <p className="text-dark-600 text-center text-sm leading-[150%] font-normal md:text-lg">
+            {post.excerpt}
+          </p>
         </div>
-      </div>
-    </>
+
+        <div className="flex flex-row items-center gap-2">
+          <Image
+            src={post.author.image}
+            alt={post.author.name}
+            width={28}
+            height={28}
+            className="h-6 w-6 rounded-full md:h-8 md:w-8"
+          />
+          <p className="text-xs leading-[150%] font-medium md:text-base">
+            {post.author.name}
+          </p>
+          <p className="text-xl leading-[150%] font-bold">•</p>
+          <p className="text-xs leading-[150%] font-normal md:text-base">
+            {new Date(post.date).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </p>
+        </div>
+      </header>
+
+      <article className="bg-dark-50 prose mx-auto rounded-3xl px-5 py-10 text-base leading-[140%] font-normal md:px-12 md:py-20 md:text-xl lg:max-w-5xl lg:p-20">
+        <MDXRemote source={post.content} />
+      </article>
+    </section>
   );
 }

@@ -1,6 +1,5 @@
 import { getAllPosts } from "@/lib/blog";
 import type { Metadata } from "next";
-import { ClientBlog } from "./ClientBlog";
 import siteConfig from "../metadata.config";
 import Image from "next/image";
 import Link from "next/link";
@@ -81,6 +80,7 @@ export default function BlogPage() {
               alt={post.title}
               width={100}
               height={100}
+              priority
               className="h-auto w-full rounded-xl"
             />
             <div className="text-dark-900 flex flex-col gap-3">
