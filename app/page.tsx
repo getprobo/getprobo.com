@@ -362,14 +362,6 @@ export default function Home() {
           aria-hidden="true"
           className="pointer-events-none absolute h-0 w-0 opacity-0 lg:pointer-events-auto lg:relative lg:h-auto lg:w-auto lg:opacity-100"
         ></div>
-        <Image
-          src="/hero.webp"
-          alt="hero image"
-          priority
-          width={320}
-          height={320}
-          className="h-80 w-80 rounded-[20px] object-cover md:h-125 md:w-125 lg:h-150 lg:w-225"
-        />
       </section>
 
       <section className="bg-dark-50 grid gap-16 rounded-3xl px-5 py-20 md:px-12">
