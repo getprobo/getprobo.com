@@ -53,29 +53,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-async function generateStructuredData(post: BlogPost) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
-    image: post.coverImage,
-    datePublished: post.date,
-    author: {
-      "@type": "Person",
-      name: post.author.name,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Probo",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://getprobo.com/logo.png",
-      },
-    },
-  };
-}
-
 export default async function BlogPost(props: Props) {
   const { slug } = await props.params;
   const post = getPostBySlug(slug);

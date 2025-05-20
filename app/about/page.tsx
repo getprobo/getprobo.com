@@ -24,7 +24,7 @@ export default function AboutPage() {
         </h1>
         <div className="flex flex-col gap-5 md:flex-row">
           <p className="text-dark-900 border-dark-400 max-w-85.5 rounded-2xl border px-5 py-6 text-base leading-[150%] font-normal md:max-w-104.5 md:p-8 md:text-xl lg:max-w-197 lg:p-22 lg:text-[32px]">
-            We're transforming compliance from a complex burden into an
+            We{"'"}re transforming compliance from a complex burden into an
             intuitive journey. Our platform makes compliance straightforward and
             cost-effective, empowering businesses of all sizes to meet
             regulatory requirements with confidence.

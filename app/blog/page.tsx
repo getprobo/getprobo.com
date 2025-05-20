@@ -1,6 +1,5 @@
 import { getAllPosts } from "@/lib/blog";
 import type { Metadata } from "next";
-import siteConfig from "../metadata.config";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,36 +25,6 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const posts = getAllPosts();
-
-  // Add structured data for blog list
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    name: "Probo Blog",
-    description:
-      "Latest insights and updates about compliance, security, and open source",
-    url: `${siteConfig.url}/blog`,
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteConfig.url}/logo.png`,
-      },
-    },
-    blogPosts: posts.map((post) => ({
-      "@type": "BlogPosting",
-      headline: post.title,
-      description: post.excerpt,
-      datePublished: post.date,
-      author: {
-        "@type": "Person",
-        name: post.author.name,
-      },
-      image: post.coverImage,
-      url: `${siteConfig.url}/blog/${post.slug}`,
-    })),
-  };
 
   return (
     <div>

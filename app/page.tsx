@@ -15,88 +15,6 @@ import Link from "next/link";
 import { TypewriterEffect } from "@/components/TypewriterEffect";
 import { useEffect, useState } from "react";
 
-function HandsOff() {
-  return (
-    <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-[#E4E2DD]">
-      {/* Concentric circles */}
-      <div className="absolute h-[85%] w-[85%] rounded-full border border-[#6A7270] opacity-40"></div>
-      <div className="absolute h-[70%] w-[70%] rounded-full border border-[#6A7270] opacity-30"></div>
-      <div className="absolute h-[55%] w-[55%] rounded-full border border-[#6A7270] opacity-20"></div>
-      <div className="absolute h-[40%] w-[40%] rounded-full border border-[#6A7270] opacity-10"></div>
-
-      {/* Center Probo logo */}
-      <div className="absolute z-10">
-        <Image
-          src="/probo-logo.svg"
-          alt="Probo"
-          width={56}
-          height={56}
-          className="rounded-2xl"
-        />
-      </div>
-
-      {/* Vendor assessment - Top */}
-      <div
-        className="absolute"
-        style={{ top: "8%", left: "50%", transform: "translateX(-50%)" }}
-      >
-        <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md">
-          <Store className="h-5 w-5" />
-          <span className="text-dark-900 text-sm">Vendor assessment</span>
-        </div>
-        {/* Yellow dot below bubble */}
-        <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-[#E6FF03]"></div>
-      </div>
-
-      {/* Policies - Top Right */}
-      <div className="absolute" style={{ top: "30%", right: "10%" }}>
-        <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md">
-          <FileText className="h-5 w-5" />
-          <span className="text-dark-900 text-sm">Policies</span>
-        </div>
-        {/* Yellow dot below bubble */}
-        <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-[#E6FF03]"></div>
-      </div>
-
-      {/* Auditor relations - Bottom Right */}
-      <div className="absolute" style={{ bottom: "30%", right: "8%" }}>
-        <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md">
-          <Users className="h-5 w-5" />
-          <span className="text-dark-900 text-sm">Auditor relations</span>
-        </div>
-        {/* Yellow dot below bubble */}
-        <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-[#E6FF03]"></div>
-      </div>
-
-      {/* Risk assessment - Bottom */}
-      <div
-        className="absolute"
-        style={{ bottom: "8%", left: "50%", transform: "translateX(-50%)" }}
-      >
-        <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md">
-          <Flame className="h-5 w-5" />
-          <span className="text-dark-900 text-sm">Risk assessment</span>
-        </div>
-        {/* Yellow dot below bubble */}
-        <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-[#E6FF03]"></div>
-      </div>
-
-      {/* Processes - Left */}
-      <div
-        className="absolute"
-        style={{ top: "50%", left: "8%", transform: "translateY(-50%)" }}
-      >
-        <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md">
-          <Settings className="h-5 w-5" />
-          <span className="text-dark-900 text-sm">Processes</span>
-        </div>
-        {/* Yellow dot below bubble */}
-        <div className="mx-auto mt-3 h-3 w-3 rounded-full bg-[#E6FF03]"></div>
-      </div>
-    </div>
-  );
-}
-
 const steps = [
   {
     icon: "/icons/talk-to-us.svg",
@@ -496,9 +414,9 @@ export default function Home() {
               <br /> company. We do the <br /> compliance for you.
             </h2>
             <p className="text-dark-300 text-base leading-[150%] font-normal md:text-lg md:leading-relaxed">
-              Compliance shouldn't feel like a burden you carry alone. Audits,
-              regulations, and <br /> endless paperwork steal focus from your
-              actual business. <br />
+              Compliance shouldn{"'"}t feel like a burden you carry alone.
+              Audits, regulations, and <br /> endless paperwork steal focus from
+              your actual business. <br />
               <br />
               Think Probo as your dedicated compliance team. We handle the maze
               efficiently <br /> so you get back your focus.

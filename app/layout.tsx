@@ -105,7 +105,9 @@ export default function RootLayout({
           </div>
         </div>
 
-        <Analytics />
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );
