@@ -3,8 +3,6 @@ import {
   ArrowRight,
   ArrowRightIcon,
   Check,
-  ChevronRight,
-  Database,
   FileText,
   Flame,
   Settings,
