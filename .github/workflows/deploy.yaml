@@ -35,6 +35,8 @@ jobs:
       - run: "npm run build"
         env:
           NEXT_TELEMETRY_DISABLED: 1
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+          NEXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
