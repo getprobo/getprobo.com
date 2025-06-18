@@ -175,7 +175,7 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <div className="text-dark-50 border-dark-300 h-3 w-3 rounded-full border md:h-5 md:w-5"></div>
               <p className="text-dark-900 text-[11px] leading-[100%] font-normal whitespace-nowrap md:text-sm">
-                Grant acces only when necessary
+                Enforce 2FA on all your tools
               </p>
               <Image
                 src="people/person-3.png"
