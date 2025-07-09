@@ -52,6 +52,11 @@ export default function SecurityPage() {
             <strong>Infrastructure as Code:</strong> All infrastructure is
             managed through code, ensuring consistency and security
           </li>
+          <li>
+            <strong>Container & VM Security:</strong> We only build from trusted
+            Docker images and rebuild them regularly to incorporate the latest
+            security fixes. The same approach is applied to VM images
+          </li>
         </ul>
       </section>
 
