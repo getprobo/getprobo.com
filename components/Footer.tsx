@@ -23,15 +23,17 @@ export function Footer() {
 
       <div className="grid gap-12 md:grid-cols-2 md:gap-0">
         <Image src="/probo-text.svg" alt="logo" width={191} height={80} />
-        <div className="text-dark-400 grid gap-6 text-base leading-[100%] font-normal whitespace-nowrap md:mr-30 md:grid-flow-col md:grid-cols-2 md:grid-rows-4 md:justify-self-end">
+        <div className="text-dark-400 grid gap-6 text-base leading-[100%] font-normal whitespace-nowrap md:mr-30 md:grid-flow-col md:grid-cols-2 md:grid-rows-5 md:justify-self-end">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <Link href="/blog">Blog</Link>
           <Link href="https://github.com/getprobo/probo">GitHub</Link>
+          <div></div>
           <Link href="/cookie-policy">Cookie Policy</Link>
           <Link href="/privacy">Privacy Policy</Link>
           <Link href="/terms">Terms of Service</Link>
           <Link href="/subprocessors">Subprocessors</Link>
+          <Link href="/security">Security</Link>
         </div>
       </div>
     </footer>
