@@ -5,11 +5,17 @@ import "./globals.css";
 import siteConfig from "./metadata.config";
 import { Analytics } from "@/components/Analytics";
 import { Suspense } from "react";
+import {
+  OrganizationStructuredData,
+  WebSiteStructuredData,
+  SoftwareApplicationStructuredData,
+  FAQStructuredData,
+} from "@/components/StructuredData";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: siteConfig.title,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -20,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.name,
+    title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
     images: [
@@ -28,16 +34,20 @@ export const metadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: siteConfig.name,
+        alt: siteConfig.title,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title: siteConfig.title,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
-    creator: "@getprobo",
+    creator: siteConfig.twitterHandle,
+    site: siteConfig.twitterHandle,
+  },
+  alternates: {
+    canonical: siteConfig.url,
   },
   icons: {
     icon: [
@@ -63,6 +73,10 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
   },
 };
 
@@ -164,6 +178,11 @@ export default function RootLayout({
         />
 
         <link rel="manifest" href="/site.webmanifest" />
+        
+        <OrganizationStructuredData />
+        <WebSiteStructuredData />
+        <SoftwareApplicationStructuredData />
+        <FAQStructuredData />
       </head>
       <body>
         <div className="bg-dark-100 md:px-4">

@@ -5,6 +5,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import type { Metadata } from "next";
 import type { BlogPost } from "@/lib/blog";
+import { BlogPostStructuredData, BreadcrumbStructuredData } from "@/components/StructuredData";
+import siteConfig from "@/app/metadata.config";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -62,8 +64,25 @@ export default async function BlogPost(props: Props) {
   }
 
   return (
-    <section>
-      <header className="flex flex-col items-center gap-5 px-5 py-10">
+    <>
+      <BlogPostStructuredData
+        title={post.title}
+        description={post.excerpt}
+        author={post.author.name}
+        datePublished={post.date}
+        image={`${siteConfig.url}${post.coverImage}`}
+        url={`${siteConfig.url}/blog/${post.slug}`}
+      />
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: siteConfig.url },
+          { name: "Blog", url: `${siteConfig.url}/blog` },
+          { name: post.title },
+        ]}
+      />
+      
+      <section>
+        <header className="flex flex-col items-center gap-5 px-5 py-10">
         <div className="mx-auto flex max-w-lg flex-col gap-4 md:max-w-3xl md:gap-10 lg:max-w-5xl">
           <h1 className="text-dark-900 text-center text-3xl leading-[120%] font-normal md:text-5xl lg:text-6xl">
             {post.title}
@@ -99,5 +118,6 @@ export default async function BlogPost(props: Props) {
         <MDXRemote source={post.content} />
       </article>
     </section>
+    </>
   );
 }
