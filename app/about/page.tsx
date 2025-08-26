@@ -4,10 +4,12 @@ import siteConfig from "@/app/metadata.config";
 
 export const metadata: Metadata = {
   title: "About Probo - Open-Source Compliance Platform",
-  description: "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
+  description:
+    "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
   openGraph: {
     title: "About Probo - Open-Source Compliance Platform",
-    description: "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
+    description:
+      "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
     url: `${siteConfig.url}/about`,
     type: "website",
   },
@@ -27,7 +29,7 @@ const teamMembers = [
     name: "Bryan Frimin",
     role: "Co-founder & CTO",
     image: "/team/bryan.jpeg",
-    bio: "ISO 27001 auditor with experience in compliance assessment and implementation. Passionate about making compliance accessible and straightforward.",
+    bio: "YC alumnus and engineer who managed SOC2/ISO27001 compliance at his previous startup. Experienced in building scalable solutions for complex problems.",
   },
 ];
 
