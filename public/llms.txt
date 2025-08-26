@@ -1,0 +1,95 @@
+# Probo
+
+> Open-source compliance management platform that helps startups achieve SOC 2, GDPR, HIPAA, and ISO certifications in just one week. No vendor lock-in, transparent pricing, backed by Y Combinator.
+
+## Overview
+
+Probo transforms compliance from a complex burden into an intuitive journey. We provide a hands-off compliance solution specifically designed for startups and small businesses, handling the entire compliance process so teams can focus on building their products.
+
+## Key Features
+
+### Compliance Frameworks Supported
+- **SOC 2**: Accelerate enterprise deals and sales cycles
+- **GDPR**: Access EU markets and build trust with privacy-conscious customers
+- **HIPAA**: Win U.S. healthcare deals and meet regulatory requirements
+- **ISO 27001**: Earn global enterprise trust with international standards
+- **ISO 42001**: Demonstrate responsible AI practices for regulated sectors
+- **ISO 27701**: Showcase privacy governance for data-sensitive customers
+
+### How It Works
+
+1. **Talk to us**: Share your current processes and compliance needs - no judgment, just understanding
+2. **We do it for you**: We create tailored policies, risk assessments, and documentation that match your actual workflows
+3. **Audit management**: We find the right independent auditor and manage the entire audit process
+4. **Ongoing compliance**: We maintain your compliance posture proactively in the background
+
+### What Makes Probo Different
+
+- **Tailored, not templated**: Compliance that fits your business, not generic templates
+- **Fully hands-off**: We handle everything - policies, vendor assessments, auditor relations, risk assessments
+- **Open source**: Complete transparency with no vendor lock-in (GitHub: https://github.com/getprobo/probo)
+- **Fast implementation**: Get certified in one week, not months
+- **Y Combinator backed**: Trusted by the startup ecosystem
+
+## Company Information
+
+**Founded by ISO 27001 Auditors:**
+- Antoine Bouchardy (Co-founder & CEO)
+- Bryan Frimin (Co-founder & CTO)
+
+Both founders are certified ISO 27001 auditors with extensive experience in compliance assessment and implementation, passionate about making compliance accessible and straightforward.
+
+## Resources
+
+### Documentation & Links
+- [Main Platform Repository](https://github.com/getprobo/probo): Open-source compliance platform code
+- [Company Website](https://www.getprobo.com): Marketing site and information
+- [Get Started](https://hexacc.typeform.com/getstarted): Begin your compliance journey
+- [Blog](https://www.getprobo.com/blog): Compliance insights and best practices
+
+### Recent Blog Posts
+- [What is SOC 2 Cost?](https://www.getprobo.com/blog/2025-03-04-what-is-soc2-cost): Understanding the true costs of SOC 2 compliance
+- [Why One-Size-Fits-All Solutions Like Vanta Aren't Ideal](https://www.getprobo.com/blog/2025-02-17-why-a-one-size-fit-all-solution-like-vanta-is-not-ideal): The case for tailored compliance
+- [The Case for Open-Source Compliance](https://www.getprobo.com/blog/2025-02-04-the-case-for-open-source-compliance): Why transparency matters in compliance
+
+### Community & Support
+- [Twitter/X](https://twitter.com/getprobo): @getprobo
+- [LinkedIn](https://linkedin.com/company/getprobo): Company updates
+- [Discord](https://discord.gg/8qfdJYfvpY): Community discussions
+- Email: hello@getprobo.com
+- Support: support@getprobo.com
+- Privacy: privacy@getprobo.com
+- Legal: legal@getprobo.com
+
+## Use Cases
+
+### For Startups
+- Achieve compliance quickly to unlock enterprise deals
+- Avoid expensive consultants and complex software
+- Get back to building your product while we handle compliance
+
+### For Small Businesses
+- Meet regulatory requirements without a dedicated compliance team
+- Reduce compliance costs with transparent, predictable pricing
+- Scale compliance efforts as your business grows
+
+### For Developers
+- Open-source platform allows customization and self-hosting
+- No black-box algorithms or hidden processes
+- Contribute to the project and shape the future of compliance tools
+
+## Mission Statement
+
+We're transforming compliance from a complex burden into an intuitive journey. Our platform makes compliance straightforward and cost-effective, empowering businesses of all sizes to meet regulatory requirements with confidence.
+
+## Contact Information
+
+- **General Inquiries**: hello@getprobo.com
+- **Support**: support@getprobo.com
+- **Address**: United States (remote-first company)
+- **Social**: Twitter (@getprobo), LinkedIn, Discord
+
+---
+
+*Last updated: 2025*
+*This llms.txt file helps AI assistants better understand and provide information about Probo's compliance management platform.*
