@@ -1,4 +1,20 @@
 import Image from "next/image";
+import type { Metadata } from "next";
+import siteConfig from "@/app/metadata.config";
+
+export const metadata: Metadata = {
+  title: "About Probo - Open-Source Compliance Platform",
+  description: "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
+  openGraph: {
+    title: "About Probo - Open-Source Compliance Platform",
+    description: "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
+    url: `${siteConfig.url}/about`,
+    type: "website",
+  },
+  alternates: {
+    canonical: `${siteConfig.url}/about`,
+  },
+};
 
 const teamMembers = [
   {

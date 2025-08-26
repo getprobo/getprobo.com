@@ -2,24 +2,47 @@ import { getAllPosts } from "@/lib/blog";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import siteConfig from "@/app/metadata.config";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blog - Compliance Insights & Best Practices",
   description:
-    "Latest insights and updates about compliance, security, and open source from the Probo team.",
+    "Expert insights on SOC 2, GDPR, HIPAA, and ISO compliance. Learn best practices for security compliance, audit preparation, and open-source compliance tools.",
+  keywords: [
+    "compliance blog",
+    "SOC 2 guide",
+    "GDPR compliance tips",
+    "security best practices",
+    "compliance automation",
+    "startup compliance",
+    "open source security",
+  ],
   openGraph: {
-    title: "Probo Blog",
+    title: "Probo Blog - Compliance Insights & Best Practices",
     description:
-      "Latest insights and updates about compliance, security, and open source from the Probo team.",
+      "Expert insights on SOC 2, GDPR, HIPAA, and ISO compliance. Learn best practices for security compliance, audit preparation, and open-source compliance tools.",
     type: "website",
+    url: `${siteConfig.url}/blog`,
     images: [
       {
         url: "/og-blog.png",
         width: 1200,
         height: 630,
-        alt: "Probo Blog",
+        alt: "Probo Blog - Compliance Insights",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Probo Blog - Compliance Insights & Best Practices",
+    description:
+      "Expert insights on SOC 2, GDPR, HIPAA, and ISO compliance. Learn best practices for security compliance and audit preparation.",
+  },
+  alternates: {
+    canonical: `${siteConfig.url}/blog`,
+    types: {
+      "application/rss+xml": `${siteConfig.url}/rss.xml`,
+    },
   },
 };
 
