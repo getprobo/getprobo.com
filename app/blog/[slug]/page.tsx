@@ -52,6 +52,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.excerpt,
       images: [post.coverImage],
     },
+    alternates: {
+      canonical: `${siteConfig.url}/blog/${slug}`,
+    },
   };
 }
 

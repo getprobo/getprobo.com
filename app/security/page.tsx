@@ -1,4 +1,14 @@
 import { Section } from "@/components/Section";
+import type { Metadata } from "next";
+import siteConfig from "@/app/metadata.config";
+
+export const metadata: Metadata = {
+  title: "Security",
+  description: "Learn about Probo's security practices and how we protect your data.",
+  alternates: {
+    canonical: `${siteConfig.url}/security`,
+  },
+};
 
 export default function SecurityPage() {
   return (

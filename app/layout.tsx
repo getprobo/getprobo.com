@@ -85,7 +85,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="canonical" href={siteConfig.url} />
         <link
           rel="apple-touch-icon-precomposed"
           sizes="57x57"
