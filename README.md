@@ -1,75 +1,29 @@
-<h1 align="center">Probo Website</h1>
-<p align="center">
-This repository contains the marketing website for Probo - the open-source
-compliance management platform.
-</p>
+# getprobo.com
 
-<p align="center">
-  <img src=".github/probo.png" alt="Probo Website" height="250">
-</p>
+Marketing website for Probo.
 
-## About Probo
-
-Probo is an open-source platform that helps startups get SOC-2 certified in just
-one week. No paywalls, no vendor lock-in - just simple, fast compliance.
-
-- Get SOC-2 certified in just 20 hours
-- Expert guidance at every step
-- Pay only for what you need - no hidden fees
-- Open source and built for startups
-- Supports multiple frameworks (SOC-2, ISO 27001, GDPR)
-
-## Tech Stack
-
-- [Next.js](https://nextjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [MDX](https://mdxjs.com/) for blog posts
-- [PostHog](https://posthog.com/) for analytics
-
-## Development
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/getprobo/getprobo.com.git
-cd getprobo.com
-```
-
-2. Install dependencies:
+## Setup
 
 ```bash
 npm ci
-```
-
-3. Create a `.env.local` file:
-
-```bash
-NEXT_PUBLIC_POSTHOG_KEY=your_key
-NEXT_PUBLIC_POSTHOG_HOST=your_host
-```
-
-4. Start the development server:
-
-```bash
+cp .env.example .env.local  # Configure PostHog credentials
 make dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Access at http://localhost:3000
+
+## Deployment
+
+The website is automatically deployed to GitHub Pages via GitHub Actions on merges to the `main` branch.
 
 ## Contributing
 
-While this is just our website repository, we welcome contributions! Please feel
-free to submit issues and pull requests.
+Submit issues and pull requests via GitHub.
 
-## Stay Updated
+## Resources
 
-- Join our private beta: [getprobo.com](https://www.getprobo.com)
-- Follow us: [@getprobo](https://twitter.com/getprobo)
-- Join our Discord: [Probo Community](https://discord.gg/8qfdJYfvpY)
-- Main project: [github.com/getprobo/probo](https://github.com/getprobo/probo)
-- Contact: [hello@getprobo.com](mailto:hello@getprobo.com)
+- Main repository: [github.com/getprobo/probo](https://github.com/getprobo/probo)
+- Documentation: See `/docs` directory
 
 ## License
 
