@@ -6,7 +6,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section className={`rounded-3xl py-32 px-12 mb-4 ${className}`}>
+    <section className={`mb-4 rounded-3xl px-12 py-32 ${className}`}>
       {children}
     </section>
   );

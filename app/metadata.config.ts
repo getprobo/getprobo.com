@@ -2,8 +2,10 @@ const siteConfig = {
   name: "Probo",
   url: "https://www.getprobo.com",
   title: "Probo - Compliance for Startups in One Week",
-  description: "Get SOC 2, GDPR, HIPAA, and ISO certified in just one week. Open-source compliance management platform with no vendor lock-in. Backed by Y Combinator.",
-  shortDescription: "Open-source compliance management platform for modern teams",
+  description:
+    "Get SOC 2, GDPR, HIPAA, and ISO certified in just one week. Open-source compliance management platform with no vendor lock-in. Backed by Y Combinator.",
+  shortDescription:
+    "Open-source compliance management platform for modern teams",
   keywords: [
     "SOC 2 compliance",
     "GDPR compliance",

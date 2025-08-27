@@ -4,7 +4,8 @@ import siteConfig from "@/app/metadata.config";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Understand how Probo collects, uses, and protects your personal information.",
+  description:
+    "Understand how Probo collects, uses, and protects your personal information.",
   alternates: {
     canonical: `${siteConfig.url}/privacy`,
   },

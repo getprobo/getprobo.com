@@ -3,19 +3,19 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-    --color-dark-50: #FAFAFA;
-    --color-dark-100: #F1EFED;
-    --color-dark-300: #E4E2DD;
-    --color-dark-400: #A0A4A3;
-    --color-dark-600: #6A7270;
-    --color-dark-900: #101E1C;
+  --color-dark-50: #fafafa;
+  --color-dark-100: #f1efed;
+  --color-dark-300: #e4e2dd;
+  --color-dark-400: #a0a4a3;
+  --color-dark-600: #6a7270;
+  --color-dark-900: #101e1c;
 
-    --color-yellow-400: #E6FF03;
+  --color-yellow-400: #e6ff03;
 
-    --breakpoint-md: 51rem;
-    --breakpoint-lg: 80rem;
+  --breakpoint-md: 51rem;
+  --breakpoint-lg: 80rem;
 }
 
 :root {
-    font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }

@@ -32,38 +32,36 @@ export function SignInDropdown() {
 
   return (
     <div
-      className="relative dropdown-container"
+      className="dropdown-container relative"
       ref={dropdownRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <button className="gap-2 bg-[#212121] text-white hover:bg-[#2a2a2a] transition-all rounded-full px-6 py-2 flex items-center">
-        <LogIn className="h-4 w-4 mr-2" />
+      <button className="flex items-center gap-2 rounded-full bg-[#212121] px-6 py-2 text-white transition-all hover:bg-[#2a2a2a]">
+        <LogIn className="mr-2 h-4 w-4" />
         Sign in
       </button>
 
       <div
-        className={`absolute right-0 mt-2 w-64 p-0 border-0 bg-[#212121] backdrop-blur-xs shadow-lg rounded-md z-10 
-                    transition-all duration-200 ease-in-out transform origin-top-right
-                    ${
-                      isHovering
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-[-8px] pointer-events-none"
-                    }`}
+        className={`absolute right-0 z-10 mt-2 w-64 origin-top-right transform rounded-md border-0 bg-[#212121] p-0 shadow-lg backdrop-blur-xs transition-all duration-200 ease-in-out ${
+          isHovering
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-[-8px] opacity-0"
+        }`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <div className="p-3">
-          <h3 className="text-sm font-medium mb-3 px-2 pt-1 text-[#c9ff3c]">
+          <h3 className="mb-3 px-2 pt-1 text-sm font-medium text-[#c9ff3c]">
             Select your region
           </h3>
           <div className="grid gap-2">
             <a
               rel="nofollow noopener noreferrer"
               href="https://us.console.getprobo.com"
-              className="w-full justify-start gap-3 px-3 py-3 text-sm hover:bg-[#c9ff3c]/10 text-white flex items-center rounded-md transition-colors"
+              className="flex w-full items-center justify-start gap-3 rounded-md px-3 py-3 text-sm text-white transition-colors hover:bg-[#c9ff3c]/10"
             >
-              <div className="flex items-center justify-center w-8 h-8 rounded-full overflow-hidden">
+              <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
                 <span className="text-xl">🇺🇸</span>
               </div>
               <div className="flex flex-col items-start">
@@ -74,9 +72,9 @@ export function SignInDropdown() {
             <a
               rel="nofollow noopener noreferrer"
               href="https://eu.console.getprobo.com"
-              className="w-full justify-start gap-3 px-3 py-3 text-sm hover:bg-[#c9ff3c]/10 text-white flex items-center rounded-md transition-colors"
+              className="flex w-full items-center justify-start gap-3 rounded-md px-3 py-3 text-sm text-white transition-colors hover:bg-[#c9ff3c]/10"
             >
-              <div className="flex items-center justify-center w-8 h-8 rounded-full overflow-hidden">
+              <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
                 <span className="text-xl">🇪🇺</span>
               </div>
               <div className="flex flex-col items-start">

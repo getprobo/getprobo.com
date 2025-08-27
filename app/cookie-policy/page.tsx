@@ -4,7 +4,8 @@ import siteConfig from "@/app/metadata.config";
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
-  description: "Learn about how Probo uses cookies and similar technologies to improve your experience.",
+  description:
+    "Learn about how Probo uses cookies and similar technologies to improve your experience.",
   alternates: {
     canonical: `${siteConfig.url}/cookie-policy`,
   },

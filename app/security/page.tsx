@@ -4,7 +4,8 @@ import siteConfig from "@/app/metadata.config";
 
 export const metadata: Metadata = {
   title: "Security",
-  description: "Learn about Probo's security practices and how we protect your data.",
+  description:
+    "Learn about Probo's security practices and how we protect your data.",
   alternates: {
     canonical: `${siteConfig.url}/security`,
   },

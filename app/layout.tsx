@@ -173,7 +173,7 @@ export default function RootLayout({
         />
 
         <link rel="manifest" href="/site.webmanifest" />
-        
+
         <OrganizationStructuredData />
         <WebSiteStructuredData />
         <SoftwareApplicationStructuredData />
