@@ -23,7 +23,6 @@ Submit issues and pull requests via GitHub.
 ## Resources
 
 - Main repository: [github.com/getprobo/probo](https://github.com/getprobo/probo)
-- Documentation: See `/docs` directory
 
 ## License
 
