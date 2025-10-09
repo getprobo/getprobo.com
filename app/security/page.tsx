@@ -47,8 +47,8 @@ export default function SecurityPage() {
           </li>
           <li>
             <strong>Network Security:</strong> All data in transit is encrypted
-            using TLS 1.3, and we employ strict firewall rules and network
-            segregation with VPN access
+            using TLS 1.2 or 1.3, and we employ strict firewall rules and
+            network segregation with VPN access
           </li>
           <li>
             <strong>Data Encryption:</strong> All data at rest is encrypted
