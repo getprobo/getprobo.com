@@ -329,7 +329,7 @@ export default function Home() {
           />
         </div>
         <div className="gap-0.2 grid grid-cols-1 text-center text-[28px] leading-[200%] font-normal whitespace-nowrap md:text-[56px] md:leading-[120%] lg:text-[64px]">
-          <p className="text-dark-900">Compliance for Startups</p>
+          <p className="text-dark-900">Your compliance officer</p>
           <div className="text-dark-600">
             <TypewriterEffect
               words={[
@@ -341,7 +341,7 @@ export default function Home() {
                 "ISO 27701",
               ]}
             />
-            <span>in one week</span>
+            <span>under control</span>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
