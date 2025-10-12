@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/cookie-policy`,
   },
+  openGraph: {
+    url: `${siteConfig.url}/cookie-policy`,
+  },
 };
 
 export default function CookiePolicyPage() {

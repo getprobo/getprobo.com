@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/subprocessors`,
   },
+  openGraph: {
+    url: `${siteConfig.url}/subprocessors`,
+  },
 };
 
 export default function SubprocessorsPage() {

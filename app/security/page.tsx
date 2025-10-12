@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/security`,
   },
+  openGraph: {
+    url: `${siteConfig.url}/security`,
+  },
 };
 
 export default function SecurityPage() {
