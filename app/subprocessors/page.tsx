@@ -5,7 +5,7 @@ import siteConfig from "@/app/metadata.config";
 export const metadata: Metadata = {
   title: "Subprocessors",
   description:
-    "View the list of third-party service providers that Probo uses to deliver our services.",
+    "View the complete list of third-party service providers and subprocessors that Probo uses to securely deliver our compliance services.",
   alternates: {
     canonical: `${siteConfig.url}/subprocessors`,
   },

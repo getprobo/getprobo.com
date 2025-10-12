@@ -5,7 +5,7 @@ import siteConfig from "@/app/metadata.config";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "Read Probo's terms of service and understand your rights and responsibilities.",
+    "Read Probo's terms of service to understand your rights, responsibilities, and how we handle data ownership for our compliance platform.",
   alternates: {
     canonical: `${siteConfig.url}/terms`,
   },
