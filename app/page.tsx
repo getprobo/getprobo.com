@@ -328,9 +328,9 @@ export default function Home() {
             className="h-6 w-29"
           />
         </div>
-        <div className="gap-0.2 grid grid-cols-1 text-center text-[28px] leading-[200%] font-normal whitespace-nowrap md:text-[56px] md:leading-[120%] lg:text-[64px]">
-          <p className="text-dark-900">Your compliance officer</p>
-          <div className="text-dark-600">
+        <h1 className="gap-0.2 grid grid-cols-1 text-center text-[28px] leading-[200%] font-normal whitespace-nowrap md:text-[56px] md:leading-[120%] lg:text-[64px]">
+          <span className="text-dark-900">Your compliance officer</span>
+          <span className="text-dark-600">
             <TypewriterEffect
               words={[
                 "SOC 2",
@@ -342,8 +342,8 @@ export default function Home() {
               ]}
             />
             <span>under control</span>
-          </div>
-        </div>
+          </span>
+        </h1>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Link
             className="bg-dark-300 text-dark-900 min-w-64 rounded-full px-6 py-5 text-center leading-[100%] font-semibold md:w-fit md:min-w-0"

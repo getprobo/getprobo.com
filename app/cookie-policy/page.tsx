@@ -47,9 +47,9 @@ export default function CookiePolicyPage() {
   return (
     <Section className="bg-dark-50">
       <div className="mb-20">
-        <h2 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
+        <h1 className="text-dark-900 mb-16 text-center text-5xl font-normal not-italic">
           Cookie Policy
-        </h2>
+        </h1>
         <p className="text-dark-900 text-center">
           Last updated: {new Date().toLocaleDateString()}
         </p>
