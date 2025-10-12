@@ -12,6 +12,14 @@ export const metadata: Metadata = {
       "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
     url: `${siteConfig.url}/about`,
     type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}${siteConfig.ogImage}`,
+        width: 1200,
+        height: 630,
+        alt: "About Probo - Open-Source Compliance Platform",
+      },
+    ],
   },
   alternates: {
     canonical: `${siteConfig.url}/about`,
