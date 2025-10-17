@@ -355,7 +355,7 @@ export default function Home() {
             className="bg-dark-900 flex min-w-64 justify-center gap-2.5 rounded-full px-6 py-5 text-center leading-[100%] font-semibold text-yellow-400 md:w-fit md:min-w-0"
             href="https://hexacc.typeform.com/getstarted"
           >
-            Get started <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+            Get free advice <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
           </Link>
         </div>
         <div
@@ -394,7 +394,7 @@ export default function Home() {
           className="bg-dark-900 mx-auto flex min-w-54 justify-center gap-2.5 rounded-full px-6 py-5 text-center leading-[100%] font-semibold text-yellow-400 md:w-fit md:min-w-0"
           href="https://hexacc.typeform.com/getstarted"
         >
-          Get started <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+          Get free advice <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
         </Link>
       </section>
 

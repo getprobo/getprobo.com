@@ -31,7 +31,7 @@ export function Nav() {
             href="https://hexacc.typeform.com/getstarted"
             className="text-dark-900 bg-dark-300 hidden w-fit rounded-full px-6 py-5 text-base leading-[100%] font-semibold md:flex md:items-center md:gap-2.5"
           >
-            Get started <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+            Talk to us<ArrowRight className="h-4 w-4" strokeWidth={2.5} />
           </Link>
           <button
             className="bg-dark-900 w-fit rounded-full p-4 text-yellow-400 lg:hidden"
