@@ -1,0 +1,18 @@
+---
+import Welcome from '../components/Welcome.astro';
+import Layout from '../layouts/Layout.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout>
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="w-200 h-50" transition:animate="slide">
+      <img class="block object-cover" src="https://picsum.photos/id/237/800/200" alt=""/>
+    </div>
+
+    <h1 class="text-2xl font-bold my-4" transition:name="title">Ceci est un titre</h1>
+  </div>
+</Layout>
