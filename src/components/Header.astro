@@ -1,13 +1,16 @@
 ---
-import Link from "./Link.astro";
+import { Image } from "astro:assets";
+import Logo from '../assets/probo-logo.svg'
+import NavLink from "./NavLink.astro";
 ---
 <header class="container mx-auto flex justify-between items-center py-4">
-  <a href="/">Logo</a>
+  <a href="/">
+    <Image src={Logo} alt="Logo probo" width={73} height={20}/>
+  </a>
   <nav>
-    <Link href="/about">About</Link>
-    <a href="#">Blog</a>
-    <a href="#">Github</a>
-    <a href="#">Access your trust center</a>
-    <a href="#">Get Certified</a>
+    <NavLink href="/about">About</NavLink>
+    <NavLink href="/blog">Blog</NavLink>
+    <NavLink href="https://github.com/getprobo">GitHub</NavLink>
+    <NavLink href="#">Access your trust center</NavLink>
   </nav>
 </header>

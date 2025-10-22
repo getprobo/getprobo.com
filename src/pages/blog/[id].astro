@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import Prose from "../../components/Prose.astro";
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const id = post.data.date.getTime();
+---
+
+<Layout title={post.data.title}>
+  <main class="container my-10 sm:my-20">
+    <a href="/blog" class="flex items-center gap-2 text-quaternary mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path fill="#C3C8C2" fill-rule="evenodd" d="M18.566 10.234a.8.8 0 0 1 0 1.132L13.93 16l4.635 4.634a.8.8 0 0 1-1.132 1.132l-5.2-5.2a.8.8 0 0 1 0-1.132l5.2-5.2a.8.8 0 0 1 1.132 0Z" clip-rule="evenodd"/></svg>
+      Back to Blog
+    </a>
+    <div  class="text-muted-foreground mb-5">{dateFormatter.format(new Date(post.data.date))}, by {post.data.author.name}</div>
+    <h1 class="text-h2 font-medium mb-10" transition:name={`title-${id}`}>{post.data.title}</h1>
+    <p  class="text-h3 font-medium mb-10">
+      {post.data.excerpt}
+    </p>
+    <Prose>
+      <Content/>
+    </Prose>
+  </main>
+</Layout>

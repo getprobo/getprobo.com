@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Portrait from '../assets/antoine-bouchardy.png';
+import Image from 'astro/components/Image.astro';
+import { getCollection } from 'astro:content';
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Layout title="Blog">
+  <main class="container my-10 sm:my-20">
+    <h1 class="text-h2 sm:text-h1 font-medium mb-3">Blog</h1>
+    <p class="text-base text-muted-foreground mb-10 sm:mb-16">
+      The latest news from Probo
+    </p>
+    <div class="flex flex-col sm:grid sm:grid-cols-[1fr_320px] gap-10 sm:gap-30">
+      <section>
+        {allPosts.map((post: any) =>
+          <article class="pb-6 border-b last:border-b-0 pt-6 first:pt-0 sm:pt-10 sm:pb-10 sm:first:pt-0">
+            <div  class="text-muted-foreground">{dateFormatter.format(new Date(post.data.date))}, by {post.data.author.name}</div>
+            <h2 transition:name={`title-${post.data.date.getTime()}`}>
+              <a href={`/blog/${post.id}`} class="block hover:underline text-h3 font-medium mt-4 mb-2">
+                {post.data.title}
+              </a>
+            </h2>
+            <p  class="text-lg text-muted-foreground">
+              {post.data.excerpt}
+            </p>
+          </article>
+        )}
+      </section>
+      <aside>
+        <Image class="block mx-auto sm:mx-0 mb-10" src={Portrait} alt="Portrait of Antoine Bouchardy" width={164} height={164} />
+        <h2 class="text-xs font-medium mb-2">Written by Antoine Bouchardy</h2>
+        <p class="text-xs text-muted-foreground">
+          Antoine Bouchardy is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he’s not building Probo, you’ll find him cycling or tinkering with open-source projects.
+        </p>
+      </aside>
+    </div>
+  </main>
+</Layout>
