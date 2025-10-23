@@ -7,7 +7,7 @@ import Button from "../components/ui/Button.astro";
 import Badges from "../components/Badges.svelte";
 ---
 
-<Layout title="Ceci est ma page">
+<Layout title="Probo - Compliance for Startups in One Week" description="Get SOC 2, GDPR, HIPAA, and ISO certified in just one week. Open-source compliance management platform with no vendor lock-in. Backed by Y Combinator.">
     <AnimatedHero>
         <div class="w-max mx-auto py-2 px-4 yc-btn text-muted-foreground flex gap-2 items-center mb-6 sm:mb-8">
             Backed by
@@ -23,7 +23,7 @@ import Badges from "../components/Badges.svelte";
             <Button variant="secondary" size="lg" href="https://github.com/getprobo/getprobo.com">Open-source</Button>
             <Button size="lg" href="https://hexacc.typeform.com/getstarted">Get certified</Button>
         </div>
-        <Badges count={6} countMobile={3} client:only="svelte" className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-10"/>
+        <Badges count={5} countMobile={3} client:load className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-10"/>
     </AnimatedHero>
 </Layout>
 

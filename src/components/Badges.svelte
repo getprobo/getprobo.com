@@ -19,20 +19,21 @@
 
 <script lang="ts">
   import { scale } from 'svelte/transition';
-
-
   import { onMount, onDestroy } from 'svelte';
-  import './FrameworkBadge.ts'
   import { frameworks } from '../data/frameworks.ts'
+  import {windowWidth} from "../lib/window.ts";
+  import('../components/FrameworkBadge.ts')
 
   let {count, className, countMobile}: { count: number, countMobile?: number, className: string } = $props();
   let timer: ReturnType<typeof setTimeout> | null = null
-  let innerWidth = $state(window.innerWidth);
+  let innerWidth = $state(windowWidth());
   let isMobile = $derived(innerWidth < 640);
   $effect(() => {
     visibleFrameworks = frameworks.slice(0, isMobile && countMobile ? countMobile : count)
   })
   let visibleFrameworks = $state(frameworks.slice(0, count));
+
+  // TODO : Stop the timer when the component is not visible
 
   onMount(() => {
     timer = setInterval(() => {
