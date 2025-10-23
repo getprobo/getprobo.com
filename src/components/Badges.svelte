@@ -1,6 +1,6 @@
 <div class={className}>
     {#each visibleFrameworks as framework, index (index)}
-        <div class="text-center grid place-items-center overflow-hidden "
+        <div class="text-center grid place-items-center overflow-hidden mix-blend-multiply"
         >
             {#key framework.badge}
             <div
@@ -38,6 +38,9 @@
     timer = setInterval(() => {
       // Pick one random available framework
       const availableFrameworks = frameworks.filter(framework => !visibleFrameworks.map(f => f.badge).includes(framework.badge));
+      if (availableFrameworks.length === 0 ){
+        return;
+      }
       const randomFramework = availableFrameworks[Math.floor(Math.random() * availableFrameworks.length)];
       const randomIndex = Math.floor(Math.random() * count);
       visibleFrameworks[randomIndex] = randomFramework;

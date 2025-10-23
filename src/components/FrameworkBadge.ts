@@ -1,4 +1,4 @@
-import lottie, {type AnimationItem} from 'lottie-web/build/player/lottie_light';
+import lottie, {type AnimationItem} from 'lottie-web';
 
 /**
  * Custom element to handle displaying animated framework badges
