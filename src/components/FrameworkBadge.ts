@@ -1,5 +1,8 @@
 import lottie, {type AnimationItem} from 'lottie-web/build/player/lottie_light';
 
+/**
+ * Custom element to handle displaying animated framework badges
+ */
 export class FrameworkBadge extends HTMLElement {
 
   animation: AnimationItem | null = null;
@@ -19,7 +22,10 @@ export class FrameworkBadge extends HTMLElement {
       path: `/frameworks/${filename}.json`
     });
     this.animation.addEventListener('complete', () => {
-      // this.animation?.goToAndPlay(this.animation?.getDuration(true) / 2, true);
+      if (!this.animation) {
+        return;
+      }
+      this.animation?.goToAndPlay(300, true);
     })
   }
 
