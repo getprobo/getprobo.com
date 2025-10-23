@@ -1,0 +1,35 @@
+---
+import {tv} from "tailwind-variants";
+const button = tv({
+  base: 'font-medium rounded-full leading-none transition-all inline-flex items-center flex-none justify-center gap-2',
+  variants: {
+    variant: {
+      primary: 'bg-primary text-primary-foreground hover:bg-primary/80',
+      secondary: 'border shadow-btn bg-secondary'
+    },
+    size: {
+      default: 'px-3 h-8 text-sm',
+      lg: 'py-1.5 text-lg px-4',
+      icon: 'size-8'
+    }
+  },
+  defaultVariants: {
+    variant: 'primary',
+    size: 'default',
+  }
+});
+let Template = 'button'
+if (Astro.props.href) {
+  Template = 'a'
+}
+if (Astro.props.as) {
+  Template = Astro.props.as
+}
+const props = {
+  ...Astro.props,
+  class: button(Astro.props)
+}
+---
+
+
+<Template {...props}><slot/></Template>

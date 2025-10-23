@@ -1,11 +1,9 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-
+import {defineConfig} from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-
-import preact from '@astrojs/preact';
-
 import mdx from '@astrojs/mdx';
+
+import svelte from '@astrojs/svelte';
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,5 +11,5 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [preact(), mdx()]
+  integrations: [mdx(), svelte()]
 });

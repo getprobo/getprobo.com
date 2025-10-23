@@ -1,0 +1,27 @@
+---
+import {Image} from "astro:assets";
+import Logo from '../../assets/probo-logo-only.svg'
+import Badges from '../Badges.svelte'
+---
+
+<div class="bg-muted py-10 sm:py-20">
+    <div class="container">
+        <Image src={Logo} alt="Logo probo" width={48} height={48} class="mb-6 mx-auto"/>
+        <h2 class="text-h3 text-center font-medium mb-3">Managed frameworks</h2>
+        <p class="text-lg text-center text-muted-foreground mb-12">
+            Compliant with every major standard.
+        </p>
+
+        <Badges count={5} countMobile={6} client:only className="grid grid-cols-3 gap-2 gap-y-10 justify-items-center  sm:grid-cols-5 sm:gap-x-10 mb-13 justify-center max-w-[660px] mx-auto"/>
+
+        <a href="https://hexacc.typeform.com/getstarted"
+           class="text-lg flex justify-center items-center text-success font-medium gap-1.5 group">
+            Get certified
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="group-hover:translate-x-1 transition-transform">
+                <path d="M9.33325 4L13.3333 7.99999L9.33325 12" stroke="#5D770D" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12.6667 8H2.66675" stroke="#5D770D" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+
+    </div>
+</div>

@@ -1,0 +1,25 @@
+---
+import YCombinator from '../../assets/photos/ycombinator.png'
+import SelfDrivingCar from '../../assets/photos/self-driving-car.png'
+import Conference from '../../assets/photos/conference.png'
+import ProboAds from '../../assets/photos/probo-ads.png'
+import Bryan from '../../assets/photos/bryan.png'
+import Image from 'astro/components/Image.astro'
+import clsx from "clsx";
+
+const photos = [
+  YCombinator, Bryan, Conference, ProboAds, SelfDrivingCar,
+]
+---
+
+<section class="grid grid-cols-2 sm:grid-cols-4">
+  {photos.map((photo, k) => (
+          <Image
+                  layout="constrained"
+                  src={photo} alt="A photo of Probo"
+                  width={960 / (k === 0 ? 1 : 2)}
+                  height={1200 / (k === 0 ? 1 : 2)}
+                  class={clsx("aspect-square sm:aspect-480/600 object-cover w-full h-auto", k === 0 && "col-span-2 sm:row-span-2")}
+          />
+  ))}
+</section>

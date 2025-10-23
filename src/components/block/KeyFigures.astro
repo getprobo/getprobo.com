@@ -1,0 +1,26 @@
+---
+import clsx from "clsx";
+const items = [
+  {label: '$20m', description: 'raised in total funding'},
+  {label: '$20m', description: 'raised in total funding'},
+  {label: '$20m', description: 'raised in total funding'},
+  {label: '$20m', description: 'raised in total funding'},
+  {label: '$20m', description: 'raised in total funding'},
+  {label: '$20m', description: 'raised in total funding'},
+]
+---
+
+
+<section class="bg-active">
+    <div class="sm:container">
+        <div class="grid grid-cols-2 sm:grid-cols-3 overflow-hidden">
+          {items.map((item, k) =>
+                  <div class="flex flex-col gap-2 aspect-square justify-between items-between p-5 sm:p-10 border-r border-b -mb-[1px] -mr-[1px] sm:aspect-360/340 intersect-once intersect:animate-slide-in"
+                       style={`animation-delay: ${k * 0.1}s;`}>
+                      <span class="text-quote">{item.label}</span>
+                      <span class="text-muted-foreground">{item.description}</span>
+                  </div>
+          )}
+        </div>
+    </div>
+</section>

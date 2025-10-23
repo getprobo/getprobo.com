@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Portrait from '../assets/antoine-bouchardy.png';
+import Portrait from '../assets/antoine-bourchardy.png';
 import Image from 'astro/components/Image.astro';
 import { getCollection } from 'astro:content';
+import Frameworks from "../components/block/Frameworks.astro";
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );

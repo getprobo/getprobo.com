@@ -1,25 +1,62 @@
 ---
 import '../styles/global.css';
-import { ClientRouter } from "astro:transitions";
+import {ClientRouter} from "astro:transitions";
 import Header from "../components/Header.astro";
-const { title } = Astro.props;
+import Footer from "../components/Footer.astro";
+const {title, description} = Astro.props;
+interface Props {
+  title: string
+  description?: string
+}
+const seoTitle = title ? `${title} | Probo` : 'Open-Source Compliance Platform | Probo';
+const canonical = Astro.url.href;
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <title>{seoTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
-    <ClientRouter />
-	</head>
-	<body class="text-primary text-base font-sans">
-  <Header/>
-		<slot />
-	</body>
+    <ClientRouter/>
+
+
+    <meta name="description" content={description}/>
+    <link rel="author" href="https://linkedin.com/in/antoinebouchardy"/>
+    <meta name="author" content="Antoine Bouchardy"/>
+    <link rel="author" href="https://linkedin.com/in/gearnode"/>
+    <meta name="author" content="Bryan Frimin"/>
+    <meta name="keywords"
+          content="SOC 2 compliance,GDPR compliance,HIPAA compliance,ISO 27001 certification,ISO 42001 certification,ISO 27701 certification,compliance automation,security compliance,compliance management software,startup compliance,open source compliance,compliance audit,Y Combinator startup,security certification,data privacy compliance"/>
+    <meta name="creator" content="Probo"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"/>
+    <link rel="canonical" href={Astro.url.href}/>
+    <meta property="og:title" content={seoTitle}/>
+    <meta property="og:description" content={description}/>
+    <meta property="og:url" content={canonical}/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@getprobo"/>
+    <meta name="twitter:creator" content="@getprobo"/>
+    <meta name="twitter:title" content="Probo - Compliance for Startups in One Week"/>
+    <meta name="twitter:description"
+          content={description}/>
+    <meta name="twitter:image" content="https://www.getprobo.com/og.png"/>
+</head>
+<body class="text-primary text-base font-sans">
+<Header/>
+<slot/>
+<Footer/>
+</body>
 </html>
+
+
+<script>
+  import {Observer} from 'tailwindcss-intersect';
+
+  Observer.start();
+</script>

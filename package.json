@@ -10,13 +10,19 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.7",
-    "@astrojs/preact": "^4.1.1",
+    "@astrojs/svelte": "^7.2.0",
     "@tailwindcss/vite": "^4.1.15",
     "astro": "^5.14.8",
-    "preact": "^10.27.2",
-    "tailwindcss": "^4.1.15"
+    "clsx": "^2.1.1",
+    "lottie-web": "^5.13.0",
+    "svelte": "^5.41.2",
+    "tailwindcss": "^4.1.15",
+    "tailwindcss-intersect": "^2.2.0",
+    "tailwindcss-motion": "^1.1.1",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.19"
+    "@tailwindcss/typography": "^0.5.19",
+    "tailwind-variants": "^3.1.1"
   }
 }

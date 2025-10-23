@@ -1,7 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import YCombinator from '../assets/ycombinator.png'
+import {Image} from 'astro:assets';
+import AnimatedHero from "../components/ui/AnimatedHero.astro";
+import Button from "../components/ui/Button.astro";
+import Badges from "../components/Badges.svelte";
 ---
 
 <Layout title="Ceci est ma page">
-  Bonjour
+    <AnimatedHero>
+        <div class="w-max mx-auto py-2 px-4 yc-btn text-muted-foreground flex gap-2 items-center mb-6 sm:mb-8">
+            Backed by
+            <Image src={YCombinator} alt="Logo YCombinator" width={77} height={15}/>
+        </div>
+        <h1 class="text-h2 sm:text-h1 font-medium text-center text-balance mb-6 sm:mb-8">
+            From Chaos to Compliance — in a few weeks.
+        </h1>
+        <p class="text-lg text-muted-foreground text-balance text-center max-w-100 mx-auto mb-6 sm:mb-8">
+            Ensure your business meets every standard without slowing down your growth.
+        </p>
+        <div class="flex items-center gap-3 justify-center mb-10 sm:mb-12">
+            <Button variant="secondary" size="lg" href="https://github.com/getprobo/getprobo.com">Open-source</Button>
+            <Button size="lg" href="https://hexacc.typeform.com/getstarted">Get certified</Button>
+        </div>
+        <Badges count={6} countMobile={3} client:only="svelte" className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-10"/>
+    </AnimatedHero>
 </Layout>
+
+<style>
+</style>
+
