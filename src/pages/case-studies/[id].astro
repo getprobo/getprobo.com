@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import Prose from "../../components/Prose.astro";
 import Image from 'astro/components/Image.astro';
 import Button from "../../components/ui/Button.astro";
+import {dynamicImages} from "../../lib/images.ts";
 export async function getStaticPaths() {
   const caseStudies = await getCollection('caseStudies');
   return caseStudies.map(item => ({
@@ -14,8 +15,11 @@ export async function getStaticPaths() {
 const {item} = Astro.props;
 const {Content} = await render(item);
 const data = item.data
-const image = data.image ? (await import((`../../assets/case-studies/${data.image}`))).default : null
-const logo = data.image ? (await import((`../../assets/case-studies/${data.logo}`))).default : null
+const images = dynamicImages(import.meta.glob<{
+  default: ImageMetadata
+}>('/src/assets/case-studies/*.{jpeg,jpg,png,gif,svg}'))
+const image = images(data.image)
+const logo = images(data.logo)
 ---
 
 <Layout title={item.data.title}>
