@@ -1,0 +1,33 @@
+---
+import LogosScroll from '../LogosScroll.svelte'
+const logos = [{
+  image: 'ahrefs.svg',
+  alt: 'Ahrefs',
+  href: 'https://ahrefs.com',
+}, {
+  image: 'carbonfact.svg',
+  alt: 'CarbonFact',
+  href: 'https://carbonfact.com',
+}, {
+  image: 'ahrefs.svg',
+  alt: 'Ahrefs',
+  href: 'https://ahrefs.com',
+}, {
+  image: 'carbonfact.svg',
+  alt: 'CarbonFact',
+  href: 'https://carbonfact.com',
+}, {
+  image: 'ahrefs.svg',
+  alt: 'Ahrefs',
+  href: 'https://ahrefs.com',
+}]
+---
+<section class="container p-0 overflow-hidden relative">
+    <LogosScroll class="flex items-center h-16 sm:h-30 animate-scroll w-max" client:load>
+      {logos.map((logo) => (
+        <a href={logo.href} target="_blank" rel="noopener noreferrer" class="flex-none block mx-4 sm:mx-15" aria-label={logo.alt}>
+            <img src={`/clients/${logo.image}`} alt={logo.alt} class="h-3 sm:h-4 w-auto" />
+        </a>
+      ))}
+    </LogosScroll>
+</section>

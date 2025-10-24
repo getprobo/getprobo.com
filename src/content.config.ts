@@ -4,4 +4,8 @@ import { glob } from "astro/loaders";
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/data/blog" }),
 });
-export const collections = { blog };
+
+const caseStudies = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/data/case-studies" }),
+});
+export const collections = { blog, caseStudies };

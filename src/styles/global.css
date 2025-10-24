@@ -25,10 +25,13 @@
     --color-level-0: #FFFFFB;
     --color-level-3: #141E12;
     --color-border-low: #022A0213;
+    --color-border-mid: #001A0027;
     --color-quaternary: #C3C8C2;
     --color-accent: #93C926;
     --color-success: #5D770D;
     --color-active: #E4F7C7;
+    --color-invert: #FFF;
+    --color-highlight: #0027000D;
 
     --text-h1: 4.5rem; /* 72px */
     --text-h1--line-height: 1;
@@ -38,13 +41,17 @@
     --text-h2--line-height: 1.09;
     --text-h2--letter-spacing: -1.4px;
 
-    --text-h3: 1.4375rem; /* 22px */
-    --text-h3--line-height: 1.08;
-    --text-h3--letter-spacing: -0.4px;
+    --text-h3: 2.125rem; /* 34px */
+    --text-h3--line-height: 1.11;
+    --text-h3--letter-spacing: -0.6px;
 
-    --text-h4: 1.25rem; /* 22px */
+    --text-h4: 1.4375rem; /* 23px */
     --text-h4--line-height: 1.08;
-    --text-h4--letter-spacing: -0.4px;
+    --text-h4--letter-spacing: -0.6px;
+
+    --text-h5: 1.3125rem; /* 21px */
+    --text-h5--line-height: 1.2;
+    --text-h5--letter-spacing: -0.4px;
 
     --text-quote: 2rem; /* 32px */
     --text-quote--line-height: 1.25;
@@ -70,12 +77,42 @@
     --text-xxs--line-height: 1.58888;
     --text-xxs--letter-spacing: 0px;
 
-    --text-quote-mobile: 1.5rem; /* 24px */
-    --text-quote-mobile--line-height: 2;
-    --text-quote-mobile--letter-spacing: -0.4px;
+    --text-quote-sm: 1.5rem; /* 24px */
+    --text-quote-sm--line-height: 1.3;
+    --text-quote-sm--letter-spacing: -0.6px;
 
     --shadow-*: initial;
     --shadow-btn: 0 1px 3px #0B13241A, inset 0 1px 0px rgba(0, 0, 0, 0.1);
+
+    --animate-scroll: scroll 4s linear infinite;
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    --animate-scaleX: scaleX 4s linear infinite;
+    @keyframes scaleX {
+        0% {
+            transform: scaleX(0);
+        }
+        100% {
+            transform: scaleX(1);
+        }
+    }
+}
+
+.dark {
+    --color-foreground: #ECEEEC;
+    --color-muted-foreground: #9AA299;
+    --color-muted: #D6FBC40F;
+    --color-level-0: #151715;
+    --color-highlight: #D6FBC40F;
+    --color-border-mid: #E9FEDF1B;
+    --color-tertiary-foreground: #778175;
 }
 
 @utility animate-slide-in {
@@ -93,6 +130,17 @@
         height: 1px;
         border: none;
         background-color: var(--color-border-low);
+    }
+
+    .embla {
+        overflow: hidden;
+    }
+    .embla__container {
+        display: flex;
+    }
+    .embla__slide {
+        flex: 0 0 100%;
+        min-width: 0;
     }
 }
 

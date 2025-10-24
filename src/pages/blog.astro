@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import Portrait from '../assets/antoine-bourchardy.png';
 import Image from 'astro/components/Image.astro';
 import { getCollection } from 'astro:content';
-import Frameworks from "../components/block/Frameworks.astro";
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -12,8 +11,8 @@ const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'lo
 
 <Layout title="Blog">
   <main class="container my-10 sm:my-20">
-    <h1 class="text-h2 sm:text-h1 font-medium mb-3">Blog</h1>
-    <p class="text-base text-muted-foreground mb-10 sm:mb-16">
+    <h1 class="text-h2 sm:text-h1 font-medium mb-3 intersect-once intersect:animate-slide-in">Blog</h1>
+    <p class="text-base text-muted-foreground mb-10 sm:mb-16 intersect-once intersect:animate-slide-in motion-delay-100">
       The latest news from Probo
     </p>
     <div class="flex flex-col sm:grid sm:grid-cols-[1fr_320px] gap-10 sm:gap-30">
@@ -32,7 +31,7 @@ const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'lo
           </article>
         )}
       </section>
-      <aside>
+      <aside class="intersect-once intersect:animate-slide-in motion-delay-250">
         <Image class="block mx-auto sm:mx-0 mb-10" src={Portrait} alt="Portrait of Antoine Bouchardy" width={164} height={164} />
         <h2 class="text-xs font-medium mb-2">Written by Antoine Bouchardy</h2>
         <p class="text-xs text-muted-foreground">

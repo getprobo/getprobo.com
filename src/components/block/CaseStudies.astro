@@ -1,0 +1,58 @@
+---
+import {Image} from 'astro:assets';
+import Slider from '../ui/Slider.svelte'
+import {getCollection} from "astro:content";
+const caseStudies = (await getCollection('caseStudies')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const items = Array.from({length: 7}).map(() => caseStudies).flat();
+---
+
+<section class="dark bg-level-0 text-foreground overflow-hidden">
+    <div class="container py-10 sm:py-30">
+        <h2 class="text-h3 sm:text-h2 font-medium mb-3 intersect-once intersect:animate-slide-in text-center">
+            Real uses cases from real people
+        </h2>
+        <p class="text-muted-foreground text-lg mb-6 intersect-once intersect:animate-slide-in motion-delay-100 text-center">
+            Inspiring stories, real Probo customers
+        </p>
+
+        <a href="https://hexacc.typeform.com/getstarted"
+           class="text-lg flex justify-center items-center font-medium gap-1.5 group intersect-once intersect:animate-slide-in motion-delay-200 mb-10 sm:mb-12">
+            View all case studies
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                 class="group-hover:translate-x-1 transition-transform">
+                <path d="M9.33325 4L13.3333 7.99999L9.33325 12" stroke="currentColor" stroke-width="1.33333"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12.6667 8H2.66675" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </a>
+
+
+        <div class="flex flex-col gap-4 ">
+
+            <Slider client:load theme="dark">
+                <div class="embla overflow-visible">
+                    <div class="embla__container ">
+                      {items.map(async (item) => (
+                              <a href={`/case-studies/${item.id}`}
+                                 class="embla__slide block rounded-2xl overflow-hidden border border-[#30352E] bg-[#D6FBC40F] sm:w-[540px] sm:flex-none sm:mr-6">
+                                  <Image class="w-full h-[158px] sm:h-[570px] object-cover"
+                                         src={(await import((`../../assets/case-studies/${item.data.image}`))).default}
+                                         alt="" width={540}
+                                         height={570} layout="constrained"/>
+                                  <div class="space-y-2 p-5 sm:px-10 sm:py-13">
+                                      <Image src={(await import((`../../assets/case-studies/${item.data.logo}`))).default}
+                                             alt="" class="h-4 w-auto"/>
+                                      <h3 class="text-h4">{item.data.title}</h3>
+                                  </div>
+                              </a>
+                      ))}
+                    </div>
+                </div>
+            </Slider>
+        </div>
+    </div>
+
+</section>
