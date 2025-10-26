@@ -15,7 +15,7 @@ const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'lo
     <p class="text-base text-muted-foreground mb-10 sm:mb-16 intersect-once intersect:animate-slide-in motion-delay-100">
       The latest news from Probo
     </p>
-    <div class="flex flex-col sm:grid sm:grid-cols-[1fr_320px] gap-10 sm:gap-30">
+    <div class="flex flex-col items-start sm:grid sm:grid-cols-[1fr_320px] gap-10 sm:gap-30">
       <section>
         {allPosts.map((post: any) =>
           <article class="pb-6 border-b last:border-b-0 pt-6 first:pt-0 sm:pt-10 sm:pb-10 sm:first:pt-0">
@@ -31,8 +31,8 @@ const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'lo
           </article>
         )}
       </section>
-      <aside class="intersect-once intersect:animate-slide-in motion-delay-250">
-        <Image class="block mx-auto sm:mx-0 mb-10" src={Portrait} alt="Portrait of Antoine Bouchardy" width={164} height={164} />
+      <aside class="intersect-once intersect:animate-slide-in motion-delay-250 sticky top-4">
+        <Image class="block mx-auto sm:mx-0 mb-10" src={Portrait} alt="Portrait of Antoine Bouchardy" format="png" width={164} height={164} />
         <h2 class="text-xs font-medium mb-2">Written by Antoine Bouchardy</h2>
         <p class="text-xs text-muted-foreground">
           Antoine Bouchardy is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he’s not building Probo, you’ll find him cycling or tinkering with open-source projects.

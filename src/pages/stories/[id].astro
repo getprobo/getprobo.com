@@ -6,8 +6,8 @@ import Image from 'astro/components/Image.astro';
 import Button from "../../components/ui/Button.astro";
 import {dynamicImages} from "../../lib/images.ts";
 export async function getStaticPaths() {
-  const caseStudies = await getCollection('caseStudies');
-  return caseStudies.map(item => ({
+  const stories = await getCollection('stories');
+  return stories.map(item => ({
     params: {id: item.id},
     props: {item},
   }));
@@ -17,7 +17,7 @@ const {Content} = await render(item);
 const data = item.data
 const images = dynamicImages(import.meta.glob<{
   default: ImageMetadata
-}>('/src/assets/case-studies/*.{jpeg,jpg,png,gif,svg}'))
+}>('/src/assets/stories/*.{jpeg,jpg,png,gif,svg}'))
 const image = images(data.image)
 const logo = images(data.logo)
 ---

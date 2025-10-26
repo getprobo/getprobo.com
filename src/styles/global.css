@@ -41,8 +41,8 @@
     --text-h2--line-height: 1.09;
     --text-h2--letter-spacing: -1.4px;
 
-    --text-h3: 2.125rem; /* 34px */
-    --text-h3--line-height: 1.11;
+    --text-h3: 2rem; /* 34px */
+    --text-h3--line-height: 1.09;
     --text-h3--letter-spacing: -0.6px;
 
     --text-h4: 1.4375rem; /* 23px */
@@ -83,6 +83,7 @@
 
     --shadow-*: initial;
     --shadow-btn: 0 1px 3px #0B13241A, inset 0 1px 0px rgba(0, 0, 0, 0.1);
+    --shadow-image: 0px 24px 24px -12px #0000000A,0px 12px 12px -6px #0000000A,0px 6px 6px -3px #0000000F,0px 3px 3px -1.5px #0000000F,0px 1px 1px -0.5px #0000000F,0px 0px 0px 1px #0000000F;
 
     --animate-scroll: scroll 4s linear infinite;
     @keyframes scroll {

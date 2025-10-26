@@ -9,5 +9,5 @@ export const frameworks = [
   { label: 'CCPA', badge: 'CCPA' },
   { label: 'ISO 27701', badge: 'ISO27701' },
   { label: 'ISO 42001', badge: 'ISO42001' },
-  { label: 'CASA Compliant', badge: 'CASA' },
-]
+  { label: 'CASA', badge: 'CASA' },
+] as const

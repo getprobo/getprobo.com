@@ -4,7 +4,7 @@ import Logo from '../../assets/probo-logo-only.svg'
 import Badges from '../Badges.svelte'
 ---
 
-<div class="bg-level-0 py-10 sm:py-20">
+<div class="py-10 sm:py-20 bg-[#F8FAF4]">
     <div class="container">
         <Image src={Logo} alt="Logo probo" width={48} height={48} class="mb-6 mx-auto intersect-once intersect:animate-slide-in"/>
         <h2 class="text-h3 sm:text-h2 text-center font-medium mb-3 intersect-once intersect:animate-slide-in motion-delay-50">Managed frameworks</h2>
@@ -12,7 +12,7 @@ import Badges from '../Badges.svelte'
             Compliant with every major standard.
         </p>
 
-        <Badges count={5} countMobile={6} client:visible className="grid grid-cols-3 gap-2 gap-y-10 justify-items-center  sm:grid-cols-5 sm:gap-x-10 mb-13 justify-center max-w-[660px] mx-auto "/>
+        <Badges count={5} countMobile={6} client:visible class="grid grid-cols-3 gap-2 gap-y-10 justify-items-center  sm:grid-cols-5 sm:gap-x-10 mb-13 justify-center max-w-[660px] mx-auto "/>
 
         <a href="https://hexacc.typeform.com/getstarted"
            class="text-lg flex justify-center items-center text-success font-medium gap-1.5 group intersect-once intersect:animate-slide-in motion-delay-250">

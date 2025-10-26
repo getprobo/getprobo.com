@@ -13,16 +13,16 @@ import SaleArg from "../components/ui/SaleArg.astro";
 import TrustImage from '../assets/app/trust.png';
 import SlackImage from '../assets/app/slack.png';
 import OpenSource from "../components/block/OpenSource.astro";
-import CaseStudies from "../components/block/CaseStudies.astro";
+import Stories from "../components/block/Stories.astro";
 
 ---
 
 <Layout title="Probo - Compliance for Startups in One Week" description="Get SOC 2, GDPR, HIPAA, and ISO certified in just one week. Open-source compliance management platform with no vendor lock-in. Backed by Y Combinator.">
     <AnimatedHero>
-        <div class="w-max mx-auto py-2 px-4 yc-btn text-muted-foreground flex gap-2 items-center mb-6 sm:mb-8">
+        <a href="/yc" class="w-max mx-auto py-2 px-4 yc-btn text-muted-foreground flex gap-2 items-center mb-6 sm:mb-8">
             Backed by
             <Image src={YCombinator} alt="Logo YCombinator" width={77} height={15}/>
-        </div>
+        </a>
         <h1 class="text-h2 sm:text-h1 font-medium text-center text-balance mb-6 sm:mb-8">
             From Chaos to Compliance — in a few weeks.
         </h1>
@@ -33,7 +33,7 @@ import CaseStudies from "../components/block/CaseStudies.astro";
             <Button variant="secondary" size="lg" href="https://github.com/getprobo/getprobo.com">Open-source</Button>
             <Button size="lg" href="https://hexacc.typeform.com/getstarted">Get certified</Button>
         </div>
-        <Badges count={5} countMobile={3} client:load className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-10"/>
+        <Badges count={5} countMobile={3} client:load class="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-10"/>
     </AnimatedHero>
 
     <Logos/>
@@ -80,7 +80,7 @@ import CaseStudies from "../components/block/CaseStudies.astro";
     </section>
     <OpenSource/>
 
-    <CaseStudies/>
+    <Stories/>
 
 </Layout>
 

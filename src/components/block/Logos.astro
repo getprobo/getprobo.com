@@ -1,4 +1,5 @@
 ---
+import { clsx } from 'clsx';
 import LogosScroll from '../LogosScroll.svelte'
 const logos = [{
   image: 'ahrefs.svg',
@@ -22,7 +23,7 @@ const logos = [{
   href: 'https://ahrefs.com',
 }]
 ---
-<section class="container p-0 overflow-hidden relative">
+<section class={clsx("container p-0 overflow-hidden relative", Astro.props.class)}>
     <LogosScroll class="flex items-center h-16 sm:h-30 animate-scroll w-max" client:load>
       {logos.map((logo) => (
         <a href={logo.href} target="_blank" rel="noopener noreferrer" class="flex-none block mx-4 sm:mx-15" aria-label={logo.alt}>

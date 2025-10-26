@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Image from 'astro/components/Image.astro';
+import {dynamicImages} from "../lib/images.ts";
+import {getCollection} from 'astro:content';
+import Logos from "../components/block/Logos.astro";
+import FrameworkBadge from "../components/FrameworkBadge.svelte";
+import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
+
+
+const images = dynamicImages(import.meta.glob<{
+  default: ImageMetadata
+}>('/src/assets/stories/*.{jpeg,jpg,png,gif,svg}'))
+const stories = (await getCollection('stories')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout title="Customer stories" description="Inspiring stories, real Probo customers">
+    <main class="container my-10 sm:my-20">
+        <h1 class="text-center text-h2 sm:text-h1 font-medium mb-3 intersect-once intersect:animate-slide-in">Customer
+            Stories</h1>
+        <p class="text-center text-base text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100">
+            Inspiring stories, real Probo customers
+        </p>
+        <Logos class="my-6"/>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+          {stories.map((item) =>
+                  <a href={`/stories/${item.id}`}
+                     class="block rounded-2xl overflow-hidden bg-muted p-2">
+                      <ResponsiveImage
+                              src={images(item.data.image)}
+                              class="aspect-320/180 object-cover rounded-2xl sm:aspect-512/450"
+                              mobile={[640, 360]}
+                              sm={[512, 450]}
+                              alt=""
+                      />
+                      <div class="p-3 sm:p-8 sm:flex items-center">
+                          <div class="space-y-2">
+                              <Image src={images(item.data.logo)} alt="" class="h-4 w-auto"/>
+                              <h3 class="text-h5">{item.data.title}</h3>
+                          </div>
+                          <div class="hidden sm:block border-l px-6">
+                              <div
+                                      class="text-center flex-col flex gap-2.5"
+                              >
+                                  <FrameworkBadge client:only name={item.data.framework} class="block size-15 mx-auto"/>
+                                  <div class="text-xxs">{item.data.framework}</div>
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+          )}
+        </div>
+    </main>
+</Layout>
