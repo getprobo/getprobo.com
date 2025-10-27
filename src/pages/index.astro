@@ -14,6 +14,7 @@ import TrustImage from '../assets/app/trust.png';
 import SlackImage from '../assets/app/slack.png';
 import OpenSource from "../components/block/OpenSource.astro";
 import Stories from "../components/block/Stories.astro";
+import ComplianceTrack from "../components/block/ComplianceTrack.svelte";
 
 ---
 
@@ -38,46 +39,46 @@ import Stories from "../components/block/Stories.astro";
 
     <Logos/>
 
-    <Testimonials/>
+    <ComplianceTrack client:visible />
 
-    <section class="my-20 sm:mt-40 container">
+    <section class="py-10 sm:py-20 container">
         <h2 class="text-h3 sm:text-h2 mb-3 font-medium text-center intersect-once intersect:animate-slide-in">
             Make compliance effortless
         </h2>
-        <p class="text-lg text-muted-foreground text-center intersect-once intersect:animate-slide-in motion-delay-100">
+        <p class="text-lg text-muted-foreground text-center intersect-once intersect:animate-slide-in motion-delay-100 mb-10 sm:mb-12">
             We turn complexity into clarity.
         </p>
 
-        <SaleArg class="my-10" title="Your dedicated compliance expert" >
-          <p>
-              Get matched with a certified compliance officer who works as part of your team.
-          </p>
-        </SaleArg>
+        <div class="flex flex-col gap-10 sm:grid grid-cols-2 sm:gap-x-20 sm:gap-y-12 items-start">
+            <SaleArg title="Your dedicated compliance expert"  image={TrustImage}>
+                <p>
+                    Get matched with a certified compliance officer who works as part of your team.
+                </p>
+            </SaleArg>
 
-        <SaleArg class="my-10" title="Compliance that runs in the background" >
-            <p>
-                Compliance doesn’t have to slow you down. Probo automates evidence collection, manages approvals, and coordinates with auditors — all without interrupting your workflow.
-            </p>
-        </SaleArg>
+            <SaleArg title="Compliance that runs in the background"  image={TrustImage}>
+                <p>
+                    Probo automates collection, approvals, and audits — without interrupting your flow.
+                </p>
+            </SaleArg>
 
-        <SaleArg class="my-10" title="Built to earn entreprise trust" image={TrustImage}>
-            <p>
-                Get the frameworks that open doors to enterprise deals — SOC 2, ISO 27001, GDPR.
-            </p>
-            <p>
-                Create a live Trust Center, share audit reports securely, and prove your security posture instantly.
-            </p>
-        </SaleArg>
+            <SaleArg title="Built to earn entreprise trust" image={TrustImage}>
+                <p>
+                    Create a live Trust Center, share audit reports securely, and prove your security posture instantly.
+                </p>
+            </SaleArg>
 
-        <SaleArg class="my-10" title="Get stuff done on Slack" image={SlackImage}>
-            <p>
-                Everything happens where you already work.
-            </p>
-            <p>Approve policies, review evidence, and complete tasks — all from Slack.
-            </p>
-        </SaleArg>
+            <SaleArg title="Get stuff done on Slack" image={SlackImage}>
+                <p>
+                    Get the frameworks that open doors to enterprise deals — SOC 2, ISO 27001, GDPR.
+                </p>
+            </SaleArg>
+        </div>
 
     </section>
+
+    <Testimonials/>
+
     <OpenSource/>
 
     <Stories/>

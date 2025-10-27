@@ -1,0 +1,24 @@
+---
+import {Image} from 'astro:assets'
+interface Props {
+  author: string;
+  role: string;
+  image: ImageMetadata
+}
+const props = Astro.props;
+---
+
+<article class="splide__slide bg-muted rounded-2xl p-5">
+    <div class="text-h2 font-medium text-muted-foreground">“</div>
+    <blockquote class="text-lg text-muted-foreground mb-6">
+        <slot/>
+    </blockquote>
+    <footer class="flex gap-3 items-center">
+        <Image src={props.image} alt={props.author} width={44} height={44}
+               class="rounded-lg"/>
+        <div class="space-y-1 text-sm">
+            <cite class="font-medium">{props.author}</cite>
+            <div class="text-muted-foreground">{props.role}</div>
+        </div>
+    </footer>
+</article>

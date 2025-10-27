@@ -3,6 +3,7 @@
 @plugin "tailwindcss-motion";
 @plugin "tailwindcss-intersect";
 @plugin "./aria-plugin.ts";
+@import "./splide.css";
 
 @theme {
     --font-sans: "Geist", sans-serif;
@@ -104,6 +105,7 @@
             transform: scaleX(1);
         }
     }
+
 }
 
 .dark {

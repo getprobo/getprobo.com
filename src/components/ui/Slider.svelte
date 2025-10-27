@@ -1,71 +1,27 @@
 <script lang="ts">
-  import EmblaCarousel, {type EmblaCarouselType} from 'embla-carousel'
-  import {onDestroy, onMount} from "svelte";
+  import Splide, {type Options} from '@splidejs/splide';
   import clsx from "clsx";
-  import Autoplay from "embla-carousel-autoplay";
 
-  const {children, theme = "light"} = $props()
-  let root: HTMLDivElement
-  let snaps = $state([] as number[])
-  let currentPage = $state(0)
-  let duration = $state(0)
-  let emblaApi: EmblaCarouselType
+  let slider = $state<HTMLDivElement | null>(null)
+  const props = $props<{children: () => any, options: Options, withOverflow?: boolean}>();
 
-  onMount(() => {
-    emblaApi = EmblaCarousel(root.querySelector('.embla')!, {
-      loop: false,
-      duration: 30
-    }, [
-      Autoplay({playOnInit: true, delay: 5000})
-    ])
-    snaps = emblaApi.scrollSnapList()
-    emblaApi
-      .on('select', () => {
-        currentPage = emblaApi.selectedScrollSnap()
-      })
-      .on('autoplay:timerset', startTimer)
-      .on('autoplay:timerstopped', stopTimer)
-    startTimer()
+  $effect(() => {
+    if (!slider) {
+      return;
+    }
+    const root = slider.querySelector('astro-slot')! as HTMLElement
+    root.setAttribute('class', 'splide__list block')
+    Array.from(root.children).forEach(node => (node as HTMLDivElement).classList.add('splide__slide'))
+    const s = new Splide(slider, props.options).mount()
+
+    return () => {
+      s.destroy();
+    }
   })
-
-  onDestroy(() => {
-    emblaApi?.destroy()
-  })
-
-  const startTimer = () => {
-    const autoplay = emblaApi?.plugins()?.autoplay
-    if (!autoplay) return
-    duration = autoplay.timeUntilNext() ?? 0
-  }
-
-  const stopTimer = () => {
-     duration = 0
-  }
-
-  const play = () => {
-    emblaApi?.plugins()?.autoplay.play()
-  }
-
-  const pause = () => {
-    emblaApi?.plugins()?.autoplay.stop()
-  }
-
 </script>
 
-<div bind:this={root} onpointerover={pause} onpointerleave={play}>
-    {@render children()}
-
-    <div class="w-max px-2 h-9 rounded-full bg-highlight flex items-center mx-auto mt-12">
-        {#each snaps as snap, i}
-            <button aria-label={`Page ${i + 1}`} class="p-2" onclick={() => emblaApi?.scrollTo(i)}>
-                <span class={clsx("h-2 bg-border-mid rounded-full block transition-all overflow-hidden", i === currentPage && duration ? "w-8" : "w-2")}>
-                    {#key duration}
-                        {#if i === currentPage}
-                        <span class="block w-full h-2 bg-tertiary-foreground animate-scaleX origin-left" style={`animation-duration:${duration}ms`}></span>
-                        {/if}
-                    {/key}
-                </span>
-            </button>
-        {/each}
+<div class="splide" bind:this={slider}>
+    <div class={clsx("splide__track", props.withOverflow && 'overflow-visible')} >
+        {@render props.children()}
     </div>
 </div>

@@ -9,14 +9,12 @@ interface Props {
 const {title, image, ...props} = Astro.props;
 ---
 
-<section class={clsx('sm:grid grid-cols-[1fr_600px] gap-20', props.class)}>
-  <div>
-      <h3 class="text-h4 sm:text-h3 font-medium mb-2 sm:pt-6 intersect-once intersect:animate-slide-in ">{title}</h3>
-      <div class="space-y-2 mb-8 text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 text-lg">
-          <slot/>
-      </div>
-  </div>
-  <div class="sm:aspect-600/640 sm:grid place-items-center sm:bg-muted">
-    {image && <Image src={image} alt="" class="max-h-[335px] sm:max-h-[700px] w-auto mx-auto block intersect-once intersect:animate-slide-in motion-delay-200"/>}
-  </div>
+<section class={clsx('flex flex-col sm:flex-col-reverse gap-8 sm:gap-10', props.class)}>
+    <div class="space-y-2">
+        <h3 class="text-h4 font-medium intersect-once intersect:animate-slide-in">{title}</h3>
+        <div class="space-y-2 text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 text-lg">
+            <slot/>
+        </div>
+    </div>
+    {image && <Image src={image} width={500} height={500} fit="contain" alt="" class="w-full block aspect-square object-contain intersect-once intersect:animate-slide-in motion-delay-200"/>}
 </section>

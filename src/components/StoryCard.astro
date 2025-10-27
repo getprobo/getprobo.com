@@ -20,7 +20,7 @@ const images = dynamicImages(import.meta.glob<{
 }>('/src/assets/stories/*.{jpeg,jpg,png,gif,svg}'))
 
 const card = tv({
-  base: 'block overflow-hidden p-2 rounded-3xl',
+  base: 'block overflow-hidden p-2 rounded-3xl transition-all',
   variants: {
     theme: {
       light: 'bg-muted',
