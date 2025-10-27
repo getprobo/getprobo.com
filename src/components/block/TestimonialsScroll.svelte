@@ -1,5 +1,4 @@
 <script lang="ts">
-  import '@splidejs/splide/css/core';
   import Splide from '@splidejs/splide';
   import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
   import { Intersection } from '@splidejs/splide-extension-intersection';

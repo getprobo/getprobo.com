@@ -19,6 +19,9 @@
     transform: translateY(-50%);
     z-index: 3;
     transition: all 0.2s ease-in-out;
+    svg {
+        display: none;
+    }
     &:disabled {
         opacity: 0;
     }
