@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import YCombinator from '../assets/ycombinator.png'
 import {Image} from 'astro:assets';
-import AnimatedHero from "../components/ui/AnimatedHero.astro";
+import AnimatedHero from "../components/ui/AnimatedHero.svelte";
 import Button from "../components/ui/Button.astro";
 import Badges from "../components/Badges.svelte";
 import Logos from "../components/block/Logos.astro";
@@ -19,7 +19,7 @@ import ComplianceTrack from "../components/block/ComplianceTrack.svelte";
 ---
 
 <Layout title="Probo - Compliance for Startups in One Week" description="Get SOC 2, GDPR, HIPAA, and ISO certified in just one week. Open-source compliance management platform with no vendor lock-in. Backed by Y Combinator.">
-    <AnimatedHero>
+    <AnimatedHero client:load class="py-10 sm:py-20 ">
         <a href="/yc" class="w-max mx-auto py-2 px-4 yc-btn text-muted-foreground flex gap-2 items-center mb-6 sm:mb-8">
             Backed by
             <Image src={YCombinator} alt="Logo YCombinator" width={77} height={15}/>
