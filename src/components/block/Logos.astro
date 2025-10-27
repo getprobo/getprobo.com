@@ -8,7 +8,7 @@ import { companies } from "../../data/companies.ts";
   class={clsx("container p-0 overflow-hidden relative", Astro.props.class)}
 >
   <LogosScroll
-    class="animate-scroll flex h-16 w-max items-center sm:h-30"
+    class="flex h-16 w-max items-center sm:h-30"
     client:load
   >
     {
@@ -17,7 +17,7 @@ import { companies } from "../../data/companies.ts";
           href={company.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="mx-4 block flex-none sm:mx-15"
+          class="mx-4 flex-none sm:mx-15 w-30 sm:w-60 flex items-center justify-center"
           aria-label={company.alt}
         >
           <img
