@@ -58,5 +58,7 @@ const canonical = Astro.url.href;
 <script>
   import {Observer} from 'tailwindcss-intersect';
 
-  Observer.start();
+  document.addEventListener('astro:page-load', () => {
+    Observer.start();
+  })
 </script>
