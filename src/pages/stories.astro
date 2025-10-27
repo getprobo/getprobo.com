@@ -27,7 +27,7 @@ const stories = (await getCollection('stories')).sort(
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           {stories.map((item) =>
                   <a href={`/stories/${item.id}`}
-                     class="block rounded-2xl overflow-hidden bg-muted p-2">
+                     class="block rounded-2xl overflow-hidden bg-highlight p-2">
                       <ResponsiveImage
                               src={images(item.data.image)}
                               class="aspect-320/180 object-cover rounded-2xl sm:aspect-512/450"

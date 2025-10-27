@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {Image} from 'astro:assets';
 import Logos from "../components/block/Logos.astro";
 import Testimonials from "../components/block/Testimonials.astro";
 import Button from "../components/ui/Button.astro";
 import Badges from "../components/Badges.svelte";
 import YCImage from '../assets/photos/ycombinator.png'
+import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
+import {companies} from "../data/companies.ts";
 ---
 
 <Layout title="From Chaos to Compliance — in a few weeks."
@@ -34,10 +35,14 @@ import YCImage from '../assets/photos/ycombinator.png'
 
     <Logos/>
 
-    <Testimonials/>
-
-    <section class="container flex flex-col gap-10 sm:flex-row sm:gap-20 sm:items-center my-10 sm:my-30">
-        <Image src={YCImage} alt="Y Combinator" width={500} height={660} class="rounded-2xl aspect-square object-cover shadow-image flex-none max-w-[500px] sm:aspect-500/660"/>
+    <section class="container flex flex-col gap-10 sm:flex-row sm:gap-20 sm:items-center my-20 sm:my-30">
+        <ResponsiveImage
+            src={YCImage}
+            alt=""
+            mobile={[500, 500]}
+            sm={[500, 660]}
+            class="w-full sm:w-[500px] rounded-2xl aspect-square object-cover shadow-image flex-none max-w-[500px] sm:aspect-500/660"
+        />
         <div class="text-muted-foreground text-lg space-y-6">
             <h2 class="text-h3 font-medium text-foreground">Our YC Story</h2>
             <p>
@@ -50,7 +55,7 @@ import YCImage from '../assets/photos/ycombinator.png'
                 Today, things are almost back under control. Our processes are stronger, our team is growing (reach out if you are a CISO or compliance officer), and we are back on track toward our objectives.
             </p>
             <p>
-                YC was the best thing that could have happened to us and Probo: Doing things than don’t scale is hard, but it’s worth it!
+                YC was the best thing that could have happened to us and Probo: Doing things than don’t scale is hard, but it’s worth it!
             </p>
             <p>
                 — Antoine Bouchardy, Co-founder & CEO
@@ -58,4 +63,26 @@ import YCImage from '../assets/photos/ycombinator.png'
         </div>
     </section>
 
+    <section class="container my-20 sm:my-30">
+        <h2 class="text-h3 font-medium text-center mb-12">YC companies using Probo</h2>
+        <div class="companies-grid grid grid-cols-2 place-items-center sm:grid-cols-4">
+          {companies.map((company) => <a href={company.href} target="_blank" rel="noopener`" class="h-26 gap-3 items-center flex flex-col justify-center">
+              <img src={`/clients/${company.image}`} alt={company.alt} class="h-3 sm:h-4 w-auto" />
+              <div class="text-xxs py-1 px-2 bg-highlight text-muted-foreground rounded-full w-max">
+                {company.badge}
+              </div>
+          </a>)}
+        </div>
+    </section>
+
+    <Testimonials/>
+
 </Layout>
+
+<style>
+    @media (max-width: 639px) {
+        .companies-grid > *:nth-child(8) ~ * {
+            display: none;
+        }
+    }
+</style>
