@@ -7,17 +7,14 @@ import { companies } from "../../data/companies.ts";
 <section
   class={clsx("container p-0 overflow-hidden relative", Astro.props.class)}
 >
-  <LogosScroll
-    class="flex h-16 w-max items-center sm:h-30"
-    client:load
-  >
+  <LogosScroll class="flex h-16 w-max items-center sm:h-30" client:load>
     {
       companies.map((company) => (
         <a
           href={company.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="mx-4 flex-none sm:mx-15 w-30 sm:w-60 flex items-center justify-center"
+          class="mx-4 flex w-30 flex-none items-center justify-center sm:mx-15 sm:w-60"
           aria-label={company.alt}
         >
           <img
