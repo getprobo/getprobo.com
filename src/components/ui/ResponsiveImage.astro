@@ -1,13 +1,13 @@
 ---
-import { getImage,  } from 'astro:assets';
-import type {UnresolvedImageTransform} from "astro";
+import { getImage } from "astro:assets";
+import type { UnresolvedImageTransform } from "astro";
 
 type Props = {
-  mobile: [number, number],
-  alt: string,
-  sm: [number, number],
-  src: Promise<{default: ImageMetadata}> | ImageMetadata,
-  class?: string,
+  mobile: [number, number];
+  alt: string;
+  sm: [number, number];
+  src: Promise<{ default: ImageMetadata }> | ImageMetadata;
+  class?: string;
 };
 
 const props = Astro.props;
@@ -15,7 +15,7 @@ const props = Astro.props;
 const mobileImage = await getImage({
   width: props.mobile[0],
   height: props.mobile[1],
-  fit: 'cover',
+  fit: "cover",
   src: props.src,
   alt: props.alt,
 } as UnresolvedImageTransform);
@@ -23,22 +23,24 @@ const mobileImage = await getImage({
 const smImage = await getImage({
   width: props.sm[0],
   height: props.sm[1],
-  fit: 'cover',
+  fit: "cover",
   src: props.src,
   alt: props.alt,
 } as UnresolvedImageTransform);
 ---
 
 <picture>
-        <source
-                media={`(max-width: 640px)`}
-                width={props.mobile[0]}
-                height={props.mobile[1]}
-                srcset={mobileImage.src}>
-        <source
-                media="(min-width: 640px)"
-                width={props.sm[0]}
-                height={props.sm[1]}
-                srcset={smImage.src}>
-        <img src={mobileImage.src} alt={props.alt}  class={props.class}>
+  <source
+    media={`(max-width: 640px)`}
+    width={props.mobile[0]}
+    height={props.mobile[1]}
+    srcset={mobileImage.src}
+  />
+  <source
+    media="(min-width: 640px)"
+    width={props.sm[0]}
+    height={props.sm[1]}
+    srcset={smImage.src}
+  />
+  <img src={mobileImage.src} alt={props.alt} class={props.class} />
 </picture>

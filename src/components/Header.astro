@@ -1,52 +1,85 @@
 ---
-import {Image} from "astro:assets";
-import Logo from '../assets/probo-logo.svg'
+import { Image } from "astro:assets";
+import Logo from "../assets/probo-logo.svg";
 import NavLink from "./NavLink.astro";
 import Button from "./ui/Button.astro";
 import MobileMenu from "./MobileMenu.astro";
 ---
+
 <header class="container mx-auto flex items-center py-4">
-    <a href="/">
-        <Image src={Logo} alt="Logo probo" width={73} height={20}/>
-    </a>
-    <nav class="ml-auto hidden sm:flex">
-        <NavLink href="/about">About</NavLink>
-        <NavLink href="/blog">Blog</NavLink>
-        <NavLink href="https://github.com/getprobo">GitHub</NavLink>
-        <NavLink href="#">Access your trust center</NavLink>
-    </nav>
-    <Button href="https://hexacc.typeform.com/getstarted" class="sm:ml-4 ml-auto">Get certified</Button>
-    <Button as="burger-menu" variant="secondary" size="icon" class="ml-3 sm:hidden group" aria-label="Open mobile menu">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="group-aria-selected:hidden">
-            <path d="M2 8H14M2 4H14M2 12H14" stroke="#141E12" stroke-width="1.33333" stroke-linecap="round"
-                  stroke-linejoin="round"/>
-        </svg>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="hidden group-aria-selected:block">
-            <path d="M3.33325 3.33594L12.6666 12.6693M12.6666 3.33594L3.33325 12.6693" stroke="black" stroke-width="1.33333" stroke-linecap="round"/>
-        </svg>
-    </Button>
+  <a href="/">
+    <Image src={Logo} alt="Logo probo" width={73} height={20} />
+  </a>
+  <nav class="ml-auto hidden sm:flex">
+    <NavLink href="/about">About</NavLink>
+    <NavLink href="/blog">Blog</NavLink>
+    <NavLink href="https://github.com/getprobo">GitHub</NavLink>
+    <NavLink href="#">Access your trust center</NavLink>
+  </nav>
+  <Button href="https://hexacc.typeform.com/getstarted" class="ml-auto sm:ml-4"
+    >Get certified</Button
+  >
+  <Button
+    as="burger-menu"
+    variant="secondary"
+    size="icon"
+    class="group ml-3 sm:hidden"
+    aria-label="Open mobile menu"
+  >
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="group-aria-selected:hidden"
+    >
+      <path
+        d="M2 8H14M2 4H14M2 12H14"
+        stroke="#141E12"
+        stroke-width="1.33333"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="hidden group-aria-selected:block"
+    >
+      <path
+        d="M3.33325 3.33594L12.6666 12.6693M12.6666 3.33594L3.33325 12.6693"
+        stroke="black"
+        stroke-width="1.33333"
+        stroke-linecap="round"></path>
+    </svg>
+  </Button>
 </header>
 
-<MobileMenu id="mobile-menu"/>
+<MobileMenu id="mobile-menu" />
 
 <script>
   class BurgerMenu extends HTMLElement {
     connectedCallback() {
-      this.addEventListener('click', () => {
-        const sidebar = document.querySelector('#mobile-menu') as HTMLDialogElement;
-        const sidebarOpen = !sidebar.hasAttribute('open')
+      this.addEventListener("click", () => {
+        const sidebar = document.querySelector(
+          "#mobile-menu",
+        ) as HTMLDialogElement;
+        const sidebarOpen = !sidebar.hasAttribute("open");
         if (sidebarOpen) {
-          sidebar.setAttribute('open', '');
-          document.body.style.removeProperty('overflow')
-          this.setAttribute('aria-selected', 'true');
+          sidebar.setAttribute("open", "");
+          document.body.style.removeProperty("overflow");
+          this.setAttribute("aria-selected", "true");
         } else {
-          sidebar.removeAttribute('open');
-          this.removeAttribute('aria-selected');
-          document.body.style.overflow = 'hidden'
+          sidebar.removeAttribute("open");
+          this.removeAttribute("aria-selected");
+          document.body.style.overflow = "hidden";
         }
       });
     }
   }
 
-  customElements.define('burger-menu', BurgerMenu);
+  customElements.define("burger-menu", BurgerMenu);
 </script>

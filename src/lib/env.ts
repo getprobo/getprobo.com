@@ -1,3 +1,3 @@
 export const isClient = () => {
-  return !import.meta.env.SSR
-}
+  return !import.meta.env.SSR;
+};

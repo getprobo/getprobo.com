@@ -1,4 +1,4 @@
-import {onMount} from "svelte";
+import { onMount } from "svelte";
 
 export const useWindowSize = () => {
   let width = $state(0);
@@ -8,19 +8,25 @@ export const useWindowSize = () => {
   const handleResize = () => {
     width = window.innerWidth;
     height = window.innerHeight;
-  }
+  };
 
   onMount(() => {
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
     loading = false;
 
-    return () => window.removeEventListener('resize', handleResize);
-  })
+    return () => window.removeEventListener("resize", handleResize);
+  });
 
   return {
-    get width() { return width },
-    get height() { return height },
-    get loading() { return loading }
-  }
-}
+    get width() {
+      return width;
+    },
+    get height() {
+      return height;
+    },
+    get loading() {
+      return loading;
+    },
+  };
+};

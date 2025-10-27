@@ -1,40 +1,42 @@
 @import "@splidejs/splide/css/core";
 
 .splide {
-    position: relative;
+  position: relative;
 }
 
 .splide__track.overflow-visible {
-    overflow: visible;
+  overflow: visible;
 }
 
 .splide__arrow {
-    border: 1px solid var(--color-border-low);
-    background: #00000066 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path fill="%23ECEEEC" fill-rule="evenodd" d="M5.43 2.23a.8.8 0 0 1 1.14 0l5.2 5.2a.8.8 0 0 1 0 1.14l-5.2 5.2a.8.8 0 0 1-1.14-1.14L10.07 8 5.43 3.37a.8.8 0 0 1 0-1.14Z" clip-rule="evenodd"/></svg>') center center / 16px 16px no-repeat;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 3;
-    transition: all 0.2s ease-in-out;
-    svg {
-        display: none;
-    }
-    &:disabled {
-        opacity: 0;
-    }
-    &:hover {
-        background-color: var(--color-level-0);
-    }
+  border: 1px solid var(--color-border-low);
+  background: #00000066
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path fill="%23ECEEEC" fill-rule="evenodd" d="M5.43 2.23a.8.8 0 0 1 1.14 0l5.2 5.2a.8.8 0 0 1 0 1.14l-5.2 5.2a.8.8 0 0 1-1.14-1.14L10.07 8 5.43 3.37a.8.8 0 0 1 0-1.14Z" clip-rule="evenodd"/></svg>')
+    center center / 16px 16px no-repeat;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  transition: all 0.2s ease-in-out;
+  svg {
+    display: none;
+  }
+  &:disabled {
+    opacity: 0;
+  }
+  &:hover {
+    background-color: var(--color-level-0);
+  }
 }
 
 .splide__arrow--prev {
-    left: -88px;
-    transform: translateY(-50%) rotate(180deg);
+  left: -88px;
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .splide__arrow--next {
-    right: -88px;
+  right: -88px;
 }

@@ -1,56 +1,117 @@
 ---
-import EthanMorales from '../../assets/testimonial/ethan-morales.jpg'
-import Scroll from './TestimonialsScroll.svelte'
+import EthanMorales from "../../assets/testimonial/ethan-morales.jpg";
+import Scroll from "./TestimonialsScroll.svelte";
 import Testimonial from "../ui/Testimonial.astro";
 ---
 
-<section class="py-10 sm:py-20 bg-linear-to-b from-[#F8FAF4] from-[0%] to-white to-[100%]">
-    <h2 class="text-center text-h3 sm:text-h2 mb-3 font-medium intersect-once intersect:animate-slide-in ">Why they love us</h2>
-    <p class="text-center text-lg text-muted-foreground mb-12 intersect-once intersect:animate-slide-in motion-delay-100">
-        Quotes from our customers
-    </p>
-    <Scroll client:load>
-        <Testimonial image={EthanMorales} author="Ethan Morales" role="CTO at Carbonfact">
-            Let's put it straight: 70% less audit prep, dozens of eng hours back. ROI day one, Probo was a no brainer
-            investment.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Sarah Chen" role="VP Engineering at DataCore">
-            aze
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Marcus Johnson" role="Head of Security at Streamline">
-            Finally, a tool that actually understands developer workflow. Security compliance without the headache.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Priya Patel" role="CTO at FinanceHub">
-            Our compliance costs dropped 60% in the first quarter. The platform pays for itself before the trial even
-            ends.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="James O'Brien" role="Director of Engineering at CloudWave">
-            Probo turned our biggest operational bottleneck into our smoothest process. Audit season is no longer a
-            nightmare.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Ana Rodriguez" role="VP of Compliance at SecureOps">
-            Three audits passed with zero findings. That's never happened before Probo. This tool is legitimately
-            game-changing.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="David Kim" role="CTO at GrowthTech">
-            We scaled from 10 to 100 engineers without scaling our compliance team. Probo made that possible.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Rachel Thompson" role="Head of Platform at Nexus">
-            Real-time visibility into our compliance posture changed everything. We catch issues before they become
-            problems.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Michael Zhang" role="VP Engineering at Catalyst">
-            Implementation took two days. Results were immediate. Best tooling decision we made this year, hands down.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Lauren Martinez" role="CTO at Velocity Systems">
-            Our auditors were impressed with the documentation quality. Probo generates better reports than we ever
-            could manually.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Tom Andersson" role="Director of Infrastructure at CloudScale">
-            85% reduction in compliance overhead. Our engineers can finally focus on building instead of box-checking.
-        </Testimonial>
-        <Testimonial image={EthanMorales} author="Olivia Wright" role="VP of Engineering at DataShield">
-            We were drowning in compliance debt. Probo pulled us out in weeks, not months. Absolute lifesaver.
-        </Testimonial>
-    </Scroll>
+<section
+  class="bg-linear-to-b from-[#F8FAF4] from-[0%] to-white to-[100%] py-10 sm:py-20"
+>
+  <h2
+    class="text-h3 sm:text-h2 intersect-once intersect:animate-slide-in mb-3 text-center font-medium"
+  >
+    Why they love us
+  </h2>
+  <p
+    class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 mb-12 text-center text-lg"
+  >
+    Quotes from our customers
+  </p>
+  <Scroll client:load>
+    <Testimonial
+      image={EthanMorales}
+      author="Ethan Morales"
+      role="CTO at Carbonfact"
+    >
+      Let's put it straight: 70% less audit prep, dozens of eng hours back. ROI
+      day one, Probo was a no brainer investment.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Sarah Chen"
+      role="VP Engineering at DataCore"
+    >
+      aze
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Marcus Johnson"
+      role="Head of Security at Streamline"
+    >
+      Finally, a tool that actually understands developer workflow. Security
+      compliance without the headache.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Priya Patel"
+      role="CTO at FinanceHub"
+    >
+      Our compliance costs dropped 60% in the first quarter. The platform pays
+      for itself before the trial even ends.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="James O'Brien"
+      role="Director of Engineering at CloudWave"
+    >
+      Probo turned our biggest operational bottleneck into our smoothest
+      process. Audit season is no longer a nightmare.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Ana Rodriguez"
+      role="VP of Compliance at SecureOps"
+    >
+      Three audits passed with zero findings. That's never happened before
+      Probo. This tool is legitimately game-changing.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="David Kim"
+      role="CTO at GrowthTech"
+    >
+      We scaled from 10 to 100 engineers without scaling our compliance team.
+      Probo made that possible.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Rachel Thompson"
+      role="Head of Platform at Nexus"
+    >
+      Real-time visibility into our compliance posture changed everything. We
+      catch issues before they become problems.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Michael Zhang"
+      role="VP Engineering at Catalyst"
+    >
+      Implementation took two days. Results were immediate. Best tooling
+      decision we made this year, hands down.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Lauren Martinez"
+      role="CTO at Velocity Systems"
+    >
+      Our auditors were impressed with the documentation quality. Probo
+      generates better reports than we ever could manually.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Tom Andersson"
+      role="Director of Infrastructure at CloudScale"
+    >
+      85% reduction in compliance overhead. Our engineers can finally focus on
+      building instead of box-checking.
+    </Testimonial>
+    <Testimonial
+      image={EthanMorales}
+      author="Olivia Wright"
+      role="VP of Engineering at DataShield"
+    >
+      We were drowning in compliance debt. Probo pulled us out in weeks, not
+      months. Absolute lifesaver.
+    </Testimonial>
+  </Scroll>
 </section>

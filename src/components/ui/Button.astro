@@ -1,35 +1,34 @@
 ---
-import {tv} from "tailwind-variants";
+import { tv } from "tailwind-variants";
 const button = tv({
-  base: 'font-medium rounded-full leading-none transition-all inline-flex items-center flex-none justify-center gap-2',
+  base: "font-medium rounded-full leading-none transition-all inline-flex items-center flex-none justify-center gap-2",
   variants: {
     variant: {
-      primary: 'bg-primary text-primary-foreground hover:bg-primary/80',
-      secondary: 'border shadow-btn bg-secondary'
+      primary: "bg-primary text-primary-foreground hover:bg-primary/80",
+      secondary: "border shadow-btn bg-secondary",
     },
     size: {
-      default: 'px-3 h-8 text-sm',
-      lg: 'py-3 text-lg px-5',
-      icon: 'size-8'
-    }
+      default: "px-3 h-8 text-sm",
+      lg: "py-3 text-lg px-5",
+      icon: "size-8",
+    },
   },
   defaultVariants: {
-    variant: 'primary',
-    size: 'default',
-  }
+    variant: "primary",
+    size: "default",
+  },
 });
-let Template = 'button'
+let Template = "button";
 if (Astro.props.href) {
-  Template = 'a'
+  Template = "a";
 }
 if (Astro.props.as) {
-  Template = Astro.props.as
+  Template = Astro.props.as;
 }
 const props = {
   ...Astro.props,
-  class: button(Astro.props)
-}
+  class: button(Astro.props),
+};
 ---
 
-
-<Template {...props}><slot/></Template>
+<Template {...props}><slot /></Template>

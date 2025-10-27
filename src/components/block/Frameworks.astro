@@ -1,27 +1,62 @@
 ---
-import {Image} from "astro:assets";
-import Logo from '../../assets/probo-logo-only.svg'
-import Badges from '../Badges.svelte'
+import { Image } from "astro:assets";
+import Logo from "../../assets/probo-logo-only.svg";
+import Badges from "../Badges.svelte";
 ---
 
-<div class="py-10 sm:py-20 bg-[#F8FAF4]">
-    <div class="container">
-        <Image src={Logo} alt="Logo probo" width={48} height={48} class="mb-6 mx-auto intersect-once intersect:animate-slide-in"/>
-        <h2 class="text-h3 sm:text-h2 text-center font-medium mb-3 intersect-once intersect:animate-slide-in motion-delay-50">Managed frameworks</h2>
-        <p class="text-lg text-center text-muted-foreground mb-12 intersect-once intersect:animate-slide-in motion-delay-150">
-            Compliant with every major standard.
-        </p>
+<div class="bg-[#F8FAF4] py-10 sm:py-20">
+  <div class="container">
+    <Image
+      src={Logo}
+      alt="Logo probo"
+      width={48}
+      height={48}
+      class="intersect-once intersect:animate-slide-in mx-auto mb-6"
+    />
+    <h2
+      class="text-h3 sm:text-h2 intersect-once intersect:animate-slide-in motion-delay-50 mb-3 text-center font-medium"
+    >
+      Managed frameworks
+    </h2>
+    <p
+      class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-150 mb-12 text-center text-lg"
+    >
+      Compliant with every major standard.
+    </p>
 
-        <Badges count={10} countMobile={9} client:visible class="grid grid-cols-3 gap-2 gap-y-10 justify-items-center  sm:grid-cols-5 sm:gap-x-10 mb-13 justify-center max-w-[660px] mx-auto "/>
+    <Badges
+      count={10}
+      countMobile={9}
+      client:visible
+      class="mx-auto mb-13 grid max-w-[660px] grid-cols-3 justify-center justify-items-center gap-2 gap-y-10 sm:grid-cols-5 sm:gap-x-10"
+    />
 
-        <a href="https://hexacc.typeform.com/getstarted"
-           class="text-lg flex justify-center items-center text-success font-medium gap-1.5 group intersect-once intersect:animate-slide-in motion-delay-250">
-            Get compliant
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="group-hover:translate-x-1 transition-transform">
-                <path d="M9.33325 4L13.3333 7.99999L9.33325 12" stroke="#5D770D" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12.6667 8H2.66675" stroke="#5D770D" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </a>
-
-    </div>
+    <a
+      href="https://hexacc.typeform.com/getstarted"
+      class="text-success group intersect-once intersect:animate-slide-in motion-delay-250 flex items-center justify-center gap-1.5 text-lg font-medium"
+    >
+      Get compliant
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="transition-transform group-hover:translate-x-1"
+      >
+        <path
+          d="M9.33325 4L13.3333 7.99999L9.33325 12"
+          stroke="#5D770D"
+          stroke-width="1.33333"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M12.6667 8H2.66675"
+          stroke="#5D770D"
+          stroke-width="1.33333"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </a>
+  </div>
 </div>

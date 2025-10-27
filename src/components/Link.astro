@@ -1,10 +1,10 @@
 ---
 interface Props {
   href: string;
-  class?: string
+  class?: string;
 }
 const { pathname } = Astro.url;
 const isActive = pathname.startsWith(Astro.props.href);
 ---
 
-<a {...Astro.props} aria-current={isActive ? 'page' : undefined}><slot /></a>
+<a {...Astro.props} aria-current={isActive ? "page" : undefined}><slot /></a>

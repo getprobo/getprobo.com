@@ -1,7 +1,7 @@
 ---
-import {Image} from 'astro:assets'
-import BryanPortrait from '../../assets/about/bryan-frimin.png'
-import AntoinePortrait from '../../assets/about/antoine-bourchardy.png'
+import { Image } from "astro:assets";
+import BryanPortrait from "../../assets/about/bryan-frimin.png";
+import AntoinePortrait from "../../assets/about/antoine-bourchardy.png";
 
 const founders = [
   {
@@ -9,46 +9,69 @@ const founders = [
     alt: "Bryan Frimin",
     name: "Bryann Frimin",
     role: "Co-founder & CTO",
-    bio:
-      "YC alumnus and engineer who managed SOC2/ISO27001 compliance at his previous startup. Experienced in building scalable solutions for complex problems.",
+    bio: "YC alumnus and engineer who managed SOC2/ISO27001 compliance at his previous startup. Experienced in building scalable solutions for complex problems.",
   },
   {
     img: AntoinePortrait,
     alt: "Antoine Bourchardy",
     name: "Antoine Bourchardy",
     role: "Co-founder & CTO",
-    bio:
-      "SO 27001 auditor with experience in compliance assessment and implementation. Passionate about making compliance accessible and straightforward.",
+    bio: "SO 27001 auditor with experience in compliance assessment and implementation. Passionate about making compliance accessible and straightforward.",
   },
 ];
-const team = [
-  ...founders,
-  ...founders
-]
+const team = [...founders, ...founders];
 ---
 
 <section class="container py-10 sm:py-20">
-    <h2 class="font-medium text-h3 mb-10 sm:mb-20 intersect-once intersect:animate-slide-in">Founders</h2>
-    <div class="flex flex-col gap-10 sm:flex-row sm:gap-20 intersect-once intersect:animate-slide-in">
-      {founders.map((f) => (
-          <article class="space-y-2">
-              <Image src={f.img} alt={f.alt} width={102} height={102} class="rounded-lg mb-4 sm:mb-8"/>
-              <h3 class="font-medium">{f.name}</h3>
-              <div>{f.role}</div>
-              <p class="text-lg">{f.bio}</p>
-          </article>
-      ))}
-    </div>
-    <hr class="my-10 sm:my-30"/>
+  <h2
+    class="text-h3 intersect-once intersect:animate-slide-in mb-10 font-medium sm:mb-20"
+  >
+    Founders
+  </h2>
+  <div
+    class="intersect-once intersect:animate-slide-in flex flex-col gap-10 sm:flex-row sm:gap-20"
+  >
+    {
+      founders.map((f) => (
+        <article class="space-y-2">
+          <Image
+            src={f.img}
+            alt={f.alt}
+            width={102}
+            height={102}
+            class="mb-4 rounded-lg sm:mb-8"
+          />
+          <h3 class="font-medium">{f.name}</h3>
+          <div>{f.role}</div>
+          <p class="text-lg">{f.bio}</p>
+        </article>
+      ))
+    }
+  </div>
+  <hr class="my-10 sm:my-30" />
 
-    <h2 class="font-medium text-h3 mb-10 sm:mb-20 intersect-once intersect:animate-slide-in">Our team</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 intersect-once intersect:animate-slide-in">
-      {team.map((item) => (
-          <article class="space-y-2">
-              <Image src={item.img} alt={item.alt} width={102} height={102} class="rounded-lg mb-4 sm:mb-8 "/>
-              <h3 class="font-medium">{item.name}</h3>
-              <div>{item.role}</div>
-          </article>
-      ))}
-    </div>
+  <h2
+    class="text-h3 intersect-once intersect:animate-slide-in mb-10 font-medium sm:mb-20"
+  >
+    Our team
+  </h2>
+  <div
+    class="intersect-once intersect:animate-slide-in grid grid-cols-2 gap-4 sm:grid-cols-4"
+  >
+    {
+      team.map((item) => (
+        <article class="space-y-2">
+          <Image
+            src={item.img}
+            alt={item.alt}
+            width={102}
+            height={102}
+            class="mb-4 rounded-lg sm:mb-8"
+          />
+          <h3 class="font-medium">{item.name}</h3>
+          <div>{item.role}</div>
+        </article>
+      ))
+    }
+  </div>
 </section>

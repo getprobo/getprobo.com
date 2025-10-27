@@ -1,20 +1,20 @@
 ---
-import Layout from './Layout.astro'
+import Layout from "./Layout.astro";
 import Prose from "../components/Prose.astro";
 
 interface Props {
-  title: string
-  subtitle: string
-  description: string
+  title: string;
+  subtitle: string;
+  description: string;
 }
 ---
 
 <Layout title={Astro.props.title} description={Astro.props.description}>
-    <div class="container max-w-[720px] py-10 sm:py-20">
-        <div class="text-muted-foreground mb-5">{Astro.props.subtitle}</div>
-        <h1 class="text-h2 font-medium mb-10">{Astro.props.title}</h1>
-        <Prose>
-            <slot/>
-        </Prose>
-    </div>
+  <div class="container max-w-[720px] py-10 sm:py-20">
+    <div class="text-muted-foreground mb-5">{Astro.props.subtitle}</div>
+    <h1 class="text-h2 mb-10 font-medium">{Astro.props.title}</h1>
+    <Prose>
+      <slot />
+    </Prose>
+  </div>
 </Layout>

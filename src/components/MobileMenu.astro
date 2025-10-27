@@ -1,19 +1,38 @@
 ---
-import {menuItems} from "../data/menu.ts";
+import { menuItems } from "../data/menu.ts";
 ---
 
-<dialog {...Astro.props} class="fixed inset-0 z-50 top-14 bg-secondary px-5 py-10 transition-all transition-discrete duration-300 starting:opacity-0 not-open:opacity-0 group w-full h-full group">
-  {menuItems.map((item, k) => <a
-          href={item.href}
-          class="flex items-center justify-between py-5 border-b motion-duration-500 group-open:motion-translate-y-in-25 group-open:motion-opacity-in-0 "
-          style={`animation-delay: ${k * 0.1}s;`}
-    >
-      <span class="flex flex-col gap-1">
+<dialog
+  {...Astro.props}
+  class="bg-secondary group group fixed inset-0 top-14 z-50 h-full w-full px-5 py-10 transition-all transition-discrete duration-300 not-open:opacity-0 starting:opacity-0"
+>
+  {
+    menuItems.map((item, k) => (
+      <a
+        href={item.href}
+        class="motion-duration-500 group-open:motion-translate-y-in-25 group-open:motion-opacity-in-0 flex items-center justify-between border-b py-5"
+        style={`animation-delay: ${k * 0.1}s;`}
+      >
+        <span class="flex flex-col gap-1">
           <span class="text-h3 font-medium">{item.label}</span>
           <span class="text-muted-foreground">{item.description}</span>
-      </span>
-      <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.91663 15L12.9166 10L7.91663 5" stroke="#818780" fill="none" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-  </a>)}
+        </span>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M7.91663 15L12.9166 10L7.91663 5"
+            stroke="#818780"
+            fill="none"
+            stroke-width="1.66667"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    ))
+  }
 </dialog>

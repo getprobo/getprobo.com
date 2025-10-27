@@ -14,7 +14,7 @@ export const useIntersectionObserver = (options: any = { threshold: 0.5 }) => {
         if (observer) observer.disconnect();
       };
     }
-  })
+  });
 
   return {
     get observed() {

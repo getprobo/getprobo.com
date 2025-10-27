@@ -1,45 +1,68 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Prose from "../../components/Prose.astro";
-import Sharer from '../../components/block/Sharer.svelte'
+import Sharer from "../../components/block/Sharer.svelte";
 import WrittenBy from "../../components/block/WrittenBy.astro";
 import Newsletter from "../../components/block/Newsletter.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
     params: { id: post.id },
     props: { post },
   }));
 }
 const { post } = Astro.props;
 const { Content } = await render(post);
-const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const dateFormatter = Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 const id = post.data.date.getTime();
 ---
 
 <Layout title={post.data.title}>
-  <main class="container my-10 sm:my-20 max-w-[720px] @container">
-    <a href="/blog" class="flex items-center gap-2 text-quaternary mb-4  intersect-once intersect:animate-slide-in">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path fill="#C3C8C2" fill-rule="evenodd" d="M18.566 10.234a.8.8 0 0 1 0 1.132L13.93 16l4.635 4.634a.8.8 0 0 1-1.132 1.132l-5.2-5.2a.8.8 0 0 1 0-1.132l5.2-5.2a.8.8 0 0 1 1.132 0Z" clip-rule="evenodd"/></svg>
+  <main class="@container container my-10 max-w-[720px] sm:my-20">
+    <a
+      href="/blog"
+      class="text-quaternary intersect-once intersect:animate-slide-in mb-4 flex items-center gap-2"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+        ><path
+          fill="#C3C8C2"
+          fill-rule="evenodd"
+          d="M18.566 10.234a.8.8 0 0 1 0 1.132L13.93 16l4.635 4.634a.8.8 0 0 1-1.132 1.132l-5.2-5.2a.8.8 0 0 1 0-1.132l5.2-5.2a.8.8 0 0 1 1.132 0Z"
+          clip-rule="evenodd"></path></svg
+      >
       Back to Blog
     </a>
-    <div  class="text-muted-foreground mb-5  intersect-once intersect:animate-slide-in motion-delay-100">{dateFormatter.format(new Date(post.data.date))}, by {post.data.author.name}</div>
-    <h1 class="text-h2 font-medium mb-10" transition:name={`title-${id}`}>{post.data.title}</h1>
-    <p  class="text-h3 font-medium mb-10  intersect-once">
+    <div
+      class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 mb-5"
+    >
+      {dateFormatter.format(new Date(post.data.date))}, by {
+        post.data.author.name
+      }
+    </div>
+    <h1 class="text-h2 mb-10 font-medium" transition:name={`title-${id}`}>
+      {post.data.title}
+    </h1>
+    <p class="text-h3 intersect-once mb-10 font-medium">
       {post.data.excerpt}
     </p>
     <Prose>
-      <Content/>
+      <Content />
     </Prose>
-    <hr class="my-10 sm:mb-20"/>
-    <Sharer client:only url={Astro.url.toString()} title={post.data.title} class="my-10 sm:my-20"/>
-    <WrittenBy class="my-10"/>
-    <hr class="my-10 sm:my-20"/>
-    <Newsletter/>
+    <hr class="my-10 sm:mb-20" />
+    <Sharer
+      client:only
+      url={Astro.url.toString()}
+      title={post.data.title}
+      class="my-10 sm:my-20"
+    />
+    <WrittenBy class="my-10" />
+    <hr class="my-10 sm:my-20" />
+    <Newsletter />
   </main>
-
-
-
 </Layout>

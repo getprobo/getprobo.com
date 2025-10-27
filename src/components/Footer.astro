@@ -1,60 +1,80 @@
 ---
-import {Image} from "astro:assets";
-import Logo from '../assets/probo-logo.svg'
-import Frameworks from './block/Frameworks.astro'
+import { Image } from "astro:assets";
+import Logo from "../assets/probo-logo.svg";
+import Frameworks from "./block/Frameworks.astro";
 
 const menus = [
   {
-    label: 'Resources', items: [
-      {label: 'Home', href: '/'},
-      {label: 'Blog', href: '/blog'},
-      {label: 'FAQs', href: '/faqs'},
-    ]
-  }, {
-    label: 'Company', items: [
-      {label: 'About', href: '/about'},
-      {label: 'Careers', href: '/careers'},
+    label: "Resources",
+    items: [
+      { label: "Home", href: "/" },
+      { label: "Blog", href: "/blog" },
+      { label: "FAQs", href: "/faqs" },
     ],
-  }, {
-    label: 'Legal', items: [
-      {label: 'Cookie Policy', href: '/cookie-policy'},
-      {label: 'Privacy Policy', href: '/privacy'},
-      {label: 'Terms of service', href: '/terms'},
-      {label: 'Subprocessors', href: '/subprocessors'},
+  },
+  {
+    label: "Company",
+    items: [
+      { label: "About", href: "/about" },
+      { label: "Careers", href: "/careers" },
     ],
-  }
-]
+  },
+  {
+    label: "Legal",
+    items: [
+      { label: "Cookie Policy", href: "/cookie-policy" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of service", href: "/terms" },
+      { label: "Subprocessors", href: "/subprocessors" },
+    ],
+  },
+];
 ---
 
-<Frameworks/>
+<Frameworks />
 
-<footer class="bg-level-0 py-10 border-t">
-    <div class="container flex flex-col-reverse gap-8 sm:grid grid-cols-[510fr_560fr]">
-        <div class="space-y-4 text-tertiary-foreground">
-            <a href="/" class="block">
-                <Image src={Logo} alt="Logo probo" width={73} height={20} class="opacity-50"/>
-            </a>
-            <p class="">
-                Forget compliance,<br/>
-                focus on your business.
-            </p>
-            <p class="text-xxs sm:mt-16">
-                Copyright © {new Date().getFullYear()} Probo. All rights reserved.
-            </p>
-        </div>
-        <div class="grid grid-cols-2 text-xs gap-6 sm:grid-cols-3">
-          {menus.map((menu) => (
-            <div class="space-y-3">
-              <div class="font-medium mb-3">{menu.label}</div>
-              <ul class="space-y-3">
-                {menu.items.map((item) => (
-                        <li>
-                            <a href={item.href} class="text-sm text-tertiary-foreground hover:text-white hover:underline">{item.label}</a>
-                        </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+<footer class="bg-level-0 border-t py-10">
+  <div
+    class="container flex grid-cols-[510fr_560fr] flex-col-reverse gap-8 sm:grid"
+  >
+    <div class="text-tertiary-foreground space-y-4">
+      <a href="/" class="block">
+        <Image
+          src={Logo}
+          alt="Logo probo"
+          width={73}
+          height={20}
+          class="opacity-50"
+        />
+      </a>
+      <p class="">
+        Forget compliance,<br />
+        focus on your business.
+      </p>
+      <p class="text-xxs sm:mt-16">
+        Copyright © {new Date().getFullYear()} Probo. All rights reserved.
+      </p>
     </div>
+    <div class="grid grid-cols-2 gap-6 text-xs sm:grid-cols-3">
+      {
+        menus.map((menu) => (
+          <div class="space-y-3">
+            <div class="mb-3 font-medium">{menu.label}</div>
+            <ul class="space-y-3">
+              {menu.items.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="text-tertiary-foreground text-sm hover:text-white hover:underline"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </footer>

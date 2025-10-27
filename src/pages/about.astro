@@ -1,31 +1,55 @@
 ---
-import {Image} from 'astro:assets';
-import Layout from '../layouts/Layout.astro';
-import AboutImg from '../assets/about.png'
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import AboutImg from "../assets/about.png";
 import KeyFigures from "../components/block/KeyFigures.astro";
 import Team from "../components/block/Team.astro";
 import Gallery from "../components/block/Gallery.astro";
 ---
 
-<Layout title="About Probo - Open-Source Compliance Platform" description="Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.">
+<Layout
+  title="About Probo - Open-Source Compliance Platform"
+  description="Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors."
+>
   <main>
-      <section class="container my-10 sm:mt-20 sm:mb-30">
-          <h1 class="text-h2 mb-3 font-medium intersect-once intersect:animate-slide-in">About</h1>
-          <p class="text-muted-foreground mb-6 sm:mb-12 intersect-once intersect:animate-slide-in motion-delay-50">
-              The people and vision powering Probo.
-          </p>
-          <Image src={AboutImg} alt="" layout="constrained" width={1080} height={607}
-                 class="rounded-lg mb-10 sm:mb-30 intersect-once intersect:animate-slide-in motion-delay-200"/>
-          <h2 class="text-muted-foreground mb-1 intersect-once intersect:animate-slide-in motion-delay-300">Mission</h2>
-          <p class="text-quote intersect-once intersect:animate-slide-in motion-delay-400">
-              We're transforming compliance from a complex burden into an intuitive journey. Our platform makes compliance straightforward and cost-effective, empowering businesses of all sizes to meet regulatory requirements with confidence.
-          </p>
-      </section>
+    <section class="container my-10 sm:mt-20 sm:mb-30">
+      <h1
+        class="text-h2 intersect-once intersect:animate-slide-in mb-3 font-medium"
+      >
+        About
+      </h1>
+      <p
+        class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-50 mb-6 sm:mb-12"
+      >
+        The people and vision powering Probo.
+      </p>
+      <Image
+        src={AboutImg}
+        alt=""
+        layout="constrained"
+        width={1080}
+        height={607}
+        class="intersect-once intersect:animate-slide-in motion-delay-200 mb-10 rounded-lg sm:mb-30"
+      />
+      <h2
+        class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-300 mb-1"
+      >
+        Mission
+      </h2>
+      <p
+        class="text-quote intersect-once intersect:animate-slide-in motion-delay-400"
+      >
+        We're transforming compliance from a complex burden into an intuitive
+        journey. Our platform makes compliance straightforward and
+        cost-effective, empowering businesses of all sizes to meet regulatory
+        requirements with confidence.
+      </p>
+    </section>
 
-      <KeyFigures/>
+    <KeyFigures />
 
-      <Team/>
+    <Team />
 
-      <Gallery />
+    <Gallery />
   </main>
 </Layout>

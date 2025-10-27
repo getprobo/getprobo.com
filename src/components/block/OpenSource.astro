@@ -1,21 +1,28 @@
 ---
-import Portrait from '../../assets/antoine-bourchardy.png';
-import Image from 'astro/components/Image.astro';
+import Portrait from "../../assets/antoine-bourchardy.png";
+import Image from "astro/components/Image.astro";
 ---
 
-<section class="py-10 sm:py-20 container text-center max-w-[760px]">
-    <h2 class="text-h3 sm:text-h2 font-medium intersect-once intersect:animate-slide-in">Why are we open source?</h2>
-    <p class="text-quote-sm sm:text-quote text-muted-foreground my-10 sm:my-12 intersect-once intersect:animate-slide-in motion-delay-100">
-        “We don't want to push companies to get help on compliance if they don't need to. That's also why we give free advice. We really just want to bring the right support."
-    </p>
-    <Image
-            densities={[1, 2]}
-            class="block mx-auto mb-10 sm:mb-12 intersect-once intersect:animate-slide-in motion-delay-150"
-            src={Portrait} alt="Portrait of Antoine Bouchardy"
-            width={164}
-            height={164}
-    />
-    <p class="text-muted-foreground">
-        — Antoine Bouchardy, Co-founder & CEO
-    </p>
+<section class="container max-w-[760px] py-10 text-center sm:py-20">
+  <h2
+    class="text-h3 sm:text-h2 intersect-once intersect:animate-slide-in font-medium"
+  >
+    Why are we open source?
+  </h2>
+  <p
+    class="text-quote-sm sm:text-quote text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 my-10 sm:my-12"
+  >
+    “We don't want to push companies to get help on compliance if they don't
+    need to. That's also why we give free advice. We really just want to bring
+    the right support."
+  </p>
+  <Image
+    densities={[1, 2]}
+    class="intersect-once intersect:animate-slide-in motion-delay-150 mx-auto mb-10 block sm:mb-12"
+    src={Portrait}
+    alt="Portrait of Antoine Bouchardy"
+    width={164}
+    height={164}
+  />
+  <p class="text-muted-foreground">— Antoine Bouchardy, Co-founder & CEO</p>
 </section>

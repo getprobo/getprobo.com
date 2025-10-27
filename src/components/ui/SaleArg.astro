@@ -1,20 +1,37 @@
 ---
-import {Image} from 'astro:assets';
-import { clsx } from 'clsx';
+import { Image } from "astro:assets";
+import { clsx } from "clsx";
 interface Props {
   title: string;
   class?: string;
   image?: ImageMetadata;
 }
-const {title, image, ...props} = Astro.props;
+const { title, image, ...props } = Astro.props;
 ---
 
-<section class={clsx('flex flex-col sm:flex-col-reverse gap-8 sm:gap-10', props.class)}>
-    <div class="space-y-2">
-        <h3 class="text-h4 font-medium intersect-once intersect:animate-slide-in">{title}</h3>
-        <div class="space-y-2 text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 text-lg">
-            <slot/>
-        </div>
+<section
+  class={clsx("flex flex-col sm:flex-col-reverse gap-8 sm:gap-10", props.class)}
+>
+  <div class="space-y-2">
+    <h3 class="text-h4 intersect-once intersect:animate-slide-in font-medium">
+      {title}
+    </h3>
+    <div
+      class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 space-y-2 text-lg"
+    >
+      <slot />
     </div>
-    {image && <Image src={image} width={500} height={500} fit="contain" alt="" class="w-full block aspect-square object-contain intersect-once intersect:animate-slide-in motion-delay-200"/>}
+  </div>
+  {
+    image && (
+      <Image
+        src={image}
+        width={500}
+        height={500}
+        fit="contain"
+        alt=""
+        class="intersect-once intersect:animate-slide-in motion-delay-200 block aspect-square w-full object-contain"
+      />
+    )
+  }
 </section>

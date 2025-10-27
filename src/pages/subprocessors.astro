@@ -48,7 +48,8 @@ const processors = [
     name: "GitHub Inc.",
     purpose: "Static site hosting",
     location: "United States",
-    policy_url: "https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement",
+    policy_url:
+      "https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement",
   },
   {
     name: "Google LLC",
@@ -84,7 +85,8 @@ const processors = [
     name: "Notion Labs Inc.",
     purpose: "Document collaboration",
     location: "United States",
-    policy_url: "https://www.notion.so/notion/Privacy-Policy-3468d120cf614d4c9014c09f6adc9091",
+    policy_url:
+      "https://www.notion.so/notion/Privacy-Policy-3468d120cf614d4c9014c09f6adc9091",
   },
   {
     name: "OpenAI LLC",
@@ -129,49 +131,78 @@ const processors = [
     policy_url: "https://admin.typeform.com/to/dwk6gt",
   },
 ] satisfies {
-  name: string,
-  purpose: string,
-  location: string,
-  policy_url: string
-}[]
+  name: string;
+  purpose: string;
+  location: string;
+  policy_url: string;
+}[];
 ---
 
 <PageLayout
-        title="Subprocessors"
-        subtitle="Last updated: 10/23/2025"
-        description="View the complete list of third-party service providers and subprocessors that Probo uses to securely deliver our compliance services."
+  title="Subprocessors"
+  subtitle="Last updated: 10/23/2025"
+  description="View the complete list of third-party service providers and subprocessors that Probo uses to securely deliver our compliance services."
 >
-    <p>Probo uses certain subprocessors to assist in providing our services. A subprocessor is a third party
-        data processor who has or potentially will have access to or process Service Data (which may contain Personal
-        Data). We use the following subprocessors to host our services and help us provide our services to you:</p>
-        <div>
-            <table>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Purpose</th>
-                    <th>Location</th>
-                    <th>Privacy Policy</th>
-                </tr>
-                </thead>
-                <tbody>
-                  {processors.map((p) => (
-                    <tr>
-                      <td>{p.name}</td>
-                      <td>{p.purpose}</td>
-                      <td>{p.location}</td>
-                      <td>
-                        <Button class="not-prose" href={p.policy_url} target="_blank" rel="noopener noreferrer">
-                            View
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.33325 4L13.3333 7.99999L9.33325 12" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12.6667 8H2.66675" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-            </table>
-        </div>
+  <p>
+    Probo uses certain subprocessors to assist in providing our services. A
+    subprocessor is a third party data processor who has or potentially will
+    have access to or process Service Data (which may contain Personal Data). We
+    use the following subprocessors to host our services and help us provide our
+    services to you:
+  </p>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Purpose</th>
+          <th>Location</th>
+          <th>Privacy Policy</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          processors.map((p) => (
+            <tr>
+              <td>{p.name}</td>
+              <td>{p.purpose}</td>
+              <td>{p.location}</td>
+              <td>
+                <Button
+                  class="not-prose"
+                  href={p.policy_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.33325 4L13.3333 7.99999L9.33325 12"
+                      stroke="currentColor"
+                      stroke-width="1.33333"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12.6667 8H2.66675"
+                      stroke="currentColor"
+                      stroke-width="1.33333"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </Button>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
 </PageLayout>

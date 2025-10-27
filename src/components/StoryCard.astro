@@ -1,63 +1,71 @@
 ---
-import type {StoryData} from "../schema.ts";
-import {dynamicImages} from "../lib/images.ts";
+import type { StoryData } from "../schema.ts";
+import { dynamicImages } from "../lib/images.ts";
 import ResponsiveImage from "./ui/ResponsiveImage.astro";
-import {Image} from 'astro:assets';
+import { Image } from "astro:assets";
 import FrameworkBadge from "../components/FrameworkBadge.svelte";
-import {tv} from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import clsx from "clsx";
 
 interface Props {
-  theme?: 'light' | 'dark';
+  theme?: "light" | "dark";
   story: {
     id: string;
-    data: StoryData
-  }
+    data: StoryData;
+  };
 }
-const {story, theme} = Astro.props;
-const images = dynamicImages(import.meta.glob<{
-  default: ImageMetadata
-}>('/src/assets/stories/*.{jpeg,jpg,png,gif,svg}'))
+const { story, theme } = Astro.props;
+const images = dynamicImages(
+  import.meta.glob<{
+    default: ImageMetadata;
+  }>("/src/assets/stories/*.{jpeg,jpg,png,gif,svg}"),
+);
 
 const card = tv({
-  base: 'block overflow-hidden p-2 rounded-3xl transition-all',
+  base: "block overflow-hidden p-2 rounded-3xl transition-all",
   variants: {
     theme: {
-      light: 'bg-muted',
-      dark: 'border border-[#30352E] bg-[#D6FBC40F]'
+      light: "bg-muted",
+      dark: "border border-[#30352E] bg-[#D6FBC40F]",
     },
     size: {
-      default: 'px-3 h-8 text-sm',
-      lg: 'py-3 text-lg px-5',
-      icon: 'size-8'
-    }
+      default: "px-3 h-8 text-sm",
+      lg: "py-3 text-lg px-5",
+      icon: "size-8",
+    },
   },
   defaultVariants: {
-    theme: 'light',
-  }
+    theme: "light",
+  },
 });
 ---
 
-<a href={`/stories/${story.id}`}
-   class={card(Astro.props)}>
-    <ResponsiveImage
-            src={images(story.data.image)}
-            class="w-full aspect-320/180 object-cover rounded-2xl sm:aspect-512/450"
-            mobile={[640, 360]}
-            sm={[512, 450]}
-            alt=""
-    />
-    <div class="p-3 sm:p-8 sm:flex items-center">
-        <div class="space-y-2">
-            <Image src={images(story.data.logo)} alt="" class={clsx("block h-4 w-auto", theme === 'dark' && 'invert')}/>
-            <h3 class="text-h5">{story.data.title}</h3>
-        </div>
-        <div class="hidden sm:block border-l px-6">
-            <div class="text-center flex-col flex gap-2.5"
-            >
-                <FrameworkBadge client:only name={story.data.framework} class="block size-15 mx-auto invert"/>
-                <div class="text-xxs">{story.data.framework}</div>
-            </div>
-        </div>
+<a href={`/stories/${story.id}`} class={card(Astro.props)}>
+  <ResponsiveImage
+    src={images(story.data.image)}
+    class="aspect-320/180 w-full rounded-2xl object-cover sm:aspect-512/450"
+    mobile={[640, 360]}
+    sm={[512, 450]}
+    alt=""
+  />
+  <div class="items-center p-3 sm:flex sm:p-8">
+    <div class="space-y-2">
+      <Image
+        src={images(story.data.logo)}
+        alt=""
+        class={clsx("block h-4 w-auto", theme === "dark" && "invert")}
+      />
+      <h3 class="text-h5">{story.data.title}</h3>
     </div>
+    <div class="hidden border-l px-6 sm:block">
+      <div class="flex flex-col gap-2.5 text-center">
+        <FrameworkBadge
+          client:only
+          name={story.data.framework}
+          class="mx-auto block size-15 invert"
+        />
+        <div class="text-xxs">{story.data.framework}</div>
+      </div>
+    </div>
+  </div>
 </a>
