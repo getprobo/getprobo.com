@@ -14,6 +14,7 @@
     --container-*: initial;
 
     --breakpoint-sm: 640px;
+    --container-sm: 640px;
     --breakpoint-md: 1120px;
 
     --color-foreground: #141E12;
@@ -147,14 +148,59 @@
     }
 }
 
+@property --animate-duration {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotateBackground {
+    0% {
+        --animate-duration: 0deg;
+    }
+    100% {
+        --animate-duration: 360deg;
+    }
+}
+
 @layer theme {
     .yc-btn {
         position: relative;
-        border-radius: 16px;
-        border: solid 1px transparent;
-        background-image: linear-gradient(white, white), linear-gradient(91.89deg, rgba(147, 201, 38, 0.12) 0%, #FFFFFF 10.1%, rgba(147, 201, 38, 0.12) 47.15%, #FFFFFF 71.63%, rgba(147, 201, 38, 0.12) 100%);
-        background-origin: border-box;
-        background-clip: padding-box, border-box;
+        isolation: isolate;
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            inset: 1px;
+            border-radius: 150px;
+            background-color: #FFF;
+            z-index: -1;
+        }
+
+        &::before {
+            content: '';
+            z-index: -1;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            height: 100%;
+            border-radius: calc(100px + 1.5px);
+            background-size: 100% 100%;
+            background-position: 0px 0px;
+            background-image: conic-gradient(
+                    from var(--animate-duration) at 50% 50%,
+                    rgba(147, 201, 38, 0.2) 0%,
+                    #FFFFFF 20%,
+                    rgba(147, 201, 38, 0.2) 50%,
+                    #FFFFFF 66%,
+                    rgba(147, 201, 38, 0.2) 100%
+            );
+            animation: rotateBackground 5s infinite linear;
+        }
     }
 }
 

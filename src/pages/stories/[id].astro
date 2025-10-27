@@ -5,6 +5,8 @@ import Prose from "../../components/Prose.astro";
 import Image from 'astro/components/Image.astro';
 import Button from "../../components/ui/Button.astro";
 import {dynamicImages} from "../../lib/images.ts";
+import Sharer from '../../components/block/Sharer.svelte'
+import Newsletter from "../../components/block/Newsletter.astro";
 export async function getStaticPaths() {
   const stories = await getCollection('stories');
   return stories.map(item => ({
@@ -46,7 +48,10 @@ const logo = images(data.logo)
             <Content/>
         </Prose>
         <hr class="-mr-5 sm:hidden"/>
-        <aside class="text-xs space-y-6">
+        <aside class="text-xs space-y-6 @container">
+            <div class="space-y-2">
+                <Sharer class="text-start items-start" gap={4}/>
+            </div>
             <div class="space-y-2">
                 <div class="font-medium">Company name</div>
                 <div class="text-muted-foreground">{data.company.name}</div>
@@ -64,23 +69,7 @@ const logo = images(data.logo)
                 <div class="text-muted-foreground">{data.company.about}</div>
             </div>
             <hr/>
-            <div class="text">
-                <div class="font-medium text-lg mb-1">Want to stay updated?</div>
-                <p class="text-muted-foreground mb-6">Join 1,000+ founders and engineers already turning compliance
-                    from a burden into a competitive advantage.</p>
-                <Button>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="1.33"
-                              d="M14 6.67v-1.2c0-.75 0-1.12-.15-1.41a1.33 1.33 0 0 0-.58-.58c-.28-.15-.66-.15-1.4-.15H4.13c-.74 0-1.12 0-1.4.15-.25.13-.46.33-.58.58C2 4.35 2 4.72 2 5.46v5.07c0 .75 0 1.12.15 1.4.12.26.33.46.58.59.28.15.66.15 1.4.15H8"/>
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="1.33" d="m2.4 4 4.92 2.93c.42.25.94.25 1.36 0L13.6 4"/>
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="1.33"
-                              d="M12.67 9.33v4M14.67 11.33h-4"/>
-                    </svg>
-                    Stay updated
-                </Button>
-            </div>
+            <Newsletter/>
         </aside>
     </main>
 

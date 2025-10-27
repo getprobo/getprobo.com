@@ -1,6 +1,28 @@
-# Questions
+# getprobo.com
 
-- Gérer l'état actif sur les liens de la navigation - Faire à la main un composant link
-- Comment gérer l'interactivité (par exemple burger menu)
-- Comment gérer l'interactivité (par exemple effet animation on scroll)
-- On peut optimiser les images ?
+Marketing website for Probo.
+
+## Setup
+
+```bash
+bun install
+bun run dev
+```
+
+Access at http://localhost:4321
+
+## Deployment
+
+The website is automatically deployed to GitHub Pages via GitHub Actions on merges to the `main` branch.
+
+## Contributing
+
+Submit issues and pull requests via GitHub.
+
+## Resources
+
+- Main repository: [github.com/getprobo/probo](https://github.com/getprobo/probo)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.

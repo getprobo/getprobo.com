@@ -1,8 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Portrait from '../assets/antoine-bourchardy.png';
-import Image from 'astro/components/Image.astro';
 import { getCollection } from 'astro:content';
+import WrittenBy from "../components/block/WrittenBy.astro";
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -32,11 +31,7 @@ const dateFormatter = Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'lo
         )}
       </section>
       <aside class="intersect-once intersect:animate-slide-in motion-delay-250 sticky top-4">
-        <Image class="block mx-auto sm:mx-0 mb-10" src={Portrait} alt="Portrait of Antoine Bouchardy" format="png" width={164} height={164} />
-        <h2 class="text-xs font-medium mb-2">Written by Antoine Bouchardy</h2>
-        <p class="text-xs text-muted-foreground">
-          Antoine Bouchardy is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he’s not building Probo, you’ll find him cycling or tinkering with open-source projects.
-        </p>
+          <WrittenBy/>
       </aside>
     </div>
   </main>

@@ -2,6 +2,10 @@
 import { getCollection, render } from 'astro:content';
 import Layout from "../../layouts/Layout.astro";
 import Prose from "../../components/Prose.astro";
+import Sharer from '../../components/block/Sharer.svelte'
+import WrittenBy from "../../components/block/WrittenBy.astro";
+import Newsletter from "../../components/block/Newsletter.astro";
+
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({
@@ -16,7 +20,7 @@ const id = post.data.date.getTime();
 ---
 
 <Layout title={post.data.title}>
-  <main class="container my-10 sm:my-20 max-w-[720px]">
+  <main class="container my-10 sm:my-20 max-w-[720px] @container">
     <a href="/blog" class="flex items-center gap-2 text-quaternary mb-4  intersect-once intersect:animate-slide-in">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path fill="#C3C8C2" fill-rule="evenodd" d="M18.566 10.234a.8.8 0 0 1 0 1.132L13.93 16l4.635 4.634a.8.8 0 0 1-1.132 1.132l-5.2-5.2a.8.8 0 0 1 0-1.132l5.2-5.2a.8.8 0 0 1 1.132 0Z" clip-rule="evenodd"/></svg>
       Back to Blog
@@ -29,5 +33,13 @@ const id = post.data.date.getTime();
     <Prose>
       <Content/>
     </Prose>
+    <hr class="my-10 sm:mb-20"/>
+    <Sharer client:only url={Astro.url.toString()} title={post.data.title} class="my-10 sm:my-20"/>
+    <WrittenBy class="my-10"/>
+    <hr class="my-10 sm:my-20"/>
+    <Newsletter/>
   </main>
+
+
+
 </Layout>
