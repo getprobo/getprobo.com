@@ -8,7 +8,13 @@ import Image from 'astro/components/Image.astro';
     <p class="text-quote-sm sm:text-quote text-muted-foreground my-10 sm:my-12 intersect-once intersect:animate-slide-in motion-delay-100">
         “We don't want to push companies to get help on compliance if they don't need to. That's also why we give free advice. We really just want to bring the right support."
     </p>
-    <Image class="block mx-auto mb-10 sm:mb-12 intersect-once intersect:animate-slide-in motion-delay-150" src={Portrait} alt="Portrait of Antoine Bouchardy" width={164} height={164} />
+    <Image
+            densities={[1, 2]}
+            class="block mx-auto mb-10 sm:mb-12 intersect-once intersect:animate-slide-in motion-delay-150"
+            src={Portrait} alt="Portrait of Antoine Bouchardy"
+            width={164}
+            height={164}
+    />
     <p class="text-muted-foreground">
         — Antoine Bouchardy, Co-founder & CEO
     </p>
