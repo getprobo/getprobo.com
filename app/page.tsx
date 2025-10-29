@@ -353,7 +353,7 @@ export default function Home() {
           </Link>
           <Link
             className="bg-dark-900 flex min-w-64 justify-center gap-2.5 rounded-full px-6 py-5 text-center leading-[100%] font-semibold text-yellow-400 md:w-fit md:min-w-0"
-            href="https://tally.so/r/nrxk9v"
+            href="https://form.getprobo.com/r/nrxk9v"
           >
             Get free advice <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
           </Link>
@@ -392,7 +392,7 @@ export default function Home() {
 
         <Link
           className="bg-dark-900 mx-auto flex min-w-54 justify-center gap-2.5 rounded-full px-6 py-5 text-center leading-[100%] font-semibold text-yellow-400 md:w-fit md:min-w-0"
-          href="https://tally.so/r/nrxk9v"
+          href="https://form.getprobo.com/r/nrxk9v"
         >
           Get free advice <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
         </Link>
@@ -415,7 +415,7 @@ export default function Home() {
             </p>
           </div>
           <Link
-            href="https://tally.so/r/nrxk9v"
+            href="https://form.getprobo.com/r/nrxk9v"
             className="text-dark-900 mx-auto flex w-fit min-w-52 items-center justify-center gap-2 rounded-full bg-yellow-400 px-6 py-5 text-base leading-[100%] font-medium md:mx-0 md:min-w-0"
           >
             Start today <ArrowRightIcon className="h-4 w-4" strokeWidth={2.5} />
