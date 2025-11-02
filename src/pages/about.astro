@@ -5,6 +5,7 @@ import AboutImg from "../assets/about.png";
 import KeyFigures from "../components/block/KeyFigures.astro";
 import Team from "../components/block/Team.astro";
 import Gallery from "../components/block/Gallery.astro";
+import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
 ---
 
 <Layout
@@ -23,13 +24,12 @@ import Gallery from "../components/block/Gallery.astro";
       >
         The people and vision powering Probo.
       </p>
-      <Image
+      <ResponsiveImage
         src={AboutImg}
+        class="aspect-square object-cover sm:aspect-1080/606 intersect-once intersect:animate-slide-in motion-delay-200 mb-10 rounded-lg sm:mb-30"
+        mobile={[640, 640]}
+        sm={[1080, 607]}
         alt=""
-        layout="constrained"
-        width={1080}
-        height={607}
-        class="intersect-once intersect:animate-slide-in motion-delay-200 mb-10 rounded-lg sm:mb-30"
       />
       <h2
         class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-300 mb-1"

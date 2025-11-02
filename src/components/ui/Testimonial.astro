@@ -8,8 +8,7 @@ interface Props {
 const props = Astro.props;
 ---
 
-<article class="splide__slide bg-highlight rounded-2xl p-5">
-  <div class="text-h2 text-muted-foreground font-medium">“</div>
+<article class="splide__slide bg-highlight rounded-2xl p-5 sm:p-8">
   <blockquote class="text-muted-foreground mb-6 text-lg">
     <slot />
   </blockquote>
@@ -22,7 +21,7 @@ const props = Astro.props;
       class="rounded-lg"
     />
     <div class="space-y-1 text-sm">
-      <cite class="font-medium">{props.author}</cite>
+      <cite class="font-medium not-italic">{props.author}</cite>
       <div class="text-muted-foreground">{props.role}</div>
     </div>
   </footer>

@@ -15,7 +15,7 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
 <Layout title="Blog">
   <main class="container my-10 sm:my-20">
     <h1
-      class="text-h2 sm:text-h1 intersect-once intersect:animate-slide-in mb-3 font-medium"
+      class="text-h2 intersect-once intersect:animate-slide-in mb-3 font-medium"
     >
       Blog
     </h1>
@@ -38,7 +38,7 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
               <h2 transition:name={`title-${post.data.date.getTime()}`}>
                 <a
                   href={`/blog/${post.id}`}
-                  class="text-h3 mt-4 mb-2 block font-medium hover:underline"
+                  class="text-h4 mt-4 mb-2 block font-medium hover:underline"
                 >
                   {post.data.title}
                 </a>

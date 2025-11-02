@@ -52,7 +52,7 @@ const stories = (await getCollection("stories")).sort(
                 <Image src={images(item.data.logo)} alt="" class="h-4 w-auto" />
                 <h3 class="text-h5">{item.data.title}</h3>
               </div>
-              <div class="hidden border-l px-6 sm:block">
+              <div class="hidden border-l px-6 sm:block ml-6">
                 <div class="flex flex-col gap-2.5 text-center">
                   <FrameworkBadge
                     client:only

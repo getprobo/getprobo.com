@@ -6,7 +6,7 @@ import Button from "./ui/Button.astro";
 import MobileMenu from "./MobileMenu.astro";
 ---
 
-<header class="container mx-auto flex items-center py-4">
+<header class="container mx-auto flex items-center py-3 sm:py-4">
   <a href="/">
     <Image src={Logo} alt="Logo probo" width={73} height={20} />
   </a>
@@ -16,21 +16,17 @@ import MobileMenu from "./MobileMenu.astro";
     <NavLink href="https://github.com/getprobo">GitHub</NavLink>
     <NavLink href="#">Access your trust center</NavLink>
   </nav>
-  <Button href="https://hexacc.typeform.com/getstarted" class="ml-auto sm:ml-4"
-    >Get certified</Button
-  >
-  <Button
-    as="burger-menu"
-    variant="secondary"
-    size="icon"
-    class="group ml-3 sm:hidden"
+  <Button href="https://hexacc.typeform.com/getstarted" class="ml-auto sm:ml-4 h-9 px-4 sm:h-8 sm:px-3">
+    Get compliant
+  </Button>
+  <burger-menu
+    class="group ml-3 sm:hidden size-9 grid place-items-center"
     aria-label="Open mobile menu"
   >
     <svg
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       class="group-aria-selected:hidden"
     >
@@ -55,7 +51,7 @@ import MobileMenu from "./MobileMenu.astro";
         stroke-width="1.33333"
         stroke-linecap="round"></path>
     </svg>
-  </Button>
+  </burger-menu>
 </header>
 
 <MobileMenu id="mobile-menu" />

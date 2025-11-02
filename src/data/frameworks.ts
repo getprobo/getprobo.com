@@ -1,7 +1,8 @@
 export const frameworks = [
   { label: "SOC2 Type 2", badge: "SOC2_TYPE2" },
   { label: "ISO 27001", badge: "ISO27001" },
-  { label: "GDPR", badge: "GDPR" },
+  // GDPR badge is renamed to avoid being blocked by adblockers
+  { label: "GDPR", badge: "JetDePierre" },
   { label: "HIPAA", badge: "HIPAA" },
   { label: "FERPA", badge: "FERPA" },
   { label: "SOC2 Type 1", badge: "SOC2_TYPE1" },
