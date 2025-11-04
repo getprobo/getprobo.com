@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import ComplianceTrackItem from "../ui/ComplianceTrackItem.svelte";
   import { useIntersectionObserver } from "../../lib/runes/useIntersectionObserver.svelte.ts";
   let intersection = useIntersectionObserver({once: true});
@@ -10,14 +10,14 @@
       return;
     }
     step = 0;
+    let timer: ReturnType<typeof setTimeout>
     const tick = () => {
       step++;
-      if (step >= 4) {
-        clearInterval(timer)
+      if (step < 4) {
+        timer = setTimeout(tick, 2000);
       }
     };
-    setTimeout(tick, 50);
-    const timer = setInterval(tick, 2000);
+    timer = setTimeout(tick, 1000);
     return () => clearInterval(timer);
   });
 </script>
