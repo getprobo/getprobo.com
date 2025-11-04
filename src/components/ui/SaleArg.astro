@@ -13,11 +13,11 @@ const { title, image, ...props } = Astro.props;
   class={clsx("flex flex-col sm:flex-col-reverse gap-8 sm:gap-10", props.class)}
 >
   <div class="space-y-2">
-    <h3 class="text-h4 intersect-once intersect:animate-slide-in font-medium">
+    <h3 class="text-h4 font-medium">
       {title}
     </h3>
     <div
-      class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 space-y-2 text-lg"
+      class="text-muted-foreground space-y-2 text-lg"
     >
       <slot />
     </div>
@@ -30,7 +30,7 @@ const { title, image, ...props } = Astro.props;
         height={500}
         fit="contain"
         alt=""
-        class="intersect-once intersect:animate-slide-in motion-delay-200 block aspect-square w-full object-contain"
+        class="block aspect-square w-full object-contain"
       />
     )
   }

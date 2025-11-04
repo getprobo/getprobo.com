@@ -16,7 +16,7 @@ const items = [
       {
         items.map((item, k) => (
           <div
-            class="items-between intersect-once intersect:animate-slide-in -mr-[1px] -mb-[1px] flex aspect-square flex-col justify-between gap-2 border-r border-b p-5 sm:aspect-360/340 sm:p-10"
+            class="items-between -mr-[1px] -mb-[1px] flex aspect-square flex-col justify-between gap-2 border-r border-b p-5 sm:aspect-360/340 sm:p-10"
             style={`animation-delay: ${k * 0.1}s;`}
           >
             <span class="text-quote">{item.label}</span>

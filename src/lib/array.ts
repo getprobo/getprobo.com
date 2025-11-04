@@ -11,3 +11,18 @@ export function chunk<T>(array: T[], size: number): T[][] {
   }
   return chunks;
 }
+
+/**
+ * Pick random elements from an array
+ */
+export function random<T>(array: T[], size: number): T[] {
+  const output: T[] = [];
+  const copy = [...array];
+
+  for (let i = 0; i < 3 && copy.length > 0; i++) {
+    const index = Math.floor(Math.random() * copy.length);
+    output.push(copy.splice(index, 1)[0]);
+  }
+  return output
+
+}

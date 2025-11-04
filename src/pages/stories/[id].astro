@@ -3,10 +3,11 @@ import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Prose from "../../components/Prose.astro";
 import Image from "astro/components/Image.astro";
-import Button from "../../components/ui/Button.astro";
 import { dynamicImages } from "../../lib/images.ts";
 import Sharer from "../../components/block/Sharer.svelte";
 import Newsletter from "../../components/block/Newsletter.astro";
+import { random } from "../../lib/array";
+import StoryCard from "../../components/StoryCard.astro";
 export async function getStaticPaths() {
   const stories = await getCollection("stories");
   return stories.map((item) => ({
@@ -24,6 +25,7 @@ const images = dynamicImages(
 );
 const image = images(data.image);
 const logo = images(data.logo);
+const stories = random((await getCollection("stories")).filter(s => s.id !== item.id), 3);
 ---
 
 <Layout title={item.data.title}>
@@ -31,7 +33,7 @@ const logo = images(data.logo);
     <Image
       src={image}
       height={652}
-      layout="constrained"
+      layout="full-width"
       alt=""
       class="absolute inset-0 z-1 size-full object-cover"
     />
@@ -41,12 +43,11 @@ const logo = images(data.logo);
       <Image
         src={logo}
         height={23}
-        layout="constrained"
+        class="invert animate-perspective-in"
         alt={`Logo ${data.company.name}`}
-        class="intersect-once intersect:animate-slide-in"
       />
       <h1
-        class="text-h3 text-invert sm:text-h2 intersect-once intersect:animate-slide-in motion-delay-50 font-medium"
+        class="text-h3 text-invert sm:text-h2 font-medium animate-perspective-in animation-delay-100"
       >
         {data.title}
       </h1>
@@ -58,12 +59,9 @@ const logo = images(data.logo);
   >
     {
       data.impacts.map((impact, k) => (
-        <div
-          class="intersect-once intersect:animate-slide-in"
-          style={`--motion-delay:${k * 100 + 100}ms`}
-        >
-          <div class="text-h4 sm:text-invert font-medium">{impact.title}</div>
-          <div class="text-muted-foreground sm:text-tertiary-foreground text-lg">
+        <div>
+          <div class="text-h4 sm:text-invert font-medium animate-perspective-in" style={`animation-delay: ${k * 100 + 200}ms`}>{impact.title}</div>
+          <div class="text-muted-foreground sm:text-tertiary-foreground text-lg animate-perspective-in" style={`animation-delay: ${k * 100 + 200}ms`}>
             {impact.label}
           </div>
         </div>
@@ -72,7 +70,7 @@ const logo = images(data.logo);
   </div>
 
   <main
-    class="container flex grid-cols-[1fr_320px] flex-col gap-10 sm:my-20 sm:grid"
+    class="container flex grid-cols-[1fr_320px] flex-col gap-10 sm:my-20 sm:grid animate-slide-in animation-delay-400"
   >
     <Prose>
       <Content />
@@ -102,6 +100,19 @@ const logo = images(data.logo);
       <Newsletter />
     </aside>
   </main>
+
+  <div class="container mb-10 sm:mb-20">
+    <hr  class="my-10 sm:my-20"/>
+    <aside>
+      <h2 class="text-h3 text-center sm:text-start font-medium mb-6 sm:mb-10">Explore more stories</h2>
+      <div class="grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6">
+        {stories.map(story => (
+          <StoryCard story={story} size="relative"/>
+        ))}
+      </div>
+    </aside>
+  </div>
+
 </Layout>
 
 <style>

@@ -20,14 +20,13 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
   month: "long",
   day: "numeric",
 });
-const id = post.data.date.getTime();
 ---
 
 <Layout title={post.data.title}>
   <main class="@container container my-10 max-w-[720px] sm:my-20">
     <a
       href="/blog"
-      class="text-quaternary intersect-once intersect:animate-slide-in mb-4 flex items-center gap-2"
+      class="text-quaternary mb-4 flex items-center gap-2 animate-fade-in animation-delay-200"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
         ><path
@@ -39,19 +38,19 @@ const id = post.data.date.getTime();
       Back to Blog
     </a>
     <div
-      class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 mb-5"
+      class="text-muted-foreground mb-5 animate-fade-in animation-delay-100"
     >
       {dateFormatter.format(new Date(post.data.date))}, by {
         post.data.author.name
       }
     </div>
-    <h1 class="text-h2 mb-10 font-medium" transition:name={`title-${id}`}>
+    <h1 class="text-h2 mb-10 font-medium animate-slide-in">
       {post.data.title}
     </h1>
-    <p class="text-h3 intersect-once mb-10 font-medium">
+    <p class="text-h5 mb-10 font-medium animate-slide-in animation-delay-100">
       {post.data.excerpt}
     </p>
-    <Prose>
+    <Prose class="animate-slide-in animation-delay-200">
       <Content />
     </Prose>
     <hr class="my-10 sm:mb-20" />

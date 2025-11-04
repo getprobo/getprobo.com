@@ -1,30 +1,27 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  const minDuration = 1000;
+  let el: HTMLDivElement
   const offsetRange = 0.5;
-  const randomScale = () => 0.2 + Math.random();
-  const randomOffset = () =>
-    100 * (offsetRange / 2 - Math.random() * offsetRange);
+  const randomStart = () => Math.random() * offsetRange;
+  const randomEnd = (start: number) => 0.2 + Math.random() + start;
   const randomDuration = () =>
-    Math.round(minDuration + Math.random() * minDuration);
+    Math.round(2000 + Math.random() * 1000);
+  const toPercent = (n: number) => `${(n * 100).toFixed(2)}%`;
 
   let timer: ReturnType<typeof setTimeout> | null = null;
-  let scale = $state(randomScale());
-  let offset = $state(randomOffset());
-  let duration = $state(randomDuration());
-  const style = $derived(
-    `transform: scaleY(${scale.toFixed(2)}) translateY(${offset.toFixed(2)}%); transition-duration: ${duration}ms;`,
-  );
   const tick = () => {
-    scale = randomScale();
-    offset = randomOffset();
-    duration = randomDuration();
+    const start = randomStart();
+    const end = randomEnd(start);
+    const duration = randomDuration();
     timer = setTimeout(tick, duration);
+    el.animate([
+      {'--start': toPercent(start), '--end': toPercent(end), 'opacity': 1},
+    ], {duration: duration, fill: 'both'})
   };
 
   onMount(() => {
-    timer = setTimeout(tick, randomDuration());
+    timer = setTimeout(tick, Math.random() * 200);
     return () => {
       if (timer) {
         clearTimeout(timer);
@@ -33,11 +30,22 @@
   });
 </script>
 
-<div class="h-full slice transition-all" {style}></div>
+<div class="h-full slice transition-all" bind:this={el}></div>
 
 <style>
-  .slice {
-    z-index: 1;
-    background: linear-gradient(180deg, #fffffb 0%, #e4f7c7 100%);
-  }
+    @property --start {
+        syntax: "<percentage>";
+        initial-value: 100%;
+        inherits: false;
+    }
+    @property --end {
+        syntax: "<percentage>";
+        initial-value: 100%;
+        inherits: false;
+    }
+    .slice {
+        z-index: 1;
+        opacity: 0;
+        background: linear-gradient(180deg, #fffffb var(--start), var(--color) var(--end));
+    }
 </style>

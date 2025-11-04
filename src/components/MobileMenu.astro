@@ -10,7 +10,7 @@ import { menuItems } from "../data/menu.ts";
     menuItems.map((item, k) => (
       <a
         href={item.href}
-        class="motion-duration-500 group-open:motion-translate-y-in-25 group-open:motion-opacity-in-0 flex items-center justify-between border-b py-5"
+        class="flex items-center justify-between border-b py-5"
         style={`animation-delay: ${k * 0.1}s;`}
       >
         <span class="flex flex-col gap-1">

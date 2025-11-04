@@ -1,0 +1,113 @@
+/** linear calculator to imitate springs : https://easingwizard.com/ **/
+html {
+    --spring-smooth: cubic-bezier(0.186, 0.964, 0.68, 1);
+    --spring-smooth-time: 1200ms;
+    @supports (animation-timing-function: linear(0, 1)) {
+        /* https://easingwizard.com/#0a1i1j6k55v11003I */
+        --spring-smooth: linear(0, 0.011 0.9%, 0.05 2.1%, 0.4 9.5%, 0.508 12.3%, 0.6 15.2%, 0.682 18.4%, 0.753 21.9%, 0.812 25.7%, 0.861 29.9%, 0.9 34.5%, 0.931 39.7%, 0.973 52.5%, 0.992 70%, 1);
+    }
+}
+
+@utility animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@utility animate-slide-in {
+    animation: slideIn var(--spring-smooth) 850ms both;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+@utility animate-perspective-in {
+    animation: perspectiveIn var(--spring-smooth) var(--spring-smooth-time) both;
+}
+
+@keyframes perspectiveIn {
+    from {
+        opacity: 0;
+        transform: translateY(100%) rotateX(-45deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%) rotateX(0deg);
+    }
+}
+
+@utility animation-delay-* {
+    animation-delay: --value(integer)ms;
+}
+
+/** Rotate animation for the YCombinator button **/
+@property --animate-duration {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotateBackground {
+    0% {
+        --animate-duration: 0deg;
+    }
+    100% {
+        --animate-duration: 360deg;
+    }
+}
+
+@layer theme {
+    .yc-btn {
+        position: relative;
+        isolation: isolate;
+
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            inset: 1px;
+            border-radius: 150px;
+            background-color: #fff;
+            z-index: -1;
+        }
+
+        &::before {
+            content: "";
+            z-index: -1;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            height: 100%;
+            border-radius: calc(100px + 1.5px);
+            background-size: 100% 100%;
+            background-position: 0px 0px;
+            background-image: conic-gradient(
+                    from var(--animate-duration) at 50% 50%,
+                    rgba(147, 201, 38, 0.2) 0%,
+                    #ffffff 20%,
+                    rgba(147, 201, 38, 0.2) 50%,
+                    #ffffff 66%,
+                    rgba(147, 201, 38, 0.2) 100%
+            );
+            animation: rotateBackground 5s infinite linear;
+        }
+    }
+}

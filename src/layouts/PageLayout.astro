@@ -11,9 +11,9 @@ interface Props {
 
 <Layout title={Astro.props.title} description={Astro.props.description}>
   <div class="container max-w-[720px] py-10 sm:py-20">
-    <div class="text-muted-foreground mb-5">{Astro.props.subtitle}</div>
-    <h1 class="text-h2 mb-10 font-medium">{Astro.props.title}</h1>
-    <Prose>
+    <div class="text-muted-foreground mb-5  animate-slide-in">{Astro.props.subtitle}</div>
+    <h1 class="text-h2 mb-10 font-medium animate-slide-in animation-delay-100">{Astro.props.title}</h1>
+    <Prose class="animate-slide-in animation-delay-200">
       <slot />
     </Prose>
   </div>

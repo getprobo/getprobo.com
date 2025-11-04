@@ -1,45 +1,35 @@
 ---
 import { getCollection } from "astro:content";
-import { dynamicImages } from "../../lib/images.ts";
 import StoryCard from "../StoryCard.astro";
 import Slider from "../ui/Slider.svelte";
 
-const images = dynamicImages(
-  import.meta.glob<{
-    default: ImageMetadata;
-  }>("/src/assets/stories/*.{jpeg,jpg,png,gif,svg}"),
-);
-const aa = (await getCollection("stories")).sort(
+const stories = (await getCollection("stories")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
-const stories = Array.from({ length: 10 })
-  .map(() => aa)
-  .flat();
 ---
 
 <section class="stories dark bg-level-0 text-foreground overflow-hidden">
   <div class="container py-10 sm:py-30">
     <h2
-      class="text-h3 sm:text-h2 intersect-once intersect:animate-slide-in mb-3 text-center font-medium"
+      class="text-h3 sm:text-h2 mb-3 text-center font-medium"
     >
       Real uses cases from real people
     </h2>
     <p
-      class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 mb-6 text-center text-lg"
+      class="text-muted-foreground mb-6 text-center text-lg"
     >
       Inspiring stories, real Probo customers
     </p>
 
     <a
       href="/stories"
-      class="group intersect-once intersect:animate-slide-in motion-delay-200 mb-10 flex items-center justify-center gap-1.5 text-lg font-medium sm:mb-12"
+      class="group mb-10 flex items-center justify-center gap-1.5 text-lg font-medium sm:mb-12"
     >
       View all case studies
       <svg
         width="16"
         height="16"
         viewBox="0 0 16 16"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
         class="transition-transform group-hover:translate-x-1"
       >
@@ -58,65 +48,43 @@ const stories = Array.from({ length: 10 })
       </svg>
     </a>
 
-    <Slider
-      client:load
-      withOverflow
-      options={{
-        perPage: 2,
-        gap: 24,
-        pagination: false,
-        breakpoints: {
-          640: {
-            destroy: true,
+    <div class="mx-auto slider">
+      <Slider
+        client:load
+        withOverflow
+        options={{
+          perPage: 1,
+          updateOnMove: true,
+          gap: 24,
+          pagination: false,
+          breakpoints: {
+            640: {
+              gap: 16,
+            },
           },
-        },
-      }}
-    >
-      {stories.map((story) => <StoryCard story={story} theme="dark" />)}
-    </Slider>
+        }}
+      >
+        {stories.map((story) => <StoryCard size="home" story={story}  />)}
+      </Slider>
+    </div>
   </div>
 </section>
 
 <style>
-  /* Only show 3 items on mobile */
-  @media (max-width: 639px) {
-    .stories :global(.splide__list) {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 1rem !important;
-    }
-    .stories :global(.splide__list a:nth-child(3) ~ *) {
-      display: none;
-    }
+  .slider {
+    width: min(80vw, 720px);
   }
-
-  /* Add masks on the side to "opacify" the edges */
-  @media (min-width: 640px) {
-    .stories :global(.splide__track.overflow-visible::after),
-    .stories :global(.splide__track.overflow-visible::before) {
-      content: "";
-      position: absolute;
-      z-index: 2;
-      top: 0;
-      bottom: 0;
-      background: linear-gradient(
-        90deg,
-        rgba(21, 23, 21, 0) 0%,
-        rgba(21, 23, 21, 0.6) 24px
-      );
-      width: 100vh;
-      left: 100%;
-    }
-
-    .stories :global(.splide__track.overflow-visible::before) {
-      transform: rotate(180deg);
-      background: linear-gradient(
-        90deg,
-        rgba(21, 23, 21, 0) 0%,
-        rgba(21, 23, 21, 0.6) 24px
-      );
-      right: 100%;
-      left: auto;
-    }
+  .slider :global(.splide__slide) {
+    opacity: .4;
+  }
+  .slider :global(.splide__slide.is-active) {
+    opacity: 1;
+  }
+  .slider :global(.badge) {
+    opacity: 0;
+    transition: .3s;
+  }
+  .slider :global(.splide__slide.is-active .badge) {
+    opacity: 1;
   }
 </style>

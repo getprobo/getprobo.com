@@ -6,15 +6,16 @@ import { Image } from "astro:assets";
 import FrameworkBadge from "../components/FrameworkBadge.svelte";
 import { tv } from "tailwind-variants";
 import clsx from "clsx";
+import { frameworks } from "../data/frameworks";
 
 interface Props {
-  theme?: "light" | "dark";
+  size?: "default" | "home" | "relative";
   story: {
     id: string;
     data: StoryData;
   };
 }
-const { story, theme } = Astro.props;
+const { story, size } = Astro.props;
 const images = dynamicImages(
   import.meta.glob<{
     default: ImageMetadata;
@@ -22,50 +23,99 @@ const images = dynamicImages(
 );
 
 const card = tv({
-  base: "block overflow-hidden p-2 rounded-3xl transition-all",
+  slots: {
+    base: "block overflow-hidden p-2 rounded-3xl transition-all",
+    image: "w-full rounded-2xl object-cover",
+    badge: "border-l px-4 ml-6 sm:ml-6 sm:px-6",
+    title: "",
+    body: "flex items-center",
+  },
   variants: {
-    theme: {
-      light: "bg-muted",
-      dark: "bg-[#D6FBC40F]",
-    },
     size: {
-      default: "px-3 h-8 text-sm",
-      lg: "py-3 text-lg px-5",
-      icon: "size-8",
+      default: {
+        base: "bg-transparent sm:bg-highlight",
+        image: "aspect-320/180 sm:aspect-512/450",
+        badge: "hidden sm:block",
+        title: "text-h5",
+        body: "px-2 py-6  sm:p-10"
+      },
+      relative: {
+        base: 'p-0',
+        image: "aspect-320/180 sm:aspect-344/200 rounded-xl ",
+        badge: "hidden",
+        title: "text-h5",
+        body: "px-2 pt-6"
+      },
+      home: {
+        base: "bg-[#D6FBC40F]",
+        image: "aspect-square sm:aspect-704/450",
+        title: "text-base sm:text-h5",
+        body: "p-5  sm:p-10",
+        badge: "border-l-[#EFFEE214]"
+      },
     },
   },
   defaultVariants: {
-    theme: "light",
+    size: "default",
   },
 });
+const isDark = size === "home";
+const framework = frameworks.find((f) => f.label === story.data.framework);
+const classNames = card(Astro.props);
+const imageSizes = (function (): [[number, number],[number, number]] {
+  switch (Astro.props.size) {
+    case "home":
+      return [
+        [640, 360],
+        [512, 450],
+      ];
+    case "relative":
+      return [
+        [670, 400],
+        [344, 200],
+      ]
+    default:
+      return [
+        [600, 600],
+        [704, 450],
+      ]
+  }
+})()
 ---
 
-<a href={`/stories/${story.id}`} class={card(Astro.props)}>
+<a href={`/stories/${story.id}`} class={classNames.base()}>
   <ResponsiveImage
     src={images(story.data.image)}
-    class="aspect-320/180 w-full rounded-2xl object-cover sm:aspect-512/450"
-    mobile={[640, 360]}
-    sm={[512, 450]}
+    class={classNames.image()}
+    mobile={imageSizes[0]}
+    sm={imageSizes[1]}
     alt=""
   />
-  <div class="items-center p-3 sm:flex sm:p-8">
-    <div class="space-y-2">
+  <div class={classNames.body()}>
+    <div class="w-full space-y-2">
       <Image
         src={images(story.data.logo)}
         alt=""
-        class={clsx("block h-4 w-auto", theme === "dark" && "invert")}
+        class={clsx("block h-4 w-auto", isDark && "invert")}
       />
-      <h3 class="text-h5">{story.data.title}</h3>
+      <h3 class={classNames.title()}>{story.data.title}</h3>
     </div>
-    <div class="hidden border-l px-6 sm:block border-l-[#EFFEE214] ml-6">
-      <div class="flex flex-col gap-2.5 text-center">
-        <FrameworkBadge
-          client:only
-          name={story.data.framework}
-          class="mx-auto block size-15 invert"
-        />
-        <div class="text-xxs">{story.data.framework}</div>
-      </div>
-    </div>
+    {
+      framework && (
+        <div class={classNames.badge()}>
+          <div class="badge flex flex-col gap-2.5 text-center">
+            <FrameworkBadge
+              client:only
+              name={framework.badge}
+              class={clsx(
+                "mx-auto block size-15",
+                isDark && "invert",
+              )}
+            />
+            <div class="text-xxs">{story.data.framework}</div>
+          </div>
+        </div>
+      )
+    }
   </div>
 </a>

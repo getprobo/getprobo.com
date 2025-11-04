@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import AboutImg from "../assets/about.png";
 import KeyFigures from "../components/block/KeyFigures.astro";
@@ -15,30 +14,28 @@ import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
   <main>
     <section class="container my-10 sm:mt-20 sm:mb-30">
       <h1
-        class="text-h2 intersect-once intersect:animate-slide-in mb-3 font-medium"
+        class="text-h2 mb-3 font-medium animate-slide-in"
       >
         About
       </h1>
       <p
-        class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-50 mb-6 sm:mb-12"
+        class="text-muted-foreground mb-6 sm:mb-12 animate-slide-in animation-delay-100"
       >
         The people and vision powering Probo.
       </p>
       <ResponsiveImage
         src={AboutImg}
-        class="aspect-square object-cover sm:aspect-1080/606 intersect-once intersect:animate-slide-in motion-delay-200 mb-10 rounded-lg sm:mb-30"
+        class="aspect-square object-cover sm:aspect-1080/606 mb-10 rounded-lg sm:mb-30 animate-slide-in animation-delay-200"
         mobile={[640, 640]}
         sm={[1080, 607]}
         alt=""
       />
       <h2
-        class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-300 mb-1"
+        class="text-muted-foreground mb-1 animate-slide-in animation-delay-300"
       >
         Mission
       </h2>
-      <p
-        class="text-quote intersect-once intersect:animate-slide-in motion-delay-400"
-      >
+      <p class="text-quote animate-slide-in animation-delay-400">
         We're transforming compliance from a complex burden into an intuitive
         journey. Our platform makes compliance straightforward and
         cost-effective, empowering businesses of all sizes to meet regulatory

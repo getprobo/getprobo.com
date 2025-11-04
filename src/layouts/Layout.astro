@@ -64,11 +64,3 @@ const canonical = Astro.url.href;
     <Footer />
   </body>
 </html>
-
-<script>
-  import { Observer } from "tailwindcss-intersect";
-
-  document.addEventListener("astro:page-load", () => {
-    Observer.start();
-  });
-</script>

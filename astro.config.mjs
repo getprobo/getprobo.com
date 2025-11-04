@@ -7,6 +7,7 @@ import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
+  prefetch: false,
   vite: {
     plugins: [tailwindcss()],
   },

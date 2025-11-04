@@ -6,12 +6,8 @@ import { getCollection } from "astro:content";
 import Logos from "../components/block/Logos.astro";
 import FrameworkBadge from "../components/FrameworkBadge.svelte";
 import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
+import StoryCard from "../components/StoryCard.astro";
 
-const images = dynamicImages(
-  import.meta.glob<{
-    default: ImageMetadata;
-  }>("/src/assets/stories/*.{jpeg,jpg,png,gif,svg}"),
-);
 const stories = (await getCollection("stories")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -23,47 +19,20 @@ const stories = (await getCollection("stories")).sort(
 >
   <main class="container my-10 sm:my-20">
     <h1
-      class="text-h2 sm:text-h1 intersect-once intersect:animate-slide-in mb-3 text-center font-medium"
+      class="text-h2 sm:text-h1 mb-3 text-center font-medium overflow-hidden"
     >
-      Customer Stories
+      <span class="inline-block animate-perspective-in">Customer</span> <span class="inline-block animate-perspective-in animation-delay-100">Stories</span>
     </h1>
     <p
-      class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 text-center text-base"
+      class="text-muted-foreground text-center text-base animate-perspective-in animation-delay-200"
     >
       Inspiring stories, real Probo customers
     </p>
-    <Logos class="my-6" />
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+    <Logos class="my-6 animate-slide-in animation-delay-300" />
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 animate-slide-in animation-delay-250">
       {
         stories.map((item) => (
-          <a
-            href={`/stories/${item.id}`}
-            class="bg-highlight block overflow-hidden rounded-2xl p-2"
-          >
-            <ResponsiveImage
-              src={images(item.data.image)}
-              class="aspect-320/180 rounded-2xl object-cover sm:aspect-512/450"
-              mobile={[640, 360]}
-              sm={[512, 450]}
-              alt=""
-            />
-            <div class="items-center p-3 sm:flex sm:p-8">
-              <div class="space-y-2">
-                <Image src={images(item.data.logo)} alt="" class="h-4 w-auto" />
-                <h3 class="text-h5">{item.data.title}</h3>
-              </div>
-              <div class="hidden border-l px-6 sm:block ml-6">
-                <div class="flex flex-col gap-2.5 text-center">
-                  <FrameworkBadge
-                    client:only
-                    name={item.data.framework}
-                    class="mx-auto block size-15"
-                  />
-                  <div class="text-xxs">{item.data.framework}</div>
-                </div>
-              </div>
-            </div>
-          </a>
+          <StoryCard story={item} />
         ))
       }
     </div>

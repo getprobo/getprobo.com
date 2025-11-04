@@ -28,8 +28,6 @@
     "prettier-plugin-tailwindcss": "^0.7.1",
     "svelte": "^5.41.2",
     "tailwindcss": "^4.1.15",
-    "tailwindcss-intersect": "^2.2.0",
-    "tailwindcss-motion": "^1.1.1",
     "typescript": "^5.9.3"
   },
   "devDependencies": {

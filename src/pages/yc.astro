@@ -17,31 +17,35 @@ import { companies } from "../data/companies.ts";
     class="container my-10 flex flex-col gap-6 sm:my-20 sm:flex-row sm:items-center sm:justify-between"
   >
     <div class="max-w-[424px]">
-      <h1 class="text-h2 mb-4 font-medium">
-        From Chaos to Compliance — in a few weeks.
-      </h1>
-      <p class="text-muted-foreground mb-6 text-lg">
-        Probo is an open-source platform that acts as your in-house compliance
-        team, handling policies, documentation, processes, risk assessments, and
-        more, so you can stay focused on what matters.
-      </p>
+      <div class="overflow-hidden">
+        <h1 class="text-h2 mb-4 font-medium animate-perspective-in">
+          From Chaos to Compliance — in a few weeks.
+        </h1>
+      </div>
+      <div class="overflow-hidden">
+        <p class="text-muted-foreground mb-6 text-lg animate-perspective-in animation-delay-100">
+          Probo is an open-source platform that acts as your in-house compliance
+          team, handling policies, documentation, processes, risk assessments, and
+          more, so you can stay focused on what matters.
+        </p>
+      </div>
       <form class="flex flex-col gap-3">
         <input
-          class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3"
+          class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3 animate-perspective-in animation-delay-200"
           type="email"
           placeholder="Enter your email"
           aria-label="Enter your email"
         />
         <input
-          class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3"
+          class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3 animate-perspective-in animation-delay-300"
           type="email"
           placeholder="Your YC verification link"
           aria-label="Your YC verification link"
         />
-        <Button type="submit" size="lg" class="text-base">Claim deal</Button>
+        <Button type="submit" size="lg" class="text-base animate-perspective-in animation-delay-350">Claim deal</Button>
         <a
           href="#"
-          class="text-tertiary-foreground text-center underline sm:text-start"
+          class="text-tertiary-foreground text-center underline sm:text-start animate-fade-in animation-delay-450"
         >
           Get your verification link
         </a>
@@ -51,11 +55,11 @@ import { companies } from "../data/companies.ts";
       count={9}
       countMobile={3}
       client:load
-      class="grid grid-cols-3 sm:w-[380px] sm:gap-10"
+      class="grid grid-cols-3 sm:w-[380px] sm:gap-10 animate-fade-in animation-delay-150"
     />
   </section>
 
-  <Logos />
+  <Logos class="animate-fade-in animation-delay-500" />
 
   <section
     class="container my-20 flex flex-col gap-10 sm:my-30 sm:flex-row sm:items-center sm:gap-20"
@@ -65,33 +69,35 @@ import { companies } from "../data/companies.ts";
       alt=""
       mobile={[500, 500]}
       sm={[500, 660]}
-      class="shadow-image aspect-square w-full max-w-[500px] flex-none rounded-2xl object-cover sm:aspect-500/660 sm:w-[500px]"
+      class="shadow-image aspect-square w-full max-w-[500px] flex-none rounded-2xl object-cover sm:aspect-500/660 sm:w-[500px] animate-slide-in animation-delay-350"
     />
     <div class="text-muted-foreground space-y-6 text-lg">
-      <h2 class="text-h3 text-foreground font-medium">Our YC Story</h2>
-      <p>
-        Instead of building yet another “classic SaaS,” we chose a different
-        path: delivering an end-to-end compliance service. We don’t just give
-        companies tools to achieve SOC 2 in record time - we run the compliance
-        for them.
-      </p>
-      <p>
-        That ambition came with a price: time. At one point we were handling
-        more clients in parallel than Bryan and I could realistically support.
-        Bryan even stepped in as a full-time compliance officer. We kept our
-        standards high, even saying no to new clients rather than compromising
-        on quality.
-      </p>
-      <p>
-        Today, things are almost back under control. Our processes are stronger,
-        our team is growing (reach out if you are a CISO or compliance officer),
-        and we are back on track toward our objectives.
-      </p>
-      <p>
-        YC was the best thing that could have happened to us and Probo: Doing
-        things than don’t scale is hard, but it’s worth it!
-      </p>
-      <p>— Antoine Bouchardy, Co-founder & CEO</p>
+      <h2 class="text-h3 text-foreground font-medium  animate-slide-in animation-delay-450">Our YC Story</h2>
+      <div class="animate-slide-in animation-delay-550">
+        <p>
+          Instead of building yet another “classic SaaS,” we chose a different
+          path: delivering an end-to-end compliance service. We don’t just give
+          companies tools to achieve SOC 2 in record time - we run the compliance
+          for them.
+        </p>
+        <p>
+          That ambition came with a price: time. At one point we were handling
+          more clients in parallel than Bryan and I could realistically support.
+          Bryan even stepped in as a full-time compliance officer. We kept our
+          standards high, even saying no to new clients rather than compromising
+          on quality.
+        </p>
+        <p>
+          Today, things are almost back under control. Our processes are stronger,
+          our team is growing (reach out if you are a CISO or compliance officer),
+          and we are back on track toward our objectives.
+        </p>
+        <p>
+          YC was the best thing that could have happened to us and Probo: Doing
+          things than don’t scale is hard, but it’s worth it!
+        </p>
+        <p>— Antoine Bouchardy, Co-founder & CEO</p>
+      </div>
     </div>
   </section>
 

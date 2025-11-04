@@ -6,52 +6,54 @@ import Button from "./ui/Button.astro";
 import MobileMenu from "./MobileMenu.astro";
 ---
 
-<header class="container mx-auto flex items-center py-3 sm:py-4">
-  <a href="/">
-    <Image src={Logo} alt="Logo probo" width={73} height={20} />
-  </a>
-  <nav class="ml-auto hidden sm:flex">
-    <NavLink href="/about">About</NavLink>
-    <NavLink href="/blog">Blog</NavLink>
-    <NavLink href="https://github.com/getprobo">GitHub</NavLink>
-    <NavLink href="#">Access your trust center</NavLink>
-  </nav>
-  <Button href="https://hexacc.typeform.com/getstarted" class="ml-auto sm:ml-4 h-9 px-4 sm:h-8 sm:px-3">
-    Get compliant
-  </Button>
-  <burger-menu
-    class="group ml-3 sm:hidden size-9 grid place-items-center"
-    aria-label="Open mobile menu"
-  >
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-      class="group-aria-selected:hidden"
+<header class="sticky top-0 z-50 bg-secondary/80 backdrop-blur-md">
+  <div class="container mx-auto flex items-center py-3 sm:py-4 ">
+    <a href="/">
+      <Image src={Logo} alt="Logo probo" width={73} height={20} />
+    </a>
+    <nav class="ml-auto hidden sm:flex">
+      <NavLink href="/about">About</NavLink>
+      <NavLink href="/blog">Blog</NavLink>
+      <NavLink href="https://github.com/getprobo">GitHub</NavLink>
+      <NavLink href="#">Access your trust center</NavLink>
+    </nav>
+    <Button href="https://hexacc.typeform.com/getstarted" class="ml-auto sm:ml-4 h-9 px-4 sm:h-8 sm:px-3">
+      Get compliant
+    </Button>
+    <burger-menu
+      class="group ml-3 sm:hidden size-9 grid place-items-center"
+      aria-label="Open mobile menu"
     >
-      <path
-        d="M2 8H14M2 4H14M2 12H14"
-        stroke="#141E12"
-        stroke-width="1.33333"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-    </svg>
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      class="hidden group-aria-selected:block"
-    >
-      <path
-        d="M3.33325 3.33594L12.6666 12.6693M12.6666 3.33594L3.33325 12.6693"
-        stroke="black"
-        stroke-width="1.33333"
-        stroke-linecap="round"></path>
-    </svg>
-  </burger-menu>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        xmlns="http://www.w3.org/2000/svg"
+        class="group-aria-selected:hidden"
+      >
+        <path
+          d="M2 8H14M2 4H14M2 12H14"
+          stroke="#141E12"
+          stroke-width="1.33333"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="hidden group-aria-selected:block"
+      >
+        <path
+          d="M3.33325 3.33594L12.6666 12.6693M12.6666 3.33594L3.33325 12.6693"
+          stroke="black"
+          stroke-width="1.33333"
+          stroke-linecap="round"></path>
+      </svg>
+    </burger-menu>
+  </div>
 </header>
 
 <MobileMenu id="mobile-menu" />

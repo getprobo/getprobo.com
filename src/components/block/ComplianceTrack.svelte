@@ -1,7 +1,7 @@
 <script>
   import ComplianceTrackItem from "../ui/ComplianceTrackItem.svelte";
   import { useIntersectionObserver } from "../../lib/runes/useIntersectionObserver.svelte.ts";
-  let intersection = useIntersectionObserver();
+  let intersection = useIntersectionObserver({once: true});
 
   let step = $state(0);
 
@@ -12,8 +12,8 @@
     step = 0;
     const tick = () => {
       step++;
-      if (step > 4) {
-        step = 0;
+      if (step >= 4) {
+        clearInterval(timer)
       }
     };
     setTimeout(tick, 50);
@@ -22,7 +22,7 @@
   });
 </script>
 
-<section class="py-10 sm:py-20 container">
+<section class="py-10 sm:py-20 container animate-fade-in animation-delay-500">
   <h2
     class="text-h3 sm:text-h2 mb-3 font-medium text-center intersect-once intersect:animate-slide-in"
   >

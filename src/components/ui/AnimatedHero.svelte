@@ -29,7 +29,7 @@
 
 <style>
   .hero {
-    background: linear-gradient(180deg, #fffffb 50%, #e4f7c7 50%);
+    --color: #D6F1AF;
     isolation: isolate;
   }
 </style>
