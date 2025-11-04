@@ -10,18 +10,18 @@
   const toPercent = (n: number) => `${(n * 100).toFixed(2)}%`;
 
   let timer: ReturnType<typeof setTimeout> | null = null;
-  const tick = () => {
+  const tick = (baseDuration?: number) => {
     const start = randomStart();
     const end = randomEnd(start);
-    const duration = randomDuration();
+    const duration = baseDuration ?? randomDuration();
     timer = setTimeout(tick, duration);
     el.animate([
       {'--start': toPercent(start), '--end': toPercent(end), 'opacity': 1},
-    ], {duration: duration, fill: 'both'})
+    ], {duration: duration, fill: 'both', delay: 0, easing: 'ease-in-out'})
   };
 
   onMount(() => {
-    timer = setTimeout(tick, Math.random() * 200);
+    tick(Math.random() * 500 + 1000);
     return () => {
       if (timer) {
         clearTimeout(timer);
