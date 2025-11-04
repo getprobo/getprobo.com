@@ -6,7 +6,10 @@
   const props = $props<{
     children: () => any;
     options: Options;
+    // Display elements on the side
     withOverflow?: boolean;
+    // Clicking on a slide navigate to it
+    navigateOnClick?: boolean
   }>();
 
   $effect(() => {
@@ -19,6 +22,14 @@
       (node as HTMLDivElement).classList.add("splide__slide"),
     );
     const s = new Splide(slider, props.options).mount();
+
+    s.on('click', (slide, e) => {
+      // Clicking on the side, should focus the right item
+      if (props.navigateOnClick && slide.index !== s.index) {
+          e.preventDefault()
+          s.go(slide.index)
+      }
+    })
 
     return () => {
       s.destroy();

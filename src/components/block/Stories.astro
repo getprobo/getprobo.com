@@ -52,6 +52,7 @@ const stories = (await getCollection("stories")).sort(
       <Slider
         client:load
         withOverflow
+        navigateOnClick
         options={{
           perPage: 1,
           updateOnMove: true,
