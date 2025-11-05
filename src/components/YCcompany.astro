@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+
+type Props = {
+  logo: ImageMetadata;
+  badge: string;
+  name: string;
+  href: string;
+  height?: number
+}
+---
+
+<a
+  href={Astro.props.href}
+  target="_blank"
+  rel="noopener`"
+  class="flex h-26 flex-col items-center justify-center gap-3"
+>
+  <div class="grid h-8 items-center">
+    <Image
+      src={Astro.props.logo}
+      alt={Astro.props.name}
+      height={Astro.props.height ?? 28}
+    />
+  </div>
+  <div class="text-xxs bg-highlight text-muted-foreground w-max rounded-full px-2">
+    {Astro.props.badge}
+  </div>
+</a>

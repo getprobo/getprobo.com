@@ -8,6 +8,13 @@ import YCImage from "../assets/photos/ycombinator.png";
 import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
 import { companies } from "../data/companies.ts";
 import DealForm from '../components/DealForm.svelte'
+import YCcompany from "../components/YCcompany.astro";
+
+import BlaxelLogo from '../assets/companies/blaxel.png';
+import WhalyLogo from '../assets/companies/whaly.png';
+import AirweaveLogo from '../assets/companies/airweave.png';
+import AlturLogo from '../assets/companies/altur.png';
+import KestrelLogo from '../assets/companies/kestrel.png';
 ---
 
 <Layout
@@ -113,25 +120,41 @@ import DealForm from '../components/DealForm.svelte'
     <div
       class="companies-grid grid grid-cols-2 place-items-center sm:grid-cols-4"
     >
-      {
-        companies.map((company) => (
-          <a
-            href={company.href}
-            target="_blank"
-            rel="noopener`"
-            class="flex h-26 flex-col items-center justify-center gap-3"
-          >
-            <img
-              src={`/clients/${company.image}`}
-              alt={company.alt}
-              class="h-3 w-auto sm:h-4"
-            />
-            <div class="text-xxs bg-highlight text-muted-foreground w-max rounded-full px-2 py-1">
-              {company.badge}
-            </div>
-          </a>
-        ))
-      }
+      <YCcompany
+        logo={BlaxelLogo}
+        badge="W25"
+        name="Blaxel"
+        href="https://blaxel.ai/"
+        height={24}
+        />
+      <YCcompany
+        logo={WhalyLogo}
+        badge="W25"
+        name="Whaly"
+        href="https://whaly.io/"
+        height={32}
+      />
+      <YCcompany
+        logo={AirweaveLogo}
+        badge="W25"
+        name="Blaxel"
+        href="https://airweave.ai/"
+        height={20}
+      />
+      <YCcompany
+        logo={AlturLogo}
+        badge="W25"
+        name="Altur"
+        href="https://www.altur.io/en"
+        height={20}
+      />
+      <YCcompany
+        logo={KestrelLogo}
+        badge="W25"
+        name="Kestrel"
+        href="https://usekestrel.ai/"
+        height={16}
+      />
     </div>
   </section>
 
