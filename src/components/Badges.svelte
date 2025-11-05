@@ -43,23 +43,24 @@
       ];
     const randomIndex = Math.floor(Math.random() * count);
     visibleFrameworks[randomIndex] = randomFramework;
-    setTimeout(tick, duration);
+    timer = setTimeout(tick, duration);
   };
 
   // Enable the timer only when the badges are visible
   $effect(() => {
     if (intersection.observed) {
-      setTimeout(tick, duration);
-    } else {
+      timer = setTimeout(tick, duration);
+    }
+    return () => {
       if (timer) {
-        clearTimeout(timer);
+        clearTimeout(timer)
       }
     }
   });
 
   onDestroy(() => {
     if (timer) {
-      clearInterval(timer);
+      clearTimeout(timer);
     }
   });
 </script>
