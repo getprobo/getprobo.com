@@ -1,6 +1,11 @@
-const base = { threshold: 0.5, once: false }
+type Options = {
+  threshold?: number;
+  once?: boolean;
+}
 
-export const useIntersectionObserver = (options: typeof base = base) => {
+const base: Options = { threshold: 0.5, once: false }
+
+export const useIntersectionObserver = (options: Options = base) => {
   let ref = $state<HTMLElement>();
   let observed = $state(false);
 

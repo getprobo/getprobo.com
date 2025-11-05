@@ -7,6 +7,7 @@ import Badges from "../components/Badges.svelte";
 import YCImage from "../assets/photos/ycombinator.png";
 import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
 import { companies } from "../data/companies.ts";
+import DealForm from '../components/DealForm.svelte'
 ---
 
 <Layout
@@ -29,16 +30,20 @@ import { companies } from "../data/companies.ts";
           more, so you can stay focused on what matters.
         </p>
       </div>
-      <form class="flex flex-col gap-3">
+      <DealForm class="flex flex-col gap-3" client:load>
         <input
           class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3 animate-perspective-in animation-delay-200"
           type="email"
+          name="email"
+          required
           placeholder="Enter your email"
           aria-label="Enter your email"
         />
         <input
           class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3 animate-perspective-in animation-delay-300"
-          type="email"
+          name="link"
+          type="url"
+          required
           placeholder="Your YC verification link"
           aria-label="Your YC verification link"
         />
@@ -49,7 +54,7 @@ import { companies } from "../data/companies.ts";
         >
           Get your verification link
         </a>
-      </form>
+      </DealForm>
     </div>
     <Badges
       count={9}
