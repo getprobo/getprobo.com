@@ -68,12 +68,12 @@ import MobileMenu from "./MobileMenu.astro";
         const sidebarOpen = !sidebar.hasAttribute("open");
         if (sidebarOpen) {
           sidebar.setAttribute("open", "");
-          document.body.style.removeProperty("overflow");
           this.setAttribute("aria-selected", "true");
+          document.body.style.overflow = "hidden";
         } else {
           sidebar.removeAttribute("open");
           this.removeAttribute("aria-selected");
-          document.body.style.overflow = "hidden";
+          document.body.style.removeProperty("overflow");
         }
       });
     }
