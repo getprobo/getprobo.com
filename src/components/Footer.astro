@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Logo from "../assets/probo-logo.svg";
 import Frameworks from "./block/Frameworks.astro";
+import OpenStatus from '../components/OpenStatus.svelte'
 
 const menus = [
   {
@@ -51,6 +52,7 @@ const menus = [
         Forget compliance,<br />
         focus on your business.
       </p>
+      <OpenStatus client:visible/>
       <p class="text-xxs sm:mt-16">
         Copyright © {new Date().getFullYear()} Probo. All rights reserved.
       </p>
