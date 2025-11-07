@@ -33,24 +33,24 @@ const card = tv({
   variants: {
     size: {
       default: {
-        base: "bg-transparent sm:bg-highlight",
+        base: 'sm:bg-highlight sm:border sm:border-[0.5px]',
         image: "aspect-320/180 sm:aspect-512/450",
         badge: "hidden sm:block",
         title: "text-h5",
         body: "px-2 py-6  sm:p-10"
       },
       relative: {
-        base: 'p-0',
-        image: "aspect-320/180 sm:aspect-344/200 rounded-xl ",
+        base: 'p-0 rounded-xl ',
+        image: "aspect-320/180 sm:aspect-344/200 rounded-xl",
         badge: "hidden",
         title: "text-h5",
         body: "px-2 pt-6"
       },
       home: {
-        base: "bg-[#D6FBC40F]",
-        image: "aspect-square sm:aspect-704/450",
+        base: "bg-highlight border border-[0.5px]",
+        image: "aspect-square sm:aspect-704/450 ",
         title: "text-base sm:text-h5",
-        body: "p-5  sm:p-10",
+        body: "p-5 sm:p-10",
         badge: "border-l-[#EFFEE214]"
       },
     },

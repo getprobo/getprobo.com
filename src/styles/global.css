@@ -121,8 +121,9 @@
     --color-muted-foreground: #9aa299;
     --color-muted: #d6fbc40f;
     --color-level-0: #151715;
-    --color-highlight: #d6fbc40f;
+    --color-highlight: #D6FBC40F;
     --color-border-mid: #e9fedf1b;
+    --color-border-low: #EFFEE214;
     --color-tertiary-foreground: #778175;
 }
 
