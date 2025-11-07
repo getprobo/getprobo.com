@@ -4,6 +4,7 @@ import Logo from "../assets/probo-logo.svg";
 import Frameworks from "./block/Frameworks.astro";
 import OpenStatus from '../components/OpenStatus.svelte'
 import Cookie from "../components/Cookie.svelte";
+import Newsletter from "./block/Newsletter.astro";
 
 const menus = [
   {
@@ -35,11 +36,11 @@ const menus = [
 
 <Frameworks />
 
-<footer class="bg-level-0 py-10 sm:py-20">
+<footer class="bg-level-0 py-10 sm:py-20 space-y-10">
   <div
-    class="container flex grid-cols-[510fr_560fr] flex-col-reverse gap-8 sm:grid"
+    class="container flex grid-cols-[520fr_560fr] flex-col-reverse gap-8 sm:grid"
   >
-    <div class="text-tertiary-foreground space-y-4">
+    <div class="container text-tertiary-foreground space-y-4 sm:max-w-[320px]">
       <a href="/" class="block">
         <Image
           src={Logo}
@@ -49,15 +50,9 @@ const menus = [
           class="opacity-50"
         />
       </a>
-      <p class="">
-        Forget compliance,<br />
-        focus on your business.
-      </p>
-      <OpenStatus client:visible/>
-      <p class="text-xxs sm:mt-16">
-        Copyright © {new Date().getFullYear()} Probo. All rights reserved.
-      </p>
+      <Newsletter variant="footer"/>
     </div>
+
     <div class="grid grid-cols-2 gap-6 text-xs sm:grid-cols-3">
       {
         menus.map((menu) => (
@@ -80,6 +75,10 @@ const menus = [
       }
     </div>
   </div>
+  <p class="container text-tertiary-foreground text-xxs flex gap-3 items-center">
+    Copyright © {new Date().getFullYear()} Probo. All rights reserved.
+    <OpenStatus client:visible/>
+  </p>
 </footer>
 <Cookie client:only/>
 

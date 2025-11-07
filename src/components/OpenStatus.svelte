@@ -5,7 +5,7 @@
   const dictionary = {
     operational: {
       label: "Operational",
-      color: "#22c55e"
+      color: "#93C926"
     },
     degraded_performance: {
       label: "Degraded Performance",
@@ -59,14 +59,14 @@
 </script>
 
 <a
-  class="border py-1 px-3 rounded-md w-max flex items-center gap-2 text-sm text-muted-foreground"
+  class="border border-border-mid bg-invert py-1.5 px-3 rounded-lg w-max flex items-center gap-2"
   href="https://probostatus.com"
   rel="noreferrer"
   target="_blank"
 >
-  {label}
   <span
     class="relative inline-flex h-2 w-2 rounded-full "
     style:background-color={color}
   ></span>
+  {label}
 </a>

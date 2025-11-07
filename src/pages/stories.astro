@@ -1,11 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Image from "astro/components/Image.astro";
-import { dynamicImages } from "../lib/images.ts";
 import { getCollection } from "astro:content";
 import Logos from "../components/block/Logos.astro";
-import FrameworkBadge from "../components/FrameworkBadge.svelte";
-import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
 import StoryCard from "../components/StoryCard.astro";
 
 const stories = (await getCollection("stories")).sort(

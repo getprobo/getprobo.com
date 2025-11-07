@@ -41,6 +41,6 @@
   })
 </script>
 
-<svelte:element this={tag} {...props} class={button({size, variant})}>
+<svelte:element this={tag} {...props} class={button({size, variant, className: props.class})}>
   <slot />
 </svelte:element>
