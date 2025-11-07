@@ -42,7 +42,7 @@
   };
 </script>
 
-<aside class={clsx("text-center flex flex-col gap-4 items-center", className)}>
+<aside class={clsx("text-center flex flex-col gap-4 items-start", className)}>
   <div class="text-xs font-medium">Share article</div>
   <div
     class="flex items-center  text-muted-foreground justify-center gap-2"

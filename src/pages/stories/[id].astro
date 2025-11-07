@@ -92,11 +92,10 @@ const stories = random((await getCollection("stories")).filter(s => s.id !== ite
         <div class="font-medium">Company type</div>
         <div class="text-muted-foreground">{data.company.type}</div>
       </div>
-      <div class="space-y-2">
+      <div class="space-y-2 mb-10">
         <div class="font-medium">About the company</div>
         <div class="text-muted-foreground">{data.company.about}</div>
       </div>
-      <hr />
       <Newsletter />
     </aside>
   </main>

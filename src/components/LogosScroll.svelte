@@ -6,7 +6,6 @@
   import { Intersection } from "@splidejs/splide-extension-intersection";
 
   const props: { children: Snippet; class?: string } = $props();
-  let innerWidth = $state(0);
   let slider: HTMLDivElement | null = null;
   const options = {
     type: "loop",
@@ -42,10 +41,3 @@
     {@render props.children()}
   </div>
 </div>
-<div
-  class="absolute top-0 right-0 h-full w-60 bg-linear-to-l from-[#FFFFFB] to-[#FFFFFB]/0"
-></div>
-<div
-  class="absolute top-0 left-0 h-full w-60 bg-linear-to-r from-[#FFFFFB] to-[#FFFFFB]/0"
-></div>
-<svelte:window bind:innerWidth />

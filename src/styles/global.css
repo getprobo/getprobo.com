@@ -24,6 +24,7 @@
     --color-secondary: #fff;
     --color-tertiary-foreground: #818780;
     --color-level-0: #fffffb;
+    --color-level-1: #FFFFFF;
     --color-level-3: #141e12;
     --color-border-low: #022a0213;
     --color-border-mid: #001a0027;
@@ -33,6 +34,7 @@
     --color-active: #e4f7c7;
     --color-invert: #fff;
     --color-highlight: #0027000d;
+    --color-subtle: #054D0507;
 
     --text-h1: 4.5rem; /* 72px */
     --text-h1--line-height: 1;
@@ -83,6 +85,7 @@
     --shadow-image: 0px 24px 24px -12px #0000000a, 0px 12px 12px -6px #0000000a,
     0px 6px 6px -3px #0000000f, 0px 3px 3px -1.5px #0000000f,
     0px 1px 1px -0.5px #0000000f, 0px 0px 0px 1px #0000000f;
+    --shadow-mid: 0px 2px 12px 0px #0000000F, 0px 2px 4px 0px #00000014;
 
     --animate-scroll: scroll 4s linear infinite;
     @keyframes scroll {

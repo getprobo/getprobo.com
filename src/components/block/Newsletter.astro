@@ -1,7 +1,43 @@
 ---
 import clsx from "clsx";
-import Button from "../ui/Button.astro";
+import Button from "../ui/Button.svelte";
 ---
+
+<newsletter-form>
+  <form class={clsx(Astro.props.class, "bg-subtle rounded-3xl p-6 sm:p-8 @sm:flex items-center gap-20")}>
+    <div class="text-lg font-medium mb-6 @sm:max-w-65 @sm:mb-0">
+      Sign up for our newsletter to get actionable insights about compliance, right to your inbox.
+    </div>
+    <div class="space-y-3"> <input
+      class="border-border-mid placeholder:text-quaternary h-11 w-full rounded-lg border px-3 bg-secondary @sm:h-8 "
+      name="email"
+      type="email"
+      required
+      placeholder="Enter your email"
+      aria-label="Your email"
+    />
+      <Button class="w-full h-11 text-base @sm:h-8 @sm:w-max">Subscribe</Button>
+    </div>
+  </form>
+</newsletter-form>
+
+<script lang="ts">
+  class NewsletterForm extends HTMLElement {
+    connectedCallback() {
+      const form = this.querySelector('form')
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const formData = new FormData(form)
+        const email = formData.get('email')
+        // TODO : add logic to subscribe
+        console.log('email', email)
+      })
+    }
+  }
+  customElements.define('newsletter-form', NewsletterForm)
+</script>
+
+<!--
 
 <section
   class={clsx(
@@ -45,3 +81,4 @@ import Button from "../ui/Button.astro";
     Stay updated
   </Button>
 </section>
+-->

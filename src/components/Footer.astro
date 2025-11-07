@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import Logo from "../assets/probo-logo.svg";
 import Frameworks from "./block/Frameworks.astro";
 import OpenStatus from '../components/OpenStatus.svelte'
+import Cookie from "../components/Cookie.svelte";
 
 const menus = [
   {
@@ -80,6 +81,7 @@ const menus = [
     </div>
   </div>
 </footer>
+<Cookie client:only/>
 
 <script>
 import { initializeFaro } from "@grafana/faro-web-sdk";
