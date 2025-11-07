@@ -70,7 +70,7 @@ const stories = random((await getCollection("stories")).filter(s => s.id !== ite
   </div>
 
   <main
-    class="container flex grid-cols-[1fr_320px] flex-col gap-10 sm:my-20 sm:grid animate-slide-in animation-delay-400"
+    class="container flex grid-cols-[1fr_320px] flex-col gap-10 sm:my-20 sm:grid sm:gap-20 animate-slide-in animation-delay-400"
   >
     <Prose>
       <Content />
