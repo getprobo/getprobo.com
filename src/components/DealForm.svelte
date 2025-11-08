@@ -4,11 +4,9 @@
 
 <script lang="ts">
   import type { Snippet } from "svelte";
-  console.log('hello')
 
   const props: { children: Snippet; } = $props();
   const handleSubmit = async (e: SubmitEvent) => {
-    console.log('submit')
     e.stopPropagation()
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
