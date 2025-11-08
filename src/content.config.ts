@@ -2,6 +2,8 @@ import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 import { frameworks } from "./data/frameworks.ts";
 
+export const pageSize = 10
+
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/data/blog" }),
 });

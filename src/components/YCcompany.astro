@@ -18,6 +18,7 @@ type Props = {
 >
   <div class="grid h-8 items-center">
     <Image
+      densities={[1, 2]}
       src={Astro.props.logo}
       alt={Astro.props.name}
       height={Astro.props.height ?? 28}

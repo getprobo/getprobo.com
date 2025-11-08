@@ -6,7 +6,6 @@ import Button from "../components/ui/Button.svelte";
 import Badges from "../components/Badges.svelte";
 import YCImage from "../assets/photos/ycombinator.png";
 import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
-import { companies } from "../data/companies.ts";
 import DealForm from '../components/DealForm.svelte'
 import YCcompany from "../components/YCcompany.astro";
 
@@ -15,6 +14,33 @@ import WhalyLogo from '../assets/companies/whaly.png';
 import AirweaveLogo from '../assets/companies/airweave.png';
 import AlturLogo from '../assets/companies/altur.png';
 import KestrelLogo from '../assets/companies/kestrel.png';
+
+const companies = [
+  {
+    image: "carbonfact.svg",
+    alt: "CarbonFact",
+    href: "https://carbonfact.com",
+    height: 12
+  },
+  {
+    image: "ahrefs.svg",
+    alt: "Ahrefs",
+    href: "https://ahrefs.com",
+    height: 18.75,
+  },
+  {
+    image: "ahrefs.svg",
+    alt: "Ahrefs",
+    href: "https://ahrefs.com",
+    height: 18.75,
+  },
+  {
+    image: "carbonfact.svg",
+    alt: "CarbonFact",
+    href: "https://carbonfact.com",
+    height: 12,
+  },
+]
 ---
 
 <Layout
@@ -71,7 +97,16 @@ import KestrelLogo from '../assets/companies/kestrel.png';
     />
   </section>
 
-  <Logos class="animate-fade-in animation-delay-500" />
+  <section class="container py-10 space-y-6 sm:py-20">
+    <h2 class="text-tertiary-foreground text-center">Trusted by leading teams</h2>
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      {companies.map((company) => (
+        <a href={company.href} target="_blank" rel="noopener noreferrer" class="border h-25 rounded-2xl grid place-items-center" aria-label={company.alt}>
+          <img src={`/clients/${company.image}`} alt={company.alt} class="h-10 w-auto" style={`height: ${company.height}px`} />
+        </a>
+      ))}
+    </div>
+  </section>
 
   <section
     class="container my-20 flex flex-col gap-10 sm:my-30 sm:flex-row sm:items-center sm:gap-20"

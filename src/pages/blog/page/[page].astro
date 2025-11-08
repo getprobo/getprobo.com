@@ -1,14 +1,24 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
-import WrittenBy from "../components/block/WrittenBy.astro";
-import { pageSize } from "../content.config.ts";
-import Pagination from "../components/Pagination.astro";
-const allPosts = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-const lastPage = Math.ceil(allPosts.length / pageSize);
-const posts = allPosts.slice(0, pageSize);
+import WrittenBy from "../../../components/block/WrittenBy.astro";
+import type { Page } from "astro";
+import Pagination from "../../../components/Pagination.astro";
+import { pageSize } from "../../../content.config.ts";
+
+export async function getStaticPaths({paginate}: {paginate: any}) {
+  const allPosts = (await getCollection("blog")).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+  return paginate(allPosts, {pageSize});
+}
+
+type Props = {
+  page: Page
+}
+
+const {page} = Astro.props
+
 const dateFormatter = Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
@@ -16,12 +26,12 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
 });
 ---
 
-<Layout title="Blog">
+<Layout title={`Blog, page ${page.currentPage}`}>
   <main class="container my-10 sm:my-20">
     <h1
       class="text-h2 mb-3 font-medium animate-slide-in"
     >
-      Blog
+      Blog, page {page.currentPage}
     </h1>
     <p
       class="text-muted-foreground mb-10 text-base sm:mb-16 animate-slide-in animation-delay-100"
@@ -33,7 +43,7 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
     >
       <section>
         {
-          posts.map((post: any) => (
+          page.data.map((post: any) => (
             <article class="border-b pt-6 pb-6 first:pt-0 last:border-b-0 sm:pt-10 sm:pb-10 sm:first:pt-0">
               <div class="text-muted-foreground">
                 {dateFormatter.format(new Date(post.data.date))}, by{" "}
@@ -51,7 +61,7 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
             </article>
           ))
         }
-        <Pagination currentPage={1} lastPage={lastPage} url="/blog" />
+        <Pagination currentPage={page.currentPage} lastPage={page.lastPage} url="/blog" />
       </section>
       <aside
         class="sticky top-4 animate-slide-in animation-delay-200"

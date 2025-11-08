@@ -1,0 +1,30 @@
+---
+import clsx from "clsx";
+type Props = {
+  currentPage: number;
+  lastPage: number
+  url:string;
+}
+
+const {currentPage, lastPage, url} = Astro.props;
+const pages = Array.from({length: lastPage}, (_, i) => i + 1);
+const className = "text-center bg-highlight size-8 rounded-full grid place-items-center text-sm font-medium aria-disabled:opacity-60"
+const urlForPage = (page: number) =>{
+  if (page === 1) {
+    return url
+  }
+  return `${url}/page/${page}`;
+};
+---
+
+{lastPage > 1 && <nav class="flex items-center gap-2 justify-center py-10 sm:py-20">
+  <a href={url} class={clsx(className, 'mr-4')} aria-disabled={currentPage === 1}>
+    <svg width={16} height={16} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path fill="#141E12" fill-rule="evenodd" d="M10.57 2.23a.8.8 0 0 1 0 1.14L5.93 8l4.64 4.63a.8.8 0 0 1-1.14 1.14l-5.2-5.2a.8.8 0 0 1 0-1.14l5.2-5.2a.8.8 0 0 1 1.14 0Z" clip-rule="evenodd"/></svg>
+  </a>
+  {pages.map((page) => (
+    <a href={urlForPage(page)} class={className} aria-disabled={currentPage === page}>{page}</a>
+  ))}
+  <a href={urlForPage(lastPage)} class={clsx(className, 'ml-4')} aria-disabled={currentPage === lastPage}>
+    <svg class="rotate-180" width={16} height={16} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path fill="#141E12" fill-rule="evenodd" d="M10.57 2.23a.8.8 0 0 1 0 1.14L5.93 8l4.64 4.63a.8.8 0 0 1-1.14 1.14l-5.2-5.2a.8.8 0 0 1 0-1.14l5.2-5.2a.8.8 0 0 1 1.14 0Z" clip-rule="evenodd"/></svg>
+  </a>
+</nav>}
