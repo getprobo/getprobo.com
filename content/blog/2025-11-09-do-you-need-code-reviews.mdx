@@ -1,0 +1,153 @@
+
+---
+title: "Do you need code review reviews for compliance?"
+date: 2025-10-28
+coverImage: "/blog/2025-10-28-what-is-soc2.webp"
+excerpt: "Compliant or certified?"
+author:
+  name: "Antoine Bouchardy"
+  role: "Co-founder & CEO"
+  image: "/team/antoine.jpeg"
+---
+
+# Do You Need Code Reviews for ISO 27001 or SOC 2?  
+### A Startup’s Guide to Secure Development and Compliance Evidence
+
+## Introduction
+
+If you're a startup aiming for ISO 27001 certification or a SOC 2 audit, you’ve probably asked:  
+**Do we need to do code reviews?**
+
+Both frameworks avoid making direct mandates like “you must perform code reviews.” This creates ambiguity. But here’s the reality: **code reviews are one of the clearest, most effective ways to show auditors that your development process is secure and controlled.**
+
+Whether you're navigating ISO 27001’s secure coding requirements or SOC 2’s change management criteria, a well-defined code review process can make the difference between passing an audit and stalling under scrutiny.
+
+---
+
+## Key Takeaways
+
+- ✅ **Not explicitly required—but strongly expected**: Neither ISO 27001 nor SOC 2 explicitly names “code review” as a control, but both expect secure coding and change management to be enforced and verifiable.
+
+- 🔒 **Code reviews are clear evidence**: A formal, documented code review process is one of the most trusted ways to prove compliance with secure development and change control expectations.
+
+- 🚀 **Simple process, big impact**: A lightweight pull request workflow with approvals in GitHub or GitLab can satisfy most auditor requirements and improve code quality and security along the way.
+
+---
+
+## Why Code Reviews Matter for ISO 27001
+
+ISO 27001:2022 includes [Annex A Control 8.28 – Secure Coding](https://www.iso.org/standard/82875.html), which requires organizations to:
+
+> “Establish and apply secure coding principles to software development.”
+
+But the standard doesn’t say how to prove it. That’s where code reviews come in.
+
+### What ISO 27001 auditors expect
+
+Auditors don’t just want to see that you’ve documented secure coding principles—they want to see that your team follows them in practice. That’s what Control A.8.28 is really testing.
+
+The most compelling evidence? A code review process that demonstrates:
+- Secure practices are applied to every code change.
+- Issues are identified and discussed during reviews.
+- No sensitive data (like secrets or keys) is accidentally introduced.
+- Reviews are recorded and traceable in your version control system.
+
+In other words: **code reviews are your audit trail.**
+
+---
+
+## Why Code Reviews Matter for SOC 2
+
+SOC 2 doesn’t list specific controls—it’s a principles-based framework. But one of its core criteria (CC8: Change Management) requires you to:
+
+> “Authorize, test, and approve changes before they are deployed.”
+
+### What SOC 2 auditors expect
+
+From the auditor’s perspective, a code review process demonstrates:
+
+- 📄 **Documentation** – every change is tracked in a pull request.
+- 👥 **Separation of duties** – changes are reviewed and approved by someone other than the author.
+- 🧾 **Evidence of control** – approvals, comments, and merge histories provide a tamper-evident record of oversight.
+
+A consistent code review process gives auditors confidence that your controls are **designed properly and operating effectively**.
+
+---
+
+## What a Strong Code Review Process Looks Like
+
+Regardless of framework, a few elements go a long way:
+
+- **A written policy** explaining how code is reviewed, who reviews it, and what reviewers check for.
+- **A pull request workflow** requiring at least one approval before merging.
+- **A changelog or audit trail** with timestamps, reviewer comments, and approval records.
+
+Tools like GitHub, GitLab, and Bitbucket already provide this out of the box—you just need to use them consistently and document the process.
+
+---
+
+## What If You’re a Small Team?
+
+Even if you're just a few engineers (or solo), some form of oversight is still expected.
+
+Here’s how small teams can meet the requirement:
+- **Delayed review** – another team member reviews post-merge before deployment.
+- **Managerial sign-off** – a founder or CTO signs off on changes.
+- **Automated controls** – CI/CD pipelines enforce checks and block risky changes.
+- **Periodic audits** – a monthly review of high-risk code changes.
+
+The key is to **show intent and structure**, even if the process is lightweight.
+
+---
+
+## How Probo Helps
+
+Probo turns vague compliance requirements into simple, done-for-you solutions. Here’s how we help with code reviews:
+
+### ✅ We design the process for you  
+No guesswork. Our experts implement a practical, auditor-approved code review policy tailored to your team’s workflow.
+
+### 🧾 We manage the evidence  
+We ensure your Git history, approvals, and documentation are audit-ready—so when the time comes, you don’t scramble.
+
+### 🔄 We handle the whole compliance stack  
+While you’re focusing on shipping product, we’re handling ISO 27001 or SOC 2 from end to end—risk assessments, control mapping, evidence collection, and audit prep.
+
+---
+
+## Conclusion
+
+**Code reviews may not be explicitly required, but they’re functionally essential.** They’re the single most effective way to demonstrate that secure development and change management controls are real, not just theoretical.
+
+By implementing a formal code review process, you’re:
+- Meeting ISO 27001's secure coding requirements.
+- Satisfying SOC 2’s change control expectations.
+- Improving code quality and reducing bugs.
+- Building a more secure and resilient product.
+
+And with Probo, you don’t have to do it alone. We make the process fast, clear, and audit-ready.
+
+---
+
+### Get Certified the Smart Way  
+**Probo helps you meet ISO 27001 and SOC 2 in weeks, not months.**  
+👉 [Get Started with Probo](#)
+
+---
+
+## Frequently Asked Questions
+
+### 1. What if we’re a very small team?
+Auditors still expect oversight. If you can’t separate duties, use compensating controls like delayed reviews, automated checks, or managerial approvals.
+
+### 2. What do auditors look for in code reviews?
+Not code quality. They want to see:
+- Pull requests were created.
+- Reviews were done by someone other than the author.
+- Formal approval was given.
+- The code was merged only after approval.
+
+### 3. How formal does our process need to be?
+Not overly. Simplicity wins. A consistently followed pull request process with approvals is usually enough.
+
+---
