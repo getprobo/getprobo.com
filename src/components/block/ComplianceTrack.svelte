@@ -26,57 +26,59 @@
   <h2
     class="text-h3 sm:text-h2 mb-3 font-medium text-center intersect-once intersect:animate-slide-in"
   >
-    From chaos to compliance
+    From chaos to confidence
   </h2>
   <p
     class="text-lg text-muted-foreground text-center intersect-once intersect:animate-slide-in motion-delay-100 mb-10 sm:mb-16"
   >
-    Experts manage your compliance program end to end to ensure success.
+    Our experts handle the entire compliance journey - from setup to audit - so you can stay focused on building.
   </p>
-  <div class="flex flex-col sm:flex-row sm:gap-16" bind:this={intersection.ref}>
+  <div class="flex flex-col sm:flex-row sm:gap-8" bind:this={intersection.ref}>
     <ComplianceTrackItem
       active={step >= 1}
       position="01"
       duration="From 30 minutes to the time you need"
-      title="Talk to our engineers and internal auditors"
+      title="Kickoff with our experts"
     >
-      We help you assess your current posture, understand your weak spots and opportunities.
+    We start by understanding your setup - where you’re strong, where the gaps are, and what matters most for your business. No fluff, just a clear path to readiness.
     </ComplianceTrackItem>
     <ComplianceTrackItem
       active={step >= 2}
       position="02"
       duration="Less than 24 hours"
-      title="Creation of your program"
+      title="Design your compliance program"
       >
-      We design the appropriate security and compliance posture for you - policies and procedures that reflect how your business actually operates. 
-      No fluff
+      We design the right security and compliance framework for you - real policies and controls that fit how your company actually works, not generic templates.
     </ComplianceTrackItem>
     <ComplianceTrackItem
       active={step >= 3}
       position="03"
       duration="Up to you"
-      title="Manage the tech side"
+      title="Integrate your systems"
     >
-      We don't want production access (and you don't want us there) - so we let you manage things there with our support while we build everything else needed for compliance.
+    You stay in control of your systems - we never need production access. Our team helps connect your tools, automate evidence collection, and make compliance effortless.
     </ComplianceTrackItem>
     <ComplianceTrackItem
       active={step >= 4}
       position="04"
       duration="Varies with each framework"
-      title="We manage your audit"
+      title="Audit, handled."
     >
-      You will talk to the auditor (your company is being audited!), but we find the right auditor, handle the process and the back and forth while you stay focus on your business. 
-      We keep your compliance current behind the scenes, so you’re always ready
-      — and always improving.
+    You’ll meet directly with the auditor - it’s your company being assessed, after all. We handle everything else: selecting the right auditor, managing the process, and keeping the communication smooth so you can focus on your work.
     </ComplianceTrackItem>
     <ComplianceTrackItem
       active={step >= 5}
       position="05"
       duration="1 year"
-      title="Your compliance runs"
+      title="Stay compliant, effortlessly."
     >
-      We keep your compliance current behind the scenes, in adherence to all appropriate frameworks, so you’re always ready
-      — and always improving. We provide ongoing guidance and support.
+    Once live, we keep your compliance current behind the scenes - monitoring, updating, and improving continuously so you’re always ready for the next audit.
     </ComplianceTrackItem>
   </div>
+  <br /><br />
+  <p
+    class="text-lg text-muted-foreground text-center intersect-once intersect:animate-slide-in motion-delay-100 mb-10 sm:mb-16"
+  >
+  From kickoff to continuous monitoring, Probo keeps you compliant, transparent, and audit-ready at all time.
+  </p>
 </section>

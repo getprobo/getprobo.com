@@ -35,7 +35,7 @@
     {props.position}
   </div>
   <div class="text-lg font-medium mb-2">{props.title}</div>
-  <p class="text-lg mb-2 sm:mb-6">
+  <p class="text-base mb-2 sm:mb-6">
     {@render props.children()}
   </p>
   <p class="text-lg text-muted-foreground mt-auto">
