@@ -64,12 +64,12 @@
       duration="Varies with each framework"
       title="Audit, handled."
     >
-    You’ll meet directly with the auditor - it’s your company being assessed, after all. We handle everything else: selecting the right auditor, managing the process, and keeping the communication smooth so you can focus on your work.
+    You’ll meet directly with the auditor - it’s your company being assessed, after all. We handle everything else: managing the process, and keeping the communication smooth so you can focus on your work.
     </ComplianceTrackItem>
     <ComplianceTrackItem
       active={step >= 5}
       position="05"
-      duration="1 year"
+      duration="Continuously"
       title="Stay compliant, effortlessly."
     >
     Once live, we keep your compliance current behind the scenes - monitoring, updating, and improving continuously so you’re always ready for the next audit.
