@@ -58,10 +58,9 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
       client:only
       url={Astro.url.toString()}
       title={post.data.title}
-      class="my-10 sm:my-20"
+      class="my-10 sm:mt-20"
     />
-    <WrittenBy class="my-10" />
-    <hr class="my-10 sm:my-20" />
+    <WrittenBy class="my-10 sm:mb-20" />
     <Newsletter />
   </main>
 </Layout>
