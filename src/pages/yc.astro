@@ -6,21 +6,21 @@ import Button from "../components/ui/Button.svelte";
 import Badges from "../components/Badges.svelte";
 import YCImage from "../assets/photos/ycombinator.png";
 import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
-import DealForm from '../components/DealForm.svelte'
+import DealForm from "../components/DealForm.svelte";
 import YCcompany from "../components/YCcompany.astro";
 
-import BlaxelLogo from '../assets/companies/blaxel.png';
-import WhalyLogo from '../assets/companies/whaly.png';
-import AirweaveLogo from '../assets/companies/airweave.png';
-import AlturLogo from '../assets/companies/altur.png';
-import KestrelLogo from '../assets/companies/kestrel.png';
+import BlaxelLogo from "../assets/companies/blaxel.png";
+import WhalyLogo from "../assets/companies/whaly.png";
+import AirweaveLogo from "../assets/companies/airweave.png";
+import AlturLogo from "../assets/companies/altur.png";
+import KestrelLogo from "../assets/companies/kestrel.png";
 
 const companies = [
   {
     image: "carbonfact.svg",
     alt: "CarbonFact",
     href: "https://carbonfact.com",
-    height: 12
+    height: 12,
   },
   {
     image: "ahrefs.svg",
@@ -40,7 +40,7 @@ const companies = [
     href: "https://carbonfact.com",
     height: 12,
   },
-]
+];
 ---
 
 <Layout
@@ -52,20 +52,22 @@ const companies = [
   >
     <div class="max-w-[424px]">
       <div class="overflow-hidden">
-        <h1 class="text-h2 mb-4 font-medium animate-perspective-in">
+        <h1 class="text-h2 animate-perspective-in mb-4 font-medium">
           From Chaos to Compliance — in a few weeks.
         </h1>
       </div>
       <div class="overflow-hidden">
-        <p class="text-muted-foreground mb-6 text-lg animate-perspective-in animation-delay-100">
+        <p
+          class="text-muted-foreground animate-perspective-in animation-delay-100 mb-6 text-lg"
+        >
           Probo is an open-source platform that acts as your in-house compliance
-          team, handling policies, documentation, processes, risk assessments, and
-          more, so you can stay focused on what matters.
+          team, handling policies, documentation, processes, risk assessments,
+          and more, so you can stay focused on what matters.
         </p>
       </div>
       <DealForm class="flex flex-col gap-3" client:load>
         <input
-          class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3 animate-perspective-in animation-delay-200"
+          class="border-border-mid placeholder:text-quaternary animate-perspective-in animation-delay-200 h-12 w-full rounded-lg border px-3"
           type="email"
           name="email"
           required
@@ -73,17 +75,22 @@ const companies = [
           aria-label="Enter your email"
         />
         <input
-          class="border-border-mid placeholder:text-quaternary h-12 w-full rounded-lg border px-3 animate-perspective-in animation-delay-300"
+          class="border-border-mid placeholder:text-quaternary animate-perspective-in animation-delay-300 h-12 w-full rounded-lg border px-3"
           name="link"
           type="url"
           required
           placeholder="Your YC verification link"
           aria-label="Your YC verification link"
         />
-        <Button type="submit" size="lg" class="text-base animate-perspective-in animation-delay-350">Claim deal</Button>
+        <Button
+          type="submit"
+          size="lg"
+          class="animate-perspective-in animation-delay-350 text-base"
+          >Claim deal</Button
+        >
         <a
-          href="#"
-          class="text-tertiary-foreground text-center underline sm:text-start animate-fade-in animation-delay-450"
+          href="https://www.ycombinator.com/verify"
+          class="text-tertiary-foreground animate-fade-in animation-delay-450 text-center underline sm:text-start"
         >
           Get your verification link
         </a>
@@ -93,18 +100,33 @@ const companies = [
       count={9}
       countMobile={3}
       client:load
-      class="grid grid-cols-3 sm:w-[380px] sm:gap-10 animate-fade-in animation-delay-150"
+      class="animate-fade-in animation-delay-150 grid grid-cols-3 sm:w-[380px] sm:gap-10"
     />
   </section>
 
-  <section class="container py-10 space-y-6 sm:py-20">
-    <h2 class="text-tertiary-foreground text-center">Trusted by leading teams</h2>
+  <section class="container space-y-6 py-10 sm:py-20">
+    <h2 class="text-tertiary-foreground text-center">
+      Trusted by leading teams
+    </h2>
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-      {companies.map((company) => (
-        <a href={company.href} target="_blank" rel="noopener noreferrer" class="border h-25 rounded-2xl grid place-items-center" aria-label={company.alt}>
-          <img src={`/clients/${company.image}`} alt={company.alt} class="h-10 w-auto" style={`height: ${company.height}px`} />
-        </a>
-      ))}
+      {
+        companies.map((company) => (
+          <a
+            href={company.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="grid h-25 place-items-center rounded-2xl border"
+            aria-label={company.alt}
+          >
+            <img
+              src={`/clients/${company.image}`}
+              alt={company.alt}
+              class="h-10 w-auto"
+              style={`height: ${company.height}px`}
+            />
+          </a>
+        ))
+      }
     </div>
   </section>
 
@@ -116,16 +138,20 @@ const companies = [
       alt=""
       mobile={[500, 500]}
       sm={[500, 660]}
-      class="shadow-image aspect-square w-full max-w-[500px] flex-none rounded-2xl object-cover sm:aspect-500/660 sm:w-[500px] animate-slide-in animation-delay-350"
+      class="shadow-image animate-slide-in animation-delay-350 aspect-square w-full max-w-[500px] flex-none rounded-2xl object-cover sm:aspect-500/660 sm:w-[500px]"
     />
     <div class="text-muted-foreground space-y-6 text-lg">
-      <h2 class="text-h3 text-foreground font-medium  animate-slide-in animation-delay-450">Our YC Story</h2>
+      <h2
+        class="text-h3 text-foreground animate-slide-in animation-delay-450 font-medium"
+      >
+        Our YC Story
+      </h2>
       <div class="animate-slide-in animation-delay-550">
         <p>
           Instead of building yet another “classic SaaS,” we chose a different
           path: delivering an end-to-end compliance service. We don’t just give
-          companies tools to achieve SOC 2 in record time - we run the compliance
-          for them.
+          companies tools to achieve SOC 2 in record time - we run the
+          compliance for them.
         </p>
         <p>
           That ambition came with a price: time. At one point we were handling
@@ -135,9 +161,9 @@ const companies = [
           on quality.
         </p>
         <p>
-          Today, things are almost back under control. Our processes are stronger,
-          our team is growing (reach out if you are a CISO or compliance officer),
-          and we are back on track toward our objectives.
+          Today, things are almost back under control. Our processes are
+          stronger, our team is growing (reach out if you are a CISO or
+          compliance officer), and we are back on track toward our objectives.
         </p>
         <p>
           YC was the best thing that could have happened to us and Probo: Doing
@@ -161,7 +187,7 @@ const companies = [
         name="Blaxel"
         href="https://blaxel.ai/"
         height={24}
-        />
+      />
       <YCcompany
         logo={WhalyLogo}
         badge="W25"
