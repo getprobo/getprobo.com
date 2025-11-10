@@ -4,51 +4,101 @@ import Button from "../ui/Button.svelte";
 import { tv } from "tailwind-variants";
 
 const newsletter = tv({
-  base: '',
+  base: "",
   variants: {
     variant: {
-      default: 'bg-subtle rounded-3xl p-6 sm:p-8 @sm:flex items-center gap-20',
-      footer: 'sm:max-w-[320px]'
-    }
+      default: "bg-subtle rounded-3xl p-6 sm:p-8 @sm:flex items-center gap-20",
+      footer: "sm:max-w-[320px]",
+    },
   },
   defaultVariants: {
-    variant: 'default'
-  }
-})
+    variant: "default",
+  },
+});
 
 const props = Astro.props;
 ---
 
 <newsletter-form>
   <form class={newsletter(Astro.props)}>
-    <div class={clsx("mb-6 @sm:max-w-65 @sm:mb-0", props.variant === 'footer' ? 'text-sm' : 'text-lg font-medium')}>
-      Sign up for our newsletter to get actionable insights about compliance, right to your inbox.
+    <div
+      class={clsx(
+        "mb-6 @sm:max-w-65 @sm:mb-0",
+        props.variant === "footer" ? "text-sm" : "text-lg font-medium"
+      )}
+    >
+      Sign up for our newsletter to get actionable insights about compliance,
+      right to your inbox.
     </div>
-    <div class="space-y-3"> <input
-      class={clsx("border-border-mid placeholder:text-quaternary w-full rounded-lg border px-3 bg-secondary ", props.variant === 'footer' ? 'h-8' : 'h-11 sm:h-8' )}
-      name="email"
-      type="email"
-      required
-      placeholder="Enter your email"
-      aria-label="Your email"
-    />
-      <Button class={clsx("w-full text-base sm:w-max", props.variant === 'footer' ? 'h-8' : 'h-11 sm:h-8')}>Subscribe</Button>
+    <div class="space-y-3">
+      <input
+        class={clsx(
+          "border-border-mid placeholder:text-quaternary w-full rounded-lg border px-3 bg-secondary ",
+          props.variant === "footer" ? "h-8" : "h-11 sm:h-8"
+        )}
+        name="email"
+        type="email"
+        required
+        placeholder="Enter your email"
+        aria-label="Your email"
+      />
+      <Button
+        type="submit"
+        class={clsx(
+          "w-full text-base sm:w-max",
+          props.variant === "footer" ? "h-8" : "h-11 sm:h-8"
+        )}>Subscribe</Button
+      >
     </div>
   </form>
 </newsletter-form>
 
-<script lang="ts">
+<script>
   class NewsletterForm extends HTMLElement {
     connectedCallback() {
-      const form = this.querySelector('form')
-      form?.addEventListener('submit', async (e) => {
-        e.preventDefault()
-        const formData = new FormData(form)
-        const email = formData.get('email')
-        // TODO : add logic to subscribe
-        console.log('email', email)
-      })
+      const form = this.querySelector("form");
+      if (!form) return;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const button = form.querySelector("button") as HTMLButtonElement;
+        const originalText = button?.textContent || "Subscribe";
+
+        // Disable button during submission
+        if (button) {
+          button.disabled = true;
+          button.textContent = "Subscribing...";
+        }
+
+        try {
+          const response = await fetch("/api/newsletter", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            alert("Successfully subscribed to our newsletter!");
+            form.reset();
+          } else {
+            const result = await response.json();
+            alert(result.error || "An error occurred. Please try again.");
+          }
+        } catch (error) {
+          console.error("Newsletter subscription error:", error);
+          alert("An error occurred. Please try again.");
+        } finally {
+          if (button) {
+            button.disabled = false;
+            button.textContent = originalText;
+          }
+        }
+      });
     }
   }
-  customElements.define('newsletter-form', NewsletterForm)
+
+  if (!customElements.get("newsletter-form")) {
+    customElements.define("newsletter-form", NewsletterForm);
+  }
 </script>
