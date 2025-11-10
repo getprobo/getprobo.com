@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import PostHog from "../components/posthog.astro";
 const { title, description } = Astro.props;
 interface Props {
   title: string;
@@ -57,8 +58,9 @@ const canonical = Astro.url.href;
     />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://www.getprobo.com/og.png" />
+    <PostHog />
   </head>
-  <body class="text-primary font-sans text-base bg-level-0">
+  <body class="text-primary bg-level-0 font-sans text-base">
     <Header />
     <slot />
     <Footer />
