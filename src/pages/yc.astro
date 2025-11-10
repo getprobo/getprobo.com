@@ -8,12 +8,7 @@ import YCImage from "../assets/photos/ycombinator.png";
 import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
 import DealForm from "../components/DealForm.svelte";
 import YCcompany from "../components/YCcompany.astro";
-
-import BlaxelLogo from "../assets/companies/blaxel.png";
-import WhalyLogo from "../assets/companies/whaly.png";
-import AirweaveLogo from "../assets/companies/airweave.png";
-import AlturLogo from "../assets/companies/altur.png";
-import KestrelLogo from "../assets/companies/kestrel.png";
+import { YCombinatorCompanies } from "../data/yc-companies";
 
 const companies = [
   {
@@ -181,41 +176,17 @@ const companies = [
     <div
       class="companies-grid grid grid-cols-2 place-items-center sm:grid-cols-4"
     >
-      <YCcompany
-        logo={BlaxelLogo}
-        badge="W25"
-        name="Blaxel"
-        href="https://blaxel.ai/"
-        height={24}
-      />
-      <YCcompany
-        logo={WhalyLogo}
-        badge="W25"
-        name="Whaly"
-        href="https://whaly.io/"
-        height={32}
-      />
-      <YCcompany
-        logo={AirweaveLogo}
-        badge="W25"
-        name="Blaxel"
-        href="https://airweave.ai/"
-        height={20}
-      />
-      <YCcompany
-        logo={AlturLogo}
-        badge="W25"
-        name="Altur"
-        href="https://www.altur.io/en"
-        height={20}
-      />
-      <YCcompany
-        logo={KestrelLogo}
-        badge="W25"
-        name="Kestrel"
-        href="https://usekestrel.ai/"
-        height={16}
-      />
+      {
+        YCombinatorCompanies.map((company) => (
+          <YCcompany
+            logo={company.logo}
+            badge={company.badge}
+            name={company.name}
+            href={company.href}
+            height={company.height}
+          />
+        ))
+      }
     </div>
   </section>
 
