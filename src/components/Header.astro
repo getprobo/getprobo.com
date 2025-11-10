@@ -6,22 +6,25 @@ import Button from "./ui/Button.svelte";
 import MobileMenu from "./MobileMenu.astro";
 ---
 
-<header class="sticky top-0 z-50 bg-secondary/80 backdrop-blur-md">
-  <div class="container mx-auto flex items-center py-3 sm:py-4 ">
+<header class="bg-secondary/80 sticky top-0 z-50 backdrop-blur-md">
+  <div class="container mx-auto flex items-center py-3 sm:py-4">
     <a href="/">
       <Image src={Logo} alt="Logo probo" width={73} height={20} />
     </a>
     <nav class="ml-auto hidden sm:flex">
       <NavLink href="/about">About</NavLink>
       <NavLink href="/blog">Blog</NavLink>
-      <NavLink href="https://github.com/getprobo">GitHub</NavLink>
-      <NavLink href="#">Access your trust center</NavLink>
+      <NavLink href="/stories">Stories</NavLink>
+      <NavLink href="https://github.com/getprobo/probo">GitHub</NavLink>
     </nav>
-    <Button href="https://hexacc.typeform.com/getstarted" class="ml-auto sm:ml-4 h-9 px-4 sm:h-8 sm:px-3">
+    <Button
+      href="https://hexacc.typeform.com/getstarted"
+      class="ml-auto h-9 px-4 sm:ml-4 sm:h-8 sm:px-3"
+    >
       Get compliant
     </Button>
     <burger-menu
-      class="group ml-3 sm:hidden size-9 grid place-items-center"
+      class="group ml-3 grid size-9 place-items-center sm:hidden"
       aria-label="Open mobile menu"
     >
       <svg
@@ -63,7 +66,7 @@ import MobileMenu from "./MobileMenu.astro";
     connectedCallback() {
       this.addEventListener("click", () => {
         const sidebar = document.querySelector(
-          "#mobile-menu",
+          "#mobile-menu"
         ) as HTMLDialogElement;
         const sidebarOpen = !sidebar.hasAttribute("open");
         if (sidebarOpen) {
