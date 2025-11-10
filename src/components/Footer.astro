@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import Logo from "../assets/probo-logo.svg";
 import Frameworks from "./block/Frameworks.astro";
-import OpenStatus from '../components/OpenStatus.svelte'
+import OpenStatus from "../components/OpenStatus.svelte";
 import Cookie from "../components/Cookie.svelte";
 import Newsletter from "./block/Newsletter.astro";
 
@@ -36,21 +36,15 @@ const menus = [
 
 <Frameworks />
 
-<footer class="bg-level-0 py-10 sm:py-20 space-y-10">
+<footer class="bg-level-0 space-y-10 py-10 sm:py-20">
   <div
     class="container flex grid-cols-[520fr_560fr] flex-col-reverse gap-8 sm:grid"
   >
     <div class="text-tertiary-foreground space-y-4 sm:max-w-[320px]">
       <a href="/" class="block">
-        <Image
-          src={Logo}
-          alt="Logo probo"
-          width={73}
-          height={20}
-          class="opacity-50"
-        />
+        <Image src={Logo} alt="Logo probo" width={73} height={20} />
       </a>
-      <Newsletter variant="footer"/>
+      <Newsletter variant="footer" />
     </div>
 
     <div class="grid grid-cols-2 gap-6 text-xs sm:grid-cols-3">
@@ -75,24 +69,25 @@ const menus = [
       }
     </div>
   </div>
-  <p class="container text-tertiary-foreground text-xxs flex gap-3 items-center">
+  <p
+    class="text-tertiary-foreground text-xxs container flex items-center gap-3"
+  >
     Copyright © {new Date().getFullYear()} Probo. All rights reserved.
-    <OpenStatus client:visible/>
+    <OpenStatus client:visible />
   </p>
 </footer>
-<Cookie client:only/>
+<Cookie client:only />
 
 <script>
-import { initializeFaro } from "@grafana/faro-web-sdk";
+  import { initializeFaro } from "@grafana/faro-web-sdk";
 
-if (import.meta.env.PROD) {
-  const faro = initializeFaro({
-    url: 'https://faro-collector-prod-us-west-0.grafana.net/collect/bc771c773d3690b642ccf001af91958a',
-    app: {
-      name: 'site',
-      version: '1.0.0',
-    }
-  })
-
-}
+  if (import.meta.env.PROD) {
+    const faro = initializeFaro({
+      url: "https://faro-collector-prod-us-west-0.grafana.net/collect/bc771c773d3690b642ccf001af91958a",
+      app: {
+        name: "site",
+        version: "1.0.0",
+      },
+    });
+  }
 </script>
