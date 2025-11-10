@@ -1,0 +1,9 @@
+# n8n webhook URL for YC Deal form submissions
+N8N_YC_DEAL_WEBHOOK_URL=https://your-n8n.com/webhook/yc-deal
+
+# n8n webhook URL for newsletter subscriptions
+N8N_NEWSLETTER_WEBHOOK_URL=https://your-n8n.com/webhook/newsletter
+
+# Basic auth credentials for webhook calls
+WEBHOOK_AUTH_USERNAME=your-username
+WEBHOOK_AUTH_PASSWORD=your-password
