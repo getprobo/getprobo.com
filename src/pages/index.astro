@@ -22,21 +22,23 @@ import ComplianceTrack from "../components/block/ComplianceTrack.svelte";
 >
   <AnimatedHero client:load class="py-10 sm:py-20">
     <a
-      href="/yc"
-      class="yc-btn text-muted-foreground mx-auto mb-6 flex w-max items-center gap-2 px-4 py-2 sm:mb-8 animate-perspective-in animation-delay-300"
+      href="https://www.ycombinator.com/companies/probo"
+      class="yc-btn text-muted-foreground animate-perspective-in animation-delay-300 mx-auto mb-6 flex w-max items-center gap-2 px-4 py-2 sm:mb-8"
     >
       Backed by
       <Image src={YCombinator} alt="Logo YCombinator" width={77} height={15} />
     </a>
     <h1
-      class="text-h2 sm:text-h1 mb-6 text-center font-medium text-balance sm:mb-8 overflow-hidden"
+      class="text-h2 sm:text-h1 mb-6 overflow-hidden text-center font-medium text-balance sm:mb-8"
     >
       <span class="animate-perspective-in inline-block">From</span>
       <span class="animate-perspective-in inline-block delay-100">Chaos</span>
-      <span class="animate-perspective-in inline-block delay-50">to Compliance</span>
+      <span class="animate-perspective-in inline-block delay-50"
+        >to Compliance</span
+      >
     </h1>
     <p
-      class="text-muted-foreground mx-auto mb-6 max-w-100 text-center text-lg text-balance sm:mb-8 animate-perspective-in animation-delay-150"
+      class="text-muted-foreground animate-perspective-in animation-delay-150 mx-auto mb-6 max-w-100 text-center text-lg text-balance sm:mb-8"
     >
       Ensure your business meets every standard without slowing down your
       growth.
@@ -48,8 +50,10 @@ import ComplianceTrack from "../components/block/ComplianceTrack.svelte";
         size="lg"
         href="https://github.com/getprobo/getprobo.com">Open-source</Button
       >
-      <Button class="animate-perspective-in animation-delay-300" size="lg" href="https://hexacc.typeform.com/getstarted"
-        >Get certified</Button
+      <Button
+        class="animate-perspective-in animation-delay-300"
+        size="lg"
+        href="https://hexacc.typeform.com/getstarted">Get certified</Button
       >
     </div>
     <Badges
@@ -60,19 +64,15 @@ import ComplianceTrack from "../components/block/ComplianceTrack.svelte";
     />
   </AnimatedHero>
 
-  <Logos class=" animate-fade-in animation-delay-400"/>
+  <Logos class="animate-fade-in animation-delay-400" />
 
   <ComplianceTrack client:visible />
 
   <section class="container py-10 sm:py-20">
-    <h2
-      class="text-h3 sm:text-h2 mb-3 text-center font-medium"
-    >
+    <h2 class="text-h3 sm:text-h2 mb-3 text-center font-medium">
       Make compliance effortless
     </h2>
-    <p
-      class="text-muted-foreground mb-10 text-center text-lg sm:mb-12"
-    >
+    <p class="text-muted-foreground mb-10 text-center text-lg sm:mb-12">
       We turn complexity into clarity.
     </p>
 
