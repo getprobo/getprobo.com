@@ -13,7 +13,7 @@
     let timer: ReturnType<typeof setTimeout>
     const tick = () => {
       step++;
-      if (step < 5) {
+      if (step < 3) {
         timer = setTimeout(tick, 2000);
       }
     };
@@ -37,42 +37,21 @@
     <ComplianceTrackItem
       active={step >= 1}
       position="01"
-      duration="From 30 minutes to the time you need"
-      title="Kickoff with our experts"
+      title="Set up and plan"
     >
-    We start by understanding your setup - where you’re strong, where the gaps are, and what matters most for your business. No fluff, just a clear path to readiness.
-    </ComplianceTrackItem>
+    We start by understanding your current setup, identifying gaps, and defining the right path for your business. Then we create a compliance framework tailored to how you actually operate - real policies, no boilerplate.</ComplianceTrackItem>
     <ComplianceTrackItem
       active={step >= 2}
       position="02"
-      duration="Less than 24 hours"
-      title="Design your compliance program"
+      title="Implementation & audit"
       >
-      We design the right security and compliance framework for you - real policies and controls that fit how your company actually works, not generic templates.
-    </ComplianceTrackItem>
+      Our team helps you integrate your systems, automate evidence collection, and coordinate everything with your auditor. You’ll still join the call but there’s no pressure. We make sure you’re ready.</ComplianceTrackItem>
     <ComplianceTrackItem
       active={step >= 3}
       position="03"
-      duration="Up to you"
-      title="Integrate your systems"
+      title="Stay compliant"
     >
-    You stay in control of your systems - we never need production access. Our team helps connect your tools, automate evidence collection, and make compliance effortless.
-    </ComplianceTrackItem>
-    <ComplianceTrackItem
-      active={step >= 4}
-      position="04"
-      duration="Varies with each framework"
-      title="Audit, handled."
-    >
-    You’ll meet directly with the auditor - it’s your company being assessed, after all. We handle everything else: managing the process, and keeping the communication smooth so you can focus on your work.
-    </ComplianceTrackItem>
-    <ComplianceTrackItem
-      active={step >= 5}
-      position="05"
-      duration="Continuously"
-      title="Stay compliant, effortlessly."
-    >
-    Once live, we keep your compliance current behind the scenes - monitoring, updating, and improving continuously so you’re always ready for the next audit.
+    Once compliant, we keep your compliance running in the background - monitoring, updating, and improving continuously so you’re always ready for the next audit.
     </ComplianceTrackItem>
   </div>
   <br /><br />
