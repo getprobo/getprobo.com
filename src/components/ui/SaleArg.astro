@@ -1,12 +1,11 @@
 ---
-import { Image } from "astro:assets";
 import { clsx } from "clsx";
 interface Props {
   title: string;
   class?: string;
-  image?: ImageMetadata;
+  video?: string;
 }
-const { title, image, ...props } = Astro.props;
+const { title, image, video, ...props } = Astro.props;
 ---
 
 <section
@@ -23,15 +22,61 @@ const { title, image, ...props } = Astro.props;
     </div>
   </div>
   {
-    image && (
-      <Image
-        src={image}
-        width={500}
-        height={500}
-        fit="contain"
-        alt=""
-        class="block aspect-square w-full object-contain"
-      />
+    video && (
+    <video-visible src={video} class="aspect-560/360 w-full rounded-2xl block object-cover relative" width={500} height={360}>
+      <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-level-0 to-level-0/0 z-10"/>
+    </video-visible>
     )
   }
+
 </section>
+
+<script>
+  class VideoVisible extends HTMLElement {
+    private video: HTMLVideoElement | null = null;
+    private observer: IntersectionObserver | null = null;
+
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.playVideo();
+          } else {
+            this.video?.pause();
+          }
+        });
+      });
+      this.observer.observe(this);
+    }
+
+    private async playVideo() {
+      if (!this.video) {
+        this.video = document.createElement('video');
+        const attributes = this.getAttributeNames();
+        for(const attr of attributes) {
+          this.video.setAttribute(attr, this.getAttribute(attr) || '');
+        }
+        this.video.setAttribute('autoplay', '');
+        this.video.setAttribute('playsinline', '');
+        this.video.setAttribute('loop', '');
+        this.appendChild(this.video);
+      }
+          await this.video.play();
+    }
+
+    disconnectedCallback() {
+      if (this.observer) {
+        this.observer.disconnect();
+        this.observer = null;
+      }
+    }
+  }
+
+  // Register the custom element
+  customElements.define('video-visible', VideoVisible);
+
+</script>
