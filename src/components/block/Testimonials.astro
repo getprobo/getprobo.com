@@ -1,117 +1,145 @@
 ---
-import EthanMorales from "../../assets/testimonial/ethan-morales.jpg";
+import AlexandrosZisimidis from "../../assets/testimonial/alexandros-zisimidis.jpg";
+import GuillaumeMarquis from "../../assets/testimonial/guillaume-marquis.png";
+import MaximeMouchet from "../../assets/testimonial/maxime-mouchet.jpg";
 import Scroll from "./TestimonialsScroll.svelte";
 import Testimonial from "../ui/Testimonial.astro";
+import LalitKundu from "../../assets/testimonial/lalit-kundu.jpg";
+import DimitriKassubeck from "../../assets/testimonial/dimitri-kassubeck.jpg";
+import SonyaRikhtverchik from "../../assets/testimonial/sonya-rikhtverchik.jpg";
+import FabienDevos from "../../assets/testimonial/fabien-devos.jpg";
+import EfimMirochnik from "../../assets/testimonial/efim-mirochnik.jpg";
+import BaptisteArnaud from "../../assets/testimonial/baptiste-arnaud.jpg";
+import GavinBains from "../../assets/testimonial/gavin-bains.jpg";
+import ChristopherPrice from "../../assets/testimonial/christopher-price.jpg";
+import JoshParolin from "../../assets/testimonial/josh-parolin.jpg";
 ---
 
 <section
   class="bg-linear-to-b from-[#F8FAF4] from-[0%] to-white to-[100%] py-10 sm:py-20"
 >
-  <h2
-    class="text-h3 sm:text-h2 mb-3 text-center font-medium"
-  >
+  <h2 class="text-h3 sm:text-h2 mb-3 text-center font-medium">
     Why they love us
   </h2>
-  <p
-    class="text-muted-foreground mb-12 text-center text-lg"
-  >
+  <p class="text-muted-foreground mb-12 text-center text-lg">
     Quotes from our customers
   </p>
   <Scroll client:load>
     <Testimonial
-      image={EthanMorales}
-      author="Ethan Morales"
-      role="CTO at Carbonfact"
+      image={JoshParolin}
+      author="Josh Parolin"
+      role="Co-founder and CTO at Sessionboard"
     >
-      Let's put it straight: 70% less audit prep, dozens of eng hours back. ROI
-      day one, Probo was a no brainer investment.
+      Working with Probo was a game-changer for Sessionboard. After months of
+      confusion, wasted time, and overpaying for various systems in our SOC 2
+      journey, partnering with Probo finally brought clarity and momentum. Their
+      team guided us every step of the way, simplifying the complex,
+      anticipating our needs, and keeping us on track from start to finish.
+      Probo didn’t just help us achieve compliance; they’ve become an ongoing
+      partner in maintaining our security and compliance posture as we grow.
+      Their expertise, responsiveness, and genuine care for their customers set
+      them apart. I can’t recommend Probo highly enough for both startups and
+      enterprises looking to navigate the SOC 2 process the right way.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Sarah Chen"
-      role="VP Engineering at DataCore"
+      image={ChristopherPrice}
+      author="Christopher Price"
+      role="Co-founder and COO at Sixtyfour"
     >
-      aze
+      Probo was an excellent experience. The team was extremely professional,
+      prompt and communicative. Having experienced Vanta, Drata, and now Probo,
+      it makes it a no-brainer to recommend Probo for teams that need to get
+      complaint quickly.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Marcus Johnson"
-      role="Head of Security at Streamline"
+      image={GavinBains}
+      author="Gavin Bains"
+      role="Co-founder at The LLM Data Company"
     >
-      Finally, a tool that actually understands developer workflow. Security
-      compliance without the headache.
+      Probo makes SOC 2 painless. They guided us step-by-step, kept us
+      organized, and did all the heavy lifting to get us audit-ready. This team
+      deeply cares about their customers and it shows.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Priya Patel"
-      role="CTO at FinanceHub"
+      image={BaptisteArnaud}
+      author="Baptiste Arnaud"
+      role="Founder at Typebot"
     >
-      Our compliance costs dropped 60% in the first quarter. The platform pays
-      for itself before the trial even ends.
+      Probo made getting ISO 27001 certified simple, fast, and human. Their
+      open-source approach, direct Slack support, and ability to adapt to a
+      one-person company made all the difference.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="James O'Brien"
-      role="Director of Engineering at CloudWave"
+      image={EfimMirochnik}
+      author="Efim Mirochnik"
+      role="CISO at Ahrefs"
     >
-      Probo turned our biggest operational bottleneck into our smoothest
-      process. Audit season is no longer a nightmare.
+      Probo has been a true partner. They adapted compliance and security to our
+      daily jobs, took the heavy lifting and enabled us to move faster than
+      expected.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Ana Rodriguez"
-      role="VP of Compliance at SecureOps"
+      image={FabienDevos}
+      author="Fabien Devos"
+      role="Co-founder and CTO at Vybe"
     >
-      Three audits passed with zero findings. That's never happened before
-      Probo. This tool is legitimately game-changing.
+      Probo made the SOC2 process seamless, their support went way beyond what I
+      expected. It’s the first time I actually enjoyed compliance.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="David Kim"
-      role="CTO at GrowthTech"
+      image={SonyaRikhtverchik}
+      author="Sonya Rikhtverchik"
+      role="COO at Vybe"
     >
-      We scaled from 10 to 100 engineers without scaling our compliance team.
-      Probo made that possible.
+      Probo made the terrifying chore of SOC 2 compliance seem like a walk in
+      Jardin des Tuileries.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Rachel Thompson"
-      role="Head of Platform at Nexus"
+      image={DimitriKassubeck}
+      author="Dimitri Kassubeck"
+      role="Co-founder and CEO at Moby Analytics"
     >
-      Real-time visibility into our compliance posture changed everything. We
-      catch issues before they become problems.
+      Compliance, done right. Experts who focus on what truly matters. Hassle
+      free - just one mission: make you more secure.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Michael Zhang"
-      role="VP Engineering at Catalyst"
+      image={LalitKundu}
+      author="Lalit Kundu"
+      role="Co-founder and CEO at Delty"
     >
-      Implementation took two days. Results were immediate. Best tooling
-      decision we made this year, hands down.
+      Probo team made SOC 2 compliance a smooth sail for us, working closely on
+      explaining and implementing the controls, and even helped us go through
+      vendor security for big enterprise contracts. They demystify the whole
+      compliance process, I couldn’t recommend them more for any startup.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Lauren Martinez"
-      role="CTO at Velocity Systems"
+      image={MaximeMouchet}
+      author="Maxime Mouchet"
+      role="Co-founder and CTO at Clarifeye"
     >
-      Our auditors were impressed with the documentation quality. Probo
-      generates better reports than we ever could manually.
+      Our customers have high security expectations. We needed a partner who
+      took compliance as seriously as we do. Probo was rigorous, responsive, and
+      fast - exactly what we needed to get it done right.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Tom Andersson"
-      role="Director of Infrastructure at CloudScale"
+      image={GuillaumeMarquis}
+      author="Guillaume Marquis"
+      role="Co-founder and CEO at Basalt"
     >
-      85% reduction in compliance overhead. Our engineers can finally focus on
-      building instead of box-checking.
+      Probo has been the ideal compliance partner. They built security and
+      compliance around how we work, took on the heavy lifting and delivered
+      fast.
     </Testimonial>
     <Testimonial
-      image={EthanMorales}
-      author="Olivia Wright"
-      role="VP of Engineering at DataShield"
+      image={AlexandrosZisimidis}
+      author="Alexandros Zisimidis"
+      role="Co-founder & COO at Cleon"
     >
-      We were drowning in compliance debt. Probo pulled us out in weeks, not
-      months. Absolute lifesaver.
+      Unlike typical compliance vendors that push every certification under the
+      sun, Probo actually helps us think through which standards make sense for
+      our business. They guide us through each decision with clarity and never
+      pressure us toward unnecessary licenses. It’s refreshing to work with a
+      compliance partner who prioritizes what we actually need
     </Testimonial>
   </Scroll>
 </section>
