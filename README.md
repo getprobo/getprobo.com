@@ -26,3 +26,13 @@ Submit issues and pull requests via GitHub.
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
+
+## TODO
+
+- Remove full page animation on page change (blog page 2,3,etc.)
+- Update framework logo with right name
+- Illuttration features (video with gradiant on top)
+- Customer stories fullscreen logo companies
+- Toast on submit actions
+- Github stars
+-
