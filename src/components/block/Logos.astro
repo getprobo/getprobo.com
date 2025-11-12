@@ -2,53 +2,54 @@
 import { clsx } from "clsx";
 import LogosScroll from "../LogosScroll.svelte";
 
-// ###
-
-// - Typebot
-// - Wolfia
-// - Blaxel
-// - T4G
-
 const companies = [
   {
     image: "ahrefs.svg",
     alt: "Ahrefs",
     href: "https://ahrefs.com",
+    class: "h-4 w-auto sm:h-5",
   },
   {
     image: "filz.svg",
     alt: "Filz",
     href: "https://www.filiz.io",
+    class: "h-7 w-auto sm:h-8",
   },
   {
     image: "wolfia.svg",
     alt: "Wolfia",
     href: "https://www.wolfia.com",
+    class: "h-6 w-auto sm:h-7",
   },
   {
     image: "t4g.svg",
     alt: "T4G",
     href: "https://t4g.io",
+    class: "h-4 w-auto sm:h-4",
   },
   {
     image: "blaxel.svg",
     alt: "Blaxel",
     href: "https://blaxel.ai",
+    class: "h-4 w-auto sm:h-4",
   },
   {
     image: "typebot.svg",
     alt: "Typebot",
     href: "https://typebot.io",
+    class: "h-5 w-auto sm:h-6",
   },
   {
     image: "jimo.svg",
     alt: "Jimo",
     href: "https://jimo.ai",
+    class: "h-6 w-auto sm:h-7",
   },
   {
     image: "normal.svg",
     alt: "Normal",
     href: "https://normalcomputing.ai",
+    class: "h-3 w-auto sm:h-4",
   },
 ];
 ---
@@ -67,9 +68,7 @@ const companies = [
           <img
             src={`/clients/${company.image}`}
             alt={company.alt}
-            class={
-              company.alt === "Jimo" ? "h-4 w-auto sm:h-5" : "h-3 w-auto sm:h-4"
-            }
+            class={company.class}
           />
         </a>
       ))
