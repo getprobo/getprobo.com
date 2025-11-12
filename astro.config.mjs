@@ -9,11 +9,15 @@ import svelte from "@astrojs/svelte";
 // https://astro.build/config
 export default defineConfig({
   prefetch: false,
+  trailingSlash: 'never',
   redirects: {
     '/blog/page/1': {
       status: 301,
       destination: '/blog'
     }
+  },
+  build: {
+    format: 'file',
   },
   vite: {
     plugins: [
