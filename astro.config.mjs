@@ -20,6 +20,23 @@ export default defineConfig({
     format: 'file',
   },
   vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks (id) {
+            if (id.includes('node_modules/svelte') || id.includes('lib/runes') || id.includes('node_modules/runed')) {
+              return 'svelte';
+            }
+
+            if (id.includes('@splide')) {
+              return 'splide';
+            }
+
+            return null;
+          }
+        }
+      }
+    },
     plugins: [
       tailwindcss(),
       faroUploader({
