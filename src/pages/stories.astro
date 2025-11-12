@@ -13,7 +13,8 @@ const stories = (await getCollection("stories")).sort(
   title="Customer stories"
   description="Inspiring stories, real Probo customers"
 >
-  <main class="container my-10 sm:my-20">
+  <main class="my-10 sm:my-20">
+    <div class="container">
     <h1
       class="text-h2 sm:text-h1 mb-3 text-center font-medium overflow-hidden"
     >
@@ -24,8 +25,9 @@ const stories = (await getCollection("stories")).sort(
     >
       Inspiring stories, real Probo customers
     </p>
+    </div>
     <Logos class="my-6 animate-slide-in animation-delay-300" />
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 animate-slide-in animation-delay-250">
+    <div class="container grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 animate-slide-in animation-delay-250">
       {
         stories.map((item) => (
           <StoryCard story={item} />

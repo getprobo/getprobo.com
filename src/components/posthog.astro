@@ -1,8 +1,5 @@
----
-// src/components/posthog.astro
----
-
-<script is:inline>
+<script is:inline define:vars={{ApiKey: import.meta.env.PUBLIC_POSTHOG_API_KEY, debug: import.meta.env.DEV}}>
+if (ApiKey) {
   !(function (t, e) {
     var o, n, p, r;
     e.__SV ||
@@ -53,12 +50,13 @@
       (e.__SV = 1));
   })(document, window.posthog || []);
 
-  posthog.init(import.meta.env.PUBLIC_POSTHOG_API_KEY, {
+  posthog.init(ApiKey, {
     api_host: "https://us.posthog.com",
     cookieless_mode: "on_reject",
     person_profiles: "identified_only",
     capture_pageview: true,
     respect_dnt: true,
-    debug: import.meta.env.DEV,
+    debug,
   });
+}
 </script>

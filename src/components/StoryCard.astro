@@ -26,7 +26,7 @@ const card = tv({
   slots: {
     base: "block overflow-hidden p-2 rounded-3xl transition-all",
     image: "w-full rounded-2xl object-cover",
-    badge: "border-l border-l-[0.5px] px-4 ml-6 sm:ml-6 sm:px-6",
+    badge: "border-l border-l-[0.5px] pl-4 ml-6 sm:ml-6 sm:pl-6",
     title: "",
     body: "flex items-center",
   },
@@ -35,7 +35,7 @@ const card = tv({
       default: {
         base: 'sm:bg-highlight sm:border sm:border-[0.5px]',
         image: "aspect-320/180 sm:aspect-512/450",
-        badge: "hidden sm:block",
+        badge: "hidden sm:block mix-blend-multiply",
         title: "text-h5",
         body: "px-2 py-6  sm:p-10"
       },
@@ -81,6 +81,8 @@ const imageSizes = (function (): [[number, number],[number, number]] {
       ]
   }
 })()
+const badge = isDark ? (framework?.badgeDark ?? framework?.badge) : framework?.badge;
+const shouldInvert = isDark && !framework?.badgeDark
 ---
 
 <a href={`/stories/${story.id}`} class={classNames.base()}>
@@ -106,11 +108,8 @@ const imageSizes = (function (): [[number, number],[number, number]] {
           <div class="badge flex flex-col gap-2.5 text-center">
             <FrameworkBadge
               client:only
-              name={framework.badge}
-              class={clsx(
-                "mx-auto block size-15",
-                isDark && "invert",
-              )}
+              name={badge}
+              class={ clsx("mx-auto block size-15", shouldInvert && "invert")}
             />
             <div class="text-xxs">{story.data.framework}</div>
           </div>
