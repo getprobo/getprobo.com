@@ -21,7 +21,7 @@
     mediaQuery: "min",
     breakpoints: {
       640: {
-        fixedWidth: 350,
+        fixedWidth: 450,
       },
     },
   } as const;
