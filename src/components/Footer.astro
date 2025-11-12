@@ -5,6 +5,7 @@ import Frameworks from "./block/Frameworks.astro";
 import OpenStatus from "../components/OpenStatus.svelte";
 import Cookie from "../components/Cookie.svelte";
 import Newsletter from "./block/Newsletter.astro";
+import {Toaster} from 'svelte-sonner'
 
 const menus = [
   {
@@ -81,7 +82,10 @@ const menus = [
     <OpenStatus client:visible />
   </p>
 </footer>
+
 <Cookie client:only />
+
+<Toaster richColors position="top-center" client:only="svelte"/>
 
 <script>
   import { initializeFaro } from "@grafana/faro-web-sdk";

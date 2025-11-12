@@ -54,6 +54,8 @@ const props = Astro.props;
 </newsletter-form>
 
 <script>
+import { toast } from "svelte-sonner";
+
   class NewsletterForm extends HTMLElement {
     connectedCallback() {
       const form = this.querySelector("form");
@@ -79,15 +81,15 @@ const props = Astro.props;
           });
 
           if (response.ok) {
-            alert("Successfully subscribed to our newsletter!");
+            toast.success("Successfully subscribed to our newsletter!");
             form.reset();
           } else {
             const result = await response.json();
-            alert(result.error || "An error occurred. Please try again.");
+            toast.error(result.error || "An error occurred. Please try again.");
           }
         } catch (error) {
           console.error("Newsletter subscription error:", error);
-          alert("An error occurred. Please try again.");
+          toast.error("An error occurred. Please try again.");
         } finally {
           if (button) {
             button.disabled = false;
