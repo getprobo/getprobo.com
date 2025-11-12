@@ -14,7 +14,7 @@
 </script>
 
 <div class={clsx(props.class, "relative hero overflow-hidden")}>
-  <div class="container max-w-[720px]">
+  <div class="container max-w-[830px]">
     {@render props.children()}
   </div>
   <div
