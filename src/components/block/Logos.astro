@@ -2,6 +2,13 @@
 import { clsx } from "clsx";
 import LogosScroll from "../LogosScroll.svelte";
 
+// ###
+
+// - Typebot
+// - Wolfia
+// - Blaxel
+// - T4G
+
 const companies = [
   {
     image: "ahrefs.svg",
@@ -9,16 +16,44 @@ const companies = [
     href: "https://ahrefs.com",
   },
   {
-    image: "carbonfact.svg",
-    alt: "CarbonFact",
-    href: "https://carbonfact.com",
+    image: "filz.svg",
+    alt: "Filz",
+    href: "https://www.filiz.io",
   },
-]
+  {
+    image: "wolfia.svg",
+    alt: "Wolfia",
+    href: "https://www.wolfia.com",
+  },
+  {
+    image: "t4g.svg",
+    alt: "T4G",
+    href: "https://t4g.io",
+  },
+  {
+    image: "blaxel.svg",
+    alt: "Blaxel",
+    href: "https://blaxel.ai",
+  },
+  {
+    image: "typebot.svg",
+    alt: "Typebot",
+    href: "https://typebot.io",
+  },
+  {
+    image: "jimo.svg",
+    alt: "Jimo",
+    href: "https://jimo.ai",
+  },
+  {
+    image: "normal.svg",
+    alt: "Normal",
+    href: "https://normalcomputing.ai",
+  },
+];
 ---
 
-<section
-  class={clsx("p-0 overflow-hidden relative", Astro.props.class)}
->
+<section class={clsx("p-0 overflow-hidden relative", Astro.props.class)}>
   <LogosScroll class="flex h-16 w-max items-center sm:h-30" client:load>
     {
       companies.map((company) => (
@@ -32,7 +67,9 @@ const companies = [
           <img
             src={`/clients/${company.image}`}
             alt={company.alt}
-            class="h-3 w-auto sm:h-4"
+            class={
+              company.alt === "Jimo" ? "h-4 w-auto sm:h-5" : "h-3 w-auto sm:h-4"
+            }
           />
         </a>
       ))
