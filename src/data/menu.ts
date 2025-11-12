@@ -10,13 +10,13 @@ export const menuItems = [
     href: "/blog",
   },
   {
+    label: "Stories",
+    description: "Hear from our customers",
+    href: "/stories",
+  },
+  {
     label: "GitHub",
     description: "Explore our open-source compliance tools",
     href: "https://github.com/getprobo/probo",
-  },
-  {
-    label: "Access your trust center",
-    description: "All your compliance evidence in one place",
-    href: "/trust-center",
   },
 ];
