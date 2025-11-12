@@ -53,12 +53,12 @@
       (e.__SV = 1));
   })(document, window.posthog || []);
 
-  posthog.init("phc_XBwJ2pHAf0MoYgh3TNZK32Qk7zLlTldhk4p9llGtZMN", {
+  posthog.init(import.meta.env.PUBLIC_POSTHOG_API_KEY, {
     api_host: "https://us.posthog.com",
     cookieless_mode: "on_reject",
     person_profiles: "identified_only",
     capture_pageview: true,
     respect_dnt: true,
-    debug: true,
+    debug: import.meta.env.DEV,
   });
 </script>
