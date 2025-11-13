@@ -47,6 +47,7 @@ const team = [...founders, ...employees];
       founders.map((f) => (
         <article class="space-y-2">
           <Image
+            densities={[1, 2]}
             src={f.img}
             alt={f.alt}
             width={102}
@@ -68,6 +69,7 @@ const team = [...founders, ...employees];
       team.map((item) => (
         <article class="space-y-2">
           <Image
+            densities={[1, 2]}
             src={item.img}
             alt={item.alt}
             width={102}

@@ -14,6 +14,7 @@ const props = Astro.props;
   </blockquote>
   <footer class="flex items-center gap-3">
     <Image
+      densities={[1, 2]}
       src={props.image}
       alt={props.author}
       width={44}

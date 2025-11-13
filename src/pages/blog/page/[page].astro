@@ -31,7 +31,7 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
     <h1
       class="text-h2 mb-3 font-medium"
     >
-      Blog, page {page.currentPage}
+      Blog<span class="hidden">, page {page.currentPage}</span>
     </h1>
     <p
       class="text-muted-foreground mb-10 text-base sm:mb-16 "
@@ -64,7 +64,7 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
         <Pagination currentPage={page.currentPage} lastPage={page.lastPage} url="/blog" />
       </section>
       <aside
-        class="sticky top-4 "
+        class="sticky top-20"
       >
         <WrittenBy />
       </aside>

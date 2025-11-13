@@ -78,9 +78,9 @@
     --text-xxs--line-height: 1.58888;
     --text-xxs--letter-spacing: 0px;
 
-    --text-quote: 1.3125rem; /* 21px */
-    --text-quote--line-height: 1.23;
-    --text-quote--letter-spacing: -0.4px;
+    --text-quote: 1.5rem; /* 21px */
+    --text-quote--line-height: 1.33;
+    --text-quote--letter-spacing: -0.6px;
 
     --shadow-*: initial;
     --shadow-btn: 0 1px 3px #0b13241a, inset 0 1px 0px rgba(0, 0, 0, 0.1);
@@ -114,7 +114,6 @@
     html, body {
         --text-quote: 2rem; /* 32px */
         --text-quote--line-height: 1.25;
-        --text-quote--letter-spacing: -0.6px;
     }
 }
 

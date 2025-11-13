@@ -11,7 +11,7 @@
 </script>
 
 <div
-  class="compliance-item min-w-0 w-full group flex flex-col relative pl-7 pb-6 last:pb-0 sm:p-0 sm:pt-13"
+  class="compliance-item min-w-0 w-full group flex flex-col relative pl-7 last:pb-0 sm:p-0 sm:pt-13"
   data-active={props.active || undefined}
 >
   <!-- Square indicator -->
@@ -21,7 +21,7 @@
 
   <!-- ProgressBar -->
   <div
-    class="absolute left-[3px] top-5 -bottom-3 group-last:bottom-0 w-0.5 bg-border-low sm:left-2 sm:top-[3px] sm:-right-16 sm:group-last:right-0 sm:bottom-auto sm:h-[2px] sm:w-auto"
+    class="absolute left-[3px] top-5 -bottom-9 group-last:bottom-0 w-0.5 bg-border-low sm:left-2 sm:top-[3px] sm:-right-16 sm:bottom-auto sm:h-[2px] sm:w-auto group-last:sm:right-0"
   >
     <div
       class="size-full bg-accent scale-y-0 duration:0 group-data-active:duration-2000 group-data-active:scale-y-100 origin-top sm:scale-x-0 sm:scale-y-100 sm:group-data-active:scale-x-100 sm:origin-left"
@@ -29,13 +29,13 @@
   </div>
 
   <!-- Content -->
-  <div
-    class="text-h3 sm:text-h2 text-border-low group-data-active:text-accent font-medium mb-1 sm:mb-6 transition-all duration-300"
-  >
-    {props.position}
+  <div class="border rounded-lg w-max flex items-center h-8.5 text-lg font-medium mb-2 sm:mb-4">
+    <div class="grid place-items-center border-r px-2.5 text-quaternary group-data-active:text-accent">{props.position}</div>
+    <div class="px-2.5">
+      {props.title}
+    </div>
   </div>
-  <div class="text-lg font-medium mb-2">{props.title}</div>
-  <p class="text-base mb-2 sm:mb-6">
+  <p class="text-lg mb-2 sm:mb-6">
     {@render props.children()}
   </p>
   <p class="text-lg text-muted-foreground mt-auto">

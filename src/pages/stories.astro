@@ -26,7 +26,7 @@ const stories = (await getCollection("stories")).sort(
       Inspiring stories, real Probo customers
     </p>
     </div>
-    <Logos class="my-6 animate-slide-in animation-delay-300" />
+    <Logos class="my-6 animate-slide-in animation-delay-300" constrained/>
     <div class="container grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 animate-slide-in animation-delay-250">
       {
         stories.map((item) => (

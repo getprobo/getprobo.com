@@ -16,6 +16,7 @@
     mediaQuery: "min",
     autoScroll: {
       pauseOnFocus: false,
+      speed: 0.7,
       pauseOnHover: false,
     },
   } as const;

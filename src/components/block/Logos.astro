@@ -2,6 +2,11 @@
 import { clsx } from "clsx";
 import LogosScroll from "../LogosScroll.svelte";
 
+type Props = {
+  constrained?: boolean
+  class?: string
+}
+
 const companies = [
   {
     image: "ahrefs.svg",
@@ -54,7 +59,7 @@ const companies = [
 ];
 ---
 
-<section class={clsx("p-0 overflow-hidden relative", Astro.props.class)}>
+<section class={clsx("p-0 overflow-hidden relative", Astro.props.class, Astro.props.constrained && "sm:max-w-270 mx-auto")}>
   <LogosScroll class="flex h-16 w-max items-center sm:h-30" client:load>
     {
       companies.map((company) => (
@@ -74,4 +79,11 @@ const companies = [
       ))
     }
   </LogosScroll>
+
+  {Astro.props.constrained && <div
+    class="absolute top-0 right-0 h-full w-5 sm:w-10 bg-linear-to-l from-[#FFFFFB] to-[#FFFFFB]/0"
+  ></div>
+  <div
+    class="absolute top-0 left-0 h-full w-5 sm:w-10 bg-linear-to-r from-[#FFFFFB] to-[#FFFFFB]/0"
+  ></div>}
 </section>

@@ -29,11 +29,11 @@
     From chaos to confidence
   </h2>
   <p
-    class="text-lg text-muted-foreground text-center intersect-once intersect:animate-slide-in motion-delay-100 mb-10 sm:mb-16"
+    class="text-lg text-muted-foreground text-center intersect-once intersect:animate-slide-in motion-delay-100 mb-10 sm:mb-16 max-w-140 mx-auto"
   >
     Our experts handle the entire compliance journey - from setup to audit - so you can stay focused on building.
   </p>
-  <div class="flex flex-col sm:flex-row sm:gap-8" bind:this={intersection.ref}>
+  <div class="flex flex-col sm:flex-row gap-6 sm:gap-16" bind:this={intersection.ref}>
     <ComplianceTrackItem
       active={step >= 1}
       position="01"
