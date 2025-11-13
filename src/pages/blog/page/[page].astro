@@ -29,17 +29,17 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
 <Layout title={`Blog, page ${page.currentPage}`}>
   <main class="container my-10 sm:my-20">
     <h1
-      class="text-h2 mb-3 font-medium animate-slide-in"
+      class="text-h2 mb-3 font-medium"
     >
       Blog, page {page.currentPage}
     </h1>
     <p
-      class="text-muted-foreground mb-10 text-base sm:mb-16 animate-slide-in animation-delay-100"
+      class="text-muted-foreground mb-10 text-base sm:mb-16 "
     >
       The latest news from Probo
     </p>
     <div
-      class="flex flex-col items-start gap-10 sm:grid sm:grid-cols-[1fr_320px] sm:gap-30 animate-slide-in animation-delay-300"
+      class="flex flex-col items-start gap-10 sm:grid sm:grid-cols-[1fr_320px] sm:gap-30 "
     >
       <section>
         {
@@ -64,7 +64,7 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
         <Pagination currentPage={page.currentPage} lastPage={page.lastPage} url="/blog" />
       </section>
       <aside
-        class="sticky top-4 animate-slide-in animation-delay-200"
+        class="sticky top-4 "
       >
         <WrittenBy />
       </aside>

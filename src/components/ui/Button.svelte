@@ -7,7 +7,7 @@
   variants: {
     variant: {
       primary: "bg-primary text-primary-foreground hover:bg-primary/80 disabled:bg-primary/60",
-      secondary: "border bg-secondary",
+      secondary: "border bg-secondary border-b-[#0000001A]",
       highlight: "bg-highlight"
     },
     size: {
