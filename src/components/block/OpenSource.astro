@@ -10,7 +10,7 @@ import Image from "astro/components/Image.astro";
     Why are we open source?
   </h2>
   <p
-    class="text-quote text-muted-foreground my-10 sm:my-12"
+    class="text-quote text-muted-foreground my-10 sm:my-12 text-gradient"
   >
     “Because compliance isn’t a spreadsheet, it’s a system. Everyone has their own way of working, so we built Probo to be open and extensible. Being open source means anyone can adapt it, extend it, and make it truly theirs."
   </p>
@@ -24,3 +24,11 @@ import Image from "astro/components/Image.astro";
   />
   <p class="text-muted-foreground">— Antoine Bouchardy, Co-founder & CEO</p>
 </section>
+
+<style>
+ .text-gradient {
+   background: -webkit-linear-gradient(#6B716A, #141E12);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+ }
+</style>

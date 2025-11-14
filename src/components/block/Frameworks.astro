@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Logo from "../../assets/probo-logo-only.svg";
 import Badges from "../Badges.svelte";
+import Button from "../../components/ui/Button.svelte";
 ---
 
 <div class="bg-linear-to-b from-[#F8FAF4] to-[#FFFFFB] py-10 sm:py-20">
@@ -32,32 +33,12 @@ import Badges from "../Badges.svelte";
       class="mx-auto mb-13 grid max-w-[660px] grid-cols-3 justify-center justify-items-center gap-2 gap-y-10 sm:grid-cols-5 sm:gap-x-10"
     />
 
-    <a
+    <Button
       href="https://form.getprobo.com/r/nrxk9v"
-      class="text-success group flex items-center justify-center gap-1.5 text-lg font-medium"
+      size="lg"
+      class="w-max mx-auto flex"
     >
       Get compliant
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        class="transition-transform group-hover:translate-x-1"
-      >
-        <path
-          d="M9.33325 4L13.3333 7.99999L9.33325 12"
-          stroke="#5D770D"
-          stroke-width="1.33333"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-        <path
-          d="M12.6667 8H2.66675"
-          stroke="#5D770D"
-          stroke-width="1.33333"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-    </a>
+    </Button>
   </div>
 </div>
