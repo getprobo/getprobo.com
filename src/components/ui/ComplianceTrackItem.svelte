@@ -30,7 +30,7 @@
 
   <!-- Content -->
   <div class="border rounded-lg w-max flex items-center h-8.5 text-lg font-medium mb-2 sm:mb-4">
-    <div class="grid place-items-center border-r px-2.5 text-quaternary group-data-active:text-accent">{props.position}</div>
+    <div class="grid place-items-center h-full border-r px-2.5 text-quaternary group-data-active:text-accent">{props.position}</div>
     <div class="px-2.5">
       {props.title}
     </div>

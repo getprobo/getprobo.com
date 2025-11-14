@@ -54,10 +54,4 @@
     Once compliant, we keep your compliance running in the background - monitoring, updating, and improving continuously so you’re always ready for the next audit.
     </ComplianceTrackItem>
   </div>
-  <br /><br />
-  <p
-    class="text-lg text-muted-foreground text-center intersect-once intersect:animate-slide-in motion-delay-100 mb-10 sm:mb-16"
-  >
-  From kickoff to continuous monitoring, Probo keeps you compliant, transparent, and audit-ready at all time.
-  </p>
 </section>
