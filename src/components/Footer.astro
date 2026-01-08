@@ -10,6 +10,7 @@ import { getLink, getTranslator } from "../lib/i18n.ts";
 import Faro from "./faro.astro";
 
 const __ = await getTranslator(Astro.currentLocale);
+const year = new Date().getFullYear()
 
 const menus = [
   {
@@ -87,7 +88,7 @@ type Props = {
   <p
     class="text-tertiary-foreground text-xxs container flex items-center gap-3"
   >
-    {__("Copyright © 2025 Probo. All rights reserved.")}
+    {`Copyright © ${year} Probo. All rights reserved.`}
     <OpenStatus client:visible />
   </p>
 </footer>
