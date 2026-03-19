@@ -145,18 +145,23 @@ export default defineConfig({
           ],
         },
         {
-          label: "Product",
+          label: "SSO",
           items: [
+            { label: "Overview", slug: "docs/product/sso/overview" },
             {
-              label: "SSO",
-              items: [
-                { label: "Overview", slug: "docs/product/sso/overview" },
-                {
-                  label: "Google Workspace",
-                  slug: "docs/product/sso/google-workspace",
-                },
-                { label: "Okta", slug: "docs/product/sso/okta" },
-              ],
+              label: "Google Workspace",
+              slug: "docs/product/sso/google-workspace",
+            },
+            { label: "Okta", slug: "docs/product/sso/okta" },
+          ],
+        },
+        {
+          label: "SCIM",
+          items: [
+            { label: "Overview", slug: "docs/product/scim/overview" },
+            {
+              label: "Google Workspace",
+              slug: "docs/product/scim/google-workspace",
             },
           ],
         },
@@ -214,139 +219,160 @@ export default defineConfig({
           ],
         },
         {
-          label: "API",
+          label: "MCP",
           items: [
+            { label: "Overview", slug: "docs/api/mcp/overview" },
             {
-              label: "MCP",
-              badge: "New",
+              label: "Authentication",
+              slug: "docs/api/mcp/authentication",
+            },
+            { label: "Pagination", slug: "docs/api/mcp/pagination" },
+            {
+              label: "Available Tools",
+              collapsed: true,
               items: [
-                { label: "Overview", slug: "docs/api/mcp/overview" },
                 {
-                  label: "Authentication",
-                  slug: "docs/api/mcp/authentication",
-                },
-                { label: "Pagination", slug: "docs/api/mcp/pagination" },
-                {
-                  label: "Available Tools",
-                  collapsed: true,
-                  items: [
-                    {
-                      label: "Overview",
-                      slug: "docs/api/mcp/tools",
-                    },
-                    {
-                      label: "Organizations",
-                      slug: "docs/api/mcp/tools/organizations",
-                    },
-                    {
-                      label: "Users",
-                      slug: "docs/api/mcp/tools/users",
-                    },
-                    {
-                      label: "Vendors",
-                      slug: "docs/api/mcp/tools/vendors",
-                    },
-                    {
-                      label: "Risks",
-                      slug: "docs/api/mcp/tools/risks",
-                    },
-                    {
-                      label: "Measures",
-                      slug: "docs/api/mcp/tools/measures",
-                    },
-                    {
-                      label: "Frameworks",
-                      slug: "docs/api/mcp/tools/frameworks",
-                    },
-                    {
-                      label: "Controls",
-                      slug: "docs/api/mcp/tools/controls",
-                    },
-                    {
-                      label: "Assets",
-                      slug: "docs/api/mcp/tools/assets",
-                    },
-                    {
-                      label: "Audits",
-                      slug: "docs/api/mcp/tools/audits",
-                    },
-                    {
-                      label: "Tasks",
-                      slug: "docs/api/mcp/tools/tasks",
-                    },
-                    {
-                      label: "Documents",
-                      slug: "docs/api/mcp/tools/documents",
-                    },
-                    {
-                      label: "Meetings",
-                      slug: "docs/api/mcp/tools/meetings",
-                    },
-                    {
-                      label: "Snapshots",
-                      slug: "docs/api/mcp/tools/snapshots",
-                    },
-                    {
-                      label: "States of Applicability",
-                      slug: "docs/api/mcp/tools/states-of-applicability",
-                    },
-                    {
-                      label: "Findings",
-                      slug: "docs/api/mcp/tools/findings",
-                    },
-                    {
-                      label: "Obligations",
-                      slug: "docs/api/mcp/tools/obligations",
-                    },
-                    {
-                      label: "Data Classification",
-                      slug: "docs/api/mcp/tools/data-classification",
-                    },
-                    {
-                      label: "Processing Activities",
-                      slug: "docs/api/mcp/tools/processing-activities",
-                    },
-                    {
-                      label: "DPIAs",
-                      slug: "docs/api/mcp/tools/dpias",
-                    },
-                    {
-                      label: "TIAs",
-                      slug: "docs/api/mcp/tools/tias",
-                    },
-                  ],
+                  label: "Overview",
+                  slug: "docs/api/mcp/tools",
                 },
                 {
-                  label: "Integrations",
-                  items: [
-                    {
-                      label: "Overview",
-                      slug: "docs/api/mcp/integrations",
-                    },
-                    {
-                      label: "Claude Desktop",
-                      slug: "docs/api/mcp/claude-desktop",
-                    },
-                    {
-                      label: "Claude Code",
-                      slug: "docs/api/mcp/claude-code",
-                    },
-                    {
-                      label: "Claude.ai",
-                      slug: "docs/api/mcp/claude-ai",
-                    },
-                    { label: "Cursor", slug: "docs/api/mcp/cursor" },
-                    { label: "Windsurf", slug: "docs/api/mcp/windsurf" },
-                    { label: "Zed", slug: "docs/api/mcp/zed" },
-                    {
-                      label: "Opencode AI",
-                      slug: "docs/api/mcp/opencode",
-                    },
-                    { label: "VS Code", slug: "docs/api/mcp/vscode" },
-                    { label: "OpenAI", slug: "docs/api/mcp/openai" },
-                  ],
+                  label: "Organizations",
+                  slug: "docs/api/mcp/tools/organizations",
+                },
+                {
+                  label: "Users",
+                  slug: "docs/api/mcp/tools/users",
+                },
+                {
+                  label: "Vendors",
+                  slug: "docs/api/mcp/tools/vendors",
+                },
+                {
+                  label: "Risks",
+                  slug: "docs/api/mcp/tools/risks",
+                },
+                {
+                  label: "Measures",
+                  slug: "docs/api/mcp/tools/measures",
+                },
+                {
+                  label: "Frameworks",
+                  slug: "docs/api/mcp/tools/frameworks",
+                },
+                {
+                  label: "Controls",
+                  slug: "docs/api/mcp/tools/controls",
+                },
+                {
+                  label: "Assets",
+                  slug: "docs/api/mcp/tools/assets",
+                },
+                {
+                  label: "Audits",
+                  slug: "docs/api/mcp/tools/audits",
+                },
+                {
+                  label: "Tasks",
+                  slug: "docs/api/mcp/tools/tasks",
+                },
+                {
+                  label: "Documents",
+                  slug: "docs/api/mcp/tools/documents",
+                },
+                {
+                  label: "Meetings",
+                  slug: "docs/api/mcp/tools/meetings",
+                },
+                {
+                  label: "Snapshots",
+                  slug: "docs/api/mcp/tools/snapshots",
+                },
+                {
+                  label: "States of Applicability",
+                  slug: "docs/api/mcp/tools/states-of-applicability",
+                },
+                {
+                  label: "Findings",
+                  slug: "docs/api/mcp/tools/findings",
+                },
+                {
+                  label: "Obligations",
+                  slug: "docs/api/mcp/tools/obligations",
+                },
+                {
+                  label: "Data Classification",
+                  slug: "docs/api/mcp/tools/data-classification",
+                },
+                {
+                  label: "Processing Activities",
+                  slug: "docs/api/mcp/tools/processing-activities",
+                },
+                {
+                  label: "DPIAs",
+                  slug: "docs/api/mcp/tools/dpias",
+                },
+                {
+                  label: "TIAs",
+                  slug: "docs/api/mcp/tools/tias",
                 },
               ],
+            },
+            {
+              label: "Integrations",
+              collapsed: true,
+              items: [
+                {
+                  label: "Overview",
+                  slug: "docs/api/mcp/integrations",
+                },
+                {
+                  label: "Claude Desktop",
+                  slug: "docs/api/mcp/claude-desktop",
+                },
+                {
+                  label: "Claude Code",
+                  slug: "docs/api/mcp/claude-code",
+                },
+                {
+                  label: "Claude.ai",
+                  slug: "docs/api/mcp/claude-ai",
+                },
+                { label: "Cursor", slug: "docs/api/mcp/cursor" },
+                { label: "Windsurf", slug: "docs/api/mcp/windsurf" },
+                { label: "Zed", slug: "docs/api/mcp/zed" },
+                {
+                  label: "Opencode AI",
+                  slug: "docs/api/mcp/opencode",
+                },
+                { label: "VS Code", slug: "docs/api/mcp/vscode" },
+                { label: "OpenAI", slug: "docs/api/mcp/openai" },
+              ],
+            },
+          ],
+        },
+        {
+          label: "n8n",
+          items: [
+            { label: "Overview", slug: "docs/api/n8n/overview" },
+            {
+              label: "Authentication",
+              slug: "docs/api/n8n/authentication",
+            },
+            { label: "Resources", slug: "docs/api/n8n/resources" },
+            { label: "GraphQL", slug: "docs/api/n8n/graphql" },
+          ],
+        },
+        {
+          label: "Webhooks",
+          items: [
+            { label: "Overview", slug: "docs/api/webhooks/overview" },
+            {
+              label: "Event Types",
+              slug: "docs/api/webhooks/event-types",
+            },
+            {
+              label: "Signature Verification",
+              slug: "docs/api/webhooks/signature-verification",
             },
           ],
         },
