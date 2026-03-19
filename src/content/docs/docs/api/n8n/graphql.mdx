@@ -1,0 +1,79 @@
+---
+title: n8n GraphQL
+description: Execute custom GraphQL queries against Probo APIs from n8n
+---
+
+The Probo n8n node includes a **GraphQL** resource that lets you run arbitrary GraphQL queries and mutations against the Probo APIs. Use this for advanced use cases not covered by the built-in resource operations.
+
+## Configuration
+
+| Field | Description |
+|---|---|
+| **API** | Which Probo API to call: **Console API** (`/api/console/v1/graphql`) or **Connect API** (`/api/connect/v1/graphql`) |
+| **Query** | The full GraphQL operation, including operation type, name, and variable declarations |
+| **Variables** | A JSON object containing the variables referenced in your query |
+
+## Example: Query
+
+Fetch a specific user by ID:
+
+**Query:**
+```graphql
+query GetUser($userId: ID!) {
+  node(id: $userId) {
+    ... on User {
+      id
+      fullName
+      email
+    }
+  }
+}
+```
+
+**Variables:**
+```json
+{
+  "userId": "usr_abc123"
+}
+```
+
+## Example: Mutation
+
+Update an organization name:
+
+**Query:**
+```graphql
+mutation UpdateOrganization($input: UpdateOrganizationInput!) {
+  updateOrganization(input: $input) {
+    organization {
+      id
+      name
+    }
+  }
+}
+```
+
+**Variables:**
+```json
+{
+  "input": {
+    "id": "org_abc123",
+    "name": "Acme Corp"
+  }
+}
+```
+
+## Requirements
+
+- The query **must** start with `query`, `mutation`, or `subscription` followed by an operation name.
+- Anonymous queries (e.g., `{ viewer { id } }`) are not supported — always name your operations.
+- Variables must be valid JSON.
+
+## When to use GraphQL
+
+Use the GraphQL resource when you need to:
+
+- Access fields or relationships not exposed by the built-in resource operations
+- Run complex queries that combine multiple resources in a single request
+- Use the Connect API (most built-in resources use the Console API)
+- Perform batch operations with custom variable logic

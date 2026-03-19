@@ -1,0 +1,159 @@
+---
+title: SCIM Overview
+description: Automated user provisioning and deprovisioning with SCIM 2.0 and Bridge sync
+---
+
+Probo supports SCIM 2.0 (System for Cross-domain Identity Management) for automated user provisioning. Combined with the Bridge sync system, Probo can automatically create, update, deactivate, and remove user accounts based on your identity provider's directory.
+
+## How It Works
+
+Probo's SCIM implementation has two modes:
+
+### Direct SCIM Provisioning
+
+Your identity provider pushes user changes to Probo's SCIM endpoint in real time. This is the standard SCIM 2.0 flow — your IdP calls Probo whenever a user is created, updated, or removed.
+
+### Bridge Sync
+
+The Bridge is Probo's built-in synchronization engine that periodically pulls user data from your identity provider and reconciles it with Probo. This is useful for identity providers that don't support outbound SCIM push, or when you want Probo to be the driver of synchronization.
+
+The Bridge:
+- Polls your identity provider at regular intervals
+- Creates users found in the provider but missing from Probo
+- Updates users when attributes have changed
+- Deactivates users present in Probo but removed from the provider
+- Supports excluding specific users from synchronization
+
+## Supported Identity Providers
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <LinkCard
+    title="Google Workspace"
+    description="Sync users from Google Workspace via Bridge"
+    href="/docs/product/scim/google-workspace"
+  />
+</CardGrid>
+
+**Direct SCIM provisioning** works with any SCIM 2.0 compliant identity provider:
+- Okta
+- Azure Active Directory (Entra ID)
+- OneLogin
+- JumpCloud
+- Any SCIM 2.0 client
+
+## SCIM Endpoint
+
+The SCIM 2.0 API is available at:
+
+```
+https://your-probo-domain.com/api/connect/v1/scim/2.0/Users
+```
+
+### Supported Operations
+
+| Operation | Method | Endpoint | Description |
+|-----------|--------|----------|-------------|
+| **Create** | `POST` | `/Users` | Provision a new user |
+| **Get** | `GET` | `/Users/{id}` | Retrieve a specific user |
+| **List** | `GET` | `/Users` | List users with pagination |
+| **Replace** | `PUT` | `/Users/{id}` | Full user replacement |
+| **Update** | `PATCH` | `/Users/{id}` | Partial user update |
+| **Delete** | `DELETE` | `/Users/{id}` | Remove a user |
+
+### Authentication
+
+All SCIM requests require a Bearer token:
+
+```bash
+curl -H "Authorization: Bearer <scim-token>" \
+     -H "Content-Type: application/scim+json" \
+     https://your-probo-domain.com/api/connect/v1/scim/2.0/Users
+```
+
+The token is generated when you create a SCIM configuration in Probo.
+
+### Supported Schemas
+
+Probo supports the following SCIM schemas:
+
+- **Core User Schema** (`urn:ietf:params:scim:schemas:core:2.0:User`) — username, displayName, name, emails, phoneNumbers, active status, title
+- **Enterprise User Extension** (`urn:ietf:params:scim:schemas:extension:enterprise:2.0:User`) — employeeNumber, costCenter, organization, division, department, manager
+
+### Filtering
+
+The SCIM endpoint supports filtering with the `eq` (equality) operator:
+
+```
+GET /Users?filter=userName eq "john@example.com"
+GET /Users?filter=externalId eq "12345"
+```
+
+## Setting Up SCIM
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. **Create a SCIM configuration**
+
+   In Probo, go to **Organization Settings** > **Authentication** > **Auto-Provisioning** and create a new SCIM configuration. This generates your SCIM endpoint URL and bearer token.
+
+2. **Save the token**
+
+   The bearer token is shown only once. Copy and store it securely.
+
+3. **Configure your identity provider**
+
+   Enter the SCIM endpoint URL and bearer token in your IdP's provisioning settings, or set up a Bridge connector for pull-based sync.
+
+4. **Test the connection**
+
+   Verify provisioning works by assigning a test user in your IdP and confirming the account appears in Probo.
+
+</Steps>
+
+## Bridge Sync States
+
+When using Bridge sync, each bridge goes through the following lifecycle:
+
+| State | Description |
+|-------|-------------|
+| **Pending** | Initial state after creation |
+| **Syncing** | Synchronization in progress |
+| **Active** | Last sync completed successfully |
+| **Failed** | Sync failed, will retry with exponential backoff |
+| **Disabled** | Permanently disabled after 10 consecutive failures |
+
+The Bridge uses exponential backoff for retries, with a maximum backoff of 24 hours. If a bridge fails 10 times consecutively, it is automatically disabled and requires manual re-enablement.
+
+## Excluding Users
+
+You can exclude specific users from Bridge synchronization by email address. Excluded users in your identity provider will not be provisioned into Probo. This is useful for service accounts, shared mailboxes, or other non-human identities that shouldn't have Probo accounts.
+
+## Audit Logging
+
+All SCIM API interactions are logged with:
+- HTTP method and path
+- Response status code
+- Request and response bodies
+- Source IP address
+- Associated user (when applicable)
+
+View SCIM events in **Organization Settings** > **Authentication** > **Auto-Provisioning** > **Event Log**.
+
+## Next Steps
+
+<CardGrid>
+  <LinkCard
+    title="Google Workspace Bridge"
+    description="Set up automated user sync from Google Workspace"
+    href="/docs/product/scim/google-workspace"
+  />
+  <LinkCard
+    title="SSO Overview"
+    description="Combine SCIM provisioning with SAML Single Sign-On"
+    href="/docs/product/sso/overview"
+  />
+</CardGrid>

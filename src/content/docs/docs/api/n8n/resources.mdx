@@ -1,0 +1,178 @@
+---
+title: n8n Resources
+description: Reference for all Probo n8n node resources and operations
+---
+
+The Probo n8n node organizes operations by resource type. Each resource supports a set of CRUD operations and, in some cases, specialized actions.
+
+## Organization
+
+Manage Probo organizations.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new organization |
+| Get | Get an organization by ID |
+| Get Many | List organizations |
+| Update | Update an existing organization |
+| Delete | Delete an organization |
+
+## User
+
+Manage users and organization memberships.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new user in the organization |
+| Get | Get a user profile by ID |
+| List | List all users in the organization |
+| Invite | Invite a user to the organization |
+| Update | Update a user profile |
+| Update Membership | Update a user's membership role |
+| Remove | Remove a user from the organization |
+
+## Framework
+
+Manage compliance frameworks (e.g., SOC 2, ISO 27001).
+
+| Operation | Description |
+|---|---|
+| Create | Create a new framework |
+| Get | Get a framework by ID |
+| Get Many | List frameworks |
+| Update | Update an existing framework |
+| Delete | Delete a framework |
+
+## Control
+
+Manage controls within frameworks.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new control |
+| Get | Get a control by ID |
+| Get Many | List controls |
+| Update | Update an existing control |
+| Delete | Delete a control |
+
+## Risk
+
+Manage risks and their relationships to documents, measures, and obligations.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new risk |
+| Get | Get a risk by ID |
+| Get Many | List risks |
+| Update | Update an existing risk |
+| Delete | Delete a risk |
+| Link Document | Link a document to a risk |
+| Unlink Document | Unlink a document from a risk |
+| Link Measure | Link a measure to a risk |
+| Unlink Measure | Unlink a measure from a risk |
+| Link Obligation | Link an obligation to a risk |
+| Unlink Obligation | Unlink an obligation from a risk |
+
+## Measure
+
+Manage security measures.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new measure |
+| Get | Get a measure by ID |
+| Get Many | List measures |
+| Update | Update an existing measure |
+| Delete | Delete a measure |
+
+## Asset
+
+Manage assets tracked in your compliance program.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new asset |
+| Get | Get an asset by ID |
+| Get Many | List assets |
+| Update | Update an existing asset |
+| Delete | Delete an asset |
+
+## Audit
+
+Manage audits and audit reports.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new audit |
+| Get | Get an audit by ID |
+| Get Many | List audits |
+| Update | Update an existing audit |
+| Delete | Delete an audit |
+| Upload Report | Upload a report file for an audit |
+| Delete Report | Delete an audit report |
+
+## Vendor
+
+Manage vendors, vendor contacts, vendor services, and vendor risk assessments.
+
+### Core operations
+
+| Operation | Description |
+|---|---|
+| Create | Create a new vendor |
+| Get | Get a vendor by ID |
+| Get Many | List vendors |
+| Update | Update an existing vendor |
+| Delete | Delete a vendor |
+
+### Contacts
+
+| Operation | Description |
+|---|---|
+| Create Contact | Create a new vendor contact |
+| Get Contact | Get a vendor contact |
+| Get Many Contacts | List vendor contacts |
+| Update Contact | Update a vendor contact |
+| Delete Contact | Delete a vendor contact |
+
+### Services
+
+| Operation | Description |
+|---|---|
+| Create Service | Create a new vendor service |
+| Get Service | Get a vendor service |
+| Get Many Services | List vendor services |
+| Update Service | Update a vendor service |
+| Delete Service | Delete a vendor service |
+
+### Risk assessments
+
+| Operation | Description |
+|---|---|
+| Create Risk Assessment | Create a new vendor risk assessment |
+| Get Risk Assessment | Get a vendor risk assessment |
+| Get Many Risk Assessments | List vendor risk assessments |
+
+## Meeting
+
+Manage meetings.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new meeting |
+| Get | Get a meeting by ID |
+| Get Many | List meetings |
+| Update | Update an existing meeting |
+| Delete | Delete a meeting |
+
+## Data Classification
+
+Manage data classification entries.
+
+| Operation | Description |
+|---|---|
+| Create | Create a new datum |
+| Get | Get a datum by ID |
+| Get Many | List data classification entries |
+| Update | Update an existing datum |
+| Delete | Delete a datum |

@@ -1,0 +1,49 @@
+---
+title: n8n Authentication
+description: Configure Probo API credentials in your n8n instance
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+The Probo n8n node authenticates using an API key sent as a Bearer token. You need to create credentials in n8n before using any Probo node.
+
+## Creating credentials
+
+<Steps>
+
+1. **Add a Probo node to your workflow**
+
+   Search for "Probo" in the n8n node palette and drag it onto your canvas.
+
+2. **Open the credentials dialog**
+
+   Click the **Credential** dropdown in the node and select **Create New Credential**.
+
+3. **Configure the connection**
+
+   | Field | Default | Description |
+   |---|---|---|
+   | **Probo Server** | `https://us.console.getprobo.com` | Your Probo instance URL. Change this if you use a different region or self-host Probo. |
+   | **API Key** | — | Your Probo API key |
+
+4. **Test the connection**
+
+   Click **Test** to verify that n8n can reach your Probo instance and that the API key is valid. The node validates credentials by querying the authenticated user's identity.
+
+5. **Save**
+
+   Click **Save** to store the credentials. They'll be available to all Probo nodes in your workflows.
+
+</Steps>
+
+## Getting an API key
+
+You can generate an API key from the Probo console:
+
+1. Go to **Settings** → **API Keys** in your Probo organization.
+2. Click **Create API Key**.
+3. Copy the key — it won't be shown again.
+
+## Self-hosted instances
+
+If you're running a self-hosted Probo instance, set the **Probo Server** field to your instance URL (e.g., `https://probo.internal.example.com`). The node connects to the GraphQL API at `/api/console/v1/graphql`.

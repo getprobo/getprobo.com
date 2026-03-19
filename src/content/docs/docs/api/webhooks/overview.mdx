@@ -1,0 +1,99 @@
+---
+title: Webhooks Overview
+description: Receive real-time notifications when events happen in Probo
+---
+
+Webhooks allow you to receive HTTP notifications when events occur in your Probo organization. When a subscribed event happens, Probo sends a `POST` request to your configured endpoint with details about the event.
+
+## How it works
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. **Create a webhook subscription**
+
+   Configure an endpoint URL and select which events you want to receive, either from the Probo console under **Settings > Webhooks** or using the [CLI](/docs/cli/commands/webhooks).
+
+2. **Receive events**
+
+   When a subscribed event occurs, Probo sends a signed `POST` request to your endpoint with a JSON payload describing the event.
+
+3. **Verify and process**
+
+   Verify the request signature using your signing secret, then process the event data.
+
+</Steps>
+
+## Endpoint requirements
+
+- Must use **HTTPS**
+- Must respond with a `2xx` status code (`200`, `201`, `202`, or `204`)
+- Must respond within **30 seconds**
+
+Responses with any other status code or timeouts are marked as failed.
+
+## Payload format
+
+Every webhook delivery sends a JSON body with this structure:
+
+```json
+{
+  "eventId": "whevt_01ABC123",
+  "subscriptionId": "whsub_01DEF456",
+  "organizationId": "org_01GHI789",
+  "eventType": "vendor:created",
+  "createdAt": "2025-01-15T10:30:00Z",
+  "data": {
+    // Event-specific fields
+  }
+}
+```
+
+| Field | Description |
+|-------|-------------|
+| `eventId` | Unique identifier for this webhook event |
+| `subscriptionId` | The subscription that triggered this delivery |
+| `organizationId` | The organization where the event occurred |
+| `eventType` | The type of event (e.g. `vendor:created`) |
+| `createdAt` | When the event was created (RFC 3339) |
+| `data` | Event-specific payload (see [Event Types](/docs/api/webhooks/event-types)) |
+
+## HTTP headers
+
+Each webhook request includes the following headers:
+
+| Header | Description |
+|--------|-------------|
+| `Content-Type` | `application/json` |
+| `X-Probo-Webhook-Event` | The event type (e.g. `vendor:created`) |
+| `X-Probo-Webhook-Organization-Id` | The organization ID |
+| `X-Probo-Webhook-Timestamp` | Unix timestamp (seconds) of the request |
+| `X-Probo-Webhook-Signature` | HMAC-SHA256 hex signature for verification |
+
+## Signing secret
+
+When you create a webhook subscription, Probo generates a signing secret (prefixed with `whsec_`). You can view this secret in the console or retrieve it via the CLI. Store it securely — you'll need it to [verify webhook signatures](/docs/api/webhooks/signature-verification).
+
+## Delivery behavior
+
+- Events are processed in order, with a polling interval of approximately 5 seconds.
+- Failed deliveries are **not retried**. The response status code, headers, and body (up to 64 KB) are stored and visible in the console for debugging.
+- Delivery history is available in **Settings > Webhooks** in the Probo console.
+
+## Next steps
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <LinkCard
+    title="Event Types"
+    description="See all available webhook events and their payloads"
+    href="/docs/api/webhooks/event-types"
+  />
+  <LinkCard
+    title="Signature Verification"
+    description="Verify that webhook requests come from Probo"
+    href="/docs/api/webhooks/signature-verification"
+  />
+</CardGrid>

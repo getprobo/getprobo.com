@@ -1,0 +1,150 @@
+---
+title: Signature Verification
+description: Verify that webhook requests are genuinely from Probo
+---
+
+Every webhook request from Probo includes a cryptographic signature that you should verify to ensure the request is authentic and hasn't been tampered with.
+
+## How it works
+
+Probo signs each webhook payload using **HMAC-SHA256** with the signing secret from your webhook subscription. The signature is sent in the `X-Probo-Webhook-Signature` header.
+
+The signed message is the concatenation of the timestamp and the raw request body, separated by a colon:
+
+```
+{timestamp}:{body}
+```
+
+Where:
+- `timestamp` is the value of the `X-Probo-Webhook-Timestamp` header (Unix seconds)
+- `body` is the raw JSON request body
+
+## Verification steps
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. **Extract the headers**
+
+   Read `X-Probo-Webhook-Timestamp` and `X-Probo-Webhook-Signature` from the request.
+
+2. **Build the signed message**
+
+   Concatenate the timestamp, a colon (`:`), and the raw request body.
+
+3. **Compute the expected signature**
+
+   Calculate `HMAC-SHA256` using your signing secret (without the `whsec_` prefix) as the key and the signed message as the input. Hex-encode the result.
+
+4. **Compare signatures**
+
+   Use a constant-time comparison to check if the computed signature matches the `X-Probo-Webhook-Signature` header.
+
+</Steps>
+
+## Examples
+
+### Go
+
+```go
+package main
+
+import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io"
+	"net/http"
+	"strings"
+)
+
+func verifyWebhook(r *http.Request, signingSecret string) ([]byte, error) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	timestamp := r.Header.Get("X-Probo-Webhook-Timestamp")
+	signature := r.Header.Get("X-Probo-Webhook-Signature")
+
+	// Remove the whsec_ prefix
+	secret := strings.TrimPrefix(signingSecret, "whsec_")
+	secretBytes, err := hex.DecodeString(secret)
+	if err != nil {
+		return nil, err
+	}
+
+	// Build the signed message
+	message := fmt.Sprintf("%s:%s", timestamp, string(body))
+
+	// Compute HMAC-SHA256
+	mac := hmac.New(sha256.New, secretBytes)
+	mac.Write([]byte(message))
+	expected := hex.EncodeToString(mac.Sum(nil))
+
+	// Constant-time comparison
+	if !hmac.Equal([]byte(expected), []byte(signature)) {
+		return nil, fmt.Errorf("invalid signature")
+	}
+
+	return body, nil
+}
+```
+
+### Python
+
+```python
+import hashlib
+import hmac
+from binascii import unhexlify
+
+def verify_webhook(body: bytes, timestamp: str, signature: str, signing_secret: str) -> bool:
+    # Remove the whsec_ prefix
+    secret = signing_secret.removeprefix("whsec_")
+    secret_bytes = unhexlify(secret)
+
+    # Build the signed message
+    message = f"{timestamp}:{body.decode()}"
+
+    # Compute HMAC-SHA256
+    expected = hmac.new(
+        secret_bytes,
+        message.encode(),
+        hashlib.sha256,
+    ).hexdigest()
+
+    # Constant-time comparison
+    return hmac.compare_digest(expected, signature)
+```
+
+### Node.js
+
+```javascript
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+function verifyWebhook(body, timestamp, signature, signingSecret) {
+  // Remove the whsec_ prefix
+  const secret = signingSecret.replace("whsec_", "");
+  const secretBytes = Buffer.from(secret, "hex");
+
+  // Build the signed message
+  const message = `${timestamp}:${body}`;
+
+  // Compute HMAC-SHA256
+  const expected = createHmac("sha256", secretBytes)
+    .update(message)
+    .digest("hex");
+
+  // Constant-time comparison
+  return timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+}
+```
+
+## Security recommendations
+
+- **Always verify signatures** in production. Never skip verification, even in development.
+- **Use constant-time comparison** to prevent timing attacks. All examples above use the appropriate function for this.
+- **Validate the timestamp** to prevent replay attacks. Reject requests where the timestamp is more than 5 minutes old.
+- **Store signing secrets securely** using environment variables or a secret manager. Never commit them to source control.

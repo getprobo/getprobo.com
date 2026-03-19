@@ -1,0 +1,80 @@
+---
+title: n8n Integration
+description: Automate your compliance workflows with the Probo n8n community node
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import { Steps } from '@astrojs/starlight/components';
+
+The [Probo n8n node](https://www.npmjs.com/package/@probo/n8n-nodes-probo) (`@probo/n8n-nodes-probo`) lets you integrate Probo into your n8n workflows. Automate compliance tasks like syncing risks, creating audits, managing vendors, and more — all from your n8n instance.
+
+## Installation
+
+<Steps>
+
+1. **Open your n8n instance settings**
+
+   Go to **Settings** → **Community nodes**.
+
+2. **Install the package**
+
+   Enter the package name:
+
+   ```
+   @probo/n8n-nodes-probo
+   ```
+
+   Click **Install**. The Probo node will appear in your node palette.
+
+3. **Configure credentials**
+
+   When you first add a Probo node to a workflow, you'll be prompted to create credentials. See [Authentication](/docs/api/n8n/authentication) for details.
+
+</Steps>
+
+## Available resources
+
+The Probo node supports 12 resource types covering the full compliance platform:
+
+| Resource | Operations | Description |
+|---|---|---|
+| **Organization** | Create, Get, Get Many, Update, Delete | Manage organizations |
+| **User** | Create, Get, List, Invite, Update, Update Membership, Remove | Manage users and memberships |
+| **Framework** | Create, Get, Get Many, Update, Delete | Manage compliance frameworks |
+| **Control** | Create, Get, Get Many, Update, Delete | Manage framework controls |
+| **Risk** | Create, Get, Get Many, Update, Delete, Link/Unlink Document, Link/Unlink Measure, Link/Unlink Obligation | Manage risks and their relationships |
+| **Measure** | Create, Get, Get Many, Update, Delete | Manage security measures |
+| **Asset** | Create, Get, Get Many, Update, Delete | Manage assets |
+| **Audit** | Create, Get, Get Many, Update, Delete, Upload Report, Delete Report | Manage audits and reports |
+| **Vendor** | Create, Get, Get Many, Update, Delete, plus Contacts, Services, and Risk Assessments sub-resources | Manage vendors and related data |
+| **Meeting** | Create, Get, Get Many, Update, Delete | Manage meetings |
+| **Data Classification** | Create, Get, Get Many, Update, Delete | Manage data classification entries |
+| **GraphQL** | Execute | Run arbitrary GraphQL queries against the Console or Connect API |
+
+## Use cases
+
+- **Sync vendors from external sources** — Pull vendor data from a spreadsheet or CRM and create/update vendors in Probo automatically.
+- **Automate risk creation from scan results** — Connect security scanning tools to Probo and create risks when new vulnerabilities are found.
+- **Schedule audit reminders** — Trigger workflows on a schedule to check audit status and send Slack or email notifications.
+- **Cross-platform compliance reporting** — Pull data from Probo and push it to reporting tools, dashboards, or document generators.
+- **Onboard new frameworks** — Automate the creation of frameworks, controls, and measures from a predefined template.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Authentication"
+    description="Configure your Probo API credentials in n8n"
+    href="/docs/api/n8n/authentication"
+  />
+  <LinkCard
+    title="Resources"
+    description="Detailed reference for all available resources and operations"
+    href="/docs/api/n8n/resources"
+  />
+  <LinkCard
+    title="GraphQL"
+    description="Execute custom GraphQL queries for advanced use cases"
+    href="/docs/api/n8n/graphql"
+  />
+</CardGrid>

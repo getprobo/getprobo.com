@@ -1,0 +1,166 @@
+---
+title: Google Workspace SCIM Bridge
+description: Configure automated user provisioning from Google Workspace using the Probo Bridge
+---
+
+This guide walks you through setting up the Probo Bridge to automatically synchronize users from Google Workspace into Probo via SCIM.
+
+## Prerequisites
+
+- Google Workspace administrator access (to create OAuth credentials)
+- Probo organization administrator access
+- A Google Cloud project with the Admin SDK API enabled
+
+## How It Works
+
+The Google Workspace Bridge connects to Google's Admin Directory API using OAuth2, retrieves your organization's user directory, and synchronizes it with Probo through the SCIM endpoint. The Bridge runs on a regular schedule and handles:
+
+- **New users**: Creates Probo accounts for users found in Google Workspace
+- **Updated users**: Syncs attribute changes (name, title, department, etc.)
+- **Removed users**: Deactivates Probo accounts for users no longer in Google Workspace
+- **Excluded users**: Skips users you've explicitly excluded by email
+
+### Mapped Attributes
+
+| Google Workspace Field | SCIM Attribute |
+|----------------------|----------------|
+| Primary email | `userName`, `emails` |
+| Display name | `displayName` |
+| First name | `name.givenName` |
+| Last name | `name.familyName` |
+| Suspended status | `active` |
+| Job title | `title` |
+| Department | `enterprise:department` |
+| Cost center | `enterprise:costCenter` |
+| Employee ID | `enterprise:employeeNumber` |
+| Manager email | `enterprise:manager` |
+| Language | `preferredLanguage` |
+
+import { Steps } from '@astrojs/starlight/components';
+
+## Step 1: Create Google OAuth Credentials
+
+<Steps>
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Select or create a project for Probo integration
+3. Go to **APIs & Services** > **Enabled APIs & Services**
+4. Click **+ Enable APIs and Services** and enable the **Admin SDK API**
+5. Go to **APIs & Services** > **Credentials**
+6. Click **+ Create Credentials** > **OAuth client ID**
+7. Configure the OAuth consent screen if prompted:
+
+   | Field | Value |
+   |-------|-------|
+   | **App name** | `Probo SCIM Bridge` |
+   | **User support email** | Your admin email |
+   | **Scopes** | `https://www.googleapis.com/auth/admin.directory.user.readonly` |
+
+8. Create the OAuth client ID:
+
+   | Field | Value |
+   |-------|-------|
+   | **Application type** | `Web application` |
+   | **Name** | `Probo SCIM Bridge` |
+   | **Authorized redirect URIs** | `https://your-probo-domain.com/connect/google/callback` |
+
+9. Save the **Client ID** and **Client Secret**
+
+</Steps>
+
+## Step 2: Configure the Bridge in Probo
+
+<Steps>
+
+1. Log in to Probo as an organization administrator
+2. Go to **Organization Settings** > **Authentication** > **Auto-Provisioning**
+3. Click **Add Connector** and select **Google Workspace**
+4. Enter your OAuth credentials:
+
+   | Field | Value |
+   |-------|-------|
+   | **Client ID** | Your Google OAuth Client ID |
+   | **Client Secret** | Your Google OAuth Client Secret |
+
+5. Click **Authorize** to complete the OAuth flow — you'll be redirected to Google to grant access
+6. After authorization, the Bridge connector will appear as **Pending**
+
+</Steps>
+
+## Step 3: Configure Exclusions (Optional)
+
+If you have service accounts, shared mailboxes, or other users that should not be provisioned into Probo:
+
+<Steps>
+
+1. In the Bridge connector settings, go to **Excluded Users**
+2. Add email addresses of users to exclude (case-insensitive)
+3. Click **Save**
+
+</Steps>
+
+Excluded users will be skipped during synchronization. If an excluded user was previously provisioned, they will be removed on the next sync cycle.
+
+## Step 4: Verify Synchronization
+
+After the Bridge is configured, it will begin synchronizing on its regular schedule (approximately every 30 seconds for polling, with a 5-minute sync timeout).
+
+<Steps>
+
+1. Go to **Organization Settings** > **Authentication** > **Auto-Provisioning**
+2. Check the Bridge state — it should transition from **Pending** to **Syncing** and then to **Active**
+3. Go to **Organization Settings** > **Members** to verify users have been provisioned
+4. Check the **Event Log** for detailed sync activity
+
+</Steps>
+
+## Troubleshooting
+
+### Bridge Stuck in "Pending"
+
+- **Cause**: OAuth authorization was not completed or the token has expired
+- **Solution**: Re-authorize the Google Workspace connector by clicking **Authorize** again
+
+### Bridge in "Failed" State
+
+- **Cause**: The sync encountered an error (network issue, API rate limit, invalid credentials)
+- **Solution**: Check the Event Log for error details. The Bridge will automatically retry with exponential backoff. If the issue persists after 10 consecutive failures, the Bridge will be disabled — fix the underlying issue and re-enable it manually.
+
+### Users Not Appearing
+
+- **Cause**: The Google OAuth scope may not include directory access, or users are in an organizational unit not visible to the admin account
+- **Solution**: Verify the Admin SDK API is enabled and the OAuth consent screen includes the `admin.directory.user.readonly` scope
+
+### Stale Users Not Deactivated
+
+- **Cause**: Users may be in the exclusion list, or the sync hasn't completed a full cycle yet
+- **Solution**: Check the exclusion list and wait for the next sync cycle. Each sync processes up to 500 users per page from Google Workspace.
+
+### OAuth Token Expired
+
+- **Cause**: The refresh token has been revoked or expired
+- **Solution**: Re-authorize the connector. The Bridge automatically refreshes OAuth tokens, but if the refresh token itself is revoked (e.g., user removed app access in Google), you'll need to re-authorize.
+
+## Combining with SSO
+
+For the best experience, combine SCIM Bridge provisioning with SAML SSO:
+
+1. **SCIM Bridge** handles user lifecycle — creating and deactivating accounts automatically
+2. **SAML SSO** handles authentication — users sign in with their Google credentials
+
+This means users get automatic Probo accounts when they join your organization and lose access when they leave, with no manual account management needed.
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <LinkCard
+    title="Google Workspace SSO"
+    description="Set up SAML SSO alongside SCIM provisioning"
+    href="/docs/product/sso/google-workspace"
+  />
+  <LinkCard
+    title="SCIM Overview"
+    description="Learn more about SCIM features and direct provisioning"
+    href="/docs/product/scim/overview"
+  />
+</CardGrid>

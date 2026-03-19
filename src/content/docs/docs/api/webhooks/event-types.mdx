@@ -1,0 +1,185 @@
+---
+title: Webhook Event Types
+description: Available webhook event types and their payload structures
+---
+
+Probo sends webhook events for four resource categories. Each resource supports `created`, `updated`, and `deleted` events.
+
+## Available events
+
+| Event | Description |
+|-------|-------------|
+| `meeting:created` | A meeting was created |
+| `meeting:updated` | A meeting was updated |
+| `meeting:deleted` | A meeting was deleted |
+| `vendor:created` | A vendor was created |
+| `vendor:updated` | A vendor was updated |
+| `vendor:deleted` | A vendor was deleted |
+| `user:created` | A user was created |
+| `user:updated` | A user was updated |
+| `user:deleted` | A user was deleted |
+| `obligation:created` | An obligation was created |
+| `obligation:updated` | An obligation was updated |
+| `obligation:deleted` | An obligation was deleted |
+
+## Payload structures
+
+The `data` field in the webhook payload contains the resource that triggered the event. Below are the fields for each resource type.
+
+### Meeting
+
+Sent for `meeting:created`, `meeting:updated`, and `meeting:deleted` events.
+
+```json
+{
+  "id": "mtg_01ABC123",
+  "name": "Q1 Risk Review",
+  "date": "2025-03-15T14:00:00Z",
+  "minutes": "Discussion notes...",
+  "createdAt": "2025-01-10T09:00:00Z",
+  "updatedAt": "2025-03-15T16:00:00Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Meeting identifier |
+| `name` | string | Meeting name |
+| `date` | string | Meeting date (RFC 3339) |
+| `minutes` | string \| null | Meeting minutes |
+| `createdAt` | string | Creation timestamp (RFC 3339) |
+| `updatedAt` | string | Last update timestamp (RFC 3339) |
+
+### Vendor
+
+Sent for `vendor:created`, `vendor:updated`, and `vendor:deleted` events.
+
+```json
+{
+  "id": "vnd_01DEF456",
+  "name": "Acme Cloud",
+  "category": "CLOUD_INFRASTRUCTURE",
+  "description": "Cloud hosting provider",
+  "statusPageUrl": "https://status.acme.cloud",
+  "termsOfServiceUrl": "https://acme.cloud/tos",
+  "privacyPolicyUrl": "https://acme.cloud/privacy",
+  "serviceLevelAgreementUrl": "https://acme.cloud/sla",
+  "dataProcessingAgreementUrl": null,
+  "businessAssociateAgreementUrl": null,
+  "subprocessorsListUrl": "https://acme.cloud/subprocessors",
+  "certifications": ["SOC2", "ISO27001"],
+  "countries": ["US", "DE"],
+  "securityPageUrl": "https://acme.cloud/security",
+  "trustPageUrl": "https://acme.cloud/trust",
+  "headquarterAddress": "123 Cloud St, San Francisco, CA",
+  "legalName": "Acme Cloud Inc.",
+  "websiteUrl": "https://acme.cloud",
+  "businessOwnerId": "usr_01GHI789",
+  "securityOwnerId": "usr_01JKL012",
+  "createdAt": "2025-01-05T10:00:00Z",
+  "updatedAt": "2025-01-05T10:00:00Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Vendor identifier |
+| `name` | string | Vendor name |
+| `category` | string | Vendor category |
+| `description` | string \| null | Description |
+| `statusPageUrl` | string \| null | Status page URL |
+| `termsOfServiceUrl` | string \| null | Terms of service URL |
+| `privacyPolicyUrl` | string \| null | Privacy policy URL |
+| `serviceLevelAgreementUrl` | string \| null | SLA URL |
+| `dataProcessingAgreementUrl` | string \| null | DPA URL |
+| `businessAssociateAgreementUrl` | string \| null | BAA URL |
+| `subprocessorsListUrl` | string \| null | Subprocessors list URL |
+| `certifications` | string[] | List of certifications |
+| `countries` | string[] | Country codes where vendor operates |
+| `securityPageUrl` | string \| null | Security page URL |
+| `trustPageUrl` | string \| null | Trust page URL |
+| `headquarterAddress` | string \| null | Headquarters address |
+| `legalName` | string \| null | Legal entity name |
+| `websiteUrl` | string \| null | Website URL |
+| `businessOwnerId` | string \| null | Business owner user ID |
+| `securityOwnerId` | string \| null | Security owner user ID |
+| `createdAt` | string | Creation timestamp (RFC 3339) |
+| `updatedAt` | string | Last update timestamp (RFC 3339) |
+
+### User
+
+Sent for `user:created`, `user:updated`, and `user:deleted` events.
+
+```json
+{
+  "id": "usr_01GHI789",
+  "organizationId": "org_01MNO345",
+  "emailAddress": "jane@example.com",
+  "fullName": "Jane Doe",
+  "kind": "EMPLOYEE",
+  "source": "MANUAL",
+  "state": "ACTIVE",
+  "additionalEmailAddresses": ["jane.doe@example.com"],
+  "position": "Security Engineer",
+  "contractStartDate": "2024-01-15T00:00:00Z",
+  "contractEndDate": null,
+  "createdAt": "2024-01-15T09:00:00Z",
+  "updatedAt": "2025-02-01T11:00:00Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | User identifier |
+| `organizationId` | string | Organization identifier |
+| `emailAddress` | string | Primary email address |
+| `fullName` | string | Full name |
+| `kind` | string \| null | User kind (e.g. `EMPLOYEE`) |
+| `source` | string | Profile source (e.g. `MANUAL`) |
+| `state` | string | Profile state (e.g. `ACTIVE`) |
+| `additionalEmailAddresses` | string[] | Additional email addresses |
+| `position` | string \| null | Job position |
+| `contractStartDate` | string \| null | Contract start date (RFC 3339) |
+| `contractEndDate` | string \| null | Contract end date (RFC 3339) |
+| `createdAt` | string | Creation timestamp (RFC 3339) |
+| `updatedAt` | string | Last update timestamp (RFC 3339) |
+
+### Obligation
+
+Sent for `obligation:created`, `obligation:updated`, and `obligation:deleted` events.
+
+```json
+{
+  "id": "obl_01PQR678",
+  "organizationId": "org_01MNO345",
+  "area": "Data Protection",
+  "source": "GDPR",
+  "requirement": "Maintain records of processing activities",
+  "actionsToBeImplemented": "Implement ROPA template and quarterly review",
+  "regulator": "CNIL",
+  "ownerId": "usr_01GHI789",
+  "lastReviewDate": "2025-01-01T00:00:00Z",
+  "dueDate": "2025-06-30T00:00:00Z",
+  "status": "IN_PROGRESS",
+  "type": "LEGAL",
+  "createdAt": "2024-06-01T10:00:00Z",
+  "updatedAt": "2025-01-15T14:00:00Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Obligation identifier |
+| `organizationId` | string | Organization identifier |
+| `area` | string \| null | Compliance area |
+| `source` | string \| null | Regulatory source |
+| `requirement` | string \| null | Requirement description |
+| `actionsToBeImplemented` | string \| null | Required actions |
+| `regulator` | string \| null | Regulatory body |
+| `ownerId` | string | Owner user ID |
+| `lastReviewDate` | string \| null | Last review date (RFC 3339) |
+| `dueDate` | string \| null | Due date (RFC 3339) |
+| `status` | string | Obligation status |
+| `type` | string | Obligation type |
+| `createdAt` | string | Creation timestamp (RFC 3339) |
+| `updatedAt` | string | Last update timestamp (RFC 3339) |
