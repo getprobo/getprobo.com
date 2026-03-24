@@ -21,10 +21,10 @@ type Props = {
       <Image src={Logo} alt="Logo probo" width={73} height={20} class="block" />
     </a>
     <nav class="hidden sm:flex" transition:name="header-nav">
+      <NavLink href={getLink(Astro, "/about")}>{__("About")}</NavLink>
       <span data-pricing-link style="display:none">
         <NavLink href={getLink(Astro, "/pricing")}>{__("Pricing")}</NavLink>
       </span>
-      <NavLink href={getLink(Astro, "/about")}>{__("About")}</NavLink>
       <NavLink href={getLink(Astro, "/blog")}>{__("Blog")}</NavLink>
       <NavLink href={getLink(Astro, "/stories")}>{__("Stories")}</NavLink>
       <NavLink href="/changelog">{__("Changelog")}</NavLink>
