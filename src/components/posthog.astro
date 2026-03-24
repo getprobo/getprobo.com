@@ -87,7 +87,7 @@
 
   // A/B test: show pricing link only for "test" variant
   function applyPricingFlag() {
-    var show = posthog.getFeatureFlag("pricing-page") === "test";
+    var show = posthog.getFeatureFlag("pricing-page") === "test-pp";
     document.querySelectorAll("[data-pricing-link]").forEach(function (el) {
       el.style.display = show ? "contents" : "none";
     });
