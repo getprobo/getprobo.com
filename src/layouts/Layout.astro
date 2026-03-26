@@ -108,7 +108,18 @@ const hreflangUrls = getHreflangUrls(Astro.url);
     <ClientRouter />
 
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="alternate" type="application/rss+xml" title="Probo Changelog" href="/changelog.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Probo Changelog"
+      href="/changelog.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Probo Blog"
+      href="/blog.xml"
+    />
 
     <meta name="description" content={description} />
     <link rel="author" href="https://linkedin.com/in/antoinebouchardy" />
