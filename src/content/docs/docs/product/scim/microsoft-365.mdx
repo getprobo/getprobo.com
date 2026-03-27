@@ -1,0 +1,216 @@
+---
+title: Microsoft 365 (Entra ID) SCIM
+description: Configure automated user provisioning from Microsoft 365 using Entra ID SCIM
+---
+
+This guide walks you through setting up direct SCIM provisioning from Microsoft Entra ID (formerly Azure Active Directory) to automatically synchronize users into Probo.
+
+## Prerequisites
+
+- Microsoft Entra ID administrator access (Global Administrator or Application Administrator)
+- Probo organization administrator access
+- A Microsoft 365 subscription with Entra ID P1 or higher (required for automatic provisioning)
+
+## How It Works
+
+Microsoft Entra ID pushes user changes to Probo's SCIM 2.0 endpoint in real time. When you assign users or groups to the Probo enterprise application in Entra ID, it automatically:
+
+- **Creates** Probo accounts for newly assigned users
+- **Updates** user attributes when they change in Entra ID
+- **Deactivates** Probo accounts when users are unassigned or disabled
+- **Deletes** Probo accounts when users are permanently removed (if configured)
+
+### Mapped Attributes
+
+**Core User attributes:**
+
+| Entra ID Field                                  | SCIM Attribute                       | Notes                                                                                            |
+| ----------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| userPrincipalName                               | `userName`                           | Required, unique                                                                                 |
+| displayName                                     | `displayName`                        |                                                                                                  |
+| givenName                                       | `name.givenName`                     |                                                                                                  |
+| surname                                         | `name.familyName`                    |                                                                                                  |
+| ImmutableId                                     | `name.formatted`                     |                                                                                                  |
+| honorificPrefix                                 | `name.honorificPrefix`               |                                                                                                  |
+| honorificSuffix                                 | `name.honorificSuffix`               |                                                                                                  |
+| mailNickname                                    | `nickName`                           |                                                                                                  |
+| accountEnabled                                  | `active`                             |                                                                                                  |
+| mail                                            | `emails[type eq "work"].value`       | Multi-valued                                                                                     |
+| telephoneNumber                                 | `phoneNumbers[type eq "work"].value` | Multi-valued                                                                                     |
+| streetAddress, city, state, postalCode, country | `addresses`                          | Multi-valued, with `streetAddress`, `locality`, `region`, `postalCode`, `country` sub-attributes |
+| jobTitle                                        | `title`                              |                                                                                                  |
+| userType                                        | `userType`                           |                                                                                                  |
+| preferredLanguage                               | `preferredLanguage`                  |                                                                                                  |
+| usageLocation                                   | `locale`                             |                                                                                                  |
+| preferredDataLocation                           | `timezone`                           |                                                                                                  |
+| mysiteUrl                                       | `profileUrl`                         |                                                                                                  |
+
+**Enterprise User Extension attributes:**
+
+| Entra ID Field | SCIM Attribute              |
+| -------------- | --------------------------- |
+| employeeId     | `enterprise:employeeNumber` |
+| companyName    | `enterprise:organization`   |
+| department     | `enterprise:department`     |
+| division       | `enterprise:division`       |
+| costCenter     | `enterprise:costCenter`     |
+| manager        | `enterprise:manager.value`  |
+
+import { Steps } from "@astrojs/starlight/components";
+
+## Step 1: Generate SCIM Credentials in Probo
+
+<Steps>
+
+1. Log in to Probo as an organization administrator
+2. Go to **Organization Settings** > **Authentication** > **Auto-Provisioning**
+3. Click **Add Connector** and select **SCIM**
+4. Copy the **SCIM Endpoint URL** and **Bearer Token**
+
+   :::caution
+   The bearer token is shown only once. Store it securely — you will need it in the next step.
+   :::
+
+</Steps>
+
+## Step 2: Create an Enterprise Application in Entra ID
+
+<Steps>
+
+1. Sign in to the [Microsoft Entra admin center](https://entra.microsoft.com)
+2. Go to **Identity** > **Applications** > **Enterprise applications**
+3. Click **+ New application** > **Create your own application**
+4. Enter the following:
+
+   | Field                           | Value                                                                         |
+   | ------------------------------- | ----------------------------------------------------------------------------- |
+   | **Name**                        | `Probo`                                                                       |
+   | **What are you looking to do?** | `Integrate any other application you don't find in the gallery (Non-gallery)` |
+
+5. Click **Create**
+
+</Steps>
+
+## Step 3: Configure Provisioning
+
+<Steps>
+
+1. In the Probo enterprise application, go to **Provisioning** in the left sidebar
+2. Click **Get started**
+3. Set **Provisioning Mode** to **Automatic**
+4. Under **Admin Credentials**, enter:
+
+   | Field            | Value                                                                                       |
+   | ---------------- | ------------------------------------------------------------------------------------------- |
+   | **Tenant URL**   | Your Probo SCIM endpoint URL (e.g. `https://your-probo-domain.com/api/connect/v1/scim/2.0`) |
+   | **Secret Token** | The bearer token from Step 1                                                                |
+
+5. Click **Test Connection** to verify Entra ID can reach the Probo SCIM endpoint
+6. Click **Save**
+
+</Steps>
+
+## Step 4: Configure Attribute Mappings
+
+The default attribute mappings work for most setups. To review or customize them:
+
+<Steps>
+
+1. In the **Provisioning** page, expand **Mappings**
+2. Click **Provision Microsoft Entra ID Users**
+3. Review the attribute mappings — the defaults map to Probo's supported SCIM attributes
+4. Adjust mappings if needed (e.g. map `employeeId` to `urn:ietf:params:scim:schemas:extension:enterprise:2.0:User:employeeNumber`)
+5. Click **Save**
+
+</Steps>
+
+:::tip
+You can remove mappings for attributes you don't use. Only `userName`, `displayName`, and `active` are required by Probo.
+:::
+
+## Step 5: Assign Users and Groups
+
+<Steps>
+
+1. In the Probo enterprise application, go to **Users and groups**
+2. Click **+ Add user/group**
+3. Select the users or groups you want to provision into Probo
+4. Click **Assign**
+
+</Steps>
+
+Only assigned users (or members of assigned groups) will be provisioned. This gives you fine-grained control over who gets a Probo account.
+
+## Step 6: Start Provisioning
+
+<Steps>
+
+1. Go back to **Provisioning**
+2. Set **Provisioning Status** to **On**
+3. Click **Save**
+4. Entra ID will start an initial provisioning cycle — this may take a few minutes depending on the number of users
+
+</Steps>
+
+After the initial cycle, Entra ID runs incremental sync approximately every 40 minutes to push any changes.
+
+## Step 7: Verify Provisioning
+
+<Steps>
+
+1. In Entra ID, go to **Provisioning** > **Provisioning logs** to see the sync activity
+2. In Probo, go to **Organization Settings** > **Members** to verify users have been provisioned
+3. Check **Organization Settings** > **Authentication** > **Auto-Provisioning** > **Event Log** for detailed SCIM events
+
+</Steps>
+
+## Troubleshooting
+
+### Test Connection Fails
+
+- **Cause**: The SCIM endpoint URL or bearer token is incorrect, or a firewall is blocking the connection
+- **Solution**: Verify the endpoint URL includes the full path (ending in `/scim/2.0`). Re-generate the bearer token in Probo if needed. Ensure your network allows outbound HTTPS from Entra ID to your Probo instance.
+
+### Users Not Being Provisioned
+
+- **Cause**: Users or groups are not assigned to the enterprise application, or provisioning is not turned on
+- **Solution**: Check that the users are assigned under **Users and groups** and that **Provisioning Status** is set to **On**
+
+### Provisioning Errors in Logs
+
+- **Cause**: Attribute mapping conflicts or missing required attributes
+- **Solution**: Check the **Provisioning logs** in Entra ID for specific error messages. Ensure `userName` is mapped to a unique, non-empty value (typically `userPrincipalName` or `mail`)
+
+### Users Not Deactivated After Removal
+
+- **Cause**: Entra ID may still be processing the change, or the user was soft-deleted
+- **Solution**: Check the provisioning logs for the deprovisioning event. Entra ID processes changes during the next sync cycle (approximately every 40 minutes). For immediate effect, trigger a manual sync by clicking **Restart provisioning** in the Provisioning page.
+
+### Duplicate Users
+
+- **Cause**: The `userName` in Entra ID doesn't match an existing Probo user's email
+- **Solution**: Ensure the attribute mapped to `userName` matches the email format used in Probo. You may need to adjust the mapping to use `mail` instead of `userPrincipalName`.
+
+## Combining with SSO
+
+For the best experience, combine SCIM provisioning with SAML SSO:
+
+1. **SCIM provisioning** handles user lifecycle — creating and deactivating accounts automatically
+2. **SAML SSO** handles authentication — users sign in with their Microsoft credentials
+
+This means users get automatic Probo accounts when they join your organization and lose access when they leave, with no manual account management needed.
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+<CardGrid>
+  <LinkCard
+    title="SCIM Overview"
+    description="Learn more about SCIM features and direct provisioning"
+    href="/docs/product/scim/overview"
+  />
+  <LinkCard
+    title="SSO Overview"
+    description="Set up SAML SSO alongside SCIM provisioning"
+    href="/docs/product/sso/overview"
+  />
+</CardGrid>

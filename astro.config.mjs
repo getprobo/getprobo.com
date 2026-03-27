@@ -163,6 +163,10 @@ export default defineConfig({
               label: "Google Workspace",
               slug: "docs/product/scim/google-workspace",
             },
+            {
+              label: "Microsoft 365 (Entra ID)",
+              slug: "docs/product/scim/microsoft-365",
+            },
           ],
         },
         {
