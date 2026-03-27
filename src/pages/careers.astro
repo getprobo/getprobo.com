@@ -1,0 +1,78 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getTranslator } from "../lib/i18n.ts";
+
+const __ = await getTranslator(Astro.currentLocale);
+
+const positions: {
+  title: string;
+  type: string;
+  location: string;
+  href: string;
+}[] = [];
+---
+
+<Layout
+  title={__("Careers - Join Probo")}
+  description={__(
+    "Join Probo and help make compliance simple for every company. See our open positions.",
+  )}
+>
+  <main>
+    <section class="container my-10 sm:mt-20 sm:mb-30">
+      <h1 class="text-h2 animate-slide-in mb-3 font-medium">
+        {__("Careers")}
+      </h1>
+      <p
+        class="text-muted-foreground animate-slide-in animation-delay-100 mb-6 max-w-2xl sm:mb-12"
+      >
+        {
+          __(
+            "We're building the future of compliance. Join our team and help make compliance simple and accessible for every company.",
+          )
+        }
+      </p>
+
+      {
+        positions.length > 0 ? (
+          <div class="animate-slide-in animation-delay-200 flex flex-col gap-4">
+            <h2 class="text-muted-foreground mb-1">
+              {__("Open positions")}
+            </h2>
+            {positions.map((position) => (
+              <a
+                href={position.href}
+                class="border-border-low hover:border-border-mid flex items-center justify-between rounded-lg border p-6 transition-colors"
+              >
+                <div>
+                  <h3 class="font-medium">{position.title}</h3>
+                  <p class="text-muted-foreground text-sm">
+                    {position.location} · {position.type}
+                  </p>
+                </div>
+                <span class="text-muted-foreground">→</span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="animate-slide-in animation-delay-200 border-border-low rounded-lg border p-10 text-center">
+            <p class="text-muted-foreground mb-4">
+              {__(
+                "There are no open positions at the moment. However, we're always looking for talented people.",
+              )}
+            </p>
+            <p>
+              {__("Send us your resume at")}{" "}
+              <a
+                href="mailto:hello@getprobo.com"
+                class="text-primary underline"
+              >
+                hello@getprobo.com
+              </a>
+            </p>
+          </div>
+        )
+      }
+    </section>
+  </main>
+</Layout>
