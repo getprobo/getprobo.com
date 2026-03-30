@@ -15,6 +15,7 @@ import ChristopherPrice from "../../assets/testimonial/christopher-price.jpg";
 import JoshParolin from "../../assets/testimonial/josh-parolin.jpg";
 import JeremieParker from "../../assets/testimonial/jeremie-parker.jpg";
 import PierreDePoulpiquet from "../../assets/testimonial/pierre-de-poulpiquet.jpg";
+import AdityavardhanAgrawal from "../../assets/testimonial/Adityavardhan-Agrawal.jpg";
 import { getTranslator } from "../../lib/i18n.ts";
 
 const __ = await getTranslator(Astro.currentLocale);
@@ -30,6 +31,17 @@ const __ = await getTranslator(Astro.currentLocale);
     {__("Quotes from our customers")}
   </p>
   <Scroll client:load>
+    <Testimonial
+      image={AdityavardhanAgrawal}
+      author="Adityavardhan Agrawal"
+      role={__("Co-founder at Morphik")}
+    >
+      {
+        __(
+          "The process was very straightforward, super fast, and best of all done for you with very clear and simple action items on our end.",
+        )
+      }
+    </Testimonial>
     <Testimonial
       image={PierreDePoulpiquet}
       author="Pierre de Poulpiquet"
