@@ -2,43 +2,148 @@
 import clsx from "clsx";
 import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/antoine-bourchardy.png";
+import BryanPortrait from "../../assets/bryan_firmin.svg";
 import { getTranslator } from "../../lib/i18n.ts";
 const __ = await getTranslator(Astro.currentLocale);
 
 interface Props {
   class?: string;
+  author?: string;
 }
 
-const props = Astro.props;
+const { class: className, author } = Astro.props;
+
+const showBoth = !author;
+const isAntoine = author === "Antoine Bouchardy";
+const isBryan = author === "Bryan Frimin";
 ---
 
-<div
-  class={clsx(
-    "flex flex-col gap-8 sm:gap-10 @sm:flex-row @sm:items-center",
-    props.class,
-  )}
->
-  <div class="flex flex-col gap-2">
-    <div class="text-xs font-medium">{__("Written by")} Antoine Bouchardy</div>
-    <div class="text-muted-foreground text-xs">
-      <a
-        href="https://www.linkedin.com/in/antoinebouchardy/"
-        class="text-success">Antoine Bouchardy</a
-      >
-      {
-        __(
-          "is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he’s not building Probo, you’ll find him cycling or tinkering with open-source projects.",
-        )
-      }
-    </div>
-  </div>
+{
+  showBoth && (
+    <div class={clsx("flex flex-col gap-8 sm:gap-10", className)}>
+      <div class="text-xs font-medium">
+        {__("Written by")} Antoine Bouchardy and Bryan Frimin
+      </div>
 
-  <Image
-    densities={[1, 2]}
-    src={AntoinePortrait}
-    alt="Portrait Antoine Bouchardy"
-    class="mx-auto block sm:mx-0 @sm:size-25"
-    width={164}
-    height={164}
-  />
-</div>
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+        <div class="flex flex-col gap-2">
+          <div class="text-muted-foreground text-xs">
+            <a
+              href="https://www.linkedin.com/in/antoinebouchardy/"
+              class="text-success"
+            >
+              Antoine Bouchardy
+            </a>
+            {__(
+              "is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he's not building Probo, you'll find him cycling or tinkering with open-source projects.",
+            )}
+          </div>
+        </div>
+
+        <Image
+          densities={[1, 2]}
+          src={AntoinePortrait}
+          alt="Portrait Antoine Bouchardy"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      </div>
+
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+        <div class="flex flex-col gap-2">
+          <div class="text-muted-foreground text-xs">
+            <a
+              href="https://www.linkedin.com/in/gearnode/"
+              class="text-success"
+            >
+              Bryan Frimin
+            </a>
+            {__(
+              "is the CTO and co-founder. Experienced with cyber-security, he's now building the open compliance tool which adapts to your actual stack.",
+            )}
+          </div>
+        </div>
+
+        <Image
+          src={BryanPortrait}
+          alt="Portrait Bryan Frimin"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      </div>
+    </div>
+  )
+}
+
+{
+  (isAntoine || isBryan) && (
+    <div
+      class={clsx(
+        "flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10",
+        className,
+      )}
+    >
+      <div class="flex flex-col gap-2">
+        {isAntoine && (
+          <>
+            <div class="text-xs font-medium">
+              {__("Written by")} Antoine Bouchardy
+            </div>
+            <div class="text-muted-foreground text-xs">
+              <a
+                href="https://www.linkedin.com/in/antoinebouchardy/"
+                class="text-success"
+              >
+                Antoine Bouchardy
+              </a>
+              {__(
+                "is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he's not building Probo, you'll find him cycling or tinkering with open-source projects.",
+              )}
+            </div>
+          </>
+        )}
+        {isBryan && (
+          <>
+            <div class="text-xs font-medium">
+              {__("Written by")} Bryan Frimin
+            </div>
+            <div class="text-muted-foreground text-xs">
+              <a
+                href="https://www.linkedin.com/in/gearnode/"
+                class="text-success"
+              >
+                Bryan Frimin
+              </a>
+              {__(
+                "is the CTO and co-founder. Experienced with cyber-security, he's now building the open compliance tool which adapts to your actual stack.",
+              )}
+            </div>
+          </>
+        )}
+      </div>
+
+      {isAntoine && (
+        <Image
+          densities={[1, 2]}
+          src={AntoinePortrait}
+          alt="Portrait Antoine Bouchardy"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      )}
+
+      {isBryan && (
+        <Image
+          src={BryanPortrait}
+          alt="Portrait Bryan Frimin"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      )}
+    </div>
+  )
+}

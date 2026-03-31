@@ -128,7 +128,7 @@ const faqSchema = post.data.faqs
       title={post.data.title}
       class="my-10 sm:mt-20"
     />
-    <WrittenBy class="my-10 sm:mb-20" />
+    <WrittenBy class="my-10 sm:mb-20" author={post.data.author.name} />
     <Newsletter />
   </main>
 </Layout>
