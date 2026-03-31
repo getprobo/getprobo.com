@@ -1,0 +1,45 @@
+---
+title: "Stripe Security 101: Configure Your Account the Right Way"
+date: 2026-03-31
+excerpt: "Stripe is probably the most used payment platform in SaaS. Three settings, thirty minutes of work, and your payment platform stops being a security gap."
+author:
+  name: "Bryan Frimin"
+---
+
+Stripe is probably the most used payment platform in SaaS. And yet most companies I talk to haven't touched their Stripe security settings. The dashboard login is password-only, access is managed by hand, and money just sits there.
+
+If you're going through SOC 2 or ISO 27001, everything below maps directly to controls your auditor will check. But honestly, you should do this regardless.
+
+## Enforce 2FA
+
+Stripe lets you require two-step authentication for all team members. It's in **Team and Security**. But it's off by default, which means right now your finance team might be logging into your payment platform with just a password.
+
+That's wild. Go turn it on. Use passkeys or security keys if you can, SMS if you must. Takes thirty seconds.
+
+For SOC 2, strong authentication on systems handling customer data is a requirement (CC6.1). Your payment platform counts.
+
+## Set up SAML and SCIM
+
+Most SaaS products charge extra for SAML and SCIM. It's the classic "enterprise tax." Stripe gives it away for free. SSO is available to all users, and you can plug in Google Workspace, Okta, Entra ID, whatever speaks SAML.
+
+Take advantage of it. Without SSO and SCIM, you're managing Stripe access by hand. Someone joins, you add them. Someone leaves, you hopefully remember to remove them. In practice, you don't. They still have access to your payment dashboard weeks later.
+
+With SCIM, your identity provider handles it. Remove someone from Google Workspace, they're instantly locked out of Stripe. Logged out, access revoked. You can also map roles through SCIM group sync, so permissions stay consistent without anyone touching the Stripe dashboard.
+
+The result: onboarding and offboarding take zero effort on the Stripe side, your access reviews take minutes instead of hours, and your security posture on a critical financial tool goes up significantly. For SOC 2 or ISO 27001, this gives you a clean audit trail for free.
+
+## Move money off the platform
+
+In 2022, PayPal froze $1.3M belonging to Flipper Devices. No real explanation. The company spent months submitting documents that kept getting rejected for different reasons. PayPal eventually terminated the account permanently. Flipper had to lawyer up and threaten arbitration to get the money back.
+
+This is not rare. Payment providers freeze accounts. And when they do, your money is stuck until you sort it out, which can take months.
+
+The simple fix: don't leave money on the platform. Stripe lets you schedule automatic payouts (daily, weekly, monthly) under **Bank accounts and scheduling**. No extra cost. Set it to daily or weekly so your Stripe balance stays as low as possible. The money lands in your bank account, where your payment processor can't touch it.
+
+SOC 2 expects you to manage vendor financial risk (CC9.1, CC9.2). That means identifying risks from third parties and having controls in place for business disruptions. A payment processor freezing your funds is textbook CC9.2. Scheduled payouts that keep your exposure low is the control.
+
+## Wrapping up
+
+Three settings: 2FA enforcement, SAML/SCIM, automatic payouts. Thirty minutes of work total. All three map to SOC 2 criteria: logical access (CC6.1), risk mitigation (CC9.1/CC9.2). And they're just good practice anyway.
+
+Stripe holds your money. Treat it like it matters.
