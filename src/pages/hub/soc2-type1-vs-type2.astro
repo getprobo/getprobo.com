@@ -1,0 +1,2203 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import FrameworkBadge from "../../components/FrameworkBadge.svelte";
+import { getTranslator } from "../../lib/i18n.ts";
+const __ = await getTranslator(Astro.currentLocale);
+
+const tableOfContents = [
+  { id: "introduction", label: "Introduction" },
+  { id: "type1-explained", label: "SOC 2 Type 1 Explained" },
+  { id: "type2-explained", label: "SOC 2 Type 2 Explained" },
+  { id: "side-by-side", label: "Side-by-Side Comparison" },
+  { id: "which-do-you-need", label: "Which Type Do You Need?" },
+  { id: "strategic-path", label: "Strategic Path: Type 1 First?" },
+  { id: "upgrading", label: "Upgrading Type 1 to Type 2" },
+  { id: "trust-service-criteria", label: "Trust Service Criteria" },
+  { id: "real-scenarios", label: "Real Scenarios" },
+  { id: "conclusion", label: "Conclusion" },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "SOC 2 Type 1 vs Type 2: Which Certification Do You Need?",
+  description:
+    "SOC 2 Type 1 vs Type 2 explained: Type 1 is point-in-time (3-6 months), Type 2 requires 6-12 month observation. Learn which you need and when to upgrade.",
+  author: {
+    "@type": "Organization",
+    name: "Probo",
+    url: "https://www.getprobo.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Probo",
+    url: "https://www.getprobo.com",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.getprobo.com/probo-logo.svg",
+    },
+  },
+  datePublished: "2026-04-07",
+  dateModified: new Date().toISOString().split("T")[0],
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": "https://www.getprobo.com/hub/soc2-type1-vs-type2",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is the difference between SOC 2 Type 1 and Type 2?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "SOC 2 Type 1 is a point-in-time assessment that evaluates whether your controls are properly designed on a specific date. SOC 2 Type 2 evaluates both design and operating effectiveness over a 3-12 month observation period, proving controls actually work consistently over time.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does SOC 2 Type 1 cost compared to Type 2?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "SOC 2 Type 1 typically costs $15,000-$40,000 and takes 3-6 months. SOC 2 Type 2 costs $30,000-$100,000 and requires 6-12 months minimum due to the observation period.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Should I start with SOC 2 Type 1 or go straight to Type 2?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Start with Type 1 if you need certification quickly for a specific deal, are early-stage selling to SMBs, or want to test compliance ROI. Go straight to Type 2 if you're selling to enterprise customers, operating in regulated industries like fintech or healthcare, or your competitors already have Type 2.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do enterprise customers accept SOC 2 Type 1?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Most enterprise customers require SOC 2 Type 2. Fortune 500 companies and large enterprises typically won't accept Type 1 as equivalent. Type 1 is more commonly accepted by mid-market companies and SMBs.",
+      },
+    },
+  ],
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.getprobo.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Hub",
+      item: "https://www.getprobo.com/hub",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "SOC 2 Type 1 vs Type 2",
+      item: "https://www.getprobo.com/hub/soc2-type1-vs-type2",
+    },
+  ],
+};
+---
+
+<Layout
+  title={__("SOC 2 Type 1 vs Type 2: Which Certification Do You Need?")}
+  description={__(
+    "SOC 2 Type 1 vs Type 2 explained: Type 1 is point-in-time (3-6 months), Type 2 requires 6-12 month observation. Learn which you need and when to upgrade.",
+  )}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <main class="container my-10 sm:my-20">
+    <!-- Header -->
+    <header class="mb-12 text-center sm:mb-16">
+      <div class="mb-4 flex items-center justify-center gap-4">
+        <h1
+          class="text-foreground text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
+        >
+          {__("SOC 2")}
+          <span class="highlight-text">{__("Type 1 vs Type 2")}</span>
+        </h1>
+        <div class="flex items-center gap-2">
+          <FrameworkBadge name="SOC2_TYPE1" class="size-12" client:visible />
+          <FrameworkBadge name="SOC2_TYPE2" class="size-12" client:visible />
+        </div>
+      </div>
+      <div
+        class="mb-6 inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-5 py-2.5 text-base text-gray-500 shadow-sm backdrop-blur-sm"
+      >
+        {__("Which Certification Do You Need?")}
+      </div>
+      <p
+        class="text-muted-foreground mx-auto max-w-[800px] text-lg leading-relaxed"
+      >
+        {
+          __(
+            "Type 1 is point-in-time (3-6 months, $15K-$40K). Type 2 requires 6-12 months of evidence ($30K-$100K). Learn which fits your business stage and when to upgrade.",
+          )
+        }
+      </p>
+    </header>
+
+    <!-- Content with TOC -->
+    <div class="flex flex-col gap-10 lg:flex-row lg:gap-16">
+      <!-- Table of Contents - Sidebar -->
+      <aside class="shrink-0 lg:w-56">
+        <nav class="lg:sticky lg:top-24">
+          <div class="flex flex-col gap-2">
+            {
+              tableOfContents.map((item) => (
+                <button
+                  type="button"
+                  data-section={item.id}
+                  class="toc-link cursor-pointer border-none bg-transparent p-0 text-left text-sm leading-5 text-[#6b716a] transition-colors hover:text-[#141e12]"
+                >
+                  {item.label}
+                </button>
+              ))
+            }
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <article class="max-w-[720px] flex-1">
+        <!-- Introduction -->
+        <section id="introduction" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("The SOC 2 Decision That Impacts Your Timeline and Budget")}
+          </h2>
+          <div class="text-muted-foreground space-y-4 leading-relaxed">
+            <p>
+              {
+                __(
+                  "You're ready to pursue SOC 2 certification. Your enterprise prospects are asking for it, your security roadmap demands it, and your competitors already have it. But here's the decision that will determine whether you spend $15,000 or $100,000, and whether you're certified in 3 months or 12: Type 1 or Type 2?",
+                )
+              }
+            </p>
+            <p>
+              {
+                __(
+                  "Most founders discover this distinction far too late in the process—often after signing with an auditor or compliance platform. The difference isn't just semantic. Type 1 is a point-in-time snapshot that proves your controls are designed correctly on a specific date. Type 2 requires 3-12 months of evidence proving those controls actually work over time. The wrong choice can double your costs, delay critical deals, or leave you scrambling to upgrade within months.",
+                )
+              }
+            </p>
+            <p>
+              {
+                __(
+                  "This guide eliminates the confusion. You'll understand exactly what each certification type measures, when each is appropriate, and how to make the strategic decision that aligns with your business stage, customer requirements, and budget reality.",
+                )
+              }
+            </p>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Type 1 Explained -->
+        <section id="type1-explained" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("SOC 2 Type 1 Explained: Point-in-Time Assessment")}
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>
+              {
+                __(
+                  'Think of SOC 2 Type 1 as a professional security inspection. An auditor examines your security controls, policies, and procedures on a specific date and confirms: "Yes, these controls are properly designed to meet the Trust Service Criteria." No long observation period, no months of evidence collection—just a thorough assessment of whether your security framework is built correctly.',
+                )
+              }
+            </p>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {
+                  __(
+                    "What Type 1 Actually Measures: Design Effectiveness at a Specific Date",
+                  )
+                }
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Type 1 audits evaluate the design of your controls, not their operational effectiveness. Your auditor reviews:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Written policies and procedures for security, access management, and incident response",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{__("System configurations and infrastructure architecture")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Access control lists and permission structures")}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{__("Vendor management and risk assessment processes")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Change management procedures")}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Backup and disaster recovery plans")}</span>
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    'The auditor interviews your team, examines documentation, and takes screenshots of configurations. They\'re asking: "If these controls were operating as designed, would they effectively address the relevant risks?" The audit occurs over a compressed timeframe, typically 2-4 weeks of active auditor engagement.',
+                  )
+                }
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Typical Timeline: 3-6 Months")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Type 1 follows a predictable path, but your preparation level determines how fast you move:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Months 1-2:")}</strong
+                    >
+                    {
+                      __(
+                        "Preparation phase—implement required controls, document policies, configure monitoring tools",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">{__("Month 3:")}</strong>
+                    {__("Readiness assessment (optional but recommended)")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Months 3-4:")}</strong
+                    >
+                    {__("Active audit period with auditor engagement")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Weeks 5-6:")}</strong
+                    >
+                    {__("Report drafting, management responses, and finalization")}</span
+                  >
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "Well-prepared companies with existing security programs can compress this to 3 months. Organizations starting from scratch typically need 4-6 months. The key advantage: no waiting period for evidence accumulation.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Average Cost: $15,000-$40,000")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Type 1 audit costs vary based on your organization's complexity:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("$15,000-$25,000:")}</strong
+                    >
+                    {
+                      __(
+                        "Small SaaS companies with simple infrastructure (single application, under 20 employees, limited integrations)",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("$25,000-$40,000:")}</strong
+                    >
+                    {
+                      __(
+                        "Mid-sized companies with moderate complexity (multiple applications, 20-50 employees, several third-party integrations)",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">{__("$40,000+:")}</strong>
+                    {
+                      __(
+                        "Complex environments with multiple systems, subsidiaries, or extensive scope",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "These figures represent auditor fees only. Factor in additional costs for compliance platforms ($1,000-$3,000/month), penetration testing ($5,000-$15,000), and internal labor. For a complete breakdown, see our",
+                  )
+                }
+                <a href="/hub/soc2#cost" class="text-[#5d770d] hover:underline"
+                  >{__("SOC 2 cost guide")}</a
+                >.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("What's Included in the Audit Report")}
+              </h3>
+              <p class="mb-3">{__("Your Type 1 report contains:")}</p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{__("Auditor's opinion on control design effectiveness")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{__("Management's description of your systems and controls")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{__("Detailed listing of controls tested and results")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Trust Service Criteria addressed (Security plus any optional criteria)",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{__("Any exceptions or qualifications noted by the auditor")}</span
+                  >
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "The report is typically 40-80 pages and can be shared with customers under NDA. It's valid indefinitely from a technical standpoint, but most customers consider Type 1 reports stale after 12 months.",
+                  )
+                }
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Type 2 Explained -->
+        <section id="type2-explained" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("SOC 2 Type 2 Explained: Operating Effectiveness Over Time")}
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>
+              {
+                __(
+                  'Type 2 takes everything from Type 1 and adds the critical question: "Do these controls actually work consistently over time?" Instead of a single-day snapshot, Type 2 requires an observation period where auditors collect evidence proving your controls operated effectively throughout a defined timeframe.',
+                )
+              }
+            </p>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {
+                  __(
+                    "What Type 2 Actually Measures: Controls Operating Effectively for 3-12 Months",
+                  )
+                }
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Type 2 audits evaluate operating effectiveness—the proof that your controls work as intended, consistently, over months. Auditors examine:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Access review logs showing quarterly user access recertifications",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Change management tickets demonstrating approval workflows for all production changes",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Vulnerability scan results from every month of the audit period",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Security awareness training completion records for all employees",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Incident response logs and resolution documentation",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{__("Backup restoration tests performed throughout the period")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Vendor security reviews conducted on schedule")}</span>
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "The auditor selects samples from across the entire observation period. If your control requires monthly vulnerability scans, they'll verify scans occurred every month. One missing month? That's an exception in your report.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Typical Timeline: 6-12 Months Minimum")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "The Type 2 timeline has a non-negotiable component: the observation period itself.",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Minimum observation period:")}</strong
+                    >
+                    {__("3 months (though 6 months is increasingly standard)")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Typical observation period:")}</strong
+                    >
+                    {__("6-12 months")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Preparation before observation starts:")}</strong
+                    >
+                    {__("1-3 months")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Audit fieldwork after observation ends:")}</strong
+                    >
+                    {__("4-6 weeks")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Total time from start to report:")}</strong
+                    >
+                    {__("6-12 months minimum")}</span
+                  >
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "Many companies begin their observation period while still implementing controls, using the first few months to work out operational kinks. However, any control failures during the observation period appear as exceptions in your final report.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Average Cost: $30,000-$100,000")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Type 2 costs reflect the expanded scope and auditor time:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("$30,000-$50,000:")}</strong
+                    >
+                    {__("Small companies with 3-6 month observation periods")}</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("$50,000-$75,000:")}</strong
+                    >
+                    {
+                      __(
+                        "Mid-sized companies with 6-12 month observation periods",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("$75,000-$100,000+:")}</strong
+                    >
+                    {
+                      __(
+                        "Complex environments, multiple locations, or 12-month observation periods",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "The longer observation period means more evidence to collect, more samples for auditors to test, and more auditor hours. Companies pursuing Type 2 also invest more in automation and compliance platforms to manage the ongoing evidence collection burden.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("What's Included in the Audit Report")}
+              </h3>
+              <p class="mb-3">
+                {__("Type 2 reports include everything from Type 1, plus:")}
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Opinion on operating effectiveness over the specified period",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Detailed test results for each control across multiple points in time",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Sample sizes and testing methodology")}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Exceptions noted (controls that failed or weren't consistently applied)",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Observation period start and end dates prominently displayed",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "Type 2 reports are typically 60-120 pages. The observation period dates are critical—a report covering January to June is already aging by Q1 of the following year. Most enterprises expect reports less than 6-9 months old.",
+                  )
+                }
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Side-by-Side Comparison -->
+        <section id="side-by-side" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("Side-by-Side Comparison: Type 1 vs Type 2")}
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Audit Scope and Depth Differences")}
+              </h3>
+              <p class="mb-4">
+                {
+                  __(
+                    "Both audit types assess the same controls and Trust Service Criteria—the difference is depth and duration:",
+                  )
+                }
+              </p>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm">
+                  <thead>
+                    <tr class="border-border-low border-b">
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Aspect")}</th
+                      >
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Type 1")}</th
+                      >
+                      <th class="text-foreground py-3 text-left font-semibold"
+                        >{__("Type 2")}</th
+                      >
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Control design")}</td
+                      >
+                      <td class="py-3 pr-4">{__("Thoroughly evaluated")}</td>
+                      <td class="py-3">{__("Thoroughly evaluated")}</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Control operation")}</td
+                      >
+                      <td class="py-3 pr-4">{__("Not tested")}</td>
+                      <td class="py-3"
+                        >{__("Extensively tested over time")}</td
+                      >
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Evidence required")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Current state documentation")}</td
+                      >
+                      <td class="py-3"
+                        >{__("Historical evidence across entire period")}</td
+                      >
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Sample size")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Single point in time")}</td
+                      >
+                      <td class="py-3"
+                        >{
+                          __(
+                            "Multiple samples across observation period",
+                          )
+                        }</td
+                      >
+                    </tr>
+                    <tr>
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Audit intensity")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Concentrated 2-4 week engagement")}</td
+                      >
+                      <td class="py-3"
+                        >{
+                          __(
+                            "Ongoing evidence collection + 4-6 week fieldwork",
+                          )
+                        }</td
+                      >
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Evidence Requirements and Collection Burden")}
+              </h3>
+              <p class="mb-3">
+                {__("The operational burden differs dramatically:")}
+              </p>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                  <p class="text-foreground mb-2 font-semibold">
+                    {__("Type 1 evidence collection:")}
+                  </p>
+                  <ul class="list-none space-y-1 text-sm">
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span>{__("Current access control lists")}</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span>{__("Screenshots of current configurations")}</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span>{__("Most recent vulnerability scan")}</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{__("Current vendor contracts and assessments")}</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span>{__("Policy documents as they exist today")}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                  <p class="text-foreground mb-2 font-semibold">
+                    {__("Type 2 evidence collection:")}
+                  </p>
+                  <ul class="list-none space-y-1 text-sm">
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{__("Monthly access reviews for 6-12 months")}</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{
+                          __(
+                            "Change management tickets across entire period",
+                          )
+                        }</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span>{__("Vulnerability scans from each month")}</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span>{__("Training completion records for all hires")}</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{
+                          __(
+                            "Incident logs spanning the entire observation period",
+                          )
+                        }</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <p class="mt-3">
+                {
+                  __(
+                    "The Type 2 evidence burden requires systematic processes and often automation. Manual evidence collection for Type 2 can consume 10-20 hours per week during the observation period.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Timeline and Cost Comparison")}
+              </h3>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm">
+                  <thead>
+                    <tr class="border-border-low border-b">
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Factor")}</th
+                      >
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("SOC 2 Type 1")}</th
+                      >
+                      <th class="text-foreground py-3 text-left font-semibold"
+                        >{__("SOC 2 Type 2")}</th
+                      >
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Minimum timeline")}</td
+                      >
+                      <td class="py-3 pr-4">3-6 {__("months")}</td>
+                      <td class="py-3">6-12 {__("months")}</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Observation period")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("None (point-in-time)")}</td
+                      >
+                      <td class="py-3">3-12 {__("months required")}</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Auditor fees")}</td
+                      >
+                      <td class="py-3 pr-4">$15,000-$40,000</td>
+                      <td class="py-3">$30,000-$100,000</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Evidence effort")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Low (2-4 weeks intensive)")}</td
+                      >
+                      <td class="py-3">{__("High (ongoing throughout period)")}</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Time to market")}</td
+                      >
+                      <td class="py-3 pr-4">{__("Faster")}</td>
+                      <td class="py-3">{__("Slower")}</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Customer acceptance")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Limited (especially enterprise)")}</td
+                      >
+                      <td class="py-3">{__("Broad acceptance")}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Report validity perception")}</td
+                      >
+                      <td class="py-3 pr-4">6-12 {__("months")}</td>
+                      <td class="py-3">12+ {__("months")}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Market Perception and Customer Acceptance")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Here's the uncomfortable truth: Type 1 reports face skepticism in many markets.",
+                  )
+                }
+              </p>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
+                  <p class="mb-2 font-semibold text-amber-800">
+                    {__("Type 1 perception challenges:")}
+                  </p>
+                  <ul class="list-none space-y-1 text-sm text-amber-700">
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{
+                          __(
+                            'Enterprise teams often view Type 1 as "incomplete"',
+                          )
+                        }</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{
+                          __(
+                            "Some RFPs explicitly require Type 2 or won't accept Type 1",
+                          )
+                        }</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{__("Minimal differentiation in mature SaaS markets")}</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="rounded-lg border border-green-200 bg-green-50 p-4"
+                >
+                  <p class="mb-2 font-semibold text-green-800">
+                    {__("Type 2 market advantages:")}
+                  </p>
+                  <ul class="list-none space-y-1 text-sm text-green-700">
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{
+                          __(
+                            "Universally accepted across industries and company sizes",
+                          )
+                        }</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{
+                          __("Demonstrates operational maturity and commitment")
+                        }</span
+                      >
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span>•</span>
+                      <span
+                        >{
+                          __(
+                            "Meets enterprise procurement requirements without qualification",
+                          )
+                        }</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Which Do You Need? -->
+        <section id="which-do-you-need" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("Which SOC 2 Type Do You Actually Need?")}
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>
+              {
+                __(
+                  "The answer depends on your customers, industry, and business stage—not what's theoretically better.",
+                )
+              }
+            </p>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {
+                  __(
+                    "When Type 1 Is Sufficient: Early-Stage, First Certification, Specific RFP Requirement",
+                  )
+                }
+              </h3>
+              <p class="mb-3">{__("Type 1 makes strategic sense when:")}</p>
+              <ul class="ml-0 list-none space-y-3">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{
+                        __(
+                          "You're closing a specific deal with a Type 1 requirement.",
+                        )
+                      }</strong
+                    >
+                    {
+                      __(
+                        "Some customers explicitly accept Type 1, particularly mid-market companies new to vendor security assessments. If your prospect confirms in writing that Type 1 satisfies their requirements, it's a valid path.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{
+                        __(
+                          "You're an early-stage company selling to SMBs.",
+                        )
+                      }</strong
+                    >
+                    {
+                      __(
+                        "Seed and Series A companies selling to small-to-medium businesses often find Type 1 sufficient. Your customers may lack sophisticated security teams to scrutinize the distinction, and the faster time-to-certification helps you compete.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__(
+                        "You need immediate certification for market entry.",
+                      )}</strong
+                    >
+                    {
+                      __(
+                        "Type 1 gets you in the game quickly. You can upgrade to Type 2 while selling, rather than waiting another 6-9 months to start.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("You're testing compliance investment ROI.")}</strong
+                    >
+                    {
+                      __(
+                        "For bootstrapped companies uncertain whether SOC 2 will unlock revenue, Type 1 provides a lower-risk test. If it doesn't generate expected returns, you've invested $20,000 instead of $60,000.",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {
+                  __(
+                    "When Type 2 Is Required: Enterprise Customers, Regulated Industries, Competitive Markets",
+                  )
+                }
+              </h3>
+              <p class="mb-3">{__("Type 2 is non-negotiable when:")}</p>
+              <ul class="ml-0 list-none space-y-3">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("You're selling to enterprise customers.")}</strong
+                    >
+                    {
+                      __(
+                        "Fortune 500 companies and large enterprises almost universally require Type 2. Their procurement and security teams won't accept Type 1 as equivalent, and presenting Type 1 may disqualify you from consideration.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("You operate in regulated industries.")}</strong
+                    >
+                    {
+                      __(
+                        "Financial services, healthcare, and insurance companies expect Type 2 as a baseline. Many won't even begin vendor security reviews without a current Type 2 report.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Your competitors have Type 2.")}</strong
+                    >
+                    {
+                      __(
+                        "In competitive deals, the vendor with Type 2 has a distinct advantage. Security becomes a differentiator, and Type 1 signals you're behind the maturity curve.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("You're raising Series B+ funding.")}</strong
+                    >
+                    {
+                      __(
+                        "Investors at later stages expect operational maturity. Type 2 demonstrates you've maintained security controls over time, not just implemented them for an audit.",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Industry Standards by Vertical")}
+              </h3>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm">
+                  <thead>
+                    <tr class="border-border-low border-b">
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Industry")}</th
+                      >
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Typical Requirement")}</th
+                      >
+                      <th class="text-foreground py-3 text-left font-semibold"
+                        >{__("Notes")}</th
+                      >
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("SaaS (General)")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Type 1 (early) → Type 2 (growth)")}</td
+                      >
+                      <td class="py-3"
+                        >{__("Depends on customer segment")}</td
+                      >
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Fintech")}</td
+                      >
+                      <td class="py-3 pr-4">{__("Type 2 required")}</td>
+                      <td class="py-3"
+                        >{__("12-month observation increasingly standard")}</td
+                      >
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Healthcare")}</td
+                      >
+                      <td class="py-3 pr-4">{__("Type 2 + HIPAA")}</td>
+                      <td class="py-3">{__("Privacy criteria typically required")}</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("HR Tech / Payroll")}</td
+                      >
+                      <td class="py-3 pr-4">{__("Type 2 required")}</td>
+                      <td class="py-3"
+                        >{__("Confidentiality criteria commonly required")}</td
+                      >
+                    </tr>
+                    <tr>
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Developer Tools")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Type 1 more acceptable")}</td
+                      >
+                      <td class="py-3"
+                        >{__("Type 2 expected for enterprise infra products")}</td
+                      >
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Strategic Path -->
+        <section id="strategic-path" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("The Strategic Path: Type 1 First or Skip to Type 2?")}
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>
+              {
+                __(
+                  "This is where strategy meets pragmatism. Both paths have merit depending on your situation.",
+                )
+              }
+            </p>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {
+                  __(
+                    "Pros of Starting with Type 1: Faster Time to Market, Learning Experience, Lower Initial Cost",
+                  )
+                }
+              </h3>
+              <ul class="ml-0 list-none space-y-3">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Speed to market:")}</strong
+                    >
+                    {
+                      __(
+                        "Type 1 gets you certified 3-6 months faster. If you have deals waiting on certification, this timeline advantage can generate $50,000-$500,000 in revenue that offsets the eventual upgrade cost.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Lower initial capital requirement:")}</strong
+                    >
+                    {
+                      __(
+                        "$20,000 is more palatable than $60,000 for early-stage companies managing runway. Type 1 can be funded from early customer revenue.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Learning experience:")}</strong
+                    >
+                    {
+                      __(
+                        "Type 1 provides a lower-stakes environment to understand audit processes, auditor expectations, and evidence requirements before committing to a lengthy observation period.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Iterative implementation:")}</strong
+                    >
+                    {
+                      __(
+                        "You can implement controls, get auditor feedback through Type 1, refine your approach, and then begin Type 2 observation with a more mature program—reducing the risk of exceptions.",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {
+                  __(
+                    "Cons of Type 1 First: Double Audit Fees, Compressed Upgrade Timeline, Customer Perception",
+                  )
+                }
+              </h3>
+              <ul class="ml-0 list-none space-y-3">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Double audit costs:")}</strong
+                    >
+                    {
+                      __(
+                        "Pursuing Type 1 then Type 2 means paying for two audits—potentially $45,000-$140,000 total versus $30,000-$100,000 for Type 2 alone.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Compressed upgrade timeline:")}</strong
+                    >
+                    {
+                      __(
+                        "Most Type 1 reports become stale within 12 months. If a customer accepts Type 1 to close a deal, they'll expect Type 2 at renewal. You're committing to upgrade within a year.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Perception challenges:")}</strong
+                    >
+                    {
+                      __(
+                        "Sophisticated customers may view Type 1 as a shortcut. In competitive situations, competitors with Type 2 can position you as less mature or committed to security.",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Delayed Type 2 benefits:")}</strong
+                    >
+                    {
+                      __(
+                        "While you're completing Type 1, you could have been accumulating observation period time for Type 2. Every month spent on Type 1 is a month that could count toward your Type 2 observation window.",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("When to Skip Type 1 and Go Straight to Type 2")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Bypass Type 1 entirely if any of these apply to your situation:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Your target customers explicitly require Type 2 and won't accept Type 1",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "You're in fintech, healthcare, or another regulated vertical",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "You have runway to absorb the higher cost and longer timeline",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Your existing security controls are already mature—less learning curve needed",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Your deal pipeline isn't time-sensitive enough to justify Type 1's cost",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="rounded-lg border border-blue-200 bg-blue-50 p-5"
+            >
+              <p class="text-foreground mb-3 font-semibold">
+                {__("Decision Framework")}
+              </p>
+              <div class="space-y-2 text-sm">
+                <p>
+                  <strong>{__("If:")}</strong>
+                  {
+                    __(
+                      "You have a deal closing within 6 months that will accept Type 1 → Start with Type 1",
+                    )
+                  }
+                </p>
+                <p>
+                  <strong>{__("If:")}</strong>
+                  {
+                    __(
+                      "Your target market is enterprise or regulated → Go straight to Type 2",
+                    )
+                  }
+                </p>
+                <p>
+                  <strong>{__("If:")}</strong>
+                  {
+                    __(
+                      "You're unsure about your market's requirements → Go straight to Type 2 (less risk)",
+                    )
+                  }
+                </p>
+                <p>
+                  <strong>{__("If:")}</strong>
+                  {
+                    __(
+                      "You're testing whether SOC 2 generates ROI → Type 1 is a lower-risk test",
+                    )
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Upgrading -->
+        <section id="upgrading" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("Upgrading from Type 1 to Type 2: What to Expect")}
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>
+              {
+                __(
+                  "If you've completed Type 1 and are ready to pursue Type 2, the process is more streamlined than starting fresh—but there are important timing and cost considerations.",
+                )
+              }
+            </p>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Timing Your Type 2 Audit After Type 1")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "The ideal approach is to begin your Type 2 observation period immediately after your Type 1 audit closes. This means:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Your Type 1 audit date becomes the start of your Type 2 observation period",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "You can have a Type 2 report ready 6-9 months after your Type 1 report",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "Many auditors offer discounts when you use them for both Type 1 and Type 2",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    >{
+                      __(
+                        "The system description from your Type 1 report becomes the baseline for Type 2",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+              <p class="mt-3">
+                {
+                  __(
+                    "Don't wait months after your Type 1 closes to start accumulating evidence—every delay extends your overall timeline to Type 2.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Additional Evidence and Controls Needed")}
+              </h3>
+              <p class="mb-3">
+                {
+                  __(
+                    "Moving from Type 1 to Type 2 primarily adds operational requirements, not new controls:",
+                  )
+                }
+              </p>
+              <ul class="ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Evidence management system:")}</strong
+                    >
+                    {
+                      __(
+                        "You need systematic processes to capture and organize evidence throughout the observation period",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Control operation consistency:")}</strong
+                    >
+                    {
+                      __(
+                        "Controls that existed on paper for Type 1 must now be demonstrably executed on schedule",
+                      )
+                    }</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground"
+                      >{__("Historical records:")}</strong
+                    >
+                    {
+                      __(
+                        "Access reviews, change tickets, training logs—all must be captured and retained throughout the observation period",
+                      )
+                    }</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Cost of Upgrade vs. Starting with Type 2")}
+              </h3>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm">
+                  <thead>
+                    <tr class="border-border-low border-b">
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Path")}</th
+                      >
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Total Audit Cost")}</th
+                      >
+                      <th class="text-foreground py-3 text-left font-semibold"
+                        >{__("Time to Type 2 Report")}</th
+                      >
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Type 1 then Type 2")}</td
+                      >
+                      <td class="py-3 pr-4">$45,000-$140,000</td>
+                      <td class="py-3">9-18 {__("months")}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Straight to Type 2")}</td
+                      >
+                      <td class="py-3 pr-4">$30,000-$100,000</td>
+                      <td class="py-3">6-12 {__("months")}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="mt-4">
+                {
+                  __(
+                    "The math is clear: if you know you'll need Type 2, going straight there is cheaper and faster. The only case where Type 1 first makes financial sense is when you need certification quickly to close deals that will fund the eventual Type 2 cost.",
+                  )
+                }
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Trust Service Criteria -->
+        <section id="trust-service-criteria" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("Trust Service Criteria: What Both Types Actually Audit")}
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>
+              {
+                __(
+                  "Whether you pursue Type 1 or Type 2, your audit will be evaluated against the same Trust Service Criteria (TSC). The difference is how thoroughly and over what period your controls are tested—not what's being tested.",
+                )
+              }
+            </p>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("Security (Required for All SOC 2 Audits)")}
+              </h3>
+              <p>
+                {
+                  __(
+                    "Security is the only mandatory criterion. It evaluates whether your systems are protected against unauthorized access, covering:",
+                  )
+                }
+              </p>
+              <ul class="mt-3 ml-0 list-none space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Access management and authentication (MFA, SSO)")}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Network and application security controls")}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Security incident response procedures")}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Change management processes")}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>{__("Risk assessment and monitoring activities")}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {
+                  __(
+                    "Availability, Processing Integrity, Confidentiality, Privacy (Optional)",
+                  )
+                }
+              </h3>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm">
+                  <thead>
+                    <tr class="border-border-low border-b">
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("Criterion")}</th
+                      >
+                      <th
+                        class="text-foreground py-3 pr-4 text-left font-semibold"
+                        >{__("When to Include")}</th
+                      >
+                      <th class="text-foreground py-3 text-left font-semibold"
+                        >{__("Common Industries")}</th
+                      >
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Availability")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("You commit to SLA uptime guarantees")}</td
+                      >
+                      <td class="py-3">{__("Infrastructure, SaaS platforms")}</td>
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Processing Integrity")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("Data processing accuracy is core to your service")}</td
+                      >
+                      <td class="py-3"
+                        >{__("Payment processors, analytics")}</td
+                      >
+                    </tr>
+                    <tr class="border-border-low border-b">
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Confidentiality")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("You handle sensitive non-personal business data")}</td
+                      >
+                      <td class="py-3">{__("HR tech, legal, finance")}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-foreground py-3 pr-4 font-medium"
+                        >{__("Privacy")}</td
+                      >
+                      <td class="py-3 pr-4"
+                        >{__("You collect and process personal data")}</td
+                      >
+                      <td class="py-3">{__("Healthcare, HR, any B2C data")}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-foreground mb-3 text-lg font-semibold">
+                {__("How Criteria Selection Affects Scope and Cost")}
+              </h3>
+              <p>
+                {
+                  __(
+                    "Each additional criterion adds roughly 15-30% to audit cost and scope. Most early-stage companies start with Security only. Adding Availability or Confidentiality is common for growth-stage companies. Healthcare companies typically include Privacy from day one. Choose criteria based on what your customers actually ask for—don't include criteria that don't apply to your business model.",
+                  )
+                }
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Real Scenarios -->
+        <section id="real-scenarios" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("Real Scenarios: 4 Companies and Their Type Decisions")}
+          </h2>
+          <div class="text-muted-foreground space-y-8 leading-relaxed">
+            <div class="rounded-lg border border-gray-200 bg-gray-50 p-6">
+              <h3 class="text-foreground mb-2 text-lg font-semibold">
+                {__("Scenario 1: Seed-Stage SaaS Selling to SMBs")}
+              </h3>
+              <p class="mb-3">
+                <strong>{__("Situation:")}</strong>
+                {
+                  __(
+                    "12-person SaaS startup with a $120K ARR pipeline on hold pending SOC 2 certification. Customers are SMBs with basic security questionnaires.",
+                  )
+                }
+              </p>
+              <p class="mb-3">
+                <strong>{__("Decision:")}</strong>
+                {__("Type 1 first.")}
+              </p>
+              <p>
+                <strong>{__("Outcome:")}</strong>
+                {
+                  __(
+                    "Completed Type 1 in 4 months for $22,000, closed $120K ARR pipeline, began Type 2 observation immediately. Type 2 report delivered 7 months later. Total cost: $65,000. Revenue unlocked during Type 1 period: $120,000+.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div class="rounded-lg border border-gray-200 bg-gray-50 p-6">
+              <h3 class="text-foreground mb-2 text-lg font-semibold">
+                {__("Scenario 2: Series B Fintech with Enterprise Pipeline")}
+              </h3>
+              <p class="mb-3">
+                <strong>{__("Situation:")}</strong>
+                {
+                  __(
+                    "45-person fintech with $2M+ enterprise deals requiring SOC 2 Type 2. Existing security program with modern tooling already in place.",
+                  )
+                }
+              </p>
+              <p class="mb-3">
+                <strong>{__("Decision:")}</strong>
+                {__("Straight to Type 2.")}
+              </p>
+              <p>
+                <strong>{__("Outcome:")}</strong>
+                {
+                  __(
+                    "6-month observation period with a compliance automation platform handling evidence collection. Type 2 report in 9 months for $55,000 total. All enterprise deals required Type 2—Type 1 would have provided zero value for their specific market.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div class="rounded-lg border border-gray-200 bg-gray-50 p-6">
+              <h3 class="text-foreground mb-2 text-lg font-semibold">
+                {__("Scenario 3: Healthcare Startup")}
+              </h3>
+              <p class="mb-3">
+                <strong>{__("Situation:")}</strong>
+                {
+                  __(
+                    "20-person healthtech startup selling patient data management tools to hospital systems. HIPAA compliance required alongside SOC 2.",
+                  )
+                }
+              </p>
+              <p class="mb-3">
+                <strong>{__("Decision:")}</strong>
+                {__("Type 2 + HIPAA from day one.")}
+              </p>
+              <p>
+                <strong>{__("Outcome:")}</strong>
+                {
+                  __(
+                    "No healthcare customer would accept Type 1. Combined SOC 2 Type 2 (Security + Privacy criteria) and HIPAA compliance audit reduced total cost vs. pursuing separately. 10-month timeline, $80,000 total investment. First hospital deal ($500K contract) closed within 30 days of report delivery.",
+                  )
+                }
+              </p>
+            </div>
+
+            <div class="rounded-lg border border-gray-200 bg-gray-50 p-6">
+              <h3 class="text-foreground mb-2 text-lg font-semibold">
+                {__("Scenario 4: Bootstrapped Company")}
+              </h3>
+              <p class="mb-3">
+                <strong>{__("Situation:")}</strong>
+                {
+                  __(
+                    "Bootstrapped 8-person SaaS with one prospect requiring SOC 2 to sign a $60K annual contract. Limited runway to fund compliance.",
+                  )
+                }
+              </p>
+              <p class="mb-3">
+                <strong>{__("Decision:")}</strong>
+                {__("Type 1 to win the deal, Type 2 commitment within 6 months.")}
+              </p>
+              <p>
+                <strong>{__("Outcome:")}</strong>
+                {
+                  __(
+                    "Type 1 completed in 3.5 months for $18,000. Closed $60K deal immediately. Used deal revenue to fund Type 2 observation, which began the day Type 1 closed. Delivered Type 2 report 7 months after starting—before the first contract renewal. Customer upgraded contract to $90K at renewal after seeing Type 2 report.",
+                  )
+                }
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- Conclusion -->
+        <section id="conclusion" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            {__("Making the Right Certification Choice for Your Business Stage")}
+          </h2>
+          <div class="text-muted-foreground space-y-4 leading-relaxed">
+            <p>
+              {
+                __(
+                  "The Type 1 vs Type 2 decision isn't about which certification is better—it's about which is right for your specific business stage, customer requirements, and financial constraints.",
+                )
+              }
+            </p>
+            <p>
+              {
+                __(
+                  "If your customers will accept Type 1 and you need certification quickly to close deals or test compliance ROI, Type 1 is a legitimate strategic choice. Start your Type 2 observation period the day your Type 1 closes, and you'll have a Type 2 report within 7-9 months total.",
+                )
+              }
+            </p>
+            <p>
+              {
+                __(
+                  "If your target market is enterprise, regulated, or competitive—go straight to Type 2. You'll save money, get there faster, and avoid the perception challenges that come with presenting Type 1 to sophisticated buyers.",
+                )
+              }
+            </p>
+            <p>
+              {
+                __(
+                  "Whatever path you choose, the key is making the decision deliberately—with clear understanding of the trade-offs—rather than defaulting to Type 1 because it's faster without considering whether it will actually satisfy your customers.",
+                )
+              }
+            </p>
+          </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section
+          class="rounded-2xl bg-gradient-to-br from-[#e4f7c7] to-[#d0e8b3] p-10 sm:p-12"
+        >
+          <div class="text-center">
+            <h3
+              class="mb-4 text-2xl font-semibold text-[#141e12] sm:text-[1.75rem]"
+            >
+              {__("Not Sure Which SOC 2 Type You Need?")}
+            </h3>
+            <p class="mx-auto mb-8 max-w-[500px] text-[#3d4a38]">
+              {
+                __(
+                  "Talk to a compliance expert. In 30 minutes, we'll analyze your customer requirements, business stage, and budget to give you a clear recommendation.",
+                )
+              }
+            </p>
+            <a
+              href="/contact"
+              class="group inline-flex items-center gap-2 rounded-full bg-[#141e12] px-6 py-3.5 font-medium shadow-lg transition-all hover:gap-3 hover:bg-[#1f2e1a] hover:shadow-xl"
+              style="color: white;"
+            >
+              {__("Talk to a compliance expert")}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="transition-transform group-hover:translate-x-0.5"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .toc-link.active {
+    color: #5d770d;
+    font-weight: 500;
+  }
+  .highlight-text {
+    background: linear-gradient(
+      180deg,
+      transparent 65%,
+      #f0ff3c 65%,
+      #f0ff3c 85%,
+      transparent 85%
+    );
+    display: inline;
+  }
+</style>
+
+<script>
+  const sectionIds = [
+    "introduction",
+    "type1-explained",
+    "type2-explained",
+    "side-by-side",
+    "which-do-you-need",
+    "strategic-path",
+    "upgrading",
+    "trust-service-criteria",
+    "real-scenarios",
+    "conclusion",
+  ];
+
+  const tocLinks = document.querySelectorAll(".toc-link");
+
+  function scrollToSection(id: string) {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const elementPosition = element.offsetTop - offset;
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
+    }
+  }
+
+  function handleScroll() {
+    const sections = sectionIds.map((id) => document.getElementById(id));
+    const scrollPosition = window.scrollY + 200;
+
+    let activeId = sectionIds[0];
+
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = sections[i];
+      if (section && section.offsetTop <= scrollPosition) {
+        activeId = sectionIds[i];
+        break;
+      }
+    }
+
+    tocLinks.forEach((link) => {
+      const linkSection = link.getAttribute("data-section");
+      if (linkSection === activeId) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  }
+
+  tocLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const sectionId = link.getAttribute("data-section");
+      if (sectionId) {
+        scrollToSection(sectionId);
+      }
+    });
+  });
+
+  window.addEventListener("scroll", handleScroll);
+  handleScroll();
+</script>
