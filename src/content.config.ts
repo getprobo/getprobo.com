@@ -49,9 +49,18 @@ const changelog = defineCollection({
   }),
 });
 
+const jobs = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/jobs" }),
+  schema: z.object({
+    title: z.string(),
+    location: z.string(),
+    type: z.string(),
+  }),
+});
+
 const docs = defineCollection({
   loader: docsLoader(),
   schema: docsSchema(),
 });
 
-export const collections = { blog, stories, docs, changelog };
+export const collections = { blog, stories, docs, changelog, jobs };

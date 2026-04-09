@@ -1,0 +1,57 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Prose from "../../components/Prose.astro";
+import { getTranslator } from "../../lib/i18n.ts";
+
+const __ = await getTranslator(Astro.currentLocale);
+
+export async function getStaticPaths() {
+  const jobs = await getCollection("jobs");
+  return jobs.map((job) => ({
+    params: { id: job.id },
+    props: { job },
+  }));
+}
+
+const { job } = Astro.props;
+const { Content } = await render(job);
+---
+
+<Layout
+  title={`${job.data.title} - ${__("Probo Careers")}`}
+  description={`${__("Join Probo as a")} ${job.data.title}. ${job.data.location} · ${job.data.type}`}
+>
+  <main>
+    <article class="mx-auto my-10 max-w-[720px] px-5 sm:mt-20 sm:mb-30">
+      <a
+        href="/careers"
+        class="text-muted-foreground hover:text-foreground animate-slide-in mb-8 inline-flex items-center gap-1 text-sm transition-colors"
+      >
+        ← {__("Back to careers")}
+      </a>
+
+      <header class="animate-slide-in animation-delay-100 mb-10">
+        <h1 class="text-h2 mb-3 font-medium">
+          {job.data.title}
+        </h1>
+        <p class="text-muted-foreground">
+          {job.data.location} · {job.data.type}
+        </p>
+      </header>
+
+      <Prose class="animate-slide-in animation-delay-200">
+        <Content />
+      </Prose>
+
+      <div class="animate-slide-in animation-delay-300 mt-12 text-center">
+        <a
+          href={`mailto:hello@getprobo.com?subject=${job.data.title} Application`}
+          class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
+        >
+          {__("Apply for this job")}
+        </a>
+      </div>
+    </article>
+  </main>
+</Layout>

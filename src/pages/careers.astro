@@ -1,15 +1,11 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { getTranslator } from "../lib/i18n.ts";
 
 const __ = await getTranslator(Astro.currentLocale);
 
-const positions: {
-  title: string;
-  type: string;
-  location: string;
-  href: string;
-}[] = [];
+const positions = await getCollection("jobs");
 ---
 
 <Layout
@@ -19,7 +15,7 @@ const positions: {
   )}
 >
   <main>
-    <section class="container my-10 sm:mt-20 sm:mb-30">
+    <section class="mx-auto my-10 max-w-[720px] px-5 sm:mt-20 sm:mb-30">
       <h1 class="text-h2 animate-slide-in mb-3 font-medium">
         {__("Careers")}
       </h1>
@@ -36,18 +32,16 @@ const positions: {
       {
         positions.length > 0 ? (
           <div class="animate-slide-in animation-delay-200 flex flex-col gap-4">
-            <h2 class="text-muted-foreground mb-1">
-              {__("Open positions")}
-            </h2>
+            <h2 class="text-muted-foreground mb-1">{__("Open positions")}</h2>
             {positions.map((position) => (
               <a
-                href={position.href}
+                href={`/careers/${position.id}`}
                 class="border-border-low hover:border-border-mid flex items-center justify-between rounded-lg border p-6 transition-colors"
               >
                 <div>
-                  <h3 class="font-medium">{position.title}</h3>
+                  <h3 class="font-medium">{position.data.title}</h3>
                   <p class="text-muted-foreground text-sm">
-                    {position.location} · {position.type}
+                    {position.data.location} · {position.data.type}
                   </p>
                 </div>
                 <span class="text-muted-foreground">→</span>
@@ -73,6 +67,24 @@ const positions: {
           </div>
         )
       }
+
+      <div
+        class="animate-slide-in animation-delay-300 border-border-low mt-10 rounded-lg border p-10 text-center"
+      >
+        <p class="text-muted-foreground mb-4">
+          {
+            __(
+              "Don't see the right role? We're always looking for talented people.",
+            )
+          }
+        </p>
+        <p>
+          {__("Send us your resume at")}{" "}
+          <a href="mailto:hello@getprobo.com" class="text-primary underline">
+            hello@getprobo.com
+          </a>
+        </p>
+      </div>
     </section>
   </main>
 </Layout>
