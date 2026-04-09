@@ -564,7 +564,13 @@ const breadcrumbSchema = {
                   __(
                     "ISO 27001 doesn't require penetration testing. For early-stage startups, it might not even be useful—your product is still evolving, and security testing makes more sense once it stabilizes.",
                   )
-                }
+                }{" "}
+                {__("We cover this in detail in")}
+                <a
+                  href="/blog/2025-10-23-do-you-need-pen-test-for-iso27001"
+                  class="text-[#5d770d] hover:underline"
+                  >{__("Do You Need a Pen Test for ISO 27001?")}</a
+                >
               </p>
               <p class="mb-4">
                 {__("If you do go for it, manual testing is worth it.")}
@@ -664,7 +670,14 @@ const breadcrumbSchema = {
                   __(
                     "for features most startups don't need. Open-source alternatives provide core compliance functionality—policy management, control tracking, evidence collection—at a fraction of the cost.",
                   )
-                }
+                }{" "}
+                {__("Read")}
+                <a
+                  href="/blog/2025-02-04-the-case-for-open-source-compliance"
+                  class="text-[#5d770d] hover:underline"
+                  >{__("the case for open-source compliance")}</a
+                >
+                {__("to understand why.")}
               </p>
             </div>
 
@@ -804,8 +817,10 @@ const breadcrumbSchema = {
                 class="text-[#5d770d] hover:underline">Probo</a
               >
               {__("is a great fit. You get a")}
-              <strong class="text-foreground"
-                >{__("hands-off compliance service")}</strong
+              <a
+                href="/blog/2025-10-17-what-is-hands-off-compliance"
+                class="font-semibold text-[#5d770d] hover:underline"
+                >{__("hands-off compliance service")}</a
               >
               {
                 __(
@@ -820,6 +835,19 @@ const breadcrumbSchema = {
                   "that keeps everything structured, auditable, and easy to maintain year after year.",
                 )
               }
+            </p>
+            <p class="mt-4">
+              {__("See how")}
+              <a
+                href="/stories/lucis-iso"
+                class="text-[#5d770d] hover:underline"
+                >{__("Lucis got ISO 27001 certified")}</a
+              >
+              {__("using Probo's managed approach, and explore our")}
+              <a href="/pricing" class="text-[#5d770d] hover:underline"
+                >{__("pricing")}</a
+              >
+              {__("to understand the cost.")}
             </p>
           </div>
         </section>

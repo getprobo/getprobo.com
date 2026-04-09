@@ -177,6 +177,18 @@ const breadcrumbSchema = {
                 )
               }
             </p>
+            <p>
+              {
+                __(
+                  "If you're just getting started, you may also want to read about",
+                )
+              }
+              <a
+                href="/blog/2025-09-11-what-are-the-steps-toward-compliance"
+                class="text-[#5d770d] hover:underline"
+                >{__("the steps toward compliance")}</a
+              >.
+            </p>
           </div>
         </section>
 
@@ -491,7 +503,20 @@ const breadcrumbSchema = {
                   __(
                     "This makes Probo suitable for organizations that are growing in complexity but still value speed and clarity.",
                   )
-                }
+                }{" "}
+                {__("Read more about")}
+                <a
+                  href="/blog/2025-02-04-the-case-for-open-source-compliance"
+                  class="text-[#5d770d] hover:underline"
+                  >{__("the case for open-source compliance")}</a
+                >
+                {__("and see how")}
+                <a
+                  href="/stories/vybe-soc2"
+                  class="text-[#5d770d] hover:underline"
+                  >{__("Vybe got SOC 2 certified")}</a
+                >
+                {__("using Probo.")}
               </p>
             </div>
           </div>
@@ -586,7 +611,13 @@ const breadcrumbSchema = {
                   __(
                     "Vanta works well when compliance is the primary goal. It becomes less suitable when organizations need to structure risk ownership and governance at scale.",
                   )
-                }
+                }{" "}
+                {__("We explore this further in")}
+                <a
+                  href="/blog/2025-02-17-why-a-one-size-fit-all-solution-like-vanta-is-not-ideal"
+                  class="text-[#5d770d] hover:underline"
+                  >{__("why a one-size-fits-all solution is not ideal")}</a
+                >.
               </p>
             </div>
           </div>

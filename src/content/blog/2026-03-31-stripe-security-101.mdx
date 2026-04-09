@@ -8,7 +8,7 @@ author:
 
 Stripe is probably the most used payment platform in SaaS. And yet most companies I talk to haven't touched their Stripe security settings. The dashboard login is password-only, access is managed by hand, and money just sits there.
 
-If you're going through SOC 2 or ISO 27001, everything below maps directly to controls your auditor will check. But honestly, you should do this regardless.
+If you're going through [SOC 2](/blog/2025-10-28-what-is-soc2) or ISO 27001, everything below maps directly to controls your auditor will check. But honestly, you should do this regardless.
 
 ## Enforce 2FA
 
@@ -26,7 +26,7 @@ Take advantage of it. Without SSO and SCIM, you're managing Stripe access by han
 
 With SCIM, your identity provider handles it. Remove someone from Google Workspace, they're instantly locked out of Stripe. Logged out, access revoked. You can also map roles through SCIM group sync, so permissions stay consistent without anyone touching the Stripe dashboard.
 
-The result: onboarding and offboarding take zero effort on the Stripe side, your access reviews take minutes instead of hours, and your security posture on a critical financial tool goes up significantly. For SOC 2 or ISO 27001, this gives you a clean audit trail for free.
+The result: onboarding and offboarding take zero effort on the Stripe side, your access reviews take minutes instead of hours, and your security posture on a critical financial tool goes up significantly. For SOC 2 or [ISO 27001](/blog/2025-10-12-how-long-for-iso27001), this gives you a clean audit trail for free.
 
 ## Move money off the platform
 
@@ -41,5 +41,7 @@ SOC 2 expects you to manage vendor financial risk (CC9.1, CC9.2). That means ide
 ## Wrapping up
 
 Three settings: 2FA enforcement, SAML/SCIM, automatic payouts. Thirty minutes of work total. All three map to SOC 2 criteria: logical access (CC6.1), risk mitigation (CC9.1/CC9.2). And they're just good practice anyway.
+
+While you're at it, make sure your [Google Workspace defaults are locked down too](/blog/2026-03-26-google-workspace-default-settings-are-insecure). And if you're wondering [how long SOC 2 takes](/blog/2025-10-09-how-long-for-soc2), we have a breakdown.
 
 Stripe holds your money. Treat it like it matters.
