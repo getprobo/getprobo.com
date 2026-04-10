@@ -79,7 +79,7 @@ const articleSchema = {
       <Image
         src={logo}
         height={23}
-        class="animate-perspective-in invert"
+        class={`animate-perspective-in${data.invertLogo ? " invert" : ""}`}
         alt={`Logo ${data.company.name}`}
       />
       <h1
