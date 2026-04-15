@@ -59,13 +59,15 @@
   })(document, window.posthog || []);
 
   posthog.init(apiKey, {
-    api_host: "https://us.posthog.com",
+    api_host: "https://p.getprobo.com",
+    ui_host: "https://us.posthog.com",
     cookieless_mode: true,
     person_profiles: "identified_only",
     capture_pageview: true,
     autocapture: true,
     capture_heatmaps: true,
     respect_dnt: true,
+    defaults: "2026-01-30",
     debug,
   });
 
