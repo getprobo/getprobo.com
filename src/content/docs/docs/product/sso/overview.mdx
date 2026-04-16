@@ -9,7 +9,7 @@ Probo supports SAML 2.0 Single Sign-On (SSO) integration with popular identity p
 
 Probo works with any SAML 2.0 compliant identity provider. We provide detailed setup guides for the most popular providers:
 
-import { LinkCard, CardGrid, Steps } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid, Steps } from "@astrojs/starlight/components";
 
 <CardGrid>
   <LinkCard
@@ -22,10 +22,15 @@ import { LinkCard, CardGrid, Steps } from '@astrojs/starlight/components';
     description="Set up SAML authentication with Okta"
     href="/docs/product/sso/okta"
   />
+  <LinkCard
+    title="Microsoft Entra ID"
+    description="Configure SSO with Microsoft Entra ID (Azure AD)"
+    href="/docs/product/sso/microsoft-entra-id"
+  />
 </CardGrid>
 
 **Other supported providers:**
-- Azure Active Directory
+
 - OneLogin
 - Auth0
 - ADFS (Active Directory Federation Services)
@@ -39,11 +44,11 @@ import { LinkCard, CardGrid, Steps } from '@astrojs/starlight/components';
 
 Before configuring your identity provider, you'll need these Probo service provider details:
 
-| Field | Value |
-|-------|-------|
-| **Entity ID** | `https://your-domain.com/auth/saml/metadata` |
-| **ACS URL** | `https://your-domain.com/auth/saml/acs` |
-| **Metadata URL** | `https://your-domain.com/auth/saml/metadata` |
+| Field            | Value                                                      |
+| ---------------- | ---------------------------------------------------------- |
+| **Entity ID**    | `https://your-domain.com/api/connect/v1/saml/2.0/metadata` |
+| **ACS URL**      | `https://your-domain.com/api/connect/v1/saml/2.0/consume`  |
+| **Metadata URL** | `https://your-domain.com/api/connect/v1/saml/2.0/metadata` |
 
 Replace `your-domain.com` with your actual Probo domain.
 
@@ -67,31 +72,30 @@ SAML_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----..."
 
 The SSO setup process involves:
 
-
 <Steps>
 
 1. **Configure your Identity Provider**
-   
+
    Set up Probo as a SAML application in your IdP (Okta, Google Workspace, etc.)
 
 2. **Configure Probo**
-   
+
    Add your IdP settings in Probo's SAML configuration
 
 3. **Update RelayState**
-   
+
    Set IdP RelayState to SAML config ID for IdP-initiated login support
 
 4. **Domain Verification**
-   
+
    Verify ownership of your email domain using DNS TXT records
 
 5. **Testing**
-   
+
    Test both SP-initiated and IdP-initiated login flows
 
 6. **Enforcement**
-   
+
    Choose enforcement policy (optional/required) and enable SSO
 
 </Steps>
@@ -107,32 +111,35 @@ For IdP-initiated flows to work properly, the **RelayState** must be set to your
 
 Probo supports three SAML enforcement policies:
 
-| Policy | SSO Available | Password Login | Description | Use Case |
-|--------|---------------|----------------|-------------|----------|
-| **OFF** | ❌ | ✅ | SSO is disabled, only password login | SSO not configured |
-| **OPTIONAL** | ✅ | ✅ | Users can choose SSO or password | Gradual SSO rollout |
-| **REQUIRED** | ✅ | ❌ | SSO mandatory for domain users | Full SSO enforcement |
+| Policy       | SSO Available | Password Login | Description                          | Use Case             |
+| ------------ | ------------- | -------------- | ------------------------------------ | -------------------- |
+| **OFF**      | ❌            | ✅             | SSO is disabled, only password login | SSO not configured   |
+| **OPTIONAL** | ✅            | ✅             | Users can choose SSO or password     | Gradual SSO rollout  |
+| **REQUIRED** | ✅            | ❌             | SSO mandatory for domain users       | Full SSO enforcement |
 
 ## Security Requirements
 
 ### Certificate Management
+
 - Use strong certificates (2048-bit RSA minimum)
 - Rotate certificates regularly
 - Store private keys securely
 
 ### Domain Verification
+
 - Always verify domain ownership before enabling SSO
 - Use DNS TXT records for verification
 - Monitor domain verification status
 
 ### Cookie Security
+
 The `auth.cookie.secure` setting **must be set to `true`** for SAML authentication to work properly:
 
 ```yaml
 probod:
   auth:
     cookie:
-      secure: true  # Required for SAML
+      secure: true # Required for SAML
 ```
 
 This is required because SAML uses `SameSite=None` cookies for cross-site POST requests from identity providers, and modern browsers require the `Secure` flag when using `SameSite=None`.
@@ -140,22 +147,27 @@ This is required because SAML uses `SameSite=None` cookies for cross-site POST r
 ## Troubleshooting
 
 ### Invalid SAML Response Error
+
 - **Cause**: Clock skew between Identity Provider and Probo servers
 - **Solution**: Ensure time synchronization (NTP) on both systems. Clock differences greater than 5 minutes can cause SAML failures.
 
 ### Signature Verification Failed Error
+
 - **Cause**: Incorrect certificate or certificate mismatch between IdP and Probo
 - **Solution**: Verify the IdP certificate is correctly copied without line breaks or formatting issues
 
 ### Unknown User Error
+
 - **Cause**: User doesn't exist in Probo and auto-signup is disabled
 - **Solution**: Either enable auto-signup in SAML configuration or create user accounts manually before SSO setup
 
 ### Domain Not Verified Error
+
 - **Cause**: Email domain hasn't been verified in Probo
 - **Solution**: Complete the domain verification process before enabling SSO - this is always the first required step
 
 ### RelayState/Start URL Issues
+
 - **Cause**: Incorrect RelayState configuration for IdP-initiated login
 - **Solution**: Ensure RelayState/Start URL is either empty or set to the exact SAML configuration ID from Probo
 
@@ -174,6 +186,11 @@ Choose your identity provider to get started:
     description="Complete Okta SAML configuration"
     href="/docs/product/sso/okta"
   />
+  <LinkCard
+    title="Microsoft Entra ID Setup"
+    description="Configure SAML with Microsoft Entra ID (Azure AD)"
+    href="/docs/product/sso/microsoft-entra-id"
+  />
 </CardGrid>
 
 ## Migration Guide
@@ -185,19 +202,16 @@ When transitioning from password-based authentication to SSO, follow this phased
 <Steps>
 
 1. **Phase 1: Set enforcement to `OPTIONAL`**
-   
    - Communicate SSO availability to users
    - Provide training and support documentation
    - Monitor adoption rates
 
 2. **Phase 2: User testing and feedback**
-   
    - Help users resolve SSO issues
    - Ensure all users can successfully authenticate
    - Address any attribute mapping issues
 
 3. **Phase 3: Full enforcement**
-   
    - Change enforcement to `REQUIRED`
    - Communicate the change to users
    - Monitor for any access issues
@@ -211,19 +225,19 @@ If issues arise, follow this rollback procedure:
 <Steps>
 
 1. **Change enforcement back to `OPTIONAL` or `OFF`**
-   
+
    Immediately restore user access using password authentication
 
 2. **Communicate alternative login methods to users**
-   
+
    Notify users about the temporary change and available login options
 
 3. **Investigate and resolve issues**
-   
+
    Debug configuration problems, test thoroughly, and prepare fixes
 
 4. **Re-enable when ready**
-   
+
    Return to SSO once all issues are resolved and tested
 
 </Steps>

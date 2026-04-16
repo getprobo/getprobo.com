@@ -16,10 +16,10 @@ This guide walks you through setting up SAML Single Sign-On between Okta and Pro
 
 Before configuring Okta, gather these Probo service provider details:
 
-| Field | Value |
-|-------|-------|
-| **ACS URL** | `https://your-probo-domain.com/auth/saml/acs` |
-| **Entity ID** | `https://your-probo-domain.com/auth/saml/metadata` |
+| Field         | Value                                                            |
+| ------------- | ---------------------------------------------------------------- |
+| **ACS URL**   | `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`  |
+| **Entity ID** | `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata` |
 
 Replace `your-probo-domain.com` with your actual Probo domain.
 
@@ -27,7 +27,7 @@ Replace `your-probo-domain.com` with your actual Probo domain.
 
 Before configuring anything else, you must verify domain ownership:
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
 <Steps>
 
@@ -59,34 +59,34 @@ import { Steps } from '@astrojs/starlight/components';
 5. Click **Next**
 6. Configure the general settings:
 
-   | Field | Value |
-   |-------|-------|
-   | **App name** | `Probo` |
-   | **App logo** | Upload Probo logo (optional) |
-   | **App visibility** | Check desired options |
+   | Field              | Value                        |
+   | ------------------ | ---------------------------- |
+   | **App name**       | `Probo`                      |
+   | **App logo**       | Upload Probo logo (optional) |
+   | **App visibility** | Check desired options        |
 
 7. Click **Next**
 8. Configure the SAML settings:
 
-   | Field | Value |
-   |-------|-------|
-   | **Single sign on URL** | `https://your-probo-domain.com/connect/saml/consume` |
-   | **Use this for Recipient URL and Destination URL** | ☑️ (Check this box) |
-   | **Audience URI (SP Entity ID)** | `https://your-probo-domain.com/connect/saml/metadata` |
-   | **Default Relay State** | `[SAML Configuration ID]` (optional - see note below) |
-   | **Name ID format** | `EmailAddress` |
-   | **Application username** | `Email` |
+   | Field                                              | Value                                                            |
+   | -------------------------------------------------- | ---------------------------------------------------------------- |
+   | **Single sign on URL**                             | `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`  |
+   | **Use this for Recipient URL and Destination URL** | ☑️ (Check this box)                                              |
+   | **Audience URI (SP Entity ID)**                    | `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata` |
+   | **Default Relay State**                            | `[SAML Configuration ID]` (optional - see note below)            |
+   | **Name ID format**                                 | `EmailAddress`                                                   |
+   | **Application username**                           | `Email`                                                          |
 
    **Important**: The **Default Relay State** is optional but if you want to support IdP-initiated login flows, it MUST be set to your exact SAML configuration ID (not a placeholder). If set incorrectly, SSO will not work. You'll get this ID after creating the SAML configuration in Probo. You can initially leave this empty and update it later with the exact configuration ID.
 
 9. Add the following attribute statements:
 
-   | Name | Name format | Value |
-   |------|-------------|-------|
-   | `email` | Unspecified | `user.email` |
-   | `firstName` | Unspecified | `user.firstName` |
-   | `lastName` | Unspecified | `user.lastName` |
-   | `role` | Unspecified | `user.role` (optional) |
+   | Name        | Name format | Value                  |
+   | ----------- | ----------- | ---------------------- |
+   | `email`     | Unspecified | `user.email`           |
+   | `firstName` | Unspecified | `user.firstName`       |
+   | `lastName`  | Unspecified | `user.lastName`        |
+   | `role`      | Unspecified | `user.role` (optional) |
 
 10. Click **Next**
 11. Select **I'm an Okta customer adding an internal app**
@@ -114,32 +114,32 @@ import { Steps } from '@astrojs/starlight/components';
 3. Click **Add SAML Configuration**
 4. Configure the basic settings:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **Email Domain** | `your-company.com` | Your organization's email domain |
-   | **Enforcement Policy** | `OPTIONAL` | Recommended for initial setup |
+   | Field                  | Value              | Notes                            |
+   | ---------------------- | ------------------ | -------------------------------- |
+   | **Email Domain**       | `your-company.com` | Your organization's email domain |
+   | **Enforcement Policy** | `OPTIONAL`         | Recommended for initial setup    |
 
 5. Configure the Identity Provider settings with values from Okta:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **IdP Entity ID** | `[Identity Provider Issuer]` | Copy from Okta setup |
-   | **IdP SSO URL** | `[Identity Provider Single Sign-On URL]` | Copy from Okta setup |
-   | **IdP Certificate** | `[X.509 Certificate]` | Copy from Okta setup |
+   | Field               | Value                                    | Notes                |
+   | ------------------- | ---------------------------------------- | -------------------- |
+   | **IdP Entity ID**   | `[Identity Provider Issuer]`             | Copy from Okta setup |
+   | **IdP SSO URL**     | `[Identity Provider Single Sign-On URL]` | Copy from Okta setup |
+   | **IdP Certificate** | `[X.509 Certificate]`                    | Copy from Okta setup |
 
 6. Configure the attribute mappings:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **Email Attribute** | `email` | Maps to user email |
+   | Field                    | Value       | Notes                   |
+   | ------------------------ | ----------- | ----------------------- |
+   | **Email Attribute**      | `email`     | Maps to user email      |
    | **First Name Attribute** | `firstName` | Maps to user first name |
-   | **Last Name Attribute** | `lastName` | Maps to user last name |
-   | **Role Attribute** | `role` | If configured in Okta |
+   | **Last Name Attribute**  | `lastName`  | Maps to user last name  |
+   | **Role Attribute**       | `role`      | If configured in Okta   |
 
 7. Configure user settings:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
+   | Field           | Value     | Notes                                             |
+   | --------------- | --------- | ------------------------------------------------- |
    | **Auto Signup** | `Enabled` | Allows new users to sign up automatically via SSO |
 
 8. Click **Save Configuration**
@@ -163,25 +163,30 @@ Return to Okta to enable IdP-initiated login:
 ## Troubleshooting
 
 ### "SAML assertion audience mismatch" Error
+
 - **Cause**: Audience URI mismatch between Okta and Probo
 - **Solution**: Ensure Audience URI in Okta exactly matches your Entity ID:
-  - Should be: `https://your-probo-domain.com/connect/saml/metadata`
+  - Should be: `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata`
 
 ### "User not assigned to application" Error
+
 - **Cause**: User not assigned to Probo app in Okta
 - **Solution**: Assign user to the application in Okta's Assignments tab
 
 ### Attributes Not Mapping
+
 - **Cause**: Incorrect attribute statement names in Okta
 - **Solution**: Verify attribute statement names match exactly: `email`, `firstName`, `lastName`
 
 ### "Invalid RelayState" Error
+
 - **Cause**: Incorrect Default Relay State configuration
 - **Solution**: Ensure Default Relay State is either empty or set to the exact SAML configuration ID from Probo
 
 ### Debugging Steps
 
 #### Check Okta System Log
+
 1. Go to Okta Admin Console → **Reports** → **System Log**
 2. Filter by application name (Probo)
 3. Look for authentication failures and error details

@@ -13,18 +13,18 @@ This guide walks you through setting up SAML Single Sign-On between Google Works
 - Access to your DNS settings for domain verification
 
 ## Prepare Probo Information
-   
+
 Before configuring Google Workspace, gather these Probo service provider details:
 
-| Field | Value |
-|-------|-------|
-| **ACS URL** | `https://your-probo-domain.com/auth/saml/acs` |
-| **Entity ID** | `https://your-probo-domain.com/auth/saml/metadata` |
-| **Start URL** | `https://your-probo-domain.com` (optional) |
+| Field         | Value                                                            |
+| ------------- | ---------------------------------------------------------------- |
+| **ACS URL**   | `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`  |
+| **Entity ID** | `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata` |
+| **Start URL** | `https://your-probo-domain.com` (optional)                       |
 
 Replace `your-probo-domain.com` with your actual Probo domain.
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
 ## Domain Verification
 
@@ -58,41 +58,42 @@ Before configuring anything else, you must verify domain ownership:
 3. Click **Add app** → **Add custom SAML app**
 4. Configure the app details:
 
-   | Field | Value |
-   |-------|-------|
-   | **App name** | `Probo` |
-   | **Description** | `Probo Compliance Management Platform` |
+   | Field           | Value                                                                                                       |
+   | --------------- | ----------------------------------------------------------------------------------------------------------- |
+   | **App name**    | `Probo`                                                                                                     |
+   | **Description** | `Probo Compliance Management Platform`                                                                      |
    | **Upload logo** | Download from [GitHub](https://github.com/getprobo/probo/blob/main/apps/console/public/logo.png) (optional) |
 
 5. Click **Continue**
 6. **Save the Google Identity Provider details** that appear (you'll need these for Probo configuration):
 
-   | Field | Example Value | Notes |
-   |-------|---------------|-------|
-   | **SSO URL** | `https://accounts.google.com/o/saml2/idp?idpid=XXXXXXXXX` | Copy this exact URL |
-   | **Entity ID** | `https://accounts.google.com/o/saml2?idpid=XXXXXXXXX` | Copy this exact URL |
-   | **Certificate** | X.509 Certificate text | Download the certificate or copy the X.509 certificate text |
+   | Field           | Example Value                                             | Notes                                                       |
+   | --------------- | --------------------------------------------------------- | ----------------------------------------------------------- |
+   | **SSO URL**     | `https://accounts.google.com/o/saml2/idp?idpid=XXXXXXXXX` | Copy this exact URL                                         |
+   | **Entity ID**   | `https://accounts.google.com/o/saml2?idpid=XXXXXXXXX`     | Copy this exact URL                                         |
+   | **Certificate** | X.509 Certificate text                                    | Download the certificate or copy the X.509 certificate text |
+
 7. Click **Continue**
 8. Configure the service provider details:
 
-   | Field | Value |
-   |-------|-------|
-   | **ACS URL** | `https://your-probo-domain.com/connect/saml/consume` |
-   | **Entity ID** | `https://your-probo-domain.com/connect/saml/metadata` |
-   | **Start URL** | `[SAML Configuration ID]` (optional - see note below) |
-   | **Name ID format** | `EMAIL` |
-   | **Name ID** | `Basic Information > Primary email` |
-   
+   | Field              | Value                                                            |
+   | ------------------ | ---------------------------------------------------------------- |
+   | **ACS URL**        | `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`  |
+   | **Entity ID**      | `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata` |
+   | **Start URL**      | `[SAML Configuration ID]` (optional - see note below)            |
+   | **Name ID format** | `EMAIL`                                                          |
+   | **Name ID**        | `Basic Information > Primary email`                              |
+
    **Important**: The **Start URL** is optional but if you want to support IdP-initiated login flows, it MUST be set to your exact SAML configuration ID (not a placeholder). If set incorrectly, SSO will not work. You'll get this ID after creating the SAML configuration in Probo.
 
 9. Click **Continue**
 10. Configure the attribute mappings:
 
-    | Google Directory attributes | App attributes |
-    |----------------------------|----------------|
-    | **Basic Information > Primary email** | `email` |
-    | **Basic Information > First name** | `firstName` |
-    | **Basic Information > Last name** | `lastName` |
+    | Google Directory attributes           | App attributes |
+    | ------------------------------------- | -------------- |
+    | **Basic Information > Primary email** | `email`        |
+    | **Basic Information > First name**    | `firstName`    |
+    | **Basic Information > Last name**     | `lastName`     |
 
 11. Click **Finish**
 12. In the app list, click on your **Probo** app
@@ -111,32 +112,32 @@ Before configuring anything else, you must verify domain ownership:
 3. Click **Add SAML Configuration**
 4. Configure the basic settings:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **Email Domain** | `your-company.com` | Your organization's email domain |
-   | **Enforcement Policy** | `OPTIONAL` | Recommended for initial setup |
+   | Field                  | Value              | Notes                            |
+   | ---------------------- | ------------------ | -------------------------------- |
+   | **Email Domain**       | `your-company.com` | Your organization's email domain |
+   | **Enforcement Policy** | `OPTIONAL`         | Recommended for initial setup    |
 
 5. Configure the Identity Provider settings with values from Google Workspace:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **IdP Entity ID** | `https://accounts.google.com/o/saml2?idpid=XXXXXXXXX` | Copy from Google Workspace setup |
-   | **IdP SSO URL** | `https://accounts.google.com/o/saml2/idp?idpid=XXXXXXXXX` | Copy from Google Workspace setup |
-   | **IdP Certificate** | `[X.509 Certificate text]` | Paste the certificate from Google |
+   | Field               | Value                                                     | Notes                             |
+   | ------------------- | --------------------------------------------------------- | --------------------------------- |
+   | **IdP Entity ID**   | `https://accounts.google.com/o/saml2?idpid=XXXXXXXXX`     | Copy from Google Workspace setup  |
+   | **IdP SSO URL**     | `https://accounts.google.com/o/saml2/idp?idpid=XXXXXXXXX` | Copy from Google Workspace setup  |
+   | **IdP Certificate** | `[X.509 Certificate text]`                                | Paste the certificate from Google |
 
 6. Configure the attribute mappings:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **Email Attribute** | `email` | Maps to user email |
-   | **First Name Attribute** | `firstName` | Maps to user first name |
-   | **Last Name Attribute** | `lastName` | Maps to user last name |
-   | **Role Attribute** | `[Leave empty]` | Unless you've configured custom attributes |
+   | Field                    | Value           | Notes                                      |
+   | ------------------------ | --------------- | ------------------------------------------ |
+   | **Email Attribute**      | `email`         | Maps to user email                         |
+   | **First Name Attribute** | `firstName`     | Maps to user first name                    |
+   | **Last Name Attribute**  | `lastName`      | Maps to user last name                     |
+   | **Role Attribute**       | `[Leave empty]` | Unless you've configured custom attributes |
 
 7. Configure user settings:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
+   | Field           | Value     | Notes                                             |
+   | --------------- | --------- | ------------------------------------------------- |
    | **Auto Signup** | `Enabled` | Allows new users to sign up automatically via SSO |
 
 8. Click **Save Configuration** (the configuration will be created but not yet enabled)
@@ -163,31 +164,37 @@ This enables IdP-initiated login flows, allowing users to click on Probo from th
 ## Troubleshooting
 
 ### "App isn't verified" Error
+
 - **Cause**: Google Workspace app not enabled for users
 - **Solution**: Enable the app for all users or specific organizational units in Google Admin Console
 
 ### "Access blocked" Error
+
 - **Cause**: User not in allowed organizational units
 - **Solution**: Check Google Workspace user access settings and ensure users are in the correct organizational units
 
 ### "Invalid SAML Response" Error
+
 - **Cause**: Incorrect ACS URL or Entity ID configuration
 - **Solution**: Verify URLs match exactly between Google Workspace and Probo:
-  - ACS URL: `https://your-probo-domain.com/connect/saml/consume`
-  - Entity ID: `https://your-probo-domain.com/connect/saml/metadata`
+  - ACS URL: `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`
+  - Entity ID: `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata`
 
 ### Attributes Not Mapping
+
 - **Cause**: Incorrect attribute names in Probo configuration
 - **Solution**: Use exact attribute names: `email`, `firstName`, `lastName`
 
 ### Debugging Steps
 
 #### Check Google Workspace Logs
+
 1. Go to Google Admin Console → **Reporting** → **Audit and investigation** → **SAML apps**
 2. Look for failed authentication attempts
 3. Check error messages and timestamps for debugging clues
 
 #### Verify Certificate Format
+
 Ensure the certificate is properly formatted without line breaks:
 
 ```
@@ -197,6 +204,7 @@ Ensure the certificate is properly formatted without line breaks:
 ```
 
 #### Test Metadata URL
+
 If using metadata URL, test it in a browser to ensure it returns valid XML:
 
 ```

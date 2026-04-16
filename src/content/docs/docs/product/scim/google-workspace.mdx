@@ -22,21 +22,21 @@ The Google Workspace Bridge connects to Google's Admin Directory API using OAuth
 
 ### Mapped Attributes
 
-| Google Workspace Field | SCIM Attribute |
-|----------------------|----------------|
-| Primary email | `userName`, `emails` |
-| Display name | `displayName` |
-| First name | `name.givenName` |
-| Last name | `name.familyName` |
-| Suspended status | `active` |
-| Job title | `title` |
-| Department | `enterprise:department` |
-| Cost center | `enterprise:costCenter` |
-| Employee ID | `enterprise:employeeNumber` |
-| Manager email | `enterprise:manager` |
-| Language | `preferredLanguage` |
+| Google Workspace Field | SCIM Attribute              |
+| ---------------------- | --------------------------- |
+| Primary email          | `userName`, `emails`        |
+| Display name           | `displayName`               |
+| First name             | `name.givenName`            |
+| Last name              | `name.familyName`           |
+| Suspended status       | `active`                    |
+| Job title              | `title`                     |
+| Department             | `enterprise:department`     |
+| Cost center            | `enterprise:costCenter`     |
+| Employee ID            | `enterprise:employeeNumber` |
+| Manager email          | `enterprise:manager`        |
+| Language               | `preferredLanguage`         |
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
 ## Step 1: Create Google OAuth Credentials
 
@@ -50,19 +50,19 @@ import { Steps } from '@astrojs/starlight/components';
 6. Click **+ Create Credentials** > **OAuth client ID**
 7. Configure the OAuth consent screen if prompted:
 
-   | Field | Value |
-   |-------|-------|
-   | **App name** | `Probo SCIM Bridge` |
-   | **User support email** | Your admin email |
-   | **Scopes** | `https://www.googleapis.com/auth/admin.directory.user.readonly` |
+   | Field                  | Value                                                           |
+   | ---------------------- | --------------------------------------------------------------- |
+   | **App name**           | `Probo SCIM Bridge`                                             |
+   | **User support email** | Your admin email                                                |
+   | **Scopes**             | `https://www.googleapis.com/auth/admin.directory.user.readonly` |
 
 8. Create the OAuth client ID:
 
-   | Field | Value |
-   |-------|-------|
-   | **Application type** | `Web application` |
-   | **Name** | `Probo SCIM Bridge` |
-   | **Authorized redirect URIs** | `https://your-probo-domain.com/connect/google/callback` |
+   | Field                        | Value                                                              |
+   | ---------------------------- | ------------------------------------------------------------------ |
+   | **Application type**         | `Web application`                                                  |
+   | **Name**                     | `Probo SCIM Bridge`                                                |
+   | **Authorized redirect URIs** | `https://your-probo-domain.com/api/console/v1/connectors/complete` |
 
 9. Save the **Client ID** and **Client Secret**
 
@@ -77,9 +77,9 @@ import { Steps } from '@astrojs/starlight/components';
 3. Click **Add Connector** and select **Google Workspace**
 4. Enter your OAuth credentials:
 
-   | Field | Value |
-   |-------|-------|
-   | **Client ID** | Your Google OAuth Client ID |
+   | Field             | Value                           |
+   | ----------------- | ------------------------------- |
+   | **Client ID**     | Your Google OAuth Client ID     |
    | **Client Secret** | Your Google OAuth Client Secret |
 
 5. Click **Authorize** to complete the OAuth flow — you'll be redirected to Google to grant access
@@ -150,7 +150,7 @@ For the best experience, combine SCIM Bridge provisioning with SAML SSO:
 
 This means users get automatic Probo accounts when they join your organization and lose access when they leave, with no manual account management needed.
 
-import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 <CardGrid>
   <LinkCard

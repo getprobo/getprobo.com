@@ -1,0 +1,228 @@
+---
+title: Microsoft Entra ID SSO
+description: Configure SAML Single Sign-On with Microsoft Entra ID (Azure AD) for Probo
+---
+
+This guide walks you through setting up SAML Single Sign-On between Microsoft Entra ID (formerly Azure Active Directory) and Probo.
+
+## Prerequisites
+
+- Microsoft Entra ID administrator access (or Application Administrator role)
+- Probo organization administrator access
+- Your Probo domain (e.g., `probo.example.com`)
+- Access to your DNS settings for domain verification
+
+## Prepare Probo Information
+
+Before configuring Microsoft Entra ID, gather these Probo service provider details:
+
+| Field         | Value                                                            |
+| ------------- | ---------------------------------------------------------------- |
+| **ACS URL**   | `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`  |
+| **Entity ID** | `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata` |
+
+Replace `your-probo-domain.com` with your actual Probo domain.
+
+## Domain Verification
+
+Before configuring anything else, you must verify domain ownership:
+
+import { Steps } from "@astrojs/starlight/components";
+
+<Steps>
+
+1. Log in to Probo as an organization administrator
+2. Go to **Organization Settings** → **Authentication** → **SAML**
+3. Click **Verify Domain** (if no configurations exist yet, this option will be available)
+4. Copy the provided TXT record value
+5. Add a TXT record to your domain's DNS settings:
+   ```
+   Type: TXT
+   Name: _probo-domain-verification.your-company.com
+   Value: [Verification token from Probo]
+   TTL: 300 (or your DNS provider's default)
+   ```
+6. Wait for DNS propagation (usually 5-15 minutes)
+7. In Probo, click **Complete Verification**
+8. If successful, the domain status will show as "Verified"
+
+</Steps>
+
+## Configure Microsoft Entra ID
+
+<Steps>
+
+1. Sign in to the [Microsoft Entra admin center](https://entra.microsoft.com/)
+2. Go to **Identity** → **Applications** → **Enterprise applications**
+3. Click **New application** → **Create your own application**
+4. Enter `Probo` as the application name
+5. Select **Integrate any other application you don't find in the gallery (Non-gallery)**
+6. Click **Create**
+7. In the application overview, go to **Single sign-on** → select **SAML**
+8. In **Basic SAML Configuration**, click **Edit** and configure:
+
+   | Field                                          | Value                                                            |
+   | ---------------------------------------------- | ---------------------------------------------------------------- |
+   | **Identifier (Entity ID)**                     | `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata` |
+   | **Reply URL (Assertion Consumer Service URL)** | `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`  |
+   | **Relay State**                                | `[SAML Configuration ID]` (optional - see note below)            |
+   | **Sign on URL**                                | `https://your-probo-domain.com` (optional)                       |
+
+   **Important**: The **Relay State** is optional but if you want to support IdP-initiated login flows, it MUST be set to your exact SAML configuration ID (not a placeholder). If set incorrectly, SSO will not work. You'll get this ID after creating the SAML configuration in Probo. You can initially leave this empty and update it later with the exact configuration ID.
+
+9. Click **Save**
+10. In **Attributes & Claims**, click **Edit** and configure the following claims:
+
+    | Claim name  | Source attribute |
+    | ----------- | ---------------- |
+    | `email`     | `user.mail`      |
+    | `firstName` | `user.givenname` |
+    | `lastName`  | `user.surname`   |
+
+    To add each claim:
+    - Click **Add new claim**
+    - Enter the claim name (e.g., `email`)
+    - Set **Source** to `Attribute`
+    - Select the corresponding **Source attribute**
+    - Click **Save**
+
+    Also verify that the **Unique User Identifier (Name ID)** is set to `user.userprincipalname` or `user.mail` with the format `Email address`.
+
+11. In **SAML Certificates**, download the **Certificate (Base64)** and copy:
+    - **Login URL** (this is the IdP SSO URL)
+    - **Microsoft Entra Identifier** (this is the IdP Entity ID)
+
+12. Go to **Users and groups**
+13. Click **Add user/group**
+14. Select users or groups that should have access to Probo
+15. Click **Assign**
+
+</Steps>
+
+## Configure Probo
+
+<Steps>
+
+1. Log in to Probo as an organization administrator
+2. Go to **Organization Settings** → **Authentication** → **SAML**
+3. Click **Add SAML Configuration**
+4. Configure the basic settings:
+
+   | Field                  | Value              | Notes                            |
+   | ---------------------- | ------------------ | -------------------------------- |
+   | **Email Domain**       | `your-company.com` | Your organization's email domain |
+   | **Enforcement Policy** | `OPTIONAL`         | Recommended for initial setup    |
+
+5. Configure the Identity Provider settings with values from Microsoft Entra ID:
+
+   | Field               | Value                          | Notes                                    |
+   | ------------------- | ------------------------------ | ---------------------------------------- |
+   | **IdP Entity ID**   | `[Microsoft Entra Identifier]` | Copy from Entra ID setup                 |
+   | **IdP SSO URL**     | `[Login URL]`                  | Copy from Entra ID setup                 |
+   | **IdP Certificate** | `[Certificate (Base64)]`       | Paste the downloaded certificate content |
+
+6. Configure the attribute mappings:
+
+   | Field                    | Value           | Notes                                  |
+   | ------------------------ | --------------- | -------------------------------------- |
+   | **Email Attribute**      | `email`         | Maps to user email                     |
+   | **First Name Attribute** | `firstName`     | Maps to user first name                |
+   | **Last Name Attribute**  | `lastName`      | Maps to user last name                 |
+   | **Role Attribute**       | `[Leave empty]` | Unless you've configured custom claims |
+
+7. Configure user settings:
+
+   | Field           | Value     | Notes                                             |
+   | --------------- | --------- | ------------------------------------------------- |
+   | **Auto Signup** | `Enabled` | Allows new users to sign up automatically via SSO |
+
+8. Click **Save Configuration**
+9. **Copy the SAML Configuration ID** that appears after saving (e.g., `saml_config_1a2b3c4d`)
+
+</Steps>
+
+## Update Entra ID Relay State
+
+Return to Microsoft Entra ID to enable IdP-initiated login:
+
+<Steps>
+
+1. Go to your Probo enterprise application in the Entra admin center
+2. Click **Single sign-on** → **Edit** Basic SAML Configuration
+3. In the **Relay State** field, enter your SAML configuration ID
+4. Click **Save**
+
+</Steps>
+
+## Troubleshooting
+
+### "AADSTS75005: The request is not a valid Saml2 protocol message" Error
+
+- **Cause**: Incorrect Reply URL or Entity ID configuration
+- **Solution**: Verify that the Reply URL and Entity ID in Entra ID exactly match your Probo configuration:
+  - Reply URL: `https://your-probo-domain.com/api/connect/v1/saml/2.0/consume`
+  - Entity ID: `https://your-probo-domain.com/api/connect/v1/saml/2.0/metadata`
+
+### "AADSTS50105: User not assigned to application" Error
+
+- **Cause**: User has not been assigned to the Probo enterprise application
+- **Solution**: Go to the enterprise application → **Users and groups** → assign the user or a group containing the user
+
+### "AADSTS700016: Application not found" Error
+
+- **Cause**: Incorrect Entity ID in Probo or application not properly configured
+- **Solution**: Verify the Microsoft Entra Identifier matches the IdP Entity ID configured in Probo
+
+### Attributes Not Mapping
+
+- **Cause**: Claims not configured correctly in Entra ID
+- **Solution**: Verify that custom claims are configured with exact names: `email`, `firstName`, `lastName`. Check under **Single sign-on** → **Attributes & Claims**
+
+### "Invalid RelayState" Error
+
+- **Cause**: Incorrect Relay State configuration
+- **Solution**: Ensure Relay State is either empty or set to the exact SAML configuration ID from Probo
+
+### Debugging Steps
+
+#### Check Entra ID Sign-in Logs
+
+1. Go to the Entra admin center → **Identity** → **Monitoring & health** → **Sign-in logs**
+2. Filter by the Probo application
+3. Click on a failed sign-in attempt to view error details and troubleshooting recommendations
+
+#### Test SAML Response
+
+1. In the Probo enterprise application, go to **Single sign-on**
+2. Click **Test this application**
+3. Review the SAML response for errors
+
+## Advanced Configuration
+
+### Custom Claims
+
+To map additional Entra ID user attributes:
+
+1. In the enterprise application, go to **Single sign-on** → **Attributes & Claims**
+2. Click **Add new claim**
+3. Map additional directory attributes as needed
+4. Update the corresponding attribute mappings in Probo
+
+### Conditional Access
+
+Control access using Microsoft Entra ID Conditional Access policies:
+
+1. Go to **Identity** → **Protection** → **Conditional Access**
+2. Create a new policy targeting the Probo application
+3. Configure conditions (location, device, risk level, etc.)
+4. Set appropriate access controls (grant, block, require MFA)
+
+### Group-Based Access
+
+Restrict access using Entra ID groups:
+
+1. In the enterprise application, go to **Users and groups**
+2. Assign groups instead of individual users
+3. Manage access by adding/removing users from the assigned groups
+
+For detailed troubleshooting and advanced configuration options, see the [SSO Overview](/docs/product/sso/overview) guide.
