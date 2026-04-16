@@ -152,6 +152,10 @@ export default defineConfig({
               label: "Google Workspace",
               slug: "docs/product/sso/google-workspace",
             },
+            {
+              label: "Microsoft Entra ID",
+              slug: "docs/product/sso/microsoft-entra-id",
+            },
             { label: "Okta", slug: "docs/product/sso/okta" },
           ],
         },
@@ -167,6 +171,7 @@ export default defineConfig({
               label: "Microsoft 365 (Entra ID)",
               slug: "docs/product/scim/microsoft-365",
             },
+            { label: "Okta", slug: "docs/product/scim/okta" },
           ],
         },
         {
