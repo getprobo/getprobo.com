@@ -1,0 +1,217 @@
+---
+title: Okta SCIM
+description: Configure automated user provisioning from Okta using SCIM 2.0
+---
+
+This guide walks you through setting up direct SCIM provisioning from Okta to automatically synchronize users into Probo.
+
+## Prerequisites
+
+- Okta administrator access
+- Probo organization administrator access
+- An Okta plan that supports SCIM provisioning (Okta Lifecycle Management)
+
+## How It Works
+
+Okta pushes user changes to Probo's SCIM 2.0 endpoint in real time. When you assign users or groups to the Probo application in Okta, it automatically:
+
+- **Creates** Probo accounts for newly assigned users
+- **Updates** user attributes when they change in Okta
+- **Deactivates** Probo accounts when users are unassigned or deactivated
+- **Deletes** Probo accounts when users are permanently removed (if configured)
+
+### Mapped Attributes
+
+| Okta User Profile Field | SCIM Attribute                       | Notes            |
+| ----------------------- | ------------------------------------ | ---------------- |
+| userName                | `userName`                           | Required, unique |
+| displayName             | `displayName`                        |                  |
+| givenName               | `name.givenName`                     |                  |
+| familyName              | `name.familyName`                    |                  |
+| nickName                | `nickName`                           |                  |
+| active                  | `active`                             |                  |
+| email                   | `emails[type eq "work"].value`       | Multi-valued     |
+| primaryPhone            | `phoneNumbers[type eq "work"].value` | Multi-valued     |
+| title                   | `title`                              |                  |
+| userType                | `userType`                           |                  |
+| preferredLanguage       | `preferredLanguage`                  |                  |
+| locale                  | `locale`                             |                  |
+| timezone                | `timezone`                           |                  |
+| profileUrl              | `profileUrl`                         |                  |
+
+**Enterprise User Extension attributes:**
+
+| Okta User Profile Field | SCIM Attribute              |
+| ----------------------- | --------------------------- |
+| employeeNumber          | `enterprise:employeeNumber` |
+| organization            | `enterprise:organization`   |
+| department              | `enterprise:department`     |
+| division                | `enterprise:division`       |
+| costCenter              | `enterprise:costCenter`     |
+| manager                 | `enterprise:manager.value`  |
+
+import { Steps } from "@astrojs/starlight/components";
+
+## Step 1: Generate SCIM Credentials in Probo
+
+<Steps>
+
+1. Log in to Probo as an organization administrator
+2. Go to **Organization Settings** > **Authentication** > **Auto-Provisioning**
+3. Click **Add Connector** and select **SCIM**
+4. Copy the **SCIM Endpoint URL** and **Bearer Token**
+
+   :::caution
+   The bearer token is shown only once. Store it securely — you will need it in the next step.
+   :::
+
+</Steps>
+
+## Step 2: Create a SCIM Application in Okta
+
+<Steps>
+
+1. Sign in to your [Okta Admin Console](https://your-domain-admin.okta.com)
+2. Go to **Applications** > **Applications**
+3. Click **Browse App Catalog**
+4. Search for **SCIM 2.0 Test App (Header Auth)** and select it
+5. Click **Add Integration**
+6. Enter the following:
+
+   | Field                 | Value   |
+   | --------------------- | ------- |
+   | **Application label** | `Probo` |
+
+7. Click **Next**, then **Done**
+
+</Steps>
+
+## Step 3: Configure Provisioning
+
+<Steps>
+
+1. In the Probo application, go to the **Provisioning** tab
+2. Click **Configure API Integration**
+3. Check **Enable API Integration**
+4. Enter the following:
+
+   | Field                  | Value                                                                                       |
+   | ---------------------- | ------------------------------------------------------------------------------------------- |
+   | **SCIM 2.0 Base URL**  | Your Probo SCIM endpoint URL (e.g. `https://your-probo-domain.com/api/connect/v1/scim/2.0`) |
+   | **OAuth Bearer Token** | The bearer token from Step 1                                                                |
+
+5. Click **Test API Credentials** to verify Okta can reach the Probo SCIM endpoint
+6. Click **Save**
+
+</Steps>
+
+## Step 4: Enable Provisioning Actions
+
+<Steps>
+
+1. In the **Provisioning** tab, click **To App** in the left sidebar
+2. Click **Edit**
+3. Enable the following provisioning actions:
+
+   | Action                     | Setting    |
+   | -------------------------- | ---------- |
+   | **Create Users**           | ☑️ Enabled |
+   | **Update User Attributes** | ☑️ Enabled |
+   | **Deactivate Users**       | ☑️ Enabled |
+
+4. Click **Save**
+
+</Steps>
+
+## Step 5: Configure Attribute Mappings
+
+The default attribute mappings work for most setups. To review or customize them:
+
+<Steps>
+
+1. In the **Provisioning** tab, scroll to **Attribute Mappings**
+2. Review the mappings — the defaults map Okta user profile attributes to Probo's supported SCIM attributes
+3. Adjust mappings if needed (e.g. map `employeeNumber` to `urn:ietf:params:scim:schemas:extension:enterprise:2.0:User:employeeNumber`)
+4. Click **Save**
+
+</Steps>
+
+:::tip
+You can remove mappings for attributes you don't use. Only `userName`, `displayName`, and `active` are required by Probo.
+:::
+
+## Step 6: Assign Users and Groups
+
+<Steps>
+
+1. In the Probo application, go to the **Assignments** tab
+2. Click **Assign** > **Assign to People** or **Assign to Groups**
+3. Select the users or groups you want to provision into Probo
+4. Click **Assign**, then **Save and Go Back**
+5. Click **Done**
+
+</Steps>
+
+Only assigned users (or members of assigned groups) will be provisioned. This gives you fine-grained control over who gets a Probo account.
+
+## Step 7: Verify Provisioning
+
+<Steps>
+
+1. In Okta, go to the Probo application > **Provisioning** tab > **To App** to check provisioning status
+2. Go to **Reports** > **System Log** and filter by application to see provisioning events
+3. In Probo, go to **Organization Settings** > **Members** to verify users have been provisioned
+4. Check **Organization Settings** > **Authentication** > **Auto-Provisioning** > **Event Log** for detailed SCIM events
+
+</Steps>
+
+## Troubleshooting
+
+### Test API Credentials Fails
+
+- **Cause**: The SCIM endpoint URL or bearer token is incorrect, or a firewall is blocking the connection
+- **Solution**: Verify the endpoint URL includes the full path (ending in `/scim/2.0`). Re-generate the bearer token in Probo if needed. Ensure your network allows outbound HTTPS from Okta to your Probo instance.
+
+### Users Not Being Provisioned
+
+- **Cause**: Users or groups are not assigned to the application, or provisioning actions are not enabled
+- **Solution**: Check that users are assigned under the **Assignments** tab and that **Create Users** is enabled under **Provisioning** > **To App**
+
+### Provisioning Errors in Logs
+
+- **Cause**: Attribute mapping conflicts or missing required attributes
+- **Solution**: Check the **System Log** in Okta for specific error messages. Ensure `userName` is mapped to a unique, non-empty value (typically the user's email)
+
+### Users Not Deactivated After Removal
+
+- **Cause**: Okta may still be processing the change, or **Deactivate Users** is not enabled
+- **Solution**: Verify that **Deactivate Users** is enabled under **Provisioning** > **To App**. Check the System Log for the deprovisioning event. For immediate effect, manually trigger a push by clicking **Push Now** in the application's provisioning settings.
+
+### Duplicate Users
+
+- **Cause**: The `userName` in Okta doesn't match an existing Probo user's email
+- **Solution**: Ensure the attribute mapped to `userName` matches the email format used in Probo. You may need to adjust the mapping to use the user's primary email address.
+
+## Combining with SSO
+
+For the best experience, combine SCIM provisioning with SAML SSO:
+
+1. **SCIM provisioning** handles user lifecycle — creating and deactivating accounts automatically
+2. **SAML SSO** handles authentication — users sign in with their Okta credentials
+
+This means users get automatic Probo accounts when they join your organization and lose access when they leave, with no manual account management needed.
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+<CardGrid>
+  <LinkCard
+    title="Okta SSO"
+    description="Set up SAML SSO alongside SCIM provisioning"
+    href="/docs/product/sso/okta"
+  />
+  <LinkCard
+    title="SCIM Overview"
+    description="Learn more about SCIM features and direct provisioning"
+    href="/docs/product/scim/overview"
+  />
+</CardGrid>
