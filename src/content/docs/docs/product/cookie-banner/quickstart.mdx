@@ -1,0 +1,98 @@
+---
+title: Cookie Banner Quickstart
+description: Create a cookie banner and add it to your website in minutes
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+This guide walks you through creating a cookie banner in the Probo console and adding it to your website.
+
+## Prerequisites
+
+- A running Probo instance (see [Self-Hosting](/docs/self-hosting/docker-compose) if you haven't deployed yet)
+- Access to your website's HTML to add a script tag
+
+## Setup
+
+<Steps>
+
+1. **Create a banner in the Probo console**
+
+   Navigate to **Cookie Banners** in the sidebar and click **Create Banner**. Fill in the required fields:
+
+   | Field | Description |
+   | --- | --- |
+   | **Name** | An internal name to identify this banner (e.g. "Main Website") |
+   | **Origin** | The full origin of your website (e.g. `https://www.example.com`) |
+   | **Privacy Policy URL** | Link to your privacy policy page |
+   | **Consent Expiry** | Number of days before consent expires and the banner reappears (default: 365) |
+   | **Consent Mode** | Choose **Opt-in** (recommended for GDPR) or **Opt-out** |
+
+2. **Configure cookie categories**
+
+   After creating the banner, go to the **Settings** tab. Five default categories are created automatically: Necessary, Analytics, Advertising, Functional, and Uncategorised.
+
+   You can:
+   - **Reorder categories** using the up/down arrows to control display order
+   - **Add custom categories** with a name and description
+   - **Delete normal categories** you don't need — any cookies in them are automatically moved to the Uncategorised category. System categories (Necessary and Uncategorised) cannot be deleted.
+
+3. **Add cookies to each category**
+
+   Switch to the **Cookies** tab to document the specific cookies used in each category. For each cookie, provide:
+   - **Name** — The cookie name (e.g. `_ga`)
+   - **Duration** — How long the cookie persists (e.g. "2 years")
+   - **Description** — What the cookie does
+
+   You can also **move cookies between categories** using the move button on each cookie row. This is useful for organizing newly detected cookies that land in the Uncategorised category — move them to the appropriate category (e.g. Analytics, Advertising) so visitors see accurate groupings.
+
+   This information is displayed to visitors in the preference panel so they can make informed decisions.
+
+4. **Publish the banner**
+
+   Click **Publish Changes** in the banner header. This creates a published version of your configuration that the SDK will serve to visitors.
+
+5. **Add the snippet to your website**
+
+   Go to the **JS / CSS snippets** tab and copy the script tag. Add it to your website's HTML, ideally just before the closing `</body>` tag:
+
+   ```html
+   <script
+     src="https://unpkg.com/@probo/cookie-banner/dist/cookie-banner.iife.js"
+     data-banner-id="YOUR_BANNER_ID"
+     data-base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+     data-position="bottom-left"
+   ></script>
+   ```
+
+   Replace `YOUR_BANNER_ID` and the base URL with the values shown in the console.
+
+6. **Activate the banner**
+
+   Back in the console, click **Activate** to make the banner live. Only one banner can be active per origin at a time.
+
+7. **Tag third-party scripts**
+
+   Mark any scripts or elements that require consent with the `data-cookie-consent` attribute. For example, to gate an analytics script:
+
+   ```html
+   <script
+     type="text/plain"
+     data-cookie-consent="analytics"
+     data-src="https://analytics.example.com/tracker.js"
+   ></script>
+   ```
+
+   The SDK automatically activates these elements when the visitor grants consent for the matching category. See [Blocking Resources](/docs/product/cookie-banner/blocking-resources) for the full guide.
+
+</Steps>
+
+## What Happens Next
+
+Once the banner is live:
+
+- New visitors see the consent dialog and can accept all, reject all, or customize their preferences.
+- Consent is stored in a `probo_consent` cookie and recorded server-side for audit purposes.
+- Third-party resources tagged with `data-cookie-consent` load only when the visitor has consented to the matching category.
+- A floating settings button lets visitors change their preferences at any time. You can replace it with your own link (e.g. in the footer) using the `<probo-settings-link>` element — see the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#custom-re-open-link) docs for details.
+- When you update categories or banner settings, a new draft version is created. Publish it to push changes to visitors. Existing consent remains valid until it expires or the visitor updates their preferences.

@@ -1,0 +1,79 @@
+---
+title: Cookie Banner Overview
+description: GDPR and ePrivacy compliant cookie consent management with Probo's cookie banner
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Probo's cookie banner lets you collect and manage visitor cookie consent on your websites. It provides a ready-to-use consent dialog, per-category cookie controls, automatic third-party script blocking, and a consent audit trail — all managed from the Probo console.
+
+## Key Features
+
+- **Consent collection** — Display a customizable banner that lets visitors accept all, reject all, or choose consent per cookie category.
+- **Category-based control** — Organize cookies into categories (Necessary, Analytics, Advertising, Functional, Uncategorised, or custom) with per-category toggles. Move cookies between categories as needed.
+- **Third-party blocking** — Automatically prevent scripts, iframes, images, and other resources from loading until the visitor grants consent for the corresponding category.
+- **Versioned configuration** — Every change to your banner creates a draft version. Publish when ready, and each consent record is tied to the exact version the visitor saw.
+- **Opt-in and opt-out modes** — Choose whether visitors must opt in before non-essential cookies are set, or whether cookies are active until the visitor opts out.
+- **Consent audit trail** — Every consent action (accept all, reject all, customize, GPC) is recorded with an anonymized IP address and user agent for compliance evidence.
+- **Lightweight SDK** — A dependency-free JavaScript SDK built on Web Components. Use a single script tag, an ES module import, or fully headless components for complete UI control.
+- **Theming** — Match your brand with CSS custom properties for colors, fonts, border radius, and more. Supports dark mode.
+
+## How It Works
+
+The cookie banner system has three parts:
+
+1. **Probo Console** — Create and configure banners, define cookie categories, and review consent records. This is where you manage everything.
+2. **Probo API** — A REST API that serves banner configuration to visitors and records their consent decisions.
+3. **JavaScript SDK** (`@probo/cookie-banner`) — A client-side library that renders the consent UI, communicates with the API, stores consent in a cookie, and blocks/unblocks third-party resources based on the visitor's choices.
+
+When a visitor loads your page, the SDK fetches the published banner configuration from the API, checks for existing consent, and displays the banner if needed. After the visitor makes a choice, the SDK records consent via the API and activates any third-party resources the visitor has allowed.
+
+## Consent Modes
+
+Probo supports two consent modes:
+
+| Mode | Behavior | Use Case |
+| --- | --- | --- |
+| **Opt-in** | Non-essential cookies are blocked until the visitor explicitly consents | GDPR, ePrivacy — required in the EU |
+| **Opt-out** | Non-essential cookies are active by default; the visitor can opt out | CCPA — common in the US |
+
+## Default Categories
+
+When you create a new banner, five default categories are set up automatically:
+
+| Category | Type | Description |
+| --- | --- | --- |
+| **Necessary** | System (required) | Essential cookies for basic site functionality. Cannot be disabled by visitors. |
+| **Analytics** | Normal | Cookies that help you understand how visitors interact with your website. |
+| **Advertising** | Normal | Cookies used to deliver relevant ads and track ad campaign performance. |
+| **Functional** | Normal | Cookies that enable enhanced functionality like live chat or videos. |
+| **Uncategorised** | System | Collects cookies that have not been assigned to a category yet. |
+
+You can rename categories, add custom ones, reorder them, and move cookies between categories. Normal categories can be deleted — when you do, any cookies in them are automatically moved to the Uncategorised category. System categories (Necessary and Uncategorised) cannot be deleted.
+
+Categories that contain no cookies are automatically hidden from the banner. Only categories with at least one cookie assigned to them are shown to visitors.
+
+## Next Steps
+
+<CardGrid>
+  <LinkCard
+    title="Quickstart"
+    description="Create a banner and add it to your website in minutes"
+    href="/docs/product/cookie-banner/quickstart"
+  />
+  <LinkCard
+    title="JavaScript SDK"
+    description="Installation options, components, and events reference"
+    href="/docs/product/cookie-banner/javascript-sdk"
+  />
+  <LinkCard
+    title="Theming"
+    description="Customize colors, fonts, and styling with CSS custom properties"
+    href="/docs/product/cookie-banner/theming"
+  />
+  <LinkCard
+    title="Blocking Resources"
+    description="Prevent third-party scripts and elements from loading without consent"
+    href="/docs/product/cookie-banner/blocking-resources"
+  />
+</CardGrid>

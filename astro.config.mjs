@@ -193,6 +193,32 @@ export default defineConfig({
           ],
         },
         {
+          label: "Cookie Banner",
+          badge: "New",
+          items: [
+            {
+              label: "Overview",
+              slug: "docs/product/cookie-banner/overview",
+            },
+            {
+              label: "Quickstart",
+              slug: "docs/product/cookie-banner/quickstart",
+            },
+            {
+              label: "JavaScript SDK",
+              slug: "docs/product/cookie-banner/javascript-sdk",
+            },
+            {
+              label: "Theming",
+              slug: "docs/product/cookie-banner/theming",
+            },
+            {
+              label: "Blocking Resources",
+              slug: "docs/product/cookie-banner/blocking-resources",
+            },
+          ],
+        },
+        {
           label: "CLI",
           badge: "New",
           items: [

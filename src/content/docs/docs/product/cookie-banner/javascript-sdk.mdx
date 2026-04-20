@@ -1,0 +1,211 @@
+---
+title: JavaScript SDK
+description: Install and use the Probo cookie banner SDK on your website
+---
+
+The `@probo/cookie-banner` SDK is a lightweight, dependency-free JavaScript library built on Web Components. It renders the consent UI, manages visitor consent state, communicates with the Probo API, and activates third-party resources based on consent.
+
+There are three ways to use the SDK, depending on your needs:
+
+## Script Tag (No Bundler)
+
+The simplest option. Add a single `<script>` tag to your HTML — no build tools required:
+
+```html
+<script
+  src="https://unpkg.com/@probo/cookie-banner/dist/cookie-banner.iife.js"
+  data-banner-id="YOUR_BANNER_ID"
+  data-base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+  data-position="bottom-left"
+></script>
+```
+
+This automatically renders a fully styled consent dialog and a floating settings button. The banner appears on `DOMContentLoaded` if the visitor hasn't consented yet.
+
+| Attribute | Required | Description |
+| --- | --- | --- |
+| `data-banner-id` | Yes | Your banner ID from the Probo console |
+| `data-base-url` | Yes | The Probo cookie banner API base URL |
+| `data-position` | No | Settings button position: `bottom-left` (default) or `bottom-right` |
+| `data-reopen-widget` | No | Set to `"custom"` to hide the floating settings button and use your own re-open trigger |
+
+## Themed Banner (ES Module)
+
+For bundled applications (React, Vue, Svelte, Next.js, etc.), import the themed banner as an ES module:
+
+```bash
+npm install @probo/cookie-banner
+```
+
+Register the component and place it in your HTML or template:
+
+```js
+import { registerThemedBanner } from "@probo/cookie-banner/themed-banner";
+
+registerThemedBanner();
+```
+
+```html
+<probo-cookie-banner
+  banner-id="YOUR_BANNER_ID"
+  base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+  position="bottom-left"
+></probo-cookie-banner>
+```
+
+| Attribute | Required | Description |
+| --- | --- | --- |
+| `banner-id` | Yes | Your banner ID from the Probo console |
+| `base-url` | Yes | The Probo cookie banner API base URL |
+| `position` | No | Settings button position: `bottom-left` (default) or `bottom-right` |
+| `reopen-widget` | No | Set to `"custom"` to hide the floating settings button and use your own re-open trigger |
+
+Since this is a Web Component, it works in any framework. In React, JSX treats it as a custom element. In Vue or Svelte, use it directly in your template.
+
+See [Theming](/docs/product/cookie-banner/theming) for how to customize colors, fonts, and styling.
+
+## Headless Components (Full Control)
+
+For complete control over the consent UI, use the headless components. These are unstyled Web Component building blocks that you compose and style yourself:
+
+```js
+import { registerComponents } from "@probo/cookie-banner";
+
+registerComponents();
+```
+
+Then build your own layout:
+
+```html
+<probo-cookie-banner-root banner-id="YOUR_BANNER_ID" base-url="BASE_URL">
+  <probo-banner>
+    <div class="my-banner">
+      <p>We use cookies to improve your experience.</p>
+      <probo-accept-button>
+        <button>Accept all</button>
+      </probo-accept-button>
+      <probo-reject-button>
+        <button>Reject all</button>
+      </probo-reject-button>
+      <probo-customize-button>
+        <button>Customize</button>
+      </probo-customize-button>
+    </div>
+  </probo-banner>
+
+  <probo-preference-panel>
+    <div class="my-preferences">
+      <probo-category-list>
+        <template>
+          <div class="category">
+            <span data-slot="name"></span>
+            <span data-slot="description"></span>
+            <probo-category-toggle>
+              <input type="checkbox" />
+            </probo-category-toggle>
+          </div>
+          <probo-cookie-list>
+            <template>
+              <div class="cookie">
+                <span data-slot="name"></span>
+                <span data-slot="duration"></span>
+              </div>
+            </template>
+          </probo-cookie-list>
+        </template>
+      </probo-category-list>
+      <probo-save-button>
+        <button>Save preferences</button>
+      </probo-save-button>
+    </div>
+  </probo-preference-panel>
+
+  <probo-settings-button position="bottom-left"></probo-settings-button>
+</probo-cookie-banner-root>
+```
+
+### Component Reference
+
+| Component | Description |
+| --- | --- |
+| `<probo-cookie-banner-root>` | Root element. Requires `banner-id` and `base-url`. Optional `reopen-widget` attribute (`"floating"` default or `"custom"`). Manages client lifecycle and state. |
+| `<probo-banner>` | Container shown when consent has not been given yet. |
+| `<probo-accept-button>` | Wraps a button that records "accept all" consent. |
+| `<probo-reject-button>` | Wraps a button that records "reject all" consent. |
+| `<probo-customize-button>` | Wraps a button that opens the preference panel. |
+| `<probo-preference-panel>` | Container for per-category consent toggles. |
+| `<probo-category-list>` | Renders a `<template>` once per cookie category. Fills `data-slot="name"` and `data-slot="description"`. |
+| `<probo-category-toggle>` | Binds the checkbox inside it to the category's consent state. |
+| `<probo-cookie-list>` | Renders a `<template>` once per cookie in the category. Fills `data-slot="name"` and `data-slot="duration"`. |
+| `<probo-save-button>` | Wraps a button that saves the current preference draft. |
+| `<probo-settings-button>` | Floating button to re-open preferences. Accepts a `position` attribute (`bottom-left` or `bottom-right`). Hidden automatically when `reopen-widget="custom"` is set on the root. |
+| `<probo-settings-link>` | Inline element (e.g. a footer link) that opens the preference panel on click. Automatically hides the floating settings button. Place it anywhere on the page. |
+
+### Custom Re-open Link
+
+By default, a floating settings button lets visitors re-open the preference panel after they've made their choice. If you'd rather use your own trigger — for example, a link in the footer — use the `<probo-settings-link>` element:
+
+```html
+<footer>
+  <probo-settings-link>
+    <a href="#">Cookie Settings</a>
+  </probo-settings-link>
+</footer>
+```
+
+When `<probo-settings-link>` connects, it automatically sets `reopen-widget="custom"` on the banner root, which hides the built-in floating button. Clicking the link opens the preference panel.
+
+This works with all three integration methods — script tag, themed banner, and headless components. The `<probo-settings-link>` element finds the banner root automatically, regardless of how the SDK is loaded.
+
+Alternatively, you can set the `reopen-widget="custom"` attribute directly and handle the click yourself. With the script tag:
+
+```html
+<script
+  src="https://unpkg.com/@probo/cookie-banner/dist/cookie-banner.iife.js"
+  data-banner-id="YOUR_BANNER_ID"
+  data-base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+  data-reopen-widget="custom"
+></script>
+```
+
+With the themed banner:
+
+```html
+<probo-cookie-banner
+  banner-id="YOUR_BANNER_ID"
+  base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+  reopen-widget="custom"
+></probo-cookie-banner>
+```
+
+With headless components:
+
+```html
+<probo-cookie-banner-root banner-id="YOUR_BANNER_ID" base-url="BASE_URL" reopen-widget="custom">
+  <!-- ... banner and preference panel ... -->
+</probo-cookie-banner-root>
+```
+
+## Events
+
+The SDK emits custom events that bubble through the DOM. Listen on the root element or any ancestor:
+
+| Event | Detail | Description |
+| --- | --- | --- |
+| `probo-ready` | `{ config }` | Fired when the banner configuration has been loaded from the API. |
+| `probo-state` | `{ state, prev }` | Fired when the banner UI state changes. States: `loading`, `banner`, `panel`, `hidden`. |
+| `probo-consent` | `{ action, consent_data }` | Fired after consent is recorded. Actions: `ACCEPT_ALL`, `REJECT_ALL`, `CUSTOMIZE`. |
+| `probo-reopen-widget` | `{ value }` | Fired when the `reopen-widget` attribute changes on the root. Values: `"floating"`, `"custom"`. |
+
+```js
+document.addEventListener("probo-consent", (e) => {
+  console.log("Consent action:", e.detail.action);
+});
+```
+
+## How Consent Is Stored
+
+- **Client-side:** A `probo_consent` cookie stores the visitor's consent state. The cookie's `max-age` is set to the consent expiry configured on the banner (in days). It uses `SameSite=Lax`.
+- **Server-side:** Every consent action is recorded via the Probo API with the banner version, visitor ID, action type, anonymized IP address, and user agent.
+- **Visitor identity:** The SDK generates a random visitor ID and stores it in `localStorage`. This ID is used to look up existing consent when the visitor returns.
+- **Offline resilience:** If the API is unreachable when consent is recorded, the request is queued in `localStorage` and retried automatically on the next page load.

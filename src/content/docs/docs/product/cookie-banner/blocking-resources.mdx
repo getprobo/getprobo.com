@@ -1,0 +1,153 @@
+---
+title: Blocking Third-Party Resources
+description: Prevent scripts, iframes, and other elements from loading until the visitor consents
+---
+
+The Probo cookie banner SDK can block third-party resources from loading until the visitor grants consent for the corresponding cookie category. This is essential for GDPR and ePrivacy compliance, where non-essential cookies and tracking must not be set before the visitor opts in.
+
+## How It Works
+
+Add a `data-cookie-consent` attribute to any element you want to gate behind consent. The attribute value must match a cookie category name (lowercased) from your banner configuration — for example, `analytics`, `advertising`, or `functional`.
+
+The SDK scans the page for elements with this attribute and keeps them inactive until the visitor consents to the matching category. It also watches for dynamically added elements using a `MutationObserver`, so resources injected after page load are handled automatically.
+
+## Scripts
+
+To block a script, change `src` to `data-src` and set `type="text/plain"` to prevent the browser from executing it:
+
+```html
+<!-- Before: loads immediately -->
+<script src="https://analytics.example.com/tracker.js"></script>
+
+<!-- After: loads only when "analytics" consent is granted -->
+<script
+  type="text/plain"
+  data-cookie-consent="analytics"
+  data-src="https://analytics.example.com/tracker.js"
+></script>
+```
+
+If the script originally had a meaningful `type` attribute (e.g. `module`), preserve it with `data-type`:
+
+```html
+<script
+  type="text/plain"
+  data-type="module"
+  data-cookie-consent="analytics"
+  data-src="https://example.com/analytics.mjs"
+></script>
+```
+
+Inline scripts work the same way:
+
+```html
+<script type="text/plain" data-cookie-consent="analytics">
+  gtag("config", "GA_MEASUREMENT_ID");
+</script>
+```
+
+## Iframes
+
+Replace `src` with `data-src`:
+
+```html
+<iframe
+  data-cookie-consent="marketing"
+  data-src="https://www.youtube.com/embed/VIDEO_ID"
+  width="560"
+  height="315"
+></iframe>
+```
+
+## Images
+
+Tracking pixels and other consent-gated images:
+
+```html
+<img
+  data-cookie-consent="analytics"
+  data-src="https://example.com/pixel.gif"
+/>
+```
+
+## Stylesheets
+
+Replace `href` with `data-href` on `<link>` tags:
+
+```html
+<link
+  data-cookie-consent="analytics"
+  data-href="https://example.com/tracker.css"
+  rel="stylesheet"
+/>
+```
+
+## Supported Elements
+
+| Element | Blocked Attribute | Restored To |
+| --- | --- | --- |
+| `<script>` | `data-src` and/or `type="text/plain"` | `src` restored, `type` set to `data-type` or removed |
+| `<iframe>` | `data-src` | `src` |
+| `<img>` | `data-src` | `src` |
+| `<video>` | `data-src` | `src` |
+| `<audio>` | `data-src` | `src` |
+| `<embed>` | `data-src` | `src` |
+| `<object>` | `data-src` | `data` |
+| `<link>` | `data-href` | `href` |
+
+## Common Integrations
+
+### Google Analytics
+
+```html
+<script type="text/plain" data-cookie-consent="analytics">
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", "GA_MEASUREMENT_ID");
+</script>
+<script
+  type="text/plain"
+  data-cookie-consent="analytics"
+  data-src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+></script>
+```
+
+### Facebook Pixel
+
+```html
+<script type="text/plain" data-cookie-consent="advertising">
+  !function(f,b,e,v,n,t,s){/* Facebook Pixel code */}(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', 'YOUR_PIXEL_ID');
+  fbq('track', 'PageView');
+</script>
+```
+
+### YouTube Embed
+
+```html
+<iframe
+  data-cookie-consent="functional"
+  data-src="https://www.youtube.com/embed/VIDEO_ID"
+  width="560"
+  height="315"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+```
+
+## Category Names
+
+The `data-cookie-consent` attribute value is matched against the **lowercased category name** from your banner configuration. The default categories use these values:
+
+| Category | Attribute Value |
+| --- | --- |
+| Necessary | `necessary` |
+| Analytics | `analytics` |
+| Advertising | `advertising` |
+| Functional | `functional` |
+| Uncategorised | `uncategorised` |
+
+If you create a custom category named "Social Media", use `data-cookie-consent="social media"`.
+
+System categories like Necessary are always consented to, so tagging elements with `data-cookie-consent="necessary"` is valid but has no blocking effect — those resources load immediately. The Uncategorised category is where cookies that haven't been assigned to a category yet are collected. You should move cookies out of Uncategorised and into the appropriate category in the console so visitors see meaningful groupings in the preference panel.

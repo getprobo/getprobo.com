@@ -1,0 +1,88 @@
+---
+title: Theming
+description: Customize the Probo cookie banner appearance with CSS custom properties
+---
+
+The themed banner (both the script tag and the ES module) renders inside a Shadow DOM and exposes CSS custom properties for styling. You can override these properties to match your brand without writing any JavaScript.
+
+## CSS Custom Properties
+
+Add a `<style>` block or CSS file targeting the `probo-cookie-banner` element:
+
+```css
+probo-cookie-banner {
+  --probo-font-family: "Inter", sans-serif;
+  --probo-font-size: 14px;
+  --probo-bg: #ffffff;
+  --probo-text: #1a1a1a;
+  --probo-text-secondary: #555555;
+  --probo-border: #e0e0e0;
+  --probo-radius: 12px;
+  --probo-btn-radius: 8px;
+  --probo-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  --probo-accent: #1a1a1a;
+  --probo-accent-text: #ffffff;
+  --probo-overlay: rgba(0, 0, 0, 0.4);
+  --probo-z-index: 2147483646;
+}
+```
+
+### Property Reference
+
+| Property | Default | Description |
+| --- | --- | --- |
+| `--probo-font-family` | System font stack | Font family for all banner text |
+| `--probo-font-size` | `14px` | Base font size |
+| `--probo-bg` | `#ffffff` | Banner background color |
+| `--probo-text` | `#1a1a1a` | Primary text color |
+| `--probo-text-secondary` | `#555555` | Secondary text color (descriptions, labels) |
+| `--probo-border` | `#e0e0e0` | Border color for cards and separators |
+| `--probo-radius` | `12px` | Border radius for the banner container |
+| `--probo-btn-radius` | `8px` | Border radius for buttons |
+| `--probo-shadow` | `0 4px 24px rgba(0,0,0,0.12)` | Box shadow for the banner |
+| `--probo-accent` | `#1a1a1a` | Accent color for primary buttons and toggles |
+| `--probo-accent-text` | `#ffffff` | Text color on accent-colored elements |
+| `--probo-overlay` | `rgba(0,0,0,0.4)` | Background overlay color when the preference panel is open |
+| `--probo-z-index` | `2147483646` | Z-index for the banner layer |
+
+## Dark Mode
+
+Use a media query to switch to dark mode colors automatically:
+
+```css
+@media (prefers-color-scheme: dark) {
+  probo-cookie-banner {
+    --probo-bg: #1a1a1a;
+    --probo-text: #f0f0f0;
+    --probo-text-secondary: #a0a0a0;
+    --probo-border: #333333;
+    --probo-accent: #f0f0f0;
+    --probo-accent-text: #1a1a1a;
+    --probo-overlay: rgba(0, 0, 0, 0.6);
+  }
+}
+```
+
+Or use a CSS class if you manage dark mode manually:
+
+```css
+.dark probo-cookie-banner {
+  --probo-bg: #1a1a1a;
+  --probo-text: #f0f0f0;
+  --probo-text-secondary: #a0a0a0;
+  --probo-border: #333333;
+  --probo-accent: #f0f0f0;
+  --probo-accent-text: #1a1a1a;
+}
+```
+
+## Using the Console Theme Editor
+
+The Probo console includes a visual theme editor on the **JS / CSS snippets** tab of your banner configuration. It lets you:
+
+- Adjust each CSS custom property with color pickers and input fields
+- Preview the banner appearance in real time
+- Copy the generated CSS to paste into your website
+- Reset to defaults at any time
+
+This is the easiest way to experiment with theming before committing to a design.
