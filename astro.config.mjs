@@ -11,6 +11,20 @@ import { langs } from "./src/config";
 import { removeTranslatedDoc } from "./tools/removeTranslatedDoc";
 import { generateMarkdown } from "./tools/generateMarkdown";
 
+// Post-enforce fallback: when vite-plugin-svelte cannot resolve a Svelte
+// virtual CSS module (e.g. during dev re-optimization), return empty CSS so
+// @tailwindcss/vite does not receive the raw .svelte source and crash.
+function svelteVirtualCssFallback() {
+  const filter = /[?&]svelte&type=style&lang\.css$/;
+  return {
+    name: "svelte-virtual-css-fallback",
+    enforce: "post",
+    load(id) {
+      if (filter.test(id)) return "";
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.getprobo.com",
@@ -34,6 +48,9 @@ export default defineConfig({
     format: "file",
   },
   vite: {
+    optimizeDeps: {
+      exclude: ["svelte-sonner"],
+    },
     build: {
       rollupOptions: {
         output: {
@@ -56,6 +73,7 @@ export default defineConfig({
       },
     },
     plugins: [
+      svelteVirtualCssFallback(),
       tailwindcss(),
       faroUploader({
         appName: "site",
