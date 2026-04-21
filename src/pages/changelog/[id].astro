@@ -13,6 +13,9 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const mediaUrl = entry.data.image;
+const isVideoMedia =
+  typeof mediaUrl === "string" && /\.(mp4|webm)$/i.test(mediaUrl);
 const dateFormatter = Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
@@ -65,13 +68,22 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
     </p>
 
     {
-      entry.data.image && (
-        <img
-          src={entry.data.image}
-          alt={entry.data.title}
-          class="shadow-image animate-slide-in animation-delay-200 mb-10 w-full rounded-lg"
-        />
-      )
+      mediaUrl &&
+        (isVideoMedia ? (
+          <video
+            src={mediaUrl}
+            controls
+            playsinline
+            class="shadow-image animate-slide-in animation-delay-200 mb-10 w-full rounded-lg"
+          >
+          </video>
+        ) : (
+          <img
+            src={mediaUrl}
+            alt={entry.data.title}
+            class="shadow-image animate-slide-in animation-delay-200 mb-10 w-full rounded-lg"
+          />
+        ))
     }
 
     <Prose class="animate-slide-in animation-delay-200">
