@@ -16,6 +16,8 @@ export const StorySchema = z.object({
   previewImage: z.string().optional(),
   framework: z.enum(frameworks.map((f) => f.label) as any),
   logo: z.string(),
+  logoLightBg: z.string().optional(),
+  invertLogo: z.boolean().optional(),
   company: z.object({
     name: z.string(),
     industry: z.string(),

@@ -29,6 +29,8 @@ const stories = defineCollection({
     ogImage: z.string().optional(),
     framework: z.enum(frameworks.map((f) => f.label) as any),
     logo: z.string(),
+    /** Logo asset for light UI (e.g. story cards); falls back to `logo` */
+    logoLightBg: z.string().optional(),
     invertLogo: z.boolean().optional().default(true),
     company: z.object({
       name: z.string(),

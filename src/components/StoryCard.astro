@@ -85,6 +85,11 @@ const badge = isDark
   ? (framework?.badgeDark ?? framework?.badge)
   : framework?.badge;
 const shouldInvert = isDark && !framework?.badgeDark;
+const invertStoryLogo = isDark && story.data.invertLogo !== false;
+const cardLogoFile =
+  !isDark && story.data.logoLightBg
+    ? story.data.logoLightBg
+    : story.data.logo;
 const url =
   "/" +
   (story.id.includes("/")
@@ -104,9 +109,9 @@ const url =
   <div class={classNames.body()}>
     <div class="w-full space-y-2">
       <Image
-        src={images(story.data.logo)}
+        src={images(cardLogoFile)}
         alt={`${story.data.company?.name || story.data.title} logo`}
-        class={clsx("block h-4 w-auto", isDark && "invert")}
+        class={clsx("block h-4 w-auto", invertStoryLogo && "invert")}
       />
       <h3 class={classNames.title()}>{story.data.title}</h3>
     </div>
