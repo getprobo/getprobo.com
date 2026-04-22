@@ -41,7 +41,7 @@ export default defineConfig({
     },
     "/fr/blog/page/1": {
       status: 301,
-      destination: "/fr/blog",
+      destination: "/blog",
     },
   },
   build: {
@@ -414,10 +414,7 @@ export default defineConfig({
         if (page.endsWith("/yc") || page.endsWith("/yc/")) {
           return false;
         }
-        if (page.includes("/fr/docs")) {
-          return false;
-        }
-        if (page.includes("/fr/blog")) {
+        if (/\/fr(\/|$)/.test(page)) {
           return false;
         }
         if (page.includes("/404")) {

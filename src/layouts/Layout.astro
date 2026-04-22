@@ -18,77 +18,6 @@ const seoTitle = title
   ? `${title} | Probo`
   : "Open-Source Compliance Platform | Probo";
 const canonical = getCanonicalUrl(Astro.url);
-
-// Pages that have French translations
-const frenchTranslatedPages = [
-  "/",
-  "/about",
-  "/blog",
-  "/brand",
-  "/contact",
-  "/cookie-policy",
-  "/privacy",
-  "/stories",
-  "/terms",
-  "/yc",
-  "/pricing",
-];
-
-// Check if current page has a French translation
-function hasTranslation(pathname: string): boolean {
-  const currentLocale = Astro.currentLocale || "en";
-
-  // Normalize pathname (remove /fr prefix if present)
-  let normalizedPath = pathname;
-  if (normalizedPath.startsWith("/fr")) {
-    normalizedPath = normalizedPath.slice(3) || "/";
-  }
-
-  // Check static pages
-  if (frenchTranslatedPages.includes(normalizedPath)) {
-    return true;
-  }
-
-  // Check dynamic pages (blog posts, stories)
-  if (
-    normalizedPath.startsWith("/blog/") ||
-    normalizedPath.startsWith("/stories/")
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-// Generate hreflang URLs
-function getHreflangUrls(url: URL): { en: string; fr: string } | null {
-  const pathname = url.pathname;
-
-  if (!hasTranslation(pathname)) {
-    return null;
-  }
-
-  const baseUrl = "https://www.getprobo.com";
-  let enPath = pathname;
-  let frPath = pathname;
-
-  // If we're on a French page, extract the English path
-  if (pathname.startsWith("/fr")) {
-    enPath = pathname.slice(3) || "/";
-    frPath = pathname;
-  } else {
-    // We're on an English page
-    enPath = pathname;
-    frPath = pathname === "/" ? "/fr" : `/fr${pathname}`;
-  }
-
-  return {
-    en: `${baseUrl}${enPath}`,
-    fr: `${baseUrl}${frPath}`,
-  };
-}
-
-const hreflangUrls = getHreflangUrls(Astro.url);
 ---
 
 <!doctype html>
@@ -142,21 +71,9 @@ const hreflangUrls = getHreflangUrls(Astro.url);
         : "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"}
     />
     <link rel="canonical" href={canonical} />
-    {
-      hreflangUrls && (
-        <>
-          <link rel="alternate" hreflang="en" href={hreflangUrls.en} />
-          <link rel="alternate" hreflang="fr" href={hreflangUrls.fr} />
-          <link rel="alternate" hreflang="x-default" href={hreflangUrls.en} />
-        </>
-      )
-    }
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Probo" />
-    <meta
-      property="og:locale"
-      content={(Astro.currentLocale || "en") === "fr" ? "fr_FR" : "en_US"}
-    />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={seoTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />

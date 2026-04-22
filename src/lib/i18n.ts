@@ -36,7 +36,8 @@ export const filterLang =
   };
 
 /**
- * Get the canonical URL for a page (self-canonical)
+ * Canonical URL for the public English site. Strips `/fr` so meta matches
+ * edge redirects (French URLs redirect to the same path without prefix).
  */
 export function getCanonicalUrl(url: URL): string {
   const baseUrl = url.origin;
@@ -44,6 +45,10 @@ export function getCanonicalUrl(url: URL): string {
 
   // Remove trailing .html if present
   pathname = pathname.replace(/\.html$/, "");
+
+  if (pathname === "/fr" || pathname.startsWith("/fr/")) {
+    pathname = pathname.slice(3) || "/";
+  }
 
   return `${baseUrl}${pathname}`;
 }
