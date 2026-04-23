@@ -27,6 +27,7 @@ This automatically renders a fully styled consent dialog and a floating settings
 | `data-banner-id` | Yes | Your banner ID from the Probo console |
 | `data-base-url` | Yes | The Probo cookie banner API base URL |
 | `data-position` | No | Settings button position: `bottom-left` (default) or `bottom-right` |
+| `data-lang` | No | Force a specific language (e.g. `"fr"`). When omitted, the SDK auto-detects from the page or browser. See [Language Detection](#language-detection). |
 | `data-reopen-widget` | No | Set to `"custom"` to hide the floating settings button and use your own re-open trigger |
 
 ## Themed Banner (ES Module)
@@ -58,6 +59,7 @@ registerThemedBanner();
 | `banner-id` | Yes | Your banner ID from the Probo console |
 | `base-url` | Yes | The Probo cookie banner API base URL |
 | `position` | No | Settings button position: `bottom-left` (default) or `bottom-right` |
+| `lang` | No | Force a specific language (e.g. `"fr"`). When omitted, the SDK auto-detects from the page or browser. See [Language Detection](#language-detection). |
 | `reopen-widget` | No | Set to `"custom"` to hide the floating settings button and use your own re-open trigger |
 
 Since this is a Web Component, it works in any framework. In React, JSX treats it as a custom element. In Vue or Svelte, use it directly in your template.
@@ -128,7 +130,7 @@ Then build your own layout:
 
 | Component | Description |
 | --- | --- |
-| `<probo-cookie-banner-root>` | Root element. Requires `banner-id` and `base-url`. Optional `reopen-widget` attribute (`"floating"` default or `"custom"`). Manages client lifecycle and state. |
+| `<probo-cookie-banner-root>` | Root element. Requires `banner-id` and `base-url`. Optional `lang` attribute to force a language. Optional `reopen-widget` attribute (`"floating"` default or `"custom"`). Manages client lifecycle and state. |
 | `<probo-banner>` | Container shown when consent has not been given yet. |
 | `<probo-accept-button>` | Wraps a button that records "accept all" consent. |
 | `<probo-reject-button>` | Wraps a button that records "reject all" consent. |
@@ -186,13 +188,93 @@ With headless components:
 </probo-cookie-banner-root>
 ```
 
+## Language Detection
+
+The SDK automatically resolves the visitor's language using the following priority:
+
+1. **Explicit attribute** — The `lang` attribute on the component (or `data-lang` on the script tag)
+2. **Page language** — The `lang` attribute on the `<html>` element, using the base language subtag (e.g. `fr` from `fr-FR`)
+3. **Browser language** — The browser's `navigator.language`, using the base subtag
+4. **Default language** — The banner's default language configured in the console (defaults to `en`)
+
+The resolved language is sent to the API when fetching the banner configuration. The API returns all UI text, category names, and descriptions in the resolved language. If no translation exists for that language, the API falls back to the banner's default language.
+
+### Built-in Languages
+
+New banners include translations for four languages out of the box:
+
+| Code | Language |
+| --- | --- |
+| `en` | English |
+| `fr` | French |
+| `de` | German |
+| `es` | Spanish |
+
+You can customize these translations and add new languages from the Probo console. All banner text is translatable, including:
+
+- Banner title and description
+- Button labels (accept all, reject all, customize, save preferences)
+- Preference panel title and description
+- Cookie detail labels (description, duration)
+- ARIA accessibility labels
+- Privacy policy link text
+- Content placeholder text (shown when resources are blocked)
+- Duration labels (years, months, days, etc.)
+
+### Forcing a Language
+
+To override auto-detection, set the language explicitly:
+
+**Script tag:**
+
+```html
+<script
+  src="https://unpkg.com/@probo/cookie-banner/dist/cookie-banner.iife.js"
+  data-banner-id="YOUR_BANNER_ID"
+  data-base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+  data-lang="de"
+></script>
+```
+
+**Themed banner:**
+
+```html
+<probo-cookie-banner
+  banner-id="YOUR_BANNER_ID"
+  base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+  lang="de"
+></probo-cookie-banner>
+```
+
+**Headless components:**
+
+```html
+<probo-cookie-banner-root
+  banner-id="YOUR_BANNER_ID"
+  base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+  lang="de"
+>
+  <!-- ... -->
+</probo-cookie-banner-root>
+```
+
+### Matching the Page Language
+
+In most cases, you don't need to set a language explicitly. If your page has a `lang` attribute on the `<html>` element, the SDK picks it up automatically:
+
+```html
+<html lang="fr">
+```
+
+This is the recommended approach for multilingual sites that already set the `lang` attribute as part of their i18n setup.
+
 ## Events
 
 The SDK emits custom events that bubble through the DOM. Listen on the root element or any ancestor:
 
 | Event | Detail | Description |
 | --- | --- | --- |
-| `probo-ready` | `{ config }` | Fired when the banner configuration has been loaded from the API. |
+| `probo-ready` | `{ config }` | Fired when the banner configuration has been loaded from the API. The `config` object includes `language` (resolved language), `default_language`, `available_languages`, and `texts` (all UI strings for the resolved language). |
 | `probo-state` | `{ state, prev }` | Fired when the banner UI state changes. States: `loading`, `banner`, `panel`, `hidden`. |
 | `probo-consent` | `{ action, consent_data }` | Fired after consent is recorded. Actions: `ACCEPT_ALL`, `REJECT_ALL`, `CUSTOMIZE`. |
 | `probo-reopen-widget` | `{ value }` | Fired when the `reopen-widget` attribute changes on the root. Values: `"floating"`, `"custom"`. |

@@ -27,6 +27,7 @@ This guide walks you through creating a cookie banner in the Probo console and a
    | **Privacy Policy URL** | Link to your privacy policy page |
    | **Consent Expiry** | Number of days before consent expires and the banner reappears (default: 365) |
    | **Consent Mode** | Choose **Opt-in** (recommended for GDPR) or **Opt-out** |
+   | **Default Language** | The fallback language for the banner (default: `en`). The SDK uses this when the visitor's language is not available. |
 
 2. **Configure cookie categories**
 
@@ -37,7 +38,17 @@ This guide walks you through creating a cookie banner in the Probo console and a
    - **Add custom categories** with a name and description
    - **Delete normal categories** you don't need — any cookies in them are automatically moved to the Uncategorised category. System categories (Necessary and Uncategorised) cannot be deleted.
 
-3. **Add cookies to each category**
+3. **Customize translations (optional)**
+
+   Go to the **Translations** tab. Built-in translations for English, French, German, and Spanish are created automatically. You can:
+   - **Edit UI text** for any language — banner title, description, button labels, and ARIA attributes
+   - **Translate category names and descriptions** per language
+   - **Add new languages** for any locale not included by default
+   - **Set the default language** in the banner settings — the SDK falls back to this when the visitor's language is not available
+
+   Changes to translations create a new draft version, just like any other configuration change.
+
+4. **Add cookies to each category**
 
    Switch to the **Cookies** tab to document the specific cookies used in each category. For each cookie, provide:
    - **Name** — The cookie name (e.g. `_ga`)
@@ -48,11 +59,11 @@ This guide walks you through creating a cookie banner in the Probo console and a
 
    This information is displayed to visitors in the preference panel so they can make informed decisions.
 
-4. **Publish the banner**
+5. **Publish the banner**
 
    Click **Publish Changes** in the banner header. This creates a published version of your configuration that the SDK will serve to visitors.
 
-5. **Add the snippet to your website**
+6. **Add the snippet to your website**
 
    Go to the **JS / CSS snippets** tab and copy the script tag. Add it to your website's HTML, ideally just before the closing `</body>` tag:
 
@@ -67,11 +78,22 @@ This guide walks you through creating a cookie banner in the Probo console and a
 
    Replace `YOUR_BANNER_ID` and the base URL with the values shown in the console.
 
-6. **Activate the banner**
+   The SDK automatically detects the visitor's language from your page's `<html lang="...">` attribute or the browser's language setting. To force a specific language, add `data-lang`:
+
+   ```html
+   <script
+     src="https://unpkg.com/@probo/cookie-banner/dist/cookie-banner.iife.js"
+     data-banner-id="YOUR_BANNER_ID"
+     data-base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+     data-lang="fr"
+   ></script>
+   ```
+
+7. **Activate the banner**
 
    Back in the console, click **Activate** to make the banner live. Only one banner can be active per origin at a time.
 
-7. **Tag third-party scripts**
+8. **Tag third-party scripts**
 
    Mark any scripts or elements that require consent with the `data-cookie-consent` attribute. For example, to gate an analytics script:
 

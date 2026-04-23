@@ -12,6 +12,7 @@ Probo's cookie banner lets you collect and manage visitor cookie consent on your
 - **Consent collection** — Display a customizable banner that lets visitors accept all, reject all, or choose consent per cookie category.
 - **Category-based control** — Organize cookies into categories (Necessary, Analytics, Advertising, Functional, Uncategorised, or custom) with per-category toggles. Move cookies between categories as needed.
 - **Third-party blocking** — Automatically prevent scripts, iframes, images, and other resources from loading until the visitor grants consent for the corresponding category.
+- **Multi-language support** — Built-in translations for English, French, German, and Spanish. Customize all banner text per language, including category names and descriptions. The SDK automatically detects the visitor's language from the page or browser.
 - **Versioned configuration** — Every change to your banner creates a draft version. Publish when ready, and each consent record is tied to the exact version the visitor saw.
 - **Opt-in and opt-out modes** — Choose whether visitors must opt in before non-essential cookies are set, or whether cookies are active until the visitor opts out.
 - **Consent audit trail** — Every consent action (accept all, reject all, customize, GPC) is recorded with an anonymized IP address and user agent for compliance evidence.
@@ -26,7 +27,27 @@ The cookie banner system has three parts:
 2. **Probo API** — A REST API that serves banner configuration to visitors and records their consent decisions.
 3. **JavaScript SDK** (`@probo/cookie-banner`) — A client-side library that renders the consent UI, communicates with the API, stores consent in a cookie, and blocks/unblocks third-party resources based on the visitor's choices.
 
-When a visitor loads your page, the SDK fetches the published banner configuration from the API, checks for existing consent, and displays the banner if needed. After the visitor makes a choice, the SDK records consent via the API and activates any third-party resources the visitor has allowed.
+When a visitor loads your page, the SDK fetches the published banner configuration from the API in the appropriate language, checks for existing consent, and displays the banner if needed. After the visitor makes a choice, the SDK records consent via the API and activates any third-party resources the visitor has allowed.
+
+## Multi-Language Support
+
+Probo supports serving the cookie banner in multiple languages. When you create a banner, built-in translations for **English**, **French**, **German**, and **Spanish** are created automatically. You can customize these translations and add new languages from the console.
+
+The system translates:
+
+- All banner UI text (title, description, buttons, labels, ARIA attributes)
+- Cookie category names and descriptions
+- Cookie duration labels
+- Content placeholder text (shown when resources are blocked)
+
+The SDK resolves the visitor's language using this priority:
+
+1. An explicit `lang` attribute on the component (or `data-lang` on the script tag)
+2. The `lang` attribute on the page's `<html>` element (base subtag, e.g. `fr` from `fr-FR`)
+3. The browser's `navigator.language`
+4. The banner's default language (set in the console)
+
+If the resolved language has no published translation, the banner falls back to its default language.
 
 ## Consent Modes
 
@@ -63,7 +84,7 @@ Categories that contain no cookies are automatically hidden from the banner. Onl
   />
   <LinkCard
     title="JavaScript SDK"
-    description="Installation options, components, and events reference"
+    description="Installation options, language detection, components, and events reference"
     href="/docs/product/cookie-banner/javascript-sdk"
   />
   <LinkCard
