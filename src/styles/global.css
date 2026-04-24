@@ -89,6 +89,32 @@
   --tw-prose-invert-td-borders: var(--color-border-low);
 }
 
+/* Article images (e.g. blog MDX screenshots): frame so they read as figures, not live UI */
+.prose img {
+  box-sizing: border-box;
+  max-width: 100%;
+  height: auto;
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border-solid);
+  padding: 0.375rem;
+  background-color: var(--color-level-0);
+  box-shadow:
+    0 0 0 1px rgb(20 30 18 / 0.04),
+    0 1px 2px rgb(20 30 18 / 0.06),
+    0 8px 28px rgb(20 30 18 / 0.08);
+}
+
+.dark .prose img {
+  border-color: var(--color-border-mid);
+  background-color: var(--color-level-0);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.04),
+    0 1px 2px rgb(0 0 0 / 0.35),
+    0 8px 28px rgb(0 0 0 / 0.35);
+}
+
 @utility container {
   max-width: 1120px;
   padding-inline: 1.25rem;

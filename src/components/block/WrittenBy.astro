@@ -2,6 +2,7 @@
 import clsx from "clsx";
 import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/antoine-bourchardy.png";
+import ArthurPortrait from "../../assets/arthur-mayoux-blog.svg";
 import BryanPortrait from "../../assets/bryan_firmin.svg";
 import { getTranslator } from "../../lib/i18n.ts";
 const __ = await getTranslator(Astro.currentLocale);
@@ -15,6 +16,7 @@ const { class: className, author } = Astro.props;
 
 const showBoth = !author;
 const isAntoine = author === "Antoine Bouchardy";
+const isArthur = author === "Arthur Mayoux";
 const isBryan = author === "Bryan Frimin";
 ---
 
@@ -78,7 +80,7 @@ const isBryan = author === "Bryan Frimin";
 }
 
 {
-  (isAntoine || isBryan) && (
+  (isAntoine || isArthur || isBryan) && (
     <div
       class={clsx(
         "flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10",
@@ -100,6 +102,24 @@ const isBryan = author === "Bryan Frimin";
               </a>
               {__(
                 "is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he's not building Probo, you'll find him cycling or tinkering with open-source projects.",
+              )}
+            </div>
+          </>
+        )}
+        {isArthur && (
+          <>
+            <div class="text-xs font-medium">
+              {__("Written by")} Arthur Mayoux
+            </div>
+            <div class="text-muted-foreground text-xs">
+              <a
+                href="https://www.linkedin.com/in/arthurmayoux/"
+                class="text-success"
+              >
+                Arthur Mayoux
+              </a>
+              {__(
+                "is the Chief of Staff at Probo. Working across multiple departments, his primary objective is to help the company scale.",
               )}
             </div>
           </>
@@ -129,6 +149,16 @@ const isBryan = author === "Bryan Frimin";
           densities={[1, 2]}
           src={AntoinePortrait}
           alt="Portrait Antoine Bouchardy"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      )}
+
+      {isArthur && (
+        <Image
+          src={ArthurPortrait}
+          alt="Portrait Arthur Mayoux"
           class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
           width={164}
           height={164}
