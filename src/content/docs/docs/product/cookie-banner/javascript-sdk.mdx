@@ -288,6 +288,36 @@ document.addEventListener("probo-consent", (e) => {
 ## How Consent Is Stored
 
 - **Client-side:** A `probo_consent` cookie stores the visitor's consent state. The cookie's `max-age` is set to the consent expiry configured on the banner (in days). It uses `SameSite=Lax`.
-- **Server-side:** Every consent action is recorded via the Probo API with the banner version, visitor ID, action type, anonymized IP address, and user agent.
+- **Server-side:** Every consent action is recorded via the Probo API with the banner version, visitor ID, action type, anonymized IP address, and user agent. IP addresses are anonymized before storage (IPv4 last octet zeroed, IPv6 masked to /48) — the full IP is never persisted. See [Audit Trail](/docs/product/cookie-banner/overview#audit-trail) for the complete list of stored fields.
 - **Visitor identity:** The SDK generates a random visitor ID and stores it in `localStorage`. This ID is used to look up existing consent when the visitor returns.
 - **Offline resilience:** If the API is unreachable when consent is recorded, the request is queued in `localStorage` and retried automatically on the next page load.
+
+## Integrations
+
+The SDK ships with built-in integrations that automatically sync consent state with third-party services. Both integrations are enabled by default — they activate only when the corresponding flags are configured on your cookie categories in the Probo console. No extra code is needed.
+
+### Google Consent Mode
+
+The SDK pushes [Google Consent Mode v2](https://developers.google.com/tag-platform/security/guides/consent) signals to `gtag()` or `dataLayer`, keeping Google tags in sync with visitor consent.
+
+How it works:
+
+1. On load, the SDK sends a `consent("default", ...)` call that sets all configured consent types to `"denied"`.
+2. When the visitor makes a choice, the SDK sends a `consent("update", ...)` call with `"granted"` or `"denied"` for each consent type based on the visitor's per-category choices.
+
+Configuration is driven by the **GCM consent types** field on each cookie category in the Probo console. Map categories to Google consent types like `analytics_storage`, `ad_storage`, `ad_user_data`, or `ad_personalization`. Categories without GCM consent types configured are ignored.
+
+The integration detects `window.gtag` or `window.dataLayer` automatically. If neither is present, it does nothing.
+
+### PostHog
+
+The SDK syncs consent with PostHog's capture opt-in/opt-out mechanism, ensuring PostHog only tracks visitors who have granted consent.
+
+How it works:
+
+1. On load, the SDK calls `posthog.opt_out_capturing()` to ensure no data is collected before consent.
+2. When the visitor grants consent for all PostHog-mapped categories, the SDK calls `posthog.opt_in_capturing()`. If any mapped category is denied, it calls `posthog.opt_out_capturing()`.
+
+Configuration is driven by the **PostHog consent** flag on each cookie category in the Probo console. Enable it on the categories that should gate PostHog tracking (typically Analytics).
+
+The integration requires the PostHog JavaScript SDK to be loaded on your page separately. It detects `window.posthog` automatically. If PostHog is not present, it does nothing.
