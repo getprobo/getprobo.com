@@ -175,12 +175,18 @@ const canonical = getCanonicalUrl(Astro.url);
     <Header />
     <slot />
     <Footer noFrameworks={Astro.props.noFrameworks} />
+    <probo-cookie-banner
+      banner-id={import.meta.env.PUBLIC_COOKIE_BANNER_ID}
+      base-url="https://us.console.getprobo.com/api/cookie-banner/v1"
+      position="bottom-right"></probo-cookie-banner>
   </body>
 </html>
 
 <script>
   import { langs } from "../config.ts";
   import { trim } from "../lib/string.ts";
+  import { registerThemedBanner } from "@probo/cookie-banner";
+
   function redirectLang() {
     const lang = localStorage.getItem("lang");
     // The check was already done in the past, do nothing
@@ -207,4 +213,5 @@ const canonical = getCanonicalUrl(Astro.url);
   }
 
   redirectLang();
+  registerThemedBanner();
 </script>
