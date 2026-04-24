@@ -72,18 +72,6 @@ type Props = {
           <div class="space-y-3">
             <div class="mb-3 font-medium">{menu.label}</div>
             <ul class="space-y-3">
-              {menu.label === "Legal" &&
-                <li>
-                  <a
-                    href="#"
-                    class="text-tertiary-foreground text-sm hover:text-white hover:underline"
-                  >
-                    <probo-settings-link>
-                      Cookie Settings
-                    </probo-settings-link>
-                  </a>
-                </li>
-              }
               {menu.items.map((item) => (
                 <li>
                   <a
