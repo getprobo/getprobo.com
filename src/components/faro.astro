@@ -1,4 +1,11 @@
-<script type="text/plain" data-type="module" data-cookie-consent="analytics">
+<script>
+  declare global {
+    interface Window {
+      __initFaro?: () => void;
+      __FARO_INITIALIZED__?: boolean;
+    }
+  }
+
   import {
     initializeFaro,
     getWebInstrumentations,
@@ -6,23 +13,24 @@
     ViewInstrumentation,
   } from "@grafana/faro-web-sdk";
 
-  if (import.meta.env.PROD && !window.__FARO_INITIALIZED__) {
+  window.__initFaro = () => {
+    if (window.__FARO_INITIALIZED__) return;
     window.__FARO_INITIALIZED__ = true;
     initializeFaro({
       url: "https://faro-collector-prod-us-west-0.grafana.net/collect/bc771c773d3690b642ccf001af91958a",
-      app: {
-        name: "site",
-        version: "1.0.0",
-      },
+      app: { name: "site", version: "1.0.0" },
       instrumentations: [
         ...getWebInstrumentations({
           captureConsole: true,
           enablePerformanceInstrumentation: true,
         }),
-
         new NavigationInstrumentation(),
         new ViewInstrumentation(),
       ],
     });
-  }
+  };
+</script>
+
+<script is:inline type="text/plain" data-cookie-consent="analytics">
+  window.__initFaro?.();
 </script>
