@@ -50,8 +50,7 @@ src/
 ├── layouts/         # Page layouts
 ├── lib/             # Utilities and helpers
 │   └── runes/       # Svelte runes (hooks)
-├── styles/          # Global CSS
-└── locales/         # i18n translations
+└── styles/          # Global CSS
 
 tools/               # Build scripts
 functions/           # Cloudflare Workers
@@ -92,16 +91,6 @@ Use Svelte 5 runes syntax for reactivity:
 </script>
 ```
 
-### Internationalization
-
-Wrap user-facing text with the translator:
-
-```typescript
-import { getTranslator } from "@/lib/i18n";
-const __ = await getTranslator(Astro.currentLocale);
-// Usage: {__("Key or default text")}
-```
-
 ### Content Collections
 
 Blog and stories use MDX with Zod schemas for validation. Stories require:
@@ -133,7 +122,6 @@ const button = tv({
 | Blog posts       | `src/content/blog/`    | MDX             |
 | Customer stories | `src/content/stories/` | MDX with schema |
 | Documentation    | `src/content/docs/`    | MDX (Starlight) |
-| Translations     | `src/locales/`         | TypeScript      |
 | Framework data   | `public/frameworks/`   | JSON            |
 
 ## Important Notes
@@ -141,9 +129,8 @@ const button = tv({
 1. **No test framework** - Focus on build verification and manual testing
 2. **Format before commit** - Run `make format` before pushing
 3. **Auto-deploy** - Commits to `v2` branch auto-deploy to Cloudflare Pages
-4. **i18n support** - English (default) and French locales
-5. **Strict TypeScript** - Use proper typing; Zod for runtime validation
-6. **Content-first** - Most changes are content (MDX), not component code
+4. **Strict TypeScript** - Use proper typing; Zod for runtime validation
+5. **Content-first** - Most changes are content (MDX), not component code
 
 ## Don't
 
@@ -159,4 +146,3 @@ const button = tv({
 - Do use Tailwind utilities for styling
 - Do run `npm run build` to verify changes compile
 - Do keep solutions simple and focused
-- Do use the existing i18n pattern for user-facing text

@@ -1,8 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FrameworkBadge from "../components/FrameworkBadge.svelte";
-import { getTranslator } from "../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const frameworks = [
   {
@@ -192,8 +190,8 @@ const articles = [
 ---
 
 <Layout
-  title={__("Hub")}
-  description={__("Your central resource for compliance knowledge, guides, and tools.")}
+  title="Hub"
+  description="Your central resource for compliance knowledge, guides, and tools."
 >
   <main class="container my-10 sm:my-20">
     <!-- Hero Section -->
@@ -215,17 +213,17 @@ const articles = [
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
           <polyline points="9 22 9 12 15 12 15 22"></polyline>
         </svg>
-        {__("Resource Center")}
+        Resource Center
       </div>
       <h1
         class="text-h2 sm:text-h1 mb-6 font-medium animate-slide-in animation-delay-100"
       >
-        {__("Hub")}
+        Hub
       </h1>
       <p
         class="text-muted-foreground text-lg sm:text-xl font-medium max-w-[600px] mx-auto animate-slide-in animation-delay-200"
       >
-        {__("Your central resource for compliance knowledge, guides, and tools.")}
+        Your central resource for compliance knowledge, guides, and tools.
       </p>
     </div>
 
@@ -233,10 +231,10 @@ const articles = [
     <section class="animate-slide-in animation-delay-300">
       <div class="mb-10">
         <h2 class="text-h3 sm:text-[40px] sm:leading-[54px] font-medium mb-3 tracking-[-0.8px]">
-          {__("Compliance Guides")}
+          Compliance Guides
         </h2>
         <p class="text-muted-foreground text-lg">
-          {__("Start your compliance journey with our comprehensive guides")}
+          Start your compliance journey with our comprehensive guides
         </p>
       </div>
 
@@ -293,7 +291,7 @@ const articles = [
                     href={framework.href}
                     class="group/btn inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-full font-medium transition-all hover:gap-3 shadow-lg hover:shadow-xl"
                   >
-                    {__("Access Complete Guide")}
+                    Access Complete Guide
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -332,10 +330,10 @@ const articles = [
     <section class="mt-10 sm:mt-16 animate-slide-in animation-delay-325">
       <div class="mb-10">
         <h2 class="text-h3 sm:text-[40px] sm:leading-[54px] font-medium mb-3 tracking-[-0.8px]">
-          {__("Tools")}
+          Tools
         </h2>
         <p class="text-muted-foreground text-lg">
-          {__("Free tools to help you navigate your compliance journey")}
+          Free tools to help you navigate your compliance journey
         </p>
       </div>
 
@@ -396,10 +394,10 @@ const articles = [
     <section class="mt-10 sm:mt-16 animate-slide-in animation-delay-350">
       <div class="mb-10">
         <h2 class="text-h3 sm:text-[40px] sm:leading-[54px] font-medium mb-3 tracking-[-0.8px]">
-          {__("Articles & Comparisons")}
+          Articles & Comparisons
         </h2>
         <p class="text-muted-foreground text-lg">
-          {__("In-depth analysis and comparisons to help you make informed decisions")}
+          In-depth analysis and comparisons to help you make informed decisions
         </p>
       </div>
 
@@ -485,14 +483,10 @@ const articles = [
             <h3
               class="text-h4 sm:text-[32px] sm:leading-[42px] font-medium text-[#141e12] tracking-[-0.8px]"
             >
-              {__("More guides coming soon")}
+              More guides coming soon
             </h3>
             <p class="text-muted-foreground text-lg max-w-[600px]">
-              {
-                __(
-                  "We're constantly expanding our compliance knowledge center. Stay tuned for guides on GDPR, HIPAA, and more frameworks."
-                )
-              }
+                              We're constantly expanding our compliance knowledge center. Stay tuned for guides on GDPR, HIPAA, and more frameworks.
             </p>
           </div>
         </div>

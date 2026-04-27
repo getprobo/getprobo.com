@@ -3,37 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import ProboLogo from "../assets/probo-logo.svg";
 import ProboLogoOnly from "../assets/probo-logo-only.svg";
-import { getTranslator } from "../lib/i18n.ts";
 import { frameworks } from "../content/frameworks.ts";
 import FrameworkBadge from "../components/FrameworkBadge.svelte";
-
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <Layout
-  title={__("Brand Assets")}
-  description={__(
-    "Download Probo's official logos, badges, and brand assets for your projects and presentations.",
-  )}
+  title="Brand Assets"
+  description="Download Probo's official logos, badges, and brand assets for your projects and presentations."
 >
   <main class="container max-w-[920px] py-10 sm:py-20">
-    <h1 class="text-h2 animate-slide-in mb-3 font-medium">
-      {__("Brand Assets")}
-    </h1>
+    <h1 class="text-h2 animate-slide-in mb-3 font-medium">Brand Assets</h1>
     <p
       class="text-muted-foreground animate-slide-in animation-delay-100 mb-10 sm:mb-20"
     >
-      {
-        __(
-          "Official logos, badges, and brand assets for Probo. Feel free to use these in your projects, presentations, or when mentioning Probo.",
-        )
-      }
+      Official logos, badges, and brand assets for Probo. Feel free to use these
+      in your projects, presentations, or when mentioning Probo.
     </p>
 
     <div class="space-y-16">
       <!-- Logos Section -->
       <section class="animate-slide-in animation-delay-200">
-        <h2 class="mb-6 text-xl font-medium">{__("Logo")}</h2>
+        <h2 class="mb-6 text-xl font-medium">Logo</h2>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <!-- Full Logo -->
           <div>
@@ -54,7 +44,7 @@ const __ = await getTranslator(Astro.currentLocale);
                 download
                 class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-md px-4 py-2 text-sm transition-colors"
               >
-                {__("Download SVG")}
+                Download SVG
               </a>
             </div>
           </div>
@@ -78,7 +68,7 @@ const __ = await getTranslator(Astro.currentLocale);
                 download
                 class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-md px-4 py-2 text-sm transition-colors"
               >
-                {__("Download SVG")}
+                Download SVG
               </a>
             </div>
           </div>
@@ -87,13 +77,10 @@ const __ = await getTranslator(Astro.currentLocale);
 
       <!-- Compliance Badges Section -->
       <section class="animate-slide-in animation-delay-300">
-        <h2 class="mb-6 text-xl font-medium">{__("Compliance Badges")}</h2>
+        <h2 class="mb-6 text-xl font-medium">Compliance Badges</h2>
         <p class="text-muted-foreground mb-6 text-sm">
-          {
-            __(
-              "Official compliance badges for ISO 27001, SOC 2, GDPR, HIPAA, and more.",
-            )
-          }
+          Official compliance badges for ISO 27001, SOC 2, GDPR, HIPAA, and
+          more.
         </p>
         <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4">
           {

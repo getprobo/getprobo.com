@@ -4,10 +4,9 @@ import { getCollection } from "astro:content";
 import WrittenBy from "../components/block/WrittenBy.astro";
 import { pageSize } from "../content.config.ts";
 import Pagination from "../components/Pagination.astro";
-import { filterLang, getLink, getTranslator } from "../lib/i18n.ts";
-const allPosts = (
-  await getCollection("blog", filterLang(Astro.currentLocale))
-).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const allPosts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 const lastPage = Math.ceil(allPosts.length / pageSize);
 const posts = allPosts.slice(0, pageSize);
 const dateFormatter = Intl.DateTimeFormat("en-US", {
@@ -15,7 +14,6 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
   month: "long",
   day: "numeric",
 });
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <Layout
@@ -23,13 +21,11 @@ const __ = await getTranslator(Astro.currentLocale);
   description="The latest news, insights, and practical guides about compliance, security certifications, SOC 2, ISO 27001, and GDPR from the Probo team."
 >
   <main class="container my-10 sm:my-20">
-    <h1 class="text-h2 animate-slide-in mb-3 font-medium">
-      {__("Blog")}
-    </h1>
+    <h1 class="text-h2 animate-slide-in mb-3 font-medium">Blog</h1>
     <p
       class="text-muted-foreground animate-slide-in animation-delay-100 mb-10 text-base sm:mb-16"
     >
-      {__("The latest news from Probo")}
+      The latest news from Probo
     </p>
     <div
       class="animate-slide-in animation-delay-300 flex flex-col items-start gap-10 sm:grid sm:grid-cols-[1fr_320px] sm:gap-30"
@@ -44,7 +40,7 @@ const __ = await getTranslator(Astro.currentLocale);
               </div>
               <h2>
                 <a
-                  href={getLink(Astro, `/blog/${post.id.split("/").at(-1)}`)}
+                  href={`/blog/${post.id.split("/").at(-1)}`}
                   class="text-h4 block font-medium hover:opacity-80"
                 >
                   {post.data.title}

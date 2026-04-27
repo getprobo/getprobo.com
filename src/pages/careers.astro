@@ -1,38 +1,28 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import { getTranslator } from "../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
 
 const positions = await getCollection("jobs");
 ---
 
 <Layout
-  title={__("Careers - Join Probo")}
-  description={__(
-    "Join Probo and help make compliance simple for every company. See our open positions.",
-  )}
+  title="Careers - Join Probo"
+  description="Join Probo and help make compliance simple for every company. See our open positions."
 >
   <main>
     <section class="mx-auto my-10 max-w-[720px] px-5 sm:mt-20 sm:mb-30">
-      <h1 class="text-h2 animate-slide-in mb-3 font-medium">
-        {__("Careers")}
-      </h1>
+      <h1 class="text-h2 animate-slide-in mb-3 font-medium">Careers</h1>
       <p
         class="text-muted-foreground animate-slide-in animation-delay-100 mb-6 max-w-2xl sm:mb-12"
       >
-        {
-          __(
-            "We're building the future of compliance. Join our team and help make compliance simple and accessible for every company.",
-          )
-        }
+        We're building the future of compliance. Join our team and help make
+        compliance simple and accessible for every company.
       </p>
 
       {
         positions.length > 0 ? (
           <div class="animate-slide-in animation-delay-200 flex flex-col gap-4">
-            <h2 class="text-muted-foreground mb-1">{__("Open positions")}</h2>
+            <h2 class="text-muted-foreground mb-1">Open positions</h2>
             {positions.map((position) => (
               <a
                 href={`/careers/${position.id}`}
@@ -51,12 +41,11 @@ const positions = await getCollection("jobs");
         ) : (
           <div class="animate-slide-in animation-delay-200 border-border-low rounded-lg border p-10 text-center">
             <p class="text-muted-foreground mb-4">
-              {__(
-                "There are no open positions at the moment. However, we're always looking for talented people.",
-              )}
+              There are no open positions at the moment. However, we're always
+              looking for talented people.
             </p>
             <p>
-              {__("Send us your resume at")}{" "}
+              Send us your resume at{" "}
               <a
                 href="mailto:hello@getprobo.com"
                 class="text-primary underline"
@@ -72,14 +61,10 @@ const positions = await getCollection("jobs");
         class="animate-slide-in animation-delay-300 border-border-low mt-10 rounded-lg border p-10 text-center"
       >
         <p class="text-muted-foreground mb-4">
-          {
-            __(
-              "Don't see the right role? We're always looking for talented people.",
-            )
-          }
+          Don't see the right role? We're always looking for talented people.
         </p>
         <p>
-          {__("Send us your resume at")}{" "}
+          Send us your resume at{" "}
           <a href="mailto:hello@getprobo.com" class="text-primary underline">
             hello@getprobo.com
           </a>

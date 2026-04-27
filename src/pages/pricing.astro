@@ -3,16 +3,11 @@ import Layout from "../layouts/Layout.astro";
 import PricingCards from "../components/block/PricingCards.astro";
 import PathToCompliance from "../components/block/PathToCompliance.astro";
 import Testimonials from "../components/block/Testimonials.astro";
-import { getTranslator } from "../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <Layout
-  title={__("Pricing")}
-  description={__(
-    "Get audit-ready. We handle everything from gap assessment to audit day. Pick the plan that fits, or deploy our open-source platform.",
-  )}
+  title="Pricing"
+  description="Get audit-ready. We handle everything from gap assessment to audit day. Pick the plan that fits, or deploy our open-source platform."
 >
   <!-- Pricing Section — Hero + Plans -->
   <PricingCards />

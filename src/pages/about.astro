@@ -5,26 +5,19 @@ import KeyFigures from "../components/block/KeyFigures.astro";
 import Team from "../components/block/Team.astro";
 import Gallery from "../components/block/Gallery.astro";
 import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
-import { getTranslator } from "../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <Layout
-  title={__("About Probo - Open-Source Compliance Platform")}
-  description={__(
-    "Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors.",
-  )}
+  title="About Probo - Open-Source Compliance Platform"
+  description="Learn about Probo's mission to transform compliance from a complex burden into an intuitive journey. Meet our team of ISO 27001 certified auditors."
 >
   <main>
     <section class="container my-10 sm:mt-20 sm:mb-30">
-      <h1 class="text-h2 animate-slide-in mb-3 font-medium">
-        {__("About")}
-      </h1>
+      <h1 class="text-h2 animate-slide-in mb-3 font-medium">About</h1>
       <p
         class="text-muted-foreground animate-slide-in animation-delay-100 mb-6 sm:mb-12"
       >
-        {__("The people and vision powering Probo.")}
+        The people and vision powering Probo.
       </p>
       <ResponsiveImage
         src={AboutImg}
@@ -37,14 +30,13 @@ const __ = await getTranslator(Astro.currentLocale);
       <h2
         class="text-muted-foreground animate-slide-in animation-delay-300 mb-1"
       >
-        {__("Mission")}
+        Mission
       </h2>
       <p class="text-quote animate-slide-in animation-delay-400">
-        {
-          __(
-            "We're transforming compliance from a complex burden into an intuitive journey. Our platform makes compliance straightforward and cost-effective, empowering businesses of all sizes to meet regulatory requirements with confidence.",
-          )
-        }
+        We're transforming compliance from a complex burden into an intuitive
+        journey. Our platform makes compliance straightforward and
+        cost-effective, empowering businesses of all sizes to meet regulatory
+        requirements with confidence.
       </p>
     </section>
 

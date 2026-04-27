@@ -87,9 +87,7 @@ const badge = isDark
 const shouldInvert = isDark && !framework?.badgeDark;
 const invertStoryLogo = isDark && story.data.invertLogo !== false;
 const cardLogoFile =
-  !isDark && story.data.logoLightBg
-    ? story.data.logoLightBg
-    : story.data.logo;
+  !isDark && story.data.logoLightBg ? story.data.logoLightBg : story.data.logo;
 const url =
   "/" +
   (story.id.includes("/")

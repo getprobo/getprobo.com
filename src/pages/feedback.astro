@@ -1,20 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import AboutImg from "../assets/about.png";
-import KeyFigures from "../components/block/KeyFigures.astro";
-import Team from "../components/block/Team.astro";
-import Gallery from "../components/block/Gallery.astro";
-import ResponsiveImage from "../components/ui/ResponsiveImage.astro";
-import { getTranslator } from "../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
-<Layout title={__("Feedback is gift")} description={__("Please be honest")}>
+<Layout title="Feedback is gift" description="Please be honest">
   <main>
     <section class="container my-10 sm:mt-20 sm:mb-30">
       <h1 class="text-h2 animate-slide-in mb-3 font-medium">
-        {__("Thank you for your trust")}
+        Thank you for your trust
       </h1>
       <iframe
         data-tally-src="https://tally.so/embed/XxreLO?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"

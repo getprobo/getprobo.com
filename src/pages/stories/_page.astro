@@ -8,7 +8,6 @@ import Sharer from "../../components/block/Sharer.svelte";
 import Newsletter from "../../components/block/Newsletter.astro";
 import { random } from "../../lib/array";
 import StoryCard from "../../components/StoryCard.astro";
-import { filterLang } from "../../lib/i18n.ts";
 type Props = {
   item: CollectionEntry<"stories">;
 };
@@ -23,9 +22,7 @@ const images = dynamicImages(
 const image = images(data.image);
 const logo = images(data.logo);
 const stories = random(
-  (await getCollection("stories", filterLang(Astro.currentLocale))).filter(
-    (s) => s.id !== item.id,
-  ),
+  (await getCollection("stories")).filter((s) => s.id !== item.id),
   3,
 );
 

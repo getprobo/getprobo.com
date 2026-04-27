@@ -4,8 +4,6 @@ import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/antoine-bourchardy.png";
 import ArthurPortrait from "../../assets/arthur-mayoux-blog.svg";
 import BryanPortrait from "../../assets/bryan_firmin.svg";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 interface Props {
   class?: string;
@@ -24,7 +22,7 @@ const isBryan = author === "Bryan Frimin";
   showBoth && (
     <div class={clsx("flex flex-col gap-8 sm:gap-10", className)}>
       <div class="text-xs font-medium">
-        {__("Written by")} Antoine Bouchardy and Bryan Frimin
+        Written by Antoine Bouchardy and Bryan Frimin
       </div>
 
       <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
@@ -36,9 +34,10 @@ const isBryan = author === "Bryan Frimin";
             >
               Antoine Bouchardy
             </a>
-            {__(
-              "is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he's not building Probo, you'll find him cycling or tinkering with open-source projects.",
-            )}
+            is the CEO and co-founder of Probo, on a mission to make compliance
+            simple and startup-friendly. He writes about the challenges founders
+            face balancing growth with regulation. When he's not building Probo,
+            you'll find him cycling or tinkering with open-source projects.
           </div>
         </div>
 
@@ -61,9 +60,8 @@ const isBryan = author === "Bryan Frimin";
             >
               Bryan Frimin
             </a>
-            {__(
-              "is the CTO and co-founder. Experienced with cyber-security, he's now building the open compliance tool which adapts to your actual stack.",
-            )}
+            is the CTO and co-founder. Experienced with cyber-security, he's now
+            building the open compliance tool which adapts to your actual stack.
           </div>
         </div>
 
@@ -90,9 +88,7 @@ const isBryan = author === "Bryan Frimin";
       <div class="flex flex-col gap-2">
         {isAntoine && (
           <>
-            <div class="text-xs font-medium">
-              {__("Written by")} Antoine Bouchardy
-            </div>
+            <div class="text-xs font-medium">Written by Antoine Bouchardy</div>
             <div class="text-muted-foreground text-xs">
               <a
                 href="https://www.linkedin.com/in/antoinebouchardy/"
@@ -100,9 +96,11 @@ const isBryan = author === "Bryan Frimin";
               >
                 Antoine Bouchardy
               </a>
-              {__(
-                "is the CEO and co-founder of Probo, on a mission to make compliance simple and startup-friendly. He writes about the challenges founders face balancing growth with regulation. When he's not building Probo, you'll find him cycling or tinkering with open-source projects.",
-              )}
+              is the CEO and co-founder of Probo, on a mission to make
+              compliance simple and startup-friendly. He writes about the
+              challenges founders face balancing growth with regulation. When
+              he's not building Probo, you'll find him cycling or tinkering with
+              open-source projects.
             </div>
           </>
         )}
@@ -126,9 +124,7 @@ const isBryan = author === "Bryan Frimin";
         )}
         {isBryan && (
           <>
-            <div class="text-xs font-medium">
-              {__("Written by")} Bryan Frimin
-            </div>
+            <div class="text-xs font-medium">Written by Bryan Frimin</div>
             <div class="text-muted-foreground text-xs">
               <a
                 href="https://www.linkedin.com/in/gearnode/"
@@ -136,9 +132,9 @@ const isBryan = author === "Bryan Frimin";
               >
                 Bryan Frimin
               </a>
-              {__(
-                "is the CTO and co-founder. Experienced with cyber-security, he's now building the open compliance tool which adapts to your actual stack.",
-              )}
+              is the CTO and co-founder. Experienced with cyber-security, he's
+              now building the open compliance tool which adapts to your actual
+              stack.
             </div>
           </>
         )}

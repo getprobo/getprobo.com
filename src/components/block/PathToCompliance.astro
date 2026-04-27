@@ -1,12 +1,9 @@
 ---
-import { getTranslator } from "../../lib/i18n.ts";
 import PlusBoldSvg from "@phosphor-icons/core/assets/bold/plus-bold.svg?raw";
 import MinusBoldSvg from "@phosphor-icons/core/assets/bold/minus-bold.svg?raw";
 import BinocularsSvg from "@phosphor-icons/core/assets/light/binoculars-light.svg?raw";
 import ClipboardTextSvg from "@phosphor-icons/core/assets/light/clipboard-text-light.svg?raw";
 import SealCheckSvg from "@phosphor-icons/core/assets/light/seal-check-light.svg?raw";
-
-const __ = await getTranslator(Astro.currentLocale);
 
 const plusIcon = PlusBoldSvg.replace(
   "<svg",
@@ -25,45 +22,45 @@ const stepIcons: Record<string, string> = {
 
 const steps = [
   {
-    label: __("Step 1"),
-    title: __("We assess your gaps"),
-    description: __("We assess your environment, identify gaps, and build a compliance program tailored to how your team works."),
+    label: "Step 1",
+    title: "We assess your gaps",
+    description: "We assess your environment, identify gaps, and build a compliance program tailored to how your team works.",
     icon: "binoculars",
   },
   {
-    label: __("Step 2"),
-    title: __("We handle the audit"),
-    description: __("We collect evidence, prepare every document, and manage auditor communications — you just show up for the key calls."),
+    label: "Step 2",
+    title: "We handle the audit",
+    description: "We collect evidence, prepare every document, and manage auditor communications — you just show up for the key calls.",
     icon: "clipboard-text",
   },
   {
-    label: __("Step 3"),
-    title: __("We keep you compliant"),
-    description: __("We run your compliance program in the background so you stay audit-ready without lifting a finger."),
+    label: "Step 3",
+    title: "We keep you compliant",
+    description: "We run your compliance program in the background so you stay audit-ready without lifting a finger.",
     icon: "seal-check",
   },
 ];
 
 const faqItems = [
   {
-    question: __("How is Probo different?"),
-    answer: __("You get a dedicated compliance officer who runs the program with you. Policies, controls, vendor reviews, risk assessments. All handled."),
+    question: "How is Probo different?",
+    answer: "You get a dedicated compliance officer who runs the program with you. Policies, controls, vendor reviews, risk assessments. All handled.",
   },
   {
-    question: __("What do I actually have to do?"),
-    answer: __("Implement the security measures we identify. We take care of everything else: risk analysis, documentation, vendor reviews, training, audit prep, monitoring."),
+    question: "What do I actually have to do?",
+    answer: "Implement the security measures we identify. We take care of everything else: risk analysis, documentation, vendor reviews, training, audit prep, monitoring.",
   },
   {
-    question: __("How long until we're audit-ready?"),
-    answer: __("6 to 8 weeks for most companies. Depends on where you're starting from and which framework you need."),
+    question: "How long until we're audit-ready?",
+    answer: "6 to 8 weeks for most companies. Depends on where you're starting from and which framework you need.",
   },
   {
-    question: __("What frameworks do you cover?"),
-    answer: __("SOC 2, ISO 27001, GDPR, HIPAA, and others. If yours isn't listed, ask us."),
+    question: "What frameworks do you cover?",
+    answer: "SOC 2, ISO 27001, GDPR, HIPAA, and others. If yours isn't listed, ask us.",
   },
   {
-    question: __("What happens after the audit?"),
-    answer: __("12 months of maintenance are included. Quarterly reviews, continuous monitoring, security questionnaires, and renewal prep."),
+    question: "What happens after the audit?",
+    answer: "12 months of maintenance are included. Quarterly reviews, continuous monitoring, security questionnaires, and renewal prep.",
   },
 ];
 ---
@@ -72,7 +69,7 @@ const faqItems = [
   <div class="max-w-[1080px] mx-auto flex flex-col gap-12">
     <!-- Title -->
     <h2 class="text-h2 font-medium tracking-[-1.4px] text-foreground animate-slide-in">
-      {__("Your path to compliance.")}
+      Your path to compliance.
     </h2>
 
     <!-- Two-column layout -->
@@ -120,7 +117,7 @@ const faqItems = [
       <!-- Right: FAQ -->
       <div class="flex-1 min-w-0 bg-[#f8faf4] rounded-[20px] px-10 pt-10 pb-3 flex flex-col gap-6 overflow-hidden animate-slide-in animation-delay-300">
         <p class="text-lg font-medium text-accent tracking-[-0.2px]">
-          {__("Frequently asked questions")}
+          Frequently asked questions
         </p>
 
         <div class="flex flex-col">

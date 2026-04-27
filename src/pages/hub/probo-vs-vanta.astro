@@ -1,7 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -70,10 +68,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("Probo vs Vanta: Full-Service Compliance vs DIY Tools")}
-  description={__(
-    "Probo vs Vanta: One gives you a tool, the other does the work. Compare full-service compliance with hands-off experts vs DIY automation platforms.",
-  )}
+  title="Probo vs Vanta: Full-Service Compliance vs DIY Tools"
+  description="Probo vs Vanta: One gives you a tool, the other does the work. Compare full-service compliance with hands-off experts vs DIY automation platforms."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script
@@ -86,15 +82,12 @@ const breadcrumbSchema = {
       <h1
         class="text-foreground mb-6 text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
       >
-        <span class="highlight-text">{__("Probo vs Vanta")}</span>{__(":")}
-        <br />{__("Full-Service Compliance")}<br />{__("vs DIY Tools")}
+        <span class="highlight-text">Probo vs Vanta</span>:
+        <br />Full-Service Compliance<br />vs DIY Tools
       </h1>
       <p class="text-muted-foreground mb-8 text-lg">
-        {
-          __(
-            "One gives you a tool, the other does the work. Compare full-service compliance with hands-off experts vs DIY automation platforms.",
-          )
-        }
+        One gives you a tool, the other does the work. Compare full-service
+        compliance with hands-off experts vs DIY automation platforms.
       </p>
       <img
         src="/hub/Probo-vs-vanta.jpg"
@@ -131,48 +124,41 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The Real Question: Do You Want a Tool or a Team?")}
+            The Real Question: Do You Want a Tool or a Team?
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Here's a scenario that plays out in startups every single day: Your sales team just landed a meeting with an enterprise prospect. The demo went perfectly. The champion is excited. Then the security questionnaire arrives, and suddenly you're staring at a requirement that stops everything cold: \"Please provide your SOC 2 Type II report.\"",
-                )
-              }
+              Here's a scenario that plays out in startups every single day:
+              Your sales team just landed a meeting with an enterprise prospect.
+              The demo went perfectly. The champion is excited. Then the
+              security questionnaire arrives, and suddenly you're staring at a
+              requirement that stops everything cold: "Please provide your SOC 2
+              Type II report."
             </p>
             <p>
-              {
-                __(
-                  "You start researching compliance solutions and quickly discover names like Vanta, Drata, and Secureframe. They promise to \"automate\" your path to SOC 2. But here's what those marketing pages don't tell you: automation doesn't mean someone else does the work. It means you get software to help you do the work yourself.",
-                )
-              }
+              You start researching compliance solutions and quickly discover
+              names like Vanta, Drata, and Secureframe. They promise to
+              "automate" your path to SOC 2. But here's what those marketing
+              pages don't tell you: automation doesn't mean someone else does
+              the work. It means you get software to help you do the work
+              yourself.
             </p>
             <p>
-              {
-                __(
-                  "This is the fundamental question most founders miss when evaluating compliance solutions:",
-                )
-              }
-              <strong class="text-foreground"
-                >{
-                  __(
-                    "Do you want a tool to manage, or a team that handles everything?",
-                  )
-                }</strong
+              This is the fundamental question most founders miss when
+              evaluating compliance solutions:
+              <strong class="text-foreground">
+                Do you want a tool to manage, or a team that handles everything?</strong
               >
-              {
-                __(
-                  "The answer determines whether you'll spend 5 hours or 100+ hours on your SOC 2 certification. It determines whether your CTO stays focused on product development or becomes a part-time compliance manager. And it determines whether you're locked into a vendor forever or maintain complete ownership of your compliance program.",
-                )
-              }
+              The answer determines whether you'll spend 5 hours or 100+ hours on
+              your SOC 2 certification. It determines whether your CTO stays focused
+              on product development or becomes a part-time compliance manager. And
+              it determines whether you're locked into a vendor forever or maintain
+              complete ownership of your compliance program.
             </p>
             <p>
-              {
-                __(
-                  "Let's break down exactly what you get with each approach, because the difference between Probo and Vanta isn't about features. It's about who actually does the work.",
-                )
-              }
+              Let's break down exactly what you get with each approach, because
+              the difference between Probo and Vanta isn't about features. It's
+              about who actually does the work.
             </p>
           </div>
         </section>
@@ -184,91 +170,85 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Vanta Overview: What You Get With a Compliance Automation Platform",
-              )
-            }
+            Vanta Overview: What You Get With a Compliance Automation Platform
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Vanta has built an impressive compliance automation platform. They've raised hundreds of millions in funding, serve thousands of customers, and have become the default name many people think of when they hear \"SOC 2 software.\" But understanding what you actually get, and what you're still responsible for, is critical before signing up.",
-                )
-              }
+              Vanta has built an impressive compliance automation platform.
+              They've raised hundreds of millions in funding, serve thousands of
+              customers, and have become the default name many people think of
+              when they hear "SOC 2 software." But understanding what you
+              actually get, and what you're still responsible for, is critical
+              before signing up.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("The DIY Model Explained")}
+                The DIY Model Explained
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Compliance automation platforms like Vanta operate on a straightforward premise: give companies the tools to manage compliance themselves. You get a dashboard, integrations with your tech stack, template policies, and checklists that track your progress toward certification.",
-                  )
-                }
+                Compliance automation platforms like Vanta operate on a
+                straightforward premise: give companies the tools to manage
+                compliance themselves. You get a dashboard, integrations with
+                your tech stack, template policies, and checklists that track
+                your progress toward certification.
               </p>
               <p class="mb-4">
-                {
-                  __(
-                    "The platform connects to your AWS, Google Workspace, GitHub, and other systems to automatically pull evidence. It flags when something falls out of compliance, like an employee without two-factor authentication enabled. It provides templates for the 20+ security policies you'll need to write.",
-                  )
-                }
+                The platform connects to your AWS, Google Workspace, GitHub, and
+                other systems to automatically pull evidence. It flags when
+                something falls out of compliance, like an employee without
+                two-factor authentication enabled. It provides templates for the
+                20+ security policies you'll need to write.
               </p>
               <p>
-                {
-                  __(
-                    "This is genuinely useful technology. The problem isn't what the platform does. The problem is what it doesn't do.",
-                  )
-                }
+                This is genuinely useful technology. The problem isn't what the
+                platform does. The problem is what it doesn't do.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "You still need to understand SOC 2 requirements well enough to configure the platform correctly. You still need to customize those template policies to actually reflect how your company operates. You still need to coordinate with auditors, answer their questions, and manage the back-and-forth that inevitably happens during an audit. The tool tracks your compliance work. It doesn't do your compliance work.",
-                  )
-                }
+                You still need to understand SOC 2 requirements well enough to
+                configure the platform correctly. You still need to customize
+                those template policies to actually reflect how your company
+                operates. You still need to coordinate with auditors, answer
+                their questions, and manage the back-and-forth that inevitably
+                happens during an audit. The tool tracks your compliance work.
+                It doesn't do your compliance work.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Hidden Time Investment Most Companies Discover Too Late")}
+                Hidden Time Investment Most Companies Discover Too Late
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'The marketing says "get SOC 2 certified in weeks." The reality looks different.',
-                  )
-                }
+                The marketing says "get SOC 2 certified in weeks." The reality
+                looks different.
               </p>
               <p class="mb-4">
-                {
-                  __(
-                    "Most companies using DIY compliance tools discover they've signed up for 100-200+ hours of internal work. Your CTO or head of engineering becomes a part-time compliance manager. Someone needs to learn the framework, configure the platform, write and customize policies, chase down evidence, coordinate vendor reviews, and prepare for auditor calls.",
-                  )
-                }
+                Most companies using DIY compliance tools discover they've
+                signed up for 100-200+ hours of internal work. Your CTO or head
+                of engineering becomes a part-time compliance manager. Someone
+                needs to learn the framework, configure the platform, write and
+                customize policies, chase down evidence, coordinate vendor
+                reviews, and prepare for auditor calls.
               </p>
               <p>
-                {__("As we've explored in our analysis of")}
+                As we've explored in our analysis of
                 <a
                   href="/hub/top-compliance-automation-tools-2026"
                   class="text-[#5d770d] hover:underline"
-                  >{__("compliance automation tools")}</a
-                >{
-                  __(
-                    ", template-based approaches often create more work, not less. You spend hours customizing generic policies to match your actual business processes. You discover that \"automated\" evidence collection still requires manual review and organization. You realize that having a dashboard full of green checkmarks doesn't mean you're actually ready for an auditor's questions.",
-                  )
-                }
+                  >compliance automation tools</a
+                > , template-based approaches often create more work, not less. You
+                spend hours customizing generic policies to match your actual business
+                processes. You discover that "automated" evidence collection still
+                requires manual review and organization. You realize that having a
+                dashboard full of green checkmarks doesn't mean you're actually ready
+                for an auditor's questions.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "The hidden cost isn't just time, it's opportunity cost. Every hour your technical leadership spends on compliance is an hour not spent on product development, customer support, or strategic initiatives that drive revenue.",
-                  )
-                }
+                The hidden cost isn't just time, it's opportunity cost. Every
+                hour your technical leadership spends on compliance is an hour
+                not spent on product development, customer support, or strategic
+                initiatives that drive revenue.
               </p>
             </div>
           </div>
@@ -281,151 +261,115 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Probo Overview: Full-Service Compliance That Does the Work for You",
-              )
-            }
+            Probo Overview: Full-Service Compliance That Does the Work for You
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Probo takes a fundamentally different approach. Instead of giving you software to manage compliance yourself, we provide a dedicated compliance team that handles your SOC 2 certification end-to-end.",
-                )
-              }
+              Probo takes a fundamentally different approach. Instead of giving
+              you software to manage compliance yourself, we provide a dedicated
+              compliance team that handles your SOC 2 certification end-to-end.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("The Hands-Off Model: Your Dedicated Compliance Team")}
+                The Hands-Off Model: Your Dedicated Compliance Team
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "When you work with Probo, you get actual compliance experts: not chatbots, not ticket queues, not a knowledge base you're expected to search through yourself.",
-                  )
-                }
+                When you work with Probo, you get actual compliance experts: not
+                chatbots, not ticket queues, not a knowledge base you're
+                expected to search through yourself.
               </p>
               <p class="mb-4">
-                {
-                  __(
-                    "Your dedicated compliance officer does the work for you. Learn your business, your tech stack, your processes. We perform a complete risk analysis of your company and build a custom compliance program based on your specific context, not generic templates applied to every customer.",
-                  )
-                }
+                Your dedicated compliance officer does the work for you. Learn
+                your business, your tech stack, your processes. We perform a
+                complete risk analysis of your company and build a custom
+                compliance program based on your specific context, not generic
+                templates applied to every customer.
               </p>
               <p class="text-foreground mb-3 font-semibold">
-                {__("Here's what our team handles for you:")}
+                Here's what our team handles for you:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Risk assessments and gap analysis:")}</strong
+                      >Risk assessments and gap analysis:</strong
                     >
-                    {
-                      __(
-                        "We analyze your current security setup and identify exactly what needs to change",
-                      )
-                    }</span
+                    We analyze your current security setup and identify exactly what
+                    needs to change</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Policy and documentation creation:")}</strong
+                      >Policy and documentation creation:</strong
                     >
-                    {
-                      __(
-                        "We write your security policies from scratch, custom to your business",
-                      )
-                    }</span
+                    We write your security policies from scratch, custom to your business</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Vendor security reviews:")}</strong
+                      >Vendor security reviews:</strong
                     >
-                    {
-                      __(
-                        "We evaluate your vendors and handle questionnaire back-and-forth",
-                      )
-                    }</span
+                    We evaluate your vendors and handle questionnaire back-and-forth</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">
+                      Audit preparation and evidence collection:</strong
+                    >
+                    We prepare all evidence and coordinate with auditors on your behalf</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{
-                        __("Audit preparation and evidence collection:")
-                      }</strong
+                      >Audit day representation:</strong
                     >
-                    {
-                      __(
-                        "We prepare all evidence and coordinate with auditors on your behalf",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Audit day representation:")}</strong
-                    >
-                    {
-                      __(
-                        "We join audit calls, answer questions, and handle findings",
-                      )
-                    }</span
+                    We join audit calls, answer questions, and handle findings</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Your only job is implementing the security measures we identify as gaps. We handle literally everything else.",
-                  )
-                }
+                Your only job is implementing the security measures we identify
+                as gaps. We handle literally everything else.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Open Source Platform: Your Data, Your Control, Forever")}
+                Open Source Platform: Your Data, Your Control, Forever
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Here's something most compliance vendors don't want you to think about: what happens if you leave?",
-                  )
-                }
+                Here's something most compliance vendors don't want you to think
+                about: what happens if you leave?
               </p>
               <p class="mb-4">
-                {
-                  __(
-                    "With typical compliance tools, your policies, documentation, and evidence live on their platform. If you cancel your subscription, you lose access to everything you've built. You're starting from scratch with a new vendor, or you're paying renewal fees forever because switching costs are too high.",
-                  )
-                }
+                With typical compliance tools, your policies, documentation, and
+                evidence live on their platform. If you cancel your
+                subscription, you lose access to everything you've built. You're
+                starting from scratch with a new vendor, or you're paying
+                renewal fees forever because switching costs are too high.
               </p>
               <p>
-                {
-                  __(
-                    "Probo is built on an open-source compliance platform. You get full access to everything: your policies, your evidence, your entire compliance program. If you ever decide to leave, you take it all with you. No lock-in. No ransom.",
-                  )
-                }
+                Probo is built on an open-source compliance platform. You get
+                full access to everything: your policies, your evidence, your
+                entire compliance program. If you ever decide to leave, you take
+                it all with you. No lock-in. No ransom.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "This isn't just about flexibility. It's about ownership. Your compliance program represents significant intellectual property: documentation of how your company operates, your security controls, your risk management approach. That should belong to you, not be held hostage by a vendor.",
-                  )
-                }
+                This isn't just about flexibility. It's about ownership. Your
+                compliance program represents significant intellectual property:
+                documentation of how your company operates, your security
+                controls, your risk management approach. That should belong to
+                you, not be held hostage by a vendor.
               </p>
             </div>
           </div>
@@ -438,152 +382,126 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Head-to-Head Comparison: Probo vs Vanta")}
+            Head-to-Head Comparison: Probo vs Vanta
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Let's get specific about what differs between these two approaches.",
-                )
-              }
+              Let's get specific about what differs between these two
+              approaches.
             </p>
 
             <!-- Who Does the Actual Work -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Who Does the Actual Work")}
+                Who Does the Actual Work
               </h3>
               <p class="mb-2">
-                <strong class="text-foreground">{__("Vanta:")}</strong>
-                {
-                  __(
-                    "You do. The platform provides tools, templates, and tracking, but your team is responsible for understanding requirements, configuring the system, writing policies, collecting evidence, and managing the audit process.",
-                  )
-                }
+                <strong class="text-foreground">Vanta:</strong>
+                You do. The platform provides tools, templates, and tracking, but
+                your team is responsible for understanding requirements, configuring
+                the system, writing policies, collecting evidence, and managing the
+                audit process.
               </p>
               <p>
-                <strong class="text-foreground">{__("Probo:")}</strong>
-                {
-                  __(
-                    "Our compliance experts do. You implement security measures we identify as gaps. We handle everything else: documentation, risk analysis, vendor reviews, auditor coordination, and ongoing maintenance.",
-                  )
-                }
+                <strong class="text-foreground">Probo:</strong>
+                Our compliance experts do. You implement security measures we identify
+                as gaps. We handle everything else: documentation, risk analysis,
+                vendor reviews, auditor coordination, and ongoing maintenance.
               </p>
             </div>
 
             <!-- Time Investment -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Time Investment Required From Your Team")}
+                Time Investment Required From Your Team
               </h3>
               <p class="mb-2">
-                <strong class="text-foreground">{__("Vanta:")}</strong>
-                {
-                  __(
-                    "Plan for 100-200+ hours of internal work across your team. Someone needs to own compliance as a significant part of their job.",
-                  )
-                }
+                <strong class="text-foreground">Vanta:</strong>
+                Plan for 100-200+ hours of internal work across your team. Someone
+                needs to own compliance as a significant part of their job.
               </p>
               <p>
-                <strong class="text-foreground">{__("Probo:")}</strong>
-                {
-                  __(
-                    "Approximately 5 hours total. A few onboarding calls, implementing identified security gaps, and a final review before audit.",
-                  )
-                }
+                <strong class="text-foreground">Probo:</strong>
+                Approximately 5 hours total. A few onboarding calls, implementing
+                identified security gaps, and a final review before audit.
               </p>
             </div>
 
             <!-- Support Model -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Support Model: Slack or Call Access vs Ticket Queues")}
+                Support Model: Slack or Call Access vs Ticket Queues
               </h3>
               <p class="mb-2">
-                <strong class="text-foreground">{__("Vanta:")}</strong>
-                {
-                  __(
-                    "Support typically comes through ticket systems, chatbots, and knowledge bases. You submit questions and wait for responses. For complex issues, you might get escalated to a human, eventually.",
-                  )
-                }
+                <strong class="text-foreground">Vanta:</strong>
+                Support typically comes through ticket systems, chatbots, and knowledge
+                bases. You submit questions and wait for responses. For complex issues,
+                you might get escalated to a human, eventually.
               </p>
               <p>
-                <strong class="text-foreground">{__("Probo:")}</strong>
-                {
-                  __(
-                    "Your dedicated compliance officer is available on Slack or call. Real conversations with real experts who know your company, your context, and your specific compliance program. No tickets. No chatbots. No waiting.",
-                  )
-                }
+                <strong class="text-foreground">Probo:</strong>
+                Your dedicated compliance officer is available on Slack or call. Real
+                conversations with real experts who know your company, your context,
+                and your specific compliance program. No tickets. No chatbots. No
+                waiting.
               </p>
             </div>
 
             <!-- Policy Creation -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Policy Creation: Custom-Written vs Template-Based")}
+                Policy Creation: Custom-Written vs Template-Based
               </h3>
               <p class="mb-2">
-                <strong class="text-foreground">{__("Vanta:")}</strong>
-                {
-                  __(
-                    "You get template policies that you're expected to customize for your business. This sounds helpful until you realize you need to understand both compliance requirements AND your own operations well enough to modify legal and security documentation appropriately.",
-                  )
-                }
+                <strong class="text-foreground">Vanta:</strong>
+                You get template policies that you're expected to customize for your
+                business. This sounds helpful until you realize you need to understand
+                both compliance requirements AND your own operations well enough to
+                modify legal and security documentation appropriately.
               </p>
               <p>
-                <strong class="text-foreground">{__("Probo:")}</strong>
-                {
-                  __(
-                    "We write your security policies from scratch. Our team learns how your company actually operates and creates documentation that reflects reality, not generic templates with your company name inserted.",
-                  )
-                }
+                <strong class="text-foreground">Probo:</strong>
+                We write your security policies from scratch. Our team learns how
+                your company actually operates and creates documentation that reflects
+                reality, not generic templates with your company name inserted.
               </p>
             </div>
 
             <!-- Audit Day -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Audit Day: Expert Representation vs You Figure It Out")}
+                Audit Day: Expert Representation vs You Figure It Out
               </h3>
               <p class="mb-2">
-                <strong class="text-foreground">{__("Vanta:")}</strong>
-                {
-                  __(
-                    "When the auditor has questions, you answer them. When there are findings, you address them. When something needs clarification, you figure it out.",
-                  )
-                }
+                <strong class="text-foreground">Vanta:</strong>
+                When the auditor has questions, you answer them. When there are findings,
+                you address them. When something needs clarification, you figure it
+                out.
               </p>
               <p>
-                <strong class="text-foreground">{__("Probo:")}</strong>
-                {
-                  __(
-                    "We join audit calls, answer auditor questions, and handle the back-and-forth from start to finish. You'll still talk with the auditor, your company is being audited, not us, but you're not doing it alone.",
-                  )
-                }
+                <strong class="text-foreground">Probo:</strong>
+                We join audit calls, answer auditor questions, and handle the back-and-forth
+                from start to finish. You'll still talk with the auditor, your company
+                is being audited, not us, but you're not doing it alone.
               </p>
             </div>
 
             <!-- What Happens If You Leave -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("What Happens If You Leave")}
+                What Happens If You Leave
               </h3>
               <p class="mb-2">
-                <strong class="text-foreground">{__("Vanta:")}</strong>
-                {
-                  __(
-                    "Your compliance program lives on their platform. Cancel your subscription and you lose access to the policies, evidence, and documentation you've built.",
-                  )
-                }
+                <strong class="text-foreground">Vanta:</strong>
+                Your compliance program lives on their platform. Cancel your subscription
+                and you lose access to the policies, evidence, and documentation you've
+                built.
               </p>
               <p>
-                <strong class="text-foreground">{__("Probo:")}</strong>
-                {
-                  __(
-                    "Everything is yours. Our open-source platform means you maintain complete ownership. Leave whenever you want and take your entire compliance program with you.",
-                  )
-                }
+                <strong class="text-foreground">Probo:</strong>
+                Everything is yours. Our open-source platform means you maintain complete
+                ownership. Leave whenever you want and take your entire compliance
+                program with you.
               </p>
             </div>
           </div>
@@ -596,174 +514,136 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "The SOC 2 Reality Check: What Actually Happens With Each Approach",
-              )
-            }
+            The SOC 2 Reality Check: What Actually Happens With Each Approach
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Getting SOC 2 compliant sounds straightforward until you actually start. Let's look at what typically happens with each approach.",
-                )
-              }
+              Getting SOC 2 compliant sounds straightforward until you actually
+              start. Let's look at what typically happens with each approach.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("The Tool Approach Reality")}
+                The Tool Approach Reality
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("What you think:")}</strong
+                    ><strong class="text-foreground">What you think:</strong>
+                    "We'll knock this out in a few weeks."<br /><strong
+                      class="text-foreground">What actually happens:</strong
                     >
-                    {__('"We\'ll knock this out in a few weeks."')}<br /><strong
-                      class="text-foreground"
-                      >{__("What actually happens:")}</strong
-                    >
-                    {__("3-6 months of your CTO's time.")}</span
+                    3-6 months of your CTO's time.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("What you think:")}</strong
+                    ><strong class="text-foreground">What you think:</strong>
+                    "Our security is already solid."<br /><strong
+                      class="text-foreground">What actually happens:</strong
                     >
-                    {__('"Our security is already solid."')}<br /><strong
-                      class="text-foreground"
-                      >{__("What actually happens:")}</strong
-                    >
-                    {__("20+ policies to write from scratch.")}</span
+                    20+ policies to write from scratch.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("What you think:")}</strong
+                    ><strong class="text-foreground">What you think:</strong>
+                    "We'll just use a tool."<br /><strong
+                      class="text-foreground">What actually happens:</strong
                     >
-                    {__('"We\'ll just use a tool."')}<br /><strong
-                      class="text-foreground"
-                      >{__("What actually happens:")}</strong
-                    >
-                    {
-                      __("Now you're managing a tool AND doing compliance.")
-                    }</span
+                    Now you're managing a tool AND doing compliance.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("What you think:")}</strong
+                    ><strong class="text-foreground">What you think:</strong>
+                    "The auditor will guide us."<br /><strong
+                      class="text-foreground">What actually happens:</strong
                     >
-                    {__('"The auditor will guide us."')}<br /><strong
-                      class="text-foreground"
-                      >{__("What actually happens:")}</strong
-                    >
-                    {__("Auditors audit. They can't help you prepare.")}</span
+                    Auditors audit. They can't help you prepare.</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "The tool approach puts you in the driver's seat for a journey you've never taken before. You're learning compliance frameworks, configuring platforms, writing documentation, and managing auditor relationships, all while trying to run your actual business.",
-                  )
-                }
+                The tool approach puts you in the driver's seat for a journey
+                you've never taken before. You're learning compliance
+                frameworks, configuring platforms, writing documentation, and
+                managing auditor relationships, all while trying to run your
+                actual business.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("The Full-Service Approach Reality")}
+                The Full-Service Approach Reality
               </h3>
-              <p class="mb-4">
-                {__("With Probo, the process looks different:")}
-              </p>
+              <p class="mb-4">With Probo, the process looks different:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Step 1: Onboarding Call,")}</strong
+                      >Step 1: Onboarding Call,</strong
                     >
-                    {
-                      __(
-                        "We spend the time necessary to understand your exact context and how your company runs.",
-                      )
-                    }</span
+                    We spend the time necessary to understand your exact context and
+                    how your company runs.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Step 2: We Build Your Program,")}</strong
+                      >Step 2: We Build Your Program,</strong
                     >
-                    {
-                      __(
-                        "We perform a complete risk analysis. Based on the results, we create a custom compliance program, write your security policies, review your vendors, and assess associated risks. Your only job is implementing security measures we identify as gaps.",
-                      )
-                    }</span
+                    We perform a complete risk analysis. Based on the results, we
+                    create a custom compliance program, write your security policies,
+                    review your vendors, and assess associated risks. Your only job
+                    is implementing security measures we identify as gaps.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Step 3: Evidence Collection,")}</strong
+                      >Step 3: Evidence Collection,</strong
                     >
-                    {
-                      __(
-                        "Our platform automatically collects your evidence. When everything is complete, we review together to ensure proper implementation.",
-                      )
-                    }</span
+                    Our platform automatically collects your evidence. When everything
+                    is complete, we review together to ensure proper implementation.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Step 4: Audit & Certification,")}</strong
+                      >Step 4: Audit & Certification,</strong
                     >
-                    {
-                      __(
-                        "We coordinate with the auditor, join all calls, answer questions, and handle any findings. You get your SOC 2 report.",
-                      )
-                    }</span
+                    We coordinate with the auditor, join all calls, answer questions,
+                    and handle any findings. You get your SOC 2 report.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Step 5: We Run Your Compliance,")}</strong
+                      >Step 5: We Run Your Compliance,</strong
                     >
-                    {
-                      __(
-                        "Monthly or quarterly security meetings with your expert. Continuous availability for any need. We even fill out your security questionnaires.",
-                      )
-                    }</span
+                    Monthly or quarterly security meetings with your expert. Continuous
+                    availability for any need. We even fill out your security questionnaires.</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {__("Understanding")}
+                Understanding
                 <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
-                  >{__("how long SOC 2 actually takes")}</a
+                  >how long SOC 2 actually takes</a
                 >
-                {
-                  __(
-                    "depends heavily on which approach you choose. A small company with a standard tech setup can be audit-ready in 2-4 weeks with full-service support. The same company using a DIY tool? Often 3-6 months.",
-                  )
-                }
+                depends heavily on which approach you choose. A small company with
+                a standard tech setup can be audit-ready in 2-4 weeks with full-service
+                support. The same company using a DIY tool? Often 3-6 months.
               </p>
             </div>
           </div>
@@ -776,170 +656,127 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Cost Comparison: Total Investment Beyond the Sticker Price")}
+            Cost Comparison: Total Investment Beyond the Sticker Price
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "When comparing compliance solutions, most companies focus on subscription costs. That's a mistake. The real cost includes everything you invest: money, time, and opportunity cost.",
-                )
-              }
+              When comparing compliance solutions, most companies focus on
+              subscription costs. That's a mistake. The real cost includes
+              everything you invest: money, time, and opportunity cost.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("The Hidden Costs of DIY Compliance Tools")}
+                The Hidden Costs of DIY Compliance Tools
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Platform subscription fees are just the beginning. Factor in:",
-                  )
-                }
+                Platform subscription fees are just the beginning. Factor in:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Internal time:")}</strong
+                    ><strong class="text-foreground">Internal time:</strong>
+                    100-200+ hours at your team's hourly rate</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Learning curve:</strong>
+                    Time spent understanding compliance requirements</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Tool management:</strong>
+                    Ongoing platform administration and maintenance</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Audit coordination:</strong
                     >
-                    {__("100-200+ hours at your team's hourly rate")}</span
+                    Managing auditor relationships and communications</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Learning curve:")}</strong
+                      >Policy customization:</strong
                     >
-                    {
-                      __("Time spent understanding compliance requirements")
-                    }</span
+                    Adapting templates to your actual business</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Tool management:")}</strong
-                    >
-                    {
-                      __("Ongoing platform administration and maintenance")
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Audit coordination:")}</strong
-                    >
-                    {
-                      __("Managing auditor relationships and communications")
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Policy customization:")}</strong
-                    >
-                    {__("Adapting templates to your actual business")}</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Vendor reviews:")}</strong
-                    >
-                    {
-                      __("Chasing questionnaires and evaluating third parties")
-                    }</span
+                    ><strong class="text-foreground">Vendor reviews:</strong>
+                    Chasing questionnaires and evaluating third parties</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "When you calculate the fully-loaded cost, including what your CTO or engineering lead's time is actually worth, DIY compliance often costs more than full-service alternatives. You're just paying in time instead of money.",
-                  )
-                }
+                When you calculate the fully-loaded cost, including what your
+                CTO or engineering lead's time is actually worth, DIY compliance
+                often costs more than full-service alternatives. You're just
+                paying in time instead of money.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("What Full-Service Compliance Actually Includes")}
+                What Full-Service Compliance Actually Includes
               </h3>
-              <p class="mb-4">{__("With Probo, your investment covers:")}</p>
+              <p class="mb-4">With Probo, your investment covers:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("SOC 2 Type I or Type II report completion")}</span>
+                  <span>SOC 2 Type I or Type II report completion</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Custom security policies tailored to your business")
-                    }</span
+                  <span>
+                    Custom security policies tailored to your business</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Complete risk assessment documentation")}</span>
+                  <span>Complete risk assessment documentation</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Branded trust center page for prospects and customers",
-                      )
-                    }</span
+                  <span>
+                    Branded trust center page for prospects and customers</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Full access to our open-source compliance platform")
-                    }</span
+                  <span>
+                    Full access to our open-source compliance platform</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("12 months of maintenance and renewal preparation")
-                    }</span
+                  <span> 12 months of maintenance and renewal preparation</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>
+                    Dedicated compliance officer available on Slack or call</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Dedicated compliance officer available on Slack or call",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>{__("Auditor coordination and management")}</span>
+                  <span>Auditor coordination and management</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "No hidden costs. No surprise time investments. No learning curves for your team to climb.",
-                  )
-                }
+                No hidden costs. No surprise time investments. No learning
+                curves for your team to climb.
               </p>
             </div>
           </div>
@@ -952,79 +789,57 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Which Solution Is Right for Your Company?")}
+            Which Solution Is Right for Your Company?
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Both approaches work. The right choice depends on your specific situation, resources, and priorities.",
-                )
-              }
+              Both approaches work. The right choice depends on your specific
+              situation, resources, and priorities.
             </p>
 
             <div class="mt-6 space-y-6">
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Choose Vanta If...")}
+                  Choose Vanta If...
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You have dedicated compliance or security staff with bandwidth to own this",
-                        )
-                      }</span
+                    <span>
+                      You have dedicated compliance or security staff with
+                      bandwidth to own this</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Someone on your team genuinely wants to learn compliance frameworks",
-                        )
-                      }</span
+                    <span>
+                      Someone on your team genuinely wants to learn compliance
+                      frameworks</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __("You prefer managing tools and processes internally")
-                      }</span
+                    <span>
+                      You prefer managing tools and processes internally</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You have 100-200+ hours of internal capacity available",
-                        )
-                      }</span
+                    <span>
+                      You have 100-200+ hours of internal capacity available</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You're comfortable coordinating directly with auditors",
-                        )
-                      }</span
+                    <span>
+                      You're comfortable coordinating directly with auditors</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You're okay with vendor lock-in on your compliance documentation",
-                        )
-                      }</span
+                    <span>
+                      You're okay with vendor lock-in on your compliance
+                      documentation</span
                     >
                   </li>
                 </ul>
@@ -1032,67 +847,48 @@ const breadcrumbSchema = {
 
               <div class="rounded-lg border border-[#d7edba] bg-[#f0f7e4] p-4">
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Choose Probo If...")}
+                  Choose Probo If...
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You want experts to handle compliance while you focus on your product",
-                        )
-                      }</span
+                    <span>
+                      You want experts to handle compliance while you focus on
+                      your product</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "Your technical leadership is already stretched thin",
-                        )
-                      }</span
+                    <span>
+                      Your technical leadership is already stretched thin</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You don't want to learn compliance frameworks, you just want results",
-                        )
-                      }</span
+                    <span>
+                      You don't want to learn compliance frameworks, you just
+                      want results</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You value your time at more than the cost of full-service support",
-                        )
-                      }</span
+                    <span>
+                      You value your time at more than the cost of full-service
+                      support</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You want dedicated experts available on or call, not ticket queues",
-                        )
-                      }</span
+                    <span>
+                      You want dedicated experts available on or call, not
+                      ticket queues</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You want to own your compliance program forever, even if you leave",
-                        )
-                      }</span
+                    <span>
+                      You want to own your compliance program forever, even if
+                      you leave</span
                     >
                   </li>
                 </ul>
@@ -1100,11 +896,9 @@ const breadcrumbSchema = {
             </div>
 
             <p class="mt-4">
-              {
-                __(
-                  "The fundamental question isn't about features or pricing. It's about whether you want to become a compliance expert or partner with one.",
-                )
-              }
+              The fundamental question isn't about features or pricing. It's
+              about whether you want to become a compliance expert or partner
+              with one.
             </p>
           </div>
         </section>
@@ -1116,91 +910,72 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Conclusion: Stop Managing Compliance, Start Having It Handled",
-              )
-            }
+            Conclusion: Stop Managing Compliance, Start Having It Handled
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "The compliance tool market has convinced many founders that the only way to get SOC 2 certified is to learn compliance, configure platforms, write policies, and manage audits themselves. That's one way. It's not the only way.",
-                )
-              }
+              The compliance tool market has convinced many founders that the
+              only way to get SOC 2 certified is to learn compliance, configure
+              platforms, write policies, and manage audits themselves. That's
+              one way. It's not the only way.
             </p>
             <p>
-              {
-                __(
-                  "Probo exists because we believe there's a better approach. Your CTO should be building product, not learning SOC 2 requirements. Your engineering team should be shipping features, not chasing vendor questionnaires. Your company should own its compliance program, not rent it from a vendor who holds your documentation hostage.",
-                )
-              }
+              Probo exists because we believe there's a better approach. Your
+              CTO should be building product, not learning SOC 2 requirements.
+              Your engineering team should be shipping features, not chasing
+              vendor questionnaires. Your company should own its compliance
+              program, not rent it from a vendor who holds your documentation
+              hostage.
             </p>
             <p class="text-foreground font-semibold">
-              {__("When you work with Probo, you get:")}
+              When you work with Probo, you get:
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("A dedicated compliance team")}</strong
+                    >A dedicated compliance team</strong
                   >
-                  {
-                    __(
-                      "that handles everything from documentation to audit day",
-                    )
-                  }</span
+                  that handles everything from documentation to audit day</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Custom policies and programs")}</strong
+                    >Custom policies and programs</strong
                   >
-                  {__("built for your specific business, not templates")}</span
+                  built for your specific business, not templates</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Real experts on Slack or call")}</strong
+                    >Real experts on Slack or call</strong
                   >
-                  {__("available when you need them")}</span
+                  available when you need them</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{__("Complete ownership")}</strong
-                  >
-                  {
-                    __(
-                      "of your compliance program through our open-source platform",
-                    )
-                  }</span
+                  ><strong class="text-foreground">Complete ownership</strong>
+                  of your compliance program through our open-source platform</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{__("5 hours of your time")}</strong
-                  >
-                  {__("instead of 200+")}</span
+                  ><strong class="text-foreground">5 hours of your time</strong>
+                  instead of 200+</span
                 >
               </li>
             </ul>
             <p class="mt-4">
-              {
-                __(
-                  "SOC 2 certification shouldn't require becoming a compliance expert. It should require partnering with one.",
-                )
-              }
+              SOC 2 certification shouldn't require becoming a compliance
+              expert. It should require partnering with one.
             </p>
           </div>
         </section>
@@ -1213,14 +988,14 @@ const breadcrumbSchema = {
             <h3
               class="mb-8 text-2xl font-semibold text-[#141e12] sm:text-[1.75rem]"
             >
-              {__("Ready to achieve compliance?")}
+              Ready to achieve compliance?
             </h3>
             <a
               href="/contact"
               class="group inline-flex items-center gap-2 rounded-full bg-[#141e12] px-6 py-3.5 font-medium shadow-lg transition-all hover:gap-3 hover:bg-[#1f2e1a] hover:shadow-xl"
               style="color: white;"
             >
-              {__("Book a Call")}
+              Book a Call
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -1238,7 +1013,7 @@ const breadcrumbSchema = {
               </svg>
             </a>
             <p class="mt-6 text-sm text-[#3d4a38]">
-              {__("Stop managing tools. Start achieving compliance.")}
+              Stop managing tools. Start achieving compliance.
             </p>
           </div>
         </section>

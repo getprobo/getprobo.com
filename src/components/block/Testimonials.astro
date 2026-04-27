@@ -16,32 +16,32 @@ import JoshParolin from "../../assets/testimonial/josh-parolin.jpg";
 import JeremieParker from "../../assets/testimonial/jeremie-parker.jpg";
 import PierreDePoulpiquet from "../../assets/testimonial/pierre-de-poulpiquet.jpg";
 import AdityavardhanAgrawal from "../../assets/testimonial/Adityavardhan-Agrawal.jpg";
+<<<<<<< HEAD
 import CamilleEpitalon from "../../assets/testimonial/Camille Epitalon.png";
 import { getTranslator } from "../../lib/i18n.ts";
 
 const __ = await getTranslator(Astro.currentLocale);
+=======
+>>>>>>> 45ed6f4 (Remove french version)
 ---
 
 <section
   class="bg-linear-to-b from-[#F8FAF4] from-[0%] to-white to-[100%] py-10 sm:py-20"
 >
   <h2 class="text-h3 sm:text-h2 mb-3 text-center font-medium">
-    {__("Why they love us")}
+    Why they love us
   </h2>
   <p class="text-muted-foreground mb-12 text-center text-lg">
-    {__("Quotes from our customers")}
+    Quotes from our customers
   </p>
   <Scroll client:load>
     <Testimonial
       image={AdityavardhanAgrawal}
       author="Adityavardhan Agrawal"
-      role={__("Co-founder at Morphik")}
+      role="Co-founder at Morphik"
     >
-      {
-        __(
-          "The process was very straightforward, super fast, and best of all done for you with very clear and simple action items on our end.",
-        )
-      }
+      The process was very straightforward, super fast, and best of all done for
+      you with very clear and simple action items on our end.
     </Testimonial>
     <Testimonial
       image={CamilleEpitalon}
@@ -57,156 +57,132 @@ const __ = await getTranslator(Astro.currentLocale);
     <Testimonial
       image={PierreDePoulpiquet}
       author="Pierre de Poulpiquet"
-      role={__("Co-founder & CTO at Whaly")}
+      role="Co-founder & CTO at Whaly"
     >
-      {
-        __(
-          "Working with Probo has been truly amazing so far; they are a true partner and very proactive, making our ISO certification seamless. We worked with Vanta in the past and didn't like the experience, but switching to Probo was night and day.",
-        )
-      }
+      Working with Probo has been truly amazing so far; they are a true partner
+      and very proactive, making our ISO certification seamless. We worked with
+      Vanta in the past and didn't like the experience, but switching to Probo
+      was night and day.
     </Testimonial>
     <Testimonial
       image={JeremieParker}
       author="Jérémie Parker"
-      role={__("CTO at Trace For Good")}
+      role="CTO at Trace For Good"
     >
-      {
-        __(
-          "Probo did all the heavy lifting and kept us focused on what really mattered. A tailored, no-nonsense approach to compliance that made the whole process refreshingly smooth.",
-        )
-      }
+      Probo did all the heavy lifting and kept us focused on what really
+      mattered. A tailored, no-nonsense approach to compliance that made the
+      whole process refreshingly smooth.
     </Testimonial>
     <Testimonial
       image={JoshParolin}
       author="Josh Parolin"
-      role={__("Co-founder & CTO at Sessionboard")}
+      role="Co-founder & CTO at Sessionboard"
     >
-      {
-        __(
-          "Working with Probo was a game-changer for Sessionboard. After months of confusion, wasted time, and overpaying for various systems in our SOC 2 journey, partnering with Probo finally brought clarity and momentum. Their team guided us every step of the way, simplifying the complex, anticipating our needs, and keeping us on track from start to finish.",
-        )
-      }
+      Working with Probo was a game-changer for Sessionboard. After months of
+      confusion, wasted time, and overpaying for various systems in our SOC 2
+      journey, partnering with Probo finally brought clarity and momentum. Their
+      team guided us every step of the way, simplifying the complex,
+      anticipating our needs, and keeping us on track from start to finish.
     </Testimonial>
     <Testimonial
       image={ChristopherPrice}
       author="Christopher Price"
-      role={__("Co-founder & COO at Sixtyfour")}
+      role="Co-founder & COO at Sixtyfour"
     >
-      {
-        __(
-          "Probo was an excellent experience. The team was extremely professional, prompt and communicative. Having experienced Vanta, Drata, and now Probo, it makes it a no-brainer to recommend Probo for teams that need to get complaint quickly.",
-        )
-      }
+      Probo was an excellent experience. The team was extremely professional,
+      prompt and communicative. Having experienced Vanta, Drata, and now Probo,
+      it makes it a no-brainer to recommend Probo for teams that need to get
+      complaint quickly.
     </Testimonial>
     <Testimonial
       image={GavinBains}
       author="Gavin Bains"
-      role={__("Co-founder at The LLM Data Company")}
+      role="Co-founder at The LLM Data Company"
     >
-      {
-        __(
-          "Probo makes SOC 2 painless. They guided us step-by-step, kept us organized, and did all the heavy lifting to get us audit-ready. This team deeply cares about their customers and it shows.",
-        )
-      }
+      Probo makes SOC 2 painless. They guided us step-by-step, kept us
+      organized, and did all the heavy lifting to get us audit-ready. This team
+      deeply cares about their customers and it shows.
     </Testimonial>
     <Testimonial
       image={BaptisteArnaud}
       author="Baptiste Arnaud"
-      role={__("Founder at Typebot")}
+      role="Founder at Typebot"
     >
-      {
-        __(
-          "Probo made getting ISO 27001 certified simple, fast, and human. Their open-source approach, direct Slack support, and ability to adapt to a one-person company made all the difference.",
-        )
-      }
+      Probo made getting ISO 27001 certified simple, fast, and human. Their
+      open-source approach, direct Slack support, and ability to adapt to a
+      one-person company made all the difference.
     </Testimonial>
     <Testimonial
       image={EfimMirochnik}
       author="Efim Mirochnik"
-      role={__("CISO at Ahrefs")}
+      role="CISO at Ahrefs"
     >
-      {
-        __(
-          "Probo has been a true partner. They adapted compliance and security to our daily jobs, took the heavy lifting and enabled us to move faster than expected.",
-        )
-      }
+      Probo has been a true partner. They adapted compliance and security to our
+      daily jobs, took the heavy lifting and enabled us to move faster than
+      expected.
     </Testimonial>
     <Testimonial
       image={FabienDevos}
       author="Fabien Devos"
-      role={__("Co-founder & CTO at Vybe")}
+      role="Co-founder & CTO at Vybe"
     >
-      {
-        __(
-          "Probo made the SOC2 process seamless, their support went way beyond what I expected. It's the first time I actually enjoyed compliance.",
-        )
-      }
+      Probo made the SOC2 process seamless, their support went way beyond what I
+      expected. It's the first time I actually enjoyed compliance.
     </Testimonial>
     <Testimonial
       image={SonyaRikhtverchik}
       author="Sonya Rikhtverchik"
-      role={__("COO at Vybe")}
+      role="COO at Vybe"
     >
-      {
-        __(
-          "Probo made the terrifying chore of SOC 2 compliance seem like a walk in Jardin des Tuileries.",
-        )
-      }
+      Probo made the terrifying chore of SOC 2 compliance seem like a walk in
+      Jardin des Tuileries.
     </Testimonial>
     <Testimonial
       image={DimitriKassubeck}
       author="Dimitri Kassubeck"
-      role={__("Co-founder & CEO at Moby Analytics")}
+      role="Co-founder & CEO at Moby Analytics"
     >
-      {
-        __(
-          "Compliance, done right. Experts who focus on what truly matters. Hassle free - just one mission: make you more secure.",
-        )
-      }
+      Compliance, done right. Experts who focus on what truly matters. Hassle
+      free - just one mission: make you more secure.
     </Testimonial>
     <Testimonial
       image={LalitKundu}
       author="Lalit Kundu"
-      role={__("Co-founder & CEO at Delty")}
+      role="Co-founder & CEO at Delty"
     >
-      {
-        __(
-          "Probo team made SOC 2 compliance a smooth sail for us, working closely on explaining and implementing the controls, and even helped us go through vendor security for big enterprise contracts. They demystify the whole compliance process, I couldn't recommend them more for any startup.",
-        )
-      }
+      Probo team made SOC 2 compliance a smooth sail for us, working closely on
+      explaining and implementing the controls, and even helped us go through
+      vendor security for big enterprise contracts. They demystify the whole
+      compliance process, I couldn't recommend them more for any startup.
     </Testimonial>
     <Testimonial
       image={MaximeMouchet}
       author="Maxime Mouchet"
-      role={__("Co-founder & CTO at Clarifeye")}
+      role="Co-founder & CTO at Clarifeye"
     >
-      {
-        __(
-          "Our customers have high security expectations. We needed a partner who took compliance as seriously as we do. Probo was rigorous, responsive, and fast - exactly what we needed to get it done right.",
-        )
-      }
+      Our customers have high security expectations. We needed a partner who
+      took compliance as seriously as we do. Probo was rigorous, responsive, and
+      fast - exactly what we needed to get it done right.
     </Testimonial>
     <Testimonial
       image={GuillaumeMarquis}
       author="Guillaume Marquis"
-      role={__("Co-founder & CEO at Basalt")}
+      role="Co-founder & CEO at Basalt"
     >
-      {
-        __(
-          "Probo has been the ideal compliance partner. They built security and compliance around how we work, took on the heavy lifting and delivered fast.",
-        )
-      }
+      Probo has been the ideal compliance partner. They built security and
+      compliance around how we work, took on the heavy lifting and delivered
+      fast.
     </Testimonial>
     <Testimonial
       image={AlexandrosZisimidis}
       author="Alexandros Zisimidis"
-      role={__("Co-founder & COO at Cleon")}
+      role="Co-founder & COO at Cleon"
     >
-      {
-        __(
-          "Unlike typical compliance vendors that push every certification under the sun, Probo actually helps us think through which standards make sense for our business. They guide us through each decision with clarity and never pressure us toward unnecessary licenses. It's refreshing to work with a compliance partner who prioritizes what we actually need.",
-        )
-      }
+      Unlike typical compliance vendors that push every certification under the
+      sun, Probo actually helps us think through which standards make sense for
+      our business. They guide us through each decision with clarity and never
+      pressure us toward unnecessary licenses. It's refreshing to work with a
+      compliance partner who prioritizes what we actually need.
     </Testimonial>
   </Scroll>
 </section>

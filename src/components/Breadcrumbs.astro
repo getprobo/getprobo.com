@@ -1,6 +1,4 @@
 ---
-import { getLink } from "../lib/i18n.ts";
-
 export interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -25,7 +23,7 @@ const structuredData = {
     position: index + 1,
     name: item.label,
     ...(item.href && {
-      item: new URL(getLink(Astro, item.href), Astro.site).toString(),
+      item: new URL(item.href, Astro.site).toString(),
     }),
   })),
 };
@@ -63,7 +61,7 @@ const structuredData = {
               <span class="text-muted-foreground">{crumb.label}</span>
             ) : (
               <a
-                href={getLink(Astro, crumb.href)}
+                href={crumb.href}
                 class="text-quaternary hover:text-primary transition-colors"
               >
                 {crumb.label}

@@ -1,8 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import FrameworkBadge from "../../components/FrameworkBadge.svelte";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "cost-overview", label: "Cost Overview 2026" },
@@ -70,10 +68,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("ISO 27001 Compliance Cost")}
-  description={__(
-    "What does ISO 27001 certification really cost in 2026? Get a complete breakdown of audit fees, implementation costs, and hidden expenses for startups and SMBs.",
-  )}
+  title="ISO 27001 Compliance Cost"
+  description="What does ISO 27001 certification really cost in 2026? Get a complete breakdown of audit fees, implementation costs, and hidden expenses for startups and SMBs."
   ogImage="/hub/ISO27001-og.png"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
@@ -88,8 +84,8 @@ const breadcrumbSchema = {
         <h1
           class="text-foreground text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
         >
-          <span class="highlight-text">{__("ISO 27001")}</span>
-          {__("Compliance Cost")}
+          <span class="highlight-text">ISO 27001</span>
+          Compliance Cost
         </h1>
         <div class="flex items-center gap-2">
           <FrameworkBadge name="ISO27001" class="size-12" client:visible />
@@ -98,16 +94,14 @@ const breadcrumbSchema = {
       <div
         class="mb-6 inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-5 py-2.5 text-base text-gray-500 shadow-sm backdrop-blur-sm"
       >
-        {__("Complete 2026 Breakdown")}
+        Complete 2026 Breakdown
       </div>
       <p
         class="text-muted-foreground mx-auto max-w-[800px] text-lg leading-relaxed"
       >
-        {
-          __(
-            "What does ISO 27001 certification really cost in 2026? Get a complete breakdown of audit fees, implementation costs, and hidden expenses for startups and SMBs.",
-          )
-        }
+        What does ISO 27001 certification really cost in 2026? Get a complete
+        breakdown of audit fees, implementation costs, and hidden expenses for
+        startups and SMBs.
       </p>
     </header>
 
@@ -145,25 +139,25 @@ const breadcrumbSchema = {
         <section class="mb-12">
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  'You\'ve probably heard wildly different numbers when asking about ISO 27001 certification costs. One vendor quotes $15,000. Another says $150,000. A consultant tells you it depends on "complexity factors" without explaining what that actually means.',
-                )
-              }
+              You've probably heard wildly different numbers when asking about
+              ISO 27001 certification costs. One vendor quotes $15,000. Another
+              says $150,000. A consultant tells you it depends on "complexity
+              factors" without explaining what that actually means.
             </p>
             <p>
-              {
-                __(
-                  "Here's the truth: ISO 27001 pricing confusion isn't accidental. It benefits consultants and enterprise compliance platforms that thrive on opacity. The more confusing the landscape, the easier it is to justify inflated fees or lock you into expensive multi-year contracts.",
-                )
-              }
+              Here's the truth: ISO 27001 pricing confusion isn't accidental. It
+              benefits consultants and enterprise compliance platforms that
+              thrive on opacity. The more confusing the landscape, the easier it
+              is to justify inflated fees or lock you into expensive multi-year
+              contracts.
             </p>
             <p>
-              {
-                __(
-                  "But you're a decision-maker who needs real numbers to justify compliance budgets to stakeholders. You need to understand exactly where your money goes, and more importantly, where you might be overpaying. This guide breaks down every cost component of ISO 27001 certification in 2026, from audit fees to the hidden expenses most vendors conveniently forget to mention.",
-                )
-              }
+              But you're a decision-maker who needs real numbers to justify
+              compliance budgets to stakeholders. You need to understand exactly
+              where your money goes, and more importantly, where you might be
+              overpaying. This guide breaks down every cost component of ISO
+              27001 certification in 2026, from audit fees to the hidden
+              expenses most vendors conveniently forget to mention.
             </p>
           </div>
         </section>
@@ -175,32 +169,21 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "ISO 27001 Certification Cost Overview: What to Expect in 2026",
-              )
-            }
+            ISO 27001 Certification Cost Overview: What to Expect in 2026
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Let's start with the direct certification costs. The fees you'll pay to actually get that ISO 27001 certificate on your wall. These are non-negotiable expenses that every organization faces, regardless of how you approach implementation.",
-                )
-              }
+              Let's start with the direct certification costs. The fees you'll
+              pay to actually get that ISO 27001 certificate on your wall. These
+              are non-negotiable expenses that every organization faces,
+              regardless of how you approach implementation.
             </p>
             <p>
-              {
-                __(
-                  "The total direct certification cost for most organizations ranges from",
-                )
-              }
+              The total direct certification cost for most organizations ranges
+              from
               <strong class="text-foreground">$6,000 to $50,000</strong>
-              {
-                __(
-                  "for the initial certification cycle, depending on your company size and complexity. But that number only tells part of the story.",
-                )
-              }
+              for the initial certification cycle, depending on your company size
+              and complexity. But that number only tells part of the story.
             </p>
           </div>
         </section>
@@ -212,151 +195,115 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("How Much the Audit Costs")}
+            How Much the Audit Costs
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Stage 1 and Stage 2 Audit Fees")}
+                Stage 1 and Stage 2 Audit Fees
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "ISO 27001 certification requires a two-stage external audit process, and understanding this structure is crucial for budgeting accurately.",
-                  )
-                }
+                ISO 27001 certification requires a two-stage external audit
+                process, and understanding this structure is crucial for
+                budgeting accurately.
               </p>
               <p class="mb-4">
                 <strong class="text-foreground"
-                  >{__("Stage 1 Audit (Documentation Review):")}</strong
+                  >Stage 1 Audit (Documentation Review):</strong
                 >
-                {
-                  __(
-                    "This is essentially a readiness check. The certification body reviews your Information Security Management System (ISMS) documentation to verify you're prepared for the full audit.",
-                  )
-                }
+                This is essentially a readiness check. The certification body reviews
+                your Information Security Management System (ISMS) documentation to
+                verify you're prepared for the full audit.
               </p>
               <p class="mb-4">
                 <strong class="text-foreground"
-                  >{__("Stage 2 Audit (Certification Audit):")}</strong
+                  >Stage 2 Audit (Certification Audit):</strong
                 >
-                {
-                  __(
-                    "This is the comprehensive on-site (or remote) audit where auditors verify your ISMS is actually implemented and working effectively.",
-                  )
-                }
+                This is the comprehensive on-site (or remote) audit where auditors
+                verify your ISMS is actually implemented and working effectively.
               </p>
               <p>
-                {__("Total cost run between")}
-                <strong class="text-foreground">$4,500 to $25,000</strong>{
-                  __(
-                    ", depending on your organization's size and the number of auditor days required.",
-                  )
-                }
+                Total cost run between
+                <strong class="text-foreground">$4,500 to $25,000</strong> , depending
+                on your organization's size and the number of auditor days required.
               </p>
             </div>
 
             <div>
               <p class="mb-3">
-                {
-                  __(
-                    "The number of audit days is calculated based on factors including:",
-                  )
-                }
+                The number of audit days is calculated based on factors
+                including:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Number of employees")}</span>
+                  <span>Number of employees</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Number of physical locations")}</span>
+                  <span>Number of physical locations</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Complexity of your IT infrastructure")}</span>
+                  <span>Complexity of your IT infrastructure</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Scope of your ISMS (which business processes are included)",
-                      )
-                    }</span
+                  <span>
+                    Scope of your ISMS (which business processes are included)</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "A 30-person SaaS startup with a single office and cloud-based infrastructure might need 1 or 2 audit days total. A 200-person company with multiple locations and on-premise systems could require at least 5 days.",
-                  )
-                }
+                A 30-person SaaS startup with a single office and cloud-based
+                infrastructure might need 1 or 2 audit days total. A 200-person
+                company with multiple locations and on-premise systems could
+                require at least 5 days.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Annual Surveillance Audit Costs")}
+                Annual Surveillance Audit Costs
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Your ISO 27001 certificate is valid for three years, but it comes with strings attached. You'll undergo",
-                  )
-                }
+                Your ISO 27001 certificate is valid for three years, but it
+                comes with strings attached. You'll undergo
                 <strong class="text-foreground"
-                  >{__("annual surveillance audits")}</strong
+                  >annual surveillance audits</strong
                 >
-                {
-                  __(
-                    "in years two and three to verify you're maintaining compliance.",
-                  )
-                }
+                in years two and three to verify you're maintaining compliance.
               </p>
               <p class="mb-4">
-                {
-                  __(
-                    "Surveillance audits are shorter than the initial certification audit—typically about one-third the duration. Budget",
-                  )
-                }
+                Surveillance audits are shorter than the initial certification
+                audit—typically about one-third the duration. Budget
                 <strong class="text-foreground"
                   >$3,000 to $12,000 per year</strong
                 >
-                {
-                  __(
-                    "for surveillance audits, depending on your organization's size.",
-                  )
-                }
+                for surveillance audits, depending on your organization's size.
               </p>
               <p>
-                {
-                  __(
-                    "These aren't optional. Skip a surveillance audit, and your certification gets suspended. Miss the window entirely, and you'll need to start the full certification process over again.",
-                  )
-                }
+                These aren't optional. Skip a surveillance audit, and your
+                certification gets suspended. Miss the window entirely, and
+                you'll need to start the full certification process over again.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Recertification Costs (Every 3 Years)")}
+                Recertification Costs (Every 3 Years)
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "When your three-year certification cycle ends, you'll need to go through recertification. This is essentially another full audit, though it may be slightly streamlined if you've maintained good compliance throughout the cycle.",
-                  )
-                }
+                When your three-year certification cycle ends, you'll need to go
+                through recertification. This is essentially another full audit,
+                though it may be slightly streamlined if you've maintained good
+                compliance throughout the cycle.
               </p>
               <p>
-                {
-                  __(
-                    "Recertification costs are comparable to initial certification. Depends of course on how your company has grown. If you have 3x more employees at this moment, price will probably be higher. But shouldn't be really a problem at this stage.",
-                  )
-                }
+                Recertification costs are comparable to initial certification.
+                Depends of course on how your company has grown. If you have 3x
+                more employees at this moment, price will probably be higher.
+                But shouldn't be really a problem at this stage.
               </p>
             </div>
 
@@ -364,12 +311,11 @@ const breadcrumbSchema = {
               class="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4"
             >
               <p class="text-amber-800">
-                <strong>{__("⚠️ Warning:")}</strong>
-                {
-                  __(
-                    "Be careful with audit prices that seem too good to be true. There's a good chance the firm isn't legitimate. When selling to enterprise customers, they will verify your auditor's credibility. If it doesn't check out, you'll have wasted both time and money.",
-                  )
-                }
+                <strong>⚠️ Warning:</strong>
+                Be careful with audit prices that seem too good to be true. There's
+                a good chance the firm isn't legitimate. When selling to enterprise
+                customers, they will verify your auditor's credibility. If it doesn't
+                check out, you'll have wasted both time and money.
               </p>
             </div>
           </div>
@@ -382,36 +328,29 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The Hidden Cost of Implementation")}
+            The Hidden Cost of Implementation
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Here's where things get expensive, and where most organizations dramatically underestimate their investment. The audit fees above represent maybe 20-30% of your total ISO 27001 spend. The rest goes into actually building and maintaining a compliant ISMS.",
-                )
-              }
+              Here's where things get expensive, and where most organizations
+              dramatically underestimate their investment. The audit fees above
+              represent maybe 20-30% of your total ISO 27001 spend. The rest
+              goes into actually building and maintaining a compliant ISMS.
             </p>
             <p>
-              {
-                __(
-                  "The audit fee is just the visible part of your ISO 27001 investment. The hidden costs often exceed the audit itself, yet they're rarely discussed in vendor marketing materials.",
-                )
-              }
+              The audit fee is just the visible part of your ISO 27001
+              investment. The hidden costs often exceed the audit itself, yet
+              they're rarely discussed in vendor marketing materials.
             </p>
             <p>
-              {
-                __(
-                  "Before the audit, you need to put policies, controls, and security measures in place:",
-                )
-              }
+              Before the audit, you need to put policies, controls, and security
+              measures in place:
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{__("Readiness assessment")}</strong
+                  ><strong class="text-foreground">Readiness assessment</strong
                   ></span
                 >
               </li>
@@ -419,7 +358,7 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Policy creation/updates")}</strong
+                    >Policy creation/updates</strong
                   ></span
                 >
               </li>
@@ -427,111 +366,83 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Control implementation")}</strong
+                    >Control implementation</strong
                   ></span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{__("Evidence collection")}</strong
+                  ><strong class="text-foreground">Evidence collection</strong
                   ></span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{__("Auditor communication")}</strong
+                  ><strong class="text-foreground">Auditor communication</strong
                   ></span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground">{__("Remediation")}</strong
-                  ></span
+                <span><strong class="text-foreground">Remediation</strong></span
                 >
               </li>
             </ul>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Internal Resource and Time Investment")}
+                Internal Resource and Time Investment
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "This is consistently the largest hidden cost. Implementing ISO 27001 in-house requires significant time from your team:",
-                  )
-                }
+                This is consistently the largest hidden cost. Implementing ISO
+                27001 in-house requires significant time from your team:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Project lead/compliance manager:")}</strong
+                      >Project lead/compliance manager:</strong
                     >
-                    {
-                      __(
-                        "a dedicated person for 3-6 months during implementation",
-                      )
-                    }</span
+                    a dedicated person for 3-6 months during implementation</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("IT/Security team:")}</strong
-                    >
-                    {
-                      __(
-                        "10-20 hours per week for technical controls and evidence gathering",
-                      )
-                    }</span
+                    ><strong class="text-foreground">IT/Security team:</strong>
+                    10-20 hours per week for technical controls and evidence gathering</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Department heads:")}</strong
-                    >
-                    {
-                      __(
-                        "5-10 hours each for policy reviews and process documentation",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Department heads:</strong>
+                    5-10 hours each for policy reviews and process documentation</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Executive sponsor:")}</strong
-                    >
-                    {
-                      __("2-5 hours per week for oversight and decision-making")
-                    }</span
+                    ><strong class="text-foreground">Executive sponsor:</strong>
+                    2-5 hours per week for oversight and decision-making</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "For a startup, this might mean your CTO or Head of Engineering is spending half their time on compliance for several months. That's an opportunity cost that can easily exceed $50,000-$100,000 in equivalent salary value.",
-                  )
-                }
+                For a startup, this might mean your CTO or Head of Engineering
+                is spending half their time on compliance for several months.
+                That's an opportunity cost that can easily exceed
+                $50,000-$100,000 in equivalent salary value.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "The compliance automation market has exploded precisely because of this pain point. A compliance solution will probably lower your internal required effort. A classic GRC solution will cost between $5k to $15K a year and still requires oversight from you.",
-                  )
-                }
+                The compliance automation market has exploded precisely because
+                of this pain point. A compliance solution will probably lower
+                your internal required effort. A classic GRC solution will cost
+                between $5k to $15K a year and still requires oversight from
+                you.
               </p>
             </div>
           </div>
@@ -544,60 +455,48 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What's Worth Paying For")}
+            What's Worth Paying For
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
-            <p>
-              {
-                __(
-                  "Not everything the compliance industry pushes is necessary.",
-                )
-              }
-            </p>
+            <p>Not everything the compliance industry pushes is necessary.</p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Penetration Testing")}
+                Penetration Testing
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "ISO 27001 doesn't require penetration testing. For early-stage startups, it might not even be useful—your product is still evolving, and security testing makes more sense once it stabilizes.",
-                  )
-                }{" "}
-                {__("We cover this in detail in")}
+                ISO 27001 doesn't require penetration testing. For early-stage
+                startups, it might not even be useful—your product is still
+                evolving, and security testing makes more sense once it
+                stabilizes. We cover this in detail in
                 <a
                   href="/blog/2025-10-23-do-you-need-pen-test-for-iso27001"
                   class="text-[#5d770d] hover:underline"
-                  >{__("Do You Need a Pen Test for ISO 27001?")}</a
+                  >Do You Need a Pen Test for ISO 27001?</a
                 >
               </p>
               <p class="mb-4">
-                {__("If you do go for it, manual testing is worth it.")}
+                If you do go for it, manual testing is worth it.
               </p>
               <p>
-                <strong class="text-foreground">{__("Budget:")}</strong>
-                {__("A proper penetration test starts at $5,000.")}
+                <strong class="text-foreground">Budget:</strong>
+                A proper penetration test starts at $5,000.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Security Training")}
+                Security Training
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Security training for employees is a good investment, but don't overpay. Plenty of",
-                  )
-                }
-                <strong class="text-foreground"
-                  >{__("free resources exist")}</strong
-                >{__(", and some vendors offer free tiers for startups.")}
+                Security training for employees is a good investment, but don't
+                overpay. Plenty of
+                <strong class="text-foreground">free resources exist</strong>,
+                and some vendors offer free tiers for startups.
               </p>
               <p>
-                <strong class="text-foreground">{__("Budget:")}</strong>
-                {__("$100/month is more than enough.")}
+                <strong class="text-foreground">Budget:</strong>
+                $100/month is more than enough.
               </p>
             </div>
           </div>
@@ -610,26 +509,21 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("ISO 27001 vs SOC 2 Cost Comparison: Which Should You Choose?")}
+            ISO 27001 vs SOC 2 Cost Comparison: Which Should You Choose?
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "This is one of the most common questions we hear from B2B companies evaluating compliance frameworks. Both ISO 27001 and SOC 2 demonstrate security maturity to customers, but they serve different purposes and carry different costs.",
-                )
-              }
+              This is one of the most common questions we hear from B2B
+              companies evaluating compliance frameworks. Both ISO 27001 and SOC
+              2 demonstrate security maturity to customers, but they serve
+              different purposes and carry different costs.
             </p>
             <p>
-              {
-                __(
-                  "For a detailed breakdown of SOC 2 expenses, check out our complete guide on",
-                )
-              }
+              For a detailed breakdown of SOC 2 expenses, check out our complete
+              guide on
               <a
                 href="/blog/2025-03-04-what-is-soc2-cost"
-                class="text-[#5d770d] hover:underline"
-                >{__("what SOC 2 costs")}</a
+                class="text-[#5d770d] hover:underline">what SOC 2 costs</a
               >.
             </p>
           </div>
@@ -642,154 +536,134 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("5 Ways to Reduce Your ISO 27001 Certification Costs")}
+            5 Ways to Reduce Your ISO 27001 Certification Costs
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "You don't have to choose between compliance and your runway. Here are proven strategies to achieve ISO 27001 certification without overspending.",
-                )
-              }
+              You don't have to choose between compliance and your runway. Here
+              are proven strategies to achieve ISO 27001 certification without
+              overspending.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {
-                  __(
-                    "1. Use Open-Source Compliance Tools Instead of Enterprise Platforms",
-                  )
-                }
+                1. Use Open-Source Compliance Tools Instead of Enterprise
+                Platforms
               </h3>
               <p>
-                {__("Enterprise GRC platforms charge")}
+                Enterprise GRC platforms charge
                 <strong class="text-foreground"
                   >$25,000-$50,000+ annually</strong
                 >
-                {
-                  __(
-                    "for features most startups don't need. Open-source alternatives provide core compliance functionality—policy management, control tracking, evidence collection—at a fraction of the cost.",
-                  )
-                }{" "}
-                {__("Read")}
+                for features most startups don't need. Open-source alternatives provide
+                core compliance functionality—policy management, control tracking,
+                evidence collection—at a fraction of the cost. Read
                 <a
                   href="/blog/2025-02-04-the-case-for-open-source-compliance"
                   class="text-[#5d770d] hover:underline"
-                  >{__("the case for open-source compliance")}</a
+                  >the case for open-source compliance</a
                 >
-                {__("to understand why.")}
+                to understand why.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("2. Start with a Proper Gap Assessment")}
+                2. Start with a Proper Gap Assessment
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Skipping the gap assessment to save $5,000-$10,000 is false economy. Without a clear understanding of your current state, you'll waste time implementing unnecessary controls while missing critical gaps.",
-                  )
-                }
+                Skipping the gap assessment to save $5,000-$10,000 is false
+                economy. Without a clear understanding of your current state,
+                you'll waste time implementing unnecessary controls while
+                missing critical gaps.
               </p>
-              <p class="mb-3">{__("A thorough gap assessment provides:")}</p>
+              <p class="mb-3">A thorough gap assessment provides:</p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Prioritized remediation roadmap")}</span>
+                  <span>Prioritized remediation roadmap</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Realistic timeline estimates")}</span>
+                  <span>Realistic timeline estimates</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Accurate budget projections")}</span>
+                  <span>Accurate budget projections</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Reduced risk of audit findings")}</span>
+                  <span>Reduced risk of audit findings</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Whether you hire a consultant or use a structured self-assessment framework, invest the time upfront to understand exactly what needs to change.",
-                  )
-                }
+                Whether you hire a consultant or use a structured
+                self-assessment framework, invest the time upfront to understand
+                exactly what needs to change.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("3. Leverage Automation for Evidence Collection")}
+                3. Leverage Automation for Evidence Collection
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Evidence collection is the most time-consuming ongoing compliance activity. Every control requires documentation proving it's implemented and working: screenshots, logs, reports, attestations.",
-                  )
-                }
+                Evidence collection is the most time-consuming ongoing
+                compliance activity. Every control requires documentation
+                proving it's implemented and working: screenshots, logs,
+                reports, attestations.
               </p>
               <p class="mb-3">
-                {
-                  __(
-                    "Modern compliance tools automate evidence collection by integrating with your existing systems:",
-                  )
-                }
+                Modern compliance tools automate evidence collection by
+                integrating with your existing systems:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Cloud providers (AWS, GCP, Azure)")}</span>
+                  <span>Cloud providers (AWS, GCP, Azure)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Identity providers (Okta, Google Workspace)")}</span
-                  >
+                  <span>Identity providers (Okta, Google Workspace)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("HR systems (BambooHR, Gusto)")}</span>
+                  <span>HR systems (BambooHR, Gusto)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Development tools (GitHub, Jira)")}</span>
+                  <span>Development tools (GitHub, Jira)</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "This automation can reduce evidence collection time by 70-80%, freeing your team to focus on actually improving security rather than documenting it.",
-                  )
-                }
+                This automation can reduce evidence collection time by 70-80%,
+                freeing your team to focus on actually improving security rather
+                than documenting it.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("4. Right-Size Your ISMS Scope")}
+                4. Right-Size Your ISMS Scope
               </h3>
               <p>
-                {
-                  __(
-                    "You don't need to certify your entire organization from day one. A focused ISMS scope—covering your core product and customer data—can significantly reduce audit complexity and costs while still satisfying customer requirements.",
-                  )
-                }
+                You don't need to certify your entire organization from day one.
+                A focused ISMS scope—covering your core product and customer
+                data—can significantly reduce audit complexity and costs while
+                still satisfying customer requirements.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("5. Choose the Right Certification Body")}
+                5. Choose the Right Certification Body
               </h3>
               <p>
-                {
-                  __(
-                    "Audit fees vary significantly between certification bodies. Get quotes from multiple accredited auditors, but remember: the cheapest option isn't always the best. Consider reputation, industry experience, and audit approach when making your decision.",
-                  )
-                }
+                Audit fees vary significantly between certification bodies. Get
+                quotes from multiple accredited auditors, but remember: the
+                cheapest option isn't always the best. Consider reputation,
+                industry experience, and audit approach when making your
+                decision.
               </p>
             </div>
           </div>
@@ -802,52 +676,42 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Get ISO 27001 Compliant with Probo")}
+            Get ISO 27001 Compliant with Probo
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {__("If you want to become ISO 27001 certified")}
-              <strong class="text-foreground"
-                >{
-                  __("without turning compliance into a second full-time job")
-                }</strong
-              >{__(",")}
+              If you want to become ISO 27001 certified
+              <strong class="text-foreground">
+                without turning compliance into a second full-time job</strong
+              >,
               <a
                 href="https://www.getprobo.com/"
                 class="text-[#5d770d] hover:underline">Probo</a
               >
-              {__("is a great fit. You get a")}
+              is a great fit. You get a
               <a
                 href="/blog/2025-10-17-what-is-hands-off-compliance"
                 class="font-semibold text-[#5d770d] hover:underline"
-                >{__("hands-off compliance service")}</a
+                >hands-off compliance service</a
               >
-              {
-                __(
-                  "(so your team isn't stuck writing policies, chasing evidence, and managing auditors) paired with an",
-                )
-              }
-              <strong class="text-foreground"
-                >{__("open-source platform")}</strong
-              >
-              {
-                __(
-                  "that keeps everything structured, auditable, and easy to maintain year after year.",
-                )
-              }
+              (so your team isn't stuck writing policies, chasing evidence, and managing
+              auditors) paired with an
+              <strong class="text-foreground">open-source platform</strong>
+              that keeps everything structured, auditable, and easy to maintain year
+              after year.
             </p>
             <p class="mt-4">
-              {__("See how")}
+              See how
               <a
                 href="/stories/lucis-iso"
                 class="text-[#5d770d] hover:underline"
-                >{__("Lucis got ISO 27001 certified")}</a
+                >Lucis got ISO 27001 certified</a
               >
-              {__("using Probo's managed approach, and explore our")}
+              using Probo's managed approach, and explore our
               <a href="/pricing" class="text-[#5d770d] hover:underline"
-                >{__("pricing")}</a
+                >pricing</a
               >
-              {__("to understand the cost.")}
+              to understand the cost.
             </p>
           </div>
         </section>
@@ -860,21 +724,17 @@ const breadcrumbSchema = {
             <h3
               class="mb-4 text-2xl font-semibold text-[#141e12] sm:text-[1.75rem]"
             >
-              {__("Get ISO 27001 Certified with Probo")}
+              Get ISO 27001 Certified with Probo
             </h3>
             <p class="mx-auto mb-8 max-w-[500px] text-[#3d4a38]">
-              {
-                __(
-                  "Take a meeting to understand how close you are to compliance.",
-                )
-              }
+              Take a meeting to understand how close you are to compliance.
             </p>
             <a
               href="/contact"
               class="group inline-flex items-center gap-2 rounded-full bg-[#141e12] px-6 py-3.5 font-medium shadow-lg transition-all hover:gap-3 hover:bg-[#1f2e1a] hover:shadow-xl"
               style="color: white;"
             >
-              {__("Talk to a compliance expert")}
+              Talk to a compliance expert
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

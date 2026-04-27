@@ -1,12 +1,8 @@
 ---
-import { getTranslator } from "../../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
-
 const items = [
-  { label: "10+", description: __("frameworks supported") },
-  { label: "20+", description: __("countries served") },
-  { label: "100+", description: __("customers") },
+  { label: "10+", description: "frameworks supported" },
+  { label: "20+", description: "countries served" },
+  { label: "100+", description: "customers" },
 ];
 ---
 

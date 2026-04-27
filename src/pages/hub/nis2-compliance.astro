@@ -1,7 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "what-is-nis2", label: "What Is NIS2?" },
@@ -73,10 +71,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("NIS2 Compliance: The Complete Guide for 2026")}
-  description={__(
-    "Everything you need to know about NIS2 compliance in 2026: requirements, costs, deadlines, and how to prepare your organization. Expert guide for tech teams.",
-  )}
+  title="NIS2 Compliance: The Complete Guide for 2026"
+  description="Everything you need to know about NIS2 compliance in 2026: requirements, costs, deadlines, and how to prepare your organization. Expert guide for tech teams."
   ogImage="/hub/nis2-compliance-2026.jpg"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
@@ -91,8 +87,8 @@ const breadcrumbSchema = {
         <h1
           class="text-foreground text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
         >
-          <span class="highlight-text">{__("NIS2")}</span>
-          {__("Compliance")}
+          <span class="highlight-text">NIS2</span>
+          Compliance
         </h1>
         <div class="flex items-center gap-2">
           <img src="/frameworks/NIS2.svg" alt="NIS2" class="size-12" />
@@ -101,16 +97,13 @@ const breadcrumbSchema = {
       <div
         class="mb-6 inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-5 py-2.5 text-base text-gray-500 shadow-sm backdrop-blur-sm"
       >
-        {__("The Complete Guide for 2026")}
+        The Complete Guide for 2026
       </div>
       <p
         class="text-muted-foreground mx-auto max-w-[800px] text-lg leading-relaxed"
       >
-        {
-          __(
-            "The European Union just redrew the cybersecurity map, and your organization might be standing on new territory.",
-          )
-        }
+        The European Union just redrew the cybersecurity map, and your
+        organization might be standing on new territory.
       </p>
     </header>
 
@@ -150,18 +143,24 @@ const breadcrumbSchema = {
         <section class="mb-12">
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "When GDPR landed in 2018, it sent shockwaves through every company handling EU citizen data. Now, the NIS2 Directive is doing the same for cybersecurity, but this time, the scope is broader, the penalties are steeper, and the technical requirements are far more prescriptive. If you're a CTO, CISO, or compliance officer at a company operating in or serving the EU market, this isn't optional reading. It's your compliance roadmap.",
-                )
-              }
+              When GDPR landed in 2018, it sent shockwaves through every company
+              handling EU citizen data. Now, the NIS2 Directive is doing the
+              same for cybersecurity, but this time, the scope is broader, the
+              penalties are steeper, and the technical requirements are far more
+              prescriptive. If you're a CTO, CISO, or compliance officer at a
+              company operating in or serving the EU market, this isn't optional
+              reading. It's your compliance roadmap.
             </p>
             <p>
-              {
-                __(
-                  "Here's the uncomfortable truth: according to recent ITPro research, a significant number of firms are already struggling to comply with NIS2 requirements. The directive's October 2024 transposition deadline has passed, member states are actively implementing their national frameworks, and enforcement is ramping up throughout 2026. Whether you're just discovering NIS2 applies to you or you're deep in implementation, this guide breaks down exactly what you need to know, and more importantly, what you need to do.",
-                )
-              }
+              Here's the uncomfortable truth: according to recent ITPro
+              research, a significant number of firms are already struggling to
+              comply with NIS2 requirements. The directive's October 2024
+              transposition deadline has passed, member states are actively
+              implementing their national frameworks, and enforcement is ramping
+              up throughout 2026. Whether you're just discovering NIS2 applies
+              to you or you're deep in implementation, this guide breaks down
+              exactly what you need to know, and more importantly, what you need
+              to do.
             </p>
           </div>
         </section>
@@ -173,40 +172,38 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What Is NIS2? Understanding the Directive's Core Purpose")}
+            What Is NIS2? Understanding the Directive's Core Purpose
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "The Network and Information Security Directive 2 (NIS2) represents the EU's most ambitious cybersecurity legislation to date. Published in the Official Journal of the European Union in December 2022, it replaces the original NIS Directive from 2016 with a dramatically expanded framework designed to address the evolving threat landscape.",
-                )
-              }
+              The Network and Information Security Directive 2 (NIS2) represents
+              the EU's most ambitious cybersecurity legislation to date.
+              Published in the Official Journal of the European Union in
+              December 2022, it replaces the original NIS Directive from 2016
+              with a dramatically expanded framework designed to address the
+              evolving threat landscape.
             </p>
             <p>
-              {
-                __(
-                  "At its core, NIS2 aims to achieve a \"high common level of cybersecurity\" across all EU member states. The European Commission recognized that the original directive's voluntary approach and limited scope left critical gaps in Europe's cyber resilience. As noted in the",
-                )
-              }
+              At its core, NIS2 aims to achieve a "high common level of
+              cybersecurity" across all EU member states. The European
+              Commission recognized that the original directive's voluntary
+              approach and limited scope left critical gaps in Europe's cyber
+              resilience. As noted in the
               <a
                 href="https://digital-strategy.ec.europa.eu/en/policies/nis2-directive"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-[#5d770d] hover:underline"
-                >{__("EU Digital Strategy documentation")}</a
-              >{
-                __(
-                  ', the directive responds to "the increased digitisation of the internal market" and the "evolving cybersecurity threat landscape" accelerated by the COVID-19 pandemic.',
-                )
-              }
+                >EU Digital Strategy documentation</a
+              > , the directive responds to "the increased digitisation of the internal
+              market" and the "evolving cybersecurity threat landscape" accelerated
+              by the COVID-19 pandemic.
             </p>
             <p>
-              {
-                __(
-                  "But NIS2 isn't just about raising the bar—it's about standardizing it. The original directive allowed too much variation between member states, creating a patchwork of requirements that made compliance a nightmare for organizations operating across borders.",
-                )
-              }
+              But NIS2 isn't just about raising the bar—it's about standardizing
+              it. The original directive allowed too much variation between
+              member states, creating a patchwork of requirements that made
+              compliance a nightmare for organizations operating across borders.
             </p>
           </div>
         </section>
@@ -218,79 +215,70 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("From NIS to NIS2 — What Actually Changed")}
+            From NIS to NIS2 — What Actually Changed
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "The jump from NIS to NIS2 isn't incremental—it's transformational. Understanding these changes is critical for scoping your compliance efforts.",
-                )
-              }
+              The jump from NIS to NIS2 isn't incremental—it's transformational.
+              Understanding these changes is critical for scoping your
+              compliance efforts.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Expanded scope and coverage")}
+                Expanded scope and coverage
               </h3>
               <p>
-                {
-                  __(
-                    'The original NIS Directive covered approximately 7 sectors. NIS2 expands this to 18 sectors, bringing an estimated 160,000+ entities under its umbrella. The directive now distinguishes between "essential" and "important" entities, with different supervisory regimes for each.',
-                  )
-                }
+                The original NIS Directive covered approximately 7 sectors. NIS2
+                expands this to 18 sectors, bringing an estimated 160,000+
+                entities under its umbrella. The directive now distinguishes
+                between "essential" and "important" entities, with different
+                supervisory regimes for each.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Harmonized requirements")}
+                Harmonized requirements
               </h3>
               <p>
-                {
-                  __(
-                    'Where NIS allowed member states significant flexibility, NIS2 prescribes specific security measures and incident reporting timelines. This means organizations can no longer rely on "light touch" national implementations.',
-                  )
-                }
+                Where NIS allowed member states significant flexibility, NIS2
+                prescribes specific security measures and incident reporting
+                timelines. This means organizations can no longer rely on "light
+                touch" national implementations.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Stricter penalties")}
+                Stricter penalties
               </h3>
               <p>
-                {
-                  __(
-                    "Administrative fines can now reach €10 million or 2% of global annual turnover for essential entities, whichever is higher. For important entities, it's €7 million or 1.4% of turnover.",
-                  )
-                }
+                Administrative fines can now reach €10 million or 2% of global
+                annual turnover for essential entities, whichever is higher. For
+                important entities, it's €7 million or 1.4% of turnover.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Personal accountability")}
+                Personal accountability
               </h3>
               <p>
-                {
-                  __(
-                    "Perhaps the most significant shift—NIS2 introduces personal liability for management bodies. Senior executives can now be held personally responsible for compliance failures.",
-                  )
-                }
+                Perhaps the most significant shift—NIS2 introduces personal
+                liability for management bodies. Senior executives can now be
+                held personally responsible for compliance failures.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Supply chain focus")}
+                Supply chain focus
               </h3>
               <p>
-                {
-                  __(
-                    "The directive explicitly requires organizations to address cybersecurity risks in their supply chains, including direct suppliers and service providers.",
-                  )
-                }
+                The directive explicitly requires organizations to address
+                cybersecurity risks in their supply chains, including direct
+                suppliers and service providers.
               </p>
             </div>
           </div>
@@ -303,147 +291,121 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The 18 Sectors Now Covered Under NIS2")}
+            The 18 Sectors Now Covered Under NIS2
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "NIS2 categorizes covered entities into two groups, each with distinct compliance obligations:",
-                )
-              }
+              NIS2 categorizes covered entities into two groups, each with
+              distinct compliance obligations:
             </p>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Essential Entities (11 sectors)")}
+                Essential Entities (11 sectors)
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Energy (electricity, oil, gas, hydrogen, district heating)",
-                      )
-                    }</span
+                  <span>
+                    Energy (electricity, oil, gas, hydrogen, district heating)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Transport (air, rail, water, road)")}</span>
+                  <span>Transport (air, rail, water, road)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Banking and financial market infrastructures")}</span
+                  <span>Banking and financial market infrastructures</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>
+                    Health (healthcare providers, EU reference laboratories,
+                    R&D, pharmaceuticals, medical devices)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Health (healthcare providers, EU reference laboratories, R&D, pharmaceuticals, medical devices)",
-                      )
-                    }</span
+                  <span>Drinking water supply and distribution</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>Wastewater management</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>
+                    Digital infrastructure (IXPs, DNS providers, TLD registries,
+                    cloud computing, data centers, CDNs, trust service
+                    providers, electronic communications)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Drinking water supply and distribution")}</span>
+                  <span>ICT service management (B2B)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Wastewater management")}</span>
+                  <span>Public administration (central and regional)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Digital infrastructure (IXPs, DNS providers, TLD registries, cloud computing, data centers, CDNs, trust service providers, electronic communications)",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>{__("ICT service management (B2B)")}</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Public administration (central and regional)")}</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>{__("Space")}</span>
+                  <span>Space</span>
                 </li>
               </ul>
             </div>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Important Entities (7 sectors)")}
+                Important Entities (7 sectors)
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Postal and courier services")}</span>
+                  <span>Postal and courier services</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Waste management")}</span>
+                  <span>Waste management</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Chemical manufacturing, production, and distribution")
-                    }</span
+                  <span>
+                    Chemical manufacturing, production, and distribution</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Food production, processing, and distribution")}</span
+                  <span>Food production, processing, and distribution</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>
+                    Manufacturing (medical devices, computers, electronics,
+                    machinery, motor vehicles)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Manufacturing (medical devices, computers, electronics, machinery, motor vehicles)",
-                      )
-                    }</span
+                  <span>
+                    Digital providers (online marketplaces, search engines,
+                    social networks)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Digital providers (online marketplaces, search engines, social networks)",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>{__("Research organizations")}</span>
+                  <span>Research organizations</span>
                 </li>
               </ul>
             </div>
 
             <p>
-              {
-                __(
-                  "The size thresholds matter too. Generally, medium-sized enterprises (50+ employees or €10M+ turnover) and large enterprises in these sectors fall within scope. However, some entities are covered regardless of size, including DNS service providers, TLD registries, and qualified trust service providers.",
-                )
-              }
+              The size thresholds matter too. Generally, medium-sized
+              enterprises (50+ employees or €10M+ turnover) and large
+              enterprises in these sectors fall within scope. However, some
+              entities are covered regardless of size, including DNS service
+              providers, TLD registries, and qualified trust service providers.
             </p>
           </div>
         </section>
@@ -455,168 +417,132 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("NIS2 Compliance Requirements: What Your Organization Must Do")}
+            NIS2 Compliance Requirements: What Your Organization Must Do
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Understanding NIS2's requirements means diving into the technical details. The directive's Article 21 outlines specific cybersecurity risk-management measures that covered entities must implement. This isn't a checkbox exercise—it requires genuine security maturity.",
-                )
-              }
+              Understanding NIS2's requirements means diving into the technical
+              details. The directive's Article 21 outlines specific
+              cybersecurity risk-management measures that covered entities must
+              implement. This isn't a checkbox exercise—it requires genuine
+              security maturity.
             </p>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Risk Management Measures (Article 21 Breakdown)")}
+                Risk Management Measures (Article 21 Breakdown)
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'Article 21 mandates an "all-hazards approach" to cybersecurity. According to ENISA\'s implementation guidance, organizations must implement measures that are "appropriate and proportionate" to their risk exposure. Here\'s what that means in practice:',
-                  )
-                }
+                Article 21 mandates an "all-hazards approach" to cybersecurity.
+                According to ENISA's implementation guidance, organizations must
+                implement measures that are "appropriate and proportionate" to
+                their risk exposure. Here's what that means in practice:
               </p>
 
               <div class="space-y-4">
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {
-                      __(
-                        "1. Risk analysis and information system security policies",
-                      )
-                    }
+                    1. Risk analysis and information system security policies
                   </h4>
                   <p>
-                    {
-                      __(
-                        "You need documented policies covering your entire information security program. This includes risk assessment methodologies, asset inventories, and security governance frameworks.",
-                      )
-                    }
+                    You need documented policies covering your entire
+                    information security program. This includes risk assessment
+                    methodologies, asset inventories, and security governance
+                    frameworks.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("2. Incident handling")}
+                    2. Incident handling
                   </h4>
                   <p>
-                    {
-                      __(
-                        "Beyond just having an incident response plan, NIS2 requires tested procedures for detecting, analyzing, containing, and recovering from security incidents. Regular tabletop exercises aren't optional—they're expected.",
-                      )
-                    }
+                    Beyond just having an incident response plan, NIS2 requires
+                    tested procedures for detecting, analyzing, containing, and
+                    recovering from security incidents. Regular tabletop
+                    exercises aren't optional—they're expected.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("3. Business continuity and crisis management")}
+                    3. Business continuity and crisis management
                   </h4>
                   <p>
-                    {
-                      __(
-                        "This encompasses backup management, disaster recovery, and crisis management procedures. Your organization must demonstrate it can maintain essential functions during and after a cyber incident.",
-                      )
-                    }
+                    This encompasses backup management, disaster recovery, and
+                    crisis management procedures. Your organization must
+                    demonstrate it can maintain essential functions during and
+                    after a cyber incident.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("4. Supply chain security")}
+                    4. Supply chain security
                   </h4>
                   <p>
-                    {
-                      __(
-                        "You must assess and manage cybersecurity risks from direct suppliers and service providers. This means security requirements in contracts, vendor assessments, and ongoing monitoring.",
-                      )
-                    }
+                    You must assess and manage cybersecurity risks from direct
+                    suppliers and service providers. This means security
+                    requirements in contracts, vendor assessments, and ongoing
+                    monitoring.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {
-                      __(
-                        "5. Security in network and information systems acquisition, development, and maintenance",
-                      )
-                    }
+                    5. Security in network and information systems acquisition,
+                    development, and maintenance
                   </h4>
                   <p>
-                    {
-                      __(
-                        "Secure development practices, vulnerability handling, and security testing must be embedded in your SDLC.",
-                      )
-                    }
+                    Secure development practices, vulnerability handling, and
+                    security testing must be embedded in your SDLC.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {
-                      __(
-                        "6. Policies and procedures for assessing cybersecurity risk-management effectiveness",
-                      )
-                    }
+                    6. Policies and procedures for assessing cybersecurity
+                    risk-management effectiveness
                   </h4>
                   <p>
-                    {
-                      __(
-                        "Regular audits, penetration testing, and security assessments are required to validate your controls actually work.",
-                      )
-                    }
+                    Regular audits, penetration testing, and security
+                    assessments are required to validate your controls actually
+                    work.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {
-                      __(
-                        "7. Basic cyber hygiene practices and cybersecurity training",
-                      )
-                    }
+                    7. Basic cyber hygiene practices and cybersecurity training
                   </h4>
                   <p>
-                    {
-                      __(
-                        "All staff need security awareness training. Technical teams need role-specific training. This must be ongoing, not a one-time exercise.",
-                      )
-                    }
+                    All staff need security awareness training. Technical teams
+                    need role-specific training. This must be ongoing, not a
+                    one-time exercise.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("8. Cryptography and encryption policies")}
+                    8. Cryptography and encryption policies
                   </h4>
                   <p>
-                    {
-                      __(
-                        "Where appropriate, you must implement encryption for data at rest and in transit, with documented key management procedures.",
-                      )
-                    }
+                    Where appropriate, you must implement encryption for data at
+                    rest and in transit, with documented key management
+                    procedures.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("9. Human resources security and access control")}
+                    9. Human resources security and access control
                   </h4>
                   <p>
-                    {
-                      __(
-                        "This covers background checks, access management, privileged access controls, and procedures for joiners, movers, and leavers.",
-                      )
-                    }
+                    This covers background checks, access management, privileged
+                    access controls, and procedures for joiners, movers, and
+                    leavers.
                   </p>
                 </div>
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {
-                      __(
-                        "10. Multi-factor authentication and secured communications",
-                      )
-                    }
+                    10. Multi-factor authentication and secured communications
                   </h4>
                   <p>
-                    {
-                      __(
-                        'MFA is explicitly required "where appropriate," along with secured voice, video, and text communications within the organization.',
-                      )
-                    }
+                    MFA is explicitly required "where appropriate," along with
+                    secured voice, video, and text communications within the
+                    organization.
                   </p>
                 </div>
               </div>
@@ -631,95 +557,82 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Incident Reporting Obligations — The 24/72 Hour Rule")}
+            Incident Reporting Obligations — The 24/72 Hour Rule
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "NIS2's incident reporting requirements are among its most operationally demanding elements. The directive establishes a multi-stage reporting framework that requires significant organizational readiness.",
-                )
-              }
+              NIS2's incident reporting requirements are among its most
+              operationally demanding elements. The directive establishes a
+              multi-stage reporting framework that requires significant
+              organizational readiness.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Early warning (24 hours)")}
+                Early warning (24 hours)
               </h3>
               <p>
-                {
-                  __(
-                    "Within 24 hours of becoming aware of a significant incident, you must submit an early warning to your national Computer Security Incident Response Team (CSIRT) or competent authority. This must indicate whether the incident is suspected to be caused by unlawful or malicious acts and whether it could have cross-border impact.",
-                  )
-                }
+                Within 24 hours of becoming aware of a significant incident, you
+                must submit an early warning to your national Computer Security
+                Incident Response Team (CSIRT) or competent authority. This must
+                indicate whether the incident is suspected to be caused by
+                unlawful or malicious acts and whether it could have
+                cross-border impact.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Incident notification (72 hours)")}
+                Incident notification (72 hours)
               </h3>
               <p>
-                {
-                  __(
-                    "Within 72 hours, you must provide an initial assessment including the incident's severity and impact, indicators of compromise where available, and any cross-border implications.",
-                  )
-                }
+                Within 72 hours, you must provide an initial assessment
+                including the incident's severity and impact, indicators of
+                compromise where available, and any cross-border implications.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Intermediate report (upon request)")}
+                Intermediate report (upon request)
               </h3>
               <p>
-                {
-                  __(
-                    "The competent authority may request status updates on your incident handling.",
-                  )
-                }
+                The competent authority may request status updates on your
+                incident handling.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Final report (one month)")}
+                Final report (one month)
               </h3>
               <p>
-                {
-                  __(
-                    "Within one month of the incident notification, or upon conclusion of incident handling if later, you must submit a detailed report including root cause analysis, mitigation measures applied, and cross-border impact assessment.",
-                  )
-                }
+                Within one month of the incident notification, or upon
+                conclusion of incident handling if later, you must submit a
+                detailed report including root cause analysis, mitigation
+                measures applied, and cross-border impact assessment.
               </p>
             </div>
 
             <div class="rounded-xl bg-gray-50 p-6">
               <h4 class="text-foreground mb-3 font-semibold">
-                {__('What constitutes a "significant incident"?')}
+                What constitutes a "significant incident"?
               </h4>
-              <p class="mb-3">
-                {__("The directive defines it as an incident that:")}
-              </p>
+              <p class="mb-3">The directive defines it as an incident that:</p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Has caused or is capable of causing severe operational disruption or financial loss",
-                      )
-                    }</span
+                  <span>
+                    Has caused or is capable of causing severe operational
+                    disruption or financial loss</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Has affected or is capable of affecting other natural or legal persons by causing considerable material or non-material damage",
-                      )
-                    }</span
+                  <span>
+                    Has affected or is capable of affecting other natural or
+                    legal persons by causing considerable material or
+                    non-material damage</span
                   >
                 </li>
               </ul>
@@ -734,79 +647,58 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Supply Chain Security Requirements")}
+            Supply Chain Security Requirements
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "The supply chain provisions in NIS2 reflect hard lessons learned from incidents like SolarWinds and Kaseya. The directive places unprecedented emphasis on third-party risk management.",
-                )
-              }
+              The supply chain provisions in NIS2 reflect hard lessons learned
+              from incidents like SolarWinds and Kaseya. The directive places
+              unprecedented emphasis on third-party risk management.
             </p>
 
-            <p class="mb-3">{__("Organizations must:")}</p>
+            <p class="mb-3">Organizations must:</p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Assess supplier security:")}</strong
+                    >Assess supplier security:</strong
                   >
-                  {
-                    __(
-                      "Evaluate the cybersecurity practices of direct suppliers and service providers",
-                    )
-                  }</span
+                  Evaluate the cybersecurity practices of direct suppliers and service
+                  providers</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Contractual requirements:")}</strong
+                    >Contractual requirements:</strong
                   >
-                  {
-                    __(
-                      "Include appropriate security clauses in supplier agreements",
-                    )
-                  }</span
+                  Include appropriate security clauses in supplier agreements</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground">Ongoing monitoring:</strong>
+                  Continuously monitor supplier security posture, not just at onboarding</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Ongoing monitoring:")}</strong
+                    >Coordinated vulnerability disclosure:</strong
                   >
-                  {
-                    __(
-                      "Continuously monitor supplier security posture, not just at onboarding",
-                    )
-                  }</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground"
-                    >{__("Coordinated vulnerability disclosure:")}</strong
-                  >
-                  {
-                    __(
-                      "Participate in and support vulnerability disclosure processes",
-                    )
-                  }</span
+                  Participate in and support vulnerability disclosure processes</span
                 >
               </li>
             </ul>
 
             <p>
-              {
-                __(
-                  "This creates cascading compliance obligations. Even if your organization isn't directly covered by NIS2, you may face these requirements through your customers' supply chain obligations.",
-                )
-              }
+              This creates cascading compliance obligations. Even if your
+              organization isn't directly covered by NIS2, you may face these
+              requirements through your customers' supply chain obligations.
             </p>
           </div>
         </section>
@@ -818,53 +710,48 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Management Accountability and Personal Liability")}
+            Management Accountability and Personal Liability
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  'Here\'s where NIS2 gets personal—literally. Article 20 requires that "management bodies of essential and important entities approve the cybersecurity risk-management measures" and "oversee its implementation."',
-                )
-              }
+              Here's where NIS2 gets personal—literally. Article 20 requires
+              that "management bodies of essential and important entities
+              approve the cybersecurity risk-management measures" and "oversee
+              its implementation."
             </p>
 
-            <p class="mb-3">{__("Management bodies must:")}</p>
+            <p class="mb-3">Management bodies must:</p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span
-                  >{__("Approve cybersecurity risk-management measures")}</span
-                >
+                <span>Approve cybersecurity risk-management measures</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Oversee implementation of those measures")}</span>
+                <span>Oversee implementation of those measures</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Undergo specific cybersecurity training")}</span>
+                <span>Undergo specific cybersecurity training</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Ensure staff receive regular training")}</span>
+                <span>Ensure staff receive regular training</span>
               </li>
             </ul>
 
             <p>
-              {
-                __(
-                  "The consequences for non-compliance are severe. Member states must ensure that competent authorities can hold management personally liable for infringements. This can include temporary bans from exercising managerial functions.",
-                )
-              }
+              The consequences for non-compliance are severe. Member states must
+              ensure that competent authorities can hold management personally
+              liable for infringements. This can include temporary bans from
+              exercising managerial functions.
             </p>
 
             <p>
-              {
-                __(
-                  "This represents a fundamental shift in how cybersecurity responsibility is allocated within organizations. CTOs and CISOs can no longer treat compliance as a purely technical matter—it's now a board-level governance issue.",
-                )
-              }
+              This represents a fundamental shift in how cybersecurity
+              responsibility is allocated within organizations. CTOs and CISOs
+              can no longer treat compliance as a purely technical matter—it's
+              now a board-level governance issue.
             </p>
           </div>
         </section>
@@ -876,56 +763,43 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("NIS2 Compliance Timeline and Deadlines")}
+            NIS2 Compliance Timeline and Deadlines
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Understanding the NIS2 timeline is crucial for planning your compliance program. While the directive entered into force in January 2023, the real implementation work happens at the national level.",
-                )
-              }
+              Understanding the NIS2 timeline is crucial for planning your
+              compliance program. While the directive entered into force in
+              January 2023, the real implementation work happens at the national
+              level.
             </p>
 
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span
-                  >{
-                    __(
-                      "Member states were required to transpose NIS2 into national law by October 2024",
-                    )
-                  }</span
+                <span>
+                  Member states were required to transpose NIS2 into national
+                  law by October 2024</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span
-                  >{
-                    __(
-                      "National measures began applying to covered entities shortly thereafter",
-                    )
-                  }</span
+                <span>
+                  National measures began applying to covered entities shortly
+                  thereafter</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span
-                  >{
-                    __(
-                      "Throughout 2025-2026, national authorities are conducting registration, supervision, and enforcement activities",
-                    )
-                  }</span
+                <span>
+                  Throughout 2025-2026, national authorities are conducting
+                  registration, supervision, and enforcement activities</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span
-                  >{
-                    __(
-                      "A European Commission review of the directive's functioning is scheduled for October 2027",
-                    )
-                  }</span
+                <span>
+                  A European Commission review of the directive's functioning is
+                  scheduled for October 2027</span
                 >
               </li>
             </ul>
@@ -939,73 +813,58 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("NIS2 Compliance Cost: What to Budget For")}
+            NIS2 Compliance Cost: What to Budget For
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Let's address the question every CTO and CFO wants answered: what will NIS2 compliance actually cost? The answer depends significantly on your organization's current security maturity, size, and sector.",
-                )
-              }
+              Let's address the question every CTO and CFO wants answered: what
+              will NIS2 compliance actually cost? The answer depends
+              significantly on your organization's current security maturity,
+              size, and sector.
             </p>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Cost Breakdown by Company Size")}
+                Cost Breakdown by Company Size
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Compliance costs vary dramatically based on several key factors that organizations should carefully evaluate when budgeting:",
-                  )
-                }
+                Compliance costs vary dramatically based on several key factors
+                that organizations should carefully evaluate when budgeting:
               </p>
 
               <div class="space-y-6">
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("Small-to-medium enterprises (50-250 employees)")}
+                    Small-to-medium enterprises (50-250 employees)
                   </h4>
                   <ul class="mt-2 ml-0 list-none space-y-2">
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "Key cost drivers include policy development, technical controls implementation, and training programs",
-                          )
-                        }</span
+                      <span>
+                        Key cost drivers include policy development, technical
+                        controls implementation, and training programs</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "Organizations with existing security frameworks will see lower initial investments",
-                          )
-                        }</span
+                      <span>
+                        Organizations with existing security frameworks will see
+                        lower initial investments</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "The availability of in-house expertise versus reliance on external consultants significantly impacts costs",
-                          )
-                        }</span
+                      <span>
+                        The availability of in-house expertise versus reliance
+                        on external consultants significantly impacts costs</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "Cloud-native companies often face lower infrastructure remediation costs than those with legacy on-premises systems",
-                          )
-                        }</span
+                      <span>
+                        Cloud-native companies often face lower infrastructure
+                        remediation costs than those with legacy on-premises
+                        systems</span
                       >
                     </li>
                   </ul>
@@ -1013,47 +872,35 @@ const breadcrumbSchema = {
 
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("Mid-market companies (250-1,000 employees)")}
+                    Mid-market companies (250-1,000 employees)
                   </h4>
                   <ul class="mt-2 ml-0 list-none space-y-2">
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "Key cost drivers include security tooling, dedicated compliance personnel, and third-party assessments",
-                          )
-                        }</span
+                      <span>
+                        Key cost drivers include security tooling, dedicated
+                        compliance personnel, and third-party assessments</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "The complexity of your technology stack and number of business units affects implementation scope",
-                          )
-                        }</span
+                      <span>
+                        The complexity of your technology stack and number of
+                        business units affects implementation scope</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "Geographic distribution across multiple EU member states increases coordination costs",
-                          )
-                        }</span
+                      <span>
+                        Geographic distribution across multiple EU member states
+                        increases coordination costs</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "Existing certifications like ISO 27001 or SOC 2 can reduce gap remediation efforts substantially",
-                          )
-                        }</span
+                      <span>
+                        Existing certifications like ISO 27001 or SOC 2 can
+                        reduce gap remediation efforts substantially</span
                       >
                     </li>
                   </ul>
@@ -1061,47 +908,38 @@ const breadcrumbSchema = {
 
                 <div>
                   <h4 class="text-foreground font-semibold">
-                    {__("Large enterprises (1,000+ employees)")}
+                    Large enterprises (1,000+ employees)
                   </h4>
                   <ul class="mt-2 ml-0 list-none space-y-2">
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "Key cost drivers include enterprise security platforms, compliance teams, external audits, and supply chain management",
-                          )
-                        }</span
+                      <span>
+                        Key cost drivers include enterprise security platforms,
+                        compliance teams, external audits, and supply chain
+                        management</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "The number and criticality of suppliers requiring assessment dramatically affects supply chain security costs",
-                          )
-                        }</span
+                      <span>
+                        The number and criticality of suppliers requiring
+                        assessment dramatically affects supply chain security
+                        costs</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            'Regulatory classification as "essential" versus "important" entity determines supervisory intensity and associated costs',
-                          )
-                        }</span
+                      <span>
+                        Regulatory classification as "essential" versus
+                        "important" entity determines supervisory intensity and
+                        associated costs</span
                       >
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-muted-foreground">•</span>
-                      <span
-                        >{
-                          __(
-                            "M&A activity and organizational complexity create additional integration challenges",
-                          )
-                        }</span
+                      <span>
+                        M&A activity and organizational complexity create
+                        additional integration challenges</span
                       >
                     </li>
                   </ul>
@@ -1111,178 +949,132 @@ const breadcrumbSchema = {
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {
-                  __(
-                    "Factors that influence costs across all organization sizes",
-                  )
-                }
+                Factors that influence costs across all organization sizes
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Current security maturity:")}</strong
+                      >Current security maturity:</strong
                     >
-                    {
-                      __(
-                        "Organizations already aligned with frameworks like ISO 27001 or NIST CSF will have significantly lower gap remediation costs",
-                      )
-                    }</span
+                    Organizations already aligned with frameworks like ISO 27001 or
+                    NIST CSF will have significantly lower gap remediation costs</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Technical debt:")}</strong
-                    >
-                    {
-                      __(
-                        "Legacy systems lacking modern security capabilities require substantial investment to bring into compliance",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Technical debt:</strong>
+                    Legacy systems lacking modern security capabilities require substantial
+                    investment to bring into compliance</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Industry sector:")}</strong
-                    >
-                    {
-                      __(
-                        "Highly regulated sectors like healthcare and finance may already have overlapping controls, while less regulated sectors face steeper climbs",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Industry sector:</strong>
+                    Highly regulated sectors like healthcare and finance may already
+                    have overlapping controls, while less regulated sectors face steeper
+                    climbs</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Internal expertise:")}</strong
+                    ><strong class="text-foreground">Internal expertise:</strong
                     >
-                    {
-                      __(
-                        "Organizations with established security teams can handle more work internally, while others must budget for consultants and managed services",
-                      )
-                    }</span
+                    Organizations with established security teams can handle more
+                    work internally, while others must budget for consultants and
+                    managed services</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Tool consolidation:")}</strong
+                    ><strong class="text-foreground">Tool consolidation:</strong
                     >
-                    {
-                      __(
-                        "Companies with fragmented security tooling face higher integration and management costs than those with consolidated platforms",
-                      )
-                    }</span
+                    Companies with fragmented security tooling face higher integration
+                    and management costs than those with consolidated platforms</span
                   >
                 </li>
               </ul>
             </div>
 
             <p>
-              {
-                __(
-                  "These cost structures align with what we see in comparable frameworks. Organizations familiar with",
-                )
-              }
+              These cost structures align with what we see in comparable
+              frameworks. Organizations familiar with
               <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
-                >{__("SOC 2 compliance costs")}</a
+                >SOC 2 compliance costs</a
               >
-              {__("or")}
+              or
               <a
                 href="/hub/iso27001-certification-cost"
                 class="text-[#5d770d] hover:underline"
-                >{__("ISO 27001 certification investments")}</a
+                >ISO 27001 certification investments</a
               >
-              {
-                __(
-                  "will recognize similar patterns, though NIS2's prescriptive requirements often push costs toward the higher end of comparable frameworks.",
-                )
-              }
+              will recognize similar patterns, though NIS2's prescriptive requirements
+              often push costs toward the higher end of comparable frameworks.
             </p>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Hidden Costs Most Organizations Miss")}
+                Hidden Costs Most Organizations Miss
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Beyond the obvious line items, several hidden costs catch organizations off guard:",
-                  )
-                }
+                Beyond the obvious line items, several hidden costs catch
+                organizations off guard:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Technical debt remediation:")}</strong
+                      >Technical debt remediation:</strong
                     >
-                    {
-                      __(
-                        "Many organizations discover their existing infrastructure can't support NIS2 requirements. Legacy systems lacking MFA capabilities, unpatched software, and inadequate logging create significant remediation costs.",
-                      )
-                    }</span
+                    Many organizations discover their existing infrastructure can't
+                    support NIS2 requirements. Legacy systems lacking MFA capabilities,
+                    unpatched software, and inadequate logging create significant
+                    remediation costs.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Supply chain compliance:")}</strong
+                      >Supply chain compliance:</strong
                     >
-                    {
-                      __(
-                        "Assessing and monitoring supplier security isn't free. Organizations report spending 15-25% of their NIS2 budget on supply chain security activities.",
-                      )
-                    }</span
+                    Assessing and monitoring supplier security isn't free. Organizations
+                    report spending 15-25% of their NIS2 budget on supply chain security
+                    activities.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Incident response readiness:")}</strong
+                      >Incident response readiness:</strong
                     >
-                    {
-                      __(
-                        "Building genuine incident response capability—including 24/7 monitoring, forensics capabilities, and tested playbooks—often exceeds initial estimates.",
-                      )
-                    }</span
+                    Building genuine incident response capability—including 24/7 monitoring,
+                    forensics capabilities, and tested playbooks—often exceeds initial
+                    estimates.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Ongoing training:")}</strong
-                    >
-                    {
-                      __(
-                        "NIS2's training requirements extend beyond one-time awareness programs. Budget for continuous education, specialized training for technical teams, and management-level cybersecurity education.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Ongoing training:</strong>
+                    NIS2's training requirements extend beyond one-time awareness
+                    programs. Budget for continuous education, specialized training
+                    for technical teams, and management-level cybersecurity education.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Opportunity cost:")}</strong
-                    >
-                    {
-                      __(
-                        "Compliance projects consume significant IT and security team bandwidth. Factor in the cost of delayed projects and stretched resources.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Opportunity cost:</strong>
+                    Compliance projects consume significant IT and security team bandwidth.
+                    Factor in the cost of delayed projects and stretched resources.</span
                   >
                 </li>
               </ul>
@@ -1297,188 +1089,142 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Why Firms Are Struggling to Comply (And How to Avoid Their Mistakes)",
-              )
-            }
+            Why Firms Are Struggling to Comply (And How to Avoid Their Mistakes)
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Recent ITPro research paints a concerning picture: many organizations are struggling to meet NIS2 requirements despite the directive's extended implementation timeline. Understanding why helps you avoid the same pitfalls.",
-                )
-              }
+              Recent ITPro research paints a concerning picture: many
+              organizations are struggling to meet NIS2 requirements despite the
+              directive's extended implementation timeline. Understanding why
+              helps you avoid the same pitfalls.
             </p>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("The Technical Debt Problem")}
+                The Technical Debt Problem
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Years of underinvestment in security infrastructure are coming due. Organizations facing NIS2 compliance often discover:",
-                  )
-                }
+                Years of underinvestment in security infrastructure are coming
+                due. Organizations facing NIS2 compliance often discover:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Insufficient logging and monitoring:")}</strong
+                      >Insufficient logging and monitoring:</strong
                     >
-                    {
-                      __(
-                        "NIS2's incident detection requirements demand comprehensive visibility. Many organizations lack adequate SIEM capabilities or centralized log management.",
-                      )
-                    }</span
+                    NIS2's incident detection requirements demand comprehensive visibility.
+                    Many organizations lack adequate SIEM capabilities or centralized
+                    log management.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Inadequate access controls:")}</strong
+                      >Inadequate access controls:</strong
                     >
-                    {
-                      __(
-                        "The directive's requirements for MFA and privileged access management expose gaps in identity infrastructure.",
-                      )
-                    }</span
+                    The directive's requirements for MFA and privileged access management
+                    expose gaps in identity infrastructure.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Undocumented systems:")}</strong
+                      >Undocumented systems:</strong
                     >
-                    {
-                      __(
-                        "You can't protect what you don't know exists. Asset inventory gaps make risk assessment impossible.",
-                      )
-                    }</span
+                    You can't protect what you don't know exists. Asset inventory
+                    gaps make risk assessment impossible.</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "The solution isn't just buying new tools—it's systematically addressing technical debt while building compliant processes. This requires executive sponsorship and realistic timelines.",
-                  )
-                }
+                The solution isn't just buying new tools—it's systematically
+                addressing technical debt while building compliant processes.
+                This requires executive sponsorship and realistic timelines.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Resource Constraints in SMEs")}
+                Resource Constraints in SMEs
               </h3>
               <p class="mb-4">
-                {__("Small and medium enterprises face particular challenges:")}
+                Small and medium enterprises face particular challenges:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Limited security expertise:")}</strong
+                      >Limited security expertise:</strong
                     >
-                    {
-                      __(
-                        "Many SMEs lack dedicated security personnel, let alone compliance specialists",
-                      )
-                    }</span
+                    Many SMEs lack dedicated security personnel, let alone compliance
+                    specialists</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Budget constraints:")}</strong
+                    ><strong class="text-foreground">Budget constraints:</strong
                     >
-                    {
-                      __(
-                        "Competing priorities make it difficult to fund comprehensive compliance programs",
-                      )
-                    }</span
+                    Competing priorities make it difficult to fund comprehensive compliance
+                    programs</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Vendor overwhelm:")}</strong
-                    >
-                    {
-                      __(
-                        "The compliance tool market is noisy, making it hard to identify appropriate solutions",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Vendor overwhelm:</strong>
+                    The compliance tool market is noisy, making it hard to identify
+                    appropriate solutions</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "For SMEs, the key is finding right-sized solutions. Enterprise GRC platforms designed for Fortune 500 companies aren't appropriate for a 75-person SaaS company.",
-                  )
-                }
+                For SMEs, the key is finding right-sized solutions. Enterprise
+                GRC platforms designed for Fortune 500 companies aren't
+                appropriate for a 75-person SaaS company.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Cross-Border Complexity Challenges")}
+                Cross-Border Complexity Challenges
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Organizations operating across multiple EU member states face additional complexity:",
-                  )
-                }
+                Organizations operating across multiple EU member states face
+                additional complexity:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Varying national requirements:")}</strong
+                      >Varying national requirements:</strong
                     >
-                    {
-                      __(
-                        "Despite harmonization, member states have discretion in certain areas",
-                      )
-                    }</span
+                    Despite harmonization, member states have discretion in certain
+                    areas</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Multiple competent authorities:")}</strong
+                      >Multiple competent authorities:</strong
                     >
-                    {
-                      __(
-                        "Understanding which authority has jurisdiction—and their specific expectations—requires careful analysis",
-                      )
-                    }</span
+                    Understanding which authority has jurisdiction—and their specific
+                    expectations—requires careful analysis</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Language barriers:")}</strong
-                    >
-                    {
-                      __(
-                        "Guidance documents and regulatory communications often appear first (or only) in local languages",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Language barriers:</strong>
+                    Guidance documents and regulatory communications often appear
+                    first (or only) in local languages</span
                   >
                 </li>
               </ul>
@@ -1493,90 +1239,76 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("How Probo Simplifies Your NIS2 Journey")}
+            How Probo Simplifies Your NIS2 Journey
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Navigating NIS2 compliance doesn't have to consume your team's time and energy. Probo manages the entire compliance process for you hands-off, combining dedicated expert guidance with powerful automated compliance software to get you compliant faster and with less stress.",
-                )
-              }
+              Navigating NIS2 compliance doesn't have to consume your team's
+              time and energy. Probo manages the entire compliance process for
+              you hands-off, combining dedicated expert guidance with powerful
+              automated compliance software to get you compliant faster and with
+              less stress.
             </p>
             <p class="text-foreground font-medium">
-              {__("Here's what's included when you partner with Probo:")}
+              Here's what's included when you partner with Probo:
             </p>
             <ul class="ml-0 list-none space-y-4">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Dedicated Compliance Expert")}</strong
-                  >{
-                    __(
-                      ": Direct access to compliance experts whenever you need guidance. No more guessing or searching for answers—your expert is just a message away.",
-                    )
-                  }</span
+                    >Dedicated Compliance Expert</strong
+                  > : Direct access to compliance experts whenever you need guidance.
+                  No more guessing or searching for answers—your expert is just a
+                  message away.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground">Onboarding Meeting</strong> : An
+                  onboarding meeting with your dedicated expert to understand your
+                  full context, tech stack, and specific compliance needs from day
+                  one.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Onboarding Meeting")}</strong
-                  >{
-                    __(
-                      ": An onboarding meeting with your dedicated expert to understand your full context, tech stack, and specific compliance needs from day one.",
-                    )
-                  }</span
+                    >Policies & Risk Assessment</strong
+                  > : Probo handles all necessary documentation templates and risk
+                  analysis for you. No more starting from scratch or wondering if
+                  your policies meet the directive's requirements.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Policies & Risk Assessment")}</strong
-                  >{
-                    __(
-                      ": Probo handles all necessary documentation templates and risk analysis for you. No more starting from scratch or wondering if your policies meet the directive's requirements.",
-                    )
-                  }</span
+                    >Implementation Support</strong
+                  > : We guide you through implementing the technical and organizational
+                  controls required by Article 21, ensuring your security measures
+                  are appropriate and proportionate to your risk profile.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground">Quarterly Follow-ups</strong> :
+                  Ongoing support to maintain your compliance posture. NIS2 requires
+                  continuous improvement—Probo ensures you stay compliant through
+                  regulatory changes and evolving threats.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Implementation Support")}</strong
-                  >{
-                    __(
-                      ": We guide you through implementing the technical and organizational controls required by Article 21, ensuring your security measures are appropriate and proportionate to your risk profile.",
-                    )
-                  }</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground"
-                    >{__("Quarterly Follow-ups")}</strong
-                  >{
-                    __(
-                      ": Ongoing support to maintain your compliance posture. NIS2 requires continuous improvement—Probo ensures you stay compliant through regulatory changes and evolving threats.",
-                    )
-                  }</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground"
-                    >{__("Access to Probo Compliance Platform")}</strong
-                  >{
-                    __(
-                      ": A centralized workspace to manage all compliance activities, with automated evidence collection and audit-ready documentation that keeps everything organized and accessible.",
-                    )
-                  }</span
+                    >Access to Probo Compliance Platform</strong
+                  > : A centralized workspace to manage all compliance activities,
+                  with automated evidence collection and audit-ready documentation
+                  that keeps everything organized and accessible.</span
                 >
               </li>
             </ul>
@@ -1591,14 +1323,14 @@ const breadcrumbSchema = {
             <h3
               class="mb-8 text-2xl font-semibold text-[#141e12] sm:text-[1.75rem]"
             >
-              {__("Ready to Tackle NIS2?")}
+              Ready to Tackle NIS2?
             </h3>
             <a
               href="/contact"
               class="group inline-flex items-center gap-2 rounded-full bg-[#141e12] px-6 py-3.5 font-medium shadow-lg transition-all hover:gap-3 hover:bg-[#1f2e1a] hover:shadow-xl"
               style="color: white;"
             >
-              {__("Book a meeting")}
+              Book a meeting
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

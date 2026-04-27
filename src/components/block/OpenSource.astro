@@ -1,20 +1,14 @@
 ---
 import Portrait from "../../assets/antoine-bourchardy.png";
 import Image from "astro/components/Image.astro";
-import { getTranslator } from "../../lib/i18n";
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <section class="container max-w-[760px] py-10 text-center sm:py-20">
-  <h2 class="text-h3 sm:text-h2 font-medium">
-    {__("Why are we open source?")}
-  </h2>
+  <h2 class="text-h3 sm:text-h2 font-medium">Why are we open source?</h2>
   <p class="text-quote text-muted-foreground text-gradient my-10 sm:my-12">
-    {
-      __(
-        '“Because compliance isn’t a spreadsheet, it’s a system. Everyone has their own way of working, so we built Probo to be open and extensible. Being open source means anyone can adapt it, extend it, and make it truly theirs."',
-      )
-    }
+    "Because compliance isn't a spreadsheet, it's a system. Everyone has their
+    own way of working, so we built Probo to be open and extensible. Being open
+    source means anyone can adapt it, extend it, and make it truly theirs."
   </p>
   <Image
     densities={[1, 2]}

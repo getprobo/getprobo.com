@@ -1,45 +1,37 @@
 ---
-import { getTranslator } from "../../lib/i18n";
 import ComplianceTrackItem from "../ui/ComplianceTrackItem.astro";
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <section class="animate-fade-in animation-delay-500 container py-10 sm:py-20">
   <h2
     class="text-h3 sm:text-h2 intersect-once intersect:animate-slide-in mb-3 text-center font-medium"
   >
-    {__("From chaos to confidence")}
+    From chaos to confidence
   </h2>
   <p
     class="text-muted-foreground intersect-once intersect:animate-slide-in motion-delay-100 mx-auto mb-10 max-w-180 text-center text-lg sm:mb-16"
   >
-    {
-      __(
-        "Our compliance officers handle the entire journey for you - from setup and risk assessments to audit coordination and ongoing monitoring - so you can stay focused on building.",
-      )
-    }
+    Our compliance officers handle the entire journey for you - from setup and
+    risk assessments to audit coordination and ongoing monitoring - so you can
+    stay focused on building.
   </p>
   <compliance-track class="flex flex-col gap-6 sm:flex-row sm:gap-16">
-    <ComplianceTrackItem position="01" title={__("Set up and plan")}>
-      {
-        __(
-          "We start by reviewing your environment, completing the risk and vendor assessments, identifying gaps, and defining the right path forward. Then we create a compliance program tailored to how your team actually operates.",
-        )
-      }</ComplianceTrackItem
-    >
-    <ComplianceTrackItem position="02" title={__("Implementation & audit")}>
-      {
-        __(
-          "Evidence collection is automated through the platform, and our team prepares every document and manages all communication with your auditor. You only join the essential calls, and we guide you through them with full preparation.",
-        )
-      }
+    <ComplianceTrackItem position="01" title="Set up and plan">
+      We start by reviewing your environment, completing the risk and vendor
+      assessments, identifying gaps, and defining the right path forward. Then
+      we create a compliance program tailored to how your team actually
+      operates.
     </ComplianceTrackItem>
-    <ComplianceTrackItem position="03" title={__("Stay compliant")}>
-      {
-        __(
-          "Once certified, we run your compliance program in the background - monitoring, updating controls, refreshing evidence, and maintaining assessments - so you remain continuously audit-ready with no extra effort.",
-        )
-      }
+    <ComplianceTrackItem position="02" title="Implementation & audit">
+      Evidence collection is automated through the platform, and our team
+      prepares every document and manages all communication with your auditor.
+      You only join the essential calls, and we guide you through them with full
+      preparation.
+    </ComplianceTrackItem>
+    <ComplianceTrackItem position="03" title="Stay compliant">
+      Once certified, we run your compliance program in the background -
+      monitoring, updating controls, refreshing evidence, and maintaining
+      assessments - so you remain continuously audit-ready with no extra effort.
     </ComplianceTrackItem>
   </compliance-track>
 </section>

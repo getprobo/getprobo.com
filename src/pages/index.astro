@@ -10,8 +10,6 @@ import SaleArg from "../components/ui/SaleArg.astro";
 
 import Stories from "../components/block/Stories.astro";
 import ComplianceTrack from "../components/block/ComplianceTrack.astro";
-import { getTranslator, getLink } from "../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -28,10 +26,8 @@ const websiteSchema = {
 ---
 
 <Layout
-  title={__("Probo - Compliance done for you")}
-  description={__(
-    "Get SOC 2, GDPR, HIPAA, and ISO certified with expert guidance and the job done for you. Open-source compliance management platform with no vendor lock-in. Backed by Y Combinator.",
-  )}
+  title="Probo - Compliance done for you"
+  description="Get SOC 2, GDPR, HIPAA, and ISO certified with expert guidance and the job done for you. Open-source compliance management platform with no vendor lock-in. Backed by Y Combinator."
 >
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <animated-hero
@@ -43,25 +39,21 @@ const websiteSchema = {
       rel="noopener noreferrer"
       class="yc-btn text-muted-foreground animate-perspective-in animation-delay-300 mx-auto mb-6 flex w-max items-center gap-2 px-4 py-2 sm:mb-8"
     >
-      {__("Backed by")}
+      Backed by
       <Image src={YCombinator} alt="Logo YCombinator" width={77} height={15} />
     </a>
     <h1
       class="text-h2 sm:text-h1 mb-6 overflow-hidden text-center font-medium text-balance sm:mb-8"
     >
-      <span class="animate-perspective-in block">{__("Compliance")},</span>
-      <span class="animate-perspective-in block delay-50">
-        {__("Done For You.")}
-      </span>
+      <span class="animate-perspective-in block">Compliance,</span>
+      <span class="animate-perspective-in block delay-50"> Done For You. </span>
     </h1>
     <p
       class="text-muted-foreground animate-perspective-in animation-delay-150 mx-auto mb-6 max-w-200 text-center text-lg text-balance sm:mb-8"
     >
-      {
-        __(
-          "Our compliance officers run your program end-to-end. Stay continuously audit-ready without the overhead or complexity of traditional compliance platforms.",
-        )
-      }
+      Our compliance officers run your program end-to-end. Stay continuously
+      audit-ready without the overhead or complexity of traditional compliance
+      platforms.
     </p>
     <div
       class="mb-11 flex flex-col items-stretch justify-center gap-3 sm:mb-17 sm:flex-row sm:items-center"
@@ -70,14 +62,13 @@ const websiteSchema = {
         class="animate-perspective-in animation-delay-200"
         variant="secondary"
         size="lg"
-        href="/docs/self-hosting/docker-compose"
-        >{__("Deploy Open Source")}</Button
+        href="/docs/self-hosting/docker-compose">Deploy Open Source</Button
       >
       <Button
         class="animate-perspective-in animation-delay-300"
         size="lg"
         rel="nofollow noreferrer"
-        href={getLink(Astro, "/contact")}>{__("Talk to an expert")}</Button
+        href="/contact">Talk to an expert</Button
       >
     </div>
     <Badges
@@ -91,7 +82,7 @@ const websiteSchema = {
       <h2
         class="text-tertiary-foreground animate-perspective-in animation-delay-300 text-center"
       >
-        {__("Trusted by leading teams")}
+        Trusted by leading teams
       </h2>
       <Logos class="animate-slide-in animation-delay-300" constrained />
     </section>
@@ -101,70 +92,57 @@ const websiteSchema = {
 
   <section class="container py-10 sm:py-20">
     <h2 class="text-h3 sm:text-h2 mb-3 text-center font-medium">
-      {__("Put compliance on autopilot")}
+      Put compliance on autopilot
     </h2>
     <p
       class="text-muted-foreground mx-auto mb-10 max-w-180 text-center text-lg sm:mb-12"
     >
-      {
-        __(
-          "Run your entire compliance program with a blend of expert support and automation. Probo's compliance officers handle the work behind the scenes while the platform keeps everything continuously audit-ready.",
-        )
-      }
+      Run your entire compliance program with a blend of expert support and
+      automation. Probo's compliance officers handle the work behind the scenes
+      while the platform keeps everything continuously audit-ready.
     </p>
 
     <div
       class="flex grid-cols-2 flex-col items-start gap-10 sm:grid sm:gap-x-20 sm:gap-y-12"
     >
       <SaleArg
-        title={__("Your dedicated compliance expert")}
+        title="Your dedicated compliance expert"
         video="/videos/keyshot1.mp4"
       >
         <p>
-          {
-            __(
-              "A seasoned compliance officer becomes an extension of your team, managing policies, controls, reviews, and assessments on your behalf - real expertise, not ticket threads.",
-            )
-          }
+          A seasoned compliance officer becomes an extension of your team,
+          managing policies, controls, reviews, and assessments on your behalf -
+          real expertise, not ticket threads.
         </p>
       </SaleArg>
 
       <SaleArg
-        title={__("Compliance that runs in the background")}
+        title="Compliance that runs in the background"
         video="/videos/keyshot2.mp4"
       >
         <p>
-          {
-            __(
-              "Probo automates evidence collection, updates, and approvals, while our team keeps your entire program aligned and audit-ready. You're only notified when something genuinely needs your attention.",
-            )
-          }
+          Probo automates evidence collection, updates, and approvals, while our
+          team keeps your entire program aligned and audit-ready. You're only
+          notified when something genuinely needs your attention.
         </p>
       </SaleArg>
 
       <SaleArg
-        title={__("Leverage your compliance for revenue growth")}
+        title="Leverage your compliance for revenue growth"
         video="/videos/keyshot3.mp4"
       >
         <p>
-          {
-            __(
-              "Show customers and prospects you're trustworthy. Share a secure, branded trust page that instantly proves your compliance and helps accelerate deals.",
-            )
-          }
+          Show customers and prospects you're trustworthy. Share a secure,
+          branded trust page that instantly proves your compliance and helps
+          accelerate deals.
         </p>
       </SaleArg>
 
-      <SaleArg
-        title={__("Get stuff done on Slack")}
-        video="/videos/keyshot4.mp4"
-      >
+      <SaleArg title="Get stuff done on Slack" video="/videos/keyshot4.mp4">
         <p>
-          {
-            __(
-              "Access documents, trigger workflows, and talk directly with your compliance officer - all without leaving Slack. Support that fits seamlessly into how your team already works.",
-            )
-          }
+          Access documents, trigger workflows, and talk directly with your
+          compliance officer - all without leaving Slack. Support that fits
+          seamlessly into how your team already works.
         </p>
       </SaleArg>
     </div>

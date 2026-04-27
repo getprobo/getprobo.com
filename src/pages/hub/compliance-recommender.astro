@@ -1,9 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
 import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/about/antoine-bourchardy.png";
-const __ = await getTranslator(Astro.currentLocale);
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -66,12 +64,8 @@ const benefits = [
 ---
 
 <Layout
-  title={__(
-    "Compliance Framework Recommender - Find the Right Security Standard for Your Business",
-  )}
-  description={__(
-    "Enter your website and we'll analyze your business to recommend you the most relevant compliance frameworks.",
-  )}
+  title="Compliance Framework Recommender - Find the Right Security Standard for Your Business"
+  description="Enter your website and we'll analyze your business to recommend you the most relevant compliance frameworks."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script
@@ -87,24 +81,21 @@ const benefits = [
         class="animate-slide-in mb-6 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-[#ffffff] px-4 py-2 text-xs text-gray-900 shadow-sm"
       >
         <span class="h-2 w-2 rounded-full bg-[#f0ff3c]"></span>
-        {__("Free Compliance Framework Assessment")}
+        Free Compliance Framework Assessment
       </div>
 
       <h1
         class="text-h2 sm:text-h1 animate-slide-in animation-delay-100 mb-6 font-medium"
       >
-        {__("Find the Right Security Standard for")}
-        <span class="highlight-text">{__("Your Business")}</span>
+        Find the Right Security Standard for
+        <span class="highlight-text">Your Business</span>
       </h1>
 
       <p
         class="animate-slide-in animation-delay-200 mx-auto mb-8 max-w-[700px] text-lg text-gray-700 sm:text-xl"
       >
-        {
-          __(
-            "Enter your website and we'll analyze your business to recommend you the most relevant compliance frameworks.",
-          )
-        }
+        Enter your website and we'll analyze your business to recommend you the
+        most relevant compliance frameworks.
       </p>
 
       <!-- Feature Pills -->
@@ -185,7 +176,7 @@ const benefits = [
                   <line x1="6" y1="20" x2="6" y2="14" />
                 </svg>
               )}
-              <span>{__(feature.label)}</span>
+              <span>{feature.label}</span>
             </div>
           ))
         }
@@ -200,7 +191,7 @@ const benefits = [
         <h2
           class="mb-8 text-center text-2xl font-semibold tracking-[-0.5px] sm:text-[28px]"
         >
-          {__("Get Your Free Compliance Report")}
+          Get Your Free Compliance Report
         </h2>
 
         <!-- Tally Form Embed -->
@@ -221,7 +212,7 @@ const benefits = [
           class="mt-8 rounded-2xl bg-gradient-to-br from-[#f0ff3c] to-[#d4e834] p-6 sm:p-8"
         >
           <h3 class="mb-4 text-center text-lg font-semibold text-[#141e12]">
-            {__("What you'll receive")}
+            What you'll receive
           </h3>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {
@@ -242,7 +233,7 @@ const benefits = [
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <span class="text-sm text-[#141e12]">{__(benefit)}</span>
+                  <span class="text-sm text-[#141e12]">{benefit}</span>
                 </div>
               ))
             }
@@ -254,13 +245,13 @@ const benefits = [
     <!-- We Handle Your Compliance Section -->
     <section class="mt-20 text-center sm:mt-32">
       <h2 class="text-h2 sm:text-h1 mb-4 font-medium">
-        {__("We Handle Your")}
-        <span class="highlight-blue">{__("Compliance.")}</span>
+        We Handle Your
+        <span class="highlight-blue">Compliance.</span>
       </h2>
       <p class="mx-auto mb-12 max-w-[500px] text-lg text-gray-900 sm:text-xl">
-        {__("Probo isn't another compliance tool -")}
+        Probo isn't another compliance tool -
         <br />
-        {__("We're your dedicated compliance team.")}
+        We're your dedicated compliance team.
       </p>
 
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -272,10 +263,10 @@ const benefits = [
             class="mb-4 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
           >
             <span class="font-semibold text-[#93c926]">01</span>
-            <span class="font-medium">{__("Talk to Us")}</span>
+            <span class="font-medium">Talk to Us</span>
           </div>
           <p class="text-muted-foreground text-sm">
-            {__("Share your tech stack and process in an onboarding call")}
+            Share your tech stack and process in an onboarding call
           </p>
         </div>
 
@@ -287,14 +278,10 @@ const benefits = [
             class="mb-4 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
           >
             <span class="font-semibold text-[#93c926]">02</span>
-            <span class="font-medium">{__("We Do the Work")}</span>
+            <span class="font-medium">We Do the Work</span>
           </div>
           <p class="text-muted-foreground text-sm">
-            {
-              __(
-                "Our experts handle assessments, docs, and prepare you for audit",
-              )
-            }
+            Our experts handle assessments, docs, and prepare you for audit
           </p>
         </div>
 
@@ -306,14 +293,10 @@ const benefits = [
             class="mb-4 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
           >
             <span class="font-semibold text-[#93c926]">03</span>
-            <span class="font-medium">{__("You Get Certified")}</span>
+            <span class="font-medium">You Get Certified</span>
           </div>
           <p class="text-muted-foreground text-sm">
-            {
-              __(
-                "Achieve SOC 2, ISO 27001, or other frameworks with serious audit",
-              )
-            }
+            Achieve SOC 2, ISO 27001, or other frameworks with serious audit
           </p>
         </div>
 
@@ -325,14 +308,10 @@ const benefits = [
             class="mb-4 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
           >
             <span class="font-semibold text-[#93c926]">04</span>
-            <span class="font-medium">{__("Audit Ready")}</span>
+            <span class="font-medium">Audit Ready</span>
           </div>
           <p class="text-muted-foreground text-sm">
-            {
-              __(
-                "Once certified, we run your compliance program in the background.",
-              )
-            }
+            Once certified, we run your compliance program in the background.
           </p>
         </div>
       </div>
@@ -350,7 +329,7 @@ const benefits = [
             width={40}
             height={40}
           />
-          {__("Book a call with Antoine")}
+          Book a call with Antoine
         </a>
       </div>
     </section>

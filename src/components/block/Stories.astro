@@ -2,32 +2,27 @@
 import { getCollection } from "astro:content";
 import StoryCard from "../StoryCard.astro";
 import Slider from "../ui/Slider.svelte";
-import { filterLang, getLink, getTranslator } from "../../lib/i18n.ts";
 
-const __ = await getTranslator(Astro.currentLocale);
-const stories = (
-  await getCollection("stories", filterLang(Astro.currentLocale))
-).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const stories = (await getCollection("stories")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 ---
 
 <section class="stories dark bg-level-0 text-foreground overflow-hidden">
   <div class="container py-10 sm:py-30">
     <h2 class="text-h3 sm:text-h2 mb-3 text-center font-medium">
-      {__("Case studies")}
+      Case studies
     </h2>
     <p class="text-muted-foreground mx-auto mb-6 max-w-140 text-center text-lg">
-      {
-        __(
-          "We help companies design and scale their cybersecurity compliance programs so they can focus on what they are best at - their business.",
-        )
-      }
+      We help companies design and scale their cybersecurity compliance programs
+      so they can focus on what they are best at - their business.
     </p>
 
     <a
-      href={getLink(Astro, "/stories")}
+      href="/stories"
       class="group mb-10 flex items-center justify-center gap-1.5 text-lg font-medium sm:mb-12"
     >
-      {__("All case studies")}
+      All case studies
       <svg
         width="16"
         height="16"

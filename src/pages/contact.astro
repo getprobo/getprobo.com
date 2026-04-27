@@ -1,19 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getTranslator } from "../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <Layout
-  title={__("Contact us")}
-  description={__("Get in touch with our compliance experts")}
+  title="Contact us"
+  description="Get in touch with our compliance experts"
 >
   <main>
     <animated-hero class="relative block overflow-hidden py-10 sm:py-20">
       <section class="container">
         <h1 class="text-h2 animate-slide-in mb-10 text-center font-medium">
-          {__("Talk to a compliance expert")}
+          Talk to a compliance expert
         </h1>
         <iframe
           id="tally-form"

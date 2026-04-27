@@ -3,22 +3,10 @@ import { ClientRouter } from "astro:transitions";
 import PostHog from "../posthog.astro";
 
 const { head } = Astro.locals.starlightRoute;
-
-const filteredHead = head.filter((item) => {
-  if (
-    item.tag === "link" &&
-    item.attrs?.hreflang &&
-    item.attrs.hreflang !== "en" &&
-    item.attrs.hreflang !== "x-default"
-  ) {
-    return false;
-  }
-  return true;
-});
 ---
 
 {
-  filteredHead.map(({ tag: Tag, attrs, content }) => (
+  head.map(({ tag: Tag, attrs, content }) => (
     <Tag {...attrs} set:html={content} />
   ))
 }

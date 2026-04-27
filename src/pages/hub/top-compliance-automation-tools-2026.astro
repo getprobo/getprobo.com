@@ -1,9 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
 import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/about/antoine-bourchardy.png";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -79,10 +77,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("Top 5 Compliance Automation Tools in 2026")}
-  description={__(
-    "Compare the top 5 compliance automation tools for 2026. Discover why open source Probo ranks #1 and how its hands-on service eliminates the DIY compliance burden.",
-  )}
+  title="Top 5 Compliance Automation Tools in 2026"
+  description="Compare the top 5 compliance automation tools for 2026. Discover why open source Probo ranks #1 and how its hands-on service eliminates the DIY compliance burden."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script
@@ -95,16 +91,14 @@ const breadcrumbSchema = {
       <h1
         class="text-foreground mb-6 text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
       >
-        {__("Top 5")}
-        <span class="highlight-text">{__("Compliance Automation Tools")}</span>
-        {__("in 2026")}
+        Top 5
+        <span class="highlight-text">Compliance Automation Tools</span>
+        in 2026
       </h1>
       <p class="text-muted-foreground mb-8 text-lg">
-        {
-          __(
-            "Here's an uncomfortable truth that most compliance vendors won't tell you: buying a compliance automation tool is just the beginning of your problems, not the end.",
-          )
-        }
+        Here's an uncomfortable truth that most compliance vendors won't tell
+        you: buying a compliance automation tool is just the beginning of your
+        problems, not the end.
       </p>
       <img
         src="/hub/Top5-Compliance-tool-2026.jpg"
@@ -141,29 +135,31 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The Hidden Burden of Compliance Tools")}
+            The Hidden Burden of Compliance Tools
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "You've probably seen the pitch before. Sign up for a shiny new platform, connect your systems, and watch the magic happen. But three months later, your engineering team is drowning in configuration tasks, your security lead is spending 15 hours a week managing the tool, and you're no closer to that SOC 2 certificate your enterprise prospects are demanding.",
-                )
-              }
+              You've probably seen the pitch before. Sign up for a shiny new
+              platform, connect your systems, and watch the magic happen. But
+              three months later, your engineering team is drowning in
+              configuration tasks, your security lead is spending 15 hours a
+              week managing the tool, and you're no closer to that SOC 2
+              certificate your enterprise prospects are demanding.
             </p>
             <p>
-              {
-                __(
-                  "The compliance automation market has exploded in recent years, with solutions ranging from enterprise behemoths to scrappy startups. But recently, a new category is emerging: open source compliance tools. Better to know all your compliance work, documents, policies, are not blocked forever behind a paywall and being locked-in as long as you don't have time to dedicate a full time person (if not more) to migrate to another solution.",
-                )
-              }
+              The compliance automation market has exploded in recent years,
+              with solutions ranging from enterprise behemoths to scrappy
+              startups. But recently, a new category is emerging: open source
+              compliance tools. Better to know all your compliance work,
+              documents, policies, are not blocked forever behind a paywall and
+              being locked-in as long as you don't have time to dedicate a full
+              time person (if not more) to migrate to another solution.
             </p>
             <p>
-              {
-                __(
-                  "Another solution is an open source tool paired with hands-on service. This approach eliminates the hidden burden that traditional tools place on your team, and it's why we're ranking Probo as the #1 compliance automation tool this year.",
-                )
-              }
+              Another solution is an open source tool paired with hands-on
+              service. This approach eliminates the hidden burden that
+              traditional tools place on your team, and it's why we're ranking
+              Probo as the #1 compliance automation tool this year.
             </p>
           </div>
         </section>
@@ -175,37 +171,34 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Why Compliance Automation Is No Longer Optional in 2026")}
+            Why Compliance Automation Is No Longer Optional in 2026
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "The days of manually tracking compliance in spreadsheets are officially over. The majority of enterprise buyers now require SOC 2 certification before signing contracts with SaaS vendors, and this expectation has grown significantly over the past several years.",
-                )
-              }
+              The days of manually tracking compliance in spreadsheets are
+              officially over. The majority of enterprise buyers now require SOC
+              2 certification before signing contracts with SaaS vendors, and
+              this expectation has grown significantly over the past several
+              years.
             </p>
             <p>
-              {
-                __(
-                  "This shift has created a compliance bottleneck for growth-stage companies. You need the certification to close deals, but the traditional compliance process can take 6-12 months and consume hundreds of hours of internal resources. For startups and scaling SaaS companies, that's time and talent you simply can't spare.",
-                )
-              }
+              This shift has created a compliance bottleneck for growth-stage
+              companies. You need the certification to close deals, but the
+              traditional compliance process can take 6-12 months and consume
+              hundreds of hours of internal resources. For startups and scaling
+              SaaS companies, that's time and talent you simply can't spare.
             </p>
             <p>
-              {
-                __(
-                  "Compliance automation tools emerged to solve this problem by automating evidence collection, continuous monitoring, and audit preparation. But here's where it gets complicated: most of these tools have created a new problem—the burden of managing the tool itself. Understanding your",
-                )
-              }
+              Compliance automation tools emerged to solve this problem by
+              automating evidence collection, continuous monitoring, and audit
+              preparation. But here's where it gets complicated: most of these
+              tools have created a new problem—the burden of managing the tool
+              itself. Understanding your
               <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
-                >{__("SOC 2 compliance cost breakdown")}</a
+                >SOC 2 compliance cost breakdown</a
               >
-              {
-                __(
-                  "means accounting for this hidden time investment, not just the subscription fees.",
-                )
-              }
+              means accounting for this hidden time investment, not just the subscription
+              fees.
             </p>
           </div>
         </section>
@@ -217,275 +210,219 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What to Look for in a Compliance Automation Tool")}
+            What to Look for in a Compliance Automation Tool
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Before diving into our rankings, let's establish the criteria that actually matter when evaluating compliance automation software. Spoiler alert: it's not just about features and integrations.",
-                )
-              }
+              Before diving into our rankings, let's establish the criteria that
+              actually matter when evaluating compliance automation software.
+              Spoiler alert: it's not just about features and integrations.
             </p>
 
             <!-- Total Cost of Ownership -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Total Cost of Ownership (Beyond Subscription Fees)")}
+                Total Cost of Ownership (Beyond Subscription Fees)
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "When vendors quote you $15,000 to $50,000 per year for their platform, that's just the tip of the iceberg. The true cost of compliance automation includes:",
-                  )
-                }
+                When vendors quote you $15,000 to $50,000 per year for their
+                platform, that's just the tip of the iceberg. The true cost of
+                compliance automation includes:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Internal labor costs:")}</strong
+                      >Internal labor costs:</strong
                     >
-                    {
-                      __(
-                        "The time your team spends configuring, managing, and maintaining the tool",
-                      )
-                    }</span
+                    The time your team spends configuring, managing, and maintaining
+                    the tool</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Opportunity cost:</strong>
+                    What your engineers could be building instead of managing compliance
+                    workflows</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Opportunity cost:")}</strong
+                      >Training and onboarding:</strong
                     >
-                    {
-                      __(
-                        "What your engineers could be building instead of managing compliance workflows",
-                      )
-                    }</span
+                    Getting your team up to speed on yet another platform</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Training and onboarding:")}</strong
+                      >Integration maintenance:</strong
                     >
-                    {
-                      __(
-                        "Getting your team up to speed on yet another platform",
-                      )
-                    }</span
+                    Keeping connections healthy as your tech stack evolves</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Integration maintenance:")}</strong
+                      >Audit preparation time:</strong
                     >
-                    {
-                      __(
-                        "Keeping connections healthy as your tech stack evolves",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Audit preparation time:")}</strong
-                    >
-                    {
-                      __(
-                        "Even with automation, someone needs to prepare for auditor conversations",
-                      )
-                    }</span
+                    Even with automation, someone needs to prepare for auditor conversations</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Industry benchmarks suggest that internal labor costs often exceed the software subscription by 2-3x. A $30,000 annual tool subscription can easily become a $100,000+ total investment when you factor in the 10-20 hours per week your team spends managing it.",
-                  )
-                }
+                Industry benchmarks suggest that internal labor costs often
+                exceed the software subscription by 2-3x. A $30,000 annual tool
+                subscription can easily become a $100,000+ total investment when
+                you factor in the 10-20 hours per week your team spends managing
+                it.
               </p>
             </div>
 
             <!-- Implementation Complexity -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Implementation Complexity and Time-to-Value")}
+                Implementation Complexity and Time-to-Value
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'Time-to-value varies dramatically across compliance tools. Some promise "SOC 2 ready in weeks" but bury the asterisk: with dedicated internal resources and ideal conditions.',
-                  )
-                }
+                Time-to-value varies dramatically across compliance tools. Some
+                promise "SOC 2 ready in weeks" but bury the asterisk: with
+                dedicated internal resources and ideal conditions.
               </p>
-              <p class="mb-3">
-                {__("The questions you should be asking include:")}
-              </p>
+              <p class="mb-3">The questions you should be asking include:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "How long until we see meaningful progress toward certification?",
-                      )
-                    }</span
+                  <span>
+                    How long until we see meaningful progress toward
+                    certification?</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "What level of technical expertise is required for implementation?",
-                      )
-                    }</span
+                  <span>
+                    What level of technical expertise is required for
+                    implementation?</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("How much ongoing maintenance does the tool require?")
-                    }</span
+                  <span>
+                    How much ongoing maintenance does the tool require?</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Can we achieve compliance without becoming compliance experts ourselves?",
-                      )
-                    }</span
+                  <span>
+                    Can we achieve compliance without becoming compliance
+                    experts ourselves?</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "For most B2B SaaS companies, the goal isn't to become compliance experts—it's to get the certification and get back to building your product. The best compliance automation tools recognize this reality.",
-                  )
-                }
+                For most B2B SaaS companies, the goal isn't to become compliance
+                experts—it's to get the certification and get back to building
+                your product. The best compliance automation tools recognize
+                this reality.
               </p>
             </div>
 
             <!-- Auditor Partner and Audit Cost -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Auditor Partner and Audit Cost")}
+                Auditor Partner and Audit Cost
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Be especially cautious about audit costs when evaluating compliance tools. Most platforms offer to match you with an audit partner, and some competitors use suspiciously low audit pricing as a competitive advantage. But there's no magic here.",
-                  )
-                }
+                Be especially cautious about audit costs when evaluating
+                compliance tools. Most platforms offer to match you with an
+                audit partner, and some competitors use suspiciously low audit
+                pricing as a competitive advantage. But there's no magic here.
               </p>
               <p>
-                {
-                  __(
-                    "If the audit cost seems too good to be true, you're likely buying a report from a non-accredited auditor, which holds little to no value in the market. The real cost comes later when you lose enterprise deals because prospects looked beyond the first page of your report and discovered it doesn't meet their standards. Before committing to any audit partner, make sure you understand",
-                  )
-                }
+                If the audit cost seems too good to be true, you're likely
+                buying a report from a non-accredited auditor, which holds
+                little to no value in the market. The real cost comes later when
+                you lose enterprise deals because prospects looked beyond the
+                first page of your report and discovered it doesn't meet their
+                standards. Before committing to any audit partner, make sure you
+                understand
                 <a
                   href="/hub/evaluate-soc2-report-quality"
                   class="text-[#5d770d] hover:underline"
-                  >{__("how to evaluate SOC 2 report quality")}</a
+                  >how to evaluate SOC 2 report quality</a
                 >
-                {__("to avoid this expensive mistake.")}
+                to avoid this expensive mistake.
               </p>
             </div>
 
             <!-- Open Source vs Proprietary -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Open Source vs Proprietary: The Hidden Trade-offs")}
+                Open Source vs Proprietary: The Hidden Trade-offs
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "The open source compliance software movement has gained significant traction in 2026, and for good reason. Open source tools offer transparency, customization, and freedom from vendor lock-in that proprietary solutions simply can't match.",
-                  )
-                }
+                The open source compliance software movement has gained
+                significant traction in 2026, and for good reason. Open source
+                tools offer transparency, customization, and freedom from vendor
+                lock-in that proprietary solutions simply can't match.
               </p>
 
               <div class="mb-4">
                 <p class="text-foreground mb-2 font-semibold">
-                  {__("Advantages of open source compliance tools:")}
+                  Advantages of open source compliance tools:
                 </p>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Full visibility into how the tool works")}</span>
+                    <span>Full visibility into how the tool works</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __("Ability to customize for your specific needs")
-                      }</span
-                    >
+                    <span> Ability to customize for your specific needs</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __("No vendor lock-in or surprise price increases")
-                      }</span
-                    >
+                    <span> No vendor lock-in or surprise price increases</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __("Community-driven improvements and integrations")
-                      }</span
-                    >
+                    <span> Community-driven improvements and integrations</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Often more cost-effective licensing")}</span>
+                    <span>Often more cost-effective licensing</span>
                   </li>
                 </ul>
               </div>
 
               <div class="mb-4">
                 <p class="text-foreground mb-2 font-semibold">
-                  {__("Traditional open source challenges:")}
+                  Traditional open source challenges:
                 </p>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Typically requires technical expertise to implement",
-                        )
-                      }</span
+                    <span>
+                      Typically requires technical expertise to implement</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Self-managed infrastructure and updates")}</span>
+                    <span>Self-managed infrastructure and updates</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Limited support options")}</span>
+                    <span>Limited support options</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Steeper learning curve")}</span>
+                    <span>Steeper learning curve</span>
                   </li>
                 </ul>
               </div>
@@ -495,14 +432,11 @@ const breadcrumbSchema = {
                   href="https://www.getprobo.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="font-semibold text-[#5d770d] hover:underline"
-                  >{__("Probo")}</a
+                  class="font-semibold text-[#5d770d] hover:underline">Probo</a
                 >
-                {
-                  __(
-                    "open source compliance tools is pairing the software with hands-on service, eliminating the traditional DIY burden while preserving all the benefits of open source.",
-                  )
-                }
+                open source compliance tools is pairing the software with hands-on
+                service, eliminating the traditional DIY burden while preserving all
+                the benefits of open source.
               </p>
             </div>
           </div>
@@ -515,15 +449,13 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("#1 Probo — Open Source with Full Hands-On Service")}
+            #1 Probo — Open Source with Full Hands-On Service
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Resource-strapped startups and SaaS companies who need SOC 2 or ISO 27001 certification but can't afford to dedicate internal resources to managing compliance tools",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Resource-strapped startups and SaaS companies who need
+              SOC 2 or ISO 27001 certification but can't afford to dedicate
+              internal resources to managing compliance tools</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
@@ -532,91 +464,77 @@ const breadcrumbSchema = {
                 href="https://www.getprobo.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="font-semibold text-[#5d770d] hover:underline"
-                >{__("Probo")}</a
+                class="font-semibold text-[#5d770d] hover:underline">Probo</a
               >
-              {
-                __(
-                  "has fundamentally reimagined what a compliance automation tool should be. As an open source platform, it offers complete transparency and flexibility. But what truly sets Probo apart is its full hands-on service model—you don't even need to use or understand the tool yourself.",
-                )
-              }
+              has fundamentally reimagined what a compliance automation tool should
+              be. As an open source platform, it offers complete transparency and
+              flexibility. But what truly sets Probo apart is its full hands-on service
+              model—you don't even need to use or understand the tool yourself.
             </p>
             <p>
-              {
-                __(
-                  "This is the anti-DIY compliance solution. While other vendors hand you a powerful tool and wish you luck, Probo's team handles your entire compliance journey from start to finish. They configure the platform, manage the integrations, collect the evidence, and prepare you for audit. Your involvement is minimal by design.",
-                )
-              }
+              This is the anti-DIY compliance solution. While other vendors hand
+              you a powerful tool and wish you luck, Probo's team handles your
+              entire compliance journey from start to finish. They configure the
+              platform, manage the integrations, collect the evidence, and
+              prepare you for audit. Your involvement is minimal by design.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Key Differentiators")}
+                Key Differentiators
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Open source transparency:")}</strong
+                      >Open source transparency:</strong
                     >
-                    {
-                      __("See exactly how your compliance data is handled")
-                    }</span
+                    See exactly how your compliance data is handled</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Full hands-on service:")}</strong
+                      >Full hands-on service:</strong
                     >
-                    {
-                      __("Probo's team manages the tool so you don't have to")
-                    }</span
+                    Probo's team manages the tool so you don't have to</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("No tool training required:")}</strong
+                      >No tool training required:</strong
                     >
-                    {__("Your team stays focused on building product")}</span
+                    Your team stays focused on building product</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Predictable outcomes:")}</strong
+                      >Predictable outcomes:</strong
                     >
-                    {__("Expert-guided process eliminates guesswork")}</span
+                    Expert-guided process eliminates guesswork</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Cost-effective:")}</strong
-                    >
-                    {
-                      __(
-                        "Open source licensing plus service often beats DIY tool management",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Cost-effective:</strong>
+                    Open source licensing plus service often beats DIY tool management</span
                   >
                 </li>
               </ul>
             </div>
 
             <p class="mt-4">
-              <strong class="text-foreground">{__("Pricing:")}</strong>
-              {
-                __(
-                  "Open source core with service packages tailored to company size and complexity. Total cost of ownership is typically 40-60% lower than managing a proprietary tool internally.",
-                )
-              }
+              <strong class="text-foreground">Pricing:</strong>
+              Open source core with service packages tailored to company size and
+              complexity. Total cost of ownership is typically 40-60% lower than managing
+              a proprietary tool internally.
             </p>
           </div>
         </section>
@@ -628,68 +546,53 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("#2 Vanta — Enterprise-Grade Automation")}
+            #2 Vanta — Enterprise-Grade Automation
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Well-resourced companies with dedicated security or compliance personnel who want a comprehensive, self-managed platform",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Well-resourced companies with dedicated security or
+              compliance personnel who want a comprehensive, self-managed
+              platform</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Vanta has established itself as the market leader in compliance automation, with robust integrations and a mature platform. It's particularly strong for companies with complex tech stacks and multiple compliance frameworks.",
-                )
-              }
+              Vanta has established itself as the market leader in compliance
+              automation, with robust integrations and a mature platform. It's
+              particularly strong for companies with complex tech stacks and
+              multiple compliance frameworks.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Key Features")}
+                Key Features
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("200+ native integrations")}</span>
+                  <span>200+ native integrations</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Continuous monitoring and automated evidence collection",
-                      )
-                    }</span
+                  <span>
+                    Continuous monitoring and automated evidence collection</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Multi-framework support (SOC 2, ISO 27001, HIPAA, GDPR)",
-                      )
-                    }</span
+                  <span>
+                    Multi-framework support (SOC 2, ISO 27001, HIPAA, GDPR)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Trust center for sharing compliance status with customers",
-                      )
-                    }</span
+                  <span>
+                    Trust center for sharing compliance status with customers</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Strong auditor network")}</span>
+                  <span>Strong auditor network</span>
                 </li>
               </ul>
             </div>
@@ -699,13 +602,11 @@ const breadcrumbSchema = {
             >
               <span>⚠️</span>
               <span
-                ><strong class="text-foreground">{__("Considerations:")}</strong
-                >
-                {
-                  __(
-                    "Vanta requires significant internal investment to configure and manage. Most customers report dedicating a part-time or full-time resource to the platform. Pricing scales with company size and can reach $50,000+ annually for larger organizations.",
-                  )
-                }</span
+                ><strong class="text-foreground">Considerations:</strong>
+                Vanta requires significant internal investment to configure and manage.
+                Most customers report dedicating a part-time or full-time resource
+                to the platform. Pricing scales with company size and can reach $50,000+
+                annually for larger organizations.</span
               >
             </p>
           </div>
@@ -718,56 +619,48 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("#3 Drata — Continuous Monitoring Focus")}
+            #3 Drata — Continuous Monitoring Focus
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Companies with security-focused cultures that want continuous visibility into their compliance status",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Companies with security-focused cultures that want
+              continuous visibility into their compliance status</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Drata excels at continuous compliance monitoring, making it particularly valuable for companies that need real-time visibility into their security posture. The platform's automated evidence collection is among the best in the industry.",
-                )
-              }
+              Drata excels at continuous compliance monitoring, making it
+              particularly valuable for companies that need real-time visibility
+              into their security posture. The platform's automated evidence
+              collection is among the best in the industry.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Key Features")}
+                Key Features
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Real-time compliance monitoring dashboard")}</span>
+                  <span>Real-time compliance monitoring dashboard</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Automated evidence collection across 100+ integrations",
-                      )
-                    }</span
+                  <span>
+                    Automated evidence collection across 100+ integrations</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Risk assessment and management tools")}</span>
+                  <span>Risk assessment and management tools</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Employee security training modules")}</span>
+                  <span>Employee security training modules</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Custom control mapping")}</span>
+                  <span>Custom control mapping</span>
                 </li>
               </ul>
             </div>
@@ -777,13 +670,11 @@ const breadcrumbSchema = {
             >
               <span>⚠️</span>
               <span
-                ><strong class="text-foreground">{__("Considerations:")}</strong
-                >
-                {
-                  __(
-                    "Like Vanta, Drata requires hands-on management from your team. The platform is powerful but has a learning curve. Some users report that the sheer volume of alerts can become overwhelming without proper configuration.",
-                  )
-                }</span
+                ><strong class="text-foreground">Considerations:</strong>
+                Like Vanta, Drata requires hands-on management from your team. The
+                platform is powerful but has a learning curve. Some users report that
+                the sheer volume of alerts can become overwhelming without proper
+                configuration.</span
               >
             </p>
           </div>
@@ -796,50 +687,45 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("#4 Secureframe")}
+            #4 Secureframe
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Companies facing tight compliance deadlines who need rapid implementation",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Companies facing tight compliance deadlines who need
+              rapid implementation</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Secureframe has built its reputation on speed. The platform is designed for rapid implementation, making it attractive for companies facing tight compliance deadlines.",
-                )
-              }
+              Secureframe has built its reputation on speed. The platform is
+              designed for rapid implementation, making it attractive for
+              companies facing tight compliance deadlines.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Key Features")}
+                Key Features
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Streamlined onboarding process")}</span>
+                  <span>Streamlined onboarding process</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Pre-built policy templates")}</span>
+                  <span>Pre-built policy templates</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Automated personnel management")}</span>
+                  <span>Automated personnel management</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Vendor risk management")}</span>
+                  <span>Vendor risk management</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Quick integration setup")}</span>
+                  <span>Quick integration setup</span>
                 </li>
               </ul>
             </div>
@@ -849,13 +735,10 @@ const breadcrumbSchema = {
             >
               <span>⚠️</span>
               <span
-                ><strong class="text-foreground">{__("Considerations:")}</strong
-                >
-                {
-                  __(
-                    "The emphasis on speed sometimes comes at the cost of depth. Some users report that Secureframe works well for initial certification but requires additional effort for ongoing compliance management.",
-                  )
-                }</span
+                ><strong class="text-foreground">Considerations:</strong>
+                The emphasis on speed sometimes comes at the cost of depth. Some users
+                report that Secureframe works well for initial certification but requires
+                additional effort for ongoing compliance management.</span
               >
             </p>
           </div>
@@ -868,50 +751,45 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("#5 Sprinto — Budget-Friendly Option")}
+            #5 Sprinto — Budget-Friendly Option
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Early-stage startups with limited budgets who need basic compliance automation",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Early-stage startups with limited budgets who need basic
+              compliance automation</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Sprinto offers solid compliance automation at a more accessible price point, making it popular with early-stage startups watching their burn rate.",
-                )
-              }
+              Sprinto offers solid compliance automation at a more accessible
+              price point, making it popular with early-stage startups watching
+              their burn rate.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Key Features")}
+                Key Features
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Competitive pricing for smaller companies")}</span>
+                  <span>Competitive pricing for smaller companies</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Core compliance automation functionality")}</span>
+                  <span>Core compliance automation functionality</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Growing integration library")}</span>
+                  <span>Growing integration library</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Responsive customer support")}</span>
+                  <span>Responsive customer support</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Multi-framework support")}</span>
+                  <span>Multi-framework support</span>
                 </li>
               </ul>
             </div>
@@ -921,13 +799,11 @@ const breadcrumbSchema = {
             >
               <span>⚠️</span>
               <span
-                ><strong class="text-foreground">{__("Considerations:")}</strong
-                >
-                {
-                  __(
-                    "Sprinto's lower price point reflects a somewhat narrower feature set compared to premium competitors. The platform is continuously improving but may lack some advanced capabilities that larger organizations require.",
-                  )
-                }</span
+                ><strong class="text-foreground">Considerations:</strong>
+                Sprinto's lower price point reflects a somewhat narrower feature set
+                compared to premium competitors. The platform is continuously improving
+                but may lack some advanced capabilities that larger organizations
+                require.</span
               >
             </p>
           </div>
@@ -940,11 +816,7 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Comparison Table: Features, Pricing, and True SOC 2 Compliance Cost",
-              )
-            }
+            Comparison Table: Features, Pricing, and True SOC 2 Compliance Cost
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <div class="overflow-x-auto">
@@ -953,81 +825,74 @@ const breadcrumbSchema = {
                   <tr class="border-border-low border-b">
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("Tool")}</th
+                      >Tool</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Pricing")}</th
+                      >Pricing</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Internal Time")}</th
+                      >Internal Time</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Open Source")}</th
+                      >Open Source</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Hands-On Service")}</th
+                      >Hands-On Service</th
                     >
                     <th
                       class="text-foreground py-3 pl-2 text-left font-semibold"
-                      >{__("Best For")}</th
+                      >Best For</th
                     >
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="border-border-low border-b bg-[#f0f7e4]">
-                    <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Probo")}</td
-                    >
-                    <td class="px-2 py-3">{__("$$-$$$")}</td>
-                    <td class="px-2 py-3">{__("Minimal (2-3 hrs/month)")}</td>
-                    <td class="px-2 py-3">{__("✅ Yes")}</td>
-                    <td class="px-2 py-3">{__("✅ Full service")}</td>
-                    <td class="py-3 pl-2">{__("Resource-strapped teams")}</td>
+                    <td class="text-foreground py-3 pr-4 font-medium">Probo</td>
+                    <td class="px-2 py-3">$$-$$$</td>
+                    <td class="px-2 py-3">Minimal (2-3 hrs/month)</td>
+                    <td class="px-2 py-3">✅ Yes</td>
+                    <td class="px-2 py-3">✅ Full service</td>
+                    <td class="py-3 pl-2">Resource-strapped teams</td>
+                  </tr>
+                  <tr class="border-border-low border-b">
+                    <td class="text-foreground py-3 pr-4 font-medium">Vanta</td>
+                    <td class="px-2 py-3">$$$-$$$$</td>
+                    <td class="px-2 py-3">High (10-20 hrs/week)</td>
+                    <td class="px-2 py-3">❌ No</td>
+                    <td class="px-2 py-3">❌ Self-service</td>
+                    <td class="py-3 pl-2">Well-resourced enterprises</td>
+                  </tr>
+                  <tr class="border-border-low border-b">
+                    <td class="text-foreground py-3 pr-4 font-medium">Drata</td>
+                    <td class="px-2 py-3">$$$-$$$$</td>
+                    <td class="px-2 py-3">High (10-15 hrs/week)</td>
+                    <td class="px-2 py-3">❌ No</td>
+                    <td class="px-2 py-3">❌ Self-service</td>
+                    <td class="py-3 pl-2">Security-focused teams</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Vanta")}</td
+                      >Secureframe</td
                     >
-                    <td class="px-2 py-3">{__("$$$-$$$$")}</td>
-                    <td class="px-2 py-3">{__("High (10-20 hrs/week)")}</td>
-                    <td class="px-2 py-3">{__("❌ No")}</td>
-                    <td class="px-2 py-3">{__("❌ Self-service")}</td>
-                    <td class="py-3 pl-2">{__("Well-resourced enterprises")}</td
-                    >
-                  </tr>
-                  <tr class="border-border-low border-b">
-                    <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Drata")}</td
-                    >
-                    <td class="px-2 py-3">{__("$$$-$$$$")}</td>
-                    <td class="px-2 py-3">{__("High (10-15 hrs/week)")}</td>
-                    <td class="px-2 py-3">{__("❌ No")}</td>
-                    <td class="px-2 py-3">{__("❌ Self-service")}</td>
-                    <td class="py-3 pl-2">{__("Security-focused teams")}</td>
-                  </tr>
-                  <tr class="border-border-low border-b">
-                    <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Secureframe")}</td
-                    >
-                    <td class="px-2 py-3">{__("$$-$$$")}</td>
-                    <td class="px-2 py-3">{__("Medium (8-12 hrs/week)")}</td>
-                    <td class="px-2 py-3">{__("❌ No")}</td>
-                    <td class="px-2 py-3">{__("❌ Self-service")}</td>
-                    <td class="py-3 pl-2">{__("Fast implementation needs")}</td>
+                    <td class="px-2 py-3">$$-$$$</td>
+                    <td class="px-2 py-3">Medium (8-12 hrs/week)</td>
+                    <td class="px-2 py-3">❌ No</td>
+                    <td class="px-2 py-3">❌ Self-service</td>
+                    <td class="py-3 pl-2">Fast implementation needs</td>
                   </tr>
                   <tr>
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Sprinto")}</td
+                      >Sprinto</td
                     >
-                    <td class="px-2 py-3">{__("$-$$")}</td>
-                    <td class="px-2 py-3">{__("Medium (8-12 hrs/week)")}</td>
-                    <td class="px-2 py-3">{__("❌ No")}</td>
-                    <td class="px-2 py-3">{__("❌ Self-service")}</td>
-                    <td class="py-3 pl-2">{__("Budget-conscious startups")}</td>
+                    <td class="px-2 py-3">$-$$</td>
+                    <td class="px-2 py-3">Medium (8-12 hrs/week)</td>
+                    <td class="px-2 py-3">❌ No</td>
+                    <td class="px-2 py-3">❌ Self-service</td>
+                    <td class="py-3 pl-2">Budget-conscious startups</td>
                   </tr>
                 </tbody>
               </table>
@@ -1035,58 +900,50 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("True SOC 2 Compliance Cost Breakdown")}
+                True SOC 2 Compliance Cost Breakdown
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "When calculating your total investment, consider these typical ranges:",
-                  )
-                }
+                When calculating your total investment, consider these typical
+                ranges:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Tool subscription:")}</strong
-                    >
-                    {__("$10,000 - $50,000/year")}</span
+                    ><strong class="text-foreground">Tool subscription:</strong>
+                    $10,000 - $50,000/year</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Internal labor (DIY tools):")}</strong
+                      >Internal labor (DIY tools):</strong
                     >
-                    {__("$30,000 - $100,000/year equivalent")}</span
+                    $30,000 - $100,000/year equivalent</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground">{__("Audit fees:")}</strong
-                    >
-                    {__("$5,000 - $50,000")}</span
+                    ><strong class="text-foreground">Audit fees:</strong>
+                    $5,000 - $50,000</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Remediation and implementation:")}</strong
+                      >Remediation and implementation:</strong
                     >
-                    {__("$10,000 - $30,000")}</span
+                    $10,000 - $30,000</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "With Probo's hands-on service model, the internal labor component drops dramatically, often making it the most cost-effective total solution despite competitive base pricing.",
-                  )
-                }
+                With Probo's hands-on service model, the internal labor
+                component drops dramatically, often making it the most
+                cost-effective total solution despite competitive base pricing.
               </p>
             </div>
           </div>
@@ -1099,220 +956,163 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Why Open Source Compliance Tools Are Gaining Traction")}
+            Why Open Source Compliance Tools Are Gaining Traction
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "The compliance automation market is experiencing a significant shift toward open source solutions. Here's why forward-thinking companies are leading this transition.",
-                )
-              }
+              The compliance automation market is experiencing a significant
+              shift toward open source solutions. Here's why forward-thinking
+              companies are leading this transition.
             </p>
 
             <!-- Transparency and Customization Benefits -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Transparency and Customization Benefits")}
+                Transparency and Customization Benefits
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "When your compliance tool is open source, there are no black boxes. You can see exactly how evidence is collected, how controls are mapped, and how your data flows through the system. This transparency isn't just philosophically appealing—it's practically valuable.",
-                  )
-                }
+                When your compliance tool is open source, there are no black
+                boxes. You can see exactly how evidence is collected, how
+                controls are mapped, and how your data flows through the system.
+                This transparency isn't just philosophically appealing—it's
+                practically valuable.
               </p>
               <p class="text-foreground mb-2 font-semibold">
-                {__("Transparency benefits include:")}
+                Transparency benefits include:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Auditor confidence:")}</strong
+                    ><strong class="text-foreground">Auditor confidence:</strong
                     >
-                    {
-                      __(
-                        "When auditors can examine the tool's methodology, they trust the output more",
-                      )
-                    }</span
+                    When auditors can examine the tool's methodology, they trust the
+                    output more</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Security assurance:</strong
+                    >
+                    Your security team can verify the tool isn't introducing vulnerabilities</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Security assurance:")}</strong
+                      >Customization freedom:</strong
                     >
-                    {
-                      __(
-                        "Your security team can verify the tool isn't introducing vulnerabilities",
-                      )
-                    }</span
+                    Adapt the tool to your specific tech stack and compliance needs</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">No vendor lock-in:</strong>
+                    Your compliance data and processes aren't trapped in a proprietary
+                    system</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Customization freedom:")}</strong
+                      >Community validation:</strong
                     >
-                    {
-                      __(
-                        "Adapt the tool to your specific tech stack and compliance needs",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("No vendor lock-in:")}</strong
-                    >
-                    {
-                      __(
-                        "Your compliance data and processes aren't trapped in a proprietary system",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Community validation:")}</strong
-                    >
-                    {
-                      __(
-                        "Open source tools benefit from community review and improvement",
-                      )
-                    }</span
+                    Open source tools benefit from community review and improvement</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "For companies in regulated industries or those with sophisticated security requirements, this transparency is increasingly non-negotiable.",
-                  )
-                }
+                For companies in regulated industries or those with
+                sophisticated security requirements, this transparency is
+                increasingly non-negotiable.
               </p>
             </div>
 
             <!-- The Probo Difference -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {
-                  __(
-                    "The Probo Difference: You Don't Even Need to Use the Tool",
-                  )
-                }
+                The Probo Difference: You Don't Even Need to Use the Tool
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Here's where Probo breaks the mold entirely. Traditional open source tools require significant technical expertise to implement and manage. You get the benefits of transparency but shoulder the burden of self-management.",
-                  )
-                }
+                Here's where Probo breaks the mold entirely. Traditional open
+                source tools require significant technical expertise to
+                implement and manage. You get the benefits of transparency but
+                shoulder the burden of self-management.
               </p>
               <p class="mb-4">
-                {
-                  __(
-                    "Probo flips this equation with its full hands-on service approach. The tool is open source, so you get all the transparency and flexibility benefits. But Probo's expert team handles everything:",
-                  )
-                }
+                Probo flips this equation with its full hands-on service
+                approach. The tool is open source, so you get all the
+                transparency and flexibility benefits. But Probo's expert team
+                handles everything:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Initial setup and configuration:")}</strong
+                      >Initial setup and configuration:</strong
                     >
-                    {__("No need to learn the platform")}</span
+                    No need to learn the platform</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Integration management:")}</strong
+                      >Integration management:</strong
                     >
-                    {
-                      __(
-                        "They connect your systems and keep connections healthy",
-                      )
-                    }</span
+                    They connect your systems and keep connections healthy</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Evidence collection:")}</strong
+                      >Evidence collection:</strong
                     >
-                    {
-                      __(
-                        "Automated and manually verified by compliance experts",
-                      )
-                    }</span
+                    Automated and manually verified by compliance experts</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Policy development:</strong
+                    >
+                    Customized policies that actually fit your organization</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Audit preparation:</strong>
+                    You're guided through the process, not left to figure it out</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Policy development:")}</strong
+                      >Ongoing maintenance:</strong
                     >
-                    {
-                      __(
-                        "Customized policies that actually fit your organization",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Audit preparation:")}</strong
-                    >
-                    {
-                      __(
-                        "You're guided through the process, not left to figure it out",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Ongoing maintenance:")}</strong
-                    >
-                    {
-                      __(
-                        "Continuous compliance without continuous internal effort",
-                      )
-                    }</span
+                    Continuous compliance without continuous internal effort</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "The result? You get open source compliance software without the open source burden. Your team stays focused on building product while Probo's team ensures you achieve and maintain certification.",
-                  )
-                }
+                The result? You get open source compliance software without the
+                open source burden. Your team stays focused on building product
+                while Probo's team ensures you achieve and maintain
+                certification.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "This model is particularly powerful for CTOs, security leaders, and compliance managers at growth-stage companies. You need SOC 2 to close enterprise deals, but you can't afford to distract your team from core product development.",
-                  )
-                }
+                This model is particularly powerful for CTOs, security leaders,
+                and compliance managers at growth-stage companies. You need SOC
+                2 to close enterprise deals, but you can't afford to distract
+                your team from core product development.
               </p>
             </div>
           </div>
@@ -1325,71 +1125,53 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("How to Choose the Right Tool for Your SOC 2 Journey")}
+            How to Choose the Right Tool for Your SOC 2 Journey
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Selecting the right compliance automation tool depends on your specific situation. Here's a framework for making the decision:",
-                )
-              }
+              Selecting the right compliance automation tool depends on your
+              specific situation. Here's a framework for making the decision:
             </p>
 
             <div class="mt-6 space-y-6">
               <div class="rounded-lg border border-[#d7edba] bg-[#f0f7e4] p-4">
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Choose Probo if:")}
+                  Choose Probo if:
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You need SOC 2 certification but can't dedicate internal resources to tool management",
-                        )
-                      }</span
+                    <span>
+                      You need SOC 2 certification but can't dedicate internal
+                      resources to tool management</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "Transparency and open source values matter to your organization",
-                        )
-                      }</span
+                    <span>
+                      Transparency and open source values matter to your
+                      organization</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You want predictable outcomes without becoming a compliance expert",
-                        )
-                      }</span
+                    <span>
+                      You want predictable outcomes without becoming a
+                      compliance expert</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "Your team is already stretched thin with product development priorities",
-                        )
-                      }</span
+                    <span>
+                      Your team is already stretched thin with product
+                      development priorities</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#5d770d]">✓</span>
-                    <span
-                      >{
-                        __(
-                          "You've been burned by DIY tools that required more effort than promised",
-                        )
-                      }</span
+                    <span>
+                      You've been burned by DIY tools that required more effort
+                      than promised</span
                     >
                   </li>
                 </ul>
@@ -1397,47 +1179,34 @@ const breadcrumbSchema = {
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Choose Vanta or Drata if:")}
+                  Choose Vanta or Drata if:
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You have dedicated security/compliance personnel with bandwidth to manage tools",
-                        )
-                      }</span
+                    <span>
+                      You have dedicated security/compliance personnel with
+                      bandwidth to manage tools</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You need multiple compliance frameworks simultaneously",
-                        )
-                      }</span
+                    <span>
+                      You need multiple compliance frameworks simultaneously</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You prefer a self-service approach with extensive documentation",
-                        )
-                      }</span
+                    <span>
+                      You prefer a self-service approach with extensive
+                      documentation</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Your organization has the budget for premium pricing plus internal labor costs",
-                        )
-                      }</span
+                    <span>
+                      Your organization has the budget for premium pricing plus
+                      internal labor costs</span
                     >
                   </li>
                 </ul>
@@ -1445,27 +1214,22 @@ const breadcrumbSchema = {
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Choose Secureframe if:")}
+                  Choose Secureframe if:
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Speed is your primary concern")}</span>
+                    <span>Speed is your primary concern</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{__("You have a relatively standard tech stack")}</span
-                    >
+                    <span>You have a relatively standard tech stack</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You're comfortable with ongoing self-management after initial setup",
-                        )
-                      }</span
+                    <span>
+                      You're comfortable with ongoing self-management after
+                      initial setup</span
                     >
                   </li>
                 </ul>
@@ -1473,31 +1237,24 @@ const breadcrumbSchema = {
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Choose Sprinto if:")}
+                  Choose Sprinto if:
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Budget is your primary constraint")}</span>
+                    <span>Budget is your primary constraint</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You're an early-stage startup with basic compliance needs",
-                        )
-                      }</span
+                    <span>
+                      You're an early-stage startup with basic compliance needs</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "You have technical team members willing to own the compliance process",
-                        )
-                      }</span
+                    <span>
+                      You have technical team members willing to own the
+                      compliance process</span
                     >
                   </li>
                 </ul>
@@ -1506,43 +1263,28 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Questions to Ask During Evaluation")}
+                Questions to Ask During Evaluation
               </h3>
               <ol class="list-inside list-decimal space-y-2">
                 <li>
-                  {
-                    __(
-                      "What is the realistic total cost of ownership, including internal time?",
-                    )
-                  }
+                  What is the realistic total cost of ownership, including
+                  internal time?
                 </li>
                 <li>
-                  {
-                    __(
-                      "How much of my team's time will this tool require on an ongoing basis?",
-                    )
-                  }
+                  How much of my team's time will this tool require on an
+                  ongoing basis?
                 </li>
                 <li>
-                  {
-                    __(
-                      "What happens if we need to customize controls for our specific situation?",
-                    )
-                  }
+                  What happens if we need to customize controls for our specific
+                  situation?
                 </li>
                 <li>
-                  {
-                    __(
-                      "How does the vendor support us through the actual audit process?",
-                    )
-                  }
+                  How does the vendor support us through the actual audit
+                  process?
                 </li>
                 <li>
-                  {
-                    __(
-                      "Can we achieve compliance without becoming compliance tool experts?",
-                    )
-                  }
+                  Can we achieve compliance without becoming compliance tool
+                  experts?
                 </li>
               </ol>
             </div>
@@ -1556,43 +1298,40 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Conclusion — Stop Managing Tools, Start Achieving Compliance")}
+            Conclusion — Stop Managing Tools, Start Achieving Compliance
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "The compliance automation market has matured significantly, but most tools still operate on a fundamental assumption: that you want to manage your compliance journey yourself, just with better software.",
-                )
-              }
+              The compliance automation market has matured significantly, but
+              most tools still operate on a fundamental assumption: that you
+              want to manage your compliance journey yourself, just with better
+              software.
             </p>
             <p>
-              {
-                __(
-                  "For many B2B SaaS companies and startups, this assumption is wrong. You don't want to become compliance experts. You don't want to spend 10-20 hours per week managing yet another platform. You want SOC 2 certification so you can close enterprise deals and grow your business.",
-                )
-              }
+              For many B2B SaaS companies and startups, this assumption is
+              wrong. You don't want to become compliance experts. You don't want
+              to spend 10-20 hours per week managing yet another platform. You
+              want SOC 2 certification so you can close enterprise deals and
+              grow your business.
             </p>
             <p>
-              {
-                __(
-                  "This is why Probo ranks #1 on our list. By combining open source transparency with full hands-on service, Probo eliminates the hidden burden that makes other compliance tools so costly. You get the certification without the DIY struggle.",
-                )
-              }
+              This is why Probo ranks #1 on our list. By combining open source
+              transparency with full hands-on service, Probo eliminates the
+              hidden burden that makes other compliance tools so costly. You get
+              the certification without the DIY struggle.
             </p>
             <p>
-              {
-                __(
-                  "The other tools on this list—Vanta, Drata, Secureframe, and Sprinto—are all capable platforms with their own strengths. But they all require significant internal investment to operate effectively. For resource-strapped teams, that investment often becomes the bottleneck that delays certification and distracts from core business priorities.",
-                )
-              }
+              The other tools on this list—Vanta, Drata, Secureframe, and
+              Sprinto—are all capable platforms with their own strengths. But
+              they all require significant internal investment to operate
+              effectively. For resource-strapped teams, that investment often
+              becomes the bottleneck that delays certification and distracts
+              from core business priorities.
             </p>
             <p class="text-foreground font-semibold">
-              {
-                __(
-                  "As you evaluate your options, look beyond the feature lists and integration counts. Ask the harder question: what will this actually cost us in time, attention, and opportunity?",
-                )
-              }
+              As you evaluate your options, look beyond the feature lists and
+              integration counts. Ask the harder question: what will this
+              actually cost us in time, attention, and opportunity?
             </p>
           </div>
         </section>
@@ -1600,15 +1339,15 @@ const breadcrumbSchema = {
         <!-- We Handle Your Compliance Section -->
         <section class="mt-8 text-center">
           <h2 class="text-h2 sm:text-h1 mb-4 font-medium">
-            {__("We Handle Your")}
-            <span class="highlight-yellow">{__("Compliance.")}</span>
+            We Handle Your
+            <span class="highlight-yellow">Compliance.</span>
           </h2>
           <p
             class="mx-auto mb-12 max-w-[500px] text-lg text-gray-900 sm:text-xl"
           >
-            {__("Probo isn't another compliance tool -")}
+            Probo isn't another compliance tool -
             <br />
-            {__("We're your dedicated compliance team.")}
+            We're your dedicated compliance team.
           </p>
 
           <div class="flex flex-col gap-4">
@@ -1620,10 +1359,10 @@ const breadcrumbSchema = {
                 class="inline-flex shrink-0 items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
               >
                 <span class="font-semibold text-[#93c926]">01</span>
-                <span class="font-medium">{__("Talk to Us")}</span>
+                <span class="font-medium">Talk to Us</span>
               </div>
               <p class="text-muted-foreground text-left text-sm">
-                {__("Share your tech stack and process in an onboarding call")}
+                Share your tech stack and process in an onboarding call
               </p>
             </div>
 
@@ -1635,14 +1374,10 @@ const breadcrumbSchema = {
                 class="inline-flex shrink-0 items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
               >
                 <span class="font-semibold text-[#93c926]">02</span>
-                <span class="font-medium">{__("We Do the Work")}</span>
+                <span class="font-medium">We Do the Work</span>
               </div>
               <p class="text-muted-foreground text-left text-sm">
-                {
-                  __(
-                    "Our experts handle assessments, docs, and prepare you for audit",
-                  )
-                }
+                Our experts handle assessments, docs, and prepare you for audit
               </p>
             </div>
 
@@ -1654,14 +1389,10 @@ const breadcrumbSchema = {
                 class="inline-flex shrink-0 items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
               >
                 <span class="font-semibold text-[#93c926]">03</span>
-                <span class="font-medium">{__("You Get Certified")}</span>
+                <span class="font-medium">You Get Certified</span>
               </div>
               <p class="text-muted-foreground text-left text-sm">
-                {
-                  __(
-                    "Achieve SOC 2, ISO 27001, or other frameworks with serious audit",
-                  )
-                }
+                Achieve SOC 2, ISO 27001, or other frameworks with serious audit
               </p>
             </div>
 
@@ -1673,14 +1404,11 @@ const breadcrumbSchema = {
                 class="inline-flex shrink-0 items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm"
               >
                 <span class="font-semibold text-[#93c926]">04</span>
-                <span class="font-medium">{__("Audit Ready")}</span>
+                <span class="font-medium">Audit Ready</span>
               </div>
               <p class="text-muted-foreground text-left text-sm">
-                {
-                  __(
-                    "Once certified, we run your compliance program in the background.",
-                  )
-                }
+                Once certified, we run your compliance program in the
+                background.
               </p>
             </div>
           </div>
@@ -1698,7 +1426,7 @@ const breadcrumbSchema = {
                 width={40}
                 height={40}
               />
-              {__("Book a call with Antoine")}
+              Book a call with Antoine
             </a>
           </div>
         </section>

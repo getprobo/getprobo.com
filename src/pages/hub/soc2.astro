@@ -1,8 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import FrameworkBadge from "../../components/FrameworkBadge.svelte";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "what-is-soc2", label: "What Is SOC 2?" },
@@ -72,10 +70,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("What is SOC 2? The Complete SOC 2 Guide for 2026")}
-  description={__(
-    "Learn everything about SOC 2 compliance: requirements, costs, timeline, and Type 1 vs Type 2 differences. Your complete guide to achieving SOC 2 certification.",
-  )}
+  title="What is SOC 2? The Complete SOC 2 Guide for 2026"
+  description="Learn everything about SOC 2 compliance: requirements, costs, timeline, and Type 1 vs Type 2 differences. Your complete guide to achieving SOC 2 certification."
   ogImage="/hub/soc2-og.png"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
@@ -90,8 +86,8 @@ const breadcrumbSchema = {
         <h1
           class="text-foreground text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
         >
-          {__("What is")}
-          <span class="highlight-text">{__("SOC 2")}</span>{__("?")}
+          What is
+          <span class="highlight-text">SOC 2</span>?
         </h1>
         <div class="flex items-center gap-2">
           <FrameworkBadge name="SOC2_TYPE1" class="size-12" client:visible />
@@ -101,7 +97,7 @@ const breadcrumbSchema = {
       <div
         class="mb-6 inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-5 py-2.5 text-base text-gray-500 shadow-sm backdrop-blur-sm"
       >
-        {__("The Complete SOC 2 Guide for 2026")}
+        The Complete SOC 2 Guide for 2026
       </div>
     </header>
 
@@ -133,38 +129,31 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What Is SOC 2?")}
+            What Is SOC 2?
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "SOC 2 (System and Organization Controls 2) is an auditing framework developed by the",
-                )
-              }
+              SOC 2 (System and Organization Controls 2) is an auditing
+              framework developed by the
               <a
                 href="https://www.aicpa-cima.com/home"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-[#5d770d] hover:underline"
-                >{
-                  __(
-                    "American Institute of Certified Public Accountants (AICPA)",
-                  )
-                }</a
               >
-              {
-                __(
-                  "that evaluates how service organizations manage customer data. Unlike prescriptive compliance frameworks that dictate specific controls, SOC 2 provides a flexible structure based on five Trust Services Criteria that organizations can adapt to their unique environments.",
-                )
-              }
+                American Institute of Certified Public Accountants (AICPA)</a
+              >
+              that evaluates how service organizations manage customer data. Unlike
+              prescriptive compliance frameworks that dictate specific controls, SOC
+              2 provides a flexible structure based on five Trust Services Criteria
+              that organizations can adapt to their unique environments.
             </p>
             <p>
-              {
-                __(
-                  'At its core, SOC 2 answers a critical question for your customers: "Can we trust this company to protect our data?" The resulting attestation report, issued by an independent CPA firm, provides documented evidence that your organization has implemented and maintained effective controls over a defined period.',
-                )
-              }
+              At its core, SOC 2 answers a critical question for your customers:
+              "Can we trust this company to protect our data?" The resulting
+              attestation report, issued by an independent CPA firm, provides
+              documented evidence that your organization has implemented and
+              maintained effective controls over a defined period.
             </p>
           </div>
         </section>
@@ -176,22 +165,24 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The Origins of SOC 2 and AICPA Standards")}
+            The Origins of SOC 2 and AICPA Standards
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "The SOC framework emerged from the AICPA's Statement on Standards for Attestation Engagements (SSAE), evolving from the earlier SAS 70 standard that focused primarily on financial reporting controls. In 2010, the AICPA introduced SOC 1, SOC 2, and SOC 3 reports to address the growing need for assurance around data security and operational controls in service organizations.",
-                )
-              }
+              The SOC framework emerged from the AICPA's Statement on Standards
+              for Attestation Engagements (SSAE), evolving from the earlier SAS
+              70 standard that focused primarily on financial reporting
+              controls. In 2010, the AICPA introduced SOC 1, SOC 2, and SOC 3
+              reports to address the growing need for assurance around data
+              security and operational controls in service organizations.
             </p>
             <p>
-              {
-                __(
-                  "The Trust Services Criteria that form the foundation of SOC 2 were most recently updated in 2017, with revised points of focus added in 2022 to address emerging risks around cloud computing, mobile technologies, and evolving cyber threats. This framework continues to be maintained by the AICPA's Assurance Services Executive Committee (ASEC).",
-                )
-              }
+              The Trust Services Criteria that form the foundation of SOC 2 were
+              most recently updated in 2017, with revised points of focus added
+              in 2022 to address emerging risks around cloud computing, mobile
+              technologies, and evolving cyber threats. This framework continues
+              to be maintained by the AICPA's Assurance Services Executive
+              Committee (ASEC).
             </p>
           </div>
         </section>
@@ -203,43 +194,41 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("SOC 2 vs Other Compliance Frameworks")}
+            SOC 2 vs Other Compliance Frameworks
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Understanding where SOC 2 fits in the compliance landscape helps you make informed decisions about your security program:",
-                )
-              }
+              Understanding where SOC 2 fits in the compliance landscape helps
+              you make informed decisions about your security program:
             </p>
 
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("SOC 2 vs SOC 1")}
+                SOC 2 vs SOC 1
               </h3>
               <p>
-                {
-                  __(
-                    "While both are AICPA frameworks, SOC 1 focuses specifically on controls relevant to financial reporting, think payroll processors or payment platforms. SOC 2 addresses broader operational and security controls, making it the appropriate choice for most SaaS companies handling customer data.",
-                  )
-                }
+                While both are AICPA frameworks, SOC 1 focuses specifically on
+                controls relevant to financial reporting, think payroll
+                processors or payment platforms. SOC 2 addresses broader
+                operational and security controls, making it the appropriate
+                choice for most SaaS companies handling customer data.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("SOC 2 vs ISO 27001")}
+                SOC 2 vs ISO 27001
               </h3>
               <p>
                 <a href="/hub/iso27001" class="text-[#5d770d] hover:underline"
-                  >{__("ISO 27001")}</a
+                  >ISO 27001</a
                 >
-                {
-                  __(
-                    "is an international standard that requires organizations to implement a formal Information Security Management System (ISMS). Unlike SOC 2's attestation model, ISO 27001 results in certification from an accredited body. Many organizations pursue both: ISO 27001 for European markets and international credibility, SOC 2 for North American enterprise sales.",
-                  )
-                }
+                is an international standard that requires organizations to implement
+                a formal Information Security Management System (ISMS). Unlike SOC
+                2's attestation model, ISO 27001 results in certification from an
+                accredited body. Many organizations pursue both: ISO 27001 for European
+                markets and international credibility, SOC 2 for North American enterprise
+                sales.
               </p>
             </div>
 
@@ -250,18 +239,18 @@ const breadcrumbSchema = {
                   <tr class="border-border-low border-b">
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("Framework")}</th
+                      >Framework</th
                     >
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("Governing Body")}</th
+                      >Governing Body</th
                     >
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("Output")}</th
+                      >Output</th
                     >
                     <th class="text-foreground py-3 text-left font-semibold"
-                      >{__("Best For")}</th
+                      >Best For</th
                     >
                   </tr>
                 </thead>
@@ -269,22 +258,22 @@ const breadcrumbSchema = {
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium">SOC 2</td>
                     <td class="py-3 pr-4">AICPA</td>
-                    <td class="py-3 pr-4">{__("Attestation Report")}</td>
-                    <td class="py-3">{__("North American B2B SaaS")}</td>
+                    <td class="py-3 pr-4">Attestation Report</td>
+                    <td class="py-3">North American B2B SaaS</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium">SOC 1</td>
                     <td class="py-3 pr-4">AICPA</td>
-                    <td class="py-3 pr-4">{__("Attestation Report")}</td>
-                    <td class="py-3">{__("Financial Services Providers")}</td>
+                    <td class="py-3 pr-4">Attestation Report</td>
+                    <td class="py-3">Financial Services Providers</td>
                   </tr>
                   <tr>
                     <td class="text-foreground py-3 pr-4 font-medium"
                       >ISO 27001</td
                     >
                     <td class="py-3 pr-4">ISO/IEC</td>
-                    <td class="py-3 pr-4">{__("Certification")}</td>
-                    <td class="py-3">{__("Global Markets, EU Customers")}</td>
+                    <td class="py-3 pr-4">Certification</td>
+                    <td class="py-3">Global Markets, EU Customers</td>
                   </tr>
                 </tbody>
               </table>
@@ -299,141 +288,135 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The Five Trust Services Criteria Explained")}
+            The Five Trust Services Criteria Explained
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "SOC 2 audits evaluate your organization against five Trust Services Criteria (TSC). While Security is mandatory for all SOC 2 reports, the remaining four criteria are optional and should be selected based on your business model and customer requirements.",
-                )
-              }
+              SOC 2 audits evaluate your organization against five Trust
+              Services Criteria (TSC). While Security is mandatory for all SOC 2
+              reports, the remaining four criteria are optional and should be
+              selected based on your business model and customer requirements.
             </p>
 
             <!-- Security -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Security (Common Criteria)")}
+                Security (Common Criteria)
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "Security, often called the Common Criteria, forms the foundation of every SOC 2 report. This criterion evaluates whether your systems are protected against unauthorized access, both physical and logical. Controls in this category address:",
-                  )
-                }
+                Security, often called the Common Criteria, forms the foundation
+                of every SOC 2 report. This criterion evaluates whether your
+                systems are protected against unauthorized access, both physical
+                and logical. Controls in this category address:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Access management and authentication")}</span>
+                  <span>Access management and authentication</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Network and application firewalls")}</span>
+                  <span>Network and application firewalls</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Intrusion detection and prevention")}</span>
+                  <span>Intrusion detection and prevention</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Security incident response procedures")}</span>
+                  <span>Security incident response procedures</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Change management processes")}</span>
+                  <span>Change management processes</span>
                 </li>
               </ul>
               <p class="mt-3">
-                {
-                  __(
-                    "The Security criterion encompasses nine control categories (CC1 through CC9) covering everything from control environment and communication to risk assessment and monitoring activities.",
-                  )
-                }
+                The Security criterion encompasses nine control categories (CC1
+                through CC9) covering everything from control environment and
+                communication to risk assessment and monitoring activities.
               </p>
             </div>
 
             <!-- Availability -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Availability")}
+                Availability
               </h3>
               <p>
-                {
-                  __(
-                    "The Availability criterion applies to organizations that make commitments to customers about system uptime and accessibility. If your SaaS platform includes Service Level Agreements (SLAs) guaranteeing specific uptime percentages, this criterion is likely relevant.",
-                  )
-                }
+                The Availability criterion applies to organizations that make
+                commitments to customers about system uptime and accessibility.
+                If your SaaS platform includes Service Level Agreements (SLAs)
+                guaranteeing specific uptime percentages, this criterion is
+                likely relevant.
               </p>
               <p class="mt-2">
-                {
-                  __(
-                    "Controls evaluated include disaster recovery planning, backup procedures, business continuity processes, and performance monitoring. For infrastructure-critical applications, demonstrating availability controls can be a significant competitive differentiator.",
-                  )
-                }
+                Controls evaluated include disaster recovery planning, backup
+                procedures, business continuity processes, and performance
+                monitoring. For infrastructure-critical applications,
+                demonstrating availability controls can be a significant
+                competitive differentiator.
               </p>
             </div>
 
             <!-- Processing Integrity -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Processing Integrity")}
+                Processing Integrity
               </h3>
               <p>
-                {
-                  __(
-                    "Processing Integrity addresses whether your systems achieve their purpose, specifically, whether data processing is complete, valid, accurate, timely, and authorized. This criterion is essential for companies whose core value proposition involves data transformation, calculations, or automated decision-making.",
-                  )
-                }
+                Processing Integrity addresses whether your systems achieve
+                their purpose, specifically, whether data processing is
+                complete, valid, accurate, timely, and authorized. This
+                criterion is essential for companies whose core value
+                proposition involves data transformation, calculations, or
+                automated decision-making.
               </p>
               <p class="mt-2">
-                {
-                  __(
-                    "Think payment processors ensuring transactions are recorded accurately, or analytics platforms guaranteeing data aggregation integrity. If errors in your processing could cause material harm to customers, Processing Integrity should be in scope.",
-                  )
-                }
+                Think payment processors ensuring transactions are recorded
+                accurately, or analytics platforms guaranteeing data aggregation
+                integrity. If errors in your processing could cause material
+                harm to customers, Processing Integrity should be in scope.
               </p>
             </div>
 
             <!-- Confidentiality -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Confidentiality")}
+                Confidentiality
               </h3>
               <p>
-                {
-                  __(
-                    "While Security addresses unauthorized access broadly, Confidentiality focuses specifically on protecting information designated as confidential. This includes intellectual property, financial data, business plans, and any information your customers expect you to protect beyond standard security measures.",
-                  )
-                }
+                While Security addresses unauthorized access broadly,
+                Confidentiality focuses specifically on protecting information
+                designated as confidential. This includes intellectual property,
+                financial data, business plans, and any information your
+                customers expect you to protect beyond standard security
+                measures.
               </p>
               <p class="mt-2">
-                {
-                  __(
-                    "Controls in this category address data classification, encryption at rest and in transit, secure disposal procedures, and confidentiality agreements with employees and vendors.",
-                  )
-                }
+                Controls in this category address data classification,
+                encryption at rest and in transit, secure disposal procedures,
+                and confidentiality agreements with employees and vendors.
               </p>
             </div>
 
             <!-- Privacy -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Privacy")}
+                Privacy
               </h3>
               <p>
-                {
-                  __(
-                    "The Privacy criterion applies when your organization collects, uses, retains, discloses, or disposes of personal information. It aligns closely with privacy regulations like GDPR and CCPA, addressing consent mechanisms, data subject rights, and privacy notice requirements.",
-                  )
-                }
+                The Privacy criterion applies when your organization collects,
+                uses, retains, discloses, or disposes of personal information.
+                It aligns closely with privacy regulations like GDPR and CCPA,
+                addressing consent mechanisms, data subject rights, and privacy
+                notice requirements.
               </p>
               <p class="mt-2">
-                {
-                  __(
-                    "For B2B SaaS companies that process end-user personal data on behalf of customers, including Privacy in your SOC 2 scope demonstrates commitment to responsible data handling beyond minimum security requirements.",
-                  )
-                }
+                For B2B SaaS companies that process end-user personal data on
+                behalf of customers, including Privacy in your SOC 2 scope
+                demonstrates commitment to responsible data handling beyond
+                minimum security requirements.
               </p>
             </div>
           </div>
@@ -446,70 +429,67 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("SOC 2 Type 1 vs Type 2: Which Do You Need?")}
+            SOC 2 Type 1 vs Type 2: Which Do You Need?
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "One of the most common questions from organizations beginning their SOC 2 journey centers on the difference between Type 1 and Type 2 reports. The distinction is straightforward but has significant implications for cost, timeline, and customer acceptance.",
-                )
-              }
+              One of the most common questions from organizations beginning
+              their SOC 2 journey centers on the difference between Type 1 and
+              Type 2 reports. The distinction is straightforward but has
+              significant implications for cost, timeline, and customer
+              acceptance.
             </p>
 
             <!-- Type 1 -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Type 1: Point-in-Time Assessment")}
+                Type 1: Point-in-Time Assessment
               </h3>
               <p>
-                {
-                  __(
-                    "A SOC 2 Type 1 report evaluates whether your controls are suitably designed and implemented as of a specific date. Think of it as a snapshot: the auditor examines your policies, procedures, and systems at a single point in time to determine whether they could effectively meet the Trust Services Criteria.",
-                  )
-                }
+                A SOC 2 Type 1 report evaluates whether your controls are
+                suitably designed and implemented as of a specific date. Think
+                of it as a snapshot: the auditor examines your policies,
+                procedures, and systems at a single point in time to determine
+                whether they could effectively meet the Trust Services Criteria.
               </p>
               <p class="mt-2">
-                {
-                  __(
-                    "Type 1 reports are valuable for organizations that need to demonstrate compliance quickly, perhaps to close an urgent enterprise deal or satisfy an investor requirement. However, they have limitations: a Type 1 report doesn't provide evidence that controls actually operated effectively over time.",
-                  )
-                }
+                Type 1 reports are valuable for organizations that need to
+                demonstrate compliance quickly, perhaps to close an urgent
+                enterprise deal or satisfy an investor requirement. However,
+                they have limitations: a Type 1 report doesn't provide evidence
+                that controls actually operated effectively over time.
               </p>
             </div>
 
             <!-- Type 2 -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Type 2: Period of Time Assessment")}
+                Type 2: Period of Time Assessment
               </h3>
               <p>
-                {
-                  __(
-                    "A SOC 2 Type 2 report goes further, evaluating both the design and operating effectiveness of controls over a defined period, typically 6 to 12 months. Auditors test whether controls not only exist but actually functioned as intended throughout the observation window.",
-                  )
-                }
+                A SOC 2 Type 2 report goes further, evaluating both the design
+                and operating effectiveness of controls over a defined period,
+                typically 6 to 12 months. Auditors test whether controls not
+                only exist but actually functioned as intended throughout the
+                observation window.
               </p>
               <p class="mt-2">
-                {
-                  __(
-                    "Type 2 reports carry significantly more weight with enterprise customers and procurement teams. They demonstrate sustained commitment to security rather than point-in-time compliance theater. Most mature organizations require Type 2 reports from their vendors.",
-                  )
-                }
+                Type 2 reports carry significantly more weight with enterprise
+                customers and procurement teams. They demonstrate sustained
+                commitment to security rather than point-in-time compliance
+                theater. Most mature organizations require Type 2 reports from
+                their vendors.
               </p>
             </div>
 
             <!-- Cost Comparison Table -->
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Cost Comparison: Type 1 vs Type 2")}
+                Cost Comparison: Type 1 vs Type 2
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "The additional rigor of Type 2 audits translates to higher costs and longer timelines:",
-                  )
-                }
+                The additional rigor of Type 2 audits translates to higher costs
+                and longer timelines:
               </p>
               <div class="overflow-x-auto">
                 <table class="w-full border-collapse text-sm">
@@ -517,56 +497,53 @@ const breadcrumbSchema = {
                     <tr class="border-border-low border-b">
                       <th
                         class="text-foreground py-3 pr-4 text-left font-semibold"
-                        >{__("Factor")}</th
+                        >Factor</th
                       >
                       <th
                         class="text-foreground py-3 pr-4 text-left font-semibold"
-                        >{__("Type 1")}</th
+                        >Type 1</th
                       >
                       <th class="text-foreground py-3 text-left font-semibold"
-                        >{__("Type 2")}</th
+                        >Type 2</th
                       >
                     </tr>
                   </thead>
                   <tbody>
                     <tr class="border-border-low border-b">
-                      <td class="py-3 pr-4">{__("Audit Duration")}</td>
-                      <td class="py-3 pr-4">2-4 {__("weeks")}</td>
-                      <td class="py-3"
-                        >2-4 {__("weeks")} ({
-                          __("after observation period")
-                        })</td
+                      <td class="py-3 pr-4">Audit Duration</td>
+                      <td class="py-3 pr-4">2-4 weeks</td>
+                      <td class="py-3">2-4 weeks ( after observation period)</td
                       >
                     </tr>
                     <tr class="border-border-low border-b">
-                      <td class="py-3 pr-4">{__("Observation Period")}</td>
-                      <td class="py-3 pr-4">{__("None")}</td>
-                      <td class="py-3">6-12 {__("months")}</td>
+                      <td class="py-3 pr-4">Observation Period</td>
+                      <td class="py-3 pr-4">None</td>
+                      <td class="py-3">6-12 months</td>
                     </tr>
                     <tr class="border-border-low border-b">
-                      <td class="py-3 pr-4">{__("Typical Audit Cost")}</td>
+                      <td class="py-3 pr-4">Typical Audit Cost</td>
                       <td class="py-3 pr-4">$15,000-$40,000</td>
                       <td class="py-3">$30,000-$100,000+</td>
                     </tr>
                     <tr class="border-border-low border-b">
-                      <td class="py-3 pr-4">{__("Time to Report")}</td>
-                      <td class="py-3 pr-4">2-3 {__("months")}</td>
-                      <td class="py-3">9-15 {__("months")}</td>
+                      <td class="py-3 pr-4">Time to Report</td>
+                      <td class="py-3 pr-4">2-3 months</td>
+                      <td class="py-3">9-15 months</td>
                     </tr>
                     <tr>
-                      <td class="py-3 pr-4">{__("Customer Acceptance")}</td>
-                      <td class="py-3 pr-4">{__("Limited")}</td>
-                      <td class="py-3">{__("High")}</td>
+                      <td class="py-3 pr-4">Customer Acceptance</td>
+                      <td class="py-3 pr-4">Limited</td>
+                      <td class="py-3">High</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <p class="mt-4">
-                {
-                  __(
-                    "Many organizations adopt a phased approach: achieving Type 1 first to demonstrate commitment and unlock near-term opportunities, then transitioning to Type 2 for long-term credibility. This strategy balances immediate business needs with sustainable compliance maturity.",
-                  )
-                }
+                Many organizations adopt a phased approach: achieving Type 1
+                first to demonstrate commitment and unlock near-term
+                opportunities, then transitioning to Type 2 for long-term
+                credibility. This strategy balances immediate business needs
+                with sustainable compliance maturity.
               </p>
             </div>
           </div>
@@ -579,86 +556,64 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("SOC 2 Compliance Cost Breakdown")}
+            SOC 2 Compliance Cost Breakdown
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {__("Understanding")}
+              Understanding
               <a
                 href="/blog/2025-03-04-what-is-soc2-cost"
-                class="text-[#5d770d] hover:underline"
-                >{__("SOC 2 compliance costs")}</a
+                class="text-[#5d770d] hover:underline">SOC 2 compliance costs</a
               >
-              {
-                __(
-                  "requires looking beyond the auditor's invoice. Total investment varies dramatically based on your starting point, company size, and chosen approach, ranging from $20,000 for a lean startup with strong existing controls to $500,000+ for complex enterprises requiring significant remediation.",
-                )
-              }
+              requires looking beyond the auditor's invoice. Total investment varies
+              dramatically based on your starting point, company size, and chosen
+              approach, ranging from $20,000 for a lean startup with strong existing
+              controls to $500,000+ for complex enterprises requiring significant
+              remediation.
             </p>
 
             <!-- Audit Fees -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Audit Fees and What Drives Them")}
+                Audit Fees and What Drives Them
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "External audit fees typically range from $15,000 to $100,000+, influenced by several factors:",
-                  )
-                }
+                External audit fees typically range from $15,000 to $100,000+,
+                influenced by several factors:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Scope complexity:")}</strong
-                    >
-                    {
-                      __(
-                        "Each additional Trust Services Criterion increases audit effort. A Security-only audit costs less than one covering all five criteria.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Scope complexity:</strong>
+                    Each additional Trust Services Criterion increases audit effort.
+                    A Security-only audit costs less than one covering all five criteria.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Company size:")}</strong
-                    >
-                    {
-                      __(
-                        "More employees, systems, and locations mean more controls to test and more evidence to review.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Company size:</strong>
+                    More employees, systems, and locations mean more controls to test
+                    and more evidence to review.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Auditor reputation:")}</strong
+                    ><strong class="text-foreground">Auditor reputation:</strong
                     >
-                    {
-                      __(
-                        "Big Four firms command premium rates compared to regional CPA firms, though smaller firms often provide more personalized service for emerging companies.",
-                      )
-                    }</span
+                    Big Four firms command premium rates compared to regional CPA
+                    firms, though smaller firms often provide more personalized service
+                    for emerging companies.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Report type:")}</strong
-                    >
-                    {
-                      __(
-                        "Type 2 audits require testing control effectiveness over time, increasing both auditor effort and your evidence collection burden.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Report type:</strong>
+                    Type 2 audits require testing control effectiveness over time,
+                    increasing both auditor effort and your evidence collection burden.</span
                   >
                 </li>
               </ul>
@@ -667,195 +622,151 @@ const breadcrumbSchema = {
             <!-- Internal Resource Costs -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Internal Resource Costs")}
+                Internal Resource Costs
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "The hidden heavyweight in SOC 2 budgeting is internal labor. Expect to allocate significant time from:",
-                  )
-                }
+                The hidden heavyweight in SOC 2 budgeting is internal labor.
+                Expect to allocate significant time from:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Compliance lead:")}</strong
-                    >
-                    {__("20-40% of capacity for 6-12 months")}</span
+                    ><strong class="text-foreground">Compliance lead:</strong>
+                    20-40% of capacity for 6-12 months</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Engineering team:")}</strong
-                    >
-                    {
-                      __(
-                        "Building controls, implementing tools, remediating gaps",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Engineering team:</strong>
+                    Building controls, implementing tools, remediating gaps</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("IT/Operations:")}</strong
-                    >
-                    {__("Configuring systems, documenting procedures")}</span
+                    ><strong class="text-foreground">IT/Operations:</strong>
+                    Configuring systems, documenting procedures</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Executive sponsors:")}</strong
+                    ><strong class="text-foreground">Executive sponsors:</strong
                     >
-                    {__("Policy approval, risk acceptance decisions")}</span
+                    Policy approval, risk acceptance decisions</span
                   >
                 </li>
               </ul>
               <p class="mt-3">
-                {
-                  __(
-                    "For a typical Series A startup, internal costs often equal or exceed external audit fees. Larger organizations may dedicate full-time compliance staff to the initiative.",
-                  )
-                }
+                For a typical Series A startup, internal costs often equal or
+                exceed external audit fees. Larger organizations may dedicate
+                full-time compliance staff to the initiative.
               </p>
             </div>
 
             <!-- Tool and Platform Investments -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Tool and Platform Investments")}
+                Tool and Platform Investments
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "Modern SOC 2 compliance typically requires investments in:",
-                  )
-                }
+                Modern SOC 2 compliance typically requires investments in:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Compliance automation platforms:")}</strong
+                      >Compliance automation platforms:</strong
                     >
-                    {__("$10,000-$50,000+ annually")}</span
+                    $10,000-$50,000+ annually</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Security tools:</strong>
+                    Endpoint detection, vulnerability scanning, SIEM</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Security tools:")}</strong
+                      >Identity management:</strong
                     >
-                    {
-                      __("Endpoint detection, vulnerability scanning, SIEM")
-                    }</span
+                    SSO, MFA, access review solutions</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Identity management:")}</strong
+                      >Documentation systems:</strong
                     >
-                    {__("SSO, MFA, access review solutions")}</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Documentation systems:")}</strong
-                    >
-                    {__("Policy management, evidence repositories")}</span
+                    Policy management, evidence repositories</span
                   >
                 </li>
               </ul>
               <p class="mt-3">
-                {__("The right")}
+                The right
                 <a href="/" class="text-[#5d770d] hover:underline"
-                  >{__("compliance automation platform")}</a
+                  >compliance automation platform</a
                 >
-                {
-                  __(
-                    "can dramatically reduce both internal labor costs and audit fees by automating evidence collection and maintaining continuous compliance.",
-                  )
-                }
+                can dramatically reduce both internal labor costs and audit fees by
+                automating evidence collection and maintaining continuous compliance.
               </p>
             </div>
 
             <!-- Hidden Costs -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Hidden Costs to Budget For")}
+                Hidden Costs to Budget For
               </h3>
-              <p class="mb-3">
-                {__("Several costs catch organizations off guard:")}
-              </p>
+              <p class="mb-3">Several costs catch organizations off guard:</p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Remediation expenses:")}</strong
+                      >Remediation expenses:</strong
                     >
-                    {
-                      __(
-                        "Addressing gaps discovered during readiness assessment",
-                      )
-                    }</span
+                    Addressing gaps discovered during readiness assessment</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Penetration testing:")}</strong
+                      >Penetration testing:</strong
                     >
-                    {
-                      __("Often required annually, costing $10,000-$30,000")
-                    }</span
+                    Often required annually, costing $10,000-$30,000</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Legal review:</strong>
+                    Privacy policies, vendor agreements, terms of service updates</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Training:</strong>
+                    Security awareness programs for all employees</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Legal review:")}</strong
+                      >Ongoing maintenance:</strong
                     >
-                    {
-                      __(
-                        "Privacy policies, vendor agreements, terms of service updates",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground">{__("Training:")}</strong>
-                    {__("Security awareness programs for all employees")}</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Ongoing maintenance:")}</strong
-                    >
-                    {
-                      __(
-                        "SOC 2 isn't one-and-done, annual audits and continuous monitoring require sustained investment",
-                      )
-                    }</span
+                    SOC 2 isn't one-and-done, annual audits and continuous monitoring
+                    require sustained investment</span
                   >
                 </li>
               </ul>
@@ -870,89 +781,68 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("SOC 2 Compliance Checklist: Your Step-by-Step Roadmap")}
+            SOC 2 Compliance Checklist: Your Step-by-Step Roadmap
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Breaking SOC 2 compliance into phases transforms an overwhelming project into manageable milestones. Here's the roadmap successful organizations follow:",
-                )
-              }
+              Breaking SOC 2 compliance into phases transforms an overwhelming
+              project into manageable milestones. Here's the roadmap successful
+              organizations follow:
             </p>
 
             <!-- Phase 1 -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Phase 1: Readiness Assessment")}
+                Phase 1: Readiness Assessment
               </h3>
               <p class="mb-3">
-                {__("Before engaging auditors, understand your current state:")}
+                Before engaging auditors, understand your current state:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Define scope:")}</strong
-                    >
-                    {
-                      __(
-                        "Which Trust Services Criteria apply to your business? Which systems and processes are in scope?",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Define scope:</strong>
+                    Which Trust Services Criteria apply to your business? Which systems
+                    and processes are in scope?</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Inventory existing controls:")}</strong
+                      >Inventory existing controls:</strong
                     >
-                    {
-                      __(
-                        "Document security measures already in place, you likely have more than you realize.",
-                      )
-                    }</span
+                    Document security measures already in place, you likely have more
+                    than you realize.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Identify stakeholders:")}</strong
+                      >Identify stakeholders:</strong
                     >
-                    {
-                      __(
-                        "Assign ownership for compliance workstreams across security, engineering, HR, and legal.",
-                      )
-                    }</span
+                    Assign ownership for compliance workstreams across security, engineering,
+                    HR, and legal.</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Establish timeline:</strong
+                    >
+                    Work backward from business deadlines (customer requirements,
+                    funding milestones) to set realistic targets.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Establish timeline:")}</strong
+                      >Select your auditor:</strong
                     >
-                    {
-                      __(
-                        "Work backward from business deadlines (customer requirements, funding milestones) to set realistic targets.",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Select your auditor:")}</strong
-                    >
-                    {
-                      __(
-                        "Begin conversations early, reputable firms book months in advance.",
-                      )
-                    }</span
+                    Begin conversations early, reputable firms book months in advance.</span
                   >
                 </li>
               </ul>
@@ -961,79 +851,54 @@ const breadcrumbSchema = {
             <!-- Phase 2 -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Phase 2: Gap Analysis and Remediation")}
+                Phase 2: Gap Analysis and Remediation
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "With baseline understanding established, identify and close gaps:",
-                  )
-                }
+                With baseline understanding established, identify and close
+                gaps:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Map controls to criteria:")}</strong
+                      >Map controls to criteria:</strong
                     >
-                    {
-                      __(
-                        "For each Trust Services Criterion in scope, document which controls address which requirements.",
-                      )
-                    }</span
+                    For each Trust Services Criterion in scope, document which controls
+                    address which requirements.</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Identify gaps:</strong>
+                    Where do current controls fall short? What's missing entirely?</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Identify gaps:")}</strong
+                      >Prioritize remediation:</strong
                     >
-                    {
-                      __(
-                        "Where do current controls fall short? What's missing entirely?",
-                      )
-                    }</span
+                    Focus first on high-risk gaps and those requiring longest lead
+                    times (tool implementations, policy changes).</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Prioritize remediation:")}</strong
+                    ><strong class="text-foreground">Implement controls:</strong
                     >
-                    {
-                      __(
-                        "Focus first on high-risk gaps and those requiring longest lead times (tool implementations, policy changes).",
-                      )
-                    }</span
+                    Deploy technical controls, establish processes, and configure
+                    monitoring.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Implement controls:")}</strong
-                    >
-                    {
-                      __(
-                        "Deploy technical controls, establish processes, and configure monitoring.",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Test internally:")}</strong
-                    >
-                    {
-                      __(
-                        "Verify controls work as intended before auditor testing.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Test internally:</strong>
+                    Verify controls work as intended before auditor testing.</span
                   >
                 </li>
               </ul>
@@ -1042,154 +907,124 @@ const breadcrumbSchema = {
             <!-- Phase 3 -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Phase 3: Documentation and Policy Development")}
+                Phase 3: Documentation and Policy Development
               </h3>
               <p class="mb-3">
-                {__("SOC 2 audits are documentation-intensive. Prepare:")}
+                SOC 2 audits are documentation-intensive. Prepare:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Information security policies:")}</strong
+                      >Information security policies:</strong
                     >
-                    {__("Overarching security program documentation")}</span
+                    Overarching security program documentation</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground">{__("Procedures:")}</strong
-                    >
-                    {__("Step-by-step instructions for key processes")}</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("System descriptions:")}</strong
-                    >
-                    {
-                      __("How your service operates and protects customer data")
-                    }</span
+                    ><strong class="text-foreground">Procedures:</strong>
+                    Step-by-step instructions for key processes</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Risk assessments:")}</strong
+                      >System descriptions:</strong
                     >
-                    {
-                      __("Documented evaluation of threats and mitigations")
-                    }</span
+                    How your service operates and protects customer data</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Risk assessments:</strong>
+                    Documented evaluation of threats and mitigations</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Vendor management documentation:")}</strong
+                      >Vendor management documentation:</strong
                     >
-                    {__("How you evaluate and monitor third parties")}</span
+                    How you evaluate and monitor third parties</span
                   >
                 </li>
               </ul>
               <p class="mt-3">
-                {
-                  __(
-                    "Quality documentation serves dual purposes: satisfying auditor requirements and creating operational clarity for your team.",
-                  )
-                }
+                Quality documentation serves dual purposes: satisfying auditor
+                requirements and creating operational clarity for your team.
               </p>
             </div>
 
             <!-- Phase 4 -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Phase 4: The Audit Process")}
+                Phase 4: The Audit Process
               </h3>
               <p class="mb-3">
-                {__("When auditors arrive (virtually or physically), expect:")}
+                When auditors arrive (virtually or physically), expect:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Planning meeting:")}</strong
-                    >
-                    {__("Confirm scope, timeline, and logistics")}</span
+                    ><strong class="text-foreground">Planning meeting:</strong>
+                    Confirm scope, timeline, and logistics</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Control walkthroughs:")}</strong
+                      >Control walkthroughs:</strong
                     >
-                    {
-                      __(
-                        "Auditors interview control owners to understand how controls operate",
-                      )
-                    }</span
+                    Auditors interview control owners to understand how controls operate</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Evidence requests:</strong>
+                    Provide documentation, screenshots, system exports demonstrating
+                    control operation</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Testing:</strong>
+                    Auditors independently verify controls through sampling and direct
+                    observation</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Evidence requests:")}</strong
+                      >Issue identification:</strong
                     >
-                    {
-                      __(
-                        "Provide documentation, screenshots, system exports demonstrating control operation",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground">{__("Testing:")}</strong>
-                    {
-                      __(
-                        "Auditors independently verify controls through sampling and direct observation",
-                      )
-                    }</span
+                    Auditors flag exceptions and potential deficiencies</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Issue identification:")}</strong
+                      >Management response:</strong
                     >
-                    {
-                      __("Auditors flag exceptions and potential deficiencies")
-                    }</span
+                    Address findings and provide remediation plans</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Management response:")}</strong
-                    >
-                    {__("Address findings and provide remediation plans")}</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Report issuance:")}</strong
-                    >
-                    {
-                      __("Receive final SOC 2 report for customer distribution")
-                    }</span
+                    ><strong class="text-foreground">Report issuance:</strong>
+                    Receive final SOC 2 report for customer distribution</span
                   >
                 </li>
               </ul>
@@ -1204,89 +1039,66 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("SOC 2 Timeline: How Long Does Certification Take?")}
+            SOC 2 Timeline: How Long Does Certification Take?
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Setting realistic timeline expectations prevents frustration and ensures proper resource allocation.",
-                )
-              }
+              Setting realistic timeline expectations prevents frustration and
+              ensures proper resource allocation.
             </p>
 
             <!-- Factors -->
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("Factors That Impact Your Timeline")}
+                Factors That Impact Your Timeline
               </h3>
               <p class="mb-3">
-                {__("Several variables influence your path to SOC 2:")}
+                Several variables influence your path to SOC 2:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Current security maturity:")}</strong
+                      >Current security maturity:</strong
                     >
-                    {
-                      __(
-                        "Organizations with established security programs may need only 2-3 months of preparation. Those starting from scratch should budget 6-12 months.",
-                      )
-                    }</span
+                    Organizations with established security programs may need only
+                    2-3 months of preparation. Those starting from scratch should
+                    budget 6-12 months.</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Report type:</strong>
+                    Type 1 can be achieved in 2-4 months with adequate preparation.
+                    Type 2 requires an additional 6-12 month observation period.</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Scope complexity:</strong>
+                    Each additional Trust Services Criterion adds preparation and
+                    audit time.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Report type:")}</strong
+                      >Resource availability:</strong
                     >
-                    {
-                      __(
-                        "Type 1 can be achieved in 2-4 months with adequate preparation. Type 2 requires an additional 6-12 month observation period.",
-                      )
-                    }</span
+                    Dedicated compliance staff accelerates progress; competing priorities
+                    extend timelines.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Scope complexity:")}</strong
-                    >
-                    {
-                      __(
-                        "Each additional Trust Services Criterion adds preparation and audit time.",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Resource availability:")}</strong
-                    >
-                    {
-                      __(
-                        "Dedicated compliance staff accelerates progress; competing priorities extend timelines.",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Tool adoption:")}</strong
-                    >
-                    {
-                      __(
-                        "Compliance automation platforms can compress preparation timelines by 40-60%.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Tool adoption:</strong>
+                    Compliance automation platforms can compress preparation timelines
+                    by 40-60%.</span
                   >
                 </li>
               </ul>
@@ -1295,7 +1107,7 @@ const breadcrumbSchema = {
             <!-- Timeline Table -->
             <div>
               <h3 class="text-foreground mb-4 text-lg font-semibold">
-                {__("Realistic Timeframes by Company Size")}
+                Realistic Timeframes by Company Size
               </h3>
               <div class="overflow-x-auto">
                 <table class="w-full border-collapse text-sm">
@@ -1303,63 +1115,55 @@ const breadcrumbSchema = {
                     <tr class="border-border-low border-b">
                       <th
                         class="text-foreground py-3 pr-4 text-left font-semibold"
-                        >{__("Company Stage")}</th
+                        >Company Stage</th
                       >
                       <th
                         class="text-foreground py-3 pr-4 text-left font-semibold"
-                        >{__("Preparation")}</th
+                        >Preparation</th
                       >
                       <th
                         class="text-foreground py-3 pr-4 text-left font-semibold"
-                        >{__("Type 1")}</th
+                        >Type 1</th
                       >
                       <th class="text-foreground py-3 text-left font-semibold"
-                        >{__("Type 2 (Total)")}</th
+                        >Type 2 (Total)</th
                       >
                     </tr>
                   </thead>
                   <tbody>
                     <tr class="border-border-low border-b">
                       <td class="py-3 pr-4"
-                        >{__("Early Startup")} (&lt; 20 {__("employees")})</td
+                        >Early Startup (&lt; 20 employees)</td
                       >
-                      <td class="py-3 pr-4">2-4 {__("months")}</td>
-                      <td class="py-3 pr-4">3-5 {__("months")}</td>
-                      <td class="py-3">9-12 {__("months")}</td>
+                      <td class="py-3 pr-4">2-4 months</td>
+                      <td class="py-3 pr-4">3-5 months</td>
+                      <td class="py-3">9-12 months</td>
                     </tr>
                     <tr class="border-border-low border-b">
-                      <td class="py-3 pr-4"
-                        >{__("Growth Stage")} (20-100 {__("employees")})</td
-                      >
-                      <td class="py-3 pr-4">3-6 {__("months")}</td>
-                      <td class="py-3 pr-4">4-7 {__("months")}</td>
-                      <td class="py-3">10-14 {__("months")}</td>
+                      <td class="py-3 pr-4">Growth Stage (20-100 employees)</td>
+                      <td class="py-3 pr-4">3-6 months</td>
+                      <td class="py-3 pr-4">4-7 months</td>
+                      <td class="py-3">10-14 months</td>
                     </tr>
                     <tr class="border-border-low border-b">
-                      <td class="py-3 pr-4"
-                        >{__("Scale-Up")} (100-500 {__("employees")})</td
-                      >
-                      <td class="py-3 pr-4">4-8 {__("months")}</td>
-                      <td class="py-3 pr-4">5-9 {__("months")}</td>
-                      <td class="py-3">12-18 {__("months")}</td>
+                      <td class="py-3 pr-4">Scale-Up (100-500 employees)</td>
+                      <td class="py-3 pr-4">4-8 months</td>
+                      <td class="py-3 pr-4">5-9 months</td>
+                      <td class="py-3">12-18 months</td>
                     </tr>
                     <tr>
-                      <td class="py-3 pr-4"
-                        >{__("Enterprise")} (500+ {__("employees")})</td
-                      >
-                      <td class="py-3 pr-4">6-12 {__("months")}</td>
-                      <td class="py-3 pr-4">8-14 {__("months")}</td>
-                      <td class="py-3">14-24 {__("months")}</td>
+                      <td class="py-3 pr-4">Enterprise (500+ employees)</td>
+                      <td class="py-3 pr-4">6-12 months</td>
+                      <td class="py-3 pr-4">8-14 months</td>
+                      <td class="py-3">14-24 months</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <p class="mt-4">
-                {
-                  __(
-                    "These estimates assume reasonable starting security posture and dedicated resources. Organizations with significant gaps or limited bandwidth should add buffer.",
-                  )
-                }
+                These estimates assume reasonable starting security posture and
+                dedicated resources. Organizations with significant gaps or
+                limited bandwidth should add buffer.
               </p>
             </div>
           </div>
@@ -1372,90 +1176,77 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("How Probo Simplifies Your SOC 2 Journey")}
+            How Probo Simplifies Your SOC 2 Journey
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Navigating SOC 2 compliance doesn't have to consume your team's time and energy. Probo manages the entire compliance process for you hands-off, combining dedicated expert guidance with powerful automated compliance software to get you compliant faster and with less stress.",
-                )
-              }
+              Navigating SOC 2 compliance doesn't have to consume your team's
+              time and energy. Probo manages the entire compliance process for
+              you hands-off, combining dedicated expert guidance with powerful
+              automated compliance software to get you compliant faster and with
+              less stress.
             </p>
             <p class="text-foreground font-medium">
-              {__("Here's what's included when you partner with Probo:")}
+              Here's what's included when you partner with Probo:
             </p>
             <ul class="ml-0 list-none space-y-4">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Dedicated Compliance Expert")}</strong
-                  >{
-                    __(
-                      ": Direct access to compliance experts whenever you need guidance. No more guessing or searching for answers, your expert is just a message away.",
-                    )
-                  }</span
+                    >Dedicated Compliance Expert</strong
+                  > : Direct access to compliance experts whenever you need guidance.
+                  No more guessing or searching for answers, your expert is just a
+                  message away.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground">Onboarding Meeting</strong> : An
+                  onboarding meeting with your dedicated expert to understand your
+                  full context, tech stack, and specific compliance needs from day
+                  one.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Onboarding Meeting")}</strong
-                  >{
-                    __(
-                      ": An onboarding meeting with your dedicated expert to understand your full context, tech stack, and specific compliance needs from day one.",
-                    )
-                  }</span
+                    >Policies & Risk Assessment</strong
+                  > : Probo handles all necessary documentation templates and risk
+                  analysis for you. No more starting from scratch or wondering if
+                  your policies meet the standard's requirements.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Policies & Risk Assessment")}</strong
-                  >{
-                    __(
-                      ": Probo handles all necessary documentation templates and risk analysis for you. No more starting from scratch or wondering if your policies meet the standard's requirements.",
-                    )
-                  }</span
+                    >Audit Prep & Auditor Selection</strong
+                  > : We find you the right auditor for your organization and prepare
+                  you thoroughly for the audit, so there are no surprises when certification
+                  day arrives.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Audit Prep & Auditor Selection")}</strong
-                  >{
-                    __(
-                      ": We find you the right auditor for your organization and prepare you thoroughly for the audit, so there are no surprises when certification day arrives.",
-                    )
-                  }</span
+                    >Quarterly Follow-ups After Certification</strong
+                  > : Ongoing support to maintain your compliance posture. Certification
+                  is just the beginning, Probo ensures you stay compliant through
+                  surveillance audits and beyond.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Quarterly Follow-ups After Certification")}</strong
-                  >{
-                    __(
-                      ": Ongoing support to maintain your compliance posture. Certification is just the beginning, Probo ensures you stay compliant through surveillance audits and beyond.",
-                    )
-                  }</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground"
-                    >{__("Access to Probo Compliance Platform")}</strong
-                  >{
-                    __(
-                      ": A centralized workspace to manage all compliance activities, with automated evidence collection and audit-ready documentation that keeps everything organized and accessible.",
-                    )
-                  }</span
+                    >Access to Probo Compliance Platform</strong
+                  > : A centralized workspace to manage all compliance activities,
+                  with automated evidence collection and audit-ready documentation
+                  that keeps everything organized and accessible.</span
                 >
               </li>
             </ul>
@@ -1470,21 +1261,17 @@ const breadcrumbSchema = {
             <h3
               class="mb-4 text-2xl font-semibold text-[#141e12] sm:text-[1.75rem]"
             >
-              {__("Get SOC 2 Compliant with Probo")}
+              Get SOC 2 Compliant with Probo
             </h3>
             <p class="mx-auto mb-8 max-w-[500px] text-[#3d4a38]">
-              {
-                __(
-                  "Take a meeting to understand how close you are to compliance.",
-                )
-              }
+              Take a meeting to understand how close you are to compliance.
             </p>
             <a
               href="/contact"
               class="group inline-flex items-center gap-2 rounded-full bg-[#141e12] px-6 py-3.5 font-medium shadow-lg transition-all hover:gap-3 hover:bg-[#1f2e1a] hover:shadow-xl"
               style="color: white;"
             >
-              {__("Talk to a compliance expert")}
+              Talk to a compliance expert
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

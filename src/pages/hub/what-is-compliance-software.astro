@@ -1,7 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -67,10 +65,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("What is a Compliance Software? | Probo")}
-  description={__(
-    "Discover what defines GRC software in 2026 and why Probo is the platform of choice for companies that want to move fast with qualitative compliance report and process.",
-  )}
+  title="What is a Compliance Software? | Probo"
+  description="Discover what defines GRC software in 2026 and why Probo is the platform of choice for companies that want to move fast with qualitative compliance report and process."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script
@@ -83,41 +79,29 @@ const breadcrumbSchema = {
       <h1
         class="text-foreground mb-6 text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
       >
-        {__("What is a")}
-        <span class="highlight-text">{__("Compliance Software")}</span>{__("?")}
+        What is a
+        <span class="highlight-text">Compliance Software</span>?
       </h1>
       <p class="text-muted-foreground text-lg">
-        {
-          __(
-            "The world of GRC (Governance, Risk, and Compliance) has changed. New regulations like the",
-          )
-        }
-        <strong>{__("EU AI Act")}</strong>, <strong>{__("DORA")}</strong>
-        {__("for financial resilience, and updated")}
-        <strong>{__("SEC cybersecurity rules")}</strong>
-        {
-          __(
-            "mean companies can't rely on spreadsheets anymore. GRC tools are no longer just places to store policies. Today, they need to actively help teams manage risk, automate work, and support the business as it grows.",
-          )
-        }
+        The world of GRC (Governance, Risk, and Compliance) has changed. New
+        regulations like the
+        <strong>EU AI Act</strong>, <strong>DORA</strong>
+        for financial resilience, and updated
+        <strong>SEC cybersecurity rules</strong>
+        mean companies can't rely on spreadsheets anymore. GRC tools are no longer
+        just places to store policies. Today, they need to actively help teams manage
+        risk, automate work, and support the business as it grows.
       </p>
       <p class="text-muted-foreground mt-4 text-lg">
-        {
-          __(
-            "In this article, we'll explore what defines GRC software in 2026 and why",
-          )
-        }
+        In this article, we'll explore what defines GRC software in 2026 and why
         <strong
           ><a
             href="https://www.getprobo.com/"
-            class="text-[#5d770d] hover:underline">{__("Probo")}</a
+            class="text-[#5d770d] hover:underline">Probo</a
           ></strong
         >
-        {
-          __(
-            "is the platform of choice for companies that want to move fast with qualitative compliance report and process.",
-          )
-        }
+        is the platform of choice for companies that want to move fast with qualitative
+        compliance report and process.
       </p>
     </header>
 
@@ -149,22 +133,18 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The New Era of Compliance")}
+            The New Era of Compliance
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "At its core, GRC software is a suite of tools designed to help organizations manage the three pillars of corporate integrity: Governance, Risk Management, and Compliance.",
-                )
-              }
+              At its core, GRC software is a suite of tools designed to help
+              organizations manage the three pillars of corporate integrity:
+              Governance, Risk Management, and Compliance.
             </p>
             <p>
-              {
-                __(
-                  'In 2026, GRC software has evolved into "Continuous Assurance." It has moved away from periodic audits (the "once-a-year scramble") and toward a state of constant readiness.',
-                )
-              }
+              In 2026, GRC software has evolved into "Continuous Assurance." It
+              has moved away from periodic audits (the "once-a-year scramble")
+              and toward a state of constant readiness.
             </p>
           </div>
         </section>
@@ -176,103 +156,85 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("1. What is GRC Software in 2026?")}
+            1. What is GRC Software in 2026?
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "At its core, GRC software is a suite of tools designed to help organizations manage the three pillars of corporate integrity:",
-                )
-              }
+              At its core, GRC software is a suite of tools designed to help
+              organizations manage the three pillars of corporate integrity:
             </p>
 
             <div class="mt-6 space-y-6">
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Governance")}
+                  Governance
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Ensuring that organizational activities, like corporate spirit and operations, are aligned with business goals and legal requirements.",
-                    )
-                  }
+                  Ensuring that organizational activities, like corporate spirit
+                  and operations, are aligned with business goals and legal
+                  requirements.
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Risk Management")}
+                  Risk Management
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Identifying, assessing, and mitigating the threats (cyber, financial, or operational) that could derail those goals.",
-                    )
-                  }
+                  Identifying, assessing, and mitigating the threats (cyber,
+                  financial, or operational) that could derail those goals.
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Compliance")}
+                  Compliance
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Adhering to the laws, regulations, and industry standards (such as",
-                    )
-                  }
+                  Adhering to the laws, regulations, and industry standards
+                  (such as
                   <strong
                     ><a
                       href="/blog/2025-10-28-what-is-soc2"
-                      class="text-[#5d770d] hover:underline">{__("SOC 2")}</a
+                      class="text-[#5d770d] hover:underline">SOC 2</a
                     >, <a
                       href="/blog/2025-10-12-how-long-for-iso27001"
-                      class="text-[#5d770d] hover:underline"
-                      >{__("ISO 27001")}</a
-                    >, {__("GDPR, and HIPAA")}</strong
-                  >{__(") that govern your industry.")}
+                      class="text-[#5d770d] hover:underline">ISO 27001</a
+                    >, GDPR, and HIPAA</strong
+                  >) that govern your industry.
                 </p>
               </div>
             </div>
 
             <p class="mt-6">
-              {__("In 2026, GRC software has evolved into")}
-              <strong>{__('"Continuous Assurance."')}</strong>
-              {
-                __(
-                  'It has moved away from periodic audits (the "once-a-year scramble") and toward a state of constant readiness.',
-                )
-              }
+              In 2026, GRC software has evolved into
+              <strong>"Continuous Assurance."</strong>
+              It has moved away from periodic audits (the "once-a-year scramble")
+              and toward a state of constant readiness.
             </p>
 
             <!-- The Shift from Static to Dynamic -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("The Shift from Static to Dynamic")}
+                The Shift from Static to Dynamic
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "The GRC software of the past was reactive. You'd upload a PDF of a policy, check a box, and hope an auditor didn't find a gap six months later.",
-                  )
-                }
+                The GRC software of the past was reactive. You'd upload a PDF of
+                a policy, check a box, and hope an auditor didn't find a gap six
+                months later.
               </p>
               <p>
                 <a
                   href="https://www.getprobo.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="font-semibold text-[#5d770d] hover:underline"
-                  >{__("Probo")}</a
+                  class="font-semibold text-[#5d770d] hover:underline">Probo</a
                 >
-                {
-                  __(
-                    "reflects this new approach to GRC. Instead of acting as a static compliance checklist, Probo helps teams centralize evidence, automate controls, and connect compliance work to the tools they already use. The result is a clearer, more continuous view of risk and compliance. So teams are prepared all year round, not just when an audit is approaching.",
-                  )
-                }
+                reflects this new approach to GRC. Instead of acting as a static compliance
+                checklist, Probo helps teams centralize evidence, automate controls,
+                and connect compliance work to the tools they already use. The result
+                is a clearer, more continuous view of risk and compliance. So teams
+                are prepared all year round, not just when an audit is approaching.
               </p>
             </div>
           </div>
@@ -285,72 +247,56 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("2. The Core Features of a 2026 GRC Platform")}
+            2. The Core Features of a 2026 GRC Platform
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  'If you are evaluating GRC solutions today, the baseline requirements have shifted. A modern platform like Probo provides five essential capabilities that were considered "optional" only a few years ago.',
-                )
-              }
+              If you are evaluating GRC solutions today, the baseline
+              requirements have shifted. A modern platform like Probo provides
+              five essential capabilities that were considered "optional" only a
+              few years ago.
             </p>
 
             <!-- A. Automated Evidence Collection -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("A. Automated Evidence Collection")}
+                A. Automated Evidence Collection
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'The manual "screenshot and upload" era is dead. In 2026, GRC software must connect directly to your tech stack—AWS, Google Cloud, GitHub, Okta, Slack, and Jira.',
-                  )
-                }
+                The manual "screenshot and upload" era is dead. In 2026, GRC
+                software must connect directly to your tech stack—AWS, Google
+                Cloud, GitHub, Okta, Slack, and Jira.
               </p>
               <p>
-                {
-                  __(
-                    "Probo's automation engine pulls evidence in real-time. If a developer forgets to enable MFA or a database is left public, the system flags it instantly. This reduces the manual workload of compliance by up to",
-                  )
-                }
-                <strong>{__("90%")}</strong>{
-                  __(
-                    ", allowing your team to focus on building, not documenting.",
-                  )
-                }
+                Probo's automation engine pulls evidence in real-time. If a
+                developer forgets to enable MFA or a database is left public,
+                the system flags it instantly. This reduces the manual workload
+                of compliance by up to
+                <strong>90%</strong> , allowing your team to focus on building, not
+                documenting.
               </p>
             </div>
 
             <!-- B. Collect Once, Comply Many -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__('B. "Collect Once, Comply Many" (Multi-Framework Mapping)')}
+                B. "Collect Once, Comply Many" (Multi-Framework Mapping)
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'As companies scale globally, they face a "alphabet soup" of regulations: SOC 2 in the US, ISO 27001 for international trust, and the EU AI Act for algorithmic transparency.',
-                  )
-                }
+                As companies scale globally, they face a "alphabet soup" of
+                regulations: SOC 2 in the US, ISO 27001 for international trust,
+                and the EU AI Act for algorithmic transparency.
               </p>
               <p>
-                {__("Probo uses")}
-                <strong>{__("cross-framework mapping")}</strong>
-                {
-                  __(
-                    "allowing you to map a single control to dozens of different regulations. You do the work once, and the platform proves your compliance across every framework you need to satisfy.",
-                  )
-                }
-                {" "}{
-                  __(
-                    "If you're weighing which framework to pursue first, see our guide on",
-                  )
-                }
+                Probo uses
+                <strong>cross-framework mapping</strong>
+                allowing you to map a single control to dozens of different regulations.
+                You do the work once, and the platform proves your compliance across
+                every framework you need to satisfy. If you're weighing which framework
+                to pursue first, see our guide on
                 <a
                   href="/blog/2025-10-08-soc2-or-iso27001"
-                  class="text-[#5d770d] hover:underline"
-                  >{__("SOC 2 vs ISO 27001")}</a
+                  class="text-[#5d770d] hover:underline">SOC 2 vs ISO 27001</a
                 >.
               </p>
             </div>
@@ -358,65 +304,67 @@ const breadcrumbSchema = {
             <!-- C. Predictive Risk Intelligence -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("C. Predictive Risk Intelligence")}
+                C. Predictive Risk Intelligence
               </h3>
               <p>
-                {
-                  __(
-                    "In 2026, risk management isn't just about reviewing what went wrong in the past. Modern GRC platforms help teams spot issues earlier, before they turn into real problems. By looking at trends across controls, evidence, and past audits, Probo highlights areas where things tend to break down, so teams can fix them ahead of time, rather than discovering them during an incident or an audit.",
-                  )
-                }
+                In 2026, risk management isn't just about reviewing what went
+                wrong in the past. Modern GRC platforms help teams spot issues
+                earlier, before they turn into real problems. By looking at
+                trends across controls, evidence, and past audits, Probo
+                highlights areas where things tend to break down, so teams can
+                fix them ahead of time, rather than discovering them during an
+                incident or an audit.
               </p>
             </div>
 
             <!-- D. Third-Party & Supply Chain Oversight -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("D. Third-Party & Supply Chain Oversight")}
+                D. Third-Party & Supply Chain Oversight
               </h3>
               <p>
-                {
-                  __(
-                    "Probo helps teams manage third-party risk as part of their overall compliance program by structuring vendor-related controls, centralizing evidence, and documenting oversight in line with frameworks like SOC 2 and ISO 27001. Instead of treating vendors as an afterthought, Probo makes it easier to track expectations, collect proof, and demonstrate to auditors that third-party risks are identified and managed consistently.",
-                  )
-                }
+                Probo helps teams manage third-party risk as part of their
+                overall compliance program by structuring vendor-related
+                controls, centralizing evidence, and documenting oversight in
+                line with frameworks like SOC 2 and ISO 27001. Instead of
+                treating vendors as an afterthought, Probo makes it easier to
+                track expectations, collect proof, and demonstrate to auditors
+                that third-party risks are identified and managed consistently.
               </p>
               <p class="mt-4">
-                {__("See how")}
+                See how
                 <a
                   href="/stories/blaxel-soc2"
                   class="text-[#5d770d] hover:underline"
-                  >{__("Blaxel achieved SOC 2")}</a
+                  >Blaxel achieved SOC 2</a
                 >
-                {__("with Probo's managed compliance approach.")}
+                with Probo's managed compliance approach.
               </p>
             </div>
 
             <!-- E. The Human-in-the-Loop -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("E. The Human-in-the-Loop: Managed Compliance")}
+                E. The Human-in-the-Loop: Managed Compliance
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "By 2026, one thing is clear: software doesn't solve everything on its own. Compliance rules can be messy, and sometimes you just need a human to help make the right call. Some teams use Probo on their own and do just fine, but others prefer a bit more backup.",
-                  )
-                }
+                By 2026, one thing is clear: software doesn't solve everything
+                on its own. Compliance rules can be messy, and sometimes you
+                just need a human to help make the right call. Some teams use
+                Probo on their own and do just fine, but others prefer a bit
+                more backup.
               </p>
               <p>
-                {
-                  __(
-                    "That's where Probo's managed compliance service comes in. For teams that want to stay focused on building their product and running the business, Probo can step in with experienced compliance experts who help run the program, deal with auditors, and keep things on track.",
-                  )
-                }
-                {" "}{__("Learn more about")}
+                That's where Probo's managed compliance service comes in. For
+                teams that want to stay focused on building their product and
+                running the business, Probo can step in with experienced
+                compliance experts who help run the program, deal with auditors,
+                and keep things on track. Learn more about
                 <a
                   href="/blog/2025-10-17-what-is-hands-off-compliance"
-                  class="text-[#5d770d] hover:underline"
-                  >{__("hands-off compliance")}</a
+                  class="text-[#5d770d] hover:underline">hands-off compliance</a
                 >
-                {__("and how it works in practice.")}
+                and how it works in practice.
               </p>
             </div>
           </div>
@@ -429,58 +377,45 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__('3. Why the "Software-Only" Approach is Failing')}
+            3. Why the "Software-Only" Approach is Failing
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "In the early 2020s, a lot of companies bought GRC tools that promised full automation. By 2026, it's pretty clear where that approach breaks down:",
-                )
-              }
+              In the early 2020s, a lot of companies bought GRC tools that
+              promised full automation. By 2026, it's pretty clear where that
+              approach breaks down:
             </p>
 
             <div class="mt-6 space-y-6">
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("1. Too many alerts, not enough signal")}
+                  1. Too many alerts, not enough signal
                 </h3>
                 <p>
-                  {
-                    __(
-                      "When everything is automated, teams end up flooded with alerts that don't really matter. Instead of helping, the tool becomes more noise than value.",
-                    )
-                  }
+                  When everything is automated, teams end up flooded with alerts
+                  that don't really matter. Instead of helping, the tool becomes
+                  more noise than value.
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("2. Checking boxes doesn't mean you're secure")}
+                  2. Checking boxes doesn't mean you're secure
                 </h3>
                 <p>
-                  {
-                    __(
-                      "It's easy to get a green dashboard and still have real gaps. Auditors today care less about whether a control exists on paper and more about whether it actually works.",
-                    )
-                  }
+                  It's easy to get a green dashboard and still have real gaps.
+                  Auditors today care less about whether a control exists on
+                  paper and more about whether it actually works.
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {
-                    __(
-                      "3. Most teams don't have deep compliance expertise in-house",
-                    )
-                  }
+                  3. Most teams don't have deep compliance expertise in-house
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Hiring a full-time CISO or building a large compliance team just isn't realistic for many startups and growing companies.",
-                    )
-                  }
+                  Hiring a full-time CISO or building a large compliance team
+                  just isn't realistic for many startups and growing companies.
                 </p>
               </div>
             </div>
@@ -491,18 +426,15 @@ const breadcrumbSchema = {
               <span>💡</span>
               <span
                 ><strong class="text-foreground"
-                  >{__("This is where Probo stands out.")}</strong
+                  >This is where Probo stands out.</strong
                 >
-                {
-                  __(
-                    "It combines a solid automation platform with real human expertise when you need it, so compliance is practical, effective, and manageable, not just another tool to maintain.",
-                  )
-                }
-                {" "}{__("Read more about")}
+                It combines a solid automation platform with real human expertise
+                when you need it, so compliance is practical, effective, and manageable,
+                not just another tool to maintain. Read more about
                 <a
                   href="/blog/2025-02-17-why-a-one-size-fit-all-solution-like-vanta-is-not-ideal"
                   class="text-[#5d770d] hover:underline"
-                  >{__("why one-size-fits-all solutions fall short")}</a
+                  >why one-size-fits-all solutions fall short</a
                 >.</span
               >
             </p>
@@ -516,62 +448,61 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("4. How Probo Redefines GRC for 2026")}
+            4. How Probo Redefines GRC for 2026
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Probo was built with a simple idea in mind: compliance shouldn't slow teams down, it should help them move faster with confidence. Here's what makes Probo different today:",
-                )
-              }
+              Probo was built with a simple idea in mind: compliance shouldn't
+              slow teams down, it should help them move faster with confidence.
+              Here's what makes Probo different today:
             </p>
 
             <!-- End-to-End Audit Support -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("End-to-End Audit Support")}
+                End-to-End Audit Support
               </h3>
               <p>
-                {
-                  __(
-                    'Most GRC tools stop once everything is "ready," leaving you to find an auditor and manage the audit process on your own. Probo goes further. The platform helps organize your evidence and workflows, and when teams choose Probo\'s managed support, compliance experts can step in to help prepare documentation, coordinate with auditors, and guide you through the process. Instead of just giving you software, Probo helps make audits smoother and more predictable.',
-                  )
-                }
+                Most GRC tools stop once everything is "ready," leaving you to
+                find an auditor and manage the audit process on your own. Probo
+                goes further. The platform helps organize your evidence and
+                workflows, and when teams choose Probo's managed support,
+                compliance experts can step in to help prepare documentation,
+                coordinate with auditors, and guide you through the process.
+                Instead of just giving you software, Probo helps make audits
+                smoother and more predictable.
               </p>
             </div>
 
             <!-- Open, Transparent Compliance Resources -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Open, Transparent Compliance Resources")}
+                Open, Transparent Compliance Resources
               </h3>
               <p>
-                {
-                  __(
-                    "At a time when many tools feel like black boxes, Probo takes a more open approach. Its compliance frameworks, templates, and resources are openly available and built by experts. This makes it easier to understand why controls exist, how they're applied, and how to explain them clearly to auditors or regulators. No mystery logic, no hidden rules.",
-                  )
-                }
+                At a time when many tools feel like black boxes, Probo takes a
+                more open approach. Its compliance frameworks, templates, and
+                resources are openly available and built by experts. This makes
+                it easier to understand why controls exist, how they're applied,
+                and how to explain them clearly to auditors or regulators. No
+                mystery logic, no hidden rules.
               </p>
             </div>
 
             <!-- Fits Into the Tools Teams Already Use -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Fits Into the Tools Teams Already Use")}
+                Fits Into the Tools Teams Already Use
               </h3>
               <p>
-                {
-                  __(
-                    "Compliance shouldn't mean yet another tool to check every day. Probo integrates with tools like",
-                  )
-                }
-                <strong>{__("Slack")}</strong>
-                {
-                  __(
-                    "and common project management systems, so approvals, reminders, and tasks happen where teams already work. Reviewing a policy, following up on evidence, or tracking remediation doesn't require context switching, compliance becomes part of the normal workflow instead of a separate burden.",
-                  )
-                }
+                Compliance shouldn't mean yet another tool to check every day.
+                Probo integrates with tools like
+                <strong>Slack</strong>
+                and common project management systems, so approvals, reminders, and
+                tasks happen where teams already work. Reviewing a policy, following
+                up on evidence, or tracking remediation doesn't require context switching,
+                compliance becomes part of the normal workflow instead of a separate
+                burden.
               </p>
             </div>
           </div>
@@ -581,14 +512,11 @@ const breadcrumbSchema = {
         <section class="border-border-low rounded-xl border bg-[#f8f9f7] p-8">
           <div class="text-center">
             <p class="text-foreground mb-4 text-lg font-semibold">
-              {__("Ready to move fast with qualitative compliance?")}
+              Ready to move fast with qualitative compliance?
             </p>
             <p class="text-muted-foreground mb-6">
-              {
-                __(
-                  "Discover how Probo can help your team build confidence without slowing down.",
-                )
-              }
+              Discover how Probo can help your team build confidence without
+              slowing down.
             </p>
             <a
               href="/contact"
@@ -596,7 +524,7 @@ const breadcrumbSchema = {
               rel="noopener noreferrer"
               class="inline-flex items-center justify-center rounded-lg bg-[#D7EDBA] px-6 py-3 font-medium text-[#141e12] transition-colors hover:bg-[#c5dba8]"
             >
-              {__("Get Started with Probo")}
+              Get Started with Probo
             </a>
           </div>
         </section>

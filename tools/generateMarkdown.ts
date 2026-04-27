@@ -214,11 +214,8 @@ export function generateMarkdown(): AstroIntegration {
           writeFileSync(outPath, md);
         }
 
-        // Process blog MDX files (skip French translations)
         const blogDir = join(rootDir, "src/content/blog");
-        const blogFiles = findFiles(blogDir, ".mdx").filter(
-          (f) => !f.includes("/fr/"),
-        );
+        const blogFiles = findFiles(blogDir, ".mdx");
         for (const file of blogFiles) {
           const slug = basename(file, ".mdx");
           const outPath = join(mdDir, "blog", `${slug}.md`);
@@ -228,11 +225,8 @@ export function generateMarkdown(): AstroIntegration {
           writeFileSync(outPath, md);
         }
 
-        // Process customer stories MDX files (skip French)
         const storiesDir = join(rootDir, "src/content/stories");
-        const storyFiles = findFiles(storiesDir, ".mdx").filter(
-          (f) => !f.includes("/fr/"),
-        );
+        const storyFiles = findFiles(storiesDir, ".mdx");
         for (const file of storyFiles) {
           const slug = basename(file, ".mdx");
           const outPath = join(mdDir, "stories", `${slug}.md`);

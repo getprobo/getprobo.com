@@ -1,8 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import FrameworkBadge from "../../components/FrameworkBadge.svelte";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "introduction", label: "Why Report Quality Matters" },
@@ -72,10 +70,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("How to Evaluate SOC 2 Report Quality: A Practical Guide")}
-  description={__(
-    "Learn 6 expert checks to evaluate SOC 2 report quality. Verify auditor legitimacy, test procedures, and sample sizes before relying on vendor assessments.",
-  )}
+  title="How to Evaluate SOC 2 Report Quality: A Practical Guide"
+  description="Learn 6 expert checks to evaluate SOC 2 report quality. Verify auditor legitimacy, test procedures, and sample sizes before relying on vendor assessments."
   ogImage="/hub/evaluate-soc2-report.png"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
@@ -90,9 +86,9 @@ const breadcrumbSchema = {
         <h1
           class="text-foreground text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
         >
-          {__("Evaluate")}
-          <span class="highlight-text">{__("SOC 2 Report")}</span>
-          {__("Quality")}
+          Evaluate
+          <span class="highlight-text">SOC 2 Report</span>
+          Quality
         </h1>
         <div class="flex items-center gap-2">
           <FrameworkBadge name="SOC2_TYPE2" class="size-12" client:visible />
@@ -101,16 +97,14 @@ const breadcrumbSchema = {
       <div
         class="mb-6 inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-5 py-2.5 text-base text-gray-500 shadow-sm backdrop-blur-sm"
       >
-        {__("A Practical Guide")}
+        A Practical Guide
       </div>
       <p
         class="text-muted-foreground mx-auto max-w-[800px] text-lg leading-relaxed"
       >
-        {
-          __(
-            "Learn 6 expert checks to evaluate SOC 2 report quality. Verify auditor legitimacy, test procedures, and sample sizes before relying on vendor assessments.",
-          )
-        }
+        Learn 6 expert checks to evaluate SOC 2 report quality. Verify auditor
+        legitimacy, test procedures, and sample sizes before relying on vendor
+        assessments.
       </p>
     </header>
 
@@ -149,37 +143,41 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Why SOC 2 Report Quality Matters for Your Vendor Assessments")}
+            Why SOC 2 Report Quality Matters for Your Vendor Assessments
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "You've requested a SOC 2 report from a vendor, and they've delivered a polished PDF with an official-looking seal. But here's the uncomfortable truth: not all SOC 2 reports are created equal. Some represent rigorous, independent assessments of security controls. Others are barely worth the digital paper they're printed on.",
-                )
-              }
+              You've requested a SOC 2 report from a vendor, and they've
+              delivered a polished PDF with an official-looking seal. But here's
+              the uncomfortable truth: not all SOC 2 reports are created equal.
+              Some represent rigorous, independent assessments of security
+              controls. Others are barely worth the digital paper they're
+              printed on.
             </p>
             <p>
-              {
-                __(
-                  "The difference matters more than you might think. When you're making procurement decisions for your organization, trusting a vendor with sensitive customer data, integrating their platform into your infrastructure, or satisfying your own compliance requirements, you're staking your reputation on the quality of that assessment. A weak SOC 2 report provides false assurance, leaving security gaps that could expose your organization to breaches, regulatory penalties, and damaged customer relationships.",
-                )
-              }
+              The difference matters more than you might think. When you're
+              making procurement decisions for your organization, trusting a
+              vendor with sensitive customer data, integrating their platform
+              into your infrastructure, or satisfying your own compliance
+              requirements, you're staking your reputation on the quality of
+              that assessment. A weak SOC 2 report provides false assurance,
+              leaving security gaps that could expose your organization to
+              breaches, regulatory penalties, and damaged customer
+              relationships.
             </p>
             <p>
-              {
-                __(
-                  "The challenge? Most security leaders, CTOs, and compliance managers haven't been trained to distinguish between a thorough audit and one that cuts corners. The reports all look similar at first glance. That's why we've compiled this practical guide with six expert checks you can run in under 30 minutes to evaluate any SOC 2 report's quality. Whether you're reviewing reports from potential vendors or ensuring your own",
-                )
-              }
+              The challenge? Most security leaders, CTOs, and compliance
+              managers haven't been trained to distinguish between a thorough
+              audit and one that cuts corners. The reports all look similar at
+              first glance. That's why we've compiled this practical guide with
+              six expert checks you can run in under 30 minutes to evaluate any
+              SOC 2 report's quality. Whether you're reviewing reports from
+              potential vendors or ensuring your own
               <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
-                >{__("SOC 2 audit process")}</a
+                >SOC 2 audit process</a
               >
-              {
-                __(
-                  "produces a report that will withstand scrutiny, these techniques will transform you from a passive report recipient into an informed evaluator.",
-                )
-              }
+              produces a report that will withstand scrutiny, these techniques will
+              transform you from a passive report recipient into an informed evaluator.
             </p>
           </div>
         </section>
@@ -191,149 +189,122 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Check 1: Verify the Auditor Is a Legitimate CPA Firm")}
+            Check 1: Verify the Auditor Is a Legitimate CPA Firm
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "The foundation of any credible SOC 2 report is the auditor who signs it. According to AICPA standards, only licensed CPA firms can issue SOC 2 reports. Yet in the rush to meet compliance deadlines, some organizations accept reports from firms that lack proper credentials, or worse, from entities that aren't legitimate audit firms at all.",
-                )
-              }
+              The foundation of any credible SOC 2 report is the auditor who
+              signs it. According to AICPA standards, only licensed CPA firms
+              can issue SOC 2 reports. Yet in the rush to meet compliance
+              deadlines, some organizations accept reports from firms that lack
+              proper credentials, or worse, from entities that aren't legitimate
+              audit firms at all.
             </p>
             <p>
-              {
-                __(
-                  "This isn't just a technicality. An audit from an unqualified firm provides zero assurance about your vendor's security controls. It's essentially a worthless document dressed up to look official.",
-                )
-              }
+              This isn't just a technicality. An audit from an unqualified firm
+              provides zero assurance about your vendor's security controls.
+              It's essentially a worthless document dressed up to look official.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("How to Confirm Registration with State Boards")}
+                How to Confirm Registration with State Boards
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Start by identifying the CPA firm name that appears at the bottom of Section 1 (the auditor's opinion letter). This firm should be registered and in good standing with at least one state board of accountancy.",
-                  )
-                }
+                Start by identifying the CPA firm name that appears at the
+                bottom of Section 1 (the auditor's opinion letter). This firm
+                should be registered and in good standing with at least one
+                state board of accountancy.
               </p>
-              <p class="mb-3">{__("To verify registration:")}</p>
+              <p class="mb-3">To verify registration:</p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">1.</span>
                   <span
-                    >{__("Visit the")}
+                    >Visit the
                     <a
                       href="https://nasba.org"
                       target="_blank"
                       rel="noopener noreferrer"
                       class="text-[#5d770d] hover:underline"
-                      >{
-                        __(
-                          "National Association of State Boards of Accountancy (NASBA)",
-                        )
-                      }</a
                     >
-                    {__("website")}</span
+                      National Association of State Boards of Accountancy
+                      (NASBA)</a
+                    >
+                    website</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">2.</span>
-                  <span
-                    >{
-                      __(
-                        "Use their CPA verification tool to search for the firm name",
-                      )
-                    }</span
+                  <span>
+                    Use their CPA verification tool to search for the firm name</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">3.</span>
-                  <span
-                    >{
-                      __(
-                        "Confirm the firm's license is active and not expired or revoked",
-                      )
-                    }</span
+                  <span>
+                    Confirm the firm's license is active and not expired or
+                    revoked</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">4.</span>
-                  <span
-                    >{
-                      __(
-                        "Note the state(s) where they're registered, legitimate firms typically maintain registration in multiple states",
-                      )
-                    }</span
+                  <span>
+                    Note the state(s) where they're registered, legitimate firms
+                    typically maintain registration in multiple states</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "If the firm doesn't appear in NASBA's database, that's an immediate red flag. The audit may be invalid, and you should request clarification from your vendor before proceeding with any risk assessment.",
-                  )
-                }
+                If the firm doesn't appear in NASBA's database, that's an
+                immediate red flag. The audit may be invalid, and you should
+                request clarification from your vendor before proceeding with
+                any risk assessment.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Checking AICPA Peer Review Program Enrollment")}
+                Checking AICPA Peer Review Program Enrollment
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Beyond state registration, reputable audit firms participate in the AICPA Peer Review Program. This program requires CPA firms that perform attestation engagements (including SOC 2 audits) to undergo periodic reviews by other qualified firms.",
-                  )
-                }
+                Beyond state registration, reputable audit firms participate in
+                the AICPA Peer Review Program. This program requires CPA firms
+                that perform attestation engagements (including SOC 2 audits) to
+                undergo periodic reviews by other qualified firms.
               </p>
-              <p class="mb-3">{__("To verify peer review status:")}</p>
+              <p class="mb-3">To verify peer review status:</p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Visit the AICPA's Peer Review Public File at aicpa.org",
-                      )
-                    }</span
+                  <span>
+                    Visit the AICPA's Peer Review Public File at aicpa.org</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Search for the firm by name")}</span>
+                  <span>Search for the firm by name</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Review their most recent peer review results and rating",
-                      )
-                    }</span
+                  <span>
+                    Review their most recent peer review results and rating</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        'Look for a "pass" rating, anything less warrants additional scrutiny',
-                      )
-                    }</span
+                  <span>
+                    Look for a "pass" rating, anything less warrants additional
+                    scrutiny</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    'A firm that isn\'t enrolled in the peer review program, or one with a "pass with deficiencies" or "fail" rating, should prompt serious questions about their audit quality. This check takes less than five minutes and can save you from relying on a compromised assessment.',
-                  )
-                }
+                A firm that isn't enrolled in the peer review program, or one
+                with a "pass with deficiencies" or "fail" rating, should prompt
+                serious questions about their audit quality. This check takes
+                less than five minutes and can save you from relying on a
+                compromised assessment.
               </p>
             </div>
           </div>
@@ -346,131 +317,108 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Check 2: Look for Heavy Platform Branding Red Flags")}
+            Check 2: Look for Heavy Platform Branding Red Flags
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "The rise of compliance automation platforms has transformed how companies achieve SOC 2 certification. These tools can dramatically reduce the time and",
-                )
-              }
+              The rise of compliance automation platforms has transformed how
+              companies achieve SOC 2 certification. These tools can
+              dramatically reduce the time and
               <a
                 href="/blog/2025-03-04-what-is-soc2-cost"
-                class="text-[#5d770d] hover:underline"
-                >{__("SOC 2 report cost")}</a
+                class="text-[#5d770d] hover:underline">SOC 2 report cost</a
               >
-              {
-                __(
-                  "for organizations pursuing compliance. However, they've also created a troubling trend: reports that appear to be auto-generated templates rather than independent professional assessments.",
-                )
-              }
+              for organizations pursuing compliance. However, they've also created
+              a troubling trend: reports that appear to be auto-generated templates
+              rather than independent professional assessments.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("What Proper Auditor Independence Looks Like")}
+                What Proper Auditor Independence Looks Like
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "A legitimate SOC 2 report should prominently feature only two entities: the CPA firm performing the audit and the company being audited. The auditor's letterhead, firm name, and professional credentials should be clearly visible. The audited company's name, system description, and control environment should be thoroughly documented.",
-                  )
-                }
+                A legitimate SOC 2 report should prominently feature only two
+                entities: the CPA firm performing the audit and the company
+                being audited. The auditor's letterhead, firm name, and
+                professional credentials should be clearly visible. The audited
+                company's name, system description, and control environment
+                should be thoroughly documented.
               </p>
               <p>
-                {
-                  __(
-                    "What you shouldn't see is a third-party platform's logo splashed across every page, watermarks from compliance software vendors, or branding that suggests the report was produced by anyone other than the independent auditor.",
-                  )
-                }
+                What you shouldn't see is a third-party platform's logo splashed
+                across every page, watermarks from compliance software vendors,
+                or branding that suggests the report was produced by anyone
+                other than the independent auditor.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "Auditor independence is a cornerstone of the attestation process. When a compliance platform's branding dominates the report, it raises questions about whether the auditor exercised independent professional judgment or simply rubber-stamped auto-generated content.",
-                  )
-                }
+                Auditor independence is a cornerstone of the attestation
+                process. When a compliance platform's branding dominates the
+                report, it raises questions about whether the auditor exercised
+                independent professional judgment or simply rubber-stamped
+                auto-generated content.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Signs of Auto-Generated Content")}
+                Signs of Auto-Generated Content
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "Beyond obvious branding issues, watch for these indicators that a report may lack genuine auditor engagement:",
-                  )
-                }
+                Beyond obvious branding issues, watch for these indicators that
+                a report may lack genuine auditor engagement:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{
-                        __(
-                          "Identical formatting across multiple vendors' reports:",
-                        )
-                      }</strong
+                    ><strong class="text-foreground">
+                      Identical formatting across multiple vendors' reports:</strong
                     >
-                    {
-                      __(
-                        "If you've reviewed SOC 2 reports from different companies and they look suspiciously similar (same fonts, layouts, and section structures), the auditor may be using a templated approach without customization",
-                      )
-                    }</span
+                    If you've reviewed SOC 2 reports from different companies and
+                    they look suspiciously similar (same fonts, layouts, and section
+                    structures), the auditor may be using a templated approach without
+                    customization</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Generic control descriptions:")}</strong
+                      >Generic control descriptions:</strong
                     >
-                    {
-                      __(
-                        'Phrases like "the company maintains appropriate security controls" without specific details about what those controls actually are',
-                      )
-                    }</span
+                    Phrases like "the company maintains appropriate security controls"
+                    without specific details about what those controls actually are</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Lack of auditor-specific language:")}</strong
+                      >Lack of auditor-specific language:</strong
                     >
-                    {
-                      __(
-                        "Professional auditors typically include firm-specific methodologies, risk assessment approaches, and testing frameworks that reflect their unique audit philosophy",
-                      )
-                    }</span
+                    Professional auditors typically include firm-specific methodologies,
+                    risk assessment approaches, and testing frameworks that reflect
+                    their unique audit philosophy</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{
-                        __("Missing or minimal management response sections:")
-                      }</strong
+                    ><strong class="text-foreground">
+                      Missing or minimal management response sections:</strong
                     >
-                    {
-                      __(
-                        "Auto-generated reports often skip nuanced discussions of how management addressed specific risks",
-                      )
-                    }</span
+                    Auto-generated reports often skip nuanced discussions of how management
+                    addressed specific risks</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "A high-quality SOC 2 report reflects genuine intellectual engagement between the auditor and the audited organization. If the report reads like it could have been produced without the auditor ever visiting (virtually or physically) the client, that's a problem.",
-                  )
-                }
+                A high-quality SOC 2 report reflects genuine intellectual
+                engagement between the auditor and the audited organization. If
+                the report reads like it could have been produced without the
+                auditor ever visiting (virtually or physically) the client,
+                that's a problem.
               </p>
             </div>
           </div>
@@ -483,157 +431,126 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Check 3: Evaluate Test Procedures in Section 4")}
+            Check 3: Evaluate Test Procedures in Section 4
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Section 4 of a SOC 2 Type 2 report contains the auditor's description of tests performed and their results. This section is where you can most clearly distinguish between rigorous audits and superficial ones. It's also where many low-quality reports reveal their weaknesses.",
-                )
-              }
+              Section 4 of a SOC 2 Type 2 report contains the auditor's
+              description of tests performed and their results. This section is
+              where you can most clearly distinguish between rigorous audits and
+              superficial ones. It's also where many low-quality reports reveal
+              their weaknesses.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Specific Details vs. Boilerplate Language")}
+                Specific Details vs. Boilerplate Language
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "Quality test procedures include specific, measurable details that demonstrate the auditor actually examined evidence. Look for language like:",
-                  )
-                }
+                Quality test procedures include specific, measurable details
+                that demonstrate the auditor actually examined evidence. Look
+                for language like:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        '"Inspected 35 quarterly access reviews and verified manager approval for each"',
-                      )
-                    }</span
+                  <span>
+                    "Inspected 35 quarterly access reviews and verified manager
+                    approval for each"</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        '"Selected a sample of 25 change tickets from the period and traced each to documented approval and testing evidence"',
-                      )
-                    }</span
+                  <span>
+                    "Selected a sample of 25 change tickets from the period and
+                    traced each to documented approval and testing evidence"</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        '"Examined firewall configuration exports from three separate dates across the audit period"',
-                      )
-                    }</span
+                  <span>
+                    "Examined firewall configuration exports from three separate
+                    dates across the audit period"</span
                   >
                 </li>
               </ul>
               <p class="mt-4 mb-3">
-                {
-                  __(
-                    "Contrast this with boilerplate language that could apply to any company:",
-                  )
-                }
+                Contrast this with boilerplate language that could apply to any
+                company:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__('"Reviewed evidence of access controls"')}</span>
+                  <span>"Reviewed evidence of access controls"</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __('"Inspected documentation supporting the control"')
-                    }</span
-                  >
+                  <span> "Inspected documentation supporting the control"</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__('"Observed the control operating effectively"')}</span
-                  >
+                  <span>"Observed the control operating effectively"</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "The difference is specificity. Rigorous auditors describe what they looked at, how many items they examined, and what criteria they used to evaluate effectiveness. Weak auditors use vague language that provides no insight into the actual testing performed.",
-                  )
-                }
+                The difference is specificity. Rigorous auditors describe what
+                they looked at, how many items they examined, and what criteria
+                they used to evaluate effectiveness. Weak auditors use vague
+                language that provides no insight into the actual testing
+                performed.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Examples of Rigorous vs. Weak Testing Statements")}
+                Examples of Rigorous vs. Weak Testing Statements
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "To illustrate this distinction, consider how different auditors might describe testing the same control, quarterly access reviews:",
-                  )
-                }
+                To illustrate this distinction, consider how different auditors
+                might describe testing the same control, quarterly access
+                reviews:
               </p>
 
               <div
                 class="mb-4 rounded-lg border border-green-200 bg-green-50 p-4"
               >
                 <p class="mb-2 font-semibold text-green-800">
-                  {__("✓ Rigorous Testing Statement:")}
+                  ✓ Rigorous Testing Statement:
                 </p>
                 <p class="text-sm text-green-700">
-                  {
-                    __(
-                      '"For the user access review control, we selected all four quarterly reviews performed during the audit period. For each review, we inspected the access listing generated from the production identity management system, the reviewer\'s documented decisions for each user, manager approval signatures, and evidence that identified access changes were implemented within 5 business days. We noted no exceptions."',
-                    )
-                  }
+                  "For the user access review control, we selected all four
+                  quarterly reviews performed during the audit period. For each
+                  review, we inspected the access listing generated from the
+                  production identity management system, the reviewer's
+                  documented decisions for each user, manager approval
+                  signatures, and evidence that identified access changes were
+                  implemented within 5 business days. We noted no exceptions."
                 </p>
               </div>
 
               <div class="rounded-lg border border-red-200 bg-red-50 p-4">
                 <p class="mb-2 font-semibold text-red-800">
-                  {__("✗ Weak Testing Statement:")}
+                  ✗ Weak Testing Statement:
                 </p>
                 <p class="text-sm text-red-700">
-                  {
-                    __(
-                      '"We reviewed evidence that access reviews were performed during the period. No exceptions noted."',
-                    )
-                  }
+                  "We reviewed evidence that access reviews were performed
+                  during the period. No exceptions noted."
                 </p>
               </div>
 
               <p class="mt-4">
-                {
-                  __(
-                    "The first statement tells you exactly what the auditor did. The second tells you almost nothing. When evaluating your vendor's SOC 2 report, flip to Section 4 and assess whether the testing descriptions provide genuine insight or empty assurances.",
-                  )
-                }
+                The first statement tells you exactly what the auditor did. The
+                second tells you almost nothing. When evaluating your vendor's
+                SOC 2 report, flip to Section 4 and assess whether the testing
+                descriptions provide genuine insight or empty assurances.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "Understanding what rigorous testing looks like also helps when you're preparing for your own",
-                  )
-                }
+                Understanding what rigorous testing looks like also helps when
+                you're preparing for your own
                 <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
-                  >{__("SOC 2 compliance")}</a
+                  >SOC 2 compliance</a
                 >
-                {
-                  __(
-                    "journey, you'll know what standards your auditor should meet.",
-                  )
-                }
+                journey, you'll know what standards your auditor should meet.
               </p>
             </div>
           </div>
@@ -646,155 +563,117 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Check 4: Verify Real Product Names in the System Description")}
+            Check 4: Verify Real Product Names in the System Description
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Section 2 of a SOC 2 report contains the system description, a detailed overview of the organization's infrastructure, software, people, procedures, and data that comprise the system being audited. This section should read like a technical architecture document, not a marketing brochure.",
-                )
-              }
+              Section 2 of a SOC 2 report contains the system description, a
+              detailed overview of the organization's infrastructure, software,
+              people, procedures, and data that comprise the system being
+              audited. This section should read like a technical architecture
+              document, not a marketing brochure.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("What a Thorough Section 2 Should Include")}
+                What a Thorough Section 2 Should Include
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "A high-quality system description names specific technologies and provides concrete details about the environment:",
-                  )
-                }
+                A high-quality system description names specific technologies
+                and provides concrete details about the environment:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Infrastructure:")}</strong
-                    >
-                    {
-                      __(
-                        '"Production systems are hosted on Amazon Web Services (AWS) in the us-east-1 and us-west-2 regions, utilizing EC2 instances, RDS PostgreSQL databases, and S3 storage buckets"',
-                      )
-                    }</span
+                    ><strong class="text-foreground">Infrastructure:</strong>
+                    "Production systems are hosted on Amazon Web Services (AWS) in
+                    the us-east-1 and us-west-2 regions, utilizing EC2 instances,
+                    RDS PostgreSQL databases, and S3 storage buckets"</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">Security tools:</strong>
+                    "Network traffic is monitored using Datadog, with alerts configured
+                    for anomalous patterns. Endpoint detection is provided by CrowdStrike
+                    Falcon deployed on all employee workstations"</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Security tools:")}</strong
+                      >Identity management:</strong
                     >
-                    {
-                      __(
-                        '"Network traffic is monitored using Datadog, with alerts configured for anomalous patterns. Endpoint detection is provided by CrowdStrike Falcon deployed on all employee workstations"',
-                      )
-                    }</span
+                    "User authentication is managed through Okta, with SAML integration
+                    for all production applications and mandatory MFA using hardware
+                    tokens or the Okta Verify application"</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Identity management:")}</strong
-                    >
-                    {
-                      __(
-                        '"User authentication is managed through Okta, with SAML integration for all production applications and mandatory MFA using hardware tokens or the Okta Verify application"',
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("Data centers:")}</strong
-                    >
-                    {
-                      __(
-                        '"Physical infrastructure is provided by AWS data centers, which maintain their own SOC 2 reports available upon request"',
-                      )
-                    }</span
+                    ><strong class="text-foreground">Data centers:</strong>
+                    "Physical infrastructure is provided by AWS data centers, which
+                    maintain their own SOC 2 reports available upon request"</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "This level of detail demonstrates that the auditor engaged with the actual technical environment and understood how the organization's systems operate.",
-                  )
-                }
+                This level of detail demonstrates that the auditor engaged with
+                the actual technical environment and understood how the
+                organization's systems operate.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Generic Marketing Copy Warning Signs")}
+                Generic Marketing Copy Warning Signs
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "Contrast thorough descriptions with generic language that could describe virtually any technology company:",
-                  )
-                }
+                Contrast thorough descriptions with generic language that could
+                describe virtually any technology company:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        '"The company utilizes industry-leading cloud infrastructure"',
-                      )
-                    }</span
+                  <span>
+                    "The company utilizes industry-leading cloud infrastructure"</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        '"Security tools are deployed to monitor and protect the environment"',
-                      )
-                    }</span
+                  <span>
+                    "Security tools are deployed to monitor and protect the
+                    environment"</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        '"Access controls are implemented using modern identity management solutions"',
-                      )
-                    }</span
+                  <span>
+                    "Access controls are implemented using modern identity
+                    management solutions"</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __('"Data is stored in secure, redundant facilities"')
-                    }</span
-                  >
+                  <span> "Data is stored in secure, redundant facilities"</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "If you can read Section 2 and still have no idea what technology stack the vendor actually uses, the auditor didn't do their job. This generic approach often indicates that the auditor relied entirely on management's representations without independently verifying the technical environment.",
-                  )
-                }
+                If you can read Section 2 and still have no idea what technology
+                stack the vendor actually uses, the auditor didn't do their job.
+                This generic approach often indicates that the auditor relied
+                entirely on management's representations without independently
+                verifying the technical environment.
               </p>
               <p class="mt-4">
-                {
-                  __(
-                    "When reviewing a vendor's SOC 2 report, cross-reference Section 2 against what you know about the vendor's technology from sales conversations, documentation, or technical evaluations. Significant discrepancies warrant follow-up questions.",
-                  )
-                }
+                When reviewing a vendor's SOC 2 report, cross-reference Section
+                2 against what you know about the vendor's technology from sales
+                conversations, documentation, or technical evaluations.
+                Significant discrepancies warrant follow-up questions.
               </p>
             </div>
           </div>
@@ -807,186 +686,147 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Check 5: Analyze Sample Sizes and Timing Distribution")}
+            Check 5: Analyze Sample Sizes and Timing Distribution
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "For SOC 2 Type 2 reports, auditors test whether controls operated effectively throughout the audit period, typically 6 to 12 months. The sampling approach they use directly impacts the assurance you can derive from their conclusions.",
-                )
-              }
+              For SOC 2 Type 2 reports, auditors test whether controls operated
+              effectively throughout the audit period, typically 6 to 12 months.
+              The sampling approach they use directly impacts the assurance you
+              can derive from their conclusions.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Why 5 Samples at Period-Start Provides Weak Assurance")}
+                Why 5 Samples at Period-Start Provides Weak Assurance
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Consider a control that should operate daily, such as automated backup verification. Over a 12-month audit period, that control should execute approximately 365 times. If the auditor tested only 5 instances, all selected from the first month of the period, what have they actually verified?",
-                  )
-                }
+                Consider a control that should operate daily, such as automated
+                backup verification. Over a 12-month audit period, that control
+                should execute approximately 365 times. If the auditor tested
+                only 5 instances, all selected from the first month of the
+                period, what have they actually verified?
               </p>
               <p class="mb-3">
-                {
-                  __(
-                    "At best, they've confirmed the control worked during a brief window. They've provided no assurance that:",
-                  )
-                }
+                At best, they've confirmed the control worked during a brief
+                window. They've provided no assurance that:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "The control continued operating after the initial testing",
-                      )
-                    }</span
+                  <span>
+                    The control continued operating after the initial testing</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("The control wasn't disabled or modified mid-period")
-                    }</span
+                  <span>
+                    The control wasn't disabled or modified mid-period</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "The control operated consistently under varying conditions throughout the year",
-                      )
-                    }</span
+                  <span>
+                    The control operated consistently under varying conditions
+                    throughout the year</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "This sampling approach is disturbingly common in low-quality audits. It's technically compliant with the minimum requirements but provides minimal actual assurance about control effectiveness.",
-                  )
-                }
+                This sampling approach is disturbingly common in low-quality
+                audits. It's technically compliant with the minimum requirements
+                but provides minimal actual assurance about control
+                effectiveness.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("How to Verify Proper Sampling Across the Audit Period")}
+                How to Verify Proper Sampling Across the Audit Period
               </h3>
               <p class="mb-3">
-                {__("When reviewing Section 4, look for evidence of:")}
+                When reviewing Section 4, look for evidence of:
               </p>
 
               <p class="text-foreground mt-4 mb-2 font-semibold">
-                {__("Appropriate sample sizes based on control frequency:")}
+                Appropriate sample sizes based on control frequency:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Daily controls: 25-45 samples is typical for reasonable assurance",
-                      )
-                    }</span
+                  <span>
+                    Daily controls: 25-45 samples is typical for reasonable
+                    assurance</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Weekly controls: 10-20 samples")}</span>
+                  <span>Weekly controls: 10-20 samples</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Monthly controls: All instances (12 for a 12-month period)",
-                      )
-                    }</span
+                  <span>
+                    Monthly controls: All instances (12 for a 12-month period)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Quarterly controls: All instances (4 for a 12-month period)",
-                      )
-                    }</span
+                  <span>
+                    Quarterly controls: All instances (4 for a 12-month period)</span
                   >
                 </li>
               </ul>
 
               <p class="text-foreground mt-4 mb-2 font-semibold">
-                {__("Distribution across the audit period:")}
+                Distribution across the audit period:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Samples should be spread throughout the period, not clustered",
-                      )
-                    }</span
+                  <span>
+                    Samples should be spread throughout the period, not
+                    clustered</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        'Look for language like "selected samples from each month of the audit period" or "selections were distributed across the period"',
-                      )
-                    }</span
+                  <span>
+                    Look for language like "selected samples from each month of
+                    the audit period" or "selections were distributed across the
+                    period"</span
                   >
                 </li>
               </ul>
 
               <p class="text-foreground mt-4 mb-2 font-semibold">
-                {__("Clear documentation of selection methodology:")}
+                Clear documentation of selection methodology:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Random selection, systematic selection, or judgmental selection should be described",
-                      )
-                    }</span
+                  <span>
+                    Random selection, systematic selection, or judgmental
+                    selection should be described</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "The auditor should explain their rationale for sample sizes",
-                      )
-                    }</span
+                  <span>
+                    The auditor should explain their rationale for sample sizes</span
                   >
                 </li>
               </ul>
 
               <p class="mt-4">
-                {__("If you're comparing the")}
+                If you're comparing the
                 <a
                   href="/hub/soc2#type1-vs-type2"
                   class="text-[#5d770d] hover:underline"
-                  >{__("difference between SOC 2 Type 1 vs Type 2")}</a
+                  >difference between SOC 2 Type 1 vs Type 2</a
                 >
-                {
-                  __(
-                    "reports, remember that Type 1 reports test controls at a single point in time, while Type 2 reports should demonstrate sustained effectiveness, making sampling methodology even more critical for Type 2 assessments.",
-                  )
-                }
+                reports, remember that Type 1 reports test controls at a single point
+                in time, while Type 2 reports should demonstrate sustained effectiveness,
+                making sampling methodology even more critical for Type 2 assessments.
               </p>
             </div>
           </div>
@@ -999,214 +839,165 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Check 6: Confirm Required AICPA Paragraphs Exist")}
+            Check 6: Confirm Required AICPA Paragraphs Exist
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "AICPA standards prescribe specific structural requirements for SOC 2 reports. Missing or incorrectly formatted sections indicate that the auditor either doesn't understand the standards or deliberately cut corners, neither of which inspires confidence.",
-                )
-              }
+              AICPA standards prescribe specific structural requirements for SOC
+              2 reports. Missing or incorrectly formatted sections indicate that
+              the auditor either doesn't understand the standards or
+              deliberately cut corners, neither of which inspires confidence.
             </p>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Mandatory Sections for Type 1 vs Type 2 Reports")}
+                Mandatory Sections for Type 1 vs Type 2 Reports
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "Every SOC 2 report should include these elements in Section 1 (the auditor's report):",
-                  )
-                }
+                Every SOC 2 report should include these elements in Section 1
+                (the auditor's report):
               </p>
 
               <p class="text-foreground mt-4 mb-2 font-semibold">
-                {__("For both Type 1 and Type 2:")}
+                For both Type 1 and Type 2:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Scope paragraph identifying the service organization, system, and applicable Trust Services Criteria",
-                      )
-                    }</span
+                  <span>
+                    Scope paragraph identifying the service organization,
+                    system, and applicable Trust Services Criteria</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Service organization's responsibilities paragraph")
-                    }</span
+                  <span>
+                    Service organization's responsibilities paragraph</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Service auditor's responsibilities paragraph")}</span
-                  >
+                  <span>Service auditor's responsibilities paragraph</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Inherent limitations paragraph")}</span>
+                  <span>Inherent limitations paragraph</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Opinion paragraph with clear, unambiguous language")
-                    }</span
+                  <span>
+                    Opinion paragraph with clear, unambiguous language</span
                   >
                 </li>
               </ul>
 
               <p class="text-foreground mt-4 mb-2 font-semibold">
-                {__("Additional requirements for Type 2 reports:")}
+                Additional requirements for Type 2 reports:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Description of tests of controls paragraph")}</span
+                  <span>Description of tests of controls paragraph</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>
+                    Reference to the audit period (specific start and end dates)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Reference to the audit period (specific start and end dates)",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Opinion on operating effectiveness throughout the period",
-                      )
-                    }</span
+                  <span>
+                    Opinion on operating effectiveness throughout the period</span
                   >
                 </li>
               </ul>
 
               <p class="mt-4">
-                {
-                  __(
-                    'The opinion paragraph is particularly important. It should clearly state whether controls were "suitably designed" (Type 1) or "suitably designed and operating effectively" (Type 2), and it should reference specific Trust Services Criteria categories (Security, Availability, Processing Integrity, Confidentiality, and/or Privacy).',
-                  )
-                }
+                The opinion paragraph is particularly important. It should
+                clearly state whether controls were "suitably designed" (Type 1)
+                or "suitably designed and operating effectively" (Type 2), and
+                it should reference specific Trust Services Criteria categories
+                (Security, Availability, Processing Integrity, Confidentiality,
+                and/or Privacy).
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Structural Red Flags That Signal Shortcuts")}
+                Structural Red Flags That Signal Shortcuts
               </h3>
               <p class="mb-3">
-                {
-                  __(
-                    "Watch for these warning signs that suggest structural problems:",
-                  )
-                }
+                Watch for these warning signs that suggest structural problems:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Missing scope definition:")}</strong
+                      >Missing scope definition:</strong
                     >
-                    {
-                      __(
-                        "The report doesn't clearly identify which systems, locations, or services are covered",
-                      )
-                    }</span
+                    The report doesn't clearly identify which systems, locations,
+                    or services are covered</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("Vague opinion language:")}</strong
+                      >Vague opinion language:</strong
                     >
-                    {
-                      __(
-                        "The auditor uses non-standard language that doesn't clearly convey their conclusion",
-                      )
-                    }</span
+                    The auditor uses non-standard language that doesn't clearly convey
+                    their conclusion</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">
+                      Absent or incomplete management assertion:</strong
+                    >
+                    Section 3 should contain management's formal assertion about the
+                    system description and controls</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{
-                        __("Absent or incomplete management assertion:")
-                      }</strong
+                      >No description of tests:</strong
                     >
-                    {
-                      __(
-                        "Section 3 should contain management's formal assertion about the system description and controls",
-                      )
-                    }</span
+                    Type 2 reports must describe the nature, timing, and extent of
+                    testing, if this is missing or perfunctory, the report doesn't
+                    meet standards</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span
+                    ><strong class="text-foreground">
+                      Missing complementary user entity controls (CUECs):</strong
+                    >
+                    Most systems require certain controls to be implemented by customers;
+                    these should be clearly listed</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
                     ><strong class="text-foreground"
-                      >{__("No description of tests:")}</strong
+                      >No subservice organization disclosure:</strong
                     >
-                    {
-                      __(
-                        "Type 2 reports must describe the nature, timing, and extent of testing, if this is missing or perfunctory, the report doesn't meet standards",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{
-                        __(
-                          "Missing complementary user entity controls (CUECs):",
-                        )
-                      }</strong
-                    >
-                    {
-                      __(
-                        "Most systems require certain controls to be implemented by customers; these should be clearly listed",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >{__("No subservice organization disclosure:")}</strong
-                    >
-                    {
-                      __(
-                        "If the vendor relies on other service providers (like AWS or Stripe), these should be identified along with the method used to address them (carve-out or inclusive)",
-                      )
-                    }</span
+                    If the vendor relies on other service providers (like AWS or Stripe),
+                    these should be identified along with the method used to address
+                    them (carve-out or inclusive)</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "A report missing required elements isn't just poorly formatted, it may not constitute a valid SOC 2 attestation under AICPA standards.",
-                  )
-                }
+                A report missing required elements isn't just poorly formatted,
+                it may not constitute a valid SOC 2 attestation under AICPA
+                standards.
               </p>
             </div>
           </div>
@@ -1219,15 +1010,12 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("SOC 2 Report Quality Checklist Summary")}
+            SOC 2 Report Quality Checklist Summary
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                __(
-                  "Before relying on any SOC 2 report for vendor assessment, run through these six checks:",
-                )
-              }
+              Before relying on any SOC 2 report for vendor assessment, run
+              through these six checks:
             </p>
 
             <div class="overflow-x-auto">
@@ -1236,126 +1024,88 @@ const breadcrumbSchema = {
                   <tr class="border-border-low border-b">
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("Check")}</th
+                      >Check</th
                     >
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("What to Verify")}</th
+                      >What to Verify</th
                     >
                     <th class="text-foreground py-3 text-left font-semibold"
-                      >{__("Red Flags")}</th
+                      >Red Flags</th
                     >
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("1. Auditor Legitimacy")}</td
+                      >1. Auditor Legitimacy</td
                     >
-                    <td class="py-3 pr-4"
-                      >{
-                        __(
-                          "CPA firm registration at nasba.org; AICPA peer review enrollment",
-                        )
-                      }</td
+                    <td class="py-3 pr-4">
+                      CPA firm registration at nasba.org; AICPA peer review
+                      enrollment</td
                     >
-                    <td class="py-3"
-                      >{
-                        __(
-                          "Firm not found in databases; failed or missing peer review",
-                        )
-                      }</td
+                    <td class="py-3">
+                      Firm not found in databases; failed or missing peer review</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("2. Platform Branding")}</td
+                      >2. Platform Branding</td
                     >
-                    <td class="py-3 pr-4"
-                      >{
-                        __(
-                          "Only auditor and audited company prominently featured",
-                        )
-                      }</td
+                    <td class="py-3 pr-4">
+                      Only auditor and audited company prominently featured</td
                     >
-                    <td class="py-3"
-                      >{
-                        __(
-                          "Third-party platform logos throughout; obvious templated content",
-                        )
-                      }</td
+                    <td class="py-3">
+                      Third-party platform logos throughout; obvious templated
+                      content</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("3. Test Procedures")}</td
+                      >3. Test Procedures</td
                     >
-                    <td class="py-3 pr-4"
-                      >{
-                        __(
-                          "Specific details about what was examined and sample sizes",
-                        )
-                      }</td
+                    <td class="py-3 pr-4">
+                      Specific details about what was examined and sample sizes</td
                     >
-                    <td class="py-3"
-                      >{
-                        __(
-                          'Vague "reviewed evidence" language; boilerplate descriptions',
-                        )
-                      }</td
+                    <td class="py-3">
+                      Vague "reviewed evidence" language; boilerplate
+                      descriptions</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("4. System Description")}</td
+                      >4. System Description</td
                     >
-                    <td class="py-3 pr-4"
-                      >{
-                        __(
-                          "Real product names, specific technologies, concrete details",
-                        )
-                      }</td
+                    <td class="py-3 pr-4">
+                      Real product names, specific technologies, concrete
+                      details</td
                     >
-                    <td class="py-3"
-                      >{
-                        __(
-                          "Generic marketing language; no specific tools or infrastructure named",
-                        )
-                      }</td
+                    <td class="py-3">
+                      Generic marketing language; no specific tools or
+                      infrastructure named</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("5. Sampling Methodology")}</td
+                      >5. Sampling Methodology</td
                     >
-                    <td class="py-3 pr-4"
-                      >{
-                        __(
-                          "Appropriate sample sizes distributed across audit period",
-                        )
-                      }</td
+                    <td class="py-3 pr-4">
+                      Appropriate sample sizes distributed across audit period</td
                     >
-                    <td class="py-3"
-                      >{
-                        __("Small samples clustered at period start or end")
-                      }</td
+                    <td class="py-3">
+                      Small samples clustered at period start or end</td
                     >
                   </tr>
                   <tr>
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("6. Required Structure")}</td
+                      >6. Required Structure</td
                     >
-                    <td class="py-3 pr-4"
-                      >{
-                        __(
-                          "All AICPA-mandated paragraphs present and properly formatted",
-                        )
-                      }</td
+                    <td class="py-3 pr-4">
+                      All AICPA-mandated paragraphs present and properly
+                      formatted</td
                     >
-                    <td class="py-3"
-                      >{
-                        __("Missing sections; non-standard opinion language")
-                      }</td
+                    <td class="py-3">
+                      Missing sections; non-standard opinion language</td
                     >
                   </tr>
                 </tbody>
@@ -1364,36 +1114,29 @@ const breadcrumbSchema = {
 
             <div class="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
               <p class="mb-2 font-semibold text-blue-800">
-                {__("Quick Assessment Scoring:")}
+                Quick Assessment Scoring:
               </p>
               <ul class="ml-0 list-none space-y-2 text-blue-700">
                 <li class="flex items-start gap-2">
                   <span>•</span>
                   <span
-                    ><strong>{__("6/6 checks pass:")}</strong>
-                    {__("High confidence in report quality")}</span
+                    ><strong>6/6 checks pass:</strong>
+                    High confidence in report quality</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span>•</span>
                   <span
-                    ><strong>{__("4-5/6 checks pass:")}</strong>
-                    {
-                      __(
-                        "Request clarification on failed items before proceeding",
-                      )
-                    }</span
+                    ><strong>4-5/6 checks pass:</strong>
+                    Request clarification on failed items before proceeding</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span>•</span>
                   <span
-                    ><strong>{__("3 or fewer checks pass:")}</strong>
-                    {
-                      __(
-                        "Significant quality concerns; consider requesting a different vendor or additional documentation",
-                      )
-                    }</span
+                    ><strong>3 or fewer checks pass:</strong>
+                    Significant quality concerns; consider requesting a different
+                    vendor or additional documentation</span
                   >
                 </li>
               </ul>
@@ -1408,37 +1151,35 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Conclusion: Making Confident Vendor Decisions")}
+            Conclusion: Making Confident Vendor Decisions
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Evaluating SOC 2 report quality isn't about being adversarial with your vendors, it's about being a responsible steward of your organization's security posture. When you understand what separates rigorous audits from superficial ones, you can make informed procurement decisions, ask better questions during vendor assessments, and avoid placing unwarranted trust in weak assurances.",
-                )
-              }
+              Evaluating SOC 2 report quality isn't about being adversarial with
+              your vendors, it's about being a responsible steward of your
+              organization's security posture. When you understand what
+              separates rigorous audits from superficial ones, you can make
+              informed procurement decisions, ask better questions during vendor
+              assessments, and avoid placing unwarranted trust in weak
+              assurances.
             </p>
             <p>
-              {
-                __(
-                  "These six checks won't catch every problem, but they'll help you quickly identify reports that deserve extra scrutiny before you rely on them. They'll also help you recognize quality when you see it, and appreciate vendors who invest in thorough, independent assessments.",
-                )
-              }
+              These six checks won't catch every problem, but they'll help you
+              quickly identify reports that deserve extra scrutiny before you
+              rely on them. They'll also help you recognize quality when you see
+              it, and appreciate vendors who invest in thorough, independent
+              assessments.
             </p>
             <p>
-              {
-                __(
-                  "If you're on the other side of this equation, preparing for your own SOC 2 audit, understanding these quality markers helps you set expectations with your auditor and ensure your report will withstand the scrutiny of sophisticated customers. The",
-                )
-              }
+              If you're on the other side of this equation, preparing for your
+              own SOC 2 audit, understanding these quality markers helps you set
+              expectations with your auditor and ensure your report will
+              withstand the scrutiny of sophisticated customers. The
               <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
-                >{__("SOC 2 requirements")}</a
+                >SOC 2 requirements</a
               >
-              {
-                __(
-                  "are demanding, but meeting them properly means your report becomes a competitive advantage rather than a checkbox exercise.",
-                )
-              }
+              are demanding, but meeting them properly means your report becomes a
+              competitive advantage rather than a checkbox exercise.
             </p>
           </div>
         </section>
@@ -1451,14 +1192,14 @@ const breadcrumbSchema = {
             <h3
               class="mb-8 text-2xl font-semibold text-[#141e12] sm:text-[1.75rem]"
             >
-              {__("Get a High-Quality SOC 2 Report with Probo")}
+              Get a High-Quality SOC 2 Report with Probo
             </h3>
             <a
               href="/contact"
               class="group inline-flex items-center gap-2 rounded-full bg-[#141e12] px-6 py-3.5 font-medium shadow-lg transition-all hover:gap-3 hover:bg-[#1f2e1a] hover:shadow-xl"
               style="color: white;"
             >
-              {__("Talk to a compliance expert")}
+              Talk to a compliance expert
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

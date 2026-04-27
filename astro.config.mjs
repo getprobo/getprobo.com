@@ -7,8 +7,6 @@ import svelte from "@astrojs/svelte";
 import starlight from "@astrojs/starlight";
 import sitemap from "@astrojs/sitemap";
 import { removeHtmlExtension } from "./vite-plugin-remove-html";
-import { langs } from "./src/config";
-import { removeTranslatedDoc } from "./tools/removeTranslatedDoc";
 import { generateMarkdown } from "./tools/generateMarkdown";
 
 // Post-enforce fallback: when vite-plugin-svelte cannot resolve a Svelte
@@ -30,18 +28,70 @@ export default defineConfig({
   site: "https://www.getprobo.com",
   prefetch: false,
   trailingSlash: "never",
-  i18n: {
-    locales: [...langs, "en"],
-    defaultLocale: "en",
-  },
   redirects: {
     "/blog/page/1": {
       status: 301,
       destination: "/blog",
     },
-    "/fr/blog/page/1": {
+    "/fr": {
+      status: 301,
+      destination: "/",
+    },
+    "/fr/about": {
+      status: 301,
+      destination: "/about",
+    },
+    "/fr/blog": {
       status: 301,
       destination: "/blog",
+    },
+    "/fr/blog/[id]": {
+      status: 301,
+      destination: "/blog/[id]",
+    },
+    "/fr/blog/page/[page]": {
+      status: 301,
+      destination: "/blog/page/[page]",
+    },
+    "/fr/brand": {
+      status: 301,
+      destination: "/brand",
+    },
+    "/fr/compliance-guides": {
+      status: 301,
+      destination: "/hub",
+    },
+    "/fr/contact": {
+      status: 301,
+      destination: "/contact",
+    },
+    "/fr/cookie-policy": {
+      status: 301,
+      destination: "/cookie-policy",
+    },
+    "/fr/pricing": {
+      status: 301,
+      destination: "/pricing",
+    },
+    "/fr/privacy": {
+      status: 301,
+      destination: "/privacy",
+    },
+    "/fr/stories": {
+      status: 301,
+      destination: "/stories",
+    },
+    "/fr/stories/[id]": {
+      status: 301,
+      destination: "/stories/[id]",
+    },
+    "/fr/terms": {
+      status: 301,
+      destination: "/terms",
+    },
+    "/fr/yc": {
+      status: 301,
+      destination: "/yc",
     },
   },
   build: {
@@ -98,7 +148,6 @@ export default defineConfig({
         Search: "./src/components/docs/Search.astro",
         MobileMenuFooter: "./src/components/docs/MobileMenuFooter.astro",
         ThemeProvider: "./src/components/docs/ThemeProvider.astro",
-        LanguageSelect: "./src/components/docs/LanguageSelect.astro",
         MobileMenuToggle: "./src/components/docs/MobileMenuToggle.astro",
         TwoColumnContent: "./src/components/docs/TwoColumnContent.astro",
         PageSidebar: "./src/components/docs/PageSidebar.astro",
@@ -431,16 +480,12 @@ export default defineConfig({
         },
       ],
     }),
-    removeTranslatedDoc(),
     generateMarkdown(),
     mdx(),
     svelte(),
     sitemap({
       filter(page) {
         if (page.endsWith("/yc") || page.endsWith("/yc/")) {
-          return false;
-        }
-        if (/\/fr(\/|$)/.test(page)) {
           return false;
         }
         if (page.includes("/404")) {

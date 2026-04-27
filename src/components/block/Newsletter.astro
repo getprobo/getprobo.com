@@ -2,9 +2,6 @@
 import clsx from "clsx";
 import Button from "../ui/Button.svelte";
 import { tv } from "tailwind-variants";
-import { getTranslator } from "../../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
 
 const newsletter = tv({
   base: "",
@@ -30,11 +27,8 @@ const props = Astro.props;
         props.variant === "footer" ? "text-sm" : "text-lg font-medium",
       )}
     >
-      {
-        __(
-          "Sign up for our newsletter to get actionable insights about compliance, right to your inbox.",
-        )
-      }
+      Sign up for our newsletter to get actionable insights about compliance,
+      right to your inbox.
     </div>
     <div class="space-y-3">
       <input
@@ -45,15 +39,15 @@ const props = Astro.props;
         name="email"
         type="email"
         required
-        placeholder={__("Enter your email")}
-        aria-label={__("Your email")}
+        placeholder="Enter your email"
+        aria-label="Your email"
       />
       <Button
         type="submit"
         class={clsx(
           "w-full text-base sm:w-max",
           props.variant === "footer" ? "h-9 w-max" : "h-11 sm:h-8",
-        )}>{__("Subscribe")}</Button
+        )}>Subscribe</Button
       >
     </div>
   </form>

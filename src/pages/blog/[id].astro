@@ -5,10 +5,8 @@ import Prose from "../../components/Prose.astro";
 import Sharer from "../../components/block/Sharer.svelte";
 import WrittenBy from "../../components/block/WrittenBy.astro";
 import Newsletter from "../../components/block/Newsletter.astro";
-import { filterLang, getLink } from "../../lib/i18n.ts";
-
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", filterLang("en"));
+  const posts = await getCollection("blog");
   return posts.map((post) => ({
     params: { id: post.id },
     props: { post },
@@ -95,7 +93,7 @@ const faqSchema = post.data.faqs
   }
   <main class="@container container my-10 max-w-[720px] sm:my-20">
     <a
-      href={getLink(Astro, "/blog")}
+      href="/blog"
       class="text-quaternary animate-fade-in animation-delay-200 mb-4 flex items-center gap-2"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"

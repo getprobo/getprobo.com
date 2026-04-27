@@ -1,10 +1,8 @@
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
-import { filterLang } from "../lib/i18n.ts";
-
 export async function GET(context: APIContext) {
-  const posts = (await getCollection("blog", filterLang("en"))).sort(
+  const posts = (await getCollection("blog")).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
   );
 

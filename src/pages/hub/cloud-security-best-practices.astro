@@ -1,7 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   {
@@ -84,10 +82,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("Cloud security best practices for audit-ready teams")}
-  description={__(
-    "Learn cloud security best practices to prevent misconfigurations, cut credential risk, and generate audit-ready evidence for SOC 2 and ISO 27001. Start now.",
-  )}
+  title="Cloud security best practices for audit-ready teams"
+  description="Learn cloud security best practices to prevent misconfigurations, cut credential risk, and generate audit-ready evidence for SOC 2 and ISO 27001. Start now."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script
@@ -100,15 +96,16 @@ const breadcrumbSchema = {
       <h1
         class="text-foreground mb-6 text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
       >
-        <span class="highlight-text">{__("Cloud Security")}</span>
-        {__("Best Practices")}<br />{__("for Audit-Ready Teams")}
+        <span class="highlight-text">Cloud Security</span>
+        Best Practices<br />for Audit-Ready Teams
       </h1>
       <p class="text-muted-foreground text-lg">
-        {
-          __(
-            "A lot of cloud incidents are not caused by elite attackers. They happen because a permission was too broad, a key lived too long, or a temporary exception became permanent. The Verizon 2025 DBIR found compromised credentials were an initial access vector in 22% of reviewed breaches. That single number explains why cloud security best practices are less about enforcing the basics consistently, across every environment.",
-          )
-        }
+        A lot of cloud incidents are not caused by elite attackers. They happen
+        because a permission was too broad, a key lived too long, or a temporary
+        exception became permanent. The Verizon 2025 DBIR found compromised
+        credentials were an initial access vector in 22% of reviewed breaches.
+        That single number explains why cloud security best practices are less
+        about enforcing the basics consistently, across every environment.
       </p>
     </header>
 
@@ -139,26 +136,20 @@ const breadcrumbSchema = {
         <section class="mb-12 scroll-mt-24">
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {__("If you are building toward")}
+              If you are building toward
               <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
                 >SOC 2</a
               >, <a href="/hub/iso27001" class="text-[#5d770d] hover:underline"
                 >ISO 27001</a
-              >, {
-                __(
-                  "HIPAA, or simply trying to keep enterprise customers confident, the goal is the same:",
-                )
-              }
+              >, HIPAA, or simply trying to keep enterprise customers confident,
+              the goal is the same:
               <strong class="text-foreground"
-                >{__("reduce your most likely risks")}</strong
+                >reduce your most likely risks</strong
               >
-              {__("and be able to prove it with")}
-              <strong class="text-foreground">{__("clean evidence.")}</strong>
-              {
-                __(
-                  "This is the playbook teams use to get there without drowning engineers in compliance noise.",
-                )
-              }
+              and be able to prove it with
+              <strong class="text-foreground">clean evidence.</strong>
+              This is the playbook teams use to get there without drowning engineers
+              in compliance noise.
             </p>
           </div>
         </section>
@@ -173,66 +164,51 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What are cloud security best practices?")}
+            What are cloud security best practices?
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
               <strong class="text-foreground"
-                >{__("What are cloud security best practices?")}</strong
+                >What are cloud security best practices?</strong
               >
-              {__("They are the operational and technical controls that")}
+              They are the operational and technical controls that
               <strong class="text-foreground"
-                >{__("keep your cloud workloads secure")}</strong
+                >keep your cloud workloads secure</strong
               >
-              {
-                __(
-                  "by default: strong identity and access controls, hardened configurations, encrypted data flows, continuous monitoring, and tested response processes. The best practices are the ones",
-                )
-              }
-              <strong class="text-foreground"
-                >{
-                  __(
-                    "you can enforce automatically and demonstrate with evidence,",
-                  )
-                }</strong
+              by default: strong identity and access controls, hardened configurations,
+              encrypted data flows, continuous monitoring, and tested response processes.
+              The best practices are the ones
+              <strong class="text-foreground">
+                you can enforce automatically and demonstrate with evidence,</strong
               >
-              {__("not the ones that live in a policy doc.")}
+              not the ones that live in a policy doc.
             </p>
-            <p>{__("Think of them in three buckets:")}</p>
+            <p>Think of them in three buckets:</p>
             <ul
               class="border-border-low ml-0 list-none space-y-3 rounded-lg border bg-[#f8f9f7] p-4"
             >
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{__("Prevent:")}</strong>
-                  {
-                    __(
-                      "stop risky actions (over-permissioned IAM, public buckets, unencrypted data paths).",
-                    )
-                  }</span
+                  ><strong class="text-foreground">Prevent:</strong>
+                  stop risky actions (over-permissioned IAM, public buckets, unencrypted
+                  data paths).</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{__("Detect:")}</strong>
-                  {
-                    __(
-                      "know quickly when something changes (config drift, suspicious auth, unexpected data access).",
-                    )
-                  }</span
+                  ><strong class="text-foreground">Detect:</strong>
+                  know quickly when something changes (config drift, suspicious auth,
+                  unexpected data access).</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{__("Recover:")}</strong>
-                  {
-                    __(
-                      "restore safely (backups, incident response, lessons learned that turn into guardrails).",
-                    )
-                  }</span
+                  ><strong class="text-foreground">Recover:</strong>
+                  restore safely (backups, incident response, lessons learned that
+                  turn into guardrails).</span
                 >
               </li>
             </ul>
@@ -240,101 +216,69 @@ const breadcrumbSchema = {
             <!-- Quick checklist -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("A quick checklist you can steal")}
+                A quick checklist you can steal
               </h3>
               <ol class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">1.</span>
-                  <span
-                    >{
-                      __(
-                        "Centralize identity (SSO) and enforce MFA for all users.",
-                      )
-                    }</span
+                  <span>
+                    Centralize identity (SSO) and enforce MFA for all users.</span
                   >
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">2.</span>
-                  <span
-                    >{
-                      __(
-                        "Remove long-lived keys and rotate anything that must exist.",
-                      )
-                    }</span
+                  <span>
+                    Remove long-lived keys and rotate anything that must exist.</span
                   >
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">3.</span>
-                  <span
-                    >{
-                      __(
-                        "Separate production from everything else (accounts/projects, IAM boundaries).",
-                      )
-                    }</span
+                  <span>
+                    Separate production from everything else (accounts/projects,
+                    IAM boundaries).</span
                   >
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">4.</span>
-                  <span
-                    >{
-                      __(
-                        "Encrypt data in transit and at rest, with managed keys and tight access.",
-                      )
-                    }</span
+                  <span>
+                    Encrypt data in transit and at rest, with managed keys and
+                    tight access.</span
                   >
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">5.</span>
-                  <span
-                    >{
-                      __(
-                        "Turn on cloud audit logs and ship them to an immutable store.",
-                      )
-                    }</span
+                  <span>
+                    Turn on cloud audit logs and ship them to an immutable
+                    store.</span
                   >
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">6.</span>
-                  <span
-                    >{
-                      __(
-                        "Use infrastructure as code with peer review and policy checks.",
-                      )
-                    }</span
+                  <span>
+                    Use infrastructure as code with peer review and policy
+                    checks.</span
                   >
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">7.</span>
-                  <span
-                    >{
-                      __(
-                        "Alert on risky changes: public access, wildcard permissions, disabled logging.",
-                      )
-                    }</span
+                  <span>
+                    Alert on risky changes: public access, wildcard permissions,
+                    disabled logging.</span
                   >
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">8.</span>
-                  <span
-                    >{
-                      __("Run periodic access reviews and vendor reviews.")
-                    }</span
-                  >
+                  <span> Run periodic access reviews and vendor reviews.</span>
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">9.</span>
-                  <span
-                    >{__("Test backup restores and incident runbooks.")}</span
-                  >
+                  <span>Test backup restores and incident runbooks.</span>
                 </li>
                 <li class="flex items-start gap-3">
                   <span class="font-semibold text-[#5d770d]">10.</span>
-                  <span
-                    >{
-                      __(
-                        "Keep an evidence trail that maps to SOC 2 / ISO 27001 controls.",
-                      )
-                    }</span
+                  <span>
+                    Keep an evidence trail that maps to SOC 2 / ISO 27001
+                    controls.</span
                   >
                 </li>
               </ol>
@@ -361,76 +305,53 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Cloud security best practices start with shared responsibility and scope",
-              )
-            }
+            Cloud security best practices start with shared responsibility and
+            scope
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Most teams lose time in cloud security because they assume the cloud provider",
-                )
-              }
-              <strong class="text-foreground">{__("handles security.")}</strong>
-              {
-                __(
-                  "Providers secure the underlying infrastructure. You still own security for your identities, your configurations, your data, and your application behavior.",
-                )
-              }
+              Most teams lose time in cloud security because they assume the
+              cloud provider
+              <strong class="text-foreground">handles security.</strong>
+              Providers secure the underlying infrastructure. You still own security
+              for your identities, your configurations, your data, and your application
+              behavior.
             </p>
             <p>
-              {__("The")}
+              The
               <a
                 href="https://www.ncsc.gov.uk/collection/cloud/understanding-cloud-services/cloud-security-shared-responsibility-model"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-[#5d770d] hover:underline"
-                >{__("shared responsibility model")}</a
+                >shared responsibility model</a
               >
-              {
-                __(
-                  "makes this explicit and changes depending on whether you are using IaaS, PaaS, or SaaS.",
-                )
-              }
+              makes this explicit and changes depending on whether you are using IaaS,
+              PaaS, or SaaS.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Define your system boundary before you harden anything")}
+                Define your system boundary before you harden anything
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "For audits and for real-world risk, you need a clear boundary:",
-                  )
-                }
+                For audits and for real-world risk, you need a clear boundary:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground">{__("In scope:")}</strong>
-                    {
-                      __(
-                        "production cloud accounts/projects, CI/CD, data stores, logging, identity, and any system that touches customer data.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">In scope:</strong>
+                    production cloud accounts/projects, CI/CD, data stores, logging,
+                    identity, and any system that touches customer data.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Out of scope")}</strong
-                    >
-                    {
-                      __(
-                        "(often): prototypes, isolated sandboxes, personal projects. If they connect to prod, they are in scope.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Out of scope</strong>
+                    (often): prototypes, isolated sandboxes, personal projects. If
+                    they connect to prod, they are in scope.</span
                   >
                 </li>
               </ul>
@@ -447,49 +368,40 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Separate environments like it is 2026, not 2016")}
+                Separate environments like it is 2026, not 2016
               </h3>
               <p class="mb-4">
-                {__("A classic startup anti-pattern is")}
+                A classic startup anti-pattern is
                 <strong class="text-foreground"
-                  >{__('"one cloud account, many environments."')}</strong
+                  >"one cloud account, many environments."</strong
                 >
-                {
-                  __(
-                    "It feels faster until it breaks. Environment separation is one of the highest leverage best practices because it reduces blast radius and simplifies evidence.",
-                  )
-                }
+                It feels faster until it breaks. Environment separation is one of
+                the highest leverage best practices because it reduces blast radius
+                and simplifies evidence.
               </p>
-              <p class="mb-4">{__("Minimum bar for most SaaS teams:")}</p>
+              <p class="mb-4">Minimum bar for most SaaS teams:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    >{__("Separate")}
-                    <strong class="text-foreground">{__("production")}</strong>
-                    {__("from")}
-                    <strong class="text-foreground"
-                      >{__("non-production")}</strong
-                    >
-                    {__("at the account/project level.")}</span
+                    >Separate
+                    <strong class="text-foreground">production</strong>
+                    from
+                    <strong class="text-foreground">non-production</strong>
+                    at the account/project level.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Use separate CI/CD credentials and separate secrets.")
-                    }</span
+                  <span>
+                    Use separate CI/CD credentials and separate secrets.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Restrict lateral movement with IAM boundaries and network segmentation.",
-                      )
-                    }</span
+                  <span>
+                    Restrict lateral movement with IAM boundaries and network
+                    segmentation.</span
                   >
                 </li>
               </ul>
@@ -504,38 +416,26 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Cloud security best practices for identity and access control",
-              )
-            }
+            Cloud security best practices for identity and access control
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
               <strong class="text-foreground"
-                >{__("Cloud security follows identity.")}</strong
+                >Cloud security follows identity.</strong
               >
-              {
-                __(
-                  "If an attacker gets a valid session, most of your network controls become irrelevant. That is why the credential story matters: compromised credentials were an initial access vector in 22% of breaches reviewed in the Verizon 2025 DBIR.",
-                )
-              }
+              If an attacker gets a valid session, most of your network controls become
+              irrelevant. That is why the credential story matters: compromised credentials
+              were an initial access vector in 22% of breaches reviewed in the Verizon
+              2025 DBIR.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {
-                  __(
-                    "Enforce SSO and MFA everywhere, then reduce exceptions to zero",
-                  )
-                }
+                Enforce SSO and MFA everywhere, then reduce exceptions to zero
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'Best practice is not "MFA for admins." It is MFA for everyone, with SSO as the default entry point:',
-                  )
-                }
+                Best practice is not "MFA for admins." It is MFA for everyone,
+                with SSO as the default entry point:
               </p>
               <ul
                 class="border-border-low ml-0 list-none space-y-3 rounded-lg border bg-[#f8f9f7] p-4"
@@ -543,132 +443,97 @@ const breadcrumbSchema = {
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    >{__("Use")}
+                    >Use
                     <strong class="text-foreground"
-                      >{__("SSO for cloud console")}</strong
-                    >{
-                      __(", Git provider, incident tooling, and ticketing.")
-                    }</span
+                      >SSO for cloud console</strong
+                    > , Git provider, incident tooling, and ticketing.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Block direct login")}</strong
-                    >
-                    {__("where possible.")}</span
+                    ><strong class="text-foreground">Block direct login</strong>
+                    where possible.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Prefer phishing-resistant MFA for privileged access (hardware keys or equivalent).",
-                      )
-                    }</span
+                  <span>
+                    Prefer phishing-resistant MFA for privileged access
+                    (hardware keys or equivalent).</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {__('Your enemy is not the attacker. It is the "')}
-                <strong class="text-foreground"
-                  >{__("temporary exception")}</strong
-                >
-                {__('" that becomes a permanent hole.')}
+                Your enemy is not the attacker. It is the "
+                <strong class="text-foreground">temporary exception</strong>
+                " that becomes a permanent hole.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Least privilege that survives growth")}
+                Least privilege that survives growth
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Least privilege fails when it is designed around individual people. Design around roles that match how work happens:",
-                  )
-                }
+                Least privilege fails when it is designed around individual
+                people. Design around roles that match how work happens:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Workload roles:")}</strong
-                    >
-                    {
-                      __(
-                        "runtime identities for services, scoped to exact resources.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Workload roles:</strong>
+                    runtime identities for services, scoped to exact resources.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Human roles:")}</strong
-                    >
-                    {__("read-only, engineer, on-call, admin.")}</span
+                    ><strong class="text-foreground">Human roles:</strong>
+                    read-only, engineer, on-call, admin.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
                   <span
-                    ><strong class="text-foreground"
-                      >{__("Break-glass:")}</strong
-                    >
-                    {
-                      __(
-                        "an emergency path with extra approval, extra logging, and short duration.",
-                      )
-                    }</span
+                    ><strong class="text-foreground">Break-glass:</strong>
+                    an emergency path with extra approval, extra logging, and short
+                    duration.</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "A simple rule: no wildcard permissions in production unless there is a written justification and a compensating control (alerting, tighter conditions, time-bounded access).",
-                  )
-                }
+                A simple rule: no wildcard permissions in production unless
+                there is a written justification and a compensating control
+                (alerting, tighter conditions, time-bounded access).
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Kill long-lived secrets before they kill you")}
+                Kill long-lived secrets before they kill you
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'The most common "quiet" cloud risk is long-lived credentials sitting in CI variables, Terraform state, or old laptops.',
-                  )
-                }
+                The most common "quiet" cloud risk is long-lived credentials
+                sitting in CI variables, Terraform state, or old laptops.
               </p>
               <p class="mb-4">
-                {__("If you want a control that auditors love:")}
+                If you want a control that auditors love:
                 <strong class="text-foreground"
-                  >{__("enforce that production changes require")}</strong
+                  >enforce that production changes require</strong
                 >
-                {
-                  __(
-                    "authenticated, reviewed pull requests (change control plus identity assurance).",
-                  )
-                }
+                authenticated, reviewed pull requests (change control plus identity
+                assurance).
                 <a
                   href="https://www.getprobo.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-[#5d770d] hover:underline">{__("Probo")}</a
+                  class="text-[#5d770d] hover:underline">Probo</a
                 >
-                {__("explicitly calls out code review evidence as a")}
-                <strong class="text-foreground"
-                  >{__("strong audit trail")}</strong
-                >
-                {__("for change management expectations.")}
+                explicitly calls out code review evidence as a
+                <strong class="text-foreground">strong audit trail</strong>
+                for change management expectations.
               </p>
             </div>
 
@@ -693,103 +558,73 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Cloud security best practices for configuration, guardrails, and drift",
-              )
-            }
+            Cloud security best practices for configuration, guardrails, and
+            drift
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {__("Cloud misconfigurations are rarely")}
-              <strong class="text-foreground">{__('"one big mistake."')}</strong
-              >
-              {
-                __(
-                  "They are hundreds of small ones that compound: a permissive bucket policy, a security group opened for debugging, logging turned off to reduce cost.",
-                )
-              }
+              Cloud misconfigurations are rarely
+              <strong class="text-foreground">"one big mistake."</strong>
+              They are hundreds of small ones that compound: a permissive bucket policy,
+              a security group opened for debugging, logging turned off to reduce
+              cost.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Treat infrastructure as code like production code")}
+                Treat infrastructure as code like production code
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Infrastructure as code (IaC) becomes a security control when you enforce:",
-                  )
-                }
+                Infrastructure as code (IaC) becomes a security control when you
+                enforce:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Peer review for changes that touch prod.")}</span>
+                  <span>Peer review for changes that touch prod.</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Automated checks for risky patterns (public exposure, wildcard IAM, missing encryption).",
-                      )
-                    }</span
+                  <span>
+                    Automated checks for risky patterns (public exposure,
+                    wildcard IAM, missing encryption).</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Versioned releases and rollback.")}</span>
+                  <span>Versioned releases and rollback.</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "This also solves an audit problem: pull requests, approvals, and pipeline logs become clean evidence of control operation.",
-                  )
-                }
+                This also solves an audit problem: pull requests, approvals, and
+                pipeline logs become clean evidence of control operation.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Put guardrails where engineers actually work")}
+                Put guardrails where engineers actually work
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "The best guardrails are hard to bypass and easy to live with:",
-                  )
-                }
+                The best guardrails are hard to bypass and easy to live with:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Organization-level policies (service control policies, org policy constraints).",
-                      )
-                    }</span
+                  <span>
+                    Organization-level policies (service control policies, org
+                    policy constraints).</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Default-deny for public access, with an exception workflow.",
-                      )
-                    }</span
+                  <span>
+                    Default-deny for public access, with an exception workflow.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __('"Secure by default" templates for new services.')
-                    }</span
-                  >
+                  <span> "Secure by default" templates for new services.</span>
                 </li>
               </ul>
             </div>
@@ -805,43 +640,39 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Detect drift, not just bad initial configs")}
+                Detect drift, not just bad initial configs
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Even if your baseline is solid, drift happens through consoles, scripts, hotfixes, and third-party tooling. Drift detection should alert on:",
-                  )
-                }
+                Even if your baseline is solid, drift happens through consoles,
+                scripts, hotfixes, and third-party tooling. Drift detection
+                should alert on:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Logging disabled")}</span>
+                  <span>Logging disabled</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Public exposure introduced")}</span>
+                  <span>Public exposure introduced</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Privileged roles granted")}</span>
+                  <span>Privileged roles granted</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("KMS key policies loosened")}</span>
+                  <span>KMS key policies loosened</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("New external integrations added")}</span>
+                  <span>New external integrations added</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    'This is where teams get frustrated by "noise." The fix is to alert on high-impact changes only, and require tickets for exceptions.',
-                  )
-                }
+                This is where teams get frustrated by "noise." The fix is to
+                alert on high-impact changes only, and require tickets for
+                exceptions.
               </p>
             </div>
           </div>
@@ -854,60 +685,40 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Cloud security best practices for data protection and privacy",
-              )
-            }
+            Cloud security best practices for data protection and privacy
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Cloud security best practices are incomplete without data discipline. You can have perfect IAM and still leak data if retention is sloppy or access is too broad.",
-                )
-              }
+              Cloud security best practices are incomplete without data
+              discipline. You can have perfect IAM and still leak data if
+              retention is sloppy or access is too broad.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Encrypt everything, but do not stop there")}
+                Encrypt everything, but do not stop there
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Encryption at rest and in transit is table stakes. The differentiator is key governance:",
-                  )
-                }
+                Encryption at rest and in transit is table stakes. The
+                differentiator is key governance:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Use managed KMS keys for production data.")}</span>
+                  <span>Use managed KMS keys for production data.</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Restrict who can decrypt, not just who can read.")
-                    }</span
-                  >
+                  <span> Restrict who can decrypt, not just who can read.</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Rotate keys on a schedule and after incidents.")
-                    }</span
-                  >
+                  <span> Rotate keys on a schedule and after incidents.</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Also, define where encryption is enforced: databases, object storage, backups, queues, and analytics sinks.",
-                  )
-                }
+                Also, define where encryption is enforced: databases, object
+                storage, backups, queues, and analytics sinks.
               </p>
             </div>
 
@@ -925,102 +736,69 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Reduce data exposure by design")}
+                Reduce data exposure by design
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Data minimization is a security control and a privacy control:",
-                  )
-                }
+                Data minimization is a security control and a privacy control:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Keep only what you need, for as long as you need it.")
-                    }</span
+                  <span>
+                    Keep only what you need, for as long as you need it.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Separate customer datasets when feasible (tenant isolation).",
-                      )
-                    }</span
+                  <span>
+                    Separate customer datasets when feasible (tenant isolation).</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Mask or tokenize sensitive fields in non-production.")
-                    }</span
+                  <span>
+                    Mask or tokenize sensitive fields in non-production.</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Auditors and enterprise customers will ask a version of the same question:",
-                  )
-                }
-                <strong class="text-foreground"
-                  >{
-                    __('"Who can access customer data and how do you know?"')
-                  }</strong
+                Auditors and enterprise customers will ask a version of the same
+                question:
+                <strong class="text-foreground">
+                  "Who can access customer data and how do you know?"</strong
                 >
-                {
-                  __(
-                    'If the answer is "a few people, and we can prove it," you are in a strong place.',
-                  )
-                }
+                If the answer is "a few people, and we can prove it," you are in a
+                strong place.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Log access to sensitive data, then protect the logs")}
+                Log access to sensitive data, then protect the logs
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "For regulated environments (HIPAA, GDPR workloads, healthcare tech), logging is part of privacy enforcement:",
-                  )
-                }
+                For regulated environments (HIPAA, GDPR workloads, healthcare
+                tech), logging is part of privacy enforcement:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Log reads of sensitive records and administrative access to data stores.",
-                      )
-                    }</span
+                  <span>
+                    Log reads of sensitive records and administrative access to
+                    data stores.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Centralize logs in a system with strict access control.",
-                      )
-                    }</span
+                  <span>
+                    Centralize logs in a system with strict access control.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Make logs tamper-resistant (write-once storage or immutability controls).",
-                      )
-                    }</span
+                  <span>
+                    Make logs tamper-resistant (write-once storage or
+                    immutability controls).</span
                   >
                 </li>
               </ul>
@@ -1038,65 +816,53 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Cloud security best practices for monitoring, incident response, and resilience",
-              )
-            }
+            Cloud security best practices for monitoring, incident response, and
+            resilience
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Security is not only prevention. Auditors and customers care about how you respond when something goes wrong.",
-                )
-              }
+              Security is not only prevention. Auditors and customers care about
+              how you respond when something goes wrong.
             </p>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Centralize audit logs and keep them immutable")}
+                Centralize audit logs and keep them immutable
               </h3>
-              <p class="mb-4">{__("At minimum, enable and retain:")}</p>
+              <p class="mb-4">At minimum, enable and retain:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Cloud audit logs (control plane)")}</span>
+                  <span>Cloud audit logs (control plane)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Network flow logs (where applicable)")}</span>
+                  <span>Network flow logs (where applicable)</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Identity provider logs")}</span>
+                  <span>Identity provider logs</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("CI/CD logs for production deploys")}</span>
+                  <span>CI/CD logs for production deploys</span>
                 </li>
               </ul>
-              <p class="mt-4">
-                {__("Then ship them to a central place with:")}
-              </p>
+              <p class="mt-4">Then ship them to a central place with:</p>
               <ul class="mt-4 ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Restricted access (security only, plus break-glass)")
-                    }</span
+                  <span>
+                    Restricted access (security only, plus break-glass)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Long enough retention for your audit period")}</span
-                  >
+                  <span>Long enough retention for your audit period</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Immutability or strong integrity controls")}</span>
+                  <span>Immutability or strong integrity controls</span>
                 </li>
               </ul>
             </div>
@@ -1117,87 +883,61 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Run incident response like you will be tested on it")}
+                Run incident response like you will be tested on it
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Incident response should not be a PDF nobody reads. Make it operational:",
-                  )
-                }
+                Incident response should not be a PDF nobody reads. Make it
+                operational:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Define severity levels and escalation paths.")}</span
+                  <span>Define severity levels and escalation paths.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-muted-foreground">•</span>
+                  <span>
+                    Pre-assign roles: incident commander, comms, ops, forensics.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Pre-assign roles: incident commander, comms, ops, forensics.",
-                      )
-                    }</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Do tabletop exercises and document what changed afterward.",
-                      )
-                    }</span
+                  <span>
+                    Do tabletop exercises and document what changed afterward.</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    'This is one of those "insider" realities: audits go smoother when your incident process includes real timestamps, real tickets, and post-incident follow-ups that became permanent controls.',
-                  )
-                }
+                This is one of those "insider" realities: audits go smoother
+                when your incident process includes real timestamps, real
+                tickets, and post-incident follow-ups that became permanent
+                controls.
               </p>
             </div>
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Backups are not a control until you test restores")}
+                Backups are not a control until you test restores
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    'Teams love saying "we have backups." Auditors and attackers both ask: "Can you restore?"',
-                  )
-                }
+                Teams love saying "we have backups." Auditors and attackers both
+                ask: "Can you restore?"
               </p>
-              <p class="mb-4">{__("Best practice:")}</p>
+              <p class="mb-4">Best practice:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Backup critical data stores with versioning.")}</span
-                  >
+                  <span>Backup critical data stores with versioning.</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Protect backups with separate access controls.")
-                    }</span
-                  >
+                  <span> Protect backups with separate access controls.</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Test restores on a schedule and store the evidence (logs, tickets, screenshots if needed).",
-                      )
-                    }</span
+                  <span>
+                    Test restores on a schedule and store the evidence (logs,
+                    tickets, screenshots if needed).</span
                   >
                 </li>
               </ul>
@@ -1212,22 +952,17 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Turn cloud security best practices into audit-ready evidence")}
+            Turn cloud security best practices into audit-ready evidence
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  'The difference between "secure" and "audit-ready" is repeatability. Enterprise customers and auditors want to see that controls operate over time, not just on the day you prepared.',
-                )
-              }
+              The difference between "secure" and "audit-ready" is
+              repeatability. Enterprise customers and auditors want to see that
+              controls operate over time, not just on the day you prepared.
             </p>
             <p>
-              {
-                __(
-                  "A useful approach is to map best practices to evidence artifacts you can produce on demand.",
-                )
-              }
+              A useful approach is to map best practices to evidence artifacts
+              you can produce on demand.
             </p>
 
             <!-- Evidence Table -->
@@ -1237,100 +972,77 @@ const breadcrumbSchema = {
                   <tr class="border-border-low border-b">
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("Control area")}</th
+                      >Control area</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Best practice")}</th
+                      >Best practice</th
                     >
                     <th
                       class="text-foreground py-3 pl-2 text-left font-semibold"
-                      >{__("Evidence that holds up in an audit")}</th
+                      >Evidence that holds up in an audit</th
                     >
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Identity")}</td
+                      >Identity</td
                     >
-                    <td class="px-2 py-3">{__("SSO + MFA enforced")}</td>
-                    <td class="py-3 pl-2"
-                      >{
-                        __(
-                          "IdP policy settings, access logs, periodic access review tickets",
-                        )
-                      }</td
+                    <td class="px-2 py-3">SSO + MFA enforced</td>
+                    <td class="py-3 pl-2">
+                      IdP policy settings, access logs, periodic access review
+                      tickets</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Access control")}</td
+                      >Access control</td
                     >
-                    <td class="px-2 py-3">{__("Least privilege roles")}</td>
-                    <td class="py-3 pl-2"
-                      >{
-                        __(
-                          "IAM role definitions, change history, approvals for exceptions",
-                        )
-                      }</td
+                    <td class="px-2 py-3">Least privilege roles</td>
+                    <td class="py-3 pl-2">
+                      IAM role definitions, change history, approvals for
+                      exceptions</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Change management")}</td
+                      >Change management</td
                     >
-                    <td class="px-2 py-3"
-                      >{__("Reviewed IaC and code deploys")}</td
-                    >
-                    <td class="py-3 pl-2"
-                      >{
-                        __(
-                          "PR approvals, CI logs, deployment records, rollback history",
-                        )
-                      }</td
+                    <td class="px-2 py-3">Reviewed IaC and code deploys</td>
+                    <td class="py-3 pl-2">
+                      PR approvals, CI logs, deployment records, rollback
+                      history</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Logging")}</td
+                      >Logging</td
                     >
-                    <td class="px-2 py-3">{__("Centralized immutable logs")}</td
-                    >
-                    <td class="py-3 pl-2"
-                      >{
-                        __(
-                          "Log configuration, retention settings, access controls, sample queries",
-                        )
-                      }</td
+                    <td class="px-2 py-3">Centralized immutable logs</td>
+                    <td class="py-3 pl-2">
+                      Log configuration, retention settings, access controls,
+                      sample queries</td
                     >
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Data protection")}</td
+                      >Data protection</td
                     >
-                    <td class="px-2 py-3"
-                      >{__("Encryption + key governance")}</td
-                    >
-                    <td class="py-3 pl-2"
-                      >{
-                        __(
-                          "KMS policies, key rotation records, encryption settings on stores",
-                        )
-                      }</td
+                    <td class="px-2 py-3">Encryption + key governance</td>
+                    <td class="py-3 pl-2">
+                      KMS policies, key rotation records, encryption settings on
+                      stores</td
                     >
                   </tr>
                   <tr>
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Resilience")}</td
+                      >Resilience</td
                     >
-                    <td class="px-2 py-3">{__("Tested restores")}</td>
-                    <td class="py-3 pl-2"
-                      >{
-                        __(
-                          "Restore test tickets, runbooks, outputs, remediation actions",
-                        )
-                      }</td
+                    <td class="px-2 py-3">Tested restores</td>
+                    <td class="py-3 pl-2">
+                      Restore test tickets, runbooks, outputs, remediation
+                      actions</td
                     >
                   </tr>
                 </tbody>
@@ -1339,26 +1051,19 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {
-                  __(
-                    "A real-world example: compressing audit timelines without cutting corners",
-                  )
-                }
+                A real-world example: compressing audit timelines without
+                cutting corners
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Ahrefs shared a public story of achieving ISO 27001 certification in 3 months, with an 80% reduction in time to audit readiness by pairing expert-led execution with an open-source compliance platform. The takeaway is not",
-                  )
-                }
+                Ahrefs shared a public story of achieving ISO 27001
+                certification in 3 months, with an 80% reduction in time to
+                audit readiness by pairing expert-led execution with an
+                open-source compliance platform. The takeaway is not
                 <strong class="text-foreground"
-                  >{__('"move faster at any cost."')}</strong
+                  >"move faster at any cost."</strong
                 >
-                {
-                  __(
-                    "It is that clear scope, clean evidence, and a managed workflow reduce rework.",
-                  )
-                }
+                It is that clear scope, clean evidence, and a managed workflow reduce
+                rework.
               </p>
             </div>
 
@@ -1373,66 +1078,48 @@ const breadcrumbSchema = {
 
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Where a managed compliance approach helps cloud security")}
+                Where a managed compliance approach helps cloud security
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "If you have a lean team, the hardest part is not understanding the best practices. It is operationalizing them while shipping product.",
-                  )
-                }
+                If you have a lean team, the hardest part is not understanding
+                the best practices. It is operationalizing them while shipping
+                product.
               </p>
               <p class="mb-4">
-                {__('This is where a "done-for-you" model fits naturally:')}
+                This is where a "done-for-you" model fits naturally:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "A compliance expert helps you translate requirements into controls that match your architecture.",
-                      )
-                    }</span
+                  <span>
+                    A compliance expert helps you translate requirements into
+                    controls that match your architecture.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Evidence collection is automated where possible and curated where it matters.",
-                      )
-                    }</span
+                  <span>
+                    Evidence collection is automated where possible and curated
+                    where it matters.</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Vendor security questionnaires get answered consistently because your control story is coherent.",
-                      )
-                    }</span
+                  <span>
+                    Vendor security questionnaires get answered consistently
+                    because your control story is coherent.</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Probo's approach is built around that reality: an open-source",
-                  )
-                }
+                Probo's approach is built around that reality: an open-source
                 <a
                   href="/hub/what-is-compliance-software"
                   class="text-[#5d770d] hover:underline"
-                  >{__("compliance management platform")}</a
+                  >compliance management platform</a
                 >
-                {
-                  __(
-                    "plus hands-on experts that handle the heavy lifting, so you stay continuously audit-ready.",
-                  )
-                }
+                plus hands-on experts that handle the heavy lifting, so you stay continuously
+                audit-ready.
               </p>
             </div>
           </div>
@@ -1445,51 +1132,37 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {
-              __(
-                "Practical application: a 30-day cloud security rollout you can actually finish",
-              )
-            }
+            Practical application: a 30-day cloud security rollout you can
+            actually finish
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "If you want progress you can measure in one month, run this as four focused weeks. Keep scope tight: production only.",
-                )
-              }
+              If you want progress you can measure in one month, run this as
+              four focused weeks. Keep scope tight: production only.
             </p>
 
             <div class="mt-6 space-y-6">
               <div class="border-border-low rounded-lg border bg-[#f8f9f7] p-6">
                 <h3 class="text-foreground mb-3 text-lg font-semibold">
-                  {__("Week 1 — Identity baseline")}
+                  Week 1 — Identity baseline
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{__("Enforce SSO and MFA for all cloud access.")}</span
+                    <span>Enforce SSO and MFA for all cloud access.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-muted-foreground">•</span>
+                    <span>
+                      Remove long-lived keys and switch CI to OIDC where
+                      possible.</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Remove long-lived keys and switch CI to OIDC where possible.",
-                        )
-                      }</span
-                    >
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Create a break-glass role with strict logging and approvals.",
-                        )
-                      }</span
+                    <span>
+                      Create a break-glass role with strict logging and
+                      approvals.</span
                     >
                   </li>
                 </ul>
@@ -1497,37 +1170,28 @@ const breadcrumbSchema = {
 
               <div class="border-border-low rounded-lg border bg-[#f8f9f7] p-6">
                 <h3 class="text-foreground mb-3 text-lg font-semibold">
-                  {__("Week 2 — Guardrails and separation")}
+                  Week 2 — Guardrails and separation
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Separate production accounts/projects if you have not already.",
-                        )
-                      }</span
+                    <span>
+                      Separate production accounts/projects if you have not
+                      already.</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Add org-level policies to block public access and wildcard IAM.",
-                        )
-                      }</span
+                    <span>
+                      Add org-level policies to block public access and wildcard
+                      IAM.</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Define an exception workflow (ticket + time limit + owner).",
-                        )
-                      }</span
+                    <span>
+                      Define an exception workflow (ticket + time limit +
+                      owner).</span
                     >
                   </li>
                 </ul>
@@ -1535,31 +1199,25 @@ const breadcrumbSchema = {
 
               <div class="border-border-low rounded-lg border bg-[#f8f9f7] p-6">
                 <h3 class="text-foreground mb-3 text-lg font-semibold">
-                  {__("Week 3 — Logging and alerting")}
+                  Week 3 — Logging and alerting
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Turn on cloud audit logs, flow logs where relevant, and CI/CD logs.",
-                        )
-                      }</span
+                    <span>
+                      Turn on cloud audit logs, flow logs where relevant, and
+                      CI/CD logs.</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span>{__("Centralize logs and lock down access.")}</span>
+                    <span>Centralize logs and lock down access.</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Add alerts for high-impact changes: public exposure, logging disabled, admin grants.",
-                        )
-                      }</span
+                    <span>
+                      Add alerts for high-impact changes: public exposure,
+                      logging disabled, admin grants.</span
                     >
                   </li>
                 </ul>
@@ -1567,35 +1225,27 @@ const breadcrumbSchema = {
 
               <div class="border-border-low rounded-lg border bg-[#f8f9f7] p-6">
                 <h3 class="text-foreground mb-3 text-lg font-semibold">
-                  {__("Week 4 — Evidence and response")}
+                  Week 4 — Evidence and response
                 </h3>
                 <ul class="ml-0 list-none space-y-2">
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Write two operational runbooks: incident response and access review.",
-                        )
-                      }</span
+                    <span>
+                      Write two operational runbooks: incident response and
+                      access review.</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __("Run one tabletop exercise and one restore test.")
-                      }</span
+                    <span>
+                      Run one tabletop exercise and one restore test.</span
                     >
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-muted-foreground">•</span>
-                    <span
-                      >{
-                        __(
-                          "Build an evidence folder that maps each control to a source of truth (configs, logs, tickets).",
-                        )
-                      }</span
+                    <span>
+                      Build an evidence folder that maps each control to a
+                      source of truth (configs, logs, tickets).</span
                     >
                   </li>
                 </ul>
@@ -1603,18 +1253,17 @@ const breadcrumbSchema = {
             </div>
 
             <p class="mt-6">
-              {__("If you are pursuing")}
+              If you are pursuing
               <a href="/hub/soc2" class="text-[#5d770d] hover:underline"
-                >{__("SOC 2")}</a
+                >SOC 2</a
               >
-              {__("or")}
+              or
               <a href="/hub/iso27001" class="text-[#5d770d] hover:underline"
-                >{__("ISO 27001")}</a
-              >{
-                __(
-                  ", this sprint produces the artifacts auditors ask for, without inventing busywork. If you want this to stay low-effort long term, use a compliance platform to automate evidence collection and keep an expert in the loop for the judgment calls.",
-                )
-              }
+                >ISO 27001</a
+              > , this sprint produces the artifacts auditors ask for, without inventing
+              busywork. If you want this to stay low-effort long term, use a compliance
+              platform to automate evidence collection and keep an expert in the loop
+              for the judgment calls.
             </p>
           </div>
         </section>
@@ -1626,22 +1275,23 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Conclusion")}
+            Conclusion
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Cloud security best practices are not a list of settings. They are repeatable controls that stop the most common failures: weak identity, risky configuration changes, and unmanaged data exposure. When you build guardrails in code, centralize logging, test recovery, and keep a clean evidence trail, you get two wins at once: fewer incidents and faster audits.",
-                )
-              }
+              Cloud security best practices are not a list of settings. They are
+              repeatable controls that stop the most common failures: weak
+              identity, risky configuration changes, and unmanaged data
+              exposure. When you build guardrails in code, centralize logging,
+              test recovery, and keep a clean evidence trail, you get two wins
+              at once: fewer incidents and faster audits.
             </p>
             <p>
-              {
-                __(
-                  "If you are preparing for SOC 2, ISO 27001, HIPAA, or enterprise security reviews, the next step is to map your current cloud setup to a small set of enforceable controls and make them easy to prove. That is how cloud security best practices become a growth lever instead of a constant fire drill.",
-                )
-              }
+              If you are preparing for SOC 2, ISO 27001, HIPAA, or enterprise
+              security reviews, the next step is to map your current cloud setup
+              to a small set of enforceable controls and make them easy to
+              prove. That is how cloud security best practices become a growth
+              lever instead of a constant fire drill.
             </p>
           </div>
 
@@ -1667,87 +1317,78 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("FAQ")}
+            FAQ
           </h2>
           <div class="text-muted-foreground space-y-8 leading-relaxed">
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {
-                  __(
-                    "What are the most important cloud security best practices for startups?",
-                  )
-                }
+                What are the most important cloud security best practices for
+                startups?
               </h3>
               <p>
-                {
-                  __(
-                    "Startups should prioritize identity-first security (SSO + MFA, least privilege), environment separation for production, infrastructure as code with review, centralized immutable logging, and tested restores. These controls reduce the highest-probability risks and generate evidence that auditors and enterprise customers accept quickly.",
-                  )
-                }
+                Startups should prioritize identity-first security (SSO + MFA,
+                least privilege), environment separation for production,
+                infrastructure as code with review, centralized immutable
+                logging, and tested restores. These controls reduce the
+                highest-probability risks and generate evidence that auditors
+                and enterprise customers accept quickly.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {__("How do cloud security best practices map to SOC 2?")}
+                How do cloud security best practices map to SOC 2?
               </h3>
               <p>
-                {
-                  __(
-                    "SOC 2 expects you to protect systems against unauthorized access, manage change, monitor activity, and respond to incidents. Cloud best practices provide the proof: MFA and access reviews for access control, PR approvals and CI logs for change management, centralized logs for monitoring, and incident runbooks plus tabletop records for response.",
-                  )
-                }
+                SOC 2 expects you to protect systems against unauthorized
+                access, manage change, monitor activity, and respond to
+                incidents. Cloud best practices provide the proof: MFA and
+                access reviews for access control, PR approvals and CI logs for
+                change management, centralized logs for monitoring, and incident
+                runbooks plus tabletop records for response.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {
-                  __(
-                    "What is the shared responsibility model in cloud security?",
-                  )
-                }
+                What is the shared responsibility model in cloud security?
               </h3>
               <p>
-                {
-                  __(
-                    "The shared responsibility model defines which security tasks the cloud provider handles versus what you must secure. Providers protect the underlying infrastructure; you still own identity, access, configuration, data protection, and application security. Responsibilities shift depending on whether you use IaaS, PaaS, or SaaS.",
-                  )
-                }
+                The shared responsibility model defines which security tasks the
+                cloud provider handles versus what you must secure. Providers
+                protect the underlying infrastructure; you still own identity,
+                access, configuration, data protection, and application
+                security. Responsibilities shift depending on whether you use
+                IaaS, PaaS, or SaaS.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {
-                  __(
-                    "How do you prevent cloud misconfigurations in production?",
-                  )
-                }
+                How do you prevent cloud misconfigurations in production?
               </h3>
               <p>
-                {
-                  __(
-                    'Use guardrails at the org level (policies that block public exposure and risky permissions), deploy infrastructure as code with peer review, and alert on drift. Make exceptions time-bound with clear ownership. If engineers can "click a risky setting" in production without friction, misconfigurations will happen again.',
-                  )
-                }
+                Use guardrails at the org level (policies that block public
+                exposure and risky permissions), deploy infrastructure as code
+                with peer review, and alert on drift. Make exceptions time-bound
+                with clear ownership. If engineers can "click a risky setting"
+                in production without friction, misconfigurations will happen
+                again.
               </p>
             </div>
 
             <div>
               <h3 class="text-foreground mb-2 text-lg font-semibold">
-                {
-                  __(
-                    "Do cloud security best practices reduce vendor security questionnaire pain?",
-                  )
-                }
+                Do cloud security best practices reduce vendor security
+                questionnaire pain?
               </h3>
               <p>
-                {
-                  __(
-                    "Yes. Vendor questionnaires are easier when your controls are consistent and provable. Central identity, defined access roles, logging, encryption, and a tested incident process translate directly into clear answers. The biggest improvement comes from having a single source of truth for evidence instead of scattered screenshots and tribal knowledge.",
-                  )
-                }
+                Yes. Vendor questionnaires are easier when your controls are
+                consistent and provable. Central identity, defined access roles,
+                logging, encryption, and a tested incident process translate
+                directly into clear answers. The biggest improvement comes from
+                having a single source of truth for evidence instead of
+                scattered screenshots and tribal knowledge.
               </p>
             </div>
           </div>
@@ -1757,14 +1398,11 @@ const breadcrumbSchema = {
         <section class="border-border-low rounded-xl border bg-[#f8f9f7] p-8">
           <div class="text-center">
             <p class="text-foreground mb-4 text-lg font-semibold">
-              {__("Ready to make your cloud security audit-ready?")}
+              Ready to make your cloud security audit-ready?
             </p>
             <p class="text-muted-foreground mb-6">
-              {
-                __(
-                  "See how Probo helps teams build repeatable security controls with clean evidence trails.",
-                )
-              }
+              See how Probo helps teams build repeatable security controls with
+              clean evidence trails.
             </p>
             <a
               href="/contact"
@@ -1772,7 +1410,7 @@ const breadcrumbSchema = {
               rel="noopener noreferrer"
               class="inline-flex items-center justify-center rounded-lg bg-[#D7EDBA] px-6 py-3 font-medium text-[#141e12] transition-colors hover:bg-[#c5dba8]"
             >
-              {__("Get Started with Probo")}
+              Get Started with Probo
             </a>
           </div>
         </section>

@@ -21,7 +21,7 @@ const canonical = getCanonicalUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang={Astro.currentLocale || "en"}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -136,7 +136,7 @@ const canonical = getCanonicalUrl(Astro.url);
           "@type": "ContactPoint",
           contactType: "sales",
           url: "https://www.getprobo.com/contact",
-          availableLanguage: ["English", "French"],
+          availableLanguage: ["English"],
         },
       })}
     />

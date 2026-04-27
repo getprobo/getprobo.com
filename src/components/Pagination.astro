@@ -1,6 +1,5 @@
 ---
 import clsx from "clsx";
-import { getLink } from "../lib/i18n";
 type Props = {
   currentPage: number;
   lastPage: number;
@@ -15,7 +14,7 @@ const urlForPage = (page: number) => {
   if (page === 1) {
     return url;
   }
-  return getLink(Astro, `${url}/page/${page}`);
+  return `${url}/page/${page}`;
 };
 ---
 

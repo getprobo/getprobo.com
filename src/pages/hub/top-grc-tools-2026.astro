@@ -1,7 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -73,12 +71,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__(
-    "Top 5 GRC Tools in 2026: Navigating the Modern Compliance Landscape",
-  )}
-  description={__(
-    "Discover the best GRC tools in 2026. We review Probo, Vanta, Drata, Hyperproof, and OneTrust based on risk management, governance, and compliance capabilities.",
-  )}
+  title="Top 5 GRC Tools in 2026: Navigating the Modern Compliance Landscape"
+  description="Discover the best GRC tools in 2026. We review Probo, Vanta, Drata, Hyperproof, and OneTrust based on risk management, governance, and compliance capabilities."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script
@@ -91,16 +85,16 @@ const breadcrumbSchema = {
       <h1
         class="text-foreground mb-6 text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
       >
-        {__("Top 5")}
-        <span class="highlight-text">{__("GRC Tools")}</span>
-        {__("in 2026")}
+        Top 5
+        <span class="highlight-text">GRC Tools</span>
+        in 2026
       </h1>
       <p class="text-muted-foreground text-lg">
-        {
-          __(
-            "Governance, Risk & Compliance (GRC) has changed dramatically over the past few years. What was once a discipline focused on passing audits and producing documentation has become a strategic function, deeply connected to business decisions, security posture, and operational resilience.",
-          )
-        }
+        Governance, Risk & Compliance (GRC) has changed dramatically over the
+        past few years. What was once a discipline focused on passing audits and
+        producing documentation has become a strategic function, deeply
+        connected to business decisions, security posture, and operational
+        resilience.
       </p>
     </header>
 
@@ -132,61 +126,47 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The New Reality of GRC")}
+            The New Reality of GRC
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  'In 2026, organizations are no longer asking "How do we pass this audit?" — they are asking:',
-                )
-              }
+              In 2026, organizations are no longer asking "How do we pass this
+              audit?" — they are asking:
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Which risks actually matter to our business?")}</span
-                >
+                <span>Which risks actually matter to our business?</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Who owns them?")}</span>
+                <span>Who owns them?</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span
-                  >{
-                    __(
-                      "How do we make informed decisions under regulatory pressure?",
-                    )
-                  }</span
+                <span>
+                  How do we make informed decisions under regulatory pressure?</span
                 >
               </li>
             </ul>
             <p>
-              {
-                __(
-                  "Choosing the right GRC tool is therefore no longer about checklists or automation alone. It is about structure, clarity, and accountability.",
-                )
-              }
+              Choosing the right GRC tool is therefore no longer about
+              checklists or automation alone. It is about structure, clarity,
+              and accountability.
             </p>
             <p>
-              {
-                __(
-                  "In this article, we review the top 5 GRC tools in 2026, based on how well they support real governance, actionable risk management, and scalable compliance. We also include a detailed comparison to help you understand which platform best fits your organization's maturity and regulatory environment.",
-                )
-              }
+              In this article, we review the top 5 GRC tools in 2026, based on
+              how well they support real governance, actionable risk management,
+              and scalable compliance. We also include a detailed comparison to
+              help you understand which platform best fits your organization's
+              maturity and regulatory environment.
             </p>
             <p>
-              {
-                __(
-                  "If you're just getting started, you may also want to read about",
-                )
-              }
+              If you're just getting started, you may also want to read about
               <a
                 href="/blog/2025-09-11-what-are-the-steps-toward-compliance"
                 class="text-[#5d770d] hover:underline"
-                >{__("the steps toward compliance")}</a
+                >the steps toward compliance</a
               >.
             </p>
           </div>
@@ -199,86 +179,71 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("How We Evaluated GRC Tools in 2026")}
+            How We Evaluated GRC Tools in 2026
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Before ranking the tools, it is important to clarify the criteria used. This article does not focus on feature quantity alone. Instead, we evaluated each platform based on five core principles that matter in 2026:",
-                )
-              }
+              Before ranking the tools, it is important to clarify the criteria
+              used. This article does not focus on feature quantity alone.
+              Instead, we evaluated each platform based on five core principles
+              that matter in 2026:
             </p>
 
             <div class="mt-6 space-y-6">
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("1. Risk-Centered Design")}
+                  1. Risk-Centered Design
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Does the tool treat risk as a first-class object, or is risk simply inferred from compliance controls?",
-                    )
-                  }
+                  Does the tool treat risk as a first-class object, or is risk
+                  simply inferred from compliance controls?
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("2. Governance Capabilities")}
+                  2. Governance Capabilities
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Can organizations define ownership, decision workflows, and accountability — or is governance left outside the tool?",
-                    )
-                  }
+                  Can organizations define ownership, decision workflows, and
+                  accountability — or is governance left outside the tool?
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("3. Regulatory Coverage and Adaptability")}
+                  3. Regulatory Coverage and Adaptability
                 </h3>
                 <p>
-                  {
-                    __(
-                      "How well does the platform support multiple frameworks, especially evolving European regulations such as GDPR, NIS2, DORA, and ISO standards?",
-                    )
-                  }
+                  How well does the platform support multiple frameworks,
+                  especially evolving European regulations such as GDPR, NIS2,
+                  DORA, and ISO standards?
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("4. Usability for Real Teams")}
+                  4. Usability for Real Teams
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Can security, compliance, leadership, and operations teams actually use the tool day-to-day?",
-                    )
-                  }
+                  Can security, compliance, leadership, and operations teams
+                  actually use the tool day-to-day?
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("5. Scalability Without Complexity")}
+                  5. Scalability Without Complexity
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Does the platform scale with organizational maturity without becoming heavy, rigid, or enterprise-only?",
-                    )
-                  }
+                  Does the platform scale with organizational maturity without
+                  becoming heavy, rigid, or enterprise-only?
                 </p>
               </div>
             </div>
 
             <p class="mt-6">
-              {__("With these criteria in mind, here is our ranking.")}
+              With these criteria in mind, here is our ranking.
             </p>
           </div>
         </section>
@@ -290,15 +255,12 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("1. Probo — The Best GRC Tool in 2026")}
+            1. Probo — The Best GRC Tool in 2026
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Organizations that want structured, risk-driven GRC without enterprise complexity",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Organizations that want structured, risk-driven GRC
+              without enterprise complexity</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
@@ -309,214 +271,178 @@ const breadcrumbSchema = {
                 rel="noopener noreferrer"
                 class="font-semibold text-[#5d770d] hover:underline">Probo</a
               >
-              {
-                __(
-                  "ranks first because it reflects what GRC has become in 2026 — a continuous, decision-oriented discipline, not a periodic compliance exercise.",
-                )
-              }
+              ranks first because it reflects what GRC has become in 2026 — a continuous,
+              decision-oriented discipline, not a periodic compliance exercise.
             </p>
             <p>
-              {
-                __(
-                  "Rather than starting from audits or evidence collection, Probo is built around a clear and explicit risk model. Risks are identified, owned, evaluated, and linked to controls, policies, and regulatory obligations. Governance is not an afterthought — it is embedded directly into how GRC operates.",
-                )
-              }
+              Rather than starting from audits or evidence collection, Probo is
+              built around a clear and explicit risk model. Risks are
+              identified, owned, evaluated, and linked to controls, policies,
+              and regulatory obligations. Governance is not an afterthought — it
+              is embedded directly into how GRC operates.
             </p>
 
             <!-- A Risk-First Foundation -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("A Risk-First Foundation")}
+                A Risk-First Foundation
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Most GRC tools historically evolved from compliance workflows. Risk was introduced later, often as a scoring layer on top of controls. Probo takes the opposite approach.",
-                  )
-                }
+                Most GRC tools historically evolved from compliance workflows.
+                Risk was introduced later, often as a scoring layer on top of
+                controls. Probo takes the opposite approach.
               </p>
-              <p class="mb-3">{__("In Probo:")}</p>
+              <p class="mb-3">In Probo:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Risks are explicitly defined and structured")}</span
-                  >
+                  <span>Risks are explicitly defined and structured</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Each risk has clear ownership")}</span>
+                  <span>Each risk has clear ownership</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Controls exist to mitigate specific risks")}</span>
+                  <span>Controls exist to mitigate specific risks</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Compliance frameworks map onto this structure — not the other way around",
-                      )
-                    }</span
+                  <span>
+                    Compliance frameworks map onto this structure — not the
+                    other way around</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "This makes risk understandable, explainable, and actionable, both for operational teams and leadership.",
-                  )
-                }
+                This makes risk understandable, explainable, and actionable,
+                both for operational teams and leadership.
               </p>
             </div>
 
             <!-- Governance Built Into the Platform -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Governance Built Into the Platform")}
+                Governance Built Into the Platform
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Governance is often the missing layer in GRC tools. Many platforms store information but leave decision-making outside the system. Probo embeds governance directly into GRC workflows:",
-                  )
-                }
+                Governance is often the missing layer in GRC tools. Many
+                platforms store information but leave decision-making outside
+                the system. Probo embeds governance directly into GRC workflows:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Clear responsibility assignment")}</span>
+                  <span>Clear responsibility assignment</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Review and validation processes")}</span>
+                  <span>Review and validation processes</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Structured decision points")}</span>
+                  <span>Structured decision points</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Traceability from risk to decision to action")}</span
-                  >
+                  <span>Traceability from risk to decision to action</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "This allows organizations to move from documentation to actual governance.",
-                  )
-                }
+                This allows organizations to move from documentation to actual
+                governance.
               </p>
             </div>
 
             <!-- Designed for European Regulatory Reality -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Designed for European Regulatory Reality")}
+                Designed for European Regulatory Reality
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Probo is built with European organizations in mind. This is increasingly important in 2026 as EU regulations continue to expand in scope and enforcement. Probo supports:",
-                  )
-                }
+                Probo is built with European organizations in mind. This is
+                increasingly important in 2026 as EU regulations continue to
+                expand in scope and enforcement. Probo supports:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("GDPR")}</span>
+                  <span>GDPR</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("ISO 27001 and related standards")}</span>
+                  <span>ISO 27001 and related standards</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("NIS2")}</span>
+                  <span>NIS2</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("DORA")}</span>
+                  <span>DORA</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("And evolving European compliance requirements")}</span
-                  >
+                  <span>And evolving European compliance requirements</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "More importantly, these frameworks are not treated as isolated checklists. They are mapped into a unified risk and governance structure, reducing duplication and long-term maintenance cost.",
-                  )
-                }
+                More importantly, these frameworks are not treated as isolated
+                checklists. They are mapped into a unified risk and governance
+                structure, reducing duplication and long-term maintenance cost.
               </p>
             </div>
 
             <!-- Simple, Modern, and Scalable -->
             <div class="mt-8">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Simple, Modern, and Scalable")}
+                Simple, Modern, and Scalable
               </h3>
               <p class="mb-4">
-                {__("Probo avoids the two extremes that dominate the market:")}
+                Probo avoids the two extremes that dominate the market:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Overly simple compliance automation tools")}</span>
+                  <span>Overly simple compliance automation tools</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Heavy, enterprise-only GRC platforms")}</span>
+                  <span>Heavy, enterprise-only GRC platforms</span>
                 </li>
               </ul>
-              <p class="mt-4">{__("Instead, it offers:")}</p>
+              <p class="mt-4">Instead, it offers:</p>
               <ul class="mt-3 ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("A modern, intuitive interface")}</span>
+                  <span>A modern, intuitive interface</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Enough structure for mature risk management")}</span
-                  >
+                  <span>Enough structure for mature risk management</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Flexibility to scale without re-implementing everything",
-                      )
-                    }</span
+                  <span>
+                    Flexibility to scale without re-implementing everything</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "This makes Probo suitable for organizations that are growing in complexity but still value speed and clarity.",
-                  )
-                }{" "}
-                {__("Read more about")}
+                This makes Probo suitable for organizations that are growing in
+                complexity but still value speed and clarity. Read more about
                 <a
                   href="/blog/2025-02-04-the-case-for-open-source-compliance"
                   class="text-[#5d770d] hover:underline"
-                  >{__("the case for open-source compliance")}</a
+                  >the case for open-source compliance</a
                 >
-                {__("and see how")}
+                and see how
                 <a
                   href="/stories/vybe-soc2"
                   class="text-[#5d770d] hover:underline"
-                  >{__("Vybe got SOC 2 certified")}</a
+                  >Vybe got SOC 2 certified</a
                 >
-                {__("using Probo.")}
+                using Probo.
               </p>
             </div>
           </div>
@@ -529,94 +455,78 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("2. Vanta")}
+            2. Vanta
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Startups and fast-growing companies focused on audit readiness",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Startups and fast-growing companies focused on audit
+              readiness</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Vanta remains one of the most visible names in the GRC ecosystem, particularly among startups. Its strength lies in automation — especially for SOC 2 and ISO certifications.",
-                )
-              }
+              Vanta remains one of the most visible names in the GRC ecosystem,
+              particularly among startups. Its strength lies in automation —
+              especially for SOC 2 and ISO certifications.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Strengths")}
+                Strengths
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Fast initial setup")}</span>
+                  <span>Fast initial setup</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Automated evidence collection")}</span>
+                  <span>Automated evidence collection</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Strong auditor ecosystem")}</span>
+                  <span>Strong auditor ecosystem</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Widely recognized by auditors and investors")}</span
-                  >
+                  <span>Widely recognized by auditors and investors</span>
                 </li>
               </ul>
             </div>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Limitations in 2026")}
+                Limitations in 2026
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "While Vanta is effective for early-stage compliance, its model shows limitations as organizations mature:",
-                  )
-                }
+                While Vanta is effective for early-stage compliance, its model
+                shows limitations as organizations mature:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Risk management is secondary")}</span>
+                  <span>Risk management is secondary</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Governance workflows are minimal")}</span>
+                  <span>Governance workflows are minimal</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "The platform is optimized for passing audits, not for long-term risk strategy",
-                      )
-                    }</span
+                  <span>
+                    The platform is optimized for passing audits, not for
+                    long-term risk strategy</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Vanta works well when compliance is the primary goal. It becomes less suitable when organizations need to structure risk ownership and governance at scale.",
-                  )
-                }{" "}
-                {__("We explore this further in")}
+                Vanta works well when compliance is the primary goal. It becomes
+                less suitable when organizations need to structure risk
+                ownership and governance at scale. We explore this further in
                 <a
                   href="/blog/2025-02-17-why-a-one-size-fit-all-solution-like-vanta-is-not-ideal"
                   class="text-[#5d770d] hover:underline"
-                  >{__("why a one-size-fits-all solution is not ideal")}</a
+                  >why a one-size-fits-all solution is not ideal</a
                 >.
               </p>
             </div>
@@ -630,83 +540,67 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("3. Drata")}
+            3. Drata
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Companies looking for compliance automation with a modern UX",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Companies looking for compliance automation with a
+              modern UX</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Drata follows a similar philosophy to Vanta, offering continuous compliance monitoring and integrations with common SaaS tools.",
-                )
-              }
+              Drata follows a similar philosophy to Vanta, offering continuous
+              compliance monitoring and integrations with common SaaS tools.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Strengths")}
+                Strengths
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Clean interface")}</span>
+                  <span>Clean interface</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Solid automation capabilities")}</span>
+                  <span>Solid automation capabilities</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Competitive alternative to Vanta")}</span>
+                  <span>Competitive alternative to Vanta</span>
                 </li>
               </ul>
             </div>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Limitations in 2026")}
+                Limitations in 2026
               </h3>
               <p class="mb-4">
-                {
-                  __(
-                    "Drata, like most compliance-first platforms, struggles with:",
-                  )
-                }
+                Drata, like most compliance-first platforms, struggles with:
               </p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Deep risk modeling")}</span>
+                  <span>Deep risk modeling</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Governance workflows")}</span>
+                  <span>Governance workflows</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Complex regulatory mapping beyond standard frameworks",
-                      )
-                    }</span
+                  <span>
+                    Complex regulatory mapping beyond standard frameworks</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "For teams whose primary need is audit efficiency, Drata is a reasonable option. For teams aiming to operationalize GRC beyond audits, it remains limited.",
-                  )
-                }
+                For teams whose primary need is audit efficiency, Drata is a
+                reasonable option. For teams aiming to operationalize GRC beyond
+                audits, it remains limited.
               </p>
             </div>
           </div>
@@ -719,93 +613,71 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("4. Hyperproof")}
+            4. Hyperproof
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Mid-market organizations wanting more structure than compliance tools",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Mid-market organizations wanting more structure than
+              compliance tools</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Hyperproof occupies a middle ground between automation tools and enterprise GRC platforms.",
-                )
-              }
+              Hyperproof occupies a middle ground between automation tools and
+              enterprise GRC platforms.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Strengths")}
+                Strengths
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Broader framework coverage")}</span>
+                  <span>Broader framework coverage</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Better risk capabilities than pure automation tools")
-                    }</span
+                  <span>
+                    Better risk capabilities than pure automation tools</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Suitable for regulated industries")}</span>
+                  <span>Suitable for regulated industries</span>
                 </li>
               </ul>
             </div>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Limitations in 2026")}
+                Limitations in 2026
               </h3>
-              <p class="mb-4">
-                {__("Despite its strengths, Hyperproof still:")}
-              </p>
+              <p class="mb-4">Despite its strengths, Hyperproof still:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __("Treats compliance as the core organizing principle")
-                    }</span
+                  <span>
+                    Treats compliance as the core organizing principle</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Adds risk and governance on top, rather than embedding them",
-                      )
-                    }</span
+                  <span>
+                    Adds risk and governance on top, rather than embedding them</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{
-                      __(
-                        "Requires more configuration and maintenance over time",
-                      )
-                    }</span
+                  <span>
+                    Requires more configuration and maintenance over time</span
                   >
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "Hyperproof is often chosen by teams that have outgrown compliance automation but are not ready for enterprise GRC platforms.",
-                  )
-                }
+                Hyperproof is often chosen by teams that have outgrown
+                compliance automation but are not ready for enterprise GRC
+                platforms.
               </p>
             </div>
           </div>
@@ -818,75 +690,64 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-2 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("5. OneTrust")}
+            5. OneTrust
           </h2>
           <div class="mb-6">
-            <span class="inline-block text-sm font-medium text-[#5d770d]"
-              >{
-                __(
-                  "Best for: Large enterprises with complex legal and regulatory requirements",
-                )
-              }</span
+            <span class="inline-block text-sm font-medium text-[#5d770d]">
+              Best for: Large enterprises with complex legal and regulatory
+              requirements</span
             >
           </div>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "OneTrust is one of the most comprehensive platforms on the market. It is widely used by large organizations with dedicated legal, privacy, and compliance teams.",
-                )
-              }
+              OneTrust is one of the most comprehensive platforms on the market.
+              It is widely used by large organizations with dedicated legal,
+              privacy, and compliance teams.
             </p>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Strengths")}
+                Strengths
               </h3>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Extremely broad coverage")}</span>
+                  <span>Extremely broad coverage</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span
-                    >{__("Strong privacy and third-party risk modules")}</span
-                  >
+                  <span>Strong privacy and third-party risk modules</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Highly configurable")}</span>
+                  <span>Highly configurable</span>
                 </li>
               </ul>
             </div>
 
             <div class="mt-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                {__("Limitations in 2026")}
+                Limitations in 2026
               </h3>
-              <p class="mb-4">
-                {__("For many organizations, OneTrust is:")}
-              </p>
+              <p class="mb-4">For many organizations, OneTrust is:</p>
               <ul class="ml-0 list-none space-y-3">
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Too complex to implement")}</span>
+                  <span>Too complex to implement</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Expensive to maintain")}</span>
+                  <span>Expensive to maintain</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-muted-foreground">•</span>
-                  <span>{__("Heavy for operational teams")}</span>
+                  <span>Heavy for operational teams</span>
                 </li>
               </ul>
               <p class="mt-4">
-                {
-                  __(
-                    "OneTrust excels in environments where GRC is managed by large, specialized teams. It is often excessive for mid-sized or fast-moving organizations.",
-                  )
-                }
+                OneTrust excels in environments where GRC is managed by large,
+                specialized teams. It is often excessive for mid-sized or
+                fast-moving organizations.
               </p>
             </div>
           </div>
@@ -899,7 +760,7 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("GRC Tools Comparison Table (2026)")}
+            GRC Tools Comparison Table (2026)
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <div class="overflow-x-auto">
@@ -908,124 +769,112 @@ const breadcrumbSchema = {
                   <tr class="border-border-low border-b">
                     <th
                       class="text-foreground py-3 pr-4 text-left font-semibold"
-                      >{__("Feature")}</th
+                      >Feature</th
                     >
                     <th
                       class="text-foreground bg-[#f0f7e4] px-2 py-3 text-left font-semibold"
-                      >{__("Probo")}</th
+                      >Probo</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Vanta")}</th
+                      >Vanta</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Drata")}</th
+                      >Drata</th
                     >
                     <th
                       class="text-foreground px-2 py-3 text-left font-semibold"
-                      >{__("Hyperproof")}</th
+                      >Hyperproof</th
                     >
                     <th
                       class="text-foreground py-3 pl-2 text-left font-semibold"
-                      >{__("OneTrust")}</th
+                      >OneTrust</th
                     >
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Core Philosophy")}</td
+                      >Core Philosophy</td
                     >
                     <td class="bg-[#f0f7e4] px-2 py-3"
-                      >{__("Risk & Governance First")}</td
+                      >Risk & Governance First</td
                     >
-                    <td class="px-2 py-3">{__("Compliance Automation")}</td>
-                    <td class="px-2 py-3">{__("Compliance Automation")}</td>
-                    <td class="px-2 py-3">{__("Compliance-Centric GRC")}</td>
-                    <td class="py-3 pl-2">{__("Enterprise GRC")}</td>
+                    <td class="px-2 py-3">Compliance Automation</td>
+                    <td class="px-2 py-3">Compliance Automation</td>
+                    <td class="px-2 py-3">Compliance-Centric GRC</td>
+                    <td class="py-3 pl-2">Enterprise GRC</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Risk Management Depth")}</td
+                      >Risk Management Depth</td
                     >
-                    <td class="bg-[#f0f7e4] px-2 py-3"
-                      >{__("Advanced & Central")}</td
-                    >
-                    <td class="px-2 py-3">{__("Basic")}</td>
-                    <td class="px-2 py-3">{__("Basic")}</td>
-                    <td class="px-2 py-3">{__("Medium")}</td>
-                    <td class="py-3 pl-2">{__("Advanced")}</td>
+                    <td class="bg-[#f0f7e4] px-2 py-3">Advanced & Central</td>
+                    <td class="px-2 py-3">Basic</td>
+                    <td class="px-2 py-3">Basic</td>
+                    <td class="px-2 py-3">Medium</td>
+                    <td class="py-3 pl-2">Advanced</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Governance Workflows")}</td
+                      >Governance Workflows</td
                     >
-                    <td class="bg-[#f0f7e4] px-2 py-3"
-                      >{__("Native & Structured")}</td
-                    >
-                    <td class="px-2 py-3">{__("Limited")}</td>
-                    <td class="px-2 py-3">{__("Limited")}</td>
-                    <td class="px-2 py-3">{__("Partial")}</td>
-                    <td class="py-3 pl-2">{__("Complex")}</td>
+                    <td class="bg-[#f0f7e4] px-2 py-3">Native & Structured</td>
+                    <td class="px-2 py-3">Limited</td>
+                    <td class="px-2 py-3">Limited</td>
+                    <td class="px-2 py-3">Partial</td>
+                    <td class="py-3 pl-2">Complex</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Multi-Framework Support")}</td
+                      >Multi-Framework Support</td
                     >
-                    <td class="bg-[#f0f7e4] px-2 py-3"
-                      >{__("Extensive & Unified")}</td
-                    >
-                    <td class="px-2 py-3">{__("Limited")}</td>
-                    <td class="px-2 py-3">{__("Limited")}</td>
-                    <td class="px-2 py-3">{__("Good")}</td>
-                    <td class="py-3 pl-2">{__("Extensive")}</td>
+                    <td class="bg-[#f0f7e4] px-2 py-3">Extensive & Unified</td>
+                    <td class="px-2 py-3">Limited</td>
+                    <td class="px-2 py-3">Limited</td>
+                    <td class="px-2 py-3">Good</td>
+                    <td class="py-3 pl-2">Extensive</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("EU Regulations (GDPR, NIS2, DORA)")}</td
+                      >EU Regulations (GDPR, NIS2, DORA)</td
                     >
-                    <td class="bg-[#f0f7e4] px-2 py-3"
-                      >{__("Built-In Focus")}</td
-                    >
-                    <td class="px-2 py-3">{__("Partial")}</td>
-                    <td class="px-2 py-3">{__("Partial")}</td>
-                    <td class="px-2 py-3">{__("Partial")}</td>
-                    <td class="py-3 pl-2">{__("Generic")}</td>
+                    <td class="bg-[#f0f7e4] px-2 py-3">Built-In Focus</td>
+                    <td class="px-2 py-3">Partial</td>
+                    <td class="px-2 py-3">Partial</td>
+                    <td class="px-2 py-3">Partial</td>
+                    <td class="py-3 pl-2">Generic</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Ease of Use")}</td
+                      >Ease of Use</td
                     >
-                    <td class="bg-[#f0f7e4] px-2 py-3">{__("High")}</td>
-                    <td class="px-2 py-3">{__("High")}</td>
-                    <td class="px-2 py-3">{__("High")}</td>
-                    <td class="px-2 py-3">{__("Medium")}</td>
-                    <td class="py-3 pl-2">{__("Low")}</td>
+                    <td class="bg-[#f0f7e4] px-2 py-3">High</td>
+                    <td class="px-2 py-3">High</td>
+                    <td class="px-2 py-3">High</td>
+                    <td class="px-2 py-3">Medium</td>
+                    <td class="py-3 pl-2">Low</td>
                   </tr>
                   <tr class="border-border-low border-b">
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Scalability")}</td
+                      >Scalability</td
                     >
-                    <td class="bg-[#f0f7e4] px-2 py-3"
-                      >{__("High without bloat")}</td
-                    >
-                    <td class="px-2 py-3">{__("Limited")}</td>
-                    <td class="px-2 py-3">{__("Limited")}</td>
-                    <td class="px-2 py-3">{__("Medium")}</td>
-                    <td class="py-3 pl-2">{__("Enterprise-only")}</td>
+                    <td class="bg-[#f0f7e4] px-2 py-3">High without bloat</td>
+                    <td class="px-2 py-3">Limited</td>
+                    <td class="px-2 py-3">Limited</td>
+                    <td class="px-2 py-3">Medium</td>
+                    <td class="py-3 pl-2">Enterprise-only</td>
                   </tr>
                   <tr>
                     <td class="text-foreground py-3 pr-4 font-medium"
-                      >{__("Best Fit")}</td
+                      >Best Fit</td
                     >
-                    <td class="bg-[#f0f7e4] px-2 py-3"
-                      >{__("Modern GRC teams")}</td
-                    >
-                    <td class="px-2 py-3">{__("Early-stage startups")}</td>
-                    <td class="px-2 py-3">{__("Early-stage startups")}</td>
-                    <td class="px-2 py-3">{__("Mid-market")}</td>
-                    <td class="py-3 pl-2">{__("Large enterprises")}</td>
+                    <td class="bg-[#f0f7e4] px-2 py-3">Modern GRC teams</td>
+                    <td class="px-2 py-3">Early-stage startups</td>
+                    <td class="px-2 py-3">Early-stage startups</td>
+                    <td class="px-2 py-3">Mid-market</td>
+                    <td class="py-3 pl-2">Large enterprises</td>
                   </tr>
                 </tbody>
               </table>
@@ -1040,63 +889,48 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What GRC Teams Should Expect in 2026")}
+            What GRC Teams Should Expect in 2026
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
-            <p>
-              {__("Across organizations, several trends are now clear:")}
-            </p>
+            <p>Across organizations, several trends are now clear:</p>
 
             <div class="mt-6 space-y-6">
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Audits are not the end goal")}
+                  Audits are not the end goal
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Passing an audit does not mean risks are understood or managed.",
-                    )
-                  }
+                  Passing an audit does not mean risks are understood or
+                  managed.
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Risk ownership matters more than documentation")}
+                  Risk ownership matters more than documentation
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Leadership expects clarity on who owns which risks and why.",
-                    )
-                  }
+                  Leadership expects clarity on who owns which risks and why.
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Governance must be operational")}
+                  Governance must be operational
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Decisions need to be traceable, repeatable, and documented — without slowing teams down.",
-                    )
-                  }
+                  Decisions need to be traceable, repeatable, and documented —
+                  without slowing teams down.
                 </p>
               </div>
 
               <div>
                 <h3 class="text-foreground mb-2 text-lg font-semibold">
-                  {__("Regulation will keep expanding")}
+                  Regulation will keep expanding
                 </h3>
                 <p>
-                  {
-                    __(
-                      "Especially in Europe, regulatory complexity will continue to increase.",
-                    )
-                  }
+                  Especially in Europe, regulatory complexity will continue to
+                  increase.
                 </p>
               </div>
             </div>
@@ -1105,12 +939,9 @@ const breadcrumbSchema = {
               class="border-border-low mt-6 flex items-start gap-2 rounded-lg border bg-[#f8f9f7] p-4"
             >
               <span>💡</span>
-              <span
-                >{
-                  __(
-                    "GRC tools that focus only on automation will struggle to keep up with these expectations.",
-                  )
-                }</span
+              <span>
+                GRC tools that focus only on automation will struggle to keep up
+                with these expectations.</span
               >
             </p>
           </div>
@@ -1123,29 +954,22 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("Final Thoughts: Why Probo Comes First")}
+            Final Thoughts: Why Probo Comes First
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              {
-                __(
-                  "Probo ranks first in 2026 because it reflects the current and future reality of GRC.",
-                )
-              }
+              Probo ranks first in 2026 because it reflects the current and
+              future reality of GRC.
             </p>
             <p>
-              {
-                __(
-                  "It does not treat governance, risk, and compliance as separate concerns. Instead, it provides a single, coherent structure where:",
-                )
-              }
+              It does not treat governance, risk, and compliance as separate
+              concerns. Instead, it provides a single, coherent structure where:
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{__("Risks are explicit")}</strong
+                  ><strong class="text-foreground">Risks are explicit</strong
                   ></span
                 >
               </li>
@@ -1153,7 +977,7 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Governance is embedded")}</strong
+                    >Governance is embedded</strong
                   ></span
                 >
               </li>
@@ -1161,17 +985,15 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Compliance becomes a natural outcome")}</strong
+                    >Compliance becomes a natural outcome</strong
                   ></span
                 >
               </li>
             </ul>
             <p>
-              {
-                __(
-                  "For organizations that want to move beyond audits and build durable, decision-ready GRC, Probo is the most complete and practical choice in 2026.",
-                )
-              }
+              For organizations that want to move beyond audits and build
+              durable, decision-ready GRC, Probo is the most complete and
+              practical choice in 2026.
             </p>
           </div>
         </section>
@@ -1180,14 +1002,11 @@ const breadcrumbSchema = {
         <section class="border-border-low rounded-xl border bg-[#f8f9f7] p-8">
           <div class="text-center">
             <p class="text-foreground mb-4 text-lg font-semibold">
-              {__("Ready to build risk-driven, governance-native GRC?")}
+              Ready to build risk-driven, governance-native GRC?
             </p>
             <p class="text-muted-foreground mb-6">
-              {
-                __(
-                  "Take a meeting to see how Probo can transform your compliance program.",
-                )
-              }
+              Take a meeting to see how Probo can transform your compliance
+              program.
             </p>
             <a
               href="/contact"
@@ -1195,7 +1014,7 @@ const breadcrumbSchema = {
               rel="noopener noreferrer"
               class="inline-flex items-center justify-center rounded-lg bg-[#D7EDBA] px-6 py-3 font-medium text-[#141e12] transition-colors hover:bg-[#c5dba8]"
             >
-              {__("Get Started with Probo")}
+              Get Started with Probo
             </a>
           </div>
         </section>

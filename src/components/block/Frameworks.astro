@@ -3,9 +3,6 @@ import { Image } from "astro:assets";
 import Logo from "../../assets/probo-logo-only.svg";
 import Badges from "../Badges.svelte";
 import Button from "../../components/ui/Button.svelte";
-import { getTranslator, getLink } from "../../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
 ---
 
 <div class="bg-linear-to-b from-[#F8FAF4] to-[#FFFFFB] py-10 sm:py-20">
@@ -18,11 +15,11 @@ const __ = await getTranslator(Astro.currentLocale);
       class="mx-auto mb-6"
     />
     <h2 class="text-h3 sm:text-h2 mb-3 text-center font-medium">
-      {__("Managed frameworks")}
+      Managed frameworks
     </h2>
     <p class="text-muted-foreground mb-12 text-center text-lg">
-      {__("Not seeing the one you are looking for?")}<br />
-      {__("Reach out, we likely do it as well.")}
+      Not seeing the one you are looking for?<br />
+      Reach out, we likely do it as well.
     </p>
 
     <Badges
@@ -34,11 +31,11 @@ const __ = await getTranslator(Astro.currentLocale);
 
     <Button
       rel="nofollow noreferrer"
-      href={getLink(Astro, "/contact")}
+      href="/contact"
       size="lg"
       class="mx-auto flex w-max"
     >
-      {__("Get compliant")}
+      Get compliant
     </Button>
   </div>
 </div>
