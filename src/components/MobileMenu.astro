@@ -11,8 +11,7 @@ import { menuItems } from "../content/menu.ts";
       <a
         href={item.href}
         class="flex items-center justify-between border-b py-5"
-        style={`animation-delay: ${k * 0.1}s;${item.href === "/pricing" ? " display:none;" : ""}`}
-        {...(item.href === "/pricing" ? { "data-pricing-link": "" } : {})}
+        style={`animation-delay: ${k * 0.1}s;`}
       >
         <span class="flex flex-col gap-1">
           <span class="text-h3 font-medium">{item.label}</span>

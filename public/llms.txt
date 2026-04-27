@@ -8,12 +8,11 @@ Probo provides dedicated compliance officers who manage your program end-to-end 
 
 Every page on this site supports content negotiation. Request any URL with the `Accept: text/markdown` header to get a clean markdown version — no navigation, scripts, or styling. This is the recommended way for LLMs and AI agents to consume this site.
 
-Example: `curl -H "Accept: text/markdown" https://www.getprobo.com/pricing`
+Example: `curl -H "Accept: text/markdown" https://www.getprobo.com/about`
 
 ## Pages
 
 - [Homepage](https://www.getprobo.com/)
-- [Pricing](https://www.getprobo.com/pricing)
 - [About](https://www.getprobo.com/about)
 - [Contact](https://www.getprobo.com/contact)
 - [Customer Stories](https://www.getprobo.com/stories)

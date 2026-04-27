@@ -34,7 +34,6 @@ SOC 2 Type 1 & 2, ISO 27001, ISO 27701, ISO 42001, GDPR, HIPAA, CCPA, FERPA, CAS
 - [Documentation](/docs)
 - [Blog](/blog)
 - [Customer Stories](/stories)
-- [Pricing](/pricing)
 - [About](/about)
 - [Contact](/contact)
 - [GitHub](https://github.com/getprobo/probo)

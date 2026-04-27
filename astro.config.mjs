@@ -69,10 +69,6 @@ export default defineConfig({
       status: 301,
       destination: "/cookie-policy",
     },
-    "/fr/pricing": {
-      status: 301,
-      destination: "/pricing",
-    },
     "/fr/privacy": {
       status: 301,
       destination: "/privacy",
@@ -498,9 +494,6 @@ export default defineConfig({
           return false;
         }
         if (page.includes("/blog/page/1")) {
-          return false;
-        }
-        if (page.endsWith("/pricing") || page.endsWith("/pricing/")) {
           return false;
         }
         return true;

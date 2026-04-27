@@ -71,50 +71,6 @@ html {
   animation-delay: --value(integer) ms;
 }
 
-/** Green glow animation for the Full Service pricing card **/
-@keyframes glowEntry {
-  from {
-    opacity: 0;
-    scale: 0.75;
-  }
-  to {
-    opacity: 1;
-    scale: 1;
-  }
-}
-
-@keyframes glowDrift {
-  0% {
-    translate: 150px -120px;
-  }
-  25% {
-    translate: -120px -100px;
-  }
-  50% {
-    translate: -130px 100px;
-  }
-  75% {
-    translate: 140px 90px;
-  }
-  100% {
-    translate: 150px -120px;
-  }
-}
-
-/** Timeline progress animation for Path to Compliance **/
-@utility animate-progress-slide {
-  animation: progressSlide 2s ease-in-out infinite;
-}
-
-@keyframes progressSlide {
-  0% {
-    top: -512px;
-  }
-  100% {
-    top: calc(100% + 256px);
-  }
-}
-
 /** Rotate animation for the YCombinator button **/
 @property --animate-duration {
   syntax: "<angle>";

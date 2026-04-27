@@ -5,8 +5,6 @@ Disallow: /yc
 Disallow: /whats-next
 Disallow: /feedback
 Disallow: /orderform
-Disallow: /pricing
-Disallow: /fr/pricing
 
 Host: https://www.getprobo.com
 Sitemap: https://www.getprobo.com/sitemap-index.xml
