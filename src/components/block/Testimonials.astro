@@ -16,13 +16,7 @@ import JoshParolin from "../../assets/testimonial/josh-parolin.jpg";
 import JeremieParker from "../../assets/testimonial/jeremie-parker.jpg";
 import PierreDePoulpiquet from "../../assets/testimonial/pierre-de-poulpiquet.jpg";
 import AdityavardhanAgrawal from "../../assets/testimonial/Adityavardhan-Agrawal.jpg";
-<<<<<<< HEAD
 import CamilleEpitalon from "../../assets/testimonial/Camille Epitalon.png";
-import { getTranslator } from "../../lib/i18n.ts";
-
-const __ = await getTranslator(Astro.currentLocale);
-=======
->>>>>>> 45ed6f4 (Remove french version)
 ---
 
 <section
@@ -46,13 +40,10 @@ const __ = await getTranslator(Astro.currentLocale);
     <Testimonial
       image={CamilleEpitalon}
       author="Camille Epitalon"
-      role={__("Co-founder & CTO at Verso")}
+      role="Co-founder & CTO at Verso"
     >
-      {
-        __(
-          "Compliance that works where we already do. In Slack, async, with almost no back-and-forth.",
-        )
-      }
+      Compliance that works where we already do. In Slack, async, with almost
+      no back-and-forth.
     </Testimonial>
     <Testimonial
       image={PierreDePoulpiquet}

@@ -183,35 +183,7 @@ const canonical = getCanonicalUrl(Astro.url);
 </html>
 
 <script>
-  import { langs } from "../config.ts";
-  import { trim } from "../lib/string.ts";
   import { registerThemedBanner } from "@probo/cookie-banner";
 
-  function redirectLang() {
-    const lang = localStorage.getItem("lang");
-    // The check was already done in the past, do nothing
-    if (lang !== null) {
-      return;
-    }
-
-    for (const lang of langs) {
-      if (!navigator.language.includes(lang)) {
-        continue;
-      }
-
-      // User is already on a translated content, do nothing
-      if (window.location.href.includes(`/${lang}`)) {
-        localStorage.setItem("lang", lang);
-        continue;
-      }
-
-      // Redirect to the translated content
-      localStorage.setItem("lang", lang);
-      window.location.href =
-        "/" + trim(`${lang}${window.location.pathname}`, "/");
-    }
-  }
-
-  redirectLang();
   registerThemedBanner();
 </script>

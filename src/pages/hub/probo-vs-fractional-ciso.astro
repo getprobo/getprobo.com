@@ -1,7 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTranslator } from "../../lib/i18n.ts";
-const __ = await getTranslator(Astro.currentLocale);
 
 const tableOfContents = [
   { id: "intro", label: "Opening" },
@@ -70,10 +68,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title={__("Probo vs Hiring a Fractional CISO")}
-  description={__(
-    "Fractional CISO vs Probo is not tool vs tool: it is leadership vs compliance execution. Role boundaries, sequencing, year-one TCO, and when to hire each.",
-  )}
+  title={"Probo vs Hiring a Fractional CISO"}
+  description={"Fractional CISO vs Probo is not tool vs tool: it is leadership vs compliance execution. Role boundaries, sequencing, year-one TCO, and when to hire each."}
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script
@@ -85,15 +81,13 @@ const breadcrumbSchema = {
       <h1
         class="text-foreground mb-6 text-[2.25rem] leading-[1.12] font-semibold tracking-[-0.02em] sm:text-[3rem]"
       >
-        {__("Probo vs Hiring a")}
+        {"Probo vs Hiring a"}
         {" "}
-        <span class="highlight-text">{__("Fractional CISO")}</span>
+        <span class="highlight-text">{"Fractional CISO"}</span>
       </h1>
       <p class="text-muted-foreground mx-auto max-w-[720px] text-lg leading-relaxed">
         {
-          __(
-            "A budget line versus an outcome: how to sequence security leadership and compliance execution without paying twice for the same work.",
-          )
+          "A budget line versus an outcome: how to sequence security leadership and compliance execution without paying twice for the same work."
         }
       </p>
     </header>
@@ -122,35 +116,27 @@ const breadcrumbSchema = {
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
               {
-                __(
-                  'Your board meeting ran long. Your lead investor pulled you aside afterward: "You need a security leader. Enterprise deals are going to stall without one. I know a great fractional CISO - $8k a month, starts next Monday."',
-                )
+                'Your board meeting ran long. Your lead investor pulled you aside afterward: "You need a security leader. Enterprise deals are going to stall without one. I know a great fractional CISO - $8k a month, starts next Monday."'
               }
             </p>
             <p>
               {
-                __(
-                  "You do the math on the walk back. $96k a year. Then you think about the SOC 2 platform you were going to buy for $15k. Then the auditor. Then the hours your engineers are going to burn on evidence. You're looking at $150k and ~200 engineering hours to get to a Type II report and an enterprise-ready posture.",
-                )
+                "You do the math on the walk back. $96k a year. Then you think about the SOC 2 platform you were going to buy for $15k. Then the auditor. Then the hours your engineers are going to burn on evidence. You're looking at $150k and ~200 engineering hours to get to a Type II report and an enterprise-ready posture."
               }
             </p>
             <p>
-              {__("You haven't hired anyone yet and you're already out six figures.")}
+              {"You haven't hired anyone yet and you're already out six figures."}
             </p>
             <p>
               {
-                __(
-                  "This article isn't a comparison between two compliance tools. ",
-                )
+                "This article isn't a comparison between two compliance tools. "
               }
               <strong class="text-foreground"
                 >{
-                  __(
-                    "It's a comparison between a budget line and an outcome.",
-                  )
+                  "It's a comparison between a budget line and an outcome."
                 }</strong
               >
-              {__(" Here's how to think about it.")}
+              {" Here's how to think about it."}
             </p>
           </div>
         </section>
@@ -161,50 +147,32 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What a Fractional CISO Actually Does")}
+            {"What a Fractional CISO Actually Does"}
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
               {
-                __(
-                  "Before comparing, let's be precise about what you're buying when you hire a fractional CISO (vCISO, part-time CSO - same role, different labels).",
-                )
+                "Before comparing, let's be precise about what you're buying when you hire a fractional CISO (vCISO, part-time CSO - same role, different labels)."
               }
             </p>
-            <p>{__("A fractional CISO typically provides:")}</p>
+            <p>{"A fractional CISO typically provides:"}</p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Strategic security leadership")}</strong
+                    >{"Strategic security leadership"}</strong
                   >{
-                    __(
-                      " - 1-on-1 with CEO, board-facing reporting, executive security narrative",
-                    )
+                    " - 1-on-1 with CEO, board-facing reporting, executive security narrative"
                   }</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{__("Program design")}</strong
+                  ><strong class="text-foreground">{"Program design"}</strong
                   >{
-                    __(
-                      " - roadmap, framework selection, risk management strategy",
-                    )
-                  }</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground"
-                    >{__("Vendor and tool selection")}</strong
-                  >{
-                    __(
-                      ' - "you should use Vanta/Drata/Secureframe, here\'s why"',
-                    )
+                    " - roadmap, framework selection, risk management strategy"
                   }</span
                 >
               </li>
@@ -212,19 +180,9 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Policy review and approval")}</strong
-                  >{__(" - not usually writing, but reviewing")}</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground"
-                    >{__("Incident response leadership")}</strong
+                    >{"Vendor and tool selection"}</strong
                   >{
-                    __(
-                      " - on-call for real incidents, tabletop facilitation",
-                    )
+                    ' - "you should use Vanta/Drata/Secureframe, here\'s why"'
                   }</span
                 >
               </li>
@@ -232,11 +190,17 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Enterprise buyer-facing presence")}</strong
+                    >{"Policy review and approval"}</strong
+                  >{" - not usually writing, but reviewing"}</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground"
+                    >{"Incident response leadership"}</strong
                   >{
-                    __(
-                      " - attends security reviews, speaks to prospects' security teams",
-                    )
+                    " - on-call for real incidents, tabletop facilitation"
                   }</span
                 >
               </li>
@@ -244,61 +208,65 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Recruiting your eventual full-time security hire")}</strong
+                    >{"Enterprise buyer-facing presence"}</strong
+                  >{
+                    " - attends security reviews, speaks to prospects' security teams"
+                  }</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground"
+                    >{"Recruiting your eventual full-time security hire"}</strong
                   ></span
                 >
               </li>
             </ul>
             <p>
               <strong class="text-foreground"
-                >{__("What a fractional CISO typically doesn't do:")}</strong
+                >{"What a fractional CISO typically doesn't do:"}</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Write your SOC 2 policies in full detail")}</span>
+                <span>{"Write your SOC 2 policies in full detail"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Upload evidence to your compliance platform")}</span>
+                <span>{"Upload evidence to your compliance platform"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   >{
-                    __(
-                      "Coordinate with your auditor on scheduling, walkthroughs, and evidence Q&A",
-                    )
+                    "Coordinate with your auditor on scheduling, walkthroughs, and evidence Q&A"
                   }</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Answer vendor security questionnaires")}</span>
+                <span>{"Answer vendor security questionnaires"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Remediate failed controls hands-on")}</span>
+                <span>{"Remediate failed controls hands-on"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Run your Trust Center")}</span>
+                <span>{"Run your Trust Center"}</span>
               </li>
             </ul>
             <p>
               {
-                __(
-                  "Their value is ",
-                )
+                "Their value is "
               }
               <strong class="text-foreground"
-                >{__("leadership, strategy, and presence.")}</strong
+                >{"leadership, strategy, and presence."}</strong
               >
               {
-                __(
-                  " Execution is not their job - and at $8k/month for 10-20 hours, there isn't capacity for it anyway.",
-                )
+                " Execution is not their job - and at $8k/month for 10-20 hours, there isn't capacity for it anyway."
               }
             </p>
           </div>
@@ -310,49 +278,33 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("What Probo Actually Does")}
+            {"What Probo Actually Does"}
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {__("Probo is not a leadership role. ")}
+              {"Probo is not a leadership role. "}
               <strong class="text-foreground"
-                >{__("Probo is a compliance execution team.")}</strong
+                >{"Probo is a compliance execution team."}</strong
               >
-              {__(" What we cover:")}
+              {" What we cover:"}
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Framework scoping and mapping")}</strong
+                    >{"Framework scoping and mapping"}</strong
                   >{
-                    __(
-                      " - SOC 2, ISO 27001, HIPAA, GDPR, NIS2, etc.",
-                    )
+                    " - SOC 2, ISO 27001, HIPAA, GDPR, NIS2, etc."
                   }</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{__("Policy drafting")}</strong
+                  ><strong class="text-foreground">{"Policy drafting"}</strong
                   >{
-                    __(
-                      " - custom to your stack, ~12-18 policies written for you",
-                    )
-                  }</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground"
-                    >{__("Evidence collection")}</strong
-                  >{
-                    __(
-                      " - integrations + our team chasing what integrations miss",
-                    )
+                    " - custom to your stack, ~12-18 policies written for you"
                   }</span
                 >
               </li>
@@ -360,20 +312,9 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__(
-                      "Auditor selection, coordination, and management",
-                    )}</strong
-                  >{__(" - we run the audit")}</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground">{__("Remediation")}</strong
+                    >{"Evidence collection"}</strong
                   >{
-                    __(
-                      " - failed controls get proposed fixes; we implement where possible",
-                    )
+                    " - integrations + our team chasing what integrations miss"
                   }</span
                 >
               </li>
@@ -381,19 +322,16 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Questionnaire response")}</strong
-                  >{__(" - 24-48 hour turnaround")}</span
+                    >{"Auditor selection, coordination, and management"}</strong
+                  >{" - we run the audit"}</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{__("Trust Center hosting")}</strong
+                  ><strong class="text-foreground">{"Remediation"}</strong
                   >{
-                    __(
-                      " - compliance reports, sub-processor list, DPA",
-                    )
+                    " - failed controls get proposed fixes; we implement where possible"
                   }</span
                 >
               </li>
@@ -401,46 +339,58 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Framework renewal")}</strong
+                    >{"Questionnaire response"}</strong
+                  >{" - 24-48 hour turnaround"}</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground"
+                    >{"Trust Center hosting"}</strong
                   >{
-                    __(
-                      " - Type II, ISO surveillance, HIPAA risk analysis updates",
-                    )
+                    " - compliance reports, sub-processor list, DPA"
+                  }</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  ><strong class="text-foreground"
+                    >{"Framework renewal"}</strong
+                  >{
+                    " - Type II, ISO surveillance, HIPAA risk analysis updates"
                   }</span
                 >
               </li>
             </ul>
             <p>
               <strong class="text-foreground"
-                >{__("What Probo doesn't do:")}</strong
+                >{"What Probo doesn't do:"}</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Be your board-facing security executive")}</span>
+                <span>{"Be your board-facing security executive"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   >{
-                    __(
-                      "Lead live incident response (we coordinate, but you or your team owns the technical response)",
-                    )
+                    "Lead live incident response (we coordinate, but you or your team owns the technical response)"
                   }</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__('Pitch prospects as "our CISO"')}</span>
+                <span>{'Pitch prospects as "our CISO"'}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   >{
-                    __(
-                      "Own the long-term security roadmap for your company",
-                    )
+                    "Own the long-term security roadmap for your company"
                   }</span
                 >
               </li>
@@ -454,66 +404,54 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("These Aren't Substitutes. They're Complements.")}
+            {"These Aren't Substitutes. They're Complements."}
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
               {
-                __(
-                  "Here's where most founders miscategorize the decision. ",
-                )
+                "Here's where most founders miscategorize the decision. "
               }
               <strong class="text-foreground"
-                >{__(
-                  "A fractional CISO and Probo solve different problems.",
-                )}</strong
+                >{"A fractional CISO and Probo solve different problems."}</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  >{__("A fractional CISO solves ")}
+                  >{"A fractional CISO solves "}
                   <strong class="text-foreground"
-                    >{__("leadership and narrative.")}</strong
+                    >{"leadership and narrative."}</strong
                   ></span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  >{__("Probo solves ")}
+                  >{"Probo solves "}
                   <strong class="text-foreground"
-                    >{__("compliance execution.")}</strong
+                    >{"compliance execution."}</strong
                   ></span
                 >
               </li>
             </ul>
             <p>
               {
-                __(
-                  "If you hire only a fractional CISO, you still need someone to do the work - an internal compliance owner, a security engineer, or a platform + internal hours. The CISO's strategy is only as valuable as your execution.",
-                )
+                "If you hire only a fractional CISO, you still need someone to do the work - an internal compliance owner, a security engineer, or a platform + internal hours. The CISO's strategy is only as valuable as your execution."
               }
             </p>
             <p>
               {
-                __(
-                  'If you use only Probo, you still need someone to be the face of security to the board and to large enterprise buyers who want to talk to "your CISO." Most Probo customers under 60 people fill that role with the founder or head of engineering, supported by our artifacts. Above 60-80 people, a part-time or full-time security leader usually enters the picture.',
-                )
+                'If you use only Probo, you still need someone to be the face of security to the board and to large enterprise buyers who want to talk to "your CISO." Most Probo customers under 60 people fill that role with the founder or head of engineering, supported by our artifacts. Above 60-80 people, a part-time or full-time security leader usually enters the picture.'
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__(
-                  'The right question isn\'t "Probo vs fractional CISO."',
-                )}</strong
+                >{'The right question isn\'t "Probo vs fractional CISO."'}</strong
               >
-              {__(" It's: ")}
+              {" It's: "}
               <strong class="text-foreground"
-                >{__(
-                  '"Which one do I need first, and when do I add the other?"',
-                )}</strong
+                >{'"Which one do I need first, and when do I add the other?"'}</strong
               >
             </p>
           </div>
@@ -525,45 +463,35 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The Sequencing Most Founders Get Wrong")}
+            {"The Sequencing Most Founders Get Wrong"}
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
               {
-                __(
-                  "The mistake: hiring a fractional CISO first, before you have a compliance program.",
-                )
+                "The mistake: hiring a fractional CISO first, before you have a compliance program."
               }
             </p>
             <p>
               {
-                __(
-                  "Here's what happens. Month 1: CISO does an assessment. Month 2: CISO recommends a platform. Month 3: You buy the platform. Months 3-8: The CISO guides, the platform tracks, and ",
-                )
+                "Here's what happens. Month 1: CISO does an assessment. Month 2: CISO recommends a platform. Month 3: You buy the platform. Months 3-8: The CISO guides, the platform tracks, and "
               }
-              <em>{__("you and your engineers do the work")}</em>
+              <em>{"you and your engineers do the work"}</em>
               {
-                __(
-                  ". You're paying $8k/month for guidance on a program you're executing yourself.",
-                )
+                ". You're paying $8k/month for guidance on a program you're executing yourself."
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__(
-                  "The correct sequencing for most startups under 60 people:",
-                )}</strong
+                >{"The correct sequencing for most startups under 60 people:"}</strong
               >
             </p>
             <ol class="ml-0 list-none space-y-4">
               <li class="flex items-start gap-3">
                 <span class="text-foreground font-semibold">1.</span>
                 <span
-                  ><strong class="text-foreground">{__("Probo first")}</strong
+                  ><strong class="text-foreground">{"Probo first"}</strong
                   >{
-                    __(
-                      " - get SOC 2 Type I in 8-12 weeks, Type II at month 12. Your compliance posture is handled.",
-                    )
+                    " - get SOC 2 Type I in 8-12 weeks, Type II at month 12. Your compliance posture is handled."
                   }</span
                 >
               </li>
@@ -571,11 +499,9 @@ const breadcrumbSchema = {
                 <span class="text-foreground font-semibold">2.</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Fractional CISO second (if needed)")}</strong
+                    >{"Fractional CISO second (if needed)"}</strong
                   >{
-                    __(
-                      ' - add at year 2 when enterprise buyers start asking "who\'s your CISO?" or when you need board-level security narrative. By now, compliance execution is stable, so the CISO\'s hours go to strategy, not setup.',
-                    )
+                    ' - add at year 2 when enterprise buyers start asking "who\'s your CISO?" or when you need board-level security narrative. By now, compliance execution is stable, so the CISO\'s hours go to strategy, not setup.'
                   }</span
                 >
               </li>
@@ -583,21 +509,17 @@ const breadcrumbSchema = {
                 <span class="text-foreground font-semibold">3.</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__("Full-time CISO eventually")}</strong
+                    >{"Full-time CISO eventually"}</strong
                   >{
-                    __(
-                      " - usually at 80-150 people, when security becomes a core function.",
-                    )
+                    " - usually at 80-150 people, when security becomes a core function."
                   }</span
                 >
               </li>
             </ol>
             <p>
-              <strong class="text-foreground">{__("The exception:")}</strong>
+              <strong class="text-foreground">{"The exception:"}</strong>
               {
-                __(
-                  " if you're in a high-regulation vertical (defense, fintech, health systems) and you need a CISO presence in sales cycles from day one, hire the CISO first and use Probo underneath them for execution. They'll thank you for it.",
-                )
+                " if you're in a high-regulation vertical (defense, fintech, health systems) and you need a CISO presence in sales cycles from day one, hire the CISO first and use Probo underneath them for execution. They'll thank you for it."
               }
             </p>
           </div>
@@ -609,41 +531,37 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The TCO Comparison, Year One")}
+            {"The TCO Comparison, Year One"}
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
               {
-                __(
-                  "Simplified for a 30-person SaaS targeting SOC 2 Type II:",
-                )
+                "Simplified for a 30-person SaaS targeting SOC 2 Type II:"
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__("Option A: Fractional CISO + self-driven compliance")}</strong
+                >{"Option A: Fractional CISO + self-driven compliance"}</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Fractional CISO: $96k/year")}</span>
+                <span>{"Fractional CISO: $96k/year"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Compliance platform: $12k/year")}</span>
+                <span>{"Compliance platform: $12k/year"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("External auditor: $18k")}</span>
+                <span>{"External auditor: $18k"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   >{
-                    __(
-                      "Founder + engineering hours: ~180 hours (worth ~$25k in opportunity cost)",
-                    )
+                    "Founder + engineering hours: ~180 hours (worth ~$25k in opportunity cost)"
                   }</span
                 >
               </li>
@@ -651,15 +569,13 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__(
-                      "Total: ~$151k cash + $25k opportunity = $176k",
-                    )}</strong
+                    >{"Total: ~$151k cash + $25k opportunity = $176k"}</strong
                   ></span
                 >
               </li>
             </ul>
             <p>
-              <strong class="text-foreground">{__("Option B: Probo alone")}</strong
+              <strong class="text-foreground">{"Option B: Probo alone"}</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
@@ -667,44 +583,38 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   >{
-                    __(
-                      "Probo managed service (including auditor): ~$35k-45k",
-                    )
+                    "Probo managed service (including auditor): ~$35k-45k"
                   }</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Founder + engineering hours: ~20 hours")}</span>
+                <span>{"Founder + engineering hours: ~20 hours"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__(
-                      "Total: ~$40k cash + $3k opportunity = $43k",
-                    )}</strong
+                    >{"Total: ~$40k cash + $3k opportunity = $43k"}</strong
                   ></span
                 >
               </li>
             </ul>
             <p>
               <strong class="text-foreground"
-                >{__("Option C: Probo + fractional CISO (later)")}</strong
+                >{"Option C: Probo + fractional CISO (later)"}</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
-                <span>{__("Probo (year 1): ~$40k")}</span>
+                <span>{"Probo (year 1): ~$40k"}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   >{
-                    __(
-                      "Fractional CISO added at month 14: ~$96k/year starting year 2",
-                    )
+                    "Fractional CISO added at month 14: ~$96k/year starting year 2"
                   }</span
                 >
               </li>
@@ -712,18 +622,14 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{__(
-                      "Total year 1: ~$40k. Year 2: ~$136k.",
-                    )}</strong
+                    >{"Total year 1: ~$40k. Year 2: ~$136k."}</strong
                   ></span
                 >
               </li>
             </ul>
             <p>
               {
-                __(
-                  "The delta between Option A and B is ~$130k in year one, at the cost of the CISO's leadership narrative - which most early-stage companies don't actually need in front of buyers yet.",
-                )
+                "The delta between Option A and B is ~$130k in year one, at the cost of the CISO's leadership narrative - which most early-stage companies don't actually need in front of buyers yet."
               }
             </p>
           </div>
@@ -735,46 +641,36 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("When a Fractional CISO Is Worth It Anyway")}
+            {"When a Fractional CISO Is Worth It Anyway"}
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
               {
-                __(
-                  "Three scenarios where hiring a CISO first makes sense:",
-                )
+                "Three scenarios where hiring a CISO first makes sense:"
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__(
-                  "1. You're selling to regulated enterprise buyers in year one.",
-                )}</strong
+                >{"1. You're selling to regulated enterprise buyers in year one."}</strong
               >
               {
-                __(
-                  " Defense, critical infrastructure, top-tier financial services. Their vendor review teams want to speak to your CISO by name. No amount of compliance posture substitutes for the title.",
-                )
+                " Defense, critical infrastructure, top-tier financial services. Their vendor review teams want to speak to your CISO by name. No amount of compliance posture substitutes for the title."
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__("2. You're raising a growth round soon.")}</strong
+                >{"2. You're raising a growth round soon."}</strong
               >
               {
-                __(
-                  ' Series B and later rounds increasingly ask "who\'s your security leader?" as a diligence question. A fractional CISO can be a credible answer.',
-                )
+                ' Series B and later rounds increasingly ask "who\'s your security leader?" as a diligence question. A fractional CISO can be a credible answer.'
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__("3. You've had a security incident.")}</strong
+                >{"3. You've had a security incident."}</strong
               >
               {
-                __(
-                  " Board-level narrative matters more than compliance paperwork in this case. Get the CISO in fast.",
-                )
+                " Board-level narrative matters more than compliance paperwork in this case. Get the CISO in fast."
               }
             </p>
           </div>
@@ -785,23 +681,19 @@ const breadcrumbSchema = {
         >
           <p class="text-foreground mb-3 font-semibold">
             {
-              __(
-                "Deciding between hiring a fractional CISO and ramping compliance?",
-              )
+              "Deciding between hiring a fractional CISO and ramping compliance?"
             }
           </p>
           <p class="text-muted-foreground mb-4 leading-relaxed">
             {
-              __(
-                "Let's scope your stage, your buyers, and your timeline. 30 minutes, no slides.",
-              )
+              "Let's scope your stage, your buyers, and your timeline. 30 minutes, no slides."
             }
           </p>
           <a
             href="/contact"
             class="inline-flex items-center gap-2 font-medium text-[#5d770d] hover:underline"
           >
-            {__("Book a Call")}
+            {"Book a Call"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -823,47 +715,39 @@ const breadcrumbSchema = {
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            {__("The Honest Recommendation")}
+            {"The Honest Recommendation"}
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
               <strong class="text-foreground"
-                >{__("Under 40 people, pre-enterprise:")}</strong
+                >{"Under 40 people, pre-enterprise:"}</strong
               >
               {
-                __(
-                  " Probo alone. Execution is the bottleneck, not strategy. Add a CISO later.",
-                )
+                " Probo alone. Execution is the bottleneck, not strategy. Add a CISO later."
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__("40-80 people, early enterprise pipeline:")}</strong
+                >{"40-80 people, early enterprise pipeline:"}</strong
               >
               {
-                __(
-                  " Probo for execution. Fractional CISO added as you scale, focused on board narrative and buyer-facing presence.",
-                )
+                " Probo for execution. Fractional CISO added as you scale, focused on board narrative and buyer-facing presence."
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__("80+ people, regulated verticals:")}</strong
+                >{"80+ people, regulated verticals:"}</strong
               >
               {
-                __(
-                  " Full-time security lead becomes the default. Probo continues as the execution layer underneath - most mature security organizations still outsource compliance program management to a specialist partner.",
-                )
+                " Full-time security lead becomes the default. Probo continues as the execution layer underneath - most mature security organizations still outsource compliance program management to a specialist partner."
               }
             </p>
             <p>
               <strong class="text-foreground"
-                >{__("If you only have budget for one, pick execution.")}</strong
+                >{"If you only have budget for one, pick execution."}</strong
               >
               {
-                __(
-                  " Buyers will forgive a missing CISO name if your SOC 2 report is clean and your questionnaire response time is under 48 hours. They won't forgive a CISO with a half-built program.",
-                )
+                " Buyers will forgive a missing CISO name if your SOC 2 report is clean and your questionnaire response time is under 48 hours. They won't forgive a CISO with a half-built program."
               }
             </p>
           </div>
@@ -874,23 +758,19 @@ const breadcrumbSchema = {
         >
           <p class="text-foreground mb-4 font-semibold leading-relaxed">
             {
-              __(
-                "Don't pay $8k/month for advice on a program you still have to build.",
-              )
+              "Don't pay $8k/month for advice on a program you still have to build."
             }
           </p>
           <p class="text-muted-foreground mb-4 leading-relaxed">
             {
-              __(
-                "Probo runs the program. Add a CISO when you need one - not before.",
-              )
+              "Probo runs the program. Add a CISO when you need one - not before."
             }
           </p>
           <a
             href="/contact"
             class="inline-flex items-center gap-2 font-medium text-[#5d770d] hover:underline"
           >
-            {__("Book a Call")}
+            {"Book a Call"}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
