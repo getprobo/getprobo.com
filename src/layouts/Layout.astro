@@ -177,7 +177,7 @@ const canonical = getCanonicalUrl(Astro.url);
     <Footer noFrameworks={Astro.props.noFrameworks} />
     <probo-cookie-banner
       banner-id={import.meta.env.PUBLIC_COOKIE_BANNER_ID}
-      base-url="https://us.console.getprobo.com/api/cookie-banner/v1"
+      base-url={import.meta.env.PUBLIC_COOKIE_BANNER_API_BASE_URL}
       position="bottom-right"></probo-cookie-banner>
   </body>
 </html>

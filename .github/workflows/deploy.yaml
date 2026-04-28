@@ -23,6 +23,7 @@ jobs:
         env:
           PUBLIC_POSTHOG_API_KEY: ${{ secrets.PUBLIC_POSTHOG_API_KEY }}
           PUBLIC_COOKIE_BANNER_ID: ${{ secrets.PUBLIC_COOKIE_BANNER_ID }}
+          PUBLIC_COOKIE_BANNER_API_BASE_URL: ${{ secrets.PUBLIC_COOKIE_BANNER_API_BASE_URL }}
       - uses: "cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65" # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

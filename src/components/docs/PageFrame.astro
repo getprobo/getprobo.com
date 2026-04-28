@@ -2,7 +2,6 @@
 import MobileMenuToggle from "virtual:starlight/components/MobileMenuToggle";
 import Search from "virtual:starlight/components/Search";
 import Header from "../Header.astro";
-import Cookie from "../Cookie.svelte";
 import Faro from "../faro.astro";
 ---
 
@@ -60,4 +59,8 @@ import Faro from "../faro.astro";
   }
 </style>
 
+<probo-cookie-banner
+  banner-id={import.meta.env.PUBLIC_COOKIE_BANNER_ID}
+  base-url={import.meta.env.PUBLIC_COOKIE_BANNER_API_BASE_URL}
+  position="bottom-right"></probo-cookie-banner>
 <Faro />
