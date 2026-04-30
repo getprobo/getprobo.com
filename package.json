@@ -18,7 +18,7 @@
     "@grafana/faro-web-sdk": "^2.3.1",
     "@phosphor-icons/core": "^2.1.1",
     "@phosphor-icons/web": "^2.1.2",
-    "@probo/cookie-banner": "^0.1.0",
+    "@probo/cookie-banner": "^0.1.1",
     "@splidejs/splide": "^4.1.4",
     "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "@splidejs/splide-extension-intersection": "^0.2.0",
