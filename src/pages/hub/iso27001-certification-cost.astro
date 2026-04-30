@@ -3,21 +3,23 @@ import Layout from "../../layouts/Layout.astro";
 import FrameworkBadge from "../../components/FrameworkBadge.svelte";
 
 const tableOfContents = [
-  { id: "cost-overview", label: "Cost Overview 2026" },
-  { id: "audit-costs", label: "How Much the Audit Costs" },
-  { id: "hidden-costs", label: "Hidden Cost of Implementation" },
-  { id: "worth-paying", label: "What's Worth Paying For" },
-  { id: "iso-vs-soc2", label: "ISO 27001 vs SOC 2 Cost" },
-  { id: "reduce-costs", label: "5 Ways to Reduce Costs" },
-  { id: "probo-help", label: "Get Compliant with Probo" },
+  { id: "two-invoices", label: "The two invoices" },
+  { id: "audit-costs", label: "What the audit costs" },
+  { id: "readiness-costs", label: "What readiness costs" },
+  { id: "hidden-pentest", label: "The hidden cost" },
+  { id: "consultant-vs-platform", label: "Consultant vs. platform" },
+  { id: "iso-vs-soc2", label: "ISO 27001 vs SOC 2" },
+  { id: "practical-checklist", label: "Checklist before you start" },
+  { id: "probo-help", label: "Get audit-ready with Probo" },
 ];
 
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "ISO 27001 Compliance Cost",
+  headline:
+    "ISO 27001 certification cost: what founders actually pay in 2026",
   description:
-    "What does ISO 27001 certification really cost in 2026? Get a complete breakdown of audit fees, implementation costs, and hidden expenses for startups and SMBs.",
+    "The real number ranges from $15,000 to over $80,000. Here is exactly what drives the difference, and how to avoid paying for things you don't need.",
   author: {
     "@type": "Organization",
     name: "Probo",
@@ -32,7 +34,7 @@ const articleSchema = {
       url: "https://www.getprobo.com/probo-logo.svg",
     },
   },
-  datePublished: "2026-01-19",
+  datePublished: "2026-04-30",
   dateModified: new Date().toISOString().split("T")[0],
   mainEntityOfPage: {
     "@type": "WebPage",
@@ -60,7 +62,7 @@ const breadcrumbSchema = {
     {
       "@type": "ListItem",
       position: 3,
-      name: "ISO 27001 Certification Cost",
+      name: "ISO 27001 certification cost (2026)",
       item: "https://www.getprobo.com/hub/iso27001-certification-cost",
     },
   ],
@@ -68,8 +70,8 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title="ISO 27001 Compliance Cost"
-  description="What does ISO 27001 certification really cost in 2026? Get a complete breakdown of audit fees, implementation costs, and hidden expenses for startups and SMBs."
+  title="ISO 27001 certification cost: what founders actually pay in 2026"
+  description="The real number ranges from $15,000 to over $80,000. Here is exactly what drives the difference, and how to avoid paying for things you don't need."
   ogImage="/hub/ISO27001-og.png"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
@@ -78,36 +80,34 @@ const breadcrumbSchema = {
     set:html={JSON.stringify(breadcrumbSchema)}
   />
   <main class="container my-10 sm:my-20">
-    <!-- Header -->
     <header class="mb-12 text-center sm:mb-16">
-      <div class="mb-4 flex items-center justify-center gap-4">
+      <div
+        class="mb-4 flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap"
+      >
         <h1
-          class="text-foreground text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
+          class="text-foreground max-w-[920px] text-[2rem] leading-[1.15] font-semibold tracking-[-0.02em] sm:text-[2.75rem] sm:leading-[1.1]"
         >
-          <span class="highlight-text">ISO 27001</span>
-          Compliance Cost
+          <span class="highlight-text">ISO 27001</span> certification cost: what
+          founders actually pay in 2026
         </h1>
-        <div class="flex items-center gap-2">
+        <div class="flex shrink-0 items-center gap-2">
           <FrameworkBadge name="ISO27001" class="size-12" client:visible />
         </div>
       </div>
       <div
         class="mb-6 inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-5 py-2.5 text-base text-gray-500 shadow-sm backdrop-blur-sm"
       >
-        Complete 2026 Breakdown
+        Audit vs. readiness — 2026 ranges
       </div>
       <p
         class="text-muted-foreground mx-auto max-w-[800px] text-lg leading-relaxed"
       >
-        What does ISO 27001 certification really cost in 2026? Get a complete
-        breakdown of audit fees, implementation costs, and hidden expenses for
-        startups and SMBs.
+        The real number ranges from $15,000 to over $80,000. Here is exactly what
+        drives the difference, and how to avoid paying for things you don't need.
       </p>
     </header>
 
-    <!-- Content with TOC -->
     <div class="flex flex-col gap-10 lg:flex-row lg:gap-16">
-      <!-- Table of Contents - Sidebar -->
       <aside class="shrink-0 lg:w-56">
         <nav class="lg:sticky lg:top-24">
           <div class="flex flex-col gap-2">
@@ -126,401 +126,291 @@ const breadcrumbSchema = {
         </nav>
       </aside>
 
-      <!-- Main Content -->
       <article class="max-w-[720px] flex-1">
-        <!-- Hero Image -->
         <img
           src="/hub/ISO27001-cost-illustration.jpg"
           alt="ISO 27001 certification cost illustration"
           class="mb-12 w-full rounded-xl"
         />
 
-        <!-- Introduction -->
         <section class="mb-12">
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              You've probably heard wildly different numbers when asking about
-              ISO 27001 certification costs. One vendor quotes $15,000. Another
-              says $150,000. A consultant tells you it depends on "complexity
-              factors" without explaining what that actually means.
+              You just started looking at ISO 27001. Maybe a prospect asked. Maybe
+              you're expanding to Europe. Either way, you want to know one thing
+              before anything else: how much is this going to cost?
             </p>
             <p>
-              Here's the truth: ISO 27001 pricing confusion isn't accidental. It
-              benefits consultants and enterprise compliance platforms that
-              thrive on opacity. The more confusing the landscape, the easier it
-              is to justify inflated fees or lock you into expensive multi-year
-              contracts.
+              Every vendor will tell you "it depends." That's true and completely
+              useless.
             </p>
-            <p>
-              But you're a decision-maker who needs real numbers to justify
-              compliance budgets to stakeholders. You need to understand exactly
-              where your money goes, and more importantly, where you might be
-              overpaying. This guide breaks down every cost component of ISO
-              27001 certification in 2026, from audit fees to the hidden
-              expenses most vendors conveniently forget to mention.
-            </p>
+            <p>Here's what actually drives the number.</p>
           </div>
         </section>
 
         <hr class="border-border-low mb-12" />
 
-        <!-- Cost Overview -->
-        <section id="cost-overview" class="mb-12 scroll-mt-24">
+        <section id="two-invoices" class="mb-12 scroll-mt-24">
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            ISO 27001 Certification Cost Overview: What to Expect in 2026
+            The two invoices you will receive
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              Let's start with the direct certification costs. The fees you'll
-              pay to actually get that ISO 27001 certificate on your wall. These
-              are non-negotiable expenses that every organization faces,
-              regardless of how you approach implementation.
+              ISO 27001 certification has two distinct cost buckets that most people
+              conflate.
             </p>
             <p>
-              The total direct certification cost for most organizations ranges
-              from
-              <strong class="text-foreground">$6,000 to $50,000</strong>
-              for the initial certification cycle, depending on your company size
-              and complexity. But that number only tells part of the story.
+              <strong class="text-foreground">The audit fee</strong> is what you pay
+              the certification body — the accredited firm that will inspect your ISMS
+              and stamp your certificate. This is the non-negotiable, external spend.
+            </p>
+            <p>
+              <strong class="text-foreground">The readiness cost</strong> is everything
+              you do to prepare before the auditor walks in: implementing controls,
+              writing policies, training staff, and tooling up. This is where costs vary
+              wildly, and where you have the most control.
+            </p>
+            <p>
+              Most "ISO 27001 cost" content adds them together and gives you a number.
+              That's misleading. They have completely different levers.
             </p>
           </div>
         </section>
 
         <hr class="border-border-low mb-12" />
 
-        <!-- Audit Costs -->
         <section id="audit-costs" class="mb-12 scroll-mt-24">
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            How Much the Audit Costs
-          </h2>
-          <div class="text-muted-foreground space-y-6 leading-relaxed">
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                Stage 1 and Stage 2 Audit Fees
-              </h3>
-              <p class="mb-4">
-                ISO 27001 certification requires a two-stage external audit
-                process, and understanding this structure is crucial for
-                budgeting accurately.
-              </p>
-              <p class="mb-4">
-                <strong class="text-foreground"
-                  >Stage 1 Audit (Documentation Review):</strong
-                >
-                This is essentially a readiness check. The certification body reviews
-                your Information Security Management System (ISMS) documentation to
-                verify you're prepared for the full audit.
-              </p>
-              <p class="mb-4">
-                <strong class="text-foreground"
-                  >Stage 2 Audit (Certification Audit):</strong
-                >
-                This is the comprehensive on-site (or remote) audit where auditors
-                verify your ISMS is actually implemented and working effectively.
-              </p>
-              <p>
-                Total cost run between
-                <strong class="text-foreground">$4,500 to $25,000</strong> , depending
-                on your organization's size and the number of auditor days required.
-              </p>
-            </div>
-
-            <div>
-              <p class="mb-3">
-                The number of audit days is calculated based on factors
-                including:
-              </p>
-              <ul class="ml-0 list-none space-y-3">
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Number of employees</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Number of physical locations</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Complexity of your IT infrastructure</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>
-                    Scope of your ISMS (which business processes are included)</span
-                  >
-                </li>
-              </ul>
-              <p class="mt-4">
-                A 30-person SaaS startup with a single office and cloud-based
-                infrastructure might need 1 or 2 audit days total. A 200-person
-                company with multiple locations and on-premise systems could
-                require at least 5 days.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                Annual Surveillance Audit Costs
-              </h3>
-              <p class="mb-4">
-                Your ISO 27001 certificate is valid for three years, but it
-                comes with strings attached. You'll undergo
-                <strong class="text-foreground"
-                  >annual surveillance audits</strong
-                >
-                in years two and three to verify you're maintaining compliance.
-              </p>
-              <p class="mb-4">
-                Surveillance audits are shorter than the initial certification
-                audit—typically about one-third the duration. Budget
-                <strong class="text-foreground"
-                  >$3,000 to $12,000 per year</strong
-                >
-                for surveillance audits, depending on your organization's size.
-              </p>
-              <p>
-                These aren't optional. Skip a surveillance audit, and your
-                certification gets suspended. Miss the window entirely, and
-                you'll need to start the full certification process over again.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                Recertification Costs (Every 3 Years)
-              </h3>
-              <p class="mb-4">
-                When your three-year certification cycle ends, you'll need to go
-                through recertification. This is essentially another full audit,
-                though it may be slightly streamlined if you've maintained good
-                compliance throughout the cycle.
-              </p>
-              <p>
-                Recertification costs are comparable to initial certification.
-                Depends of course on how your company has grown. If you have 3x
-                more employees at this moment, price will probably be higher.
-                But shouldn't be really a problem at this stage.
-              </p>
-            </div>
-
-            <div
-              class="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4"
-            >
-              <p class="text-amber-800">
-                <strong>⚠️ Warning:</strong>
-                Be careful with audit prices that seem too good to be true. There's
-                a good chance the firm isn't legitimate. When selling to enterprise
-                customers, they will verify your auditor's credibility. If it doesn't
-                check out, you'll have wasted both time and money.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <hr class="border-border-low mb-12" />
-
-        <!-- Hidden Costs -->
-        <section id="hidden-costs" class="mb-12 scroll-mt-24">
-          <h2
-            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
-          >
-            The Hidden Cost of Implementation
+            What the audit actually costs
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              Here's where things get expensive, and where most organizations
-              dramatically underestimate their investment. The audit fees above
-              represent maybe 20-30% of your total ISO 27001 spend. The rest
-              goes into actually building and maintaining a compliant ISMS.
+              A Stage 1 and Stage 2 audit from an accredited certification body —
+              Bureau Veritas, BSI, SGS, DNV — will typically run between
+              <strong class="text-foreground">$8,000 and $20,000</strong> for a startup
+              with 10–50 employees.
             </p>
-            <p>
-              The audit fee is just the visible part of your ISO 27001
-              investment. The hidden costs often exceed the audit itself, yet
-              they're rarely discussed in vendor marketing materials.
-            </p>
-            <p>
-              Before the audit, you need to put policies, controls, and security
-              measures in place:
-            </p>
+            <p>What moves that number:</p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">Readiness assessment</strong
-                  ></span
+                  ><strong class="text-foreground">Employee count.</strong> Auditors
+                  price by scope. More people = more man-days to assess.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >Policy creation/updates</strong
-                  ></span
+                  ><strong class="text-foreground">Site count.</strong> Fully remote
+                  companies often pay less. Multiple offices add cost.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >Control implementation</strong
-                  ></span
+                  ><strong class="text-foreground">Auditor brand.</strong> BSI charges a
+                  premium. Smaller regional bodies charge less for the same accreditation.</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">Evidence collection</strong
-                  ></span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span
-                  ><strong class="text-foreground">Auditor communication</strong
-                  ></span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-muted-foreground">•</span>
-                <span><strong class="text-foreground">Remediation</strong></span
+                  ><strong class="text-foreground">Surveillance audits.</strong> Your certificate
+                  lasts 3 years. Year 2 and Year 3 annual surveillance audits run
+                  <strong class="text-foreground">$3,000–$6,000</strong> each.</span
                 >
               </li>
             </ul>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                Internal Resource and Time Investment
-              </h3>
-              <p class="mb-4">
-                This is consistently the largest hidden cost. Implementing ISO
-                27001 in-house requires significant time from your team:
-              </p>
-              <ul class="ml-0 list-none space-y-3">
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground"
-                      >Project lead/compliance manager:</strong
-                    >
-                    a dedicated person for 3-6 months during implementation</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground">IT/Security team:</strong>
-                    10-20 hours per week for technical controls and evidence gathering</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground">Department heads:</strong>
-                    5-10 hours each for policy reviews and process documentation</span
-                  >
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span
-                    ><strong class="text-foreground">Executive sponsor:</strong>
-                    2-5 hours per week for oversight and decision-making</span
-                  >
-                </li>
-              </ul>
-              <p class="mt-4">
-                For a startup, this might mean your CTO or Head of Engineering
-                is spending half their time on compliance for several months.
-                That's an opportunity cost that can easily exceed
-                $50,000-$100,000 in equivalent salary value.
-              </p>
-              <p class="mt-4">
-                The compliance automation market has exploded precisely because
-                of this pain point. A compliance solution will probably lower
-                your internal required effort. A classic GRC solution will cost
-                between $5k to $15K a year and still requires oversight from
-                you.
-              </p>
-            </div>
+            <p>
+              One thing that doesn't affect the audit price: how well-prepared you are.
+              The auditor charges for time, not for how clean your controls are.
+            </p>
           </div>
         </section>
 
         <hr class="border-border-low mb-12" />
 
-        <!-- What's Worth Paying For -->
-        <section id="worth-paying" class="mb-12 scroll-mt-24">
+        <section id="readiness-costs" class="mb-12 scroll-mt-24">
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            What's Worth Paying For
+            What readiness actually costs
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
-            <p>Not everything the compliance industry pushes is necessary.</p>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                Penetration Testing
-              </h3>
-              <p class="mb-4">
-                ISO 27001 doesn't require penetration testing. For early-stage
-                startups, it might not even be useful—your product is still
-                evolving, and security testing makes more sense once it
-                stabilizes. We cover this in detail in
-                <a
-                  href="/blog/2025-10-23-do-you-need-pen-test-for-iso27001"
-                  class="text-[#5d770d] hover:underline"
-                  >Do You Need a Pen Test for ISO 27001?</a
-                >
-              </p>
-              <p class="mb-4">
-                If you do go for it, manual testing is worth it.
-              </p>
-              <p>
-                <strong class="text-foreground">Budget:</strong>
-                A proper penetration test starts at $5,000.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                Security Training
-              </h3>
-              <p class="mb-4">
-                Security training for employees is a good investment, but don't
-                overpay. Plenty of
-                <strong class="text-foreground">free resources exist</strong>,
-                and some vendors offer free tiers for startups.
-              </p>
-              <p>
-                <strong class="text-foreground">Budget:</strong>
-                $100/month is more than enough.
-              </p>
+            <p>This is the part that blows budgets.</p>
+            <p>
+              A consultant-led engagement — where an external firm runs your ISO 27001
+              project end to end — will cost
+              <strong class="text-foreground">$20,000 to $60,000</strong>.
+              Enterprise-focused firms will quote <strong class="text-foreground"
+                >$80,000+</strong
+              >.
+            </p>
+            <p>
+              If you use a compliance platform instead (Vanta, Drata, Probo), the tool
+              cost is typically
+              <strong class="text-foreground">$6,000 to $15,000 per year</strong>, but
+              your team still has to do the actual work.
+            </p>
+            <p>
+              If you do it mostly yourself with a lean platform and one day a week from
+              your CTO:
+              <strong class="text-foreground">$8,000 to $20,000</strong> total, including
+              the audit.
+            </p>
+            <p>
+              The honest breakdown for a 20-person SaaS company doing it properly, not
+              cutting corners:
+            </p>
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse text-sm">
+                <thead>
+                  <tr class="border-border-low border-b">
+                    <th class="text-foreground py-3 pr-4 text-left font-semibold"
+                      >Item</th
+                    >
+                    <th class="text-foreground py-3 text-left font-semibold"
+                      >Estimated cost</th
+                    >
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-border-low border-b">
+                    <td class="text-foreground py-3 pr-4 font-medium">
+                      Certification audit (Stage 1 + Stage 2)
+                    </td>
+                    <td class="py-3">$10,000–$15,000</td>
+                  </tr>
+                  <tr class="border-border-low border-b">
+                    <td class="text-foreground py-3 pr-4 font-medium"
+                      >Compliance platform (annual)</td
+                    >
+                    <td class="py-3">$6,000–$10,000</td>
+                  </tr>
+                  <tr class="border-border-low border-b">
+                    <td class="text-foreground py-3 pr-4 font-medium"
+                      >Internal time (CTO + team, ~60–80h)</td
+                    >
+                    <td class="py-3">Depends on your day rate</td>
+                  </tr>
+                  <tr class="border-border-low border-b">
+                    <td class="text-foreground py-3 pr-4 font-medium"
+                      >Penetration test (usually required)</td
+                    >
+                    <td class="py-3">$3,000–$8,000</td>
+                  </tr>
+                  <tr class="border-border-low border-b">
+                    <td class="text-foreground py-3 pr-4 font-medium"
+                      >Legal review of policies (optional but smart)</td
+                    >
+                    <td class="py-3">$1,500–$3,000</td>
+                  </tr>
+                  <tr>
+                    <td class="text-foreground py-3 pr-4 font-medium"
+                      >Total, first year</td
+                    >
+                    <td class="py-3 font-medium text-[#141e12]">$20,000–$36,000</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
 
         <hr class="border-border-low mb-12" />
 
-        <!-- ISO vs SOC 2 -->
+        <section id="hidden-pentest" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            The hidden cost that nobody lists
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>A penetration test.</p>
+            <p>
+              Most auditors will expect to see evidence of a recent pentest before they
+              sign off. It's not formally mandatory in ISO 27001:2022, but in practice
+              most certification bodies treat it as standard for Annex A control 8.8
+              (management of technical vulnerabilities).
+            </p>
+            <p>
+              A basic pentest from a reputable firm runs
+              <strong class="text-foreground">$3,000 to $8,000</strong> for a standard web
+              application. If you don't budget for it, you'll find out at the worst moment
+              — during Stage 1.
+            </p>
+            <p>
+              For more nuance on when a pentest is required, see
+              <a
+                href="/blog/2025-10-23-do-you-need-pen-test-for-iso27001"
+                class="text-[#5d770d] hover:underline"
+                >Do you need a pen test for ISO 27001?</a
+              >
+            </p>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <section id="consultant-vs-platform" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            Consultant vs. platform: the real tradeoff
+          </h2>
+          <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>Consultants sell time. Platforms sell tooling.</p>
+            <p>
+              If you have no compliance knowledge internally and no time to build it, a
+              consultant gets you to the finish line faster. You're paying for expertise
+              and project management, not just deliverables.
+            </p>
+            <p>
+              If you have a technically literate CTO who can own the project, a platform
+              is almost always the better value. The platforms structure the work, track
+              evidence, generate the required documentation, and reduce the audit to a
+              relatively predictable exercise.
+            </p>
+            <p>
+              <strong class="text-foreground">The trap:</strong> assuming that paying a
+              consultant means you don't need a platform, or vice versa. Some companies
+              pay for both and end up with duplicate work and two different sets of
+              documentation. Pick one model before you start.
+            </p>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
         <section id="iso-vs-soc2" class="mb-12 scroll-mt-24">
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            ISO 27001 vs SOC 2 Cost Comparison: Which Should You Choose?
+            Does ISO 27001 cost more than SOC 2?
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              This is one of the most common questions we hear from B2B
-              companies evaluating compliance frameworks. Both ISO 27001 and SOC
-              2 demonstrate security maturity to customers, but they serve
-              different purposes and carry different costs.
+              Roughly the same, with one key difference: ISO 27001 gives you an
+              internationally recognised certificate that never expires until
+              de-certified, while SOC 2 gives you a point-in-time report valid for 12
+              months.
             </p>
             <p>
-              For a detailed breakdown of SOC 2 expenses, check out our complete
-              guide on
+              If your customers are primarily in Europe, ISO 27001 is almost always the
+              better investment. North American enterprise buyers are more likely to ask
+              for SOC 2.
+            </p>
+            <p>
+              If you're not sure, the short version: ask the three prospects who've
+              actually raised it what they want. Don't guess.
+            </p>
+            <p>
+              For SOC 2 numbers, see
               <a
                 href="/blog/2025-03-04-what-is-soc2-cost"
                 class="text-[#5d770d] hover:underline">what SOC 2 costs</a
@@ -531,192 +421,90 @@ const breadcrumbSchema = {
 
         <hr class="border-border-low mb-12" />
 
-        <!-- 5 Ways to Reduce Costs -->
-        <section id="reduce-costs" class="mb-12 scroll-mt-24">
+        <section id="practical-checklist" class="mb-12 scroll-mt-24">
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            5 Ways to Reduce Your ISO 27001 Certification Costs
+            A practical checklist before you start
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
+            <p>Before you commit to a budget, answer these:</p>
+            <ul class="ml-0 list-none space-y-3">
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  >Who is actually asking for ISO 27001? Named prospects with real deals,
+                  or a vague "we should probably have it"?</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  >Is a Stage 1 + Stage 2 audit enough, or does the prospect require
+                  surveillance audits too?</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  >Do you have an existing pentest? If not, add
+                  <strong class="text-foreground">$5,000</strong> to your budget immediately.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  >Will the CTO own this, or do you need a consultant? Decide before you
+                  engage anyone.</span
+                >
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-muted-foreground">•</span>
+                <span
+                  >Do you have a scope document? Narrowing scope (e.g., excluding certain
+                  systems) reduces your audit fee.</span
+                >
+              </li>
+            </ul>
             <p>
-              You don't have to choose between compliance and your runway. Here
-              are proven strategies to achieve ISO 27001 certification without
-              overspending.
+              Getting ISO 27001 certified is achievable in
+              <strong class="text-foreground">3–6 months</strong> for most startups. The cost
+              is controllable if you go in with a clear scope and a realistic estimate of
+              internal time.
             </p>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                1. Use Open-Source Compliance Tools Instead of Enterprise
-                Platforms
-              </h3>
-              <p>
-                Enterprise GRC platforms charge
-                <strong class="text-foreground"
-                  >$25,000-$50,000+ annually</strong
-                >
-                for features most startups don't need. Open-source alternatives provide
-                core compliance functionality—policy management, control tracking,
-                evidence collection—at a fraction of the cost. Read
-                <a
-                  href="/blog/2025-02-04-the-case-for-open-source-compliance"
-                  class="text-[#5d770d] hover:underline"
-                  >the case for open-source compliance</a
-                >
-                to understand why.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                2. Start with a Proper Gap Assessment
-              </h3>
-              <p class="mb-4">
-                Skipping the gap assessment to save $5,000-$10,000 is false
-                economy. Without a clear understanding of your current state,
-                you'll waste time implementing unnecessary controls while
-                missing critical gaps.
-              </p>
-              <p class="mb-3">A thorough gap assessment provides:</p>
-              <ul class="ml-0 list-none space-y-2">
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Prioritized remediation roadmap</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Realistic timeline estimates</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Accurate budget projections</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Reduced risk of audit findings</span>
-                </li>
-              </ul>
-              <p class="mt-4">
-                Whether you hire a consultant or use a structured
-                self-assessment framework, invest the time upfront to understand
-                exactly what needs to change.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                3. Leverage Automation for Evidence Collection
-              </h3>
-              <p class="mb-4">
-                Evidence collection is the most time-consuming ongoing
-                compliance activity. Every control requires documentation
-                proving it's implemented and working: screenshots, logs,
-                reports, attestations.
-              </p>
-              <p class="mb-3">
-                Modern compliance tools automate evidence collection by
-                integrating with your existing systems:
-              </p>
-              <ul class="ml-0 list-none space-y-2">
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Cloud providers (AWS, GCP, Azure)</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Identity providers (Okta, Google Workspace)</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>HR systems (BambooHR, Gusto)</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="text-muted-foreground">•</span>
-                  <span>Development tools (GitHub, Jira)</span>
-                </li>
-              </ul>
-              <p class="mt-4">
-                This automation can reduce evidence collection time by 70-80%,
-                freeing your team to focus on actually improving security rather
-                than documenting it.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                4. Right-Size Your ISMS Scope
-              </h3>
-              <p>
-                You don't need to certify your entire organization from day one.
-                A focused ISMS scope—covering your core product and customer
-                data—can significantly reduce audit complexity and costs while
-                still satisfying customer requirements.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-foreground mb-3 text-lg font-semibold">
-                5. Choose the Right Certification Body
-              </h3>
-              <p>
-                Audit fees vary significantly between certification bodies. Get
-                quotes from multiple accredited auditors, but remember: the
-                cheapest option isn't always the best. Consider reputation,
-                industry experience, and audit approach when making your
-                decision.
-              </p>
-            </div>
           </div>
         </section>
 
         <hr class="border-border-low mb-12" />
 
-        <!-- How Probo Helps -->
         <section id="probo-help" class="mb-12 scroll-mt-24">
           <h2
             class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
           >
-            Get ISO 27001 Compliant with Probo
+            Get audit-ready with Probo
           </h2>
           <div class="text-muted-foreground space-y-4 leading-relaxed">
             <p>
-              If you want to become ISO 27001 certified
-              <strong class="text-foreground">
-                without turning compliance into a second full-time job</strong
-              >,
-              <a
-                href="https://www.getprobo.com/"
-                class="text-[#5d770d] hover:underline">Probo</a
+              If you're going through ISO 27001,
+              <a href="https://www.getprobo.com/" class="text-[#5d770d] hover:underline"
+                >Probo</a
               >
-              is a great fit. You get a
-              <a
-                href="/blog/2025-10-17-what-is-hands-off-compliance"
-                class="font-semibold text-[#5d770d] hover:underline"
-                >hands-off compliance service</a
-              >
-              (so your team isn't stuck writing policies, chasing evidence, and managing
-              auditors) paired with an
-              <strong class="text-foreground">open-source platform</strong>
-              that keeps everything structured, auditable, and easy to maintain year
-              after year.
+              gets your team audit-ready with
+              <strong class="text-foreground">less than 10 hours</strong> of their time,
+              maps your controls automatically, and tracks evidence in one place.
             </p>
-            <p class="mt-4">
+            <p>
               See how
-              <a
-                href="/stories/lucis-iso"
-                class="text-[#5d770d] hover:underline"
+              <a href="/stories/lucis-iso" class="text-[#5d770d] hover:underline"
                 >Lucis got ISO 27001 certified</a
               >
-              using Probo's managed approach, and
-              <a href="/contact" class="text-[#5d770d] hover:underline"
-                >talk to us</a
-              >
-              to understand the cost.
+              with Probo, or
+              <a href="/contact" class="text-[#5d770d] hover:underline">talk to us</a> about your
+              scope and budget.
             </p>
           </div>
         </section>
 
-        <!-- CTA Section -->
         <section
           class="rounded-2xl bg-gradient-to-br from-[#e4f7c7] to-[#d0e8b3] p-10 sm:p-12"
         >
@@ -724,7 +512,7 @@ const breadcrumbSchema = {
             <h3
               class="mb-4 text-2xl font-semibold text-[#141e12] sm:text-[1.75rem]"
             >
-              Get ISO 27001 Certified with Probo
+              Get ISO 27001 certified with Probo
             </h3>
             <p class="mx-auto mb-8 max-w-[500px] text-[#3d4a38]">
               Take a meeting to understand how close you are to compliance.
@@ -777,18 +565,18 @@ const breadcrumbSchema = {
 
 <script>
   const sectionIds = [
-    "cost-overview",
+    "two-invoices",
     "audit-costs",
-    "hidden-costs",
-    "worth-paying",
+    "readiness-costs",
+    "hidden-pentest",
+    "consultant-vs-platform",
     "iso-vs-soc2",
-    "reduce-costs",
+    "practical-checklist",
     "probo-help",
   ];
 
   const tocLinks = document.querySelectorAll(".toc-link");
 
-  // Function to scroll to a specific section
   function scrollToSection(id: string) {
     const element = document.getElementById(id);
     if (element) {
@@ -798,7 +586,6 @@ const breadcrumbSchema = {
     }
   }
 
-  // Handle scroll to update active section
   function handleScroll() {
     const sections = sectionIds.map((id) => document.getElementById(id));
     const scrollPosition = window.scrollY + 200;
@@ -813,7 +600,6 @@ const breadcrumbSchema = {
       }
     }
 
-    // Update active class on TOC links
     tocLinks.forEach((link) => {
       const linkSection = link.getAttribute("data-section");
       if (linkSection === activeId) {
@@ -824,7 +610,6 @@ const breadcrumbSchema = {
     });
   }
 
-  // Add click handlers to TOC buttons
   tocLinks.forEach((link) => {
     link.addEventListener("click", () => {
       const sectionId = link.getAttribute("data-section");
@@ -834,9 +619,6 @@ const breadcrumbSchema = {
     });
   });
 
-  // Listen to scroll events
   window.addEventListener("scroll", handleScroll);
-
-  // Initial call to set active section on page load
   handleScroll();
 </script>
