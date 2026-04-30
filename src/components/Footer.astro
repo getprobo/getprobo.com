@@ -7,6 +7,7 @@ import Cookie from "../components/Cookie.svelte";
 import Newsletter from "./block/Newsletter.astro";
 import { Toaster } from "svelte-sonner";
 import Faro from "./faro.astro";
+import { meta } from "astro:schema";
 
 const menus = [
   {
@@ -94,4 +95,4 @@ type Props = {
 
 <Toaster richColors position="top-center" client:only="svelte" />
 
-<Faro />
+{!import.meta.env.DEV && <Faro />}

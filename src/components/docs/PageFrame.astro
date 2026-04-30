@@ -63,4 +63,5 @@ import Faro from "../faro.astro";
   banner-id={import.meta.env.PUBLIC_COOKIE_BANNER_ID}
   base-url={import.meta.env.PUBLIC_COOKIE_BANNER_API_BASE_URL}
   position="bottom-right"></probo-cookie-banner>
-<Faro />
+
+{!import.meta.env.DEV && <Faro />}
