@@ -1,0 +1,33 @@
+---
+title: "Cookie Banner"
+description: "Build, theme, translate, and ship a GDPR-ready cookie banner from Probo, with consent signals, auto-detection, CLI, and MCP support baked in."
+date: 2026-05-04
+image: "/changelog/2026-05-04-cookie.banner.mp4"
+tags: ["Console", "MCP", "CLI"]
+---
+
+Cookie banners are a compliance chore nobody wants to own. So we built the whole thing into Probo — editor, SDK, consent signals, translations, auto-detection, and tooling.
+
+**Build and theme the banner**
+
+Manage a catalog of cookies, group them by category, theme the banner, preview it, then publish. Global branding config covers the default Probo styling, or you can go fully custom. On the implementation side, there's a `@probo/cookie-banner` SDK with web components and both headless and themed entrypoints — your frontend team embeds it once and pulls config from Probo.
+
+**Auto-detection with cookie patterns**
+
+Cookie detection used to dump every cookie into a flat list. With dozens of third-party scripts loading dozens of cookies each, that got old fast. Cookie patterns fix this: define a URL prefix, and any matching cookie gets grouped under it. A background worker handles auto-detection, so newly seen cookies land in the right pattern without manual triage. Categories are assigned at the pattern level, not per cookie.
+
+**Consent signals that actually wire up**
+
+A consent banner is only useful if the rest of your stack listens to it. Three signals are wired in:
+
+- **Google Consent Mode v2** — the banner forwards the right gtag consent state so Analytics, Ads, and Tag Manager behave correctly.
+- **Global Privacy Control** — if a browser sends GPC, the banner treats it as a rejection of non-necessary categories without asking again.
+- **PostHog** — map a PostHog event category to one of your cookie categories, and consent decisions flow through without custom glue code.
+
+**Translations out of the box**
+
+Banners ship with built-in translations for French, German, and Spanish — covering category labels, cookie descriptions, and duration strings. Override anything you want in the JS SDK, but you no longer have to translate from scratch to launch in three of the biggest EU markets.
+
+**CLI and MCP**
+
+Cookie banner management is in the CLI (`probo cookie-banner`) and exposed as MCP tools. Banners, categories, patterns, versions, and consent records are all addressable from the terminal or any MCP-compatible agent.
