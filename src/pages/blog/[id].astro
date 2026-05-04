@@ -67,7 +67,7 @@ const faqSchema = post.data.faqs
 <Layout
   title={post.data.title}
   description={post.data.excerpt}
-  ogImage={post.data.ogImage}
+  ogImage={post.data.ogImage ?? post.data.titleImage}
 >
   <meta slot="head" property="og:type" content="article" />
   <meta
@@ -110,9 +110,28 @@ const faqSchema = post.data.faqs
         post.data.author.name
       }
     </div>
-    <h1 class="text-h3 sm:text-h2 animate-slide-in mb-10 font-medium">
-      {post.data.title}
-    </h1>
+    {
+      post.data.titleImage ? (
+        <div class="animate-slide-in mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+          <h1 class="text-h3 sm:text-h2 flex-1 font-medium">
+            {post.data.title}
+          </h1>
+          <img
+            src={post.data.titleImage}
+            alt=""
+            width={280}
+            height={280}
+            class="mx-auto h-auto w-full max-w-[160px] shrink-0 object-contain sm:mx-0 sm:max-w-[200px]"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      ) : (
+        <h1 class="text-h3 sm:text-h2 animate-slide-in mb-10 font-medium">
+          {post.data.title}
+        </h1>
+      )
+    }
     <p class="text-h5 animate-slide-in animation-delay-100 mb-10 font-medium">
       {post.data.excerpt}
     </p>
