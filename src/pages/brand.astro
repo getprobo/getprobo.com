@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import ProboLogo from "../assets/probo-logo.svg";
 import ProboLogoOnly from "../assets/probo-logo-only.svg";
+import ProboWhiteLogo from "../assets/probo_white_logo.svg";
 import { frameworks } from "../content/frameworks.ts";
 import FrameworkBadge from "../components/FrameworkBadge.svelte";
 ---
@@ -24,7 +25,7 @@ import FrameworkBadge from "../components/FrameworkBadge.svelte";
       <!-- Logos Section -->
       <section class="animate-slide-in animation-delay-200">
         <h2 class="mb-6 text-xl font-medium">Logo</h2>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <!-- Full Logo -->
           <div>
             <div
@@ -65,6 +66,30 @@ import FrameworkBadge from "../components/FrameworkBadge.svelte";
             <div class="flex justify-center">
               <a
                 href="/probo-logo-only.svg"
+                download
+                class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-md px-4 py-2 text-sm transition-colors"
+              >
+                Download SVG
+              </a>
+            </div>
+          </div>
+
+          <!-- Full Logo (white, for dark backgrounds) -->
+          <div>
+            <div
+              class="bg-[#141E12] mb-4 flex h-32 items-center justify-center rounded-lg"
+            >
+              <Image
+                src={ProboWhiteLogo}
+                alt="Probo Logo (white)"
+                width={148}
+                height={41}
+                class="h-10 w-auto"
+              />
+            </div>
+            <div class="flex justify-center">
+              <a
+                href={ProboWhiteLogo.src}
                 download
                 class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-md px-4 py-2 text-sm transition-colors"
               >
