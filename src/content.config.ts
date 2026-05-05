@@ -29,11 +29,14 @@ const stories = defineCollection({
     ogImage: z.string().optional(),
     framework: z.enum(frameworks.map((f) => f.label) as any),
     logo: z.string(),
+    /** Hero logo height in px (story page + cards); default 23 */
+    logoHeight: z.number().optional(),
     /** Logo asset for light UI (e.g. story cards); falls back to `logo` */
     logoLightBg: z.string().optional(),
     invertLogo: z.boolean().optional().default(true),
     company: z.object({
       name: z.string(),
+      url: z.string().url().optional(),
       industry: z.string(),
       type: z.string(),
       about: z.string(),

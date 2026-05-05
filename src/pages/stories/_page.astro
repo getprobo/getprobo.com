@@ -75,8 +75,12 @@ const articleSchema = {
     >
       <Image
         src={logo}
-        height={23}
-        class={`animate-perspective-in${data.invertLogo ? " invert" : ""}`}
+        height={data.logoHeight ?? 23}
+        class={`animate-perspective-in${
+          data.invertLogo
+            ? " [filter:brightness(0)_invert(1)_drop-shadow(0_2px_10px_rgba(0,0,0,0.28))_drop-shadow(0_16px_36px_rgba(0,0,0,0.2))]"
+            : ""
+        }`}
         alt={`Logo ${data.company.name}`}
       />
       <h1
@@ -128,7 +132,22 @@ const articleSchema = {
       </div>
       <div class="space-y-2">
         <div class="font-medium">Company name</div>
-        <div class="text-muted-foreground">{data.company.name}</div>
+        <div class="text-muted-foreground">
+          {
+            data.company.url ? (
+              <a
+                href={data.company.url}
+                class="text-inherit underline-offset-4 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {data.company.name}
+              </a>
+            ) : (
+              data.company.name
+            )
+          }
+        </div>
       </div>
       <div class="space-y-2">
         <div class="font-medium">Industry</div>

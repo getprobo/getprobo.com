@@ -16,10 +16,12 @@ export const StorySchema = z.object({
   previewImage: z.string().optional(),
   framework: z.enum(frameworks.map((f) => f.label) as any),
   logo: z.string(),
+  logoHeight: z.number().optional(),
   logoLightBg: z.string().optional(),
   invertLogo: z.boolean().optional(),
   company: z.object({
     name: z.string(),
+    url: z.string().url().optional(),
     industry: z.string(),
     type: z.string(),
     about: z.string(),

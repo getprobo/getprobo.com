@@ -94,8 +94,18 @@ const url =
     : `stories/${story.id}`);
 
 const heroLogo = images(story.data.logo);
-const floatingHeroLogoImg =
-  "block h-7 w-auto max-w-[min(100%,18rem)] sm:h-8 [filter:brightness(0)_invert(1)_drop-shadow(0_2px_10px_rgba(0,0,0,0.28))_drop-shadow(0_16px_36px_rgba(0,0,0,0.2))]";
+const logoFilter =
+  "[filter:brightness(0)_invert(1)_drop-shadow(0_2px_10px_rgba(0,0,0,0.28))_drop-shadow(0_16px_36px_rgba(0,0,0,0.2))]";
+const lh = story.data.logoHeight ?? 23;
+const logoSizeClass =
+  lh <= 23
+    ? "h-7 sm:h-8"
+    : lh <= 30
+      ? "h-8 sm:h-9"
+      : lh <= 38
+        ? "h-9 sm:h-10"
+        : "h-10 sm:h-11";
+const floatingHeroLogoImg = `block w-auto max-w-[min(100%,18rem)] ${logoSizeClass} ${logoFilter}`;
 
 const imageGradientOverlay =
   "pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-[rgba(0,0,0,0.25)] to-transparent";
