@@ -41,9 +41,9 @@ npm install @probo/cookie-banner
 Register the component and place it in your HTML or template:
 
 ```js
-import { registerThemedBanner } from "@probo/cookie-banner";
+import { registerCookieBanner } from "@probo/cookie-banner";
 
-registerThemedBanner();
+registerCookieBanner();
 ```
 
 ```html
@@ -71,9 +71,9 @@ See [Theming](/docs/product/cookie-banner/theming) for how to customize colors, 
 For complete control over the consent UI, use the headless components. These are unstyled Web Component building blocks that you compose and style yourself:
 
 ```js
-import { registerComponents } from "@probo/cookie-banner/headless";
+import { registerHeadlessComponents } from "@probo/cookie-banner/headless";
 
-registerComponents();
+registerHeadlessComponents();
 ```
 
 Then build your own layout:
