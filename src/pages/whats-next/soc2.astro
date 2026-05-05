@@ -4,6 +4,7 @@ import FrameworkBadge from "../../components/FrameworkBadge.svelte";
 import { Image } from "astro:assets";
 import ProboLogo from "../../assets/probo-logo.svg";
 import ProboLogoOnly from "../../assets/probo-logo-only.svg";
+import ProboWhiteLogo from "../../assets/probo_white_logo.svg";
 import TrustCenterExample from "../../assets/trust-center-example.png";
 
 const soc2Badges = [
@@ -95,6 +96,13 @@ const soc2Badges = [
               href="#compliance-badges"
               class="hover:text-foreground transition-colors"
               >Compliance Badges for SOC 2</a
+            >
+          </li>
+          <li>
+            <a
+              href="#aicpa-soc-logo"
+              class="hover:text-foreground transition-colors"
+              >Official AICPA SOC logo</a
             >
           </li>
           <li>
@@ -1013,8 +1021,13 @@ const soc2Badges = [
     </div>
 
     <!-- Assets for your website Section -->
-    <section id="assets" class="animate-slide-in animation-delay-300">
-      <h2 class="text-h4 mb-10 font-medium">Assets for your website</h2>
+    <section
+      id="assets"
+      class="animate-slide-in animation-delay-300 pt-8 sm:pt-12"
+    >
+      <h2 class="text-h4 mb-12 font-medium sm:mb-16">
+        Assets for your website
+      </h2>
 
       <h3 id="compliance-badges" class="mt-10 mb-4 text-lg font-medium">
         Compliance Badges for SOC 2
@@ -1052,12 +1065,47 @@ const soc2Badges = [
         }
       </div>
 
+      <div
+        id="aicpa-soc-logo"
+        class="border-border bg-level-1 mt-10 scroll-mt-24 rounded-2xl border p-6 sm:p-8"
+      >
+        <h3 class="mb-4 text-lg font-medium">
+          Rule to display the official AICPA SOC logo
+        </h3>
+        <div class="text-muted-foreground space-y-4">
+          <p>
+            If you want to display the official AICPA SOC logo on your website,
+            you have to register first.
+          </p>
+          <p>
+            The report and the trademark are two separate things, and the AICPA
+            has been enforcing this more actively since April 2026.
+          </p>
+          <p>
+            Registration takes five minutes. You'll need the name and license
+            number of the CPA who signed your report, and the report date.
+          </p>
+          <p>
+            Register directly on the <a
+              href="https://www.aicpa-cima.com/resources/download/soc-for-service-organizations-logo-guidelines-for-service-organization"
+              class="text-foreground underline"
+              target="_blank"
+              rel="noopener noreferrer">AICPA &amp; CIMA website</a
+            > (free account required) or ping us to handle it for you.
+          </p>
+          <p>
+            One more thing: the logo expires. If 12 months pass without a new
+            report, you have to take it down.
+          </p>
+        </div>
+      </div>
+
       <h3 id="probo-logo" class="mt-10 mb-4 text-lg font-medium">Probo logo</h3>
       <p class="text-muted-foreground mb-6">
         Add the Probo logo next to your compliance badge to highlight your
         certified status.
       </p>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <!-- Full Logo -->
         <div>
           <div
@@ -1105,12 +1153,39 @@ const soc2Badges = [
             </a>
           </div>
         </div>
+
+        <!-- Full Logo (white, for dark backgrounds) -->
+        <div>
+          <div
+            class="mb-4 flex h-32 items-center justify-center rounded-lg bg-[#141E12]"
+          >
+            <Image
+              src={ProboWhiteLogo}
+              alt="Probo Logo (white)"
+              width={148}
+              height={41}
+              class="h-10 w-auto"
+            />
+          </div>
+          <div class="flex justify-center">
+            <a
+              href={ProboWhiteLogo.src}
+              download
+              class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-md px-4 py-2 text-sm transition-colors"
+            >
+              Download SVG
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Turn compliance into business growth Section -->
-    <section id="business-growth" class="animate-slide-in animation-delay-300">
-      <h2 class="text-h4 mb-10 font-medium">
+    <section
+      id="business-growth"
+      class="animate-slide-in animation-delay-300 pt-8 sm:pt-12"
+    >
+      <h2 class="text-h4 mb-12 font-medium sm:mb-16">
         Turn compliance into business growth
       </h2>
 
