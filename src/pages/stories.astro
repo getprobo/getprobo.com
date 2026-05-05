@@ -3,10 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import Logos from "../components/block/Logos.astro";
 import StoryCard from "../components/StoryCard.astro";
+import { sortStoriesForListing } from "../lib/stories.ts";
 
-const stories = (await getCollection("stories")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const stories = sortStoriesForListing(await getCollection("stories"));
 ---
 
 <Layout

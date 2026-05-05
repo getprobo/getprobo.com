@@ -80,7 +80,7 @@ const articleSchema = {
         alt={`Logo ${data.company.name}`}
       />
       <h1
-        class="text-h3 text-invert sm:text-h2 animate-perspective-in animation-delay-100 font-medium"
+        class="text-h3 whitespace-pre-line text-invert sm:text-h2 animate-perspective-in animation-delay-100 font-medium"
       >
         {data.title}
       </h1>
@@ -165,6 +165,6 @@ const articleSchema = {
     position: absolute;
     inset: 0;
     z-index: 2;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 6.73%, #000000 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent);
   }
 </style>

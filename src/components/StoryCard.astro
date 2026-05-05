@@ -15,7 +15,7 @@ interface Props {
     data: StoryData;
   };
 }
-const { story, size } = Astro.props;
+const { story, size = "default" } = Astro.props;
 const images = dynamicImages(
   import.meta.glob<{
     default: ImageMetadata;
@@ -24,34 +24,36 @@ const images = dynamicImages(
 
 const card = tv({
   slots: {
-    base: "block overflow-hidden p-2 rounded-3xl transition-all",
-    image: "w-full rounded-2xl object-cover mb-2",
-    badge: "border-l border-l-[0.5px] pl-4 ml-6 sm:ml-6 sm:pl-10",
+    base: "group block overflow-hidden rounded-3xl transition-[transform,box-shadow] duration-300 ease-out will-change-transform hover:-translate-y-1",
+    image:
+      "w-full origin-center object-cover transition-transform duration-500 [transition-timing-function:cubic-bezier(0.33,1,0.68,1)] group-hover:scale-[1.04]",
+    badge: "",
     title: "",
-    body: "flex items-center",
+    body: "",
   },
   variants: {
     size: {
       default: {
-        base: "sm:bg-highlight sm:border sm:border-[0.5px]",
-        image: "aspect-320/180 sm:aspect-512/450",
-        badge: "hidden sm:block mix-blend-multiply",
-        title: "text-h5",
-        body: "px-2 py-6  sm:p-8",
+        base: "bg-[#f7f9f7] sm:border sm:border-[0.5px] sm:shadow-sm sm:hover:shadow-lg hover:shadow-md",
+        image: "aspect-[320/208] rounded-t-3xl sm:aspect-[512/332]",
+        badge: "",
+        title:
+          "text-lg font-normal first-line:font-semibold leading-snug sm:text-h4",
+        body: "px-6 pb-8 pt-6 sm:px-8 sm:pb-10 sm:pt-8",
       },
       relative: {
-        base: "p-0 rounded-xl ",
-        image: "aspect-320/180 sm:aspect-344/200 rounded-xl",
+        base: "rounded-xl shadow-sm hover:shadow-md",
+        image: "aspect-320/180 sm:aspect-344/200 rounded-xl object-cover",
         badge: "hidden",
-        title: "text-h5",
-        body: "px-2 pt-6",
+        title: "text-base leading-snug sm:text-h5",
+        body: "flex items-center px-2 pt-6",
       },
       home: {
-        base: "bg-highlight border border-[0.5px]",
-        image: "aspect-square sm:aspect-704/450 ",
-        title: "text-base sm:text-h5",
+        base: "border border-[0.5px] bg-highlight p-2 shadow-sm hover:shadow-md sm:hover:shadow-lg",
+        image: "aspect-square rounded-2xl object-cover sm:aspect-704/450",
+        badge: "",
+        title: "text-sm leading-snug sm:text-h5",
         body: "p-3 sm:p-8",
-        badge: "border-l-[#EFFEE214]",
       },
     },
   },
@@ -76,8 +78,8 @@ const imageSizes = (function (): [[number, number], [number, number]] {
       ];
     default:
       return [
-        [600, 600],
-        [704, 450],
+        [320, 208],
+        [512, 332],
       ];
   }
 })();
@@ -85,47 +87,166 @@ const badge = isDark
   ? (framework?.badgeDark ?? framework?.badge)
   : framework?.badge;
 const shouldInvert = isDark && !framework?.badgeDark;
-const invertStoryLogo = isDark && story.data.invertLogo !== false;
-const cardLogoFile =
-  !isDark && story.data.logoLightBg ? story.data.logoLightBg : story.data.logo;
 const url =
   "/" +
   (story.id.includes("/")
     ? story.id.replace("/", "/stories/")
     : `stories/${story.id}`);
+
+const heroLogo = images(story.data.logo);
+const floatingHeroLogoImg =
+  "block h-7 w-auto max-w-[min(100%,18rem)] sm:h-8 [filter:brightness(0)_invert(1)_drop-shadow(0_2px_10px_rgba(0,0,0,0.28))_drop-shadow(0_16px_36px_rgba(0,0,0,0.2))]";
+
+const imageGradientOverlay =
+  "pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-[rgba(0,0,0,0.25)] to-transparent";
+
+const heroLogoPosition =
+  "absolute bottom-4 left-4 z-10 max-w-[calc(100%-2rem)] sm:bottom-5 sm:left-5 sm:max-w-[calc(100%-2.5rem)]";
 ---
 
 <a href={url} class={classNames.base()}>
-  <ResponsiveImage
-    src={images(story.data.previewImage ?? story.data.image)}
-    mobileSrc={images(story.data.image)}
-    class={classNames.image()}
-    mobile={imageSizes[0]}
-    sm={imageSizes[1]}
-    alt={story.data.title}
-  />
-  <div class={classNames.body()}>
-    <div class="w-full space-y-2">
-      <Image
-        src={images(cardLogoFile)}
-        alt={`${story.data.company?.name || story.data.title} logo`}
-        class={clsx("block h-4 w-auto", invertStoryLogo && "invert")}
-      />
-      <h3 class={classNames.title()}>{story.data.title}</h3>
-    </div>
-    {
-      framework && (
-        <div class={classNames.badge()}>
-          <div class="badge flex flex-col gap-2.5 text-center">
-            <FrameworkBadge
-              client:only
-              name={badge}
-              class={clsx("mx-auto block size-15", shouldInvert && "invert")}
+  {
+    size === "default" ? (
+      <>
+        <div class="relative overflow-hidden rounded-t-3xl">
+          <ResponsiveImage
+            src={images(story.data.previewImage ?? story.data.image)}
+            mobileSrc={images(story.data.image)}
+            class={classNames.image()}
+            mobile={imageSizes[0]}
+            sm={imageSizes[1]}
+            alt={story.data.title}
+          />
+          <div
+            class:list={[imageGradientOverlay, "rounded-t-3xl"]}
+            aria-hidden="true"
+          />
+          <div class={heroLogoPosition}>
+            <Image
+              src={heroLogo}
+              alt={`${story.data.company?.name || story.data.title} logo`}
+              class={floatingHeroLogoImg}
             />
-            <div class="text-xxs">{story.data.framework}</div>
           </div>
         </div>
-      )
-    }
-  </div>
+        <div class={classNames.body()}>
+          <div class="flex flex-wrap items-start gap-x-3 gap-y-2 sm:gap-x-4">
+            <h3
+              class={clsx(
+                classNames.title(),
+                "min-w-0 flex-1 whitespace-pre-line",
+              )}
+            >
+              {story.data.title}
+            </h3>
+            {framework && badge && (
+              <div class="shrink-0">
+                <FrameworkBadge
+                  client:only
+                  name={badge}
+                  class={clsx(
+                    "block size-10 sm:size-11",
+                    shouldInvert && "invert",
+                  )}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </>
+    ) : size === "home" ? (
+      <>
+        <div class="relative mb-2 overflow-hidden rounded-2xl">
+          <ResponsiveImage
+            src={images(story.data.previewImage ?? story.data.image)}
+            mobileSrc={images(story.data.image)}
+            class={classNames.image()}
+            mobile={imageSizes[0]}
+            sm={imageSizes[1]}
+            alt={story.data.title}
+          />
+          <div
+            class:list={[imageGradientOverlay, "rounded-2xl"]}
+            aria-hidden="true"
+          />
+          <div class={heroLogoPosition}>
+            <Image
+              src={heroLogo}
+              alt={`${story.data.company?.name || story.data.title} logo`}
+              class={floatingHeroLogoImg}
+            />
+          </div>
+        </div>
+        <div class={classNames.body()}>
+          <div class="flex flex-wrap items-start gap-x-3 gap-y-2 sm:gap-x-4">
+            <h3
+              class={clsx(
+                classNames.title(),
+                "min-w-0 flex-1 whitespace-pre-line",
+              )}
+            >
+              {story.data.title}
+            </h3>
+            {framework && badge && (
+              <div class="badge shrink-0">
+                <FrameworkBadge
+                  client:only
+                  name={badge}
+                  class={clsx(
+                    "block size-10 sm:size-11",
+                    shouldInvert && "invert",
+                  )}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div class="relative mb-2 overflow-hidden rounded-xl">
+          <ResponsiveImage
+            src={images(story.data.previewImage ?? story.data.image)}
+            mobileSrc={images(story.data.image)}
+            class={classNames.image()}
+            mobile={imageSizes[0]}
+            sm={imageSizes[1]}
+            alt={story.data.title}
+          />
+          <div
+            class:list={[imageGradientOverlay, "rounded-xl"]}
+            aria-hidden="true"
+          />
+          <div class={heroLogoPosition}>
+            <Image
+              src={heroLogo}
+              alt={`${story.data.company?.name || story.data.title} logo`}
+              class={floatingHeroLogoImg}
+            />
+          </div>
+        </div>
+        <div class={classNames.body()}>
+          <div class="min-w-0 flex-1">
+            <h3 class={clsx(classNames.title(), "whitespace-pre-line")}>
+              {story.data.title}
+            </h3>
+          </div>
+          {framework && badge && (
+            <div class={classNames.badge()}>
+              <div class="badge flex justify-center text-center">
+                <FrameworkBadge
+                  client:only
+                  name={badge}
+                  class={clsx(
+                    "mx-auto block size-15",
+                    shouldInvert && "invert",
+                  )}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </>
+    )
+  }
 </a>

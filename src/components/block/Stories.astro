@@ -2,10 +2,9 @@
 import { getCollection } from "astro:content";
 import StoryCard from "../StoryCard.astro";
 import Slider from "../ui/Slider.svelte";
+import { sortStoriesForListing } from "../../lib/stories.ts";
 
-const stories = (await getCollection("stories")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const stories = sortStoriesForListing(await getCollection("stories"));
 ---
 
 <section class="stories dark bg-level-0 text-foreground overflow-hidden">
