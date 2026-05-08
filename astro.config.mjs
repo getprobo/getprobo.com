@@ -246,6 +246,10 @@ export default defineConfig({
               slug: "docs/product/cookie-banner/overview",
             },
             {
+              label: "Geolocation and Regulations",
+              slug: "docs/product/cookie-banner/geolocation",
+            },
+            {
               label: "Quickstart",
               slug: "docs/product/cookie-banner/quickstart",
             },

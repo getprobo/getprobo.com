@@ -31,7 +31,7 @@ When a visitor loads your page, the SDK fetches the published banner configurati
 
 ## Compliance
 
-Probo's cookie banner is designed to help you meet the requirements of multiple privacy regulations through its consent modes, audit trail, and resource blocking. The same banner adapts to different regulatory frameworks by switching between opt-in and opt-out behavior.
+Probo's cookie banner is designed to help you meet the requirements of multiple privacy regulations through its consent modes, audit trail, and resource blocking. The banner automatically adapts to different regulatory frameworks based on the visitor's location — the correct consent mode, button labels, and description text are applied without any manual intervention. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation) for details on how this works.
 
 | Regulation | Region | How Probo Helps |
 | --- | --- | --- |
@@ -89,6 +89,8 @@ Probo supports two consent modes:
 | **Opt-in** | Non-essential cookies are blocked until the visitor explicitly consents | GDPR, ePrivacy — required in the EU |
 | **Opt-out** | Non-essential cookies are active by default; the visitor can opt out | CCPA — common in the US |
 
+The consent mode is **automatically selected** based on the visitor's country and the applicable privacy regulation. The mode you configure in the console serves as the default for visitors in countries where no specific regulation applies. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation) for the full list of supported regulations and how consent mode resolution works.
+
 ## Default Categories
 
 When you create a new banner, five default categories are set up automatically:
@@ -108,6 +110,11 @@ Categories that contain no cookies are automatically hidden from the banner. Onl
 ## Next Steps
 
 <CardGrid>
+  <LinkCard
+    title="Geolocation and Regulations"
+    description="How Probo adapts the banner to each visitor's location and applicable privacy regulation"
+    href="/docs/product/cookie-banner/geolocation"
+  />
   <LinkCard
     title="Quickstart"
     description="Create a banner and add it to your website in minutes"
