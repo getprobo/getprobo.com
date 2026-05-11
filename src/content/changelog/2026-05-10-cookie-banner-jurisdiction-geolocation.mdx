@@ -1,0 +1,19 @@
+---
+title: "Cookie banner jurisdiction from geolocation"
+description: "Every cookie banner interaction is mapped to country and privacy regulation automatically — consent records, APIs, and the banner UI stay aligned."
+date: 2026-05-10
+image: "/changelog/2026-05-10-cookie-banner-country.png"
+tags: ["Cookie Banner"]
+---
+
+Probo now runs an IP-to-country geolocation service on every cookie banner interaction.
+
+When a visitor lands on your site, Probo identifies their country and maps it to the applicable privacy regulation — GDPR, UK GDPR, FADP, CCPA, PIPEDA, LGPD, LFPDPPP, POPIA, PDPA, PIPL, PIPA, APPI, DPDP, or PDPL.
+
+That regulation is then stored on the consent record.
+
+The banner adapts accordingly: CCPA visitors see an opt-out notice. Visitors from regions with no applicable regulation see a simple notice. Visitors under GDPR see the standard consent flow.
+
+The regulation and country code are now available across GraphQL, MCP, CLI, and n8n — so you can filter consent records by jurisdiction in audits or reporting pipelines.
+
+No configuration needed. It works automatically for all new consent events.
