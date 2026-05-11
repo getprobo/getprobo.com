@@ -21,24 +21,24 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Probo",
-    url: "https://www.getprobo.com",
+    url: "https://www.probo.com",
   },
   publisher: {
     "@type": "Organization",
     name: "Probo",
-    url: "https://www.getprobo.com",
+    url: "https://www.probo.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.getprobo.com/probo-logo.svg",
+      url: "https://www.probo.com/probo-logo.svg",
     },
   },
   datePublished: "2026-04-23",
   dateModified: new Date().toISOString().split("T")[0],
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://www.getprobo.com/hub/probo-vs-fractional-ciso",
+    "@id": "https://www.probo.com/hub/probo-vs-fractional-ciso",
   },
-  image: "https://www.getprobo.com/probo-logo.svg",
+  image: "https://www.probo.com/probo-logo.svg",
 };
 
 const breadcrumbSchema = {
@@ -49,19 +49,19 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://www.getprobo.com",
+      item: "https://www.probo.com",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "Hub",
-      item: "https://www.getprobo.com/hub",
+      item: "https://www.probo.com/hub",
     },
     {
       "@type": "ListItem",
       position: 3,
       name: "Probo vs Hiring a Fractional CISO",
-      item: "https://www.getprobo.com/hub/probo-vs-fractional-ciso",
+      item: "https://www.probo.com/hub/probo-vs-fractional-ciso",
     },
   ],
 };
@@ -85,7 +85,9 @@ const breadcrumbSchema = {
         {" "}
         <span class="highlight-text">{"Fractional CISO"}</span>
       </h1>
-      <p class="text-muted-foreground mx-auto max-w-[720px] text-lg leading-relaxed">
+      <p
+        class="text-muted-foreground mx-auto max-w-[720px] text-lg leading-relaxed"
+      >
         {
           "A budget line versus an outcome: how to sequence security leadership and compliance execution without paying twice for the same work."
         }
@@ -125,12 +127,12 @@ const breadcrumbSchema = {
               }
             </p>
             <p>
-              {"You haven't hired anyone yet and you're already out six figures."}
+              {
+                "You haven't hired anyone yet and you're already out six figures."
+              }
             </p>
             <p>
-              {
-                "This article isn't a comparison between two compliance tools. "
-              }
+              {"This article isn't a comparison between two compliance tools. "}
               <strong class="text-foreground"
                 >{
                   "It's a comparison between a budget line and an outcome."
@@ -170,8 +172,7 @@ const breadcrumbSchema = {
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{"Program design"}</strong
-                  >{
+                  ><strong class="text-foreground">{"Program design"}</strong>{
                     " - roadmap, framework selection, risk management strategy"
                   }</span
                 >
@@ -218,7 +219,9 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{"Recruiting your eventual full-time security hire"}</strong
+                    >{
+                      "Recruiting your eventual full-time security hire"
+                    }</strong
                   ></span
                 >
               </li>
@@ -259,9 +262,7 @@ const breadcrumbSchema = {
               </li>
             </ul>
             <p>
-              {
-                "Their value is "
-              }
+              {"Their value is "}
               <strong class="text-foreground"
                 >{"leadership, strategy, and presence."}</strong
               >
@@ -294,16 +295,13 @@ const breadcrumbSchema = {
                 <span
                   ><strong class="text-foreground"
                     >{"Framework scoping and mapping"}</strong
-                  >{
-                    " - SOC 2, ISO 27001, HIPAA, GDPR, NIS2, etc."
-                  }</span
+                  >{" - SOC 2, ISO 27001, HIPAA, GDPR, NIS2, etc."}</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{"Policy drafting"}</strong
-                  >{
+                  ><strong class="text-foreground">{"Policy drafting"}</strong>{
                     " - custom to your stack, ~12-18 policies written for you"
                   }</span
                 >
@@ -329,8 +327,7 @@ const breadcrumbSchema = {
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground">{"Remediation"}</strong
-                  >{
+                  ><strong class="text-foreground">{"Remediation"}</strong>{
                     " - failed controls get proposed fixes; we implement where possible"
                   }</span
                 >
@@ -348,16 +345,13 @@ const breadcrumbSchema = {
                 <span
                   ><strong class="text-foreground"
                     >{"Trust Center hosting"}</strong
-                  >{
-                    " - compliance reports, sub-processor list, DPA"
-                  }</span
+                  >{" - compliance reports, sub-processor list, DPA"}</span
                 >
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  ><strong class="text-foreground"
-                    >{"Framework renewal"}</strong
+                  ><strong class="text-foreground">{"Framework renewal"}</strong
                   >{
                     " - Type II, ISO surveillance, HIPAA risk analysis updates"
                   }</span
@@ -365,8 +359,7 @@ const breadcrumbSchema = {
               </li>
             </ul>
             <p>
-              <strong class="text-foreground"
-                >{"What Probo doesn't do:"}</strong
+              <strong class="text-foreground">{"What Probo doesn't do:"}</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
@@ -389,9 +382,7 @@ const breadcrumbSchema = {
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
-                  >{
-                    "Own the long-term security roadmap for your company"
-                  }</span
+                  >{"Own the long-term security roadmap for your company"}</span
                 >
               </li>
             </ul>
@@ -408,11 +399,11 @@ const breadcrumbSchema = {
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                "Here's where most founders miscategorize the decision. "
-              }
+              {"Here's where most founders miscategorize the decision. "}
               <strong class="text-foreground"
-                >{"A fractional CISO and Probo solve different problems."}</strong
+                >{
+                  "A fractional CISO and Probo solve different problems."
+                }</strong
               >
             </p>
             <ul class="ml-0 list-none space-y-3">
@@ -447,11 +438,15 @@ const breadcrumbSchema = {
             </p>
             <p>
               <strong class="text-foreground"
-                >{'The right question isn\'t "Probo vs fractional CISO."'}</strong
+                >{
+                  'The right question isn\'t "Probo vs fractional CISO."'
+                }</strong
               >
               {" It's: "}
               <strong class="text-foreground"
-                >{'"Which one do I need first, and when do I add the other?"'}</strong
+                >{
+                  '"Which one do I need first, and when do I add the other?"'
+                }</strong
               >
             </p>
           </div>
@@ -482,15 +477,16 @@ const breadcrumbSchema = {
             </p>
             <p>
               <strong class="text-foreground"
-                >{"The correct sequencing for most startups under 60 people:"}</strong
+                >{
+                  "The correct sequencing for most startups under 60 people:"
+                }</strong
               >
             </p>
             <ol class="ml-0 list-none space-y-4">
               <li class="flex items-start gap-3">
                 <span class="text-foreground font-semibold">1.</span>
                 <span
-                  ><strong class="text-foreground">{"Probo first"}</strong
-                  >{
+                  ><strong class="text-foreground">{"Probo first"}</strong>{
                     " - get SOC 2 Type I in 8-12 weeks, Type II at month 12. Your compliance posture is handled."
                   }</span
                 >
@@ -501,7 +497,7 @@ const breadcrumbSchema = {
                   ><strong class="text-foreground"
                     >{"Fractional CISO second (if needed)"}</strong
                   >{
-                    ' - add at year 2 when enterprise buyers start asking "who\'s your CISO?" or when you need board-level security narrative. By now, compliance execution is stable, so the CISO\'s hours go to strategy, not setup.'
+                    " - add at year 2 when enterprise buyers start asking \"who's your CISO?\" or when you need board-level security narrative. By now, compliance execution is stable, so the CISO's hours go to strategy, not setup."
                   }</span
                 >
               </li>
@@ -535,9 +531,7 @@ const breadcrumbSchema = {
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                "Simplified for a 30-person SaaS targeting SOC 2 Type II:"
-              }
+              {"Simplified for a 30-person SaaS targeting SOC 2 Type II:"}
             </p>
             <p>
               <strong class="text-foreground"
@@ -575,8 +569,7 @@ const breadcrumbSchema = {
               </li>
             </ul>
             <p>
-              <strong class="text-foreground">{"Option B: Probo alone"}</strong
-              >
+              <strong class="text-foreground">{"Option B: Probo alone"}</strong>
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
@@ -645,13 +638,13 @@ const breadcrumbSchema = {
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                "Three scenarios where hiring a CISO first makes sense:"
-              }
+              {"Three scenarios where hiring a CISO first makes sense:"}
             </p>
             <p>
               <strong class="text-foreground"
-                >{"1. You're selling to regulated enterprise buyers in year one."}</strong
+                >{
+                  "1. You're selling to regulated enterprise buyers in year one."
+                }</strong
               >
               {
                 " Defense, critical infrastructure, top-tier financial services. Their vendor review teams want to speak to your CISO by name. No amount of compliance posture substitutes for the title."
@@ -756,7 +749,7 @@ const breadcrumbSchema = {
         <blockquote
           class="border-border-low my-10 rounded-lg border-l-4 border-[#5d770d] bg-[#f8f9f7] p-6 not-italic"
         >
-          <p class="text-foreground mb-4 font-semibold leading-relaxed">
+          <p class="text-foreground mb-4 leading-relaxed font-semibold">
             {
               "Don't pay $8k/month for advice on a program you still have to build."
             }

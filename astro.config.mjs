@@ -25,7 +25,7 @@ function svelteVirtualCssFallback() {
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.getprobo.com",
+  site: "https://www.probo.com",
   prefetch: false,
   trailingSlash: "never",
   redirects: {
@@ -505,12 +505,12 @@ export default defineConfig({
       serialize(item) {
         item.lastmod = new Date().toISOString();
 
-        if (item.url === "https://www.getprobo.com") {
+        if (item.url === "https://www.probo.com") {
           item.changefreq = /** @type {import('sitemap').EnumChangefreq} */ (
             "weekly"
           );
           item.priority = 1.0;
-        } else if (item.url === "https://www.getprobo.com/docs") {
+        } else if (item.url === "https://www.probo.com/docs") {
           item.changefreq = /** @type {import('sitemap').EnumChangefreq} */ (
             "weekly"
           );

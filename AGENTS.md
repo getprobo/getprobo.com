@@ -1,10 +1,10 @@
 # AGENTS.md
 
-Guidelines for AI coding assistants working on the getprobo.com marketing website and documentation portal.
+Guidelines for AI coding assistants working on the probo.com marketing website and documentation portal.
 
 ## Project Overview
 
-This is the marketing website and documentation portal for [Probo](https://www.getprobo.com), an open-source compliance management platform. The site is built with Astro, Svelte, and Tailwind CSS, deployed on Cloudflare Pages.
+This is the marketing website and documentation portal for [Probo](https://www.probo.com), an open-source compliance management platform. The site is built with Astro, Svelte, and Tailwind CSS, deployed on Cloudflare Pages.
 
 ## Tech Stack
 

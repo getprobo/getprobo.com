@@ -1,4 +1,4 @@
-# getprobo.com
+# probo.com
 
 Marketing website and documentation for Probo.
 

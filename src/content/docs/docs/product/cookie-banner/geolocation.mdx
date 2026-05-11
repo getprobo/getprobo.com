@@ -24,29 +24,29 @@ The following table lists every regulation Probo recognizes, the countries it co
 
 Opt-in means non-essential cookies are **blocked** until the visitor gives explicit consent.
 
-| Regulation | Countries | Consent Mode |
-| --- | --- | --- |
-| **GDPR** | Austria, Belgium, Bulgaria, Croatia, Cyprus, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, Iceland, Liechtenstein, Norway | Opt-in |
-| **UK GDPR** | United Kingdom | Opt-in |
-| **FADP** | Switzerland | Opt-in |
-| **POPIA** | South Africa | Opt-in |
-| **PDPA** | Thailand | Opt-in |
-| **PIPL** | China | Opt-in |
-| **PIPA** | South Korea | Opt-in |
-| **DPDP** | India | Opt-in |
-| **PDPL** | Saudi Arabia | Opt-in |
+| Regulation  | Countries                                                                                                                                                                                                                                                                          | Consent Mode |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| **GDPR**    | Austria, Belgium, Bulgaria, Croatia, Cyprus, Czechia, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, Iceland, Liechtenstein, Norway | Opt-in       |
+| **UK GDPR** | United Kingdom                                                                                                                                                                                                                                                                     | Opt-in       |
+| **FADP**    | Switzerland                                                                                                                                                                                                                                                                        | Opt-in       |
+| **POPIA**   | South Africa                                                                                                                                                                                                                                                                       | Opt-in       |
+| **PDPA**    | Thailand                                                                                                                                                                                                                                                                           | Opt-in       |
+| **PIPL**    | China                                                                                                                                                                                                                                                                              | Opt-in       |
+| **PIPA**    | South Korea                                                                                                                                                                                                                                                                        | Opt-in       |
+| **DPDP**    | India                                                                                                                                                                                                                                                                              | Opt-in       |
+| **PDPL**    | Saudi Arabia                                                                                                                                                                                                                                                                       | Opt-in       |
 
 ### Opt-out Regulations
 
 Opt-out means non-essential cookies are **active by default** and the visitor is offered a way to opt out.
 
-| Regulation | Countries | Consent Mode |
-| --- | --- | --- |
-| **CCPA / CPRA** | United States | Opt-out |
-| **PIPEDA** | Canada | Opt-out |
-| **LGPD** | Brazil | Opt-out |
-| **LFPDPPP** | Mexico | Opt-out |
-| **APPI** | Japan | Opt-out |
+| Regulation      | Countries     | Consent Mode |
+| --------------- | ------------- | ------------ |
+| **CCPA / CPRA** | United States | Opt-out      |
+| **PIPEDA**      | Canada        | Opt-out      |
+| **LGPD**        | Brazil        | Opt-out      |
+| **LFPDPPP**     | Mexico        | Opt-out      |
+| **APPI**        | Japan         | Opt-out      |
 
 ### No Regulation
 
@@ -68,10 +68,10 @@ The consent mode you configure in the Probo console (under **Consent Mode** when
 
 The API automatically adjusts the banner's button labels and description text to match the resolved consent mode. You do not need to manage separate text variants — this is handled server-side.
 
-| Resolved mode | Banner behavior |
-| --- | --- |
-| **Opt-in** | Shows accept all, reject all, and customize buttons with the standard consent description |
-| **Opt-out** | Shows an acknowledge button and an opt-out button with an opt-out-specific description |
+| Resolved mode     | Banner behavior                                                                              |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| **Opt-in**        | Shows accept all, reject all, and customize buttons with the standard consent description    |
+| **Opt-out**       | Shows an acknowledge button and an opt-out button with an opt-out-specific description       |
 | **No regulation** | Shows a dismiss button only with a notice-style description — no reject or customize options |
 
 If you have customized banner translations, the system uses your opt-out or notice-specific text variants when they apply. You can configure these per-language in the Probo console under the banner's **Translations** tab.

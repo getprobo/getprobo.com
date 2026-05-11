@@ -35,14 +35,14 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Probo",
-    url: "https://www.getprobo.com",
+    url: "https://www.probo.com",
   },
   publisher: {
     "@type": "Organization",
     name: "Probo",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.getprobo.com/probo-logo.svg",
+      url: "https://www.probo.com/probo-logo.svg",
     },
   },
   mainEntityOfPage: {
@@ -50,8 +50,8 @@ const articleSchema = {
     "@id": Astro.url.toString(),
   },
   image: data.ogImage
-    ? `https://www.getprobo.com${data.ogImage}`
-    : "https://www.getprobo.com/og.png",
+    ? `https://www.probo.com${data.ogImage}`
+    : "https://www.probo.com/og.png",
 };
 ---
 
@@ -84,7 +84,7 @@ const articleSchema = {
         alt={`Logo ${data.company.name}`}
       />
       <h1
-        class="text-h3 whitespace-pre-line text-invert sm:text-h2 animate-perspective-in animation-delay-100 font-medium"
+        class="text-h3 text-invert sm:text-h2 animate-perspective-in animation-delay-100 font-medium whitespace-pre-line"
       >
         {data.title}
       </h1>

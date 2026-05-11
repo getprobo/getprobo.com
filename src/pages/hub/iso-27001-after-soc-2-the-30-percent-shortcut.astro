@@ -16,22 +16,21 @@ const tableOfContents = [
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline:
-    "ISO 27001 for Companies That Already Have SOC 2: The 30% Shortcut",
+  headline: "ISO 27001 for Companies That Already Have SOC 2: The 30% Shortcut",
   description:
     "If you have SOC 2 Type 2, you are roughly 70% of the way to ISO 27001. Learn what is reuse vs reformat vs net-new, how to sequence the project, and how to avoid paying for the same controls twice.",
   author: {
     "@type": "Organization",
     name: "Probo",
-    url: "https://www.getprobo.com",
+    url: "https://www.probo.com",
   },
   publisher: {
     "@type": "Organization",
     name: "Probo",
-    url: "https://www.getprobo.com",
+    url: "https://www.probo.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.getprobo.com/probo-logo.svg",
+      url: "https://www.probo.com/probo-logo.svg",
     },
   },
   datePublished: "2026-04-23",
@@ -39,9 +38,9 @@ const articleSchema = {
   mainEntityOfPage: {
     "@type": "WebPage",
     "@id":
-      "https://www.getprobo.com/hub/iso-27001-after-soc-2-the-30-percent-shortcut",
+      "https://www.probo.com/hub/iso-27001-after-soc-2-the-30-percent-shortcut",
   },
-  image: "https://www.getprobo.com/hub/ISO27001-og.png",
+  image: "https://www.probo.com/hub/ISO27001-og.png",
 };
 
 const breadcrumbSchema = {
@@ -52,19 +51,19 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://www.getprobo.com",
+      item: "https://www.probo.com",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "Hub",
-      item: "https://www.getprobo.com/hub",
+      item: "https://www.probo.com/hub",
     },
     {
       "@type": "ListItem",
       position: 3,
       name: "ISO 27001 after SOC 2",
-      item: "https://www.getprobo.com/hub/iso-27001-after-soc-2-the-30-percent-shortcut",
+      item: "https://www.probo.com/hub/iso-27001-after-soc-2-the-30-percent-shortcut",
     },
   ],
 };
@@ -82,14 +81,14 @@ const breadcrumbSchema = {
   />
   <main class="container my-10 sm:my-20">
     <header class="mb-12 text-center sm:mb-16">
-      <div class="mb-4 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <div
+        class="mb-4 flex flex-col items-center justify-center gap-4 sm:flex-row"
+      >
         <h1
           class="text-foreground max-w-[920px] text-[2rem] leading-[1.12] font-semibold tracking-[-0.02em] sm:text-[2.75rem]"
         >
           {"ISO 27001 for Companies That Already Have SOC 2:"}
-          <span class="highlight-text"
-            >{"The 30% Shortcut"}</span
-          >
+          <span class="highlight-text">{"The 30% Shortcut"}</span>
         </h1>
         <div class="flex shrink-0 items-center gap-2">
           <FrameworkBadge name="SOC2_TYPE2" class="size-12" client:visible />
@@ -148,7 +147,9 @@ const breadcrumbSchema = {
               }
             </p>
             <p>
-              {"Yes. You did. And the good news your CTO doesn't know yet: you're already "}
+              {
+                "Yes. You did. And the good news your CTO doesn't know yet: you're already "
+              }
               <strong class="text-foreground"
                 >{"roughly 70% of the way to ISO 27001"}</strong
               >{
@@ -161,7 +162,9 @@ const breadcrumbSchema = {
               }
             </p>
             <p>
-              {"The real shape of the work is different. If you have a clean SOC 2 Type 2 in hand, "}
+              {
+                "The real shape of the work is different. If you have a clean SOC 2 Type 2 in hand, "
+              }
               <strong class="text-foreground"
                 >{"ISO 27001 is a 30% shortcut, not a 100% restart."}</strong
               >
@@ -205,16 +208,14 @@ const breadcrumbSchema = {
               </li>
             </ul>
             <p>
-              {
-                "Different outputs. Different auditors. Different vocabulary. "
-              }
+              {"Different outputs. Different auditors. Different vocabulary. "}
               <strong class="text-foreground"
                 >{"Deeply overlapping evidence."}</strong
               >
             </p>
             <p>
               {
-                "The reason nobody frames it this way is that the two standards use different words for the same thing. SOC 2 talks about \"control objectives.\" ISO talks about \"Annex A controls.\" SOC 2 has a \"System Description.\" ISO has a \"Statement of Applicability.\" Underneath the jargon, you're proving the same things: you manage access, you encrypt data, you respond to incidents, you screen your vendors, you train your people."
+                'The reason nobody frames it this way is that the two standards use different words for the same thing. SOC 2 talks about "control objectives." ISO talks about "Annex A controls." SOC 2 has a "System Description." ISO has a "Statement of Applicability." Underneath the jargon, you\'re proving the same things: you manage access, you encrypt data, you respond to incidents, you screen your vendors, you train your people.'
               }
             </p>
             <p>
@@ -279,9 +280,7 @@ const breadcrumbSchema = {
               <strong class="text-foreground"
                 >{"That's the shape of the work."}</strong
               >
-              {
-                " ~70% reuse. ~22% reformat. ~8% build from scratch."
-              }
+              {" ~70% reuse. ~22% reformat. ~8% build from scratch."}
             </p>
             <p>
               {
@@ -390,7 +389,9 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{"Backup, availability, capacity (A.8.13–A.8.14, A.8.6)."}</strong
+                    >{
+                      "Backup, availability, capacity (A.8.13–A.8.14, A.8.6)."
+                    }</strong
                   >{
                     " If your SOC 2 scope included Availability, these are done. If not, you still have most of the evidence, but it was just out of scope."
                   }</span
@@ -424,7 +425,9 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{"Risk assessment and treatment (A.5.1–A.5.3, Clause 6)."}</strong
+                    >{
+                      "Risk assessment and treatment (A.5.1–A.5.3, Clause 6)."
+                    }</strong
                   >{
                     " SOC 2 asks you to do a risk assessment. ISO asks you to do a risk assessment "
                   }<em>{"plus"}</em>{
@@ -563,7 +566,9 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{"Information security for use of cloud services (A.5.23, new in 2022)."}</strong
+                    >{
+                      "Information security for use of cloud services (A.5.23, new in 2022)."
+                    }</strong
                   >{
                     " Most of this inherits from your existing vendor reviews, but ISO wants explicit cloud-service selection and exit criteria documented."
                   }</span
@@ -573,7 +578,9 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{"ICT readiness for business continuity (A.5.30, new in 2022)."}</strong
+                    >{
+                      "ICT readiness for business continuity (A.5.30, new in 2022)."
+                    }</strong
                   >{
                     " Adjacent to your SOC 2 BCP, but ISO is more explicit. You need documented RTOs/RPOs tied to business impact."
                   }</span
@@ -582,7 +589,9 @@ const breadcrumbSchema = {
             </ul>
             <p>
               <strong class="text-foreground"
-                >{"This is the 8% that actually changes your operating model."}</strong
+                >{
+                  "This is the 8% that actually changes your operating model."
+                }</strong
               >
               {" Everything else is re-labeling."}
             </p>
@@ -633,8 +642,7 @@ const breadcrumbSchema = {
                 <span
                   >{
                     "Build the ISMS before the audit gap. The 8% of net-new controls need to run for "
-                  }<strong class="text-foreground"
-                    >{"at least 3 months"}</strong
+                  }<strong class="text-foreground">{"at least 3 months"}</strong
                   >{
                     " before your ISO stage 2 audit. Management review minutes from last week won't fly. Start the ISMS rhythm the day you decide to pursue ISO, not the month before the audit."
                   }</span
@@ -653,7 +661,9 @@ const breadcrumbSchema = {
               {
                 "Done right, the marginal cost of adding ISO 27001 on top of a SOC 2 is "
               }
-              <strong class="text-foreground">{"$12–20k and 6–10 weeks of part-time effort"}</strong>
+              <strong class="text-foreground"
+                >{"$12–20k and 6–10 weeks of part-time effort"}</strong
+              >
               {", not $40k and a quarter."}
             </p>
           </div>
@@ -669,16 +679,16 @@ const breadcrumbSchema = {
           </h2>
           <div class="text-muted-foreground space-y-6 leading-relaxed">
             <p>
-              {
-                "Three predictable ways the SOC-to-ISO path goes wrong:"
-              }
+              {"Three predictable ways the SOC-to-ISO path goes wrong:"}
             </p>
             <ul class="ml-0 list-none space-y-3">
               <li class="flex items-start gap-2">
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{"Hiring a pure ISO consultant who ignores your SOC 2."}</strong
+                    >{
+                      "Hiring a pure ISO consultant who ignores your SOC 2."
+                    }</strong
                   >{
                     " They'll rebuild policies from templates they own, rewrite risk registers in their format, and quote you for a \"full ISMS implementation\" as if you've never done compliance. You'll pay for work you already did."
                   }</span
@@ -688,9 +698,11 @@ const breadcrumbSchema = {
                 <span class="text-muted-foreground">•</span>
                 <span
                   ><strong class="text-foreground"
-                    >{"Letting the compliance platform drive the scope."}</strong
+                    >{
+                      "Letting the compliance platform drive the scope."
+                    }</strong
                   >{
-                    " Automated platforms default to \"all 93 Annex A controls, all your systems, all your teams.\" That's a marketing-safe default, not a scoping decision. It inflates audit cost and policy count. A human should be making scope calls, not a checkbox UI."
+                    ' Automated platforms default to "all 93 Annex A controls, all your systems, all your teams." That\'s a marketing-safe default, not a scoping decision. It inflates audit cost and policy count. A human should be making scope calls, not a checkbox UI.'
                   }</span
                 >
               </li>

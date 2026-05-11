@@ -33,14 +33,14 @@ When a visitor loads your page, the SDK fetches the published banner configurati
 
 Probo's cookie banner is designed to help you meet the requirements of multiple privacy regulations through its consent modes, audit trail, and resource blocking. The banner automatically adapts to different regulatory frameworks based on the visitor's location — the correct consent mode, button labels, and description text are applied without any manual intervention. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation) for details on how this works.
 
-| Regulation | Region | How Probo Helps |
-| --- | --- | --- |
-| **GDPR** | European Union | Opt-in mode blocks all non-essential cookies until the visitor explicitly consents. Per-category controls and a full audit trail provide the evidence required by Articles 7 and 30. |
-| **ePrivacy Directive** | European Union | Consent is collected before any cookies are set, satisfying the prior consent requirement for terminal equipment access. |
-| **CCPA / CPRA** | California, US | Opt-out mode allows cookies by default and provides a clear mechanism for visitors to opt out. |
-| **LGPD** | Brazil | Opt-in mode with per-category consent and an auditable consent record. |
-| **PIPEDA** | Canada | Meaningful consent with clear descriptions of each cookie category and purpose. |
-| **POPIA** | South Africa | Prior consent collection with documented proof of each visitor's choices. |
+| Regulation             | Region         | How Probo Helps                                                                                                                                                                      |
+| ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **GDPR**               | European Union | Opt-in mode blocks all non-essential cookies until the visitor explicitly consents. Per-category controls and a full audit trail provide the evidence required by Articles 7 and 30. |
+| **ePrivacy Directive** | European Union | Consent is collected before any cookies are set, satisfying the prior consent requirement for terminal equipment access.                                                             |
+| **CCPA / CPRA**        | California, US | Opt-out mode allows cookies by default and provides a clear mechanism for visitors to opt out.                                                                                       |
+| **LGPD**               | Brazil         | Opt-in mode with per-category consent and an auditable consent record.                                                                                                               |
+| **PIPEDA**             | Canada         | Meaningful consent with clear descriptions of each cookie category and purpose.                                                                                                      |
+| **POPIA**              | South Africa   | Prior consent collection with documented proof of each visitor's choices.                                                                                                            |
 
 The SDK also detects **Global Privacy Control (GPC)**. When a visitor's browser sends the `Sec-GPC: 1` header (via `navigator.globalPrivacyControl`), the SDK automatically records a GPC consent action that enables only necessary cookies — no banner is shown. This satisfies GPC requirements under CCPA and similar frameworks.
 
@@ -84,10 +84,10 @@ If the resolved language has no published translation, the banner falls back to 
 
 Probo supports two consent modes:
 
-| Mode | Behavior | Use Case |
-| --- | --- | --- |
-| **Opt-in** | Non-essential cookies are blocked until the visitor explicitly consents | GDPR, ePrivacy — required in the EU |
-| **Opt-out** | Non-essential cookies are active by default; the visitor can opt out | CCPA — common in the US |
+| Mode        | Behavior                                                                | Use Case                            |
+| ----------- | ----------------------------------------------------------------------- | ----------------------------------- |
+| **Opt-in**  | Non-essential cookies are blocked until the visitor explicitly consents | GDPR, ePrivacy — required in the EU |
+| **Opt-out** | Non-essential cookies are active by default; the visitor can opt out    | CCPA — common in the US             |
 
 The consent mode is **automatically selected** based on the visitor's country and the applicable privacy regulation. The mode you configure in the console serves as the default for visitors in countries where no specific regulation applies. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation) for the full list of supported regulations and how consent mode resolution works.
 
@@ -95,13 +95,13 @@ The consent mode is **automatically selected** based on the visitor's country an
 
 When you create a new banner, five default categories are set up automatically:
 
-| Category | Type | Description |
-| --- | --- | --- |
-| **Necessary** | System (required) | Essential cookies for basic site functionality. Cannot be disabled by visitors. |
-| **Analytics** | Normal | Cookies that help you understand how visitors interact with your website. |
-| **Advertising** | Normal | Cookies used to deliver relevant ads and track ad campaign performance. |
-| **Functional** | Normal | Cookies that enable enhanced functionality like live chat or videos. |
-| **Uncategorised** | System | Collects cookies that have not been assigned to a category yet. |
+| Category          | Type              | Description                                                                     |
+| ----------------- | ----------------- | ------------------------------------------------------------------------------- |
+| **Necessary**     | System (required) | Essential cookies for basic site functionality. Cannot be disabled by visitors. |
+| **Analytics**     | Normal            | Cookies that help you understand how visitors interact with your website.       |
+| **Advertising**   | Normal            | Cookies used to deliver relevant ads and track ad campaign performance.         |
+| **Functional**    | Normal            | Cookies that enable enhanced functionality like live chat or videos.            |
+| **Uncategorised** | System            | Collects cookies that have not been assigned to a category yet.                 |
 
 You can rename categories, add custom ones, reorder them, and move cookies between categories. Normal categories can be deleted — when you do, any cookies in them are automatically moved to the Uncategorised category. System categories (Necessary and Uncategorised) cannot be deleted.
 

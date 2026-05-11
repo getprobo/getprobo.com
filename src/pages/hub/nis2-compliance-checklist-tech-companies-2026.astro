@@ -18,22 +18,21 @@ const tableOfContents = [
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline:
-    "NIS2 Compliance Checklist for Tech Companies (2026 Edition)",
+  headline: "NIS2 Compliance Checklist for Tech Companies (2026 Edition)",
   description:
     "Your CTO just got a question about NIS2. Practical checklist for tech companies: governance, technical controls, supply chain, incident timelines, and what you can ignore.",
   author: {
     "@type": "Organization",
     name: "Probo",
-    url: "https://www.getprobo.com",
+    url: "https://www.probo.com",
   },
   publisher: {
     "@type": "Organization",
     name: "Probo",
-    url: "https://www.getprobo.com",
+    url: "https://www.probo.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.getprobo.com/probo-logo.svg",
+      url: "https://www.probo.com/probo-logo.svg",
     },
   },
   datePublished: "2026-04-28",
@@ -41,9 +40,9 @@ const articleSchema = {
   mainEntityOfPage: {
     "@type": "WebPage",
     "@id":
-      "https://www.getprobo.com/hub/nis2-compliance-checklist-tech-companies-2026",
+      "https://www.probo.com/hub/nis2-compliance-checklist-tech-companies-2026",
   },
-  image: "https://www.getprobo.com/hub/nis2-compliance-2026.jpg",
+  image: "https://www.probo.com/hub/nis2-compliance-2026.jpg",
 };
 
 const breadcrumbSchema = {
@@ -54,19 +53,19 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://www.getprobo.com",
+      item: "https://www.probo.com",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "Hub",
-      item: "https://www.getprobo.com/hub",
+      item: "https://www.probo.com/hub",
     },
     {
       "@type": "ListItem",
       position: 3,
       name: "NIS2 Compliance Checklist (2026)",
-      item: "https://www.getprobo.com/hub/nis2-compliance-checklist-tech-companies-2026",
+      item: "https://www.probo.com/hub/nis2-compliance-checklist-tech-companies-2026",
     },
   ],
 };
@@ -147,8 +146,8 @@ const breadcrumbSchema = {
             <p>This checklist is for you.</p>
             <p>
               Not a law firm summary. Not a 40-page PDF. A practical,
-              step-by-step checklist that a technical founder or engineering lead
-              can actually use to assess where they stand.
+              step-by-step checklist that a technical founder or engineering
+              lead can actually use to assess where they stand.
             </p>
           </div>
         </section>
@@ -193,8 +192,7 @@ const breadcrumbSchema = {
                 >SaaS company, cloud provider, managed service provider (MSP),
                 or B2B tech company</strong
               > operating in Europe, you almost certainly fall under the "digital
-              providers" or "important entities" category once you cross these
-              thresholds:
+              providers" or "important entities" category once you cross these thresholds:
             </p>
             <ul class="ml-0 list-none space-y-2">
               <li class="flex items-start gap-2">
@@ -214,8 +212,8 @@ const breadcrumbSchema = {
             </ul>
             <p>
               Under those thresholds? NIS2 does not legally apply to you. That
-              said, your enterprise customers may still require NIS2 alignment as
-              a procurement condition, regardless of your size.
+              said, your enterprise customers may still require NIS2 alignment
+              as a procurement condition, regardless of your size.
             </p>
             <p>
               Know which situation you're in before you spend a single hour on
@@ -262,8 +260,8 @@ const breadcrumbSchema = {
               </h3>
               <p class="text-muted-foreground leading-relaxed">
                 Your leadership team needs to formally approve a written
-                information security policy. This does not have to be 80 pages. A
-                clear, signed policy covering data protection, access control,
+                information security policy. This does not have to be 80 pages.
+                A clear, signed policy covering data protection, access control,
                 incident response, and acceptable use is enough to start.
               </p>
             </div>
@@ -284,9 +282,9 @@ const breadcrumbSchema = {
               </h3>
               <p class="text-muted-foreground leading-relaxed">
                 List the systems your business depends on. For each one,
-                identify what happens if it goes down for 24 hours. If the answer
-                is "we can't operate," it's critical. This list becomes the
-                backbone of your risk management approach.
+                identify what happens if it goes down for 24 hours. If the
+                answer is "we can't operate," it's critical. This list becomes
+                the backbone of your risk management approach.
               </p>
             </div>
           </div>
@@ -308,10 +306,10 @@ const breadcrumbSchema = {
               <p class="text-muted-foreground leading-relaxed">
                 You need a documented process for identifying, assessing, and
                 treating security risks. This does not require a specialist
-                consultant. A structured spreadsheet mapping threats, likelihood,
-                impact, and mitigations is a valid starting point. What matters
-                is that it exists, is reviewed regularly, and drives real
-                decisions.
+                consultant. A structured spreadsheet mapping threats,
+                likelihood, impact, and mitigations is a valid starting point.
+                What matters is that it exists, is reviewed regularly, and
+                drives real decisions.
               </p>
             </div>
             <div class="rounded-xl bg-gray-50 p-6">
@@ -330,8 +328,8 @@ const breadcrumbSchema = {
                 2.3 Review your risk assessment at least annually
               </h3>
               <p class="text-muted-foreground leading-relaxed">
-                NIS2 requires ongoing risk management, not a one-time exercise. Put
-                a recurring calendar item in your team's calendar. If a
+                NIS2 requires ongoing risk management, not a one-time exercise.
+                Put a recurring calendar item in your team's calendar. If a
                 significant incident occurs or your tech stack changes
                 substantially, review it sooner.
               </p>
@@ -348,13 +346,14 @@ const breadcrumbSchema = {
             Section 3: Technical Security Controls
           </h2>
           <p class="text-muted-foreground mb-6 leading-relaxed">
-            This is where the checklist gets specific. These are the controls NIS2
-            actually expects.
+            This is where the checklist gets specific. These are the controls
+            NIS2 actually expects.
           </p>
           <div class="space-y-6">
             <div class="rounded-xl bg-gray-50 p-6">
               <h3 class="text-foreground mb-3 text-lg font-semibold">
-                3.1 Multi-factor authentication (MFA) across all critical systems
+                3.1 Multi-factor authentication (MFA) across all critical
+                systems
               </h3>
               <p class="text-muted-foreground leading-relaxed">
                 Turn it on. Every admin account. Every cloud console. Every code
@@ -403,11 +402,11 @@ const breadcrumbSchema = {
                 3.5 Network segmentation
               </h3>
               <p class="text-muted-foreground leading-relaxed">
-                Production systems should be isolated from development and internal
-                tooling. Your customer data should not be accessible from the same
-                network segment as your office Slack. If you're on AWS, GCP, or
-                Azure, this is achievable with VPCs and security groups. It does
-                not require building a new data centre.
+                Production systems should be isolated from development and
+                internal tooling. Your customer data should not be accessible
+                from the same network segment as your office Slack. If you're on
+                AWS, GCP, or Azure, this is achievable with VPCs and security
+                groups. It does not require building a new data centre.
               </p>
             </div>
             <div class="rounded-xl bg-gray-50 p-6">
@@ -415,11 +414,11 @@ const breadcrumbSchema = {
                 3.6 Endpoint security on company devices
               </h3>
               <p class="text-muted-foreground leading-relaxed">
-                All employee laptops and mobile devices accessing company systems
-                need endpoint protection: MDM enrollment, disk encryption
-                (FileVault or BitLocker), screen lock, and remote wipe
-                capability. If you use BYOD, define a clear policy for minimum
-                device standards.
+                All employee laptops and mobile devices accessing company
+                systems need endpoint protection: MDM enrollment, disk
+                encryption (FileVault or BitLocker), screen lock, and remote
+                wipe capability. If you use BYOD, define a clear policy for
+                minimum device standards.
               </p>
             </div>
             <div class="rounded-xl bg-gray-50 p-6">
@@ -427,8 +426,8 @@ const breadcrumbSchema = {
                 3.7 Secure configuration baseline for your infrastructure
               </h3>
               <p class="text-muted-foreground leading-relaxed">
-                Cloud environments drift from secure configurations over time. Run
-                a configuration audit against CIS Benchmarks or your cloud
+                Cloud environments drift from secure configurations over time.
+                Run a configuration audit against CIS Benchmarks or your cloud
                 provider's security best practices. AWS Security Hub, Azure
                 Defender, and GCP Security Command Center all offer automated
                 scoring. Get your score above 80% before anything else.
@@ -538,8 +537,8 @@ const breadcrumbSchema = {
                 This is the part that will trip you up if you don't know it.
               </p>
               <p class="text-muted-foreground mb-4 leading-relaxed">
-                Under NIS2, if you experience a significant incident affecting the
-                security of your network and information systems, you must:
+                Under NIS2, if you experience a significant incident affecting
+                the security of your network and information systems, you must:
               </p>
               <ul class="ml-0 list-none space-y-2">
                 <li class="flex items-start gap-2">
@@ -555,8 +554,7 @@ const breadcrumbSchema = {
                   <span
                     >Submit a full incident notification within <strong
                       class="text-foreground">72 hours</strong
-                    > (including initial assessment, severity, indicators of
-                    compromise)</span
+                    > (including initial assessment, severity, indicators of compromise)</span
                   >
                 </li>
                 <li class="flex items-start gap-2">
@@ -591,11 +589,11 @@ const breadcrumbSchema = {
                 5.4 Log and monitor your critical systems
               </h3>
               <p class="text-muted-foreground leading-relaxed">
-                You cannot detect an incident you're not logging for. At minimum:
-                authentication events, privileged access, API calls to sensitive
-                data, and system configuration changes. Centralise your logs. Set
-                up alerts for anomalous behaviour. Retain logs for at least 12
-                months.
+                You cannot detect an incident you're not logging for. At
+                minimum: authentication events, privileged access, API calls to
+                sensitive data, and system configuration changes. Centralise
+                your logs. Set up alerts for anomalous behaviour. Retain logs
+                for at least 12 months.
               </p>
             </div>
           </div>
@@ -616,9 +614,9 @@ const breadcrumbSchema = {
               </h3>
               <p class="text-muted-foreground leading-relaxed">
                 Backups of critical systems and data must exist, must be
-                encrypted, and must be tested. "We have backups" is not enough. The
-                question is: how long does it take to restore from backup, and did
-                you actually test it in the last six months?
+                encrypted, and must be tested. "We have backups" is not enough.
+                The question is: how long does it take to restore from backup,
+                and did you actually test it in the last six months?
               </p>
             </div>
             <div class="rounded-xl bg-gray-50 p-6">
@@ -640,8 +638,8 @@ const breadcrumbSchema = {
                 What do you do if your primary cloud region goes down? What if
                 your offices are inaccessible? What if a key employee is
                 unavailable during a crisis? These scenarios don't need perfect
-                answers. They need documented procedures that the rest of your team
-                can follow without the person who "just knows."
+                answers. They need documented procedures that the rest of your
+                team can follow without the person who "just knows."
               </p>
             </div>
           </div>
@@ -662,12 +660,12 @@ const breadcrumbSchema = {
               </h3>
               <p class="text-muted-foreground leading-relaxed">
                 Most EU member states have designated a national authority
-                responsible for NIS2 oversight. In France, it's ANSSI. In Germany,
-                BSI. In the Netherlands, NCSC-NL. In Ireland, the NCSC. If your
-                business falls under NIS2, you are required to register with the
-                relevant authority. Check whether your country has published a
-                public register or registration process. Many did this through 2024
-                and 2025.
+                responsible for NIS2 oversight. In France, it's ANSSI. In
+                Germany, BSI. In the Netherlands, NCSC-NL. In Ireland, the NCSC.
+                If your business falls under NIS2, you are required to register
+                with the relevant authority. Check whether your country has
+                published a public register or registration process. Many did
+                this through 2024 and 2025.
               </p>
             </div>
             <div class="rounded-xl bg-gray-50 p-6">
@@ -687,11 +685,11 @@ const breadcrumbSchema = {
               </h3>
               <p class="text-muted-foreground leading-relaxed">
                 NIS2 does not require a formal certification the way ISO 27001
-                does. But it does require that you can demonstrate compliance when
-                asked. Maintain a compliance register: the controls you've
+                does. But it does require that you can demonstrate compliance
+                when asked. Maintain a compliance register: the controls you've
                 implemented, the policies you've approved, the risk assessments
-                you've conducted, and the incidents you've handled. This evidence
-                file is your defence in a regulatory investigation.
+                you've conducted, and the incidents you've handled. This
+                evidence file is your defence in a regulatory investigation.
               </p>
             </div>
           </div>
@@ -751,11 +749,13 @@ const breadcrumbSchema = {
             </div>
             <div class="rounded-xl border border-gray-200 bg-white p-6">
               <p class="text-muted-foreground leading-relaxed">
-                <strong class="text-foreground">Waiting for a fine before starting.</strong>
+                <strong class="text-foreground"
+                  >Waiting for a fine before starting.</strong
+                >
                 Penalties under NIS2 can reach €10 million or 2% of global annual
-                turnover for important entities, and €20 million or 2% of global
-                revenue for essential entities. The enforcement calendar across EU
-                member states accelerated through 2025.
+                turnover for important entities, and €20 million or 2% of global revenue
+                for essential entities. The enforcement calendar across EU member
+                states accelerated through 2025.
               </p>
             </div>
             <div class="rounded-xl border border-gray-200 bg-white p-6">
@@ -763,17 +763,18 @@ const breadcrumbSchema = {
                 <strong class="text-foreground"
                   >Ignoring supply chain requirements.</strong
                 >
-                Most breaches come through vendors, not direct attacks. NIS2's
-                supply chain provisions exist for this reason. This is not a
-                paperwork exercise.
+                Most breaches come through vendors, not direct attacks. NIS2's supply
+                chain provisions exist for this reason. This is not a paperwork exercise.
               </p>
             </div>
             <div class="rounded-xl border border-gray-200 bg-white p-6">
               <p class="text-muted-foreground leading-relaxed">
-                <strong class="text-foreground">Conflating NIS2 and GDPR.</strong>
-                They're related but separate. GDPR governs personal data. NIS2
-                governs security of network and information systems. A breach can
-                trigger obligations under both. Know the difference.
+                <strong class="text-foreground"
+                  >Conflating NIS2 and GDPR.</strong
+                >
+                They're related but separate. GDPR governs personal data. NIS2 governs
+                security of network and information systems. A breach can trigger
+                obligations under both. Know the difference.
               </p>
             </div>
           </div>
@@ -799,11 +800,15 @@ const breadcrumbSchema = {
               </li>
               <li class="flex items-start gap-3">
                 <span class="text-foreground font-medium">2.</span>
-                <span>Assign a named owner for NIS2 compliance at your company</span>
+                <span
+                  >Assign a named owner for NIS2 compliance at your company</span
+                >
               </li>
               <li class="flex items-start gap-3">
                 <span class="text-foreground font-medium">3.</span>
-                <span>Conduct a risk assessment and map your critical systems</span>
+                <span
+                  >Conduct a risk assessment and map your critical systems</span
+                >
               </li>
               <li class="flex items-start gap-3">
                 <span class="text-foreground font-medium">4.</span>
@@ -820,22 +825,18 @@ const breadcrumbSchema = {
                 >
               </li>
             </ol>
+            <p>Everything else can be phased over 6 to 12 months.</p>
             <p>
-              Everything else can be phased over 6 to 12 months.
-            </p>
-            <p>
-              If you want to track progress against the full checklist, structure
-              your evidence, and get audit-ready without spending hundreds of hours
-              on documentation,{" "}
+              If you want to track progress against the full checklist,
+              structure your evidence, and get audit-ready without spending
+              hundreds of hours on documentation,{" "}
               <a
-                href="https://www.getprobo.com"
-                class="text-[#5d770d] hover:underline"
-                >Probo</a
+                href="https://www.probo.com"
+                class="text-[#5d770d] hover:underline">Probo</a
               >{" "}
-              handles this for European tech companies. The platform maps NIS2
-              requirements to concrete tasks, tracks completion, and stores your
-              evidence in one place. Most teams get through the initial setup in
-              under 10 hours.
+              handles this for European tech companies. The platform maps NIS2 requirements
+              to concrete tasks, tracks completion, and stores your evidence in one
+              place. Most teams get through the initial setup in under 10 hours.
             </p>
             <p>
               NIS2 is not the most complex regulation you'll ever deal with. But
@@ -847,12 +848,12 @@ const breadcrumbSchema = {
               For more context, see our{" "}
               <a
                 href="/hub/nis2-compliance"
-                class="text-[#5d770d] hover:underline"
-                >complete NIS2 guide</a
+                class="text-[#5d770d] hover:underline">complete NIS2 guide</a
               >{" "}
               and{" "}
-              <a href="/hub/nis2-tech-teams" class="text-[#5d770d] hover:underline"
-                >NIS2 for tech teams</a
+              <a
+                href="/hub/nis2-tech-teams"
+                class="text-[#5d770d] hover:underline">NIS2 for tech teams</a
               >.
             </p>
           </div>

@@ -64,10 +64,7 @@ Replace `src` with `data-src`:
 Tracking pixels and other consent-gated images:
 
 ```html
-<img
-  data-cookie-consent="analytics"
-  data-src="https://example.com/pixel.gif"
-/>
+<img data-cookie-consent="analytics" data-src="https://example.com/pixel.gif" />
 ```
 
 ## Stylesheets
@@ -84,16 +81,16 @@ Replace `href` with `data-href` on `<link>` tags:
 
 ## Supported Elements
 
-| Element | Blocked Attribute | Restored To |
-| --- | --- | --- |
+| Element    | Blocked Attribute                     | Restored To                                          |
+| ---------- | ------------------------------------- | ---------------------------------------------------- |
 | `<script>` | `data-src` and/or `type="text/plain"` | `src` restored, `type` set to `data-type` or removed |
-| `<iframe>` | `data-src` | `src` |
-| `<img>` | `data-src` | `src` |
-| `<video>` | `data-src` | `src` |
-| `<audio>` | `data-src` | `src` |
-| `<embed>` | `data-src` | `src` |
-| `<object>` | `data-src` | `data` |
-| `<link>` | `data-href` | `href` |
+| `<iframe>` | `data-src`                            | `src`                                                |
+| `<img>`    | `data-src`                            | `src`                                                |
+| `<video>`  | `data-src`                            | `src`                                                |
+| `<audio>`  | `data-src`                            | `src`                                                |
+| `<embed>`  | `data-src`                            | `src`                                                |
+| `<object>` | `data-src`                            | `data`                                               |
+| `<link>`   | `data-href`                           | `href`                                               |
 
 ## Common Integrations
 
@@ -140,12 +137,12 @@ Replace `href` with `data-href` on `<link>` tags:
 
 The `data-cookie-consent` attribute value is matched against the **lowercased category name** from your banner configuration. The default categories use these values:
 
-| Category | Attribute Value |
-| --- | --- |
-| Necessary | `necessary` |
-| Analytics | `analytics` |
-| Advertising | `advertising` |
-| Functional | `functional` |
+| Category      | Attribute Value |
+| ------------- | --------------- |
+| Necessary     | `necessary`     |
+| Analytics     | `analytics`     |
+| Advertising   | `advertising`   |
+| Functional    | `functional`    |
 | Uncategorised | `uncategorised` |
 
 If you create a custom category named "Social Media", use `data-cookie-consent="social media"`.

@@ -22,13 +22,13 @@ The simplest option. Add a single `<script>` tag to your HTML — no build tools
 
 This automatically renders a fully styled consent dialog and a floating settings button. The banner appears on `DOMContentLoaded` if the visitor hasn't consented yet.
 
-| Attribute | Required | Description |
-| --- | --- | --- |
-| `data-banner-id` | Yes | Your banner ID from the Probo console |
-| `data-base-url` | Yes | The Probo cookie banner API base URL |
-| `data-position` | No | Settings button position: `bottom-left` (default) or `bottom-right` |
-| `data-lang` | No | Force a specific language (e.g. `"fr"`). When omitted, the SDK auto-detects from the page or browser. See [Language Detection](#language-detection). |
-| `data-reopen-widget` | No | Set to `"custom"` to hide the floating settings button and use your own re-open trigger |
+| Attribute            | Required | Description                                                                                                                                          |
+| -------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-banner-id`     | Yes      | Your banner ID from the Probo console                                                                                                                |
+| `data-base-url`      | Yes      | The Probo cookie banner API base URL                                                                                                                 |
+| `data-position`      | No       | Settings button position: `bottom-left` (default) or `bottom-right`                                                                                  |
+| `data-lang`          | No       | Force a specific language (e.g. `"fr"`). When omitted, the SDK auto-detects from the page or browser. See [Language Detection](#language-detection). |
+| `data-reopen-widget` | No       | Set to `"custom"` to hide the floating settings button and use your own re-open trigger                                                              |
 
 ## Themed Banner (ES Module)
 
@@ -54,13 +54,13 @@ registerCookieBanner();
 ></probo-cookie-banner>
 ```
 
-| Attribute | Required | Description |
-| --- | --- | --- |
-| `banner-id` | Yes | Your banner ID from the Probo console |
-| `base-url` | Yes | The Probo cookie banner API base URL |
-| `position` | No | Settings button position: `bottom-left` (default) or `bottom-right` |
-| `lang` | No | Force a specific language (e.g. `"fr"`). When omitted, the SDK auto-detects from the page or browser. See [Language Detection](#language-detection). |
-| `reopen-widget` | No | Set to `"custom"` to hide the floating settings button and use your own re-open trigger |
+| Attribute       | Required | Description                                                                                                                                          |
+| --------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `banner-id`     | Yes      | Your banner ID from the Probo console                                                                                                                |
+| `base-url`      | Yes      | The Probo cookie banner API base URL                                                                                                                 |
+| `position`      | No       | Settings button position: `bottom-left` (default) or `bottom-right`                                                                                  |
+| `lang`          | No       | Force a specific language (e.g. `"fr"`). When omitted, the SDK auto-detects from the page or browser. See [Language Detection](#language-detection). |
+| `reopen-widget` | No       | Set to `"custom"` to hide the floating settings button and use your own re-open trigger                                                              |
 
 Since this is a Web Component, it works in any framework. In React, JSX treats it as a custom element. In Vue or Svelte, use it directly in your template.
 
@@ -128,20 +128,20 @@ Then build your own layout:
 
 ### Component Reference
 
-| Component | Description |
-| --- | --- |
+| Component                    | Description                                                                                                                                                                                                    |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `<probo-cookie-banner-root>` | Root element. Requires `banner-id` and `base-url`. Optional `lang` attribute to force a language. Optional `reopen-widget` attribute (`"floating"` default or `"custom"`). Manages client lifecycle and state. |
-| `<probo-banner>` | Container shown when consent has not been given yet. |
-| `<probo-accept-button>` | Wraps a button that records "accept all" consent. |
-| `<probo-reject-button>` | Wraps a button that records "reject all" consent. |
-| `<probo-customize-button>` | Wraps a button that opens the preference panel. |
-| `<probo-preference-panel>` | Container for per-category consent toggles. |
-| `<probo-category-list>` | Renders a `<template>` once per cookie category. Fills `data-slot="name"` and `data-slot="description"`. |
-| `<probo-category-toggle>` | Binds the checkbox inside it to the category's consent state. |
-| `<probo-cookie-list>` | Renders a `<template>` once per cookie in the category. Fills `data-slot="name"` and `data-slot="duration"`. |
-| `<probo-save-button>` | Wraps a button that saves the current preference draft. |
-| `<probo-settings-button>` | Floating button to re-open preferences. Accepts a `position` attribute (`bottom-left` or `bottom-right`). Hidden automatically when `reopen-widget="custom"` is set on the root. |
-| `<probo-settings-link>` | Inline element (e.g. a footer link) that opens the preference panel on click. Automatically hides the floating settings button. Place it anywhere on the page. |
+| `<probo-banner>`             | Container shown when consent has not been given yet.                                                                                                                                                           |
+| `<probo-accept-button>`      | Wraps a button that records "accept all" consent.                                                                                                                                                              |
+| `<probo-reject-button>`      | Wraps a button that records "reject all" consent.                                                                                                                                                              |
+| `<probo-customize-button>`   | Wraps a button that opens the preference panel.                                                                                                                                                                |
+| `<probo-preference-panel>`   | Container for per-category consent toggles.                                                                                                                                                                    |
+| `<probo-category-list>`      | Renders a `<template>` once per cookie category. Fills `data-slot="name"` and `data-slot="description"`.                                                                                                       |
+| `<probo-category-toggle>`    | Binds the checkbox inside it to the category's consent state.                                                                                                                                                  |
+| `<probo-cookie-list>`        | Renders a `<template>` once per cookie in the category. Fills `data-slot="name"` and `data-slot="duration"`.                                                                                                   |
+| `<probo-save-button>`        | Wraps a button that saves the current preference draft.                                                                                                                                                        |
+| `<probo-settings-button>`    | Floating button to re-open preferences. Accepts a `position` attribute (`bottom-left` or `bottom-right`). Hidden automatically when `reopen-widget="custom"` is set on the root.                               |
+| `<probo-settings-link>`      | Inline element (e.g. a footer link) that opens the preference panel on click. Automatically hides the floating settings button. Place it anywhere on the page.                                                 |
 
 ### Custom Re-open Link
 
@@ -183,7 +183,11 @@ With the themed banner:
 With headless components:
 
 ```html
-<probo-cookie-banner-root banner-id="YOUR_BANNER_ID" base-url="BASE_URL" reopen-widget="custom">
+<probo-cookie-banner-root
+  banner-id="YOUR_BANNER_ID"
+  base-url="BASE_URL"
+  reopen-widget="custom"
+>
   <!-- ... banner and preference panel ... -->
 </probo-cookie-banner-root>
 ```
@@ -204,11 +208,11 @@ The resolved language is sent to the API when fetching the banner configuration.
 New banners include translations for four languages out of the box:
 
 | Code | Language |
-| --- | --- |
-| `en` | English |
-| `fr` | French |
-| `de` | German |
-| `es` | Spanish |
+| ---- | -------- |
+| `en` | English  |
+| `fr` | French   |
+| `de` | German   |
+| `es` | Spanish  |
 
 You can customize these translations and add new languages from the Probo console. All banner text is translatable, including:
 
@@ -263,7 +267,7 @@ To override auto-detection, set the language explicitly:
 In most cases, you don't need to set a language explicitly. If your page has a `lang` attribute on the `<html>` element, the SDK picks it up automatically:
 
 ```html
-<html lang="fr">
+<html lang="fr"></html>
 ```
 
 This is the recommended approach for multilingual sites that already set the `lang` attribute as part of their i18n setup.
@@ -272,12 +276,12 @@ This is the recommended approach for multilingual sites that already set the `la
 
 The SDK emits custom events that bubble through the DOM. Listen on the root element or any ancestor:
 
-| Event | Detail | Description |
-| --- | --- | --- |
-| `probo-ready` | `{ config }` | Fired when the banner configuration has been loaded from the API. The `config` object includes `language` (resolved language), `default_language`, `available_languages`, and `texts` (all UI strings for the resolved language). |
-| `probo-state` | `{ state, prev }` | Fired when the banner UI state changes. States: `loading`, `banner`, `panel`, `hidden`. |
-| `probo-consent` | `{ action, consent_data }` | Fired after consent is recorded. Actions: `ACCEPT_ALL`, `REJECT_ALL`, `CUSTOMIZE`. |
-| `probo-reopen-widget` | `{ value }` | Fired when the `reopen-widget` attribute changes on the root. Values: `"floating"`, `"custom"`. |
+| Event                 | Detail                     | Description                                                                                                                                                                                                                       |
+| --------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `probo-ready`         | `{ config }`               | Fired when the banner configuration has been loaded from the API. The `config` object includes `language` (resolved language), `default_language`, `available_languages`, and `texts` (all UI strings for the resolved language). |
+| `probo-state`         | `{ state, prev }`          | Fired when the banner UI state changes. States: `loading`, `banner`, `panel`, `hidden`.                                                                                                                                           |
+| `probo-consent`       | `{ action, consent_data }` | Fired after consent is recorded. Actions: `ACCEPT_ALL`, `REJECT_ALL`, `CUSTOMIZE`.                                                                                                                                                |
+| `probo-reopen-widget` | `{ value }`                | Fired when the `reopen-widget` attribute changes on the root. Values: `"floating"`, `"custom"`.                                                                                                                                   |
 
 ```js
 document.addEventListener("probo-consent", (e) => {

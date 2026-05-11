@@ -6,5 +6,5 @@ Disallow: /whats-next
 Disallow: /feedback
 Disallow: /orderform
 
-Host: https://www.getprobo.com
-Sitemap: https://www.getprobo.com/sitemap-index.xml
+Host: https://www.probo.com
+Sitemap: https://www.probo.com/sitemap-index.xml
