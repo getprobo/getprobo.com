@@ -55,7 +55,9 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
                   {post.data.title}
                 </a>
               </h2>
-              <p class="text-muted-foreground text-lg">{post.data.excerpt}</p>
+              <p class="text-muted-foreground whitespace-pre-line text-lg">
+                {post.data.excerpt}
+              </p>
             </article>
           ))
         }

@@ -1,0 +1,103 @@
+---
+title: "What is a risk in compliance?"
+date: 2026-05-13
+excerpt: |
+  Risk management is at the heart of every compliance framework: ISO 27001, SOC 2, GDPR. Yet most teams treat it like a checkbox.
+
+  Here's what it actually means, and how to think about it properly.
+author:
+  name: "Arthur Mayoux"
+---
+
+A customer just asked about your security posture. You open your risk register and realize it's a spreadsheet someone filled in 18 months ago and never touched since.
+
+Sound familiar?
+
+Before you can manage risks, you need to understand what a risk actually is.
+
+## Risk = threat × vulnerability
+
+In information security, a risk is not just "something bad that could happen." It's the product of two things:
+
+- **A threat:** something dangerous or harmful that could occur (a cyberattack, a data leak, a fire in your server room).
+- **A vulnerability:** a weakness that could be exploited (no backups, no access controls, no encryption).
+
+Remove either one, and the risk disappears.
+
+No threat? No risk. There's no risk of an avalanche in central London.
+
+No vulnerability? No risk either. An attacker with no entry point is just a person standing outside a locked building with no doors.
+
+This matters because most teams focus on threats without auditing their vulnerabilities, or patch vulnerabilities without checking if there's actually a credible threat. Both are a waste of time. This is why it is key to have a deep understanding of your company context.
+
+## A concrete example
+
+Say one of your developers leaves the company. Nobody revokes their GitHub access. One potential threat: a disgruntled ex-employee. One vulnerability: active credentials with no expiry.
+
+The resulting risk: your codebase gets tampered with or leaked.
+
+| Component | In this scenario |
+| --- | --- |
+| **Threat** | Disgruntled ex-employee |
+| **Vulnerability** | Active credentials post-offboarding |
+| **Risk** | Code leak or sabotage, reputational and contractual damage |
+
+Simple to write. But is it worth fixing?
+
+## Probability and impact: the two questions that actually matter
+
+Let's put numbers on this:
+
+You hire and lose roughly 5 people per year. Each departure without proper offboarding carries an estimated exposure of €20,000 (breach investigation, legal fees, customer notification). Probability it happens badly: once every 4 years.
+
+**Annual loss (ALE):** €5,000/year.
+
+**Cost of a fancy automated identity management platform:** €800/month = €9,600/year.
+
+The math doesn't hold. A €9,600/year tool to cover a €5,000/year risk makes no sense. A better fix: a one-page offboarding checklist and a Slack reminder to IT. Costs nothing. Solves the problem.
+
+Now flip it. A ransomware attack hits your infrastructure and you have no offline backups:
+
+| Component | In this scenario |
+| --- | --- |
+| **Threat** | Ransomware attack |
+| **Vulnerability** | No immutable backups |
+| **Risk** | Complete data loss, operations shutdown, ransom payment |
+
+**Probability:** ransomware attacks on SMBs are up every year. This is not a theoretical threat.
+
+**Impact:** average ransom demand for a small company sits around €80,000—before you factor in a week of downtime, customer churn, and potential GDPR fines. Realistic total: €500,000+.
+
+**Cost of a proper immutable backup solution:** €200/month = €12,000 over 5 years.
+
+That's a €488,000 benefit over five years. The decision is obvious.
+
+## The four ways to treat a risk
+
+Once you've evaluated a risk, you have four options:
+
+1. **Reduce it** — implement a control (backup system, access policy, encryption).
+2. **Transfer it** — get cyber insurance, use a SaaS that absorbs the liability.
+3. **Avoid it** — stop the activity that creates the risk entirely.
+4. **Accept it** — document that you've made a conscious decision to live with it.
+
+Most frameworks (ISO 27001, SOC 2) require you to pick one of these for every identified risk. "We didn't think about it" is not an option.
+
+## Why this matters for compliance
+
+ISO 27001 is literally built around risk management. The entire framework exists to make you identify your risks, evaluate them, and treat them systematically. SOC 2 Trust Services Criteria follow the same logic.
+
+A compliance audit isn't checking whether you have zero risks. It's checking whether you have a rational process to understand and manage them.
+
+Which means a risk register full of "high" ratings and no treatment decisions is worse than useless: it shows your auditor you've identified problems and ignored them.
+
+## A practical starting point
+
+Before your next audit, ask yourself:
+
+- Do we have a list of assets that matter? (data, systems, people, processes)
+- For each one, what's the credible threat and where's the vulnerability?
+- Have we estimated the probability and impact, with actual numbers?
+- Have we made an explicit decision on how to treat each risk?
+
+If the answer to any of these is "not really," you're not managing risk as you should.
