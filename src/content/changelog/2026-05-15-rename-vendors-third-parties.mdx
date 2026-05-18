@@ -1,0 +1,34 @@
+---
+title: "Vendors Are Now Third Parties"
+description: "Vendor is now Third Party across the API, CLI, webhooks, and console — a breaking rename that better matches compliance terminology."
+date: 2026-05-15
+image: "/changelog/2026-05-15-rename-vendors-third-parties.png"
+tags: ["Console"]
+---
+
+Probo has renamed the Vendor concept to Third Party everywhere.
+
+This is a breaking change across the full API surface.
+
+## What changed
+
+- GraphQL and MCP: all `vendor*` fields and types renamed to `third_party*`
+- Webhook events: `vendor:*` events are now `third_party:*`
+- CLI: `prb vendor` command group renamed to `prb third-party`
+- Console and Trust page URLs updated accordingly
+- Database snapshot type: `VENDORS` → `THIRD_PARTIES`
+
+## Why it matters
+
+The rename better reflects what the feature tracks: any third-party service your organization uses, not just traditional vendors. It also aligns the product language with GDPR and SOC 2 terminology used by compliance teams.
+
+## What you need to do
+
+If you have automations, scripts, or integrations that use the Probo API or CLI:
+
+- Update webhook listeners from `vendor:*` to `third_party:*`
+- Update `prb vendor` calls to `prb third-party`
+- Update any hardcoded GraphQL queries or MCP tool calls referencing vendor fields
+- Update any saved URLs that include `/vendor` paths
+
+Existing data is migrated automatically. No manual data migration needed.
