@@ -62,9 +62,11 @@ registerCookieBanner();
 | `lang`          | No       | Force a specific language (e.g. `"fr"`). When omitted, the SDK auto-detects from the page or browser. See [Language Detection](#language-detection). |
 | `reopen-widget` | No       | Set to `"custom"` to hide the floating settings button and use your own re-open trigger                                                              |
 
-Since this is a Web Component, it works in any framework. In React, JSX treats it as a custom element. In Vue or Svelte, use it directly in your template.
+Since this is a Web Component, it works in any framework. In React, JSX treats it as a custom element. In Vue or Svelte, use it directly in your template. See the [React Integration](/docs/product/cookie-banner/react) guide for a complete walkthrough with a `useConsent` hook, Next.js setup, and TypeScript declarations.
 
 See [Theming](/docs/product/cookie-banner/theming) for how to customize colors, fonts, and styling.
+
+For programmatic access to consent state from any module (not just the DOM), see the [Consent Manager API](/docs/product/cookie-banner/consent-manager).
 
 ## Headless Components (Full Control)
 

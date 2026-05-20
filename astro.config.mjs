@@ -249,6 +249,14 @@ export default defineConfig({
               slug: "docs/product/cookie-banner/javascript-sdk",
             },
             {
+              label: "Consent Manager API",
+              slug: "docs/product/cookie-banner/consent-manager",
+            },
+            {
+              label: "React",
+              slug: "docs/product/cookie-banner/react",
+            },
+            {
               label: "Theming",
               slug: "docs/product/cookie-banner/theming",
             },

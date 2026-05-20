@@ -1,0 +1,339 @@
+---
+title: React Integration
+description: Add the Probo cookie banner to a React or Next.js application
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+This guide shows how to integrate the Probo cookie banner into a React application, build a `useConsent` hook for consent-aware rendering, and handle Next.js-specific requirements.
+
+## Installation
+
+```bash
+npm install @probo/cookie-banner
+```
+
+## Rendering the Themed Banner
+
+The themed banner is a Web Component. Register it once and place the custom element in your layout.
+
+<Steps>
+
+1. **Create a `CookieBanner` component**
+
+   ```tsx
+   // src/components/CookieBanner.tsx
+   import { useEffect } from "react";
+   import { registerCookieBanner } from "@probo/cookie-banner";
+
+   let registered = false;
+
+   export function CookieBanner() {
+     useEffect(() => {
+       if (!registered) {
+         registerCookieBanner();
+         registered = true;
+       }
+     }, []);
+
+     return (
+       <probo-cookie-banner
+         banner-id="YOUR_BANNER_ID"
+         base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+         position="bottom-left"
+       />
+     );
+   }
+   ```
+
+2. **Add it to your layout**
+
+   Render `<CookieBanner />` once at the root of your application — typically in your layout or `App` component:
+
+   ```tsx
+   // src/App.tsx
+   import { CookieBanner } from "./components/CookieBanner";
+
+   export default function App() {
+     return (
+       <>
+         {/* your app */}
+         <CookieBanner />
+       </>
+     );
+   }
+   ```
+
+</Steps>
+
+The banner handles everything from there — it fetches the configuration, shows the consent dialog, records consent, and manages the floating settings button.
+
+### TypeScript
+
+If TypeScript complains about the `<probo-cookie-banner>` JSX element, add a type declaration:
+
+```ts
+// src/probo.d.ts
+declare namespace JSX {
+  interface IntrinsicElements {
+    "probo-cookie-banner": React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLElement> & {
+        "banner-id": string;
+        "base-url": string;
+        position?: "bottom-left" | "bottom-right";
+        lang?: string;
+        "reopen-widget"?: "floating" | "custom";
+      },
+      HTMLElement
+    >;
+  }
+}
+```
+
+## The `useConsent` Hook
+
+Use the [Consent Manager API](/docs/product/cookie-banner/consent-manager) to build a React hook that gives components reactive access to consent state.
+
+```tsx
+// src/hooks/useConsent.ts
+import { useSyncExternalStore } from "react";
+import { getConsent } from "@probo/cookie-banner/consent";
+
+const consent = getConsent();
+
+function subscribe(onStoreChange: () => void): () => void {
+  return consent.subscribe(onStoreChange);
+}
+
+function getSnapshot(): Record<string, boolean> {
+  return consent.getAll();
+}
+
+function getServerSnapshot(): Record<string, boolean> {
+  return {};
+}
+
+export function useConsent(): Record<string, boolean> {
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+```
+
+This hook re-renders the component whenever consent state changes — on initial resolution and after the visitor updates their preferences.
+
+### Usage
+
+```tsx
+import { useConsent } from "../hooks/useConsent";
+
+export function AnalyticsLoader() {
+  const consent = useConsent();
+
+  if (!consent.analytics) {
+    return null;
+  }
+
+  return <ThirdPartyAnalytics />;
+}
+```
+
+### Checking a single category
+
+```tsx
+import { useConsent } from "../hooks/useConsent";
+
+export function ChatWidget() {
+  const consent = useConsent();
+
+  if (!consent.functional) {
+    return <p>Enable functional cookies to use live chat.</p>;
+  }
+
+  return <LiveChat />;
+}
+```
+
+## Imperative Consent Checks
+
+For code that runs outside of React's render cycle — event handlers, side effects, or non-React modules — use `getConsent()` directly instead of the hook:
+
+```ts
+import { getConsent } from "@probo/cookie-banner/consent";
+
+export function trackEvent(name: string) {
+  if (getConsent().has("analytics")) {
+    analytics.track(name);
+  }
+}
+```
+
+See the [Consent Manager API](/docs/product/cookie-banner/consent-manager) reference for the full API.
+
+## Next.js
+
+The cookie banner SDK accesses `document`, `window`, and `localStorage`, so it must run on the client. In the Next.js App Router, mark the component with `"use client"`:
+
+```tsx
+// src/components/CookieBanner.tsx
+"use client";
+
+import { useEffect } from "react";
+import { registerCookieBanner } from "@probo/cookie-banner";
+
+let registered = false;
+
+export function CookieBanner() {
+  useEffect(() => {
+    if (!registered) {
+      registerCookieBanner();
+      registered = true;
+    }
+  }, []);
+
+  return (
+    <probo-cookie-banner
+      banner-id="YOUR_BANNER_ID"
+      base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+      position="bottom-left"
+    />
+  );
+}
+```
+
+Then render it in your root layout:
+
+```tsx
+// src/app/layout.tsx
+import { CookieBanner } from "../components/CookieBanner";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <CookieBanner />
+      </body>
+    </html>
+  );
+}
+```
+
+The `useConsent` hook works in any client component. Mark hooks that use it with `"use client"` or consume them from client components:
+
+```tsx
+// src/components/AnalyticsLoader.tsx
+"use client";
+
+import { useConsent } from "../hooks/useConsent";
+
+export function AnalyticsLoader() {
+  const consent = useConsent();
+
+  if (!consent.analytics) {
+    return null;
+  }
+
+  return <ThirdPartyAnalytics />;
+}
+```
+
+### Pages Router
+
+In the Pages Router, the banner component works without `"use client"`. Render it in `_app.tsx`:
+
+```tsx
+// pages/_app.tsx
+import type { AppProps } from "next/app";
+import { CookieBanner } from "../components/CookieBanner";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <Component {...pageProps} />
+      <CookieBanner />
+    </>
+  );
+}
+```
+
+## Headless Components
+
+For complete control over the consent UI in React, use the [headless components](/docs/product/cookie-banner/javascript-sdk#headless-components-full-control). Register them once and compose the Web Component building blocks in your JSX:
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+import { registerHeadlessComponents } from "@probo/cookie-banner/headless";
+
+let registered = false;
+
+export function CustomConsentBanner() {
+  useEffect(() => {
+    if (!registered) {
+      registerHeadlessComponents();
+      registered = true;
+    }
+  }, []);
+
+  return (
+    <probo-cookie-banner-root
+      banner-id="YOUR_BANNER_ID"
+      base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+    >
+      <probo-banner>
+        <div className="my-banner">
+          <p>We use cookies to improve your experience.</p>
+          <probo-accept-button>
+            <button>Accept all</button>
+          </probo-accept-button>
+          <probo-reject-button>
+            <button>Reject all</button>
+          </probo-reject-button>
+          <probo-customize-button>
+            <button>Customize</button>
+          </probo-customize-button>
+        </div>
+      </probo-banner>
+
+      <probo-preference-panel>
+        <div className="my-preferences">
+          <probo-category-list>
+            <template>
+              <div className="category">
+                <span data-slot="name"></span>
+                <span data-slot="description"></span>
+                <probo-category-toggle>
+                  <input type="checkbox" />
+                </probo-category-toggle>
+              </div>
+            </template>
+          </probo-category-list>
+          <probo-save-button>
+            <button>Save preferences</button>
+          </probo-save-button>
+        </div>
+      </probo-preference-panel>
+    </probo-cookie-banner-root>
+  );
+}
+```
+
+See the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#headless-components-full-control) docs for the full component reference.
+
+## Custom Re-open Link
+
+To replace the floating settings button with a link in your React app (e.g. in the footer), use the `<probo-settings-link>` element:
+
+```tsx
+export function Footer() {
+  return (
+    <footer>
+      <probo-settings-link>
+        <button>Cookie Settings</button>
+      </probo-settings-link>
+    </footer>
+  );
+}
+```
+
+This automatically hides the floating button and opens the preference panel when clicked. It works regardless of how the banner is loaded — see [Custom Re-open Link](/docs/product/cookie-banner/javascript-sdk#custom-re-open-link) for details.

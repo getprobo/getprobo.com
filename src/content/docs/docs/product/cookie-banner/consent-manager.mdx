@@ -1,0 +1,194 @@
+---
+title: Consent Manager API
+description: Read consent state and react to changes programmatically with the ConsentManager singleton
+---
+
+The Consent Manager is a lightweight, framework-agnostic API for reading consent state and reacting to changes in your application code. It works with all three SDK modes — script tag, themed banner, and headless components.
+
+Use it when you need to conditionally run code based on consent — for example, initializing an analytics library only after the visitor grants permission, or rendering a component differently depending on which categories are allowed.
+
+## Importing
+
+The Consent Manager is available as a standalone sub-export that ships no UI code:
+
+```js
+import { getConsent } from "@probo/cookie-banner/consent";
+
+const consent = getConsent();
+```
+
+If you use the IIFE script tag, the same singleton is exposed on the `window` object:
+
+```js
+const consent = window.Probo.consent;
+```
+
+`getConsent()` always returns the same `ConsentManager` instance. You can call it from anywhere in your application — there is no need to pass it through props or context.
+
+## API Reference
+
+### `getConsent()`
+
+Returns the global `ConsentManager` singleton. Call it from any module.
+
+```js
+import { getConsent } from "@probo/cookie-banner/consent";
+
+const consent = getConsent();
+```
+
+### Properties
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `ready` | `boolean` | `true` once the SDK has resolved the initial consent state (from cookie, API, or defaults). |
+| `hasResponse` | `boolean` | `true` if the visitor has actively made a consent choice (as opposed to defaults being applied). |
+
+### `has(category)`
+
+Check whether a specific category is currently allowed.
+
+```js
+if (consent.has("analytics")) {
+  // Analytics category is granted
+}
+```
+
+**Parameters:**
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `category` | `string` | The category slug (e.g. `"analytics"`, `"advertising"`, `"functional"`) |
+
+**Returns:** `boolean`
+
+### `getAll()`
+
+Returns the full consent state as a `Record<string, boolean>` keyed by category slug.
+
+```js
+const state = consent.getAll();
+// { necessary: true, analytics: false, advertising: false, functional: true }
+```
+
+### `onReady(callback)`
+
+Registers a one-shot callback that fires when consent state is first resolved. If consent is already resolved, the callback fires immediately.
+
+```js
+const off = consent.onReady((data) => {
+  console.log("Consent resolved:", data);
+});
+
+// Call off() to unsubscribe before it fires
+off();
+```
+
+**Returns:** An unsubscribe function.
+
+### `onChange(callback)`
+
+Registers a callback that fires every time the visitor updates their consent choices. Does **not** fire for the initial resolution — use `onReady` or `subscribe` for that.
+
+```js
+const off = consent.onChange((data) => {
+  console.log("Consent updated:", data);
+});
+
+off(); // stop listening
+```
+
+**Returns:** An unsubscribe function.
+
+### `subscribe(callback)`
+
+Combines `onReady` and `onChange` into a single subscription. The callback fires once when consent is first resolved, then again whenever the visitor changes their choices.
+
+```js
+const off = consent.subscribe((data) => {
+  console.log("Consent state:", data);
+});
+
+off(); // stop listening
+```
+
+**Returns:** An unsubscribe function.
+
+## Examples
+
+### Conditionally initialize analytics
+
+```js
+import { getConsent } from "@probo/cookie-banner/consent";
+
+getConsent().onReady((data) => {
+  if (data.analytics) {
+    loadAnalytics();
+  }
+});
+
+getConsent().onChange((data) => {
+  if (data.analytics) {
+    loadAnalytics();
+  }
+});
+```
+
+### Guard a third-party SDK
+
+```js
+import { getConsent } from "@probo/cookie-banner/consent";
+
+const consent = getConsent();
+
+consent.subscribe((data) => {
+  if (data.advertising) {
+    import("./facebook-pixel").then((m) => m.init());
+  }
+});
+```
+
+### Read consent state at any time
+
+```js
+import { getConsent } from "@probo/cookie-banner/consent";
+
+const consent = getConsent();
+
+if (consent.ready && consent.has("functional")) {
+  enableLiveChat();
+}
+```
+
+### IIFE usage
+
+When using the script tag, access the same API through `window.Probo.consent`:
+
+```html
+<script
+  src="https://unpkg.com/@probo/cookie-banner/dist/cookie-banner.iife.js"
+  data-banner-id="YOUR_BANNER_ID"
+  data-base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+></script>
+
+<script>
+  var consent = window.Probo.consent;
+
+  consent.onReady(function (data) {
+    if (data.analytics) {
+      // initialize analytics
+    }
+  });
+</script>
+```
+
+## Consent Manager vs DOM Events
+
+The SDK also emits [DOM events](/docs/product/cookie-banner/javascript-sdk#events) like `probo-consent` and `probo-ready`. Both approaches give you access to consent state — use whichever fits your architecture:
+
+| Approach | Best for |
+| --- | --- |
+| **Consent Manager** (`getConsent()`) | Application code, React hooks, module imports, anywhere you need to subscribe/unsubscribe or check state at any time. Works without a DOM reference. |
+| **DOM events** (`probo-consent`, etc.) | Inline scripts, event delegation, cases where you already listen on the document or a parent element. |
+
+The Consent Manager is the recommended approach for bundled applications — it's easier to compose, does not require a DOM element reference, and the `subscribe` API handles both initial state and updates in one call.
