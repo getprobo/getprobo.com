@@ -15,7 +15,6 @@
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/starlight": "^0.38.3",
     "@astrojs/svelte": "^8.0.5",
-    "@grafana/faro-web-sdk": "^2.3.1",
     "@phosphor-icons/core": "^2.1.1",
     "@phosphor-icons/web": "^2.1.2",
     "@probo/cookie-banner": "^0.4.0",
@@ -42,7 +41,6 @@
   },
   "devDependencies": {
     "@astrojs/starlight-tailwind": "^5.0.0",
-    "@grafana/faro-rollup-plugin": "^0.10.0",
     "@tailwindcss/typography": "^0.5.19",
     "tailwind-variants": "^3.2.2",
     "wrangler": "^4.84.0"
