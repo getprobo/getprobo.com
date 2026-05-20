@@ -169,6 +169,7 @@ export default defineConfig({
           label: "Getting Started",
           items: [
             { label: "Overview", slug: "docs" },
+            { label: "Introduction", slug: "docs/getting-started" },
             { label: "Quickstart", slug: "docs/getting-started/quickstart" },
             {
               label: "Core Concepts",
@@ -485,6 +486,9 @@ export default defineConfig({
           return false;
         }
         if (page.includes("/feedback")) {
+          return false;
+        }
+        if (page.includes("/welcome")) {
           return false;
         }
         if (page.includes("/blog/page/1")) {
