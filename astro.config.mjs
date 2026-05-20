@@ -499,6 +499,12 @@ export default defineConfig({
         if (page.includes("/welcome")) {
           return false;
         }
+        if (page.includes("/static")) {
+          return false;
+        }
+        if (page.includes("/orderform")) {
+          return false;
+        }
         if (page.includes("/blog/page/1")) {
           return false;
         }
