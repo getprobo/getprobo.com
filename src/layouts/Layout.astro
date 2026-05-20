@@ -101,6 +101,11 @@ const canonical = getCanonicalUrl(Astro.url);
         : "https://www.probo.com/og.png"}
     />
 
+    <script>
+      import { registerCookieBanner } from "@probo/cookie-banner";
+      registerCookieBanner();
+    </script>
+
     <!-- JSON-LD Organization Schema -->
     <script
       type="application/ld+json"
@@ -181,8 +186,3 @@ const canonical = getCanonicalUrl(Astro.url);
       position="bottom-right"></probo-cookie-banner>
   </body>
 </html>
-
-<script>
-  import { registerCookieBanner } from "@probo/cookie-banner";
-  registerCookieBanner();
-</script>

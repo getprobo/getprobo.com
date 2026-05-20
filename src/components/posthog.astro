@@ -1,10 +1,4 @@
-<script
-  is:inline
-  define:vars={{
-    apiKey: import.meta.env.PUBLIC_POSTHOG_API_KEY,
-    debug: import.meta.env.DEV,
-  }}
->
+<script is:inline>
   !(function (t, e) {
     var o, n, p, r;
     e.__SV ||
@@ -57,7 +51,17 @@
       }),
       (e.__SV = 1));
   })(document, window.posthog || []);
+</script>
 
+<script
+  is:inline
+  type="text/plain"
+  data-cookie-consent="analytics"
+  define:vars={{
+    apiKey: import.meta.env.PUBLIC_POSTHOG_API_KEY,
+    debug: import.meta.env.DEV,
+  }}
+>
   posthog.init(apiKey, {
     api_host: "https://t.probo.com",
     ui_host: "https://us.posthog.com",

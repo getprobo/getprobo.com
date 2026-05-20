@@ -300,7 +300,7 @@ document.addEventListener("probo-consent", (e) => {
 
 ## Integrations
 
-The SDK ships with built-in integrations that automatically sync consent state with third-party services. Both integrations are enabled by default — they activate only when the corresponding flags are configured on your cookie categories in the Probo console. No extra code is needed.
+The SDK ships with built-in integrations that automatically sync consent state with third-party services. Integrations are enabled by default — they activate only when the corresponding flags are configured on your cookie categories in the Probo console. No extra code is needed.
 
 ### Google Consent Mode
 
@@ -314,16 +314,3 @@ How it works:
 Configuration is driven by the **GCM consent types** field on each cookie category in the Probo console. Map categories to Google consent types like `analytics_storage`, `ad_storage`, `ad_user_data`, or `ad_personalization`. Categories without GCM consent types configured are ignored.
 
 The integration detects `window.gtag` or `window.dataLayer` automatically. If neither is present, it does nothing.
-
-### PostHog
-
-The SDK syncs consent with PostHog's capture opt-in/opt-out mechanism, ensuring PostHog only tracks visitors who have granted consent.
-
-How it works:
-
-1. On load, the SDK calls `posthog.opt_out_capturing()` to ensure no data is collected before consent.
-2. When the visitor grants consent for all PostHog-mapped categories, the SDK calls `posthog.opt_in_capturing()`. If any mapped category is denied, it calls `posthog.opt_out_capturing()`.
-
-Configuration is driven by the **PostHog consent** flag on each cookie category in the Probo console. Enable it on the categories that should gate PostHog tracking (typically Analytics).
-
-The integration requires the PostHog JavaScript SDK to be loaded on your page separately. It detects `window.posthog` automatically. If PostHog is not present, it does nothing.

@@ -5,7 +5,7 @@ description: Privacy-compliant cookie consent management — GDPR, ePrivacy, CCP
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-Probo's cookie banner is a simple, full-featured consent solution you can bundle directly into your app, use headless with complete UI control, or drop in with a single script tag. It is not a bloated CMP platform — it is a straight-to-the-point tool that covers what you actually need: consent collection, an auditable consent trail, third-party resource blocking, and built-in integrations with Google Consent Mode and PostHog.
+Probo's cookie banner is a simple, full-featured consent solution you can bundle directly into your app, use headless with complete UI control, or drop in with a single script tag. It is not a bloated CMP platform — it is a straight-to-the-point tool that covers what you actually need: consent collection, an auditable consent trail, third-party resource blocking, and built-in integration with Google Consent Mode.
 
 ## Key Features
 
@@ -14,7 +14,7 @@ Probo's cookie banner is a simple, full-featured consent solution you can bundle
 - **Multi-regulation compliance** — Supports opt-in (GDPR, ePrivacy) and opt-out (CCPA/CPRA) consent modes, Global Privacy Control (GPC) detection, and per-category cookie controls. See [Compliance](#compliance) for the full list of supported regulations.
 - **Consent audit trail** — Every consent action is recorded server-side with an anonymized IP address, user agent, per-category choices, and a reference to the exact banner version the visitor saw. See [Audit Trail](#audit-trail) for details.
 - **Third-party blocking** — Automatically prevent scripts, iframes, images, and other resources from loading until the visitor grants consent for the corresponding category.
-- **Built-in integrations** — Automatically syncs consent state with Google Consent Mode v2 and PostHog, driven by per-category configuration in the console. No extra code needed.
+- **Built-in integrations** — Automatically syncs consent state with Google Consent Mode v2, driven by per-category configuration in the console. No extra code needed.
 - **Multi-language support** — Built-in translations for English, French, German, and Spanish. Customize all banner text per language, including category names and descriptions. The SDK automatically detects the visitor's language from the page or browser.
 - **Versioned configuration** — Every change to your banner creates a draft version. Publish when ready, and each consent record is tied to the exact version the visitor saw.
 - **Theming** — Match your brand with CSS custom properties for colors, fonts, border radius, and more. Supports dark mode.
@@ -147,7 +147,7 @@ Categories that contain no cookies are automatically hidden from the banner. Onl
   />
   <LinkCard
     title="Integrations"
-    description="Built-in Google Consent Mode and PostHog consent sync"
+    description="Built-in Google Consent Mode consent sync"
     href="/docs/product/cookie-banner/javascript-sdk#integrations"
   />
 </CardGrid>
