@@ -33,22 +33,10 @@ Kubernetes deployment provides the most scalable and production-ready way to run
    export TRUST_TOKEN_SECRET=$(openssl rand -base64 32)
    ```
 
-2. Add Helm Repository
+2. Install with Managed Services
 
    ```bash
-   # If using remote Helm chart (when available)
-   helm repo add probo https://charts.getprobo.com
-   helm repo update
-
-   # Or clone the repository for local chart
-   git clone https://github.com/getprobo/probo.git
-   cd probo/contrib/helm
-   ```
-
-3. Install with Managed Services
-
-   ```bash
-   helm install my-probo ./charts/probo \
+   helm install my-probo oci://artifact.probo.inc/charts/probo \
     --set probo.baseUrl="probo.example.com" \
     --set probo.encryptionKey="$ENCRYPTION_KEY" \
     --set probo.auth.cookieSecret="$COOKIE_SECRET" \
@@ -64,7 +52,7 @@ Kubernetes deployment provides the most scalable and production-ready way to run
    --set s3.secretAccessKey="your-secret-key"
    ```
 
-4. Access the Application
+3. Access the Application
 
    ```bash
    # Port forward for testing
@@ -80,12 +68,7 @@ Kubernetes deployment provides the most scalable and production-ready way to run
 
 ### Create Production Values File
 
-```bash
-# Copy the example values
-cp charts/probo/values-production.yaml.example values-production.yaml
-```
-
-Edit `values-production.yaml`:
+Create a `values-production.yaml` file:
 
 ```yaml
 # Production configuration
@@ -168,7 +151,7 @@ ingress:
 ### Deploy with Production Config
 
 ```bash
-helm install probo ./charts/probo \
+helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.encryptionKey="$ENCRYPTION_KEY" \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
@@ -189,7 +172,7 @@ helm install probo ./charts/probo \
 # - Amazon RDS PostgreSQL instance
 # - S3 bucket
 
-helm install probo ./charts/probo \
+helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.encryptionKey="$ENCRYPTION_KEY" \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
@@ -212,7 +195,7 @@ helm install probo ./charts/probo \
 # - Cloud SQL PostgreSQL instance
 # - Cloud Storage bucket with HMAC keys
 
-helm install probo ./charts/probo \
+helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.encryptionKey="$ENCRYPTION_KEY" \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
@@ -235,7 +218,7 @@ helm install probo ./charts/probo \
 # - Azure Database for PostgreSQL
 # - Azure Blob Storage with S3 compatibility
 
-helm install probo ./charts/probo \
+helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.encryptionKey="$ENCRYPTION_KEY" \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
@@ -509,7 +492,7 @@ kubectl exec -it <pod-name> -- /bin/sh
 
 ```bash
 # Update to new version
-helm upgrade probo ./charts/probo \
+helm upgrade probo oci://artifact.probo.inc/charts/probo \
   --set image.tag="v1.2.0" \
   -f values-production.yaml
 
