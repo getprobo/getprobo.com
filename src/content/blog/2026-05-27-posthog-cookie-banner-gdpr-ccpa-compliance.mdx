@@ -1,0 +1,291 @@
+---
+title: "How to set up PostHog: GDPR, CCPA, and global privacy laws"
+date: 2026-05-27
+excerpt: "Two clean ways to wire PostHog into a website that respects GDPR, CCPA, UK GDPR, LGPD, PIPEDA, and the rest of the alphabet soup of privacy laws — without losing analytics."
+author:
+  name: "Émile RÉ"
+faqs:
+  - question: "Do I need a cookie banner if I use PostHog?"
+    answer: "It depends on the regulation that applies to your visitor. By default, posthog-js stores a first-party cookie and a localStorage entry to identify visitors, which is considered terminal-equipment access under the ePrivacy Directive and personal data under GDPR. For visitors in opt-in regions (EU, UK, Switzerland, Brazil…), you must collect consent before setting these or switch PostHog to cookieless mode. In opt-out regions like California (CCPA/CPRA), you can run PostHog by default but must offer a clear opt-out mechanism. The Probo cookie banner handles this automatically based on the visitor's country."
+  - question: "What is PostHog cookieless mode and when should I use it?"
+    answer: "Cookieless mode disables all browser storage (cookies, localStorage, sessionStorage) and counts unique users via a privacy-preserving hash computed server-side. Use it when you want PostHog itself to require no consent gate (cookieless_mode: 'always'), or as a fallback for visitors who reject consent (cookieless_mode: 'on_reject'). You still need a cookie banner on the site — for every other tool you load (fonts, embeds, error tracking, marketing tags) — but PostHog won't be the thing forcing it. Either way, enable 'Cookieless server hash mode' in your PostHog project's Web Analytics settings, otherwise the hashed user count won't be computed."
+  - question: "What's the difference between opt-in and opt-out consent?"
+    answer: "Opt-in (GDPR, UK GDPR, ePrivacy, LGPD, FADP, POPIA, PIPL, PIPA, DPDP, PDPL) requires non-essential cookies and analytics to be blocked until the visitor explicitly accepts. Opt-out (CCPA/CPRA, PIPEDA, LFPDPPP, APPI) allows them by default but you must give the visitor a clear way to opt out. The Probo cookie banner detects the visitor's country via geolocation and applies the correct mode automatically — your code doesn't have to."
+  - question: "Why does cookieless mode break session replay and feature flags?"
+    answer: "Both rely on persistent browser storage that cookieless mode forbids. Session replay needs a session ID kept across page loads. Feature flag caching needs to store the last resolved flag values. Without storage, replays can't be captured at all and feature flags must be re-fetched on every page load (or bootstrapped server-side). You also lose identify() because a stable distinct_id would qualify as personal data under GDPR."
+  - question: "Does PostHog have to be the same domain to bypass ad blockers?"
+    answer: "Not strictly, but it helps. Loading posthog-js from a first-party subdomain (e.g. t.yourdomain.com) via a reverse proxy reduces the chance that uBlock Origin, Brave, or Safari ITP will block or strip the request. PostHog has a built-in reverse proxy guide. Probo uses t.probo.com for this exact reason."
+---
+
+You want to put PostHog on your site. Your legal team mentioned GDPR. Your US sales lead just learned about CCPA. Your support team asked about that LGPD thing in Brazil. Now you're staring at a "cookieless mode" setting and wondering if you have to throw the whole analytics stack away.
+
+You don't. There are two clean ways to do this, and your choice depends on a single question: do you care about anything beyond counting unique visitors and pageviews?
+
+This guide walks you through both, with the minimum amount of code, the configuration knobs that actually matter, and the regulation-aware bits Probo handles for you so you don't have to.
+
+## TL;DR
+
+- **PostHog cookieless mode** removes the consent gate around PostHog itself — but you lose `identify()`, session replay, surveys, persistent feature flags, and GeoIP enrichment. You still need the banner for everything else on the site (fonts, embeds, error tracking, ads…).
+- **If you need any of those**, run PostHog with consent. The Probo cookie banner picks the right mode (opt-in for GDPR / UK GDPR / ePrivacy / LGPD / FADP / POPIA / PIPL / PIPA / DPDP / PDPL, opt-out for CCPA / CPRA / PIPEDA / LFPDPPP / APPI) per visitor based on their country, so you don't write a country table in your codebase.
+- **Existing consent always wins** over the regulation default — if the visitor has already accepted or rejected on a previous visit, that decision is honored. The previous decision is read from the `probo_consent` cookie, which is itself **strictly necessary** (it exists to enforce compliance) and therefore allowed to be set without consent.
+- **Never initialize PostHog — or set any non-essential cookie — before the banner has resolved** (1) the applicable regulation / consent mode and (2) the visitor's existing consent. Wait for the `probo-ready` event. Initializing too early either drops a cookie on an opt-in visitor without consent (out of step with GDPR's prior-consent requirement) or fires a `$pageview` you can't recall for an opt-out visitor who already rejected on a previous visit.
+- **Don't forget the PostHog project setting**: even with `cookieless_mode` enabled in the SDK, you must turn on **Cookieless server hash mode** under Project Settings → Web Analytics, otherwise unique-user counts won't be computed for rejected/anonymous visitors.
+- **Custom events that carry user data** must be gated on `posthog.has_opted_in_capturing()` (or a consent-check helper — covered below) — don't trust the SDK to scrub PII for you.
+
+## The shape of the problem
+
+PostHog-js, by default, drops a first-party cookie and writes to `localStorage` so it can give every visitor a stable `distinct_id`. Under GDPR's ePrivacy Directive, that counts as accessing terminal equipment and requires prior consent. Under CCPA/CPRA it doesn't require prior consent, but you must offer an opt-out. Under LGPD, opt-in. Under PIPEDA, "meaningful consent" which in practice means opt-out is fine. And so on for a dozen more regulations.
+
+There are essentially two ways out of this maze:
+
+1. **Don't store anything.** Use PostHog's cookieless mode and count visitors with a server-side hash. PostHog itself no longer triggers a consent requirement — but you still need a banner for the rest of the page (fonts, embeds, support widgets, error tracking, marketing tags), so don't read this as "no banner needed."
+2. **Store stuff, but only with the right consent.** Run PostHog normally where the regulation allows it (or where the visitor agreed), and degrade gracefully to cookieless where it doesn't.
+
+Pick one based on what you actually need from analytics. In both cases, the Probo cookie banner stays on the page.
+
+## Decide which track you're on
+
+You're on **Track 1 (cookieless-only)** if all you need from PostHog is:
+
+- Pageviews and basic web analytics (referrers, top pages, bounce rate)
+- Custom events that contain no user-level data
+- Top-level conversion funnels measured per-day
+
+You're on **Track 2 (consent-aware)** if you need any of:
+
+- `identify()` to tie behavior to a known user (sign-up, login, account ID)
+- Session replay
+- Surveys
+- Feature flags with caching (no extra round-trip on each page load)
+- Cross-day or cross-device user journeys (weekly/monthly retention, attribution)
+- GeoIP enrichment, bot detection, or the web analytics world map
+- Person profiles linking multiple events to one human
+
+If you tried to claim Track 1 but you also want session replay, you can't have both. Pick again.
+
+In practice, **most companies need both — one per surface**. Public marketing site → Track 1 (aggregate pageviews, no per-user data needed). Authenticated web app → Track 2 (you already know who the user is and want replay, flags, retention). Both surfaces still ship the Probo banner for everything else they load — but **use a separate banner per surface** (one banner ID for the site, another for the app): different cookie inventories, different category lists, cleaner audit trail.
+
+---
+
+## Track 1: cookieless-only
+
+This is the minimum-friction setup for PostHog. The SDK stores nothing in the visitor's browser. Unique users are counted by a daily-rotating server-side hash of `(team_id, daily_salt, ip_address, user_agent, hostname)` — never reversible, never personal data, and the salt is deleted at the end of the day.
+
+A common misreading of the PostHog docs is that cookieless mode lets you remove the cookie banner. It doesn't. It only removes PostHog from the list of things that *need* the banner. The banner still belongs on the site for every other tool that does store something — webfonts, embedded YouTube/Vimeo, Calendly, Intercom, Sentry, marketing tags, ad pixels. Treat Track 1 as "PostHog no longer needs a consent gate," not as "no banner needed." Probo's banner is regulation-aware and category-driven, so you keep it running for those other tools and just don't gate PostHog behind it.
+
+### Step 1 — turn on the project setting
+
+In your PostHog project, go to **Project Settings → Web Analytics** and enable **Cookieless server hash mode**. Without this, the hash isn't computed and your dashboards will show zero users for cookieless visitors. This is the single most common reason people think cookieless mode "doesn't work."
+
+### Step 2 — initialize the SDK
+
+```ts
+import posthog from "posthog-js";
+
+posthog.init("<YOUR_POSTHOG_KEY>", {
+  api_host: "https://us.i.posthog.com", // or your reverse proxy
+  defaults: "2026-01-30",
+  cookieless_mode: "always",
+  respect_dnt: true,
+});
+```
+
+That's it. Capture pageviews and events as usual:
+
+```ts
+posthog.capture("checkout_started", {
+  plan: "pro",
+  // never include emails, names, IPs, etc. — see "Custom events" below
+});
+```
+
+### What you give up
+
+Cookieless mode has real limitations: no `identify()`, no session replay, no surveys, no feature-flag caching, no GeoIP enrichment, no bot detection, inflated WAU/MAU (the daily hash salt rotates), and occasional hash collisions on shared corporate networks. PostHog documents the full list and the underlying reasons in <a href="https://posthog.com/tutorials/cookieless-tracking#limitations" target="_blank" rel="noopener noreferrer">their cookieless tracking guide</a>.
+
+If any of those matter to your product, you're on Track 2.
+
+---
+
+## Track 2: consent-aware, with a regulation-smart banner
+
+This is where the Probo cookie banner earns its keep. The hard part of compliant analytics isn't writing the PostHog code — it's knowing which mode (opt-in vs opt-out) to apply for which visitor, and proving you did it correctly during an audit.
+
+### Why the banner matters
+
+Probo's cookie banner is **regulation-aware**. It detects the visitor's country from their IP and resolves the consent mode automatically. You don't write `if (country === "FR") { ... }` anywhere. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation) for the full mapping, but the short version is:
+
+| Mode        | Regulations                                                       | Behavior                                              |
+| ----------- | ----------------------------------------------------------------- | ----------------------------------------------------- |
+| **Opt-in**  | GDPR, UK GDPR, ePrivacy, FADP, LGPD, POPIA, PDPA, PIPL, PIPA, DPDP, PDPL | Non-essential cookies blocked until the visitor accepts. |
+| **Opt-out** | CCPA / CPRA, PIPEDA, LFPDPPP, APPI                                | Cookies active by default; the visitor can opt out.   |
+
+The banner also detects **Global Privacy Control** (`navigator.globalPrivacyControl`) and records a rejection automatically — required for CCPA conformance — without showing the banner.
+
+**Existing consent always takes precedence over the regulation default.** The banner remembers the visitor's last decision in a `probo_consent` cookie (and falls back to the Probo API for returning visitors whose cookie has expired or who arrived from another device). A visitor who rejected analytics on a previous visit will start out rejected even in a CCPA region; a visitor who explicitly accepted will start opted-in even in the EU.
+
+The `probo_consent` cookie itself is **strictly necessary** — its only job is to remember and enforce the visitor's consent decision on subsequent page loads. Necessary cookies are exempt from the consent requirement under GDPR Article 5(3) / ePrivacy and the equivalent carve-outs in other regulations, so the cookie is always set regardless of what the visitor accepted. Without it, you'd have to re-prompt on every page view.
+
+Server-side, every action is recorded with a snapshot of the banner version, anonymized IP, user agent, and per-category choices — the [audit trail](/docs/product/cookie-banner/overview#audit-trail) you need when a DPA comes knocking.
+
+### How the integration works
+
+Before any code, one rule that everything else hangs off: **don't touch PostHog — or set any non-essential cookie — until two things have been resolved**.
+
+1. **The applicable regulation and consent mode**, computed by the Probo API from the visitor's geolocation (opt-in for GDPR, opt-out for CCPA, etc.).
+2. **The visitor's existing consent**, read from the `probo_consent` cookie or, when the cookie is missing, fetched from the Probo API by visitor ID.
+
+The banner exposes both as a single signal: the `probo-ready` DOM event, which fires once after the snapshot is computed. Hang every cookie-setting init off that event — initializing earlier risks writing a cookie before consent (out of step with GDPR's prior-consent requirement) or firing a `$pageview` you can't undo for an opt-out visitor who already rejected.
+
+With that rule in place, the integration is two parts:
+
+1. **PostHog initializes from the current consent snapshot.** If analytics is allowed (opt-out visitor by default, or an opt-in visitor who already accepted), PostHog boots with cookies on. If not, PostHog boots in cookieless mode and opted out, so you still get aggregate unique-visitor counts.
+2. **A subscription on the consent state mirrors any future opt-in/opt-out** call to `posthog.opt_in_capturing()` / `posthog.opt_out_capturing()` — no page reload required.
+
+The "consent state" comes from `getConsent()`, the framework-agnostic [Consent Manager API](/docs/product/cookie-banner/consent-manager) exposed by `@probo/cookie-banner/consent`. It's a singleton you can call from any module to read the current per-category state (`consent.has("analytics")`, `consent.getAll()`) or subscribe to changes (`consent.subscribe(cb)`). It's how the rest of your app reads and reacts to consent without poking at DOM events.
+
+### Minimum configuration
+
+This is the smallest viable React setup. The full working example with the floating consent UI, debug panel, and three different banner styles lives at <a href="https://github.com/getprobo/probo/tree/main/examples/cookie-banner-react" target="_blank" rel="noopener noreferrer"><code>getprobo/probo/examples/cookie-banner-react</code></a>. The relevant PostHog wiring is in <a href="https://github.com/getprobo/probo/blob/main/examples/cookie-banner-react/src/lib/posthog.ts" target="_blank" rel="noopener noreferrer"><code>src/lib/posthog.ts</code></a>.
+
+```ts
+// posthog.ts
+import posthog from "posthog-js";
+import { getConsent } from "@probo/cookie-banner/consent";
+import type { BannerConfig } from "@probo/cookie-banner";
+
+let initialized = false;
+const ANALYTICS_CATEGORY = "analytics";
+
+export function configurePosthogFromBanner(_config: BannerConfig) {
+  if (initialized) return;
+  initialized = true;
+
+  const consent = getConsent();
+  const analyticsAllowed = consent.getAll()[ANALYTICS_CATEGORY] === true;
+
+  posthog.init("<YOUR_POSTHOG_KEY>", {
+    api_host: "https://us.i.posthog.com",
+    defaults: "2026-01-30",
+    cookieless_mode: analyticsAllowed ? "on_reject" : "always",
+    opt_out_capturing_by_default: !analyticsAllowed,
+    person_profiles: "identified_only",
+    respect_dnt: true,
+  });
+
+  consent.subscribe((data) => {
+    if (data[ANALYTICS_CATEGORY]) {
+      posthog.opt_in_capturing();
+    } else {
+      posthog.opt_out_capturing();
+    }
+  });
+}
+```
+
+Then wire it to the banner's ready event. The banner emits `probo-ready` once it has resolved the visitor's location and consent mode:
+
+```tsx
+import { useEffect } from "react";
+import { registerCookieBanner } from "@probo/cookie-banner";
+import { configurePosthogFromBanner } from "./posthog";
+
+registerCookieBanner();
+
+export function CookieBanner() {
+  useEffect(() => {
+    const onReady = (e: Event) => {
+      const { config } = (e as CustomEvent).detail;
+      configurePosthogFromBanner(config);
+    };
+    document.addEventListener("probo-ready", onReady);
+    return () => document.removeEventListener("probo-ready", onReady);
+  }, []);
+
+  return (
+    <probo-cookie-banner
+      banner-id="YOUR_BANNER_ID"
+      base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+    />
+  );
+}
+```
+
+This is the ordering rule from above made concrete. `posthog.init` lives inside the `probo-ready` handler, so it only runs once the banner has resolved the regulation and the visitor's existing consent. The `cookieless_mode` and `opt_out_capturing_by_default` options are derived from the snapshot at that moment — not from "what regulation are we under" (which would lose the precedence rule for visitors who already chose) but from the actual current consent state.
+
+### The PostHog init options worth knowing
+
+The example above uses a handful of options that materially affect compliance and analytics quality. Skim them once so you know what each one does:
+
+| Option                            | Why it's there                                                                                                                                                                                                  |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaults: "2026-01-30"`          | Pins PostHog SDK defaults to a known date so future SDK updates don't silently change behavior on you. PostHog recommends always setting this.                                                                  |
+| `cookieless_mode: "on_reject"`    | When the visitor has accepted analytics, run normally; when they reject (or haven't decided), run cookieless. The banner subscription flips this through the SDK's runtime API.                                  |
+| `cookieless_mode: "always"`       | What you use when the snapshot says analytics is denied at init time. Hard guarantee that nothing is written to the browser.                                                                                    |
+| `opt_out_capturing_by_default: true` | Belt-and-suspenders. If `cookieless_mode` is `"always"`, no events are sent anyway, but setting this avoids the edge case where the visitor flips to accept and PostHog tries to backfill the initial pageview. |
+| `person_profiles: "identified_only"` | Don't create a person profile for anonymous traffic. Cuts MTU billing and matches the spirit of data minimization principles in GDPR and CCPA.                                                                  |
+| `respect_dnt: true`               | Honor `navigator.doNotTrack`. Cheap to set, no downside, and several US state laws (and the upcoming EU AI Act privacy rules) treat DNT/GPC signals as binding.                                                  |
+| `api_host`                        | Set this to a first-party subdomain (e.g. `https://t.yourdomain.com` proxying to PostHog) to dodge ad blockers and Safari ITP. PostHog has a reverse-proxy guide.                                                |
+| `before_send`                     | Last chance to scrub PII from event properties before they leave the browser. Strip emails, query strings with tokens, anything you can't guarantee won't sneak in.                                              |
+
+### The PostHog project setting (don't skip this)
+
+Same as Track 1: enable **Cookieless server hash mode** under **Project Settings → Web Analytics** in PostHog. Visitors who reject consent will fall back to the server-side hash for unique-user counting. Without this setting, those visitors are invisible — your "unique visitors" chart drops every time someone rejects.
+
+### Wiring the banner category
+
+In the Probo console, the banner has an **Analytics** category by default. Either keep its slug as `analytics` (matching the constant in the example) or flag a different category with **PostHog consent** in the console and use its slug in your code. See the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk) and [Consent Manager API](/docs/product/cookie-banner/consent-manager) docs for the full reference.
+
+---
+
+## Custom events that touch user data
+
+This is the part that bites teams six months in. PostHog's opt-out machinery only stops events the SDK sends automatically. If your own code calls `posthog.capture("invoice_paid", { email, amount })` for an opted-out visitor, nothing in the SDK will block it — `opt_out_capturing()` only stops captures from the same SDK call after it was set, but if your custom code runs before the consent listener fires, you're capturing PII without consent.
+
+The safe pattern is to gate every capture that carries identifiable data on an explicit consent check:
+
+```ts
+import posthog from "posthog-js";
+import { getConsent } from "@probo/cookie-banner/consent";
+
+export function trackInvoicePaid(amount: number, email: string) {
+  if (!getConsent().has("analytics")) return;
+  if (posthog.has_opted_out_capturing()) return;
+
+  posthog.capture("invoice_paid", { amount, email });
+}
+```
+
+Two checks because they protect against different failure modes. `getConsent().has("analytics")` is the source of truth from the banner. `posthog.has_opted_out_capturing()` catches the case where PostHog itself has been opted out (e.g. by a DNT-respecting visitor) but the banner's analytics category happens to be allowed.
+
+For events with no user data — `posthog.capture("homepage_cta_clicked")` with no properties — you can skip the check; cookieless mode will count them via the server-side hash for opted-out visitors.
+
+If you forget to gate, you're not just degrading analytics — you're processing personal data without a legal basis, which is the kind of thing GDPR and CCPA enforcement actions tend to focus on. Make this check a code-review item or wrap `posthog.capture` in a thin helper that does the check for you.
+
+---
+
+## Putting it together
+
+The two-track view in one decision:
+
+```
+Need identify(), replay, surveys, retention, or feature flag caching?
+├─ No  → Track 1: cookieless_mode: "always", no PostHog consent gate
+└─ Yes → Track 2: cookieless_mode: "on_reject" + consent subscription
+(Probo banner stays on the page in both tracks for everything else you load.)
+```
+
+In either case:
+
+- Enable **Cookieless server hash mode** in your PostHog project's Web Analytics settings.
+- Always gate user-data captures on a consent check.
+- Use `defaults: "2026-01-30"` to lock SDK behavior.
+- Run from a first-party `api_host` to survive ad blockers.
+
+The Probo cookie banner handles the regulation-to-mode mapping, GPC detection, existing-consent precedence, third-party resource blocking, and the audit trail so you don't have to. If you want to see it end-to-end with a working PostHog integration, theming, and a debug panel that shows the resolved consent mode in real time, clone <a href="https://github.com/getprobo/probo/tree/main/examples/cookie-banner-react" target="_blank" rel="noopener noreferrer"><code>examples/cookie-banner-react</code></a> and point it at your Probo instance.
+
+If you don't have a Probo instance yet, the [Cookie Banner overview](/docs/product/cookie-banner/overview) and [quickstart](/docs/product/cookie-banner/quickstart) get you to a published banner in under fifteen minutes.
+
+---
+
+_Probo is the open-source compliance platform that also ships a free, dependency-free cookie banner with built-in support for GDPR, UK GDPR, FADP, CCPA, CPRA, LGPD, PIPEDA, POPIA, PDPA, PIPL, PIPA, APPI, DPDP, LFPDPPP, and PDPL. If you'd like a walkthrough, [book a call](/contact)._
