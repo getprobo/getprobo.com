@@ -3,10 +3,10 @@ title: Environment Variables (Docker Only)
 description: Environment variables reference for Docker deployments of Probo
 ---
 
-import { Aside, LinkCard } from '@astrojs/starlight/components';
+import { Aside, LinkCard } from "@astrojs/starlight/components";
 
 <Aside type="caution">
-**Docker Only**: These environment variables are only supported when running Probo via Docker containers. The `probod` daemon itself only supports YAML configuration files. 
+**Docker Only**: These environment variables are only supported when running Probo via Docker containers. The `probod` daemon itself only supports YAML configuration files.
 
 <LinkCard
   title="Config File"
@@ -14,7 +14,6 @@ import { Aside, LinkCard } from '@astrojs/starlight/components';
   href="/docs/configuration/config-file"
 />
 </Aside>
-
 
 This document provides a comprehensive reference for all environment variables used by the **Docker entrypoint script** to generate the YAML configuration file for `probod`.
 
@@ -114,6 +113,12 @@ When running Probo in Docker:
 | `TRUST_AUTH_SCOPE`               | OAuth2 scope for trust center access                   | `trust_center_readonly` | No       |
 | `TRUST_AUTH_TOKEN_TYPE`          | Token type identifier for trust center tokens          | `trust_center_access`   | No       |
 
+## OAuth2 Server
+
+| Variable                    | Description                                            | Default Value | Required |
+| --------------------------- | ------------------------------------------------------ | ------------- | -------- |
+| `OAUTH2_SERVER_SIGNING_KEY` | PEM-encoded RSA private key used to sign OAuth2 tokens | -             | **Yes**  |
+
 ## AWS / S3 Storage
 
 | Variable                | Description                                                  | Default Value | Required |
@@ -204,6 +209,7 @@ The following environment variables are **required** and must be set to secure r
 2. `AUTH_COOKIE_SECRET` - Generate with: `openssl rand -base64 32`
 3. `AUTH_PASSWORD_PEPPER` - Generate with: `openssl rand -base64 32`
 4. `TRUST_AUTH_TOKEN_SECRET` - Generate with: `openssl rand -base64 32`
+5. `OAUTH2_SERVER_SIGNING_KEY` - Generate as a PEM RSA private key
 
 ### Secret Generation Example
 
@@ -213,11 +219,13 @@ export PROBOD_ENCRYPTION_KEY=$(openssl rand -base64 32)
 export AUTH_COOKIE_SECRET=$(openssl rand -base64 32)
 export AUTH_PASSWORD_PEPPER=$(openssl rand -base64 32)
 export TRUST_AUTH_TOKEN_SECRET=$(openssl rand -base64 32)
+export OAUTH2_SERVER_SIGNING_KEY="$(openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048)"
 
 echo "PROBOD_ENCRYPTION_KEY=$PROBOD_ENCRYPTION_KEY"
 echo "AUTH_COOKIE_SECRET=$AUTH_COOKIE_SECRET"
 echo "AUTH_PASSWORD_PEPPER=$AUTH_PASSWORD_PEPPER"
 echo "TRUST_AUTH_TOKEN_SECRET=$TRUST_AUTH_TOKEN_SECRET"
+echo "OAUTH2_SERVER_SIGNING_KEY is set (PEM key hidden)"
 ```
 
 ## Docker Configuration Priority

@@ -3,7 +3,7 @@ title: Kubernetes Deployment
 description: Deploy Probo on Kubernetes using Helm charts with managed services
 ---
 
-import { Steps } from "@astrojs/starlight/components";
+import { Aside, Steps } from "@astrojs/starlight/components";
 
 Kubernetes deployment provides the most scalable and production-ready way to run Probo. This method is recommended for:
 
@@ -20,6 +20,15 @@ Kubernetes deployment provides the most scalable and production-ready way to run
 - Managed PostgreSQL database
 - S3-compatible object storage
 
+## Chart Access
+
+The default install command uses the Probo OCI registry. If your environment cannot pull the chart anonymously and you receive a `401 Unauthorized` error, install from a local chart checkout instead:
+
+```bash
+git clone https://github.com/getprobo/probo.git
+helm install my-probo ./probo/contrib/helm/charts/probo
+```
+
 ## Quick Start
 
 <Steps>
@@ -31,7 +40,10 @@ Kubernetes deployment provides the most scalable and production-ready way to run
    export COOKIE_SECRET=$(openssl rand -base64 32)
    export PASSWORD_PEPPER=$(openssl rand -base64 32)
    export TRUST_TOKEN_SECRET=$(openssl rand -base64 32)
+   openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out oauth2-signing-key.pem
    ```
+
+   Use `openssl rand -base64 32` for symmetric secrets. Do not use `-hex` for these values.
 
 2. Install with Managed Services
 
@@ -42,9 +54,12 @@ Kubernetes deployment provides the most scalable and production-ready way to run
     --set probo.auth.cookieSecret="$COOKIE_SECRET" \
     --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
     --set probo.trustAuth.tokenSecret="$TRUST_TOKEN_SECRET" \
+    --set-file probo.oauth2.signingKey="./oauth2-signing-key.pem" \
     --set postgresql.enabled=false \
-    --set postgresql.host="your-managed-db.example.com" \
-    --set postgresql.password="your-db-password" \
+    --set probo.pg.addr="your-managed-db.example.com:5432" \
+    --set probo.pg.username="probod" \
+    --set probo.pg.password="your-db-password" \
+    --set probo.pg.database="probod" \
    --set seaweedfs.enabled=false \
    --set s3.region="us-east-1" \
    --set s3.bucket="your-bucket-name" \
@@ -88,6 +103,15 @@ probo:
     tokenSecret: "" # Set via --set or external secrets
     cookieDomain: "probo.example.com"
 
+  oauth2:
+    signingKey: "" # Set via --set-file with a PEM RSA private key
+
+  pg:
+    addr: "your-managed-db.example.com:5432"
+    username: "probod"
+    password: "your-secure-db-password"
+    database: "probod"
+
   cors:
     allowedOrigins:
       - "https://probo.example.com"
@@ -103,8 +127,6 @@ probo:
 # Disable demo services
 postgresql:
   enabled: false
-  host: "your-managed-db.example.com"
-  password: "your-secure-db-password"
 
 seaweedfs:
   enabled: false
@@ -156,7 +178,8 @@ helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
   --set probo.trustAuth.tokenSecret="$TRUST_TOKEN_SECRET" \
-  --set postgresql.password="$DB_PASSWORD" \
+  --set-file probo.oauth2.signingKey="./oauth2-signing-key.pem" \
+  --set probo.pg.password="$DB_PASSWORD" \
   --set s3.accessKeyId="$S3_ACCESS_KEY" \
   --set s3.secretAccessKey="$S3_SECRET_KEY" \
   -f values-production.yaml
@@ -177,9 +200,12 @@ helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
   --set probo.trustAuth.tokenSecret="$TRUST_TOKEN_SECRET" \
+  --set-file probo.oauth2.signingKey="./oauth2-signing-key.pem" \
   --set postgresql.enabled=false \
-  --set postgresql.host="mydb.abc123.us-east-1.rds.amazonaws.com" \
-  --set postgresql.password="$RDS_PASSWORD" \
+  --set probo.pg.addr="mydb.abc123.us-east-1.rds.amazonaws.com:5432" \
+  --set probo.pg.username="probod" \
+  --set probo.pg.password="$RDS_PASSWORD" \
+  --set probo.pg.database="probod" \
   --set seaweedfs.enabled=false \
   --set s3.region="us-east-1" \
   --set s3.bucket="my-probo-bucket" \
@@ -200,9 +226,12 @@ helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
   --set probo.trustAuth.tokenSecret="$TRUST_TOKEN_SECRET" \
+  --set-file probo.oauth2.signingKey="./oauth2-signing-key.pem" \
   --set postgresql.enabled=false \
-  --set postgresql.host="10.0.0.5" \
-  --set postgresql.password="$CLOUDSQL_PASSWORD" \
+  --set probo.pg.addr="10.0.0.5:5432" \
+  --set probo.pg.username="probod" \
+  --set probo.pg.password="$CLOUDSQL_PASSWORD" \
+  --set probo.pg.database="probod" \
   --set seaweedfs.enabled=false \
   --set s3.endpoint="https://storage.googleapis.com" \
   --set s3.bucket="my-probo-bucket" \
@@ -216,22 +245,60 @@ helm install probo oci://artifact.probo.inc/charts/probo \
 # Prerequisites:
 # - AKS cluster
 # - Azure Database for PostgreSQL
-# - Azure Blob Storage with S3 compatibility
+# - AWS S3 or another tested S3-compatible object storage
 
 helm install probo oci://artifact.probo.inc/charts/probo \
   --set probo.encryptionKey="$ENCRYPTION_KEY" \
   --set probo.auth.cookieSecret="$COOKIE_SECRET" \
   --set probo.auth.passwordPepper="$PASSWORD_PEPPER" \
   --set probo.trustAuth.tokenSecret="$TRUST_TOKEN_SECRET" \
+  --set-file probo.oauth2.signingKey="./oauth2-signing-key.pem" \
   --set postgresql.enabled=false \
-  --set postgresql.host="mydb.postgres.database.azure.com" \
-  --set postgresql.password="$AZURE_DB_PASSWORD" \
+  --set probo.pg.addr="mydb.postgres.database.azure.com:5432" \
+  --set probo.pg.username="probod" \
+  --set probo.pg.password="$AZURE_DB_PASSWORD" \
+  --set probo.pg.database="probod" \
   --set seaweedfs.enabled=false \
-  --set s3.endpoint="https://mystorageaccount.blob.core.windows.net" \
-  --set s3.bucket="my-probo-container" \
-  --set s3.usePathStyle=true \
+  --set s3.region="eu-west-1" \
+  --set s3.bucket="my-probo-bucket" \
   --set s3.accessKeyId="$AZURE_ACCESS_KEY" \
   --set s3.secretAccessKey="$AZURE_SECRET_KEY"
+```
+
+<Aside type="caution">
+  Azure Blob via S3Proxy has known metadata compatibility issues with Probo's
+  object metadata keys. For production, use AWS S3 (or another S3-compatible
+  backend that supports standard S3 metadata behavior) until native Azure Blob
+  support is available.
+</Aside>
+
+## Managed PostgreSQL Notes
+
+When using managed PostgreSQL providers (Azure, RDS, Cloud SQL, etc.), apply this checklist before your first migration:
+
+1. Enable/allow-list required extensions: `citext`, `pgcrypto`, `unaccent`, `pg_stat_statements`.
+2. Ensure the Probo database user can own and use the `public` schema.
+3. If your provider enforces TLS, provide a CA certificate bundle.
+
+### Schema Ownership SQL (PostgreSQL 15+)
+
+```sql
+ALTER SCHEMA public OWNER TO probod;
+GRANT ALL ON SCHEMA public TO probod;
+```
+
+### TLS CA Bundle
+
+For small PEM bundles, you can use:
+
+```bash
+--set-file postgresql.caBundle=./db-ca.pem
+```
+
+If you hit `argument list too long`, mount the certificate from your own Kubernetes Secret and use:
+
+```bash
+--set postgresql.caBundlePath="/path/in/container/db-ca.pem"
 ```
 
 ## Architecture
@@ -461,6 +528,8 @@ velero backup create probo-backup --include-namespaces=default
    kubectl run pg-test --image=postgres:17 --rm -it --restart=Never -- \
      pg_isready -h your-db-host -p 5432
    ```
+
+   If logs report `missing required environment variables: OAUTH2_SERVER_SIGNING_KEY`, verify that `probo.oauth2.signingKey` is set via `--set-file`.
 
 3. **Ingress not working**:
    ```bash
