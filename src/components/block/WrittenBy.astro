@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/antoine-bourchardy.png";
 import ArthurPortrait from "../../assets/arthur-mayoux-blog.svg";
 import BryanPortrait from "../../assets/bryan_firmin.svg";
+import EmilePortrait from "../../assets/emile_blog.svg";
 
 interface Props {
   class?: string;
@@ -16,13 +17,14 @@ const showBoth = !author;
 const isAntoine = author === "Antoine Bouchardy";
 const isArthur = author === "Arthur Mayoux";
 const isBryan = author === "Bryan Frimin";
+const isEmile = author === "Émile Ré";
 ---
 
 {
   showBoth && (
     <div class={clsx("flex flex-col gap-8 sm:gap-10", className)}>
       <div class="text-xs font-medium">
-        Written by Antoine Bouchardy and Bryan Frimin
+        Written by Antoine Bouchardy, Bryan Frimin, Arthur Mayoux and Émile Ré
       </div>
 
       <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
@@ -73,12 +75,53 @@ const isBryan = author === "Bryan Frimin";
           height={164}
         />
       </div>
+
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+        <div class="flex flex-col gap-2">
+          <div class="text-muted-foreground text-xs">
+            <a
+              href="https://www.linkedin.com/in/arthurmayoux/"
+              class="text-success"
+            >
+              Arthur Mayoux
+            </a>
+            is the Chief of Staff at Probo. Working across multiple departments,
+            his primary objective is to help the company scale.
+          </div>
+        </div>
+
+        <Image
+          src={ArthurPortrait}
+          alt="Portrait Arthur Mayoux"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      </div>
+
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+        <div class="flex flex-col gap-2">
+          <div class="text-muted-foreground text-xs">
+            Émile Ré is a founding engineer at Probo, building the open-source
+            compliance platform from the ground up. He writes about the
+            technical side of making compliance simple for startups.
+          </div>
+        </div>
+
+        <Image
+          src={EmilePortrait}
+          alt="Portrait Émile Ré"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      </div>
     </div>
   )
 }
 
 {
-  (isAntoine || isArthur || isBryan) && (
+  (isAntoine || isArthur || isBryan || isEmile) && (
     <div
       class={clsx(
         "flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10",
@@ -135,6 +178,16 @@ const isBryan = author === "Bryan Frimin";
             </div>
           </>
         )}
+        {isEmile && (
+          <>
+            <div class="text-xs font-medium">Written by Émile Ré</div>
+            <div class="text-muted-foreground text-xs">
+              Émile Ré is a founding engineer at Probo, building the open-source
+              compliance platform from the ground up. He writes about the
+              technical side of making compliance simple for startups.
+            </div>
+          </>
+        )}
       </div>
 
       {isAntoine && (
@@ -162,6 +215,16 @@ const isBryan = author === "Bryan Frimin";
         <Image
           src={BryanPortrait}
           alt="Portrait Bryan Frimin"
+          class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
+          width={164}
+          height={164}
+        />
+      )}
+
+      {isEmile && (
+        <Image
+          src={EmilePortrait}
+          alt="Portrait Émile Ré"
           class="mx-auto block shrink-0 sm:mx-0 sm:size-25"
           width={164}
           height={164}

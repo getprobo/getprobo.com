@@ -3,7 +3,7 @@ title: "How to set up PostHog: GDPR, CCPA, and global privacy laws"
 date: 2026-05-27
 excerpt: "Two clean ways to wire PostHog into a website that respects GDPR, CCPA, UK GDPR, LGPD, PIPEDA, and the rest of the alphabet soup of privacy laws — without losing analytics."
 author:
-  name: "Émile RÉ"
+  name: "Émile Ré"
 faqs:
   - question: "Do I need a cookie banner if I use PostHog?"
     answer: "It depends on the regulation that applies to your visitor. By default, posthog-js stores a first-party cookie and a localStorage entry to identify visitors, which is considered terminal-equipment access under the ePrivacy Directive and personal data under GDPR. For visitors in opt-in regions (EU, UK, Switzerland, Brazil…), you must collect consent before setting these or switch PostHog to cookieless mode. In opt-out regions like California (CCPA/CPRA), you can run PostHog by default but must offer a clear opt-out mechanism. The Probo cookie banner handles this automatically based on the visitor's country."
