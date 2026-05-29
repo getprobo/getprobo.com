@@ -71,7 +71,7 @@ In practice, **most companies need both — one per surface**. Public marketing 
 
 This is the minimum-friction setup for PostHog. The SDK stores nothing in the visitor's browser. Unique users are counted by a daily-rotating server-side hash of `(team_id, daily_salt, ip_address, user_agent, hostname)` — never reversible, never personal data, and the salt is deleted at the end of the day.
 
-A common misreading of the PostHog docs is that cookieless mode lets you remove the cookie banner. It doesn't. It only removes PostHog from the list of things that *need* the banner. The banner still belongs on the site for every other tool that does store something — webfonts, embedded YouTube/Vimeo, Calendly, Intercom, Sentry, marketing tags, ad pixels. Treat Track 1 as "PostHog no longer needs a consent gate," not as "no banner needed." Probo's banner is regulation-aware and category-driven, so you keep it running for those other tools and just don't gate PostHog behind it.
+A common misreading of the PostHog docs is that cookieless mode lets you remove the cookie banner. It doesn't. It only removes PostHog from the list of things that _need_ the banner. The banner still belongs on the site for every other tool that does store something — webfonts, embedded YouTube/Vimeo, Calendly, Intercom, Sentry, marketing tags, ad pixels. Treat Track 1 as "PostHog no longer needs a consent gate," not as "no banner needed." Probo's banner is regulation-aware and category-driven, so you keep it running for those other tools and just don't gate PostHog behind it.
 
 ### Step 1 — turn on the project setting
 
@@ -115,10 +115,10 @@ This is where the Probo cookie banner earns its keep. The hard part of compliant
 
 Probo's cookie banner is **regulation-aware**. It detects the visitor's country from their IP and resolves the consent mode automatically. You don't write `if (country === "FR") { ... }` anywhere. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation) for the full mapping, but the short version is:
 
-| Mode        | Regulations                                                       | Behavior                                              |
-| ----------- | ----------------------------------------------------------------- | ----------------------------------------------------- |
+| Mode        | Regulations                                                              | Behavior                                                 |
+| ----------- | ------------------------------------------------------------------------ | -------------------------------------------------------- |
 | **Opt-in**  | GDPR, UK GDPR, ePrivacy, FADP, LGPD, POPIA, PDPA, PIPL, PIPA, DPDP, PDPL | Non-essential cookies blocked until the visitor accepts. |
-| **Opt-out** | CCPA / CPRA, PIPEDA, LFPDPPP, APPI                                | Cookies active by default; the visitor can opt out.   |
+| **Opt-out** | CCPA / CPRA, PIPEDA, LFPDPPP, APPI                                       | Cookies active by default; the visitor can opt out.      |
 
 The banner also detects **Global Privacy Control** (`navigator.globalPrivacyControl`) and records a rejection automatically — required for CCPA conformance — without showing the banner.
 
@@ -217,16 +217,16 @@ This is the ordering rule from above made concrete. `posthog.init` lives inside 
 
 The example above uses a handful of options that materially affect compliance and analytics quality. Skim them once so you know what each one does:
 
-| Option                            | Why it's there                                                                                                                                                                                                  |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `defaults: "2026-01-30"`          | Pins PostHog SDK defaults to a known date so future SDK updates don't silently change behavior on you. PostHog recommends always setting this.                                                                  |
-| `cookieless_mode: "on_reject"`    | When the visitor has accepted analytics, run normally; when they reject (or haven't decided), run cookieless. The banner subscription flips this through the SDK's runtime API.                                  |
-| `cookieless_mode: "always"`       | What you use when the snapshot says analytics is denied at init time. Hard guarantee that nothing is written to the browser.                                                                                    |
+| Option                               | Why it's there                                                                                                                                                                                                  |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaults: "2026-01-30"`             | Pins PostHog SDK defaults to a known date so future SDK updates don't silently change behavior on you. PostHog recommends always setting this.                                                                  |
+| `cookieless_mode: "on_reject"`       | When the visitor has accepted analytics, run normally; when they reject (or haven't decided), run cookieless. The banner subscription flips this through the SDK's runtime API.                                 |
+| `cookieless_mode: "always"`          | What you use when the snapshot says analytics is denied at init time. Hard guarantee that nothing is written to the browser.                                                                                    |
 | `opt_out_capturing_by_default: true` | Belt-and-suspenders. If `cookieless_mode` is `"always"`, no events are sent anyway, but setting this avoids the edge case where the visitor flips to accept and PostHog tries to backfill the initial pageview. |
 | `person_profiles: "identified_only"` | Don't create a person profile for anonymous traffic. Cuts MTU billing and matches the spirit of data minimization principles in GDPR and CCPA.                                                                  |
-| `respect_dnt: true`               | Honor `navigator.doNotTrack`. Cheap to set, no downside, and several US state laws (and the upcoming EU AI Act privacy rules) treat DNT/GPC signals as binding.                                                  |
-| `api_host`                        | Set this to a first-party subdomain (e.g. `https://t.yourdomain.com` proxying to PostHog) to dodge ad blockers and Safari ITP. PostHog has a reverse-proxy guide.                                                |
-| `before_send`                     | Last chance to scrub PII from event properties before they leave the browser. Strip emails, query strings with tokens, anything you can't guarantee won't sneak in.                                              |
+| `respect_dnt: true`                  | Honor `navigator.doNotTrack`. Cheap to set, no downside, and several US state laws (and the upcoming EU AI Act privacy rules) treat DNT/GPC signals as binding.                                                 |
+| `api_host`                           | Set this to a first-party subdomain (e.g. `https://t.yourdomain.com` proxying to PostHog) to dodge ad blockers and Safari ITP. PostHog has a reverse-proxy guide.                                               |
+| `before_send`                        | Last chance to scrub PII from event properties before they leave the browser. Strip emails, query strings with tokens, anything you can't guarantee won't sneak in.                                             |
 
 ### The PostHog project setting (don't skip this)
 

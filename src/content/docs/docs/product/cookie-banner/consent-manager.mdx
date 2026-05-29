@@ -39,9 +39,9 @@ const consent = getConsent();
 
 ### Properties
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `ready` | `boolean` | `true` once the SDK has resolved the initial consent state (from cookie, API, or defaults). |
+| Property      | Type      | Description                                                                                      |
+| ------------- | --------- | ------------------------------------------------------------------------------------------------ |
+| `ready`       | `boolean` | `true` once the SDK has resolved the initial consent state (from cookie, API, or defaults).      |
 | `hasResponse` | `boolean` | `true` if the visitor has actively made a consent choice (as opposed to defaults being applied). |
 
 ### `has(category)`
@@ -56,8 +56,8 @@ if (consent.has("analytics")) {
 
 **Parameters:**
 
-| Parameter | Type | Description |
-| --- | --- | --- |
+| Parameter  | Type     | Description                                                             |
+| ---------- | -------- | ----------------------------------------------------------------------- |
 | `category` | `string` | The category slug (e.g. `"analytics"`, `"advertising"`, `"functional"`) |
 
 **Returns:** `boolean`
@@ -186,9 +186,9 @@ When using the script tag, access the same API through `window.Probo.consent`:
 
 The SDK also emits [DOM events](/docs/product/cookie-banner/javascript-sdk#events) like `probo-consent` and `probo-ready`. Both approaches give you access to consent state — use whichever fits your architecture:
 
-| Approach | Best for |
-| --- | --- |
-| **Consent Manager** (`getConsent()`) | Application code, React hooks, module imports, anywhere you need to subscribe/unsubscribe or check state at any time. Works without a DOM reference. |
-| **DOM events** (`probo-consent`, etc.) | Inline scripts, event delegation, cases where you already listen on the document or a parent element. |
+| Approach                               | Best for                                                                                                                                             |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Consent Manager** (`getConsent()`)   | Application code, React hooks, module imports, anywhere you need to subscribe/unsubscribe or check state at any time. Works without a DOM reference. |
+| **DOM events** (`probo-consent`, etc.) | Inline scripts, event delegation, cases where you already listen on the document or a parent element.                                                |
 
 The Consent Manager is the recommended approach for bundled applications — it's easier to compose, does not require a DOM element reference, and the `subscribe` API handles both initial state and updates in one call.

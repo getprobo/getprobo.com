@@ -117,10 +117,7 @@ export default defineConfig({
         },
       },
     },
-    plugins: [
-      svelteVirtualCssFallback(),
-      tailwindcss(),
-    ],
+    plugins: [svelteVirtualCssFallback(), tailwindcss()],
   },
 
   integrations: [
