@@ -1,0 +1,24 @@
+---
+title: "Seven New Access Review Connectors"
+description: "New access review connectors land in Probo: PostHog, Metabase, Grafana, Cursor, Tailscale, Anthropic, and Heroku — plus HTTP Basic auth and automatic signature request cancellation."
+date: 2026-05-28
+tags: ["Access Review"]
+---
+
+<div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+  <img src="/changelog/2026-05-28-posthog.jpg" alt="PostHog" style="height: 48px; width: auto;" />
+  <img src="/changelog/2026-05-27-metabase-logo2.png" alt="Metabase" style="height: 48px; width: auto;" />
+  <img src="/changelog/2026-05-28-posthog.jpg-grafana.png" alt="Grafana" style="height: 48px; width: auto;" />
+  <img src="/changelog/2026-05-28-Cursor_logo.svg.png" alt="Cursor" style="height: 48px; width: auto;" />
+  <img src="/changelog/2026-05-27-tailscale.png" alt="Tailscale" style="height: 48px; width: auto;" />
+  <img src="/changelog/2026-05-27-anthropic.png" alt="Anthropic" style="height: 48px; width: auto;" />
+  <img src="/changelog/2026-05-27-heroku.png" alt="Heroku" style="height: 48px; width: auto;" />
+</div>
+
+Run an access review against your analytics stack, your internal BI tool, your observability layer, or your AI coding environment. Who has access? Who should?
+
+Probo pulls the member list, you confirm who still needs it.
+
+Connectors now support HTTP Basic auth for API-key connections. If your tool authenticates with a username/password pair rather than a bearer token, that works now.
+
+Pending signature requests are cancelled automatically when a contract ends or a connector is deactivated. No more ghost signature requests sitting open after you've already closed the loop.

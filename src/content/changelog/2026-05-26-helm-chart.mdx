@@ -1,0 +1,14 @@
+---
+title: "Official Helm Chart for Kubernetes"
+description: "Self-hosting Probo on Kubernetes now has a proper path with an official Helm chart that deploys the full stack in one command."
+date: 2026-05-26
+tags: ["Open-source"]
+---
+
+Self-hosting Probo just got a proper Kubernetes path.
+
+The official Helm chart is out. One command deploys the full Probo stack — server, object storage, ingress, SAML, SMTP, and all your access-review OAuth connectors — fully configurable via values.
+
+Images ship from the artifact.probo.inc OCI registry. Firecrawl is now the only supported web search backend (SearXNG is gone). Access-review connectors require a clientSecret.
+
+If you've been running Probo on raw Kubernetes with hand-rolled manifests, this replaces that. If you've been waiting for a clean self-hosted path before committing — this is it.
