@@ -10,6 +10,16 @@
     loadToolbarFromCache,
   } from "../lib/posthog";
 
+  function getPageType(path: string) {
+    if (path.startsWith("/blog")) return "blog";
+    if (path.startsWith("/docs")) return "docs";
+    if (path.startsWith("/stories")) return "stories";
+    if (path === "/contact") return "contact";
+    if (path === "/about") return "about";
+    if (path === "/changelog") return "changelog";
+    return "marketing";
+  }
+
   // Grab the toolbar payload from the URL hash before any client-side nav drops it.
   captureToolbarPayloadFromHash();
 
@@ -19,9 +29,37 @@
     { once: true },
   );
 
+  // CTA click tracking: explicit data-ph-event attributes + auto-tracked contact/github links
+  document.addEventListener("click", (e) => {
+    const el = (e.target as Element).closest("[data-ph-event]");
+    if (el) {
+      const eventName = el.getAttribute("data-ph-event")!;
+      const props: Record<string, string> = {};
+      Array.from(el.attributes).forEach((attr) => {
+        if (attr.name.startsWith("data-ph-") && attr.name !== "data-ph-event") {
+          props[attr.name.slice(8).replace(/-/g, "_")] = attr.value;
+        }
+      });
+      posthog.capture(eventName, props);
+      return;
+    }
+
+    const link = (e.target as Element).closest<HTMLAnchorElement>("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href")!;
+    if (href === "/contact" || href.startsWith("/contact?")) {
+      posthog.capture("contact_cta_click", { source_path: location.pathname });
+    } else if (href.includes("github.com/getprobo")) {
+      posthog.capture("github_link_click", {
+        url: href,
+        source_path: location.pathname,
+      });
+    }
+  });
+
   // Capture pageview and re-inject the toolbar after each Astro view-transition body swap.
   document.addEventListener("astro:after-swap", () => {
-    posthog.capture("$pageview");
+    posthog.capture("$pageview", { page_type: getPageType(location.pathname) });
     loadToolbarFromCache();
   });
 </script>
