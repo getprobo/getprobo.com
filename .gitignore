@@ -30,3 +30,6 @@ pnpm-debug.log*
 .wrangler/
 .dev.vars
 .vercel
+
+# Claude Code local settings
+.claude/settings.local.json
