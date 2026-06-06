@@ -24,11 +24,14 @@ Docker Compose provides the simplest way to deploy Probo with all required servi
 
 <Steps>
 
-1. **Download the production compose file:**
+1. **Clone the repository:**
 
-    ```bash
-    curl -o compose.prod.yaml https://raw.githubusercontent.com/getprobo/probo/main/compose.prod.yaml
-    ```
+   ```bash
+   git clone https://github.com/getprobo/probo.git
+   cd probo
+   ```
+
+   The `compose.prod.yaml` file and the supporting `compose/` directory (with database init scripts and storage config) are all needed and are included in the repository.
 
 2. **Generate required secrets:**
 
@@ -69,7 +72,7 @@ Docker Compose provides the simplest way to deploy Probo with all required servi
    docker compose -f compose.prod.yaml up -d
    ```
 
-5. **Verify deployment:**
+5. **Verify the deployment:**
 
    ```bash
    # Check service health

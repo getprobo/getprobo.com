@@ -16,16 +16,17 @@ This guide walks you through deploying Probo with Docker Compose and setting up 
 
 <Steps>
 
-1. **Download the Docker Compose file**
+1. **Clone the repository**
 
    ```bash
-   curl -sL https://raw.githubusercontent.com/getprobo/probo/refs/heads/main/deploy/docker-compose/docker-compose.yml -o docker-compose.yml
+   git clone https://github.com/getprobo/probo.git
+   cd probo
    ```
 
 2. **Start the services**
 
    ```bash
-   docker compose up -d
+   docker compose -f compose.prod.yaml up -d
    ```
 
    This starts all required services: the Probo server, PostgreSQL database, and SeaweedFS for file storage.
