@@ -1,0 +1,19 @@
+---
+title: "Filter and Identify Trackers by Vendor"
+description: "See the vendor behind each tracker on the banner trackers page, and filter the entire list by third party to audit everything a given vendor places."
+date: 2026-06-02
+image: "/changelog/02-06-2026-tracker-by-vendor.png"
+tags: ["Cookie Banner"]
+---
+
+You can now see the vendor behind each tracker directly on the banner trackers page.
+
+Trackers detected on your site are matched to known third-party vendors. The trackers list shows the linked vendor alongside each tracker, and you can filter the entire list by third party — so if you want to audit everything Salesforce, Stripe, or any other vendor is placing, that's now one click.
+
+This is part of the broader tracker attribution system: when a tracker matches a known pattern, it gets promoted to a vendor automatically. The enrichment runs in the background, so your trackers page stays current without any manual work.
+
+**What changed**
+
+- Tracker list shows the linked third-party vendor per tracker
+- New filter to scope the trackers page to a specific vendor
+- Backend enrichment worker attributes unmatched trackers to known vendors using catalog data
