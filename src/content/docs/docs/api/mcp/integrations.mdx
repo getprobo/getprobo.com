@@ -26,7 +26,7 @@ Connect Probo to your favorite AI assistant to manage compliance data through na
   />
   <LinkCard
     title="Claude.ai"
-    description="Web interface with workarounds for MCP"
+    description="Web interface with native OAuth MCP support"
     href="/docs/api/mcp/claude-ai"
   />
 </CardGrid>
@@ -119,14 +119,14 @@ Choose the right integration for your needs:
 | Platform           | Setup Difficulty | Native MCP       |
 | ------------------ | ---------------- | ---------------- |
 | **Claude Desktop** | Easy             | ✅ Yes           |
-| **Claude Code**    | Easy             | ✅ Yes           |
+| **Claude Code**    | Easy             | ✅ Yes (OAuth)   |
 | **Cursor**         | Easy             | ✅ Yes           |
 | **Windsurf**       | Easy             | ✅ Yes           |
 | **Zed**            | Easy             | ✅ Yes           |
 | **Opencode AI**    | Easy             | ✅ Yes           |
 | **VS Code**        | Medium           | ⚠️ Via extension |
 | **OpenAI**         | Medium           | ⚠️ Via API       |
-| **Claude.ai**      | Hard             | ❌ No            |
+| **Claude.ai**      | Easy             | ✅ Yes (OAuth)   |
 
 ## Quick Start Guide
 
@@ -145,7 +145,7 @@ See [Authentication](/docs/api/mcp/authentication) for details.
 
 Select an integration based on your workflow:
 
-- **For interactive compliance queries** → Claude Desktop or Claude.ai
+- **For interactive compliance queries** → Claude.ai, Claude Desktop
 - **For command-line automation** → Claude Code
 - **For coding with compliance context** → Cursor, Windsurf, Zed, or Opencode AI
 - **For custom applications** → OpenAI or VS Code

@@ -3,139 +3,121 @@ title: Claude.ai Configuration
 description: Use the Probo MCP Server with Claude.ai web interface
 ---
 
-This guide explains how to connect the Probo MCP Server to Claude.ai, Anthropic's web-based interface, enabling Claude to interact with your compliance data from your browser.
+This guide explains how to connect the Probo MCP Server to Claude.ai, Anthropic's web-based interface, enabling Claude to interact with your compliance data directly in the browser.
 
-## Important Note
+Claude.ai supports native MCP integration via OAuth — no tokens to manage and no local software to install.
 
-As of now, Claude.ai's MCP support is limited and requires specific configurations. This guide covers the current methods available and future possibilities.
+## Prerequisites
 
-## Current Status
+- A Claude.ai account (Pro, Team, or Enterprise plan)
+- A running Probo instance with API access
 
-Claude.ai (the web interface at claude.ai) has experimental MCP support through:
+## Connect Probo to Claude.ai
 
-1. **Browser Extensions** - Third-party extensions that bridge MCP to Claude.ai
-2. **Proxy Setup** - Running a local MCP proxy that Claude.ai connects to
-3. **API Integration** - Using Claude API with MCP via custom implementation
+### 1. Open Integrations Settings
 
-## Method 1: Browser Extension (Recommended)
+1. Log into [claude.ai](https://claude.ai)
+2. Click your profile icon in the top-right corner
+3. Go to **Settings → Integrations**
 
-### Using MCP Bridge Extension
+### 2. Add the Probo MCP Server
 
-Several browser extensions enable MCP functionality in Claude.ai:
+1. Click **"Add integration"**
+2. Enter a name (e.g. `Probo`)
+3. Enter your Probo MCP URL:
 
-1. Install an MCP-compatible browser extension (Chrome/Firefox)
-2. Configure the extension with your Probo MCP server details
-3. The extension intercepts Claude.ai requests and adds MCP capabilities
-
-**Configuration Example:**
-
-```json
-{
-  "servers": {
-    "probo": {
-      "url": "https://your-probo-instance.com/api/mcp",
-      "auth": {
-        "type": "bearer",
-        "token": "your_api_token_here"
-      }
-    }
-  }
-}
+```
+https://your-probo-instance.com/api/mcp/v1
 ```
 
-### Available Extensions
+4. Click **"Connect"**
 
-Check these resources for MCP-compatible extensions:
+### 3. Authorize via OAuth
 
-- [MCP GitHub Organization](https://github.com/modelcontextprotocol)
-- Chrome Web Store (search for "MCP" or "Model Context Protocol")
-- Firefox Add-ons (search for MCP support)
+Claude.ai will open a new window redirecting you to your Probo instance. Log in if prompted, then click **"Authorize"** to grant Claude.ai access to your compliance data.
 
-## Method 2: Local MCP Proxy
+Once authorized, you'll be redirected back to Claude.ai — the integration is active.
 
-Run a local proxy that bridges Claude.ai to your Probo MCP server.
+## Verify Connection
 
-### Setup Local Proxy
+Start a new conversation and ask:
 
-1. **Install the MCP Proxy:**
-
-```bash
-npm install -g @modelcontextprotocol/proxy
+```
+"List all organizations I have access to"
 ```
 
-2. **Configure the Proxy:**
+Claude should use the `listOrganizations` tool and return your organizations. If it does, the connection is working.
 
-Create a `mcp-proxy-config.json`:
+## Example Interactions
 
-```json
-{
-  "port": 3000,
-  "servers": {
-    "probo": {
-      "url": "https://your-probo-instance.com/api/mcp",
-      "auth": {
-        "type": "bearer",
-        "token": "your_api_token_here"
-      }
-    }
-  },
-  "cors": {
-    "origin": "https://claude.ai",
-    "credentials": true
-  }
-}
+### Risk Management
+
+```
+You: "Show me all high-priority risks in my organization"
+
+Claude: I'll fetch those for you.
+[Uses listRisks tool]
+
+Here are the high-priority risks:
+1. Data breach from vendor systems
+2. Inadequate access controls
+...
 ```
 
-3. **Start the Proxy:**
+### Vendor Management
 
-```bash
-mcp-proxy --config mcp-proxy-config.json
+```
+You: "Add a new vendor called 'CloudStore Inc' that provides storage services"
+
+Claude: I'll add that vendor now.
+[Uses addVendor tool]
+
+Successfully added CloudStore Inc as a vendor.
 ```
 
-4. **Configure Browser:**
+### Compliance Status
 
-Install a browser extension or userscript that routes Claude.ai MCP requests through `http://localhost:3000`.
+```
+You: "Give me a compliance status overview — open nonconformities, overdue obligations, and active audits"
 
-### Security Considerations
+Claude: Let me gather that data.
+[Uses listFindings, listObligations, listAudits]
 
-When running a local proxy:
+Here's your compliance summary:
+- 3 open nonconformities (1 critical)
+- 2 overdue obligations
+- 1 active audit (SOC 2 Type II)
+```
 
-- Only allow connections from `claude.ai` domain
-- Use HTTPS for production Probo instances
-- Store tokens securely
-- Run the proxy only when needed
-- Consider using localhost-only binding
+## Programmatic Access
 
-## Method 3: API Integration
-
-For programmatic access, use the Claude API with MCP:
+For custom applications that use the Claude API, you can also connect to the Probo MCP server programmatically:
 
 ### Python Example
 
 ```python
 import anthropic
-from mcp import MCPClient
 
-# Initialize MCP client for Probo
-probo_mcp = MCPClient(
-    url="https://your-probo-instance.com/api/mcp",
-    auth={"type": "bearer", "token": "your_api_token"}
-)
+client = anthropic.Anthropic(api_key="your_claude_api_key")
 
-# Initialize Claude API client
-claude = anthropic.Anthropic(api_key="your_claude_api_key")
-
-# Use MCP tools with Claude
-response = claude.messages.create(
-    model="claude-3-5-sonnet-20241022",
+response = client.beta.messages.create(
+    model="claude-opus-4-8",
     max_tokens=1024,
-    tools=probo_mcp.get_tools(),
+    mcp_servers=[
+        {
+            "type": "url",
+            "url": "https://your-probo-instance.com/api/mcp/v1",
+            "name": "probo",
+            "authorization_token": "your_probo_api_token",
+        }
+    ],
     messages=[
         {
             "role": "user",
             "content": "List all high-priority risks in my organization"
         }
-    ]
+    ],
+    betas=["mcp-client-2025-04-04"],
 )
 
 print(response.content)
@@ -145,167 +127,33 @@ print(response.content)
 
 ```javascript
 import Anthropic from "@anthropic-ai/sdk";
-import { MCPClient } from "@modelcontextprotocol/sdk";
 
-// Initialize MCP client
-const proboMCP = new MCPClient({
-  url: "https://your-probo-instance.com/api/mcp",
-  auth: {
-    type: "bearer",
-    token: process.env.PROBO_API_TOKEN,
-  },
-});
-
-// Initialize Claude client
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// Get available tools
-const tools = await proboMCP.getTools();
-
-// Make request with MCP tools
-const response = await anthropic.messages.create({
-  model: "claude-3-5-sonnet-20241022",
+const response = await anthropic.beta.messages.create({
+  model: "claude-opus-4-8",
   max_tokens: 1024,
-  tools: tools,
+  mcp_servers: [
+    {
+      type: "url",
+      url: "https://your-probo-instance.com/api/mcp/v1",
+      name: "probo",
+      authorization_token: process.env.PROBO_API_TOKEN,
+    },
+  ],
   messages: [
     {
       role: "user",
       content: "Show me all open nonconformities",
     },
   ],
+  betas: ["mcp-client-2025-04-04"],
 });
 
 console.log(response.content);
 ```
-
-## Limitations
-
-Current limitations when using Claude.ai with MCP:
-
-1. **No Native Support** - Claude.ai doesn't natively support MCP yet
-2. **Requires Workarounds** - Browser extensions or proxies needed
-3. **Limited Functionality** - Some MCP features may not work
-4. **Security Concerns** - Browser-based tokens need careful handling
-5. **Updates Required** - Solutions may break with Claude.ai updates
-
-## Alternative: Use Claude Desktop
-
-For the best MCP experience, we recommend using [Claude Desktop](/docs/api/mcp/claude-desktop) instead of Claude.ai, as it has native MCP support.
-
-### Benefits of Claude Desktop:
-
-- Native MCP integration
-- No proxy or extensions needed
-- Better security for API tokens
-- More reliable connection
-- Offline capability
-
-## Future Developments
-
-Anthropic is working on native MCP support for Claude.ai. When available, configuration will be simpler:
-
-**Expected Future Configuration:**
-
-1. Navigate to Claude.ai Settings
-2. Go to "Connected Apps" or "MCP Servers"
-3. Add your Probo instance:
-   - Name: Probo
-   - URL: https://your-probo-instance.com/api/mcp
-   - Token: your_api_token_here
-4. Save and start using MCP tools
-
-Stay updated on MCP support:
-
-- [Anthropic Changelog](https://anthropic.com/changelog)
-- [MCP Specification Updates](https://github.com/modelcontextprotocol/specification)
-
-## Workaround Examples
-
-### Using Custom Userscript
-
-Create a userscript (Tampermonkey/Greasemonkey) to inject MCP functionality:
-
-```javascript
-// ==UserScript==
-// @name         Probo MCP for Claude.ai
-// @namespace    http://your-domain.com/
-// @version      1.0
-// @description  Add Probo MCP support to Claude.ai
-// @match        https://claude.ai/*
-// @grant        GM_xmlhttpRequest
-// ==/UserScript==
-
-(function () {
-  "use strict";
-
-  const PROBO_MCP_URL = "https://your-probo-instance.com/api/mcp";
-  const PROBO_TOKEN = "your_api_token_here";
-
-  // Inject MCP functionality
-  window.proboMCP = {
-    async callTool(toolName, params) {
-      return new Promise((resolve, reject) => {
-        GM_xmlhttpRequest({
-          method: "POST",
-          url: `${PROBO_MCP_URL}/tools/${toolName}`,
-          headers: {
-            Authorization: `Bearer ${PROBO_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          data: JSON.stringify(params),
-          onload: (response) => resolve(JSON.parse(response.responseText)),
-          onerror: (error) => reject(error),
-        });
-      });
-    },
-  };
-
-  console.log("Probo MCP integration loaded");
-})();
-```
-
-### Using Bookmarklet
-
-Create a bookmarklet for quick MCP actions:
-
-```javascript
-javascript: (function () {
-  const orgId = prompt("Enter Organization ID:");
-  fetch("https://your-probo-instance.com/api/mcp/tools/listRisks", {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer your_token_here",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ organization_id: orgId }),
-  })
-    .then((r) => r.json())
-    .then((data) => alert(JSON.stringify(data, null, 2)));
-})();
-```
-
-## Security Best Practices
-
-When using browser-based MCP solutions:
-
-1. **Never store tokens in userscripts** - Use environment variables or secure storage
-2. **Use HTTPS only** - Never send tokens over HTTP
-3. **Validate origins** - Ensure requests only come from claude.ai
-4. **Rotate tokens regularly** - Browser storage can be compromised
-5. **Use read-only tokens** when possible
-6. **Clear tokens** when done - Don't leave them in browser memory
-7. **Monitor access logs** - Review API usage regularly
-
-## Recommended Approach
-
-Until Claude.ai has native MCP support, we recommend:
-
-1. **For Desktop Use**: Use [Claude Desktop](/docs/api/mcp/claude-desktop) with native MCP support
-2. **For CLI Use**: Use [Claude Code](/docs/api/mcp/claude-code) for command-line access
-3. **For IDE Integration**: Use [VS Code](/docs/api/mcp/vscode) or [Cursor](/docs/api/mcp/cursor)
-4. **For Web Access**: Wait for native Claude.ai MCP support or use the API integration method
 
 ## Support
 
@@ -317,7 +165,7 @@ Need help with Claude.ai integration?
 
 ## Next Steps
 
-- Try [Claude Desktop](/docs/api/mcp/claude-desktop) for native MCP support
+- Explore [Claude Desktop](/docs/api/mcp/claude-desktop) for the desktop app
 - Explore [Claude Code](/docs/api/mcp/claude-code) for CLI access
 - Check out [VS Code integration](/docs/api/mcp/vscode) for IDE usage
 - View all [available MCP tools](/docs/api/mcp/overview#available-tools)

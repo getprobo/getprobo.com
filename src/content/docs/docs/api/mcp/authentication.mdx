@@ -1,11 +1,28 @@
 ---
 title: Authentication
-description: Authenticate with the Probo MCP Server using Bearer tokens
+description: Authenticate with the Probo MCP Server using OAuth 2.0 or Bearer tokens
 ---
 
-The Probo MCP Server uses Bearer token authentication. Generate a token from your Probo instance and include it in the `Authorization` header.
+The Probo MCP Server supports two authentication methods depending on your client.
 
-## How It Works
+## Authentication Methods
+
+### OAuth 2.0 / PKCE (Claude.ai, Claude Desktop, Claude Code)
+
+Claude clients authenticate automatically via OAuth — no token generation required. You provide only the MCP server URL; the client handles the rest:
+
+1. Add the Probo MCP URL to your client's integration settings
+2. On first connection, a browser window opens to your Probo instance
+3. Log in and click **Authorize**
+4. The client stores the OAuth token — no further configuration needed
+
+This is the simplest option: no tokens to generate, rotate, or store manually.
+
+### Bearer Token (Cursor, Windsurf, Zed, and other config-file clients)
+
+Clients configured via a JSON file use a static Bearer token. Generate a token from your Probo instance and include it in the `Authorization` header.
+
+#### How It Works
 
 1. Generate an API token from your Probo instance
 2. Add the token to your MCP client configuration
