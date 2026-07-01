@@ -1,0 +1,427 @@
+---
+import "@phosphor-icons/web/regular";
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/ui/Button.svelte";
+import LottiePlayer from "../components/LottiePlayer.svelte";
+import Logos from "../components/block/Logos.astro";
+
+const overviewFeatures = [
+  {
+    icon: "ph-file-c",
+    title: "Compliance docs, with granular permissions",
+    description:
+      "Share key security materials from one Trust Center, and decide what stays public, restricted, or approval-only.",
+  },
+  {
+    icon: "ph-slack-logo",
+    title: "Manage access from your stack",
+    description:
+      "Review access requests in Slack and keep rules aligned with the way your team already works.",
+  },
+  {
+    icon: "ph-signature",
+    title: "Your documents under an NDA",
+    description:
+      "Let prospects sign an NDA in the Trust Center before downloading protected, watermarked files.",
+  },
+  {
+    icon: "ph-key",
+    title: "Simple authentication",
+    description:
+      "Let prospects sign in with SSO or magic links without creating another account.",
+  },
+  {
+    icon: "ph-bell-simple",
+    title: "Keep customers informed",
+    description:
+      "Choose which policy, subprocessor, report, or audit updates subscribers should receive.",
+  },
+];
+
+const accessFeatures = [
+  {
+    title: "Approve requests from Slack",
+    lottie: "/lottie/trust-center/slack.json",
+    bullets: [
+      "Review access requests directly from Slack.",
+      "Notify the right owners when a prospect needs access.",
+      "Keep every decision synced with your Trust Center automatically.",
+    ],
+  },
+  {
+    title: "Gate sensitive downloads with an NDA",
+    lottie: "/lottie/trust-center/nda.json",
+    reverse: true,
+    bullets: [
+      "Require an NDA before sensitive files can be opened.",
+      "Let prospects sign directly inside the product page.",
+      "Share watermarked documents without extra legal back and forth.",
+    ],
+  },
+  {
+    title: "Frictionless authentication",
+    lottie: "/lottie/trust-center/authentication.json",
+    bullets: [
+      "Let visitors sign in with magic links or SSO.",
+      "Remove account creation from the security review flow.",
+      "Keep access secure while making the buyer experience seamless.",
+    ],
+  },
+  {
+    title: "Notify subscribers about the right updates",
+    lottie: "/lottie/trust-center/updates.json",
+    reverse: true,
+    bullets: [
+      "Notify subscribers when selected security documents change.",
+      "Choose which updates subscribers receive.",
+      "Keep every notification relevant and controlled.",
+    ],
+  },
+];
+
+const publishCards = [
+  {
+    icon: "ph-files",
+    title: "Policies",
+    description:
+      "Publish privacy, security, and compliance policies with the right visibility for each audience.",
+  },
+  {
+    icon: "ph-shield-check",
+    title: "Controls",
+    description:
+      "Show the controls behind your compliance posture without exposing internal implementation details.",
+  },
+  {
+    icon: "ph-file-lock",
+    title: "Reports",
+    description:
+      "Share SOC 2, ISO, pentest, and other sensitive reports behind request, NDA, or company-level approval.",
+  },
+  {
+    icon: "ph-clipboard-text",
+    title: "Audits",
+    description:
+      "Give buyers access to audit evidence and supporting documents without sending files manually.",
+  },
+  {
+    icon: "ph-tree-structure",
+    title: "Subprocessors",
+    description:
+      "List vendors and subprocessors with the right context, and keep subscribers informed when they change.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Can we make some documents public and others restricted?",
+    answer:
+      "Yes. Keep general resources open, gate sensitive files, and decide what stays restricted or approval-only.",
+    open: true,
+  },
+  {
+    question: "Can access require an NDA?",
+    answer:
+      "Yes. Prospects can sign an NDA before opening protected files, so access stays controlled without slowing the review.",
+  },
+  {
+    question: "Can requests be approved from Slack?",
+    answer:
+      "Yes. The right owner can review the request in Slack, approve access, and keep the decision synced with the Trust Center.",
+  },
+  {
+    question: "Can buyers access without creating an account?",
+    answer:
+      "Yes. Buyers can use magic links or SSO, so the review stays secure without adding account creation friction.",
+  },
+  {
+    question: "Who keeps the content up to date?",
+    answer:
+      "Probo helps structure and maintain the materials, while your team keeps control over what is public, restricted, or approval-only.",
+  },
+];
+---
+
+<Layout
+  title="Trust Center"
+  description="Give prospects one clear place to request access, sign the right NDA, and download watermarked compliance documents while your team keeps control."
+>
+  <main class="-mt-16 overflow-hidden pt-16">
+    <section class="container py-16 text-center sm:py-24">
+      <div
+        class="border-border-low text-tertiary-foreground mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
+      >
+        Trust Center
+      </div>
+      <h1
+        class="mx-auto mb-6 max-w-[600px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
+      >
+        Your compliance documentation with access control.
+      </h1>
+      <p class="text-muted-foreground mx-auto mb-8 max-w-[420px] text-base">
+        Give prospects one clear place to request access, sign the right NDA,
+        and download watermarked documents while your team keeps control.
+      </p>
+      <Button href="/contact" size="lg" class="mx-auto">Book a demo</Button>
+    </section>
+
+    <section class="container pb-16 sm:pb-28">
+      <div
+        class="shadow-image bg-level-1 overflow-hidden rounded-2xl border border-black/5"
+      >
+        <div
+          class="border-border-low bg-level-1 flex h-9 items-center justify-between border-b px-4"
+        >
+          <div class="flex gap-2">
+            <span class="size-3 rounded-full bg-[#ff6b5f]"></span>
+            <span class="size-3 rounded-full bg-[#f5bd4f]"></span>
+            <span class="size-3 rounded-full bg-[#61c554]"></span>
+          </div>
+          <div class="text-muted-foreground flex items-center gap-2 text-xs">
+            <i class="ph ph-sliders-horizontal text-sm"></i>
+            trust.acme.com
+          </div>
+          <i class="ph ph-dots-three-vertical text-muted-foreground text-lg"
+          ></i>
+        </div>
+
+        <div class="bg-[#fbfcf8] p-5 sm:p-8 lg:p-12">
+          <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center">
+            <div>
+              <div class="mb-2 flex items-center gap-2 text-sm font-medium">
+                <span
+                  class="bg-primary grid size-8 place-items-center rounded-md text-sm text-white"
+                  >A</span
+                >
+                Acme Trust Center
+              </div>
+              <h2
+                class="max-w-[760px] text-2xl leading-tight font-semibold tracking-[-0.6px] sm:text-3xl"
+              >
+                How Acme keeps your data safe.
+              </h2>
+              <p class="text-muted-foreground mt-3 max-w-[620px]">
+                Find security commitments, compliance documents, subprocessors,
+                and updates in one controlled experience.
+              </p>
+            </div>
+            <Button
+              href="/contact"
+              variant="secondary"
+              class="w-max lg:ml-auto"
+            >
+              Get Access
+            </Button>
+          </div>
+
+          <div class="grid gap-4 lg:grid-cols-[1fr_260px]">
+            <div class="grid gap-4 sm:grid-cols-2">
+              {
+                ["Security", "Privacy", "Reliability", "Compliance"].map(
+                  (item) => (
+                    <div class="border-border-low bg-level-1 rounded-xl border p-5">
+                      <div class="bg-active mb-4 h-14 rounded-lg" />
+                      <div class="font-medium">{item}</div>
+                      <div class="text-muted-foreground mt-2 text-sm">
+                        Reviewed, documented, and ready to share.
+                      </div>
+                    </div>
+                  ),
+                )
+              }
+            </div>
+            <div class="border-border-low bg-level-1 rounded-xl border p-5">
+              <div class="mb-4 font-medium">Compliance</div>
+              <div class="bg-active mb-4 h-20 rounded-lg"></div>
+              <div class="text-sm font-medium">SOC 2 Type II</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-16 text-center sm:py-24">
+      <h2
+        class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+      >
+        Everything your buyers need to review security, in one place.
+      </h2>
+      <p class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-base">
+        Help buyers find the right materials faster, while your team decides
+        what is public, restricted, or approval-only.
+      </p>
+
+      <div class="mt-16 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          overviewFeatures.map((feature) => (
+            <div class="mx-auto max-w-[340px] text-center">
+              <i
+                class:list={[
+                  "ph mx-auto mb-3 block text-3xl text-[#343330]",
+                  feature.icon,
+                ]}
+              />
+              <h3 class="mb-1 text-base leading-6 font-medium">
+                {feature.title}
+              </h3>
+              <p class="text-muted-foreground text-base leading-6">
+                {feature.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="access-control" class="py-16 sm:py-24">
+      <div class="container mb-12 text-center sm:mb-16">
+        <h2
+          class="mx-auto max-w-[600px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+        >
+          Give buyers access without losing control
+        </h2>
+        <p class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-base">
+          Approve requests in Slack, support SSO or magic links, and keep every
+          permission attached to the right company.
+        </p>
+      </div>
+
+      <div class="space-y-8 sm:space-y-12">
+        {
+          accessFeatures.map((feature) => (
+            <div
+              class:list={[
+                "container flex flex-col gap-8 lg:items-center lg:gap-16",
+                feature.reverse ? "lg:flex-row-reverse" : "lg:flex-row",
+              ]}
+            >
+              <div class="bg-subtle relative aspect-[508/664] w-full overflow-hidden rounded-2xl lg:w-[508px] lg:flex-none">
+                <LottiePlayer
+                  client:visible
+                  src={feature.lottie}
+                  label={`${feature.title} animation`}
+                  class="size-full"
+                />
+              </div>
+
+              <div
+                class:list={[
+                  "max-w-[508px] flex-1",
+                  feature.reverse ? "lg:pr-16" : "lg:pl-16",
+                ]}
+              >
+                <h3 class="mb-6 text-2xl leading-8 font-semibold tracking-[-0.6px]">
+                  {feature.title}
+                </h3>
+                <ul class="text-muted-foreground space-y-3 text-base leading-6">
+                  {feature.bullets.map((bullet) => (
+                    <li class="flex gap-2">
+                      <i class="ph ph-check mt-0.5 text-xl text-[#343330]" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container py-16 sm:py-24">
+      <div class="mb-12 text-center">
+        <h2
+          class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+        >
+          Publish every security resource buyers ask for
+        </h2>
+        <p class="text-muted-foreground mx-auto mt-2 max-w-[520px]">
+          Keep the review moving without turning your team into a document
+          forwarding queue.
+        </p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          publishCards.map((card) => (
+            <article class="bg-subtle rounded-2xl p-6">
+              <i
+                class:list={[
+                  "ph mb-8 block text-3xl text-[#343330]",
+                  card.icon,
+                ]}
+              />
+              <h3 class="mb-2 text-xl leading-7 font-semibold tracking-[-0.4px]">
+                {card.title}
+              </h3>
+              <p class="text-muted-foreground text-base leading-6">
+                {card.description}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container py-16 sm:py-24">
+      <div class="mb-12 text-center">
+        <h2 class="text-[1.875rem] leading-9 font-semibold tracking-[-1px]">
+          Trusted by 130+ companies
+        </h2>
+        <p class="text-muted-foreground mx-auto mt-2 max-w-[520px]">
+          Security teams use Probo to share the right materials, protect
+          sensitive documents, and keep access requests moving.
+        </p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="bg-subtle rounded-2xl p-8 sm:p-12">
+          <p
+            class="text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+          >
+            "Probo makes security review feel simple, fast, and controlled."
+          </p>
+          <div class="mt-8">
+            <div class="font-medium">Fabien Devos</div>
+            <div class="text-muted-foreground">Co-founder & CTO at Vybe</div>
+          </div>
+        </div>
+        <div
+          class="bg-subtle flex flex-col justify-end overflow-hidden rounded-2xl p-8 sm:p-12"
+        >
+          <p class="text-muted-foreground mb-8 text-center">
+            Trusted by teams building compliance-ready workflows
+          </p>
+          <Logos constrained />
+        </div>
+      </div>
+    </section>
+
+    <section class="container max-w-[808px] py-16 sm:py-24">
+      <h2
+        class="mb-8 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px]"
+      >
+        Frequently asked questions
+      </h2>
+      <div>
+        {
+          faqs.map((faq) => (
+            <details
+              class="group border-border-low border-b py-4"
+              open={faq.open}
+            >
+              <summary class="flex list-none items-center gap-6 font-medium [&::-webkit-details-marker]:hidden">
+                <span class="flex-1">{faq.question}</span>
+                <i class="ph ph-plus block text-lg group-open:hidden" />
+                <i class="ph ph-minus hidden text-lg group-open:block" />
+              </summary>
+              <p class="text-muted-foreground mt-2 max-w-[720px]">
+                {faq.answer}
+              </p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</Layout>

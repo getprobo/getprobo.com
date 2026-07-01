@@ -1,5 +1,6 @@
 import { readFile, writeFile, readdir } from "fs/promises";
 import { join } from "path";
+import { fileURLToPath } from "url";
 
 /**
  * Astro integration to remove .html extensions from links
@@ -24,7 +25,7 @@ export function removeHtmlExtension() {
           }
         }
 
-        await findHtmlFiles(dir.pathname);
+        await findHtmlFiles(fileURLToPath(dir));
         console.log(`Found ${htmlFiles.length} HTML files to process`);
 
         let processedCount = 0;
