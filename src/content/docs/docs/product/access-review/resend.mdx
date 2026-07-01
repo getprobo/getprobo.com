@@ -1,0 +1,62 @@
+---
+title: Resend
+description: Connect Resend as an access source using a Full access API key
+---
+
+Probo reads your Resend account's API keys through the Resend API so you can review which programmatic credentials have access.
+
+:::caution
+Use a **Full access** API key (`re_…`) created in the Resend dashboard. A **Sending access** key (also prefixed `re_…`) will **not** work, because it can only send emails and cannot read your account's API keys.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- Access to the Resend account's **API Keys** page, so you can create the key for the account you want to review
+- A Resend API key with **Full access** (Sending access cannot read the account's API keys)
+
+## Collected Fields
+
+Resend exposes the account's API keys rather than human members, so each reviewed account is an API key (a service account).
+
+| Probo field | Resend field                                             | Notes                                                      |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------- |
+| Name        | `name`                                                   | The label given to the API key when it was created         |
+| Email       | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| Role        | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| Admin       | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| Last login  | `last_used_at`                                           | When the API key was last used to call the Resend API      |
+| External ID | `id`                                                     | Stable identifier used to track the API key across reviews |
+| Created at  | `created_at`                                             | When the API key was created                               |
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating a Full access API key in the Resend dashboard](/docs/access-review/resend-create-api-key.webp)
+
+<Steps>
+
+1. In the [Resend dashboard](https://resend.com/api-keys), go to **API Keys** in the sidebar.
+2. Click **Create API Key**, name it (e.g. `Probo Access Review`), and set **Permission** to **Full access**, since Probo needs to read the account's API keys.
+3. Copy the key (`re_…`) and store it securely. It is shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Resend**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo lists the source as **Resend** and pulls the account's API keys into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it is a **Full access** key (`re_…`). A Sending access key only sends emails and will not connect.
+- **No API keys appear.** The key must have **Full access** and belong to the Resend account you are reviewing.

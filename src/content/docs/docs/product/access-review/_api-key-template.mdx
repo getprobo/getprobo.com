@@ -1,0 +1,97 @@
+---
+title: <Provider>
+description: Connect <Provider> as an access source using a <token type, e.g. an organization Admin API key>
+---
+
+{/\*
+TEMPLATE for an API-key access-review connector page.
+Copy this file to <provider>.mdx and fill in every <placeholder>. Then: 1. Add a <LinkCard> for the provider in directory.mdx. 2. Save the Step 1 screenshot as optimized WebP at
+public/docs/access-review/<provider>-create-api-key.webp.
+
+Conventions (match the Anthropic and OpenAI pages): - Title-case headings, neutral voice, no em or en dashes. - Collected Fields: the Probo column ALWAYS lists every field in the fixed order below and uses
+the exact column names the Probo console shows in the campaign review table: Name, Email, Role,
+Admin, Status, MFA, Last login (then External ID and Created at, which are collected but not
+console columns). Do NOT invent labels like "Full name", "Active status", or "Administrator".
+The provider column holds the response field the driver reads in ListAccounts, or a
+`<Badge text="Not supported" class="badge-unsupported" />` tag when the driver leaves that AccountRecord
+field empty for this provider (leave the Notes cell empty on those rows; import Badge alongside
+Steps). Ground every row and flag in the driver (`pkg/accessreview/drivers/<provider>.go`); do
+not guess support. - Exactly one screenshot, in Step 1 (the provider's key-creation dialog, cropped so no
+account email, billing, or real key value is shown). - Step 2: for key-only providers (Anthropic, OpenAI) the user just pastes the key. If the
+connector defines ExtraSettings (an org slug, workspace/team ID, region, base URL, or
+instance URL), those render as extra fields in the SAME Connect dialog. Document each by
+its dialog label, say where the user finds the value, and add a matching Prerequisites
+bullet. This is not a separate later step (that picker is for OAuth providers). - Never delete a Probo row; mark unsupported fields with the `badge-unsupported` badge (Notes left empty).
+Drop the account-type prerequisite only if it doesn't apply. - Some connectors review SERVICE ACCOUNTS / API keys, not human members (e.g. Resend lists the
+account's own API keys; AccountType is a service account, with no email or role). When the
+driver's records have no email/role, say so in the intro and mark Email, Role, and Admin as
+`Not supported` (still list all rows), map the credential fields the driver returns (id, name,
+created, last-used), and note that no account is flagged admin.
+\*/}
+
+Probo reads your <Provider> organization's members through the <API name, e.g. Admin API> so you can review who has access.
+
+:::caution
+Use a **<exact token type>** (`<prefix>-…`) created in <where it's created>. A **<wrong token type>** (`<wrong prefix>-…`) will **not** work, because <one-clause reason>.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **<required role>** in <Provider> (only <role> can create the API key)
+- <Account-type requirement if any, e.g. an organization rather than an individual account>
+- <Extra-settings only: the org slug / workspace or team ID / region / base URL Probo should review, and where to find it. Delete if the connector is key-only.>
+
+## Collected Fields
+
+The Probo column lists every field. In the provider column, put the provider response field the
+driver reads in `ListAccounts`, or the `<Badge text="Not supported" class="badge-unsupported" />` tag when
+the driver leaves that field empty for this provider. Do not delete rows, and leave the Notes cell
+empty on a Not supported row.
+
+| Probo field | <Provider> field                                         | Notes                                                         |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------- |
+| Name        | `name`                                                   |                                                               |
+| Email       | `email`                                                  |                                                               |
+| Role        | `role`                                                   | <how the provider's roles map, e.g. `owner` → Owner>          |
+| Admin       | `role`                                                   | <which role flags admin, e.g. flagged when `role` is `owner`> |
+| Status      | `<active flag>`                                          | <how an inactive member is detected>                          |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                               |
+| Last login  | `<last-activity>`                                        | <what the timestamp represents>                               |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews    |
+| Created at  | `<created field>`                                        | When the member joined the organization                       |
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![<alt text describing the key-creation dialog>](/docs/access-review/<provider>-create-api-key.webp)
+
+<Steps>
+
+1. In <Provider> (signed in as <role>), go to **<menu path to the key settings>**.
+2. Create the key, name it (e.g. `Probo Access Review`), and <set the permission/scope, or note there are none>.
+3. Copy the key (`<prefix>-…`) and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **<Provider>**, click **API Key**, paste the key, and click **Connect**.
+
+{/_ Extra-settings providers: the Connect dialog shows extra field(s) below the API Key field
+(org slug, workspace/team ID, region, base URL, …). Rewrite step 2 as, e.g.:
+"Find <Provider>, click API Key, paste the key, enter your **<Field Label>** (<where to find
+    it>), and click Connect." Repeat per required field. Delete this note for key-only providers. _/}
+
+</Steps>
+
+Probo names the source after your organization and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it's a <token type> (`<prefix>-…`) <with any required permission>. <Wrong key types> won't work.
+- **No members appear.** The key must be created by <role> and belong to the organization you're reviewing.

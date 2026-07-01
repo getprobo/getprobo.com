@@ -175,6 +175,9 @@ function findFiles(dir: string, ext: string): string[] {
   try {
     const entries = readdirSync(dir);
     for (const entry of entries) {
+      // Skip underscore-prefixed files and directories, matching Astro's
+      // convention for partials/templates that are not published pages.
+      if (entry.startsWith("_")) continue;
       const fullPath = join(dir, entry);
       const stat = statSync(fullPath);
       if (stat.isDirectory()) {

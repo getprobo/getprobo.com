@@ -226,6 +226,20 @@ export default defineConfig({
           ],
         },
         {
+          label: "Access Reviews",
+          badge: "New",
+          items: [
+            {
+              label: "Overview",
+              slug: "docs/product/access-review/overview",
+            },
+            {
+              label: "Directory",
+              slug: "docs/product/access-review/directory",
+            },
+          ],
+        },
+        {
           label: "Cookie Banner",
           badge: "New",
           items: [

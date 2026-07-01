@@ -1,0 +1,59 @@
+---
+title: OpenAI
+description: Connect OpenAI as an access source using an organization Admin API key
+---
+
+Probo reads your OpenAI organization's members through the Admin API so you can review who has access.
+
+:::caution
+Use an **Admin API key** (`sk-admin-…`) created in the OpenAI API platform. A standard project key (`sk-proj-…`) will **not** work.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Owner** role in an OpenAI organization (only owners can create Admin API keys)
+
+## Collected Fields
+
+| Probo field | OpenAI field                                             | Notes                                                      |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------- |
+| Name        | `name`                                                   |                                                            |
+| Email       | `email`                                                  |                                                            |
+| Role        | `role`                                                   | `owner` → Owner, `reader` → Reader, otherwise Member       |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `owner`         |
+| Status      | `disabled`                                               | Disabled members are shown as inactive                     |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews |
+| Created at  | `added_at`                                               | When the member joined the organization                    |
+
+## Step 1: Create an Admin API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating a Read only Admin key in the OpenAI API platform](/docs/access-review/openai-create-api-key.webp)
+
+<Steps>
+
+1. In the [OpenAI API platform](https://platform.openai.com/settings/organization/admin-keys), go to **Settings** > **Admin keys** as an organization **Owner**.
+2. Click **Create new Admin key**, name it (e.g. `Probo Access Review`), and set **Permissions** to **Read only**, since Probo only reads your members.
+3. Copy the key (`sk-admin-…`) and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **OpenAI**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo names the source after your organization and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it's an admin key (`sk-admin-…`) with at least **Read only** permission. A project key (`sk-proj-…`) won't work.
+- **No members appear.** The key must be created by an organization **Owner** and belong to the organization you're reviewing.
