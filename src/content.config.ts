@@ -61,6 +61,7 @@ const jobs = defineCollection({
     title: z.string(),
     location: z.string(),
     type: z.string(),
+    draft: z.boolean().default(false),
   }),
 });
 

@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 
-const positions = await getCollection("jobs");
+const positions = await getCollection("jobs", ({ data }) => !data.draft);
 ---
 
 <Layout
