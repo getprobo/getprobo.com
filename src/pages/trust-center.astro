@@ -147,98 +147,45 @@ const faqs = [
   description="Give prospects one clear place to request access, sign the right NDA, and download watermarked compliance documents while your team keeps control."
 >
   <main class="-mt-16 overflow-hidden pt-16">
-    <section class="container py-16 text-center sm:py-24">
+    <div class="relative isolate overflow-hidden">
       <div
-        class="border-border-low text-tertiary-foreground mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
+        aria-hidden="true"
+        data-node-id="241:851"
+        class="pointer-events-none absolute top-[-1314px] left-1/2 z-0 size-[2265px] -translate-x-1/2 rounded-full border-[256px] border-[#E6FF03] blur-[84px]"
       >
-        Trust Center
       </div>
-      <h1
-        class="mx-auto mb-6 max-w-[600px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
-      >
-        Your compliance documentation with access control.
-      </h1>
-      <p class="text-muted-foreground mx-auto mb-8 max-w-[420px] text-base">
-        Give prospects one clear place to request access, sign the right NDA,
-        and download watermarked documents while your team keeps control.
-      </p>
-      <Button href="/contact" size="lg" class="mx-auto">Book a demo</Button>
-    </section>
 
-    <section class="container pb-16 sm:pb-28">
-      <div
-        class="shadow-image bg-level-1 overflow-hidden rounded-2xl border border-black/5"
-      >
+      <section class="relative z-10 container py-16 text-center sm:py-24">
         <div
-          class="border-border-low bg-level-1 flex h-9 items-center justify-between border-b px-4"
+          class="border-border-low text-tertiary-foreground mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
         >
-          <div class="flex gap-2">
-            <span class="size-3 rounded-full bg-[#ff6b5f]"></span>
-            <span class="size-3 rounded-full bg-[#f5bd4f]"></span>
-            <span class="size-3 rounded-full bg-[#61c554]"></span>
-          </div>
-          <div class="text-muted-foreground flex items-center gap-2 text-xs">
-            <i class="ph ph-sliders-horizontal text-sm"></i>
-            trust.acme.com
-          </div>
-          <i class="ph ph-dots-three-vertical text-muted-foreground text-lg"
-          ></i>
+          Trust Center
         </div>
+        <h1
+          class="mx-auto mb-6 max-w-[600px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
+        >
+          Your compliance documentation with access control.
+        </h1>
+        <p class="text-muted-foreground mx-auto mb-8 max-w-[420px] text-base">
+          Give prospects one clear place to request access, sign the right NDA,
+          and download watermarked documents while your team keeps control.
+        </p>
+        <Button href="/contact" size="lg" class="mx-auto">Book a demo</Button>
+      </section>
 
-        <div class="bg-[#fbfcf8] p-5 sm:p-8 lg:p-12">
-          <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center">
-            <div>
-              <div class="mb-2 flex items-center gap-2 text-sm font-medium">
-                <span
-                  class="bg-primary grid size-8 place-items-center rounded-md text-sm text-white"
-                  >A</span
-                >
-                Acme Trust Center
-              </div>
-              <h2
-                class="max-w-[760px] text-2xl leading-tight font-semibold tracking-[-0.6px] sm:text-3xl"
-              >
-                How Acme keeps your data safe.
-              </h2>
-              <p class="text-muted-foreground mt-3 max-w-[620px]">
-                Find security commitments, compliance documents, subprocessors,
-                and updates in one controlled experience.
-              </p>
-            </div>
-            <Button
-              href="/contact"
-              variant="secondary"
-              class="w-max lg:ml-auto"
-            >
-              Get Access
-            </Button>
-          </div>
-
-          <div class="grid gap-4 lg:grid-cols-[1fr_260px]">
-            <div class="grid gap-4 sm:grid-cols-2">
-              {
-                ["Security", "Privacy", "Reliability", "Compliance"].map(
-                  (item) => (
-                    <div class="border-border-low bg-level-1 rounded-xl border p-5">
-                      <div class="bg-active mb-4 h-14 rounded-lg" />
-                      <div class="font-medium">{item}</div>
-                      <div class="text-muted-foreground mt-2 text-sm">
-                        Reviewed, documented, and ready to share.
-                      </div>
-                    </div>
-                  ),
-                )
-              }
-            </div>
-            <div class="border-border-low bg-level-1 rounded-xl border p-5">
-              <div class="mb-4 font-medium">Compliance</div>
-              <div class="bg-active mb-4 h-20 rounded-lg"></div>
-              <div class="text-sm font-medium">SOC 2 Type II</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <section class="relative z-10 container pb-16 sm:pb-28">
+        <img
+          src="/trust-center/browser.svg"
+          alt="Acme Trust Center browser preview"
+          width="1146"
+          height="786"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="mx-auto h-auto w-full"
+        />
+      </section>
+    </div>
 
     <section class="container py-16 text-center sm:py-24">
       <h2
@@ -300,7 +247,7 @@ const faqs = [
                   client:visible
                   src={feature.lottie}
                   label={`${feature.title} animation`}
-                  class="size-full"
+                  class="size-full origin-center scale-[1.12] transform-gpu"
                 />
               </div>
 
