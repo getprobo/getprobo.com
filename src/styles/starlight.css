@@ -106,6 +106,14 @@
     border: solid 1px var(--color-border-low);
   }
 
+  /* Soft amber "Not supported" tag used in the access-review Collected Fields tables.
+     Muted fill + darker text reads calmer than the solid danger/caution variants. */
+  .sl-badge.badge-unsupported {
+    --sl-color-bg-badge: var(--sl-color-orange-low);
+    --sl-color-text-badge: var(--sl-color-orange-high);
+    --sl-color-border-badge: var(--sl-color-orange);
+  }
+
   .starlight-aside {
     border-radius: 0.5rem;
   }

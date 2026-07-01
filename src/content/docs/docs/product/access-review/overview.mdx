@@ -1,0 +1,35 @@
+---
+title: Access Reviews Overview
+description: Connect third-party providers as access sources and run periodic access review campaigns
+---
+
+Access reviews let you periodically check who has access to your third-party tools and whether that access is still appropriate. Probo connects to each provider, pulls the current members and their roles, and lets reviewers approve or flag each account. The decisions become the audit evidence that frameworks like SOC 2 and ISO 27001 ask for.
+
+## How It Works
+
+1. **Connect a provider** as an access source, over OAuth or with an API key.
+2. **Probo collects each account's** name, email, role, admin status, MFA state, and last login.
+3. **Run a campaign** over one or more sources. Probo snapshots access at that point in time.
+4. **Reviewers decide.** Each account is approved or flagged, and the decision is recorded as evidence.
+
+## What Probo Collects
+
+For each account in a review, Probo shows the following, wherever the provider exposes it. Fields the provider doesn't return are left blank.
+
+| Field      | What it tells reviewers                                 |
+| ---------- | ------------------------------------------------------- |
+| Name       | The account holder's name (service accounts are marked) |
+| Email      | The account's email address                             |
+| Role       | The role(s) the account holds in the provider           |
+| Admin      | Whether the account has administrator access            |
+| Status     | Whether the account is active or disabled               |
+| MFA        | Whether multi-factor authentication is enabled          |
+| Last login | When the account last signed in or was used             |
+
+## Connection Methods
+
+- **OAuth.** You authorize Probo from the provider's consent screen.
+- **API key.** You generate a token on the provider and paste it into Probo. The token type and required permissions vary per provider, so check the [Connector Directory](/docs/product/access-review/directory).
+- **CSV.** Upload an exported user list for tools Probo can't connect to directly.
+
+Access reviews live under **Access Reviews** in your organization: the **Sources** tab connects providers, the **Campaigns** tab runs reviews.

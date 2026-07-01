@@ -1,0 +1,30 @@
+---
+title: Connector Directory
+description: Supported access-review connectors and their setup guides
+---
+
+Probo connects to these providers as access sources. Each guide covers the token to create and how to connect it.
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+<CardGrid>
+  <LinkCard
+    title="Anthropic"
+    description="Claude Console Admin API key"
+    href="/docs/product/access-review/anthropic"
+  />
+  <LinkCard
+    title="OpenAI"
+    description="Organization Admin API key (Read only)"
+    href="/docs/product/access-review/openai"
+  />
+  <LinkCard
+    title="Resend"
+    description="Full access API key"
+    href="/docs/product/access-review/resend"
+  />
+</CardGrid>
+
+:::note
+More connectors are being added. A provider not listed yet can still be brought in via a CSV source.
+:::
