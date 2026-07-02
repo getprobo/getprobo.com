@@ -1,9 +1,12 @@
 ---
 import "@phosphor-icons/web/regular";
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Button from "../components/ui/Button.svelte";
 import LottiePlayer from "../components/LottiePlayer.svelte";
-import Logos from "../components/block/Logos.astro";
+import LogosScroll from "../components/LogosScroll.svelte";
+import FabienDevos from "../assets/testimonial/fabien-devos.jpg";
+import VybeFounders from "../assets/stories/vybe-founder.png";
 
 const overviewFeatures = [
   {
@@ -112,6 +115,18 @@ const publishCards = [
   },
 ];
 
+const trustedLogos = [
+  {
+    src: "/clients/trace_for_good.svg",
+    alt: "Trace for Good",
+    class: "trusted-logo--trace",
+  },
+  { src: "/clients/jimo.svg", alt: "Jimo", class: "trusted-logo--jimo" },
+  { src: "/clients/lucis.svg", alt: "Lucis", class: "trusted-logo--lucis" },
+  { src: "/clients/filz.svg", alt: "Filiz", class: "trusted-logo--filiz" },
+  { src: "/clients/ahrefs.svg", alt: "Ahrefs", class: "trusted-logo--ahrefs" },
+];
+
 const faqs = [
   {
     question: "Can we make some documents public and others restricted?",
@@ -173,7 +188,7 @@ const faqs = [
         <Button href="/contact" size="lg" class="mx-auto">Book a demo</Button>
       </section>
 
-      <section class="relative z-10 container pb-16 sm:pb-28">
+      <section class="relative z-10 container pb-0">
         <img
           src="/trust-center/browser.svg"
           alt="Acme Trust Center browser preview"
@@ -187,40 +202,35 @@ const faqs = [
       </section>
     </div>
 
-    <section class="container py-16 text-center sm:py-24">
+    <section class="container pt-16 pb-0 text-center sm:pt-32">
       <h2
-        class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+        class="mx-auto max-w-[552px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance text-[#141e12]"
       >
         Everything your buyers need to review security, in one place.
       </h2>
-      <p class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-base">
+      <p
+        class="mx-auto mt-2 max-w-[504px] text-[16px] leading-6 text-[#6b716a]"
+      >
         Help buyers find the right materials faster, while your team decides
         what is public, restricted, or approval-only.
       </p>
 
-      <div class="mt-16 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="overview-feature-grid mt-16">
         {
           overviewFeatures.map((feature) => (
-            <div class="mx-auto max-w-[340px] text-center">
-              <i
-                class:list={[
-                  "ph mx-auto mb-3 block text-3xl text-[#343330]",
-                  feature.icon,
-                ]}
-              />
-              <h3 class="mb-1 text-base leading-6 font-medium">
-                {feature.title}
-              </h3>
-              <p class="text-muted-foreground text-base leading-6">
-                {feature.description}
-              </p>
+            <div class="overview-feature">
+              <i class:list={["ph overview-feature-icon", feature.icon]} />
+              <div class="overview-feature-copy">
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </div>
             </div>
           ))
         }
       </div>
     </section>
 
-    <section id="access-control" class="pt-16 pb-0 sm:pt-24">
+    <section id="access-control" class="pt-16 pb-0 sm:pt-32">
       <div class="container mb-12 text-center sm:mb-16">
         <h2
           class="mx-auto max-w-[600px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
@@ -284,7 +294,7 @@ const faqs = [
       </div>
     </section>
 
-    <section class="container pt-16 pb-16 sm:pt-32 sm:pb-24">
+    <section class="container pt-16 pb-0 sm:pt-32">
       <div class="mb-16 text-center">
         <h2
           class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
@@ -324,59 +334,97 @@ const faqs = [
       </div>
     </section>
 
-    <section class="container py-16 sm:py-24">
-      <div class="mb-12 text-center">
-        <h2 class="text-[1.875rem] leading-9 font-semibold tracking-[-1px]">
+    <section class="container pt-16 pb-0 sm:pt-32">
+      <div class="pb-12 text-center sm:pb-16">
+        <h2
+          class="text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
+        >
           Trusted by 130+ companies
         </h2>
-        <p class="text-muted-foreground mx-auto mt-2 max-w-[520px]">
+        <p
+          class="mx-auto mt-2 max-w-[504px] text-[16px] leading-6 text-[#6b716a]"
+        >
           Security teams use Probo to share the right materials, protect
           sensitive documents, and keep access requests moving.
         </p>
       </div>
 
-      <div class="grid gap-6 lg:grid-cols-2">
-        <div class="bg-subtle rounded-2xl p-8 sm:p-12">
-          <p
-            class="text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
-          >
-            "Probo makes security review feel simple, fast, and controlled."
-          </p>
-          <div class="mt-8">
-            <div class="font-medium">Fabien Devos</div>
-            <div class="text-muted-foreground">Co-founder & CTO at Vybe</div>
-          </div>
+      <div class="trusted-showcase">
+        <div class="trusted-photo-card">
+          <Image
+            src={VybeFounders}
+            alt="Fabien Devos and the Vybe founding team"
+            width={528}
+            height={528}
+            densities={[1, 2]}
+            class="trusted-photo"
+            loading="lazy"
+          />
         </div>
-        <div
-          class="bg-subtle flex flex-col justify-end overflow-hidden rounded-2xl p-8 sm:p-12"
-        >
-          <p class="text-muted-foreground mb-8 text-center">
-            Trusted by teams building compliance-ready workflows
-          </p>
-          <Logos constrained />
+
+        <div class="trusted-quote-card">
+          <div class="trusted-quote-content">
+            <blockquote class="trusted-quote">
+              <span>&ldquo;Probo makes security review</span>
+              <span>feel simple, fast, and controlled.&rdquo;</span>
+            </blockquote>
+
+            <div class="trusted-author">
+              <div class="trusted-author-copy">
+                <div class="trusted-author-name">Fabien Devos</div>
+                <div class="trusted-author-role">
+                  Co-founder &amp; CTO at Vybe
+                </div>
+              </div>
+              <Image
+                src={FabienDevos}
+                alt="Fabien Devos"
+                width={48}
+                height={48}
+                densities={[1, 2]}
+                class="trusted-avatar"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="trusted-logo-block">
+            <p>Trusted by teams building compliance-ready workflows</p>
+            <div class="trusted-logo-rail" aria-label="Trusted companies">
+              <LogosScroll class="trusted-logo-ticker" client:load>
+                {
+                  trustedLogos.map((logo) => (
+                    <span class:list={["trusted-logo-item", logo.class]}>
+                      <img src={logo.src} alt={logo.alt} loading="lazy" />
+                    </span>
+                  ))
+                }
+              </LogosScroll>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="container max-w-[808px] py-16 sm:py-24">
+    <section class="container pt-16 pb-16 sm:pt-32 sm:pb-24">
       <h2
-        class="mb-8 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px]"
+        class="mb-6 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
       >
         Frequently asked questions
       </h2>
-      <div>
+      <div class="mx-auto max-w-[768px]">
         {
           faqs.map((faq) => (
             <details
-              class="group border-border-low border-b py-4"
+              class="group border-border-low border-b py-4 last:border-b-0"
               open={faq.open}
             >
-              <summary class="flex list-none items-center gap-6 font-medium [&::-webkit-details-marker]:hidden">
+              <summary class="flex list-none items-center gap-6 text-[16px] leading-6 font-medium text-[#141e12] [&::-webkit-details-marker]:hidden">
                 <span class="flex-1">{faq.question}</span>
-                <i class="ph ph-plus block text-lg group-open:hidden" />
-                <i class="ph ph-minus hidden text-lg group-open:block" />
+                <i class="ph ph-plus flex size-4 shrink-0 items-center justify-center text-[16px] leading-none group-open:hidden" />
+                <i class="ph ph-minus hidden size-4 shrink-0 items-center justify-center text-[16px] leading-none group-open:flex" />
               </summary>
-              <p class="text-muted-foreground mt-2 max-w-[720px]">
+              <p class="mt-2 w-full text-[16px] leading-6 text-[#6b716a]">
                 {faq.answer}
               </p>
             </details>
@@ -388,6 +436,332 @@ const faqs = [
 </Layout>
 
 <style>
+  .overview-feature-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 48px;
+  }
+
+  .overview-feature {
+    display: flex;
+    width: min(100%, 328px);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .overview-feature-icon {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    color: #343330;
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .overview-feature-copy {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 3px 0;
+    color: #141e12;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    word-break: break-word;
+  }
+
+  .overview-feature-copy h3,
+  .overview-feature-copy p {
+    width: 100%;
+  }
+
+  .overview-feature-copy h3 {
+    color: #141e12;
+    font-weight: 500;
+  }
+
+  .overview-feature-copy p {
+    color: #6b716a;
+    font-weight: 400;
+  }
+
+  @media (min-width: 640px) {
+    .overview-feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 48px;
+      row-gap: 56px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .overview-feature-grid {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 1080px;
+      height: 346px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .overview-feature {
+      position: absolute;
+      width: 328px;
+    }
+
+    .overview-feature:nth-child(1) {
+      top: 0;
+      left: 0;
+    }
+
+    .overview-feature:nth-child(1) .overview-feature-copy h3 {
+      max-width: 276px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .overview-feature:nth-child(2) {
+      top: 0;
+      left: 376px;
+    }
+
+    .overview-feature:nth-child(3) {
+      top: 0;
+      left: 752px;
+    }
+
+    .overview-feature:nth-child(4) {
+      top: 201px;
+      left: 188px;
+    }
+
+    .overview-feature:nth-child(5) {
+      top: 201px;
+      left: 564px;
+    }
+  }
+
+  .trusted-showcase {
+    display: grid;
+    width: 100%;
+    max-width: 1080px;
+    gap: 24px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .trusted-photo-card,
+  .trusted-quote-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #f6f9f5;
+  }
+
+  .trusted-photo-card {
+    aspect-ratio: 1 / 1;
+  }
+
+  .trusted-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .trusted-quote-card {
+    display: flex;
+    min-height: 420px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 72px 20px 32px;
+    text-align: center;
+  }
+
+  .trusted-quote-card::before {
+    position: absolute;
+    right: -62%;
+    bottom: -74%;
+    width: 192%;
+    max-width: 1010px;
+    aspect-ratio: 1 / 1;
+    border-radius: 999px;
+    background: radial-gradient(
+      circle,
+      #e6ff03 0 27%,
+      rgb(230 255 3 / 0.62) 43%,
+      rgb(230 255 3 / 0.18) 58%,
+      transparent 74%
+    );
+    content: "";
+    pointer-events: none;
+  }
+
+  .trusted-quote-content,
+  .trusted-logo-block {
+    position: relative;
+    z-index: 1;
+  }
+
+  .trusted-quote-content {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .trusted-quote {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin: 0;
+    color: #141e12;
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    text-align: center;
+    text-wrap: balance;
+    word-break: break-word;
+  }
+
+  .trusted-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .trusted-author-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 3px 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .trusted-author-name {
+    color: #141e12;
+    font-weight: 500;
+  }
+
+  .trusted-author-role {
+    color: #6b716a;
+    font-weight: 400;
+  }
+
+  .trusted-avatar {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    object-fit: cover;
+  }
+
+  .trusted-logo-block {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .trusted-logo-block p {
+    color: #6b716a;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .trusted-logo-rail {
+    width: 792px;
+    max-width: calc(100vw - 48px);
+    height: 24px;
+    overflow: hidden;
+  }
+
+  :global(.trusted-logo-ticker) {
+    height: 24px;
+    overflow: hidden;
+  }
+
+  :global(.trusted-logo-ticker .splide__track),
+  :global(.trusted-logo-ticker .splide__list) {
+    height: 24px;
+  }
+
+  :global(.trusted-logo-ticker .splide__slide) {
+    display: flex;
+    height: 24px;
+    align-items: center;
+  }
+
+  .trusted-logo-item {
+    display: flex;
+    height: 24px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    opacity: 0.6;
+  }
+
+  .trusted-logo-item img {
+    display: block;
+    width: 100%;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .trusted-logo--trace {
+    width: 190.5px;
+  }
+
+  .trusted-logo--jimo {
+    width: 78px;
+  }
+
+  .trusted-logo--lucis {
+    width: 109.5px;
+  }
+
+  .trusted-logo--filiz {
+    width: 115.5px;
+  }
+
+  .trusted-logo--ahrefs {
+    width: 123px;
+  }
+
+  @media (min-width: 1024px) {
+    .trusted-showcase {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .trusted-quote-card {
+      min-height: auto;
+      aspect-ratio: 1 / 1;
+      padding: 96px 32px 32px;
+    }
+
+    .trusted-quote {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+
   .trust-category-visual {
     aspect-ratio: 1 / 1;
     overflow: hidden;
