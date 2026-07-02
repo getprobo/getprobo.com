@@ -81,31 +81,31 @@ const accessFeatures = [
 
 const publishCards = [
   {
-    icon: "ph-files",
+    visual: "policies",
     title: "Policies",
     description:
       "Publish privacy, security, and compliance policies with the right visibility for each audience.",
   },
   {
-    icon: "ph-shield-check",
+    visual: "controls",
     title: "Controls",
     description:
       "Show the controls behind your compliance posture without exposing internal implementation details.",
   },
   {
-    icon: "ph-file-lock",
+    visual: "reports",
     title: "Reports",
     description:
       "Share SOC 2, ISO, pentest, and other sensitive reports behind request, NDA, or company-level approval.",
   },
   {
-    icon: "ph-clipboard-text",
+    visual: "audits",
     title: "Audits",
     description:
       "Give buyers access to audit evidence and supporting documents without sending files manually.",
   },
   {
-    icon: "ph-tree-structure",
+    visual: "subprocessors",
     title: "Subprocessors",
     description:
       "List vendors and subprocessors with the right context, and keep subscribers informed when they change.",
@@ -220,14 +220,16 @@ const faqs = [
       </div>
     </section>
 
-    <section id="access-control" class="py-16 sm:py-24">
+    <section id="access-control" class="pt-16 pb-0 sm:pt-24">
       <div class="container mb-12 text-center sm:mb-16">
         <h2
           class="mx-auto max-w-[600px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
         >
           Give buyers access without losing control
         </h2>
-        <p class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-base">
+        <p
+          class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"
+        >
           Approve requests in Slack, support SSO or magic links, and keep every
           permission attached to the right company.
         </p>
@@ -253,17 +255,24 @@ const faqs = [
 
               <div
                 class:list={[
-                  "max-w-[508px] flex-1",
+                  "w-full max-w-[508px] lg:w-[508px] lg:flex-none",
                   feature.reverse ? "lg:pr-16" : "lg:pl-16",
                 ]}
               >
-                <h3 class="mb-6 text-2xl leading-8 font-semibold tracking-[-0.6px]">
+                <h3
+                  class:list={[
+                    "mb-6 font-semibold",
+                    feature.reverse
+                      ? "text-[20px] leading-7 tracking-[-0.4px]"
+                      : "text-[24px] leading-8 tracking-[-0.6px]",
+                  ]}
+                >
                   {feature.title}
                 </h3>
-                <ul class="text-muted-foreground space-y-3 text-base leading-6">
+                <ul class="text-muted-foreground space-y-3 text-[16px] leading-6">
                   {feature.bullets.map((bullet) => (
                     <li class="flex gap-2">
-                      <i class="ph ph-check mt-0.5 text-xl text-[#343330]" />
+                      <i class="ph ph-check inline-flex size-6 shrink-0 items-center justify-center text-[24px] leading-none text-current" />
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -275,35 +284,40 @@ const faqs = [
       </div>
     </section>
 
-    <section class="container py-16 sm:py-24">
-      <div class="mb-12 text-center">
+    <section class="container pt-16 pb-16 sm:pt-32 sm:pb-24">
+      <div class="mb-16 text-center">
         <h2
           class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
         >
           Publish every security resource buyers ask for
         </h2>
-        <p class="text-muted-foreground mx-auto mt-2 max-w-[520px]">
+        <p
+          class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"
+        >
           Keep the review moving without turning your team into a document
           forwarding queue.
         </p>
       </div>
 
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
         {
           publishCards.map((card) => (
-            <article class="bg-subtle rounded-2xl p-6">
-              <i
+            <article class="flex flex-col gap-6">
+              <div
                 class:list={[
-                  "ph mb-8 block text-3xl text-[#343330]",
-                  card.icon,
+                  "trust-category-visual",
+                  `trust-category-visual--${card.visual}`,
                 ]}
+                aria-hidden="true"
               />
-              <h3 class="mb-2 text-xl leading-7 font-semibold tracking-[-0.4px]">
-                {card.title}
-              </h3>
-              <p class="text-muted-foreground text-base leading-6">
-                {card.description}
-              </p>
+              <div class="flex flex-col gap-2">
+                <h3 class="text-[20px] leading-7 font-semibold tracking-[-0.4px]">
+                  {card.title}
+                </h3>
+                <p class="text-muted-foreground text-[16px] leading-6">
+                  {card.description}
+                </p>
+              </div>
             </article>
           ))
         }
@@ -372,3 +386,79 @@ const faqs = [
     </section>
   </main>
 </Layout>
+
+<style>
+  .trust-category-visual {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #f6f9f5;
+  }
+
+  .trust-category-visual--policies {
+    background:
+      radial-gradient(
+        circle at -24% -8%,
+        #e6ff03 0 42%,
+        rgb(230 255 3 / 0.28) 57%,
+        transparent 72%
+      ),
+      radial-gradient(
+        circle at -20% 108%,
+        #e6ff03 0 34%,
+        rgb(230 255 3 / 0.18) 54%,
+        transparent 72%
+      ),
+      #f6f9f5;
+  }
+
+  .trust-category-visual--controls {
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        #e6ff03 0 16%,
+        rgb(230 255 3 / 0.42) 31%,
+        rgb(246 249 245 / 0.76) 53%,
+        transparent 70%
+      ),
+      #f6f9f5;
+  }
+
+  .trust-category-visual--reports {
+    background:
+      radial-gradient(
+        circle at 50% -28%,
+        #e6ff03 0 40%,
+        rgb(230 255 3 / 0.28) 57%,
+        transparent 72%
+      ),
+      radial-gradient(
+        circle at 50% 128%,
+        #e6ff03 0 40%,
+        rgb(230 255 3 / 0.28) 57%,
+        transparent 72%
+      ),
+      #f6f9f5;
+  }
+
+  .trust-category-visual--audits {
+    background:
+      radial-gradient(
+        circle at 0% 0%,
+        #e6ff03 0 43%,
+        rgb(230 255 3 / 0.24) 60%,
+        transparent 78%
+      ),
+      #f6f9f5;
+  }
+
+  .trust-category-visual--subprocessors {
+    background:
+      radial-gradient(
+        circle at 50% 112%,
+        #e6ff03 0 45%,
+        rgb(230 255 3 / 0.24) 62%,
+        transparent 79%
+      ),
+      #f6f9f5;
+  }
+</style>
