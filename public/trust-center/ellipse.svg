@@ -1,0 +1,40 @@
+<svg
+  preserveAspectRatio="none"
+  width="100%"
+  height="100%"
+  overflow="visible"
+  style="display: block"
+  viewBox="0 0 1013.39 1013.39"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g filter="url(#trust-center-ellipse-blur)">
+    <circle
+      cx="506.693"
+      cy="506.693"
+      r="335"
+      stroke="#E6FF03"
+      stroke-width="126.734"
+    />
+  </g>
+  <defs>
+    <filter
+      id="trust-center-ellipse-blur"
+      x="0"
+      y="0"
+      width="1013.39"
+      height="1013.39"
+      filterUnits="userSpaceOnUse"
+      color-interpolation-filters="sRGB"
+    >
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend
+        mode="normal"
+        in="SourceGraphic"
+        in2="BackgroundImageFix"
+        result="shape"
+      />
+      <feGaussianBlur stdDeviation="54.1629" result="effect1_foregroundBlur" />
+    </filter>
+  </defs>
+</svg>
