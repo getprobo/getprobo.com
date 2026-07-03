@@ -1,0 +1,60 @@
+---
+title: OpenRouter
+description: Connect OpenRouter as an access source using an organization Management API key
+---
+
+Probo reads your OpenRouter organization's members through the organization members API so you can review who has access.
+
+:::caution
+Use an organization **Management API key** (`sk-or-v1-…`) created at `openrouter.ai/settings/management-keys`. A **personal inference API key** will **not** work, because it is not an organization-owned management key and cannot list organization members.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **organization admin** (`org:admin`) role in OpenRouter (mint the management key from within the organization)
+- An OpenRouter **organization** (create one under **Settings** > **Preferences** before creating the key; this requires a verified email address)
+
+## Collected Fields
+
+| Probo field | OpenRouter field                                         | Notes                                                                    |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Name        | `first_name` `last_name`                                 | Combined into a full name; falls back to the email when neither is set   |
+| Email       | `email`                                                  | The member's email address                                               |
+| Role        | `role`                                                   | `org:admin` maps to Admin, `org:member` maps to Member, otherwise the raw role |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `org:admin`                   |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews               |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating a Management API key in OpenRouter settings](/docs/access-review/openrouter-create-api-key.webp)
+
+<Steps>
+
+1. In OpenRouter (signed in as an organization **admin**), go to **Settings** > **Management API Keys** (`openrouter.ai/settings/management-keys`).
+2. Click **Create New Key**, name it (e.g. `Probo Access Review`), and confirm. Management keys have no per-scope toggles; the key type alone authorizes listing organization members.
+3. Copy the key (`sk-or-v1-…`) and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **OpenRouter**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo names the source **OpenRouter** and pulls your organization's members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it's an organization **Management API key** (`sk-or-v1-…`), not a personal inference key. A key that does not belong to an organization is rejected.
+- **No members appear.** The management key must belong to the organization you are reviewing and be created by an organization admin. A personal key returns no members.
