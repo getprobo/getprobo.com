@@ -6,7 +6,7 @@ description: Connect Anthropic as an access source using a Claude Console Admin 
 Probo reads your Anthropic organization's members through the Admin API so you can review who has access.
 
 :::caution
-Use a **Claude Console** Admin API key (`sk-ant-admin01-…`) from `platform.claude.com`. A **Claude Enterprise** key (`sk-ant-api01-…`) from `claude.ai` will **not** work.
+Use a **Claude Console** Admin API key (`sk-ant-admin01-…`) created at `platform.claude.com`. A standard Console API key (`sk-ant-api03-…`) will **not** work, because the Admin API members endpoint requires an admin key sent in the `x-api-key` header.
 :::
 
 ## Prerequisites
@@ -37,7 +37,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 <Steps>
 
 1. In the [Claude Console](https://platform.claude.com/settings/admin-keys), go to **Settings** > **Admin keys** as an organization **admin**.
-2. Click **Create key**, name it (e.g. `Probo Access Review`), and confirm. Console admin keys have no scopes, so every key carries full Admin API access.
+2. Click **+ Create admin key**, enter a name (e.g. `Probo Access Review`), and click **Add**. Console admin keys have no scopes, so every key carries full Admin API access.
 3. Copy the key (`sk-ant-admin01-…`) and store it securely. It's shown only once.
 
 </Steps>
@@ -55,5 +55,5 @@ Probo names the source after your organization and pulls its members into your c
 
 ## Troubleshooting
 
-- **Key rejected.** Confirm it's a Console admin key (`sk-ant-admin01-…`) created by an admin. Workbench keys (`sk-ant-api03-…`) and Claude Enterprise keys (`sk-ant-api01-…`) don't work.
+- **Key rejected.** Confirm it's a Console admin key (`sk-ant-admin01-…`) created by an admin. A standard Console API key (`sk-ant-api03-…`) won't work.
 - **"Admin API unavailable for individual accounts".** Set up an organization in the Console under **Settings** > **Organization** first.

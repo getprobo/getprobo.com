@@ -6,7 +6,7 @@ description: Connect Cloudflare as an access source using a scoped API Token
 Probo reads your Cloudflare account's members through the Cloudflare API so you can review who has access.
 
 :::caution
-Use a scoped **API Token** (an opaque string with no prefix) created in the Cloudflare dashboard under **My Profile** > **API Tokens**. A **Global API Key** will **not** work, because it authenticates with `X-Auth-Email` and `X-Auth-Key` headers instead of the `Authorization: Bearer` scheme Probo uses.
+Use a scoped **API Token** (newly created tokens are prefixed `cfut_`) created in the Cloudflare dashboard under **My Profile** > **API Tokens**. A **Global API Key** will **not** work, because it authenticates with `X-Auth-Email` and `X-Auth-Key` headers instead of the `Authorization: Bearer` scheme Probo uses.
 :::
 
 ## Prerequisites
@@ -17,17 +17,17 @@ Use a scoped **API Token** (an opaque string with no prefix) created in the Clou
 
 ## Collected Fields
 
-| Probo field | Cloudflare field                                         | Notes                                                                                    |
-| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Name        | `first_name` and `last_name`                             | Combined into the member's display name                                                  |
-| Email       | `email`                                                  |                                                                                          |
-| Role        | `roles[].name`                                           | Defaults to Member when the member has no roles                                          |
+| Probo field | Cloudflare field                                         | Notes                                                                                            |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Name        | `first_name` and `last_name`                             | Combined into the member's display name                                                          |
+| Email       | `email`                                                  |                                                                                                  |
+| Role        | `roles[].name`                                           | Defaults to Member when the member has no roles                                                  |
 | Admin       | `roles[].name`                                           | Flagged as an administrator when a role is Super Administrator - All Privileges or Administrator |
-| Status      | `status`                                                 | A member is active when `status` is `accepted`                                           |
-| MFA         | `two_factor_authentication_enabled`                      | Whether two-factor authentication is enabled for the member                              |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                          |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews                               |
-| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                          |
+| Status      | `status`                                                 | A member is active when `status` is `accepted`                                                   |
+| MFA         | `two_factor_authentication_enabled`                      | Whether two-factor authentication is enabled for the member                                      |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                  |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                       |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                  |
 
 ## Step 1: Create an API Token
 

@@ -17,17 +17,17 @@ Use an organization **Management API key** (`sk-or-v1-…`) created at `openrout
 
 ## Collected Fields
 
-| Probo field | OpenRouter field                                         | Notes                                                                    |
-| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------ |
-| Name        | `first_name` `last_name`                                 | Combined into a full name; falls back to the email when neither is set   |
-| Email       | `email`                                                  | The member's email address                                               |
+| Probo field | OpenRouter field                                         | Notes                                                                          |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Name        | `first_name` `last_name`                                 | Combined into a full name; falls back to the email when neither is set         |
+| Email       | `email`                                                  | The member's email address                                                     |
 | Role        | `role`                                                   | `org:admin` maps to Admin, `org:member` maps to Member, otherwise the raw role |
-| Admin       | `role`                                                   | Flagged as an administrator when `role` is `org:admin`                   |
-| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
-| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews               |
-| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                          |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `org:admin`                         |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                     |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                |
 
 ## Step 1: Create an API Key
 

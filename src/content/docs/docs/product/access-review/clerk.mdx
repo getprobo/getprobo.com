@@ -17,17 +17,17 @@ Use a **Secret Key** (`sk_live_…` for production instances, `sk_test_…` for 
 
 ## Collected Fields
 
-| Probo field | Clerk field                                              | Notes                                                          |
-| ----------- | -------------------------------------------------------- | -------------------------------------------------------------- |
-| Name        | `first_name` and `last_name`                             | Falls back to the primary email address when no name is set    |
-| Email       | `email_addresses`                                        | The primary email address                                      |
-| Role        | <Badge text="Not supported" class="badge-unsupported" /> |                                                                |
-| Admin       | <Badge text="Not supported" class="badge-unsupported" /> |                                                                |
-| Status      | `banned`, `locked`, `deprovisioned`                      | Active unless the user is banned, locked, or deprovisioned     |
-| MFA         | `two_factor_enabled`, `totp_enabled`                     | Derived from the user's two-factor or TOTP enrollment          |
-| Last login  | `last_sign_in_at`                                        | The user's most recent sign-in                                 |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews     |
-| Created at  | `created_at`                                             | When the user account was created                              |
+| Probo field | Clerk field                                                 | Notes                                                                           |
+| ----------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Name        | `first_name` and `last_name`                                | Falls back to the username, then the primary email address, when no name is set |
+| Email       | `email_addresses`                                           | The primary email address                                                       |
+| Role        | <Badge text="Not supported" class="badge-unsupported" />    |                                                                                 |
+| Admin       | <Badge text="Not supported" class="badge-unsupported" />    |                                                                                 |
+| Status      | `banned`, `locked`, `deprovisioned`                         | Active unless the user is banned, locked, or deprovisioned                      |
+| MFA         | `two_factor_enabled`, `totp_enabled`, `backup_code_enabled` | Derived from the user's two-factor, TOTP, or backup-code enrollment             |
+| Last login  | `last_sign_in_at`                                           | The user's most recent sign-in                                                  |
+| External ID | `id`                                                        | Stable identifier used to track the account across reviews                      |
+| Created at  | `created_at`                                                | When the user account was created                                               |
 
 ## Step 1: Create an API Key
 
