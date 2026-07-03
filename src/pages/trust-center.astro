@@ -84,34 +84,40 @@ const accessFeatures = [
 
 const publishCards = [
   {
-    visual: "policies",
-    title: "Policies",
+    visual: "documents",
+    title: "Documents",
     description:
-      "Publish privacy, security, and compliance policies with the right visibility for each audience.",
+      "Share SOC 2, ISO, pentest, and other reports in a structured, access-controlled library.",
   },
   {
-    visual: "controls",
-    title: "Controls",
+    visual: "protected-assets",
+    title: "Protected Assets",
     description:
-      "Show the controls behind your compliance posture without exposing internal implementation details.",
-  },
-  {
-    visual: "reports",
-    title: "Reports",
-    description:
-      "Share SOC 2, ISO, pentest, and other sensitive reports behind request, NDA, or company-level approval.",
+      "Let buyers open, review, and download each PDF in a secure, focused experience.",
   },
   {
     visual: "audits",
     title: "Audits",
     description:
-      "Give buyers access to audit evidence and supporting documents without sending files manually.",
+      "Give buyers the audit history and historical compliance materials they need when appropriate.",
   },
   {
     visual: "subprocessors",
     title: "Subprocessors",
     description:
-      "List vendors and subprocessors with the right context, and keep subscribers informed when they change.",
+      "List subprocessors with the context buyers need to assess risk.",
+  },
+  {
+    visual: "data-requests",
+    title: "Data Requests",
+    description:
+      "Handle customer data requests through a guided flow, from identity check to export delivery.",
+  },
+  {
+    visual: "security-commitments",
+    title: "Security Commitments",
+    description:
+      "Explain what your company commits to in security, in a concise, scannable, and engaging format.",
   },
 ];
 
@@ -158,7 +164,7 @@ const faqs = [
 
 <Layout
   title="Trust Center"
-  description="Give prospects one clear place to request access, sign the right NDA, and download watermarked compliance documents while your team keeps control."
+  description="Give prospects one clear place to request access, sign the right NDA, and download watermarked documents while your team keeps control."
 >
   <main class="-mt-16 overflow-hidden pt-16">
     <div class="relative isolate overflow-hidden">
@@ -298,13 +304,13 @@ const faqs = [
         <h2
           class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
         >
-          Publish every security resource buyers ask for
+          All your trust materials, organized for security review
         </h2>
         <p
           class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"
         >
-          Keep the review moving without turning your team into a document
-          forwarding queue.
+          Organize policies, controls, reports, audits, and vendors into clear
+          categories instead of scattered compliance materials.
         </p>
       </div>
 
@@ -995,33 +1001,39 @@ const faqs = [
     background: url("/trust-center/ellipse.svg") center / 100% 100% no-repeat;
   }
 
-  .trust-category-visual--policies .trust-category-halo {
+  .trust-category-visual--documents .trust-category-halo {
     top: 50%;
     right: -45px;
     transform: translateY(-50%);
   }
 
-  .trust-category-visual--controls .trust-category-halo {
+  .trust-category-visual--protected-assets .trust-category-halo {
     top: 340px;
     left: 50%;
     transform: translateX(-50%);
   }
 
-  .trust-category-visual--reports .trust-category-halo {
+  .trust-category-visual--audits .trust-category-halo {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
   }
 
-  .trust-category-visual--audits .trust-category-halo {
+  .trust-category-visual--subprocessors .trust-category-halo {
     top: 50%;
     left: 0;
     transform: translateY(-50%);
   }
 
-  .trust-category-visual--subprocessors .trust-category-halo {
+  .trust-category-visual--data-requests .trust-category-halo {
     bottom: -29px;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  .trust-category-visual--security-commitments .trust-category-halo {
+    top: 50%;
+    right: -45px;
+    transform: translateY(-50%);
   }
 </style>
