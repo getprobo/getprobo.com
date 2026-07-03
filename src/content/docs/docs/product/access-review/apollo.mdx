@@ -1,0 +1,60 @@
+---
+title: Apollo.io
+description: Connect Apollo.io as an access source using a master API key
+---
+
+Probo reads your Apollo.io account's team members through the Apollo REST API so you can review who has access. Probo reviews Apollo teammates (account seats), not prospect or contact records.
+
+:::caution
+Use a **master API key** created in Apollo under **Settings** > **Integrations** > **API Keys** with **Set as master key** enabled. A **non-master, endpoint-scoped key** will **not** work, because the Get a List of Users endpoint that Probo reads is accessible only to master keys.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Apollo account admin** role, or a permission profile that grants API key creation
+- A **master API key** (created with the **Set as master key** toggle), since Probo reads the master-key-only Get a List of Users endpoint
+
+## Collected Fields
+
+| Probo field | Apollo.io field                                          | Notes                                                      |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to first and last name, then the email          |
+| Email       | `email`                                                  |                                                            |
+| Role        | `role`                                                   | The Apollo permission-profile name for the user            |
+| Admin       | `role`                                                   | Flagged as an administrator when the role name equals `Admin` |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating a master API key in Apollo settings](/docs/access-review/apollo-create-api-key.webp)
+
+<Steps>
+
+1. In Apollo (signed in as an account admin), go to **Settings** > **Integrations** > **API Keys** > **Create new key**.
+2. Name the key (e.g. `Probo Access Review`) and toggle **Set as master key** so it can reach the Get a List of Users endpoint that Probo reads.
+3. Save the key immediately and store it securely. Apollo may not show it again.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Apollo.io**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo names the source **Apollo.io** (the fixed provider name), since Apollo exposes no stable account-name endpoint. Probo pulls the account's members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it's a master key created with **Set as master key** enabled. A non-master, endpoint-scoped key is rejected because the Get a List of Users endpoint is master-key-only.
+- **No members appear.** The key must be created by an account admin (or a permission profile that grants API key creation) and belong to the Apollo account you're reviewing.

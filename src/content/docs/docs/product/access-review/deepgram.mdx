@@ -1,0 +1,60 @@
+---
+title: Deepgram
+description: Connect Deepgram as an access source using a project API key
+---
+
+Probo reads your Deepgram account's members through the Deepgram Management API so you can review who has access.
+
+:::caution
+Use a **Deepgram project API Key** created with the **Owner** or **Admin** role. Deepgram keys have no fixed prefix, and Probo sends the key as `Authorization: Token <key>`. A **short-lived access token (JWT)** from the token-based Auth API (sent as `Authorization: Bearer <jwt>`) will **not** work, because it is a roughly 30 second Bearer token that carries only usage scope instead of the static members-read key Probo needs.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Owner** or **Admin** role in Deepgram (the key must carry owner or admin scopes so it can enumerate every project and its members)
+- A key created under a project where its holder has the Owner or Admin role, so the key can see all projects across the account
+
+## Collected Fields
+
+| Probo field | Deepgram field                                           | Notes                                                                        |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Name        | `name`                                                   | First and last name, falling back to the email                               |
+| Email       | `email`                                                  | The member's email address                                                   |
+| Role        | `scopes`                                                 | An owner scope maps to Owner, an admin scope maps to Admin, otherwise Member  |
+| Admin       | `scopes`                                                 | Flagged as an administrator when the member holds an owner or admin scope     |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| External ID | `member_id`                                              | Stable identifier used to track the account across reviews                    |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating a new API key in the Deepgram Console](/docs/access-review/deepgram-create-api-key.webp)
+
+<Steps>
+
+1. In the [Deepgram Console](https://console.deepgram.com), open the **Projects** dropdown (top left), select the project, then go to **Settings** > **API Keys**.
+2. Click **Create a New API Key**, name it (e.g. `Probo Access Review`), and choose the **Owner** or **Admin** role so the key carries members-read access across the account. You can optionally set an expiration.
+3. Copy the key and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Deepgram**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo names the source **Deepgram**. An account may span several projects, so the source keeps its generic name rather than a specific organization or project name.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it's a Deepgram project API Key with the Owner or Admin role, sent under the Token scheme. Short-lived Bearer access tokens from the token-based Auth API won't work.
+- **No members appear.** The key must carry owner or admin scopes so it can enumerate every project and its members. A Member-role or narrowly scoped project key that cannot see all projects is insufficient.
