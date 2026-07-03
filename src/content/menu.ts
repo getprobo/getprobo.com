@@ -5,6 +5,11 @@ export const menuItems = [
     href: "/about",
   },
   {
+    label: "Trust Center",
+    description: "Share security documents with prospects",
+    href: "/trust-center",
+  },
+  {
     label: "Blog",
     description: "The latest news from Probo",
     href: "/blog",
