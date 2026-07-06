@@ -458,9 +458,7 @@ const faqs = [
                   "trust-category-visual",
                   `trust-category-visual--${card.visual}`,
                 ]}
-                data-documents-visual={
-                  card.visual === "documents" ? "true" : undefined
-                }
+                data-trust-material-visual
                 aria-hidden="true"
               >
                 {visualAssets[card.visual]?.map((asset) => (
@@ -629,11 +627,11 @@ const faqs = [
 
 <script>
   const initTrustCenterAnimations = () => {
-    const documentVisuals = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-documents-visual]"),
+    const materialVisuals = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-trust-material-visual]"),
     );
 
-    if (documentVisuals.length === 0) {
+    if (materialVisuals.length === 0) {
       return;
     }
 
@@ -642,7 +640,7 @@ const faqs = [
     ).matches;
 
     if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-      documentVisuals.forEach((visual) => {
+      materialVisuals.forEach((visual) => {
         visual.classList.add("is-visible");
       });
       return;
@@ -662,7 +660,7 @@ const faqs = [
       { threshold: 0.35 },
     );
 
-    documentVisuals.forEach((visual) => {
+    materialVisuals.forEach((visual) => {
       if (visual.dataset.motionReady === "true") {
         return;
       }
@@ -1223,13 +1221,17 @@ const faqs = [
   .trust-category-browser,
   .trust-category-audit-row,
   .trust-category-subprocessor-card,
-  .trust-category-data-requests {
+  .trust-category-data-requests,
+  .trust-category-security-card {
     position: absolute;
     z-index: 1;
     display: block;
     max-width: none;
+    opacity: 1;
     pointer-events: none;
+    transform: translate3d(0, 0, 0);
     user-select: none;
+    will-change: transform, opacity;
   }
 
   .trust-category-visual--documents .trust-category-halo {
@@ -1249,7 +1251,7 @@ const faqs = [
     left: -204px;
     width: 500px;
     height: 500px;
-    --trust-asset-enter-x: -72px;
+    --trust-asset-delay: 100ms;
   }
 
   .trust-category-visual--audits .trust-category-halo {
@@ -1260,7 +1262,6 @@ const faqs = [
 
   .trust-category-audit-row {
     height: 140px;
-    --trust-asset-enter-y: 32px;
   }
 
   .trust-category-audit-row--one {
@@ -1268,6 +1269,7 @@ const faqs = [
     left: -179px;
     width: 702px;
     --trust-asset-delay: 80ms;
+    --trust-audit-enter-x: -116px;
   }
 
   .trust-category-audit-row--two {
@@ -1275,6 +1277,7 @@ const faqs = [
     left: -88px;
     width: 883px;
     --trust-asset-delay: 160ms;
+    --trust-audit-enter-x: 116px;
   }
 
   .trust-category-audit-row--three {
@@ -1282,6 +1285,7 @@ const faqs = [
     left: -179px;
     width: 702px;
     --trust-asset-delay: 240ms;
+    --trust-audit-enter-x: -116px;
   }
 
   .trust-category-documents-art {
@@ -1333,32 +1337,38 @@ const faqs = [
   .trust-category-subprocessor-card {
     width: 232.5px;
     height: 172.97px;
-    --trust-asset-enter-x: 48px;
-    --trust-asset-enter-y: -48px;
   }
 
   .trust-category-subprocessor-card--docusign {
     top: 192px;
     left: -78px;
-    --trust-asset-delay: 260ms;
+    --trust-asset-delay: 100ms;
+    --trust-stack-x: 0px;
+    --trust-stack-y: 0px;
   }
 
   .trust-category-subprocessor-card--hubspot {
     top: 144px;
     left: -31px;
-    --trust-asset-delay: 200ms;
+    --trust-asset-delay: 140ms;
+    --trust-stack-x: -47px;
+    --trust-stack-y: 48px;
   }
 
   .trust-category-subprocessor-card--linear {
     top: 96px;
     left: 16px;
-    --trust-asset-delay: 140ms;
+    --trust-asset-delay: 180ms;
+    --trust-stack-x: -94px;
+    --trust-stack-y: 96px;
   }
 
   .trust-category-subprocessor-card--stripe {
     top: 48px;
     left: 63px;
-    --trust-asset-delay: 80ms;
+    --trust-asset-delay: 220ms;
+    --trust-stack-x: -141px;
+    --trust-stack-y: 144px;
   }
 
   .trust-category-visual--data-requests .trust-category-halo {
@@ -1372,7 +1382,6 @@ const faqs = [
     left: 48px;
     width: 468px;
     height: 192px;
-    --trust-asset-enter-x: 80px;
     --trust-asset-delay: 100ms;
   }
 
@@ -1383,15 +1392,8 @@ const faqs = [
   }
 
   .trust-category-security-card {
-    position: absolute;
-    z-index: 1;
-    display: block;
     width: 201.02px;
     height: 170.72px;
-    max-width: none;
-    pointer-events: none;
-    user-select: none;
-    --trust-asset-enter-y: 36px;
   }
 
   .trust-category-security-card--encryption {
@@ -1418,50 +1420,173 @@ const faqs = [
     --trust-asset-delay: 260ms;
   }
 
-  @keyframes trust-category-asset-enter {
-    from {
+  @keyframes trust-protected-assets-enter {
+    0% {
       opacity: 0;
-      transform: translate(
-        var(--trust-asset-enter-x, 0),
-        var(--trust-asset-enter-y, 24px)
-      );
+      transform: translate3d(-96px, 96px, 0) scale(0.98);
     }
 
-    to {
+    45% {
       opacity: 1;
-      transform: translate(0, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes trust-audit-row-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(var(--trust-audit-enter-x), 0, 0);
+    }
+
+    42% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes trust-subprocessors-unstack {
+    0% {
+      opacity: 0;
+      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0)
+        scale(0.94);
+    }
+
+    24% {
+      opacity: 1;
+      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0)
+        scale(0.98);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes trust-data-requests-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(104px, 0, 0);
+    }
+
+    42% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes trust-security-card-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 42px, 0) scale(0.98);
+    }
+
+    44% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
     }
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .trust-category-visual--protected-assets .trust-category-browser,
-    .trust-category-visual--audits .trust-category-audit-row,
-    .trust-category-visual--subprocessors .trust-category-subprocessor-card,
-    .trust-category-visual--data-requests .trust-category-data-requests,
-    .trust-category-visual--security-commitments .trust-category-security-card {
-      animation: trust-category-asset-enter 900ms cubic-bezier(0.16, 1, 0.3, 1)
-        var(--trust-asset-delay, 160ms) both;
+    .trust-category-visual--protected-assets.is-awaiting-animation
+      .trust-category-browser {
+      opacity: 0;
+      transform: translate3d(-96px, 96px, 0) scale(0.98);
     }
 
-    @supports (animation-timeline: view()) {
-      .trust-category-visual--protected-assets .trust-category-browser,
-      .trust-category-visual--audits .trust-category-audit-row,
-      .trust-category-visual--subprocessors .trust-category-subprocessor-card,
-      .trust-category-visual--data-requests .trust-category-data-requests,
-      .trust-category-visual--security-commitments
-        .trust-category-security-card {
-        animation-timeline: view();
-        animation-range: entry 0% cover 38%;
-      }
+    .trust-category-visual--audits.is-awaiting-animation
+      .trust-category-audit-row {
+      opacity: 0;
+      transform: translate3d(var(--trust-audit-enter-x), 0, 0);
+    }
+
+    .trust-category-visual--subprocessors.is-awaiting-animation
+      .trust-category-subprocessor-card {
+      opacity: 0;
+      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0)
+        scale(0.94);
+    }
+
+    .trust-category-visual--data-requests.is-awaiting-animation
+      .trust-category-data-requests {
+      opacity: 0;
+      transform: translate3d(104px, 0, 0);
+    }
+
+    .trust-category-visual--security-commitments.is-awaiting-animation
+      .trust-category-security-card {
+      opacity: 0;
+      transform: translate3d(0, 42px, 0) scale(0.98);
+    }
+
+    .trust-category-visual--protected-assets.is-visible
+      .trust-category-browser {
+      animation: trust-protected-assets-enter 860ms
+        cubic-bezier(0.16, 1, 0.3, 1) var(--trust-asset-delay, 100ms) both;
+    }
+
+    .trust-category-visual--audits.is-visible .trust-category-audit-row {
+      animation: trust-audit-row-enter 760ms cubic-bezier(0.16, 1, 0.3, 1)
+        var(--trust-asset-delay, 120ms) both;
+    }
+
+    .trust-category-visual--subprocessors.is-visible
+      .trust-category-subprocessor-card {
+      animation: trust-subprocessors-unstack 940ms cubic-bezier(0.16, 1, 0.3, 1)
+        var(--trust-asset-delay, 120ms) both;
+    }
+
+    .trust-category-visual--data-requests.is-visible
+      .trust-category-data-requests {
+      animation: trust-data-requests-enter 820ms cubic-bezier(0.16, 1, 0.3, 1)
+        var(--trust-asset-delay, 100ms) both;
+    }
+
+    .trust-category-visual--security-commitments.is-visible
+      .trust-category-security-card {
+      animation: trust-security-card-enter 760ms cubic-bezier(0.16, 1, 0.3, 1)
+        var(--trust-asset-delay, 100ms) both;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .trust-category-documents-art {
+    .trust-category-documents-art,
+    .trust-category-browser,
+    .trust-category-audit-row,
+    .trust-category-subprocessor-card,
+    .trust-category-data-requests,
+    .trust-category-security-card {
       opacity: 1 !important;
       animation: none !important;
-      transform: translate3d(-50%, 0, 0) !important;
       will-change: auto;
+    }
+
+    .trust-category-documents-art {
+      transform: translate3d(-50%, 0, 0) !important;
+    }
+
+    .trust-category-browser,
+    .trust-category-audit-row,
+    .trust-category-subprocessor-card,
+    .trust-category-data-requests,
+    .trust-category-security-card {
+      transform: translate3d(0, 0, 0) !important;
     }
   }
 </style>
