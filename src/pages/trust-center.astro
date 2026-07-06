@@ -1382,11 +1382,9 @@ const faqs = [
     top: 36px;
     left: 39px;
     z-index: 4;
-    --trust-asset-delay: 80ms;
+    --trust-asset-delay: 0ms;
     --trust-stack-x: -141px;
     --trust-stack-y: 144px;
-    --trust-reveal-shift-x: 28px;
-    --trust-reveal-shift-y: -29px;
     --trust-hover-translate: 9px -9px;
   }
 
@@ -1477,24 +1475,13 @@ const faqs = [
 
   @keyframes trust-subprocessors-unstack {
     0% {
-      opacity: 0;
-      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0)
-        scale(0.94);
-    }
-
-    24% {
       opacity: 1;
-      transform: translate3d(
-          calc(var(--trust-stack-x) + var(--trust-reveal-shift-x, 0px)),
-          calc(var(--trust-stack-y) + var(--trust-reveal-shift-y, 0px)),
-          0
-        )
-        scale(0.98);
+      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0);
     }
 
     100% {
       opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
+      transform: translate3d(0, 0, 0);
     }
   }
 
@@ -1568,9 +1555,8 @@ const faqs = [
 
     .trust-category-visual--subprocessors.is-awaiting-animation
       .trust-category-subprocessor-card {
-      opacity: 0;
-      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0)
-        scale(0.94);
+      opacity: 1;
+      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0);
     }
 
     .trust-category-visual--data-requests.is-awaiting-animation
