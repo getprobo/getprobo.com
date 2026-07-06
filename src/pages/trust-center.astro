@@ -170,42 +170,29 @@ const visualAssets: Record<string, { className: string; src: string }[]> = {
       src: "/trust-center/data-requests.svg",
     },
   ],
+  "security-commitments": [
+    {
+      className:
+        "trust-category-security-card trust-category-security-card--encryption",
+      src: "/trust-center/security-encryption.svg",
+    },
+    {
+      className:
+        "trust-category-security-card trust-category-security-card--privacy",
+      src: "/trust-center/security-privacy.svg",
+    },
+    {
+      className:
+        "trust-category-security-card trust-category-security-card--monitoring",
+      src: "/trust-center/security-monitoring.svg",
+    },
+    {
+      className:
+        "trust-category-security-card trust-category-security-card--vulnerability",
+      src: "/trust-center/security-vulnerability.svg",
+    },
+  ],
 };
-
-const securityCommitmentCards = [
-  {
-    id: "encryption",
-    icon: "ph-lock-key",
-    title: "Encryption",
-    heading: "Encrypted by default across the stack.",
-    description:
-      "Customer data is encrypted with AES-256 at rest and TLS 1.3 in transit. Key access is limited and logged.",
-  },
-  {
-    id: "privacy",
-    icon: "ph-eye-slash",
-    title: "Privacy",
-    heading: "Production data never trains models.",
-    description:
-      "Production data stays isolated. Test environments use masked or synthetic datasets with strict retention controls.",
-  },
-  {
-    id: "monitoring",
-    icon: "ph-bell-ringing",
-    title: "Monitoring",
-    heading: "Security signals are triaged 24/7.",
-    description:
-      "Cloud, app, and endpoint alerts route to clear owners with documented escalation paths.",
-  },
-  {
-    id: "vulnerability",
-    icon: "ph-bug",
-    title: "Vulnerability",
-    heading: "Findings are tracked to closure.",
-    description:
-      "App, cloud, and dependency findings are scanned, prioritized, and remediated against SLAs.",
-  },
-];
 
 const trustedLogos = [
   {
@@ -423,34 +410,6 @@ const faqs = [
                     decoding="async"
                   />
                 ))}
-                {card.visual === "security-commitments" && (
-                  <div class="trust-category-security-grid">
-                    {securityCommitmentCards.map((commitment) => (
-                      <div
-                        class:list={[
-                          "trust-category-security-card",
-                          `trust-category-security-card--${commitment.id}`,
-                        ]}
-                      >
-                        <i
-                          class:list={[
-                            "ph trust-category-security-icon",
-                            commitment.icon,
-                          ]}
-                        />
-                        <span class="trust-category-security-title">
-                          {commitment.title}
-                        </span>
-                        <strong class="trust-category-security-heading">
-                          {commitment.heading}
-                        </strong>
-                        <p class="trust-category-security-copy">
-                          {commitment.description}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                )}
                 <span class="trust-category-halo" />
                 {card.visual === "documents" && (
                   <img
@@ -1352,41 +1311,16 @@ const faqs = [
     transform: translateY(-50%);
   }
 
-  .trust-category-security-grid {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-  }
-
   .trust-category-security-card {
     position: absolute;
-    display: flex;
-    flex-direction: column;
+    z-index: 1;
+    display: block;
     width: 201.02px;
     height: 170.72px;
-    overflow: hidden;
-    padding: 59.8px 19.94px 0;
-    border: 1px solid #ecefec;
-    border-radius: 6px;
-    background: #fff;
-    color: #21201c;
-    box-shadow: 0 1px 0 rgba(33, 32, 28, 0.02);
+    max-width: none;
+    pointer-events: none;
+    user-select: none;
     --trust-asset-enter-y: 36px;
-  }
-
-  .trust-category-security-card::before {
-    position: absolute;
-    inset: 0 0 auto;
-    height: 59.8px;
-    border-bottom: 1px solid rgba(33, 32, 28, 0.06);
-    background-image: radial-gradient(
-      circle,
-      rgba(164, 170, 162, 0.58) 0.7px,
-      transparent 0.8px
-    );
-    background-size: 7.1px 7.1px;
-    content: "";
   }
 
   .trust-category-security-card--encryption {
@@ -1411,43 +1345,6 @@ const faqs = [
     top: 238.7px;
     left: 269px;
     --trust-asset-delay: 260ms;
-  }
-
-  .trust-category-security-icon {
-    position: absolute;
-    top: 19.9px;
-    left: 19.9px;
-    z-index: 1;
-    display: inline-flex;
-    width: 19.9px;
-    height: 19.9px;
-    align-items: center;
-    justify-content: center;
-    color: #6b716a;
-    font-size: 16px;
-    line-height: 1;
-  }
-
-  .trust-category-security-title {
-    margin-bottom: 3.98px;
-    color: #6b716a;
-    font-size: 7.97px;
-    line-height: 9.96px;
-  }
-
-  .trust-category-security-heading {
-    margin-bottom: 3.98px;
-    color: #21201c;
-    font-size: 12.95px;
-    line-height: 15.94px;
-    font-weight: 500;
-  }
-
-  .trust-category-security-copy {
-    margin: 0;
-    color: #6b716a;
-    font-size: 8.96px;
-    line-height: 11.95px;
   }
 
   @keyframes trust-category-asset-enter {
