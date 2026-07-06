@@ -133,8 +133,8 @@ const visualAssets: Record<
     {
       className: "trust-category-browser",
       src: "/trust-center/pdf.svg",
-      width: 500,
-      height: 500,
+      width: 740,
+      height: 1071,
     },
   ],
   audits: [
@@ -147,7 +147,7 @@ const visualAssets: Record<
     {
       className: "trust-category-audit-row trust-category-audit-row--two",
       src: "/trust-center/audit-row-2.svg",
-      width: 883,
+      width: 520,
       height: 140,
     },
     {
@@ -162,36 +162,36 @@ const visualAssets: Record<
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--docusign",
       src: "/trust-center/subprocessor-docusign.svg",
-      width: 331,
-      height: 246,
+      width: 281,
+      height: 221,
     },
     {
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--hubspot",
       src: "/trust-center/subprocessor-hubspot.svg",
-      width: 331,
-      height: 246,
+      width: 281,
+      height: 221,
     },
     {
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--linear",
       src: "/trust-center/subprocessor-linear.svg",
-      width: 331,
-      height: 246,
+      width: 281,
+      height: 221,
     },
     {
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--stripe",
       src: "/trust-center/subprocessor-stripe.svg",
-      width: 331,
-      height: 246,
+      width: 281,
+      height: 221,
     },
   ],
   "data-requests": [
     {
       className: "trust-category-data-requests",
       src: "/trust-center/data-requests.svg",
-      width: 468,
+      width: 1024,
       height: 192,
     },
   ],
@@ -200,29 +200,29 @@ const visualAssets: Record<
       className:
         "trust-category-security-card trust-category-security-card--encryption",
       src: "/trust-center/security-encryption.svg",
-      width: 331,
-      height: 272,
+      width: 201,
+      height: 171,
     },
     {
       className:
         "trust-category-security-card trust-category-security-card--privacy",
       src: "/trust-center/security-privacy.svg",
-      width: 331,
-      height: 272,
+      width: 201,
+      height: 171,
     },
     {
       className:
         "trust-category-security-card trust-category-security-card--monitoring",
       src: "/trust-center/security-monitoring.svg",
-      width: 331,
-      height: 272,
+      width: 201,
+      height: 171,
     },
     {
       className:
         "trust-category-security-card trust-category-security-card--vulnerability",
       src: "/trust-center/security-vulnerability.svg",
-      width: 331,
-      height: 272,
+      width: 201,
+      height: 171,
     },
   ],
 };
@@ -449,7 +449,7 @@ const faqs = [
         </p>
       </div>
 
-      <div class="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
         {
           publishCards.map((card) => (
             <article class="flex flex-col gap-6">
@@ -1240,6 +1240,47 @@ const faqs = [
     transform: translateY(-50%);
   }
 
+  .trust-category-documents-art {
+    position: absolute;
+    top: 64px;
+    left: -154px;
+    z-index: 1;
+    width: 653px;
+    max-width: none;
+    height: 224px;
+    pointer-events: none;
+    user-select: none;
+    transform: translate3d(0, 0, 0);
+    will-change: transform, opacity;
+  }
+
+  .trust-category-visual--documents.is-awaiting-animation
+    .trust-category-documents-art {
+    opacity: 0;
+    transform: translate3d(148px, 0, 0);
+  }
+
+  .trust-category-visual--documents.is-visible .trust-category-documents-art {
+    animation: trust-documents-slide-from-right 820ms
+      cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+  }
+
+  @keyframes trust-documents-slide-from-right {
+    0% {
+      opacity: 0;
+      transform: translate3d(148px, 0, 0);
+    }
+
+    42% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
   .trust-category-visual--protected-assets .trust-category-halo {
     top: 340px;
     left: 50%;
@@ -1248,9 +1289,9 @@ const faqs = [
 
   .trust-category-visual--protected-assets .trust-category-browser {
     top: 48px;
-    left: -204px;
-    width: 500px;
-    height: 500px;
+    left: -444px;
+    width: 740px;
+    height: 1071.29px;
     --trust-asset-delay: 100ms;
   }
 
@@ -1266,8 +1307,8 @@ const faqs = [
 
   .trust-category-audit-row--one {
     top: -62px;
-    left: -179px;
-    width: 702px;
+    left: -178.67px;
+    width: 701.33px;
     --trust-asset-delay: 80ms;
     --trust-audit-enter-x: -116px;
   }
@@ -1275,57 +1316,17 @@ const faqs = [
   .trust-category-audit-row--two {
     top: 102px;
     left: -88px;
-    width: 883px;
+    width: 520px;
     --trust-asset-delay: 160ms;
     --trust-audit-enter-x: 116px;
   }
 
   .trust-category-audit-row--three {
     top: 266px;
-    left: -179px;
-    width: 702px;
+    left: -178.67px;
+    width: 701.33px;
     --trust-asset-delay: 240ms;
     --trust-audit-enter-x: -116px;
-  }
-
-  .trust-category-documents-art {
-    position: absolute;
-    top: 18.6%;
-    left: 50%;
-    z-index: 1;
-    width: 190%;
-    max-width: none;
-    height: auto;
-    pointer-events: none;
-    transform: translate3d(-50%, 0, 0);
-    will-change: transform, opacity;
-  }
-
-  .trust-category-visual--documents.is-awaiting-animation
-    .trust-category-documents-art {
-    opacity: 0;
-    transform: translate3d(calc(-50% + 148px), 0, 0);
-  }
-
-  .trust-category-visual--documents.is-visible .trust-category-documents-art {
-    animation: trust-documents-slide-from-right 820ms
-      cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
-  }
-
-  @keyframes trust-documents-slide-from-right {
-    0% {
-      opacity: 0;
-      transform: translate3d(calc(-50% + 148px), 0, 0);
-    }
-
-    42% {
-      opacity: 1;
-    }
-
-    100% {
-      opacity: 1;
-      transform: translate3d(-50%, 0, 0);
-    }
   }
 
   .trust-category-visual--subprocessors .trust-category-halo {
@@ -1335,37 +1336,37 @@ const faqs = [
   }
 
   .trust-category-subprocessor-card {
-    width: 232.5px;
-    height: 172.97px;
+    width: 280.89px;
+    height: 221.02px;
   }
 
   .trust-category-subprocessor-card--docusign {
-    top: 192px;
-    left: -78px;
+    top: 180px;
+    left: -102px;
     --trust-asset-delay: 100ms;
     --trust-stack-x: 0px;
     --trust-stack-y: 0px;
   }
 
   .trust-category-subprocessor-card--hubspot {
-    top: 144px;
-    left: -31px;
+    top: 132px;
+    left: -55px;
     --trust-asset-delay: 140ms;
     --trust-stack-x: -47px;
     --trust-stack-y: 48px;
   }
 
   .trust-category-subprocessor-card--linear {
-    top: 96px;
-    left: 16px;
+    top: 84px;
+    left: -8px;
     --trust-asset-delay: 180ms;
     --trust-stack-x: -94px;
     --trust-stack-y: 96px;
   }
 
   .trust-category-subprocessor-card--stripe {
-    top: 48px;
-    left: 63px;
+    top: 36px;
+    left: 39px;
     --trust-asset-delay: 220ms;
     --trust-stack-x: -141px;
     --trust-stack-y: 144px;
@@ -1380,7 +1381,7 @@ const faqs = [
   .trust-category-data-requests {
     top: 76px;
     left: 48px;
-    width: 468px;
+    width: 1024px;
     height: 192px;
     --trust-asset-delay: 100ms;
   }
@@ -1392,8 +1393,8 @@ const faqs = [
   }
 
   .trust-category-security-card {
-    width: 201.02px;
-    height: 170.72px;
+    width: 201.015px;
+    height: 170.717px;
   }
 
   .trust-category-security-card--encryption {
@@ -1404,19 +1405,19 @@ const faqs = [
 
   .trust-category-security-card--privacy {
     top: 48px;
-    left: 269px;
+    left: 268.985px;
     --trust-asset-delay: 140ms;
   }
 
   .trust-category-security-card--monitoring {
-    top: 238.7px;
+    top: 238.687px;
     left: 48px;
     --trust-asset-delay: 200ms;
   }
 
   .trust-category-security-card--vulnerability {
-    top: 238.7px;
-    left: 269px;
+    top: 238.687px;
+    left: 268.985px;
     --trust-asset-delay: 260ms;
   }
 
@@ -1577,10 +1578,7 @@ const faqs = [
       will-change: auto;
     }
 
-    .trust-category-documents-art {
-      transform: translate3d(-50%, 0, 0) !important;
-    }
-
+    .trust-category-documents-art,
     .trust-category-browser,
     .trust-category-audit-row,
     .trust-category-subprocessor-card,
