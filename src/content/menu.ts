@@ -1,13 +1,13 @@
 export const menuItems = [
   {
-    label: "About",
-    description: "The people and vision powering Probo",
-    href: "/about",
-  },
-  {
     label: "Trust Center",
     description: "Share security documents with prospects",
     href: "/trust-center",
+  },
+  {
+    label: "About",
+    description: "The people and vision powering Probo",
+    href: "/about",
   },
   {
     label: "Blog",
