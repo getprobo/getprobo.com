@@ -1385,6 +1385,8 @@ const faqs = [
     --trust-asset-delay: 80ms;
     --trust-stack-x: -141px;
     --trust-stack-y: 144px;
+    --trust-reveal-shift-x: 28px;
+    --trust-reveal-shift-y: -29px;
     --trust-hover-translate: 9px -9px;
   }
 
@@ -1482,7 +1484,11 @@ const faqs = [
 
     24% {
       opacity: 1;
-      transform: translate3d(var(--trust-stack-x), var(--trust-stack-y), 0)
+      transform: translate3d(
+          calc(var(--trust-stack-x) + var(--trust-reveal-shift-x, 0px)),
+          calc(var(--trust-stack-y) + var(--trust-reveal-shift-y, 0px)),
+          0
+        )
         scale(0.98);
     }
 
