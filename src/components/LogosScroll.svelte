@@ -7,19 +7,26 @@
 
   const props: { children: Snippet; class?: string } = $props();
   let slider: HTMLDivElement | null = null;
-  const options = {
-    type: "loop",
-    gap: 16,
-    arrows: false,
-    autoWidth: true,
-    pagination: false,
-    mediaQuery: "min",
-    autoScroll: {
-      pauseOnFocus: false,
-      speed: 0.7,
-      pauseOnHover: false,
-    },
-  } as const;
+  const createOptions = () => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    return {
+      type: "loop",
+      gap: 16,
+      arrows: false,
+      autoWidth: true,
+      pagination: false,
+      mediaQuery: "min",
+      autoScroll: {
+        autoStart: !prefersReducedMotion,
+        pauseOnFocus: true,
+        speed: prefersReducedMotion ? 0 : 0.7,
+        pauseOnHover: true,
+      },
+    } as const;
+  };
 
   onMount(() => {
     if (!slider) {
@@ -30,7 +37,10 @@
     Array.from(slot.children).forEach((child) => {
       child.classList.add("splide__slide");
     });
-    const s = new Splide(slider, options).mount({ AutoScroll, Intersection });
+    const s = new Splide(slider, createOptions()).mount({
+      AutoScroll,
+      Intersection,
+    });
     return () => {
       s.destroy();
     };

@@ -8,6 +8,10 @@ import LogosScroll from "../components/LogosScroll.svelte";
 import FabienDevos from "../assets/testimonial/fabien-devos-vybe.png";
 import VybeFounders from "../assets/stories/vybe-founder.png";
 
+const pageTitle = "Trust Center Software with NDA Access Control";
+const pageDescription =
+  "Give prospects one secure Trust Center to request access, sign the right NDA, and download watermarked compliance documents while your team keeps control.";
+
 const overviewFeatures = [
   {
     icon: "ph-file-c",
@@ -121,25 +125,36 @@ const publishCards = [
   },
 ];
 
-const visualAssets: Record<string, { className: string; src: string }[]> = {
+const visualAssets: Record<
+  string,
+  { className: string; src: string; width: number; height: number }[]
+> = {
   "protected-assets": [
     {
       className: "trust-category-browser",
       src: "/trust-center/pdf.svg",
+      width: 500,
+      height: 500,
     },
   ],
   audits: [
     {
       className: "trust-category-audit-row trust-category-audit-row--one",
       src: "/trust-center/audit-row-1.svg",
+      width: 702,
+      height: 140,
     },
     {
       className: "trust-category-audit-row trust-category-audit-row--two",
       src: "/trust-center/audit-row-2.svg",
+      width: 883,
+      height: 140,
     },
     {
       className: "trust-category-audit-row trust-category-audit-row--three",
       src: "/trust-center/audit-row-3.svg",
+      width: 702,
+      height: 140,
     },
   ],
   subprocessors: [
@@ -147,27 +162,37 @@ const visualAssets: Record<string, { className: string; src: string }[]> = {
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--docusign",
       src: "/trust-center/subprocessor-docusign.svg",
+      width: 331,
+      height: 246,
     },
     {
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--hubspot",
       src: "/trust-center/subprocessor-hubspot.svg",
+      width: 331,
+      height: 246,
     },
     {
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--linear",
       src: "/trust-center/subprocessor-linear.svg",
+      width: 331,
+      height: 246,
     },
     {
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--stripe",
       src: "/trust-center/subprocessor-stripe.svg",
+      width: 331,
+      height: 246,
     },
   ],
   "data-requests": [
     {
       className: "trust-category-data-requests",
       src: "/trust-center/data-requests.svg",
+      width: 468,
+      height: 192,
     },
   ],
   "security-commitments": [
@@ -199,11 +224,37 @@ const trustedLogos = [
     src: "/clients/trace_for_good.svg",
     alt: "Trace for Good",
     class: "trusted-logo--trace",
+    width: 1023,
+    height: 154,
   },
-  { src: "/clients/jimo.svg", alt: "Jimo", class: "trusted-logo--jimo" },
-  { src: "/clients/lucis.svg", alt: "Lucis", class: "trusted-logo--lucis" },
-  { src: "/clients/filz.svg", alt: "Filiz", class: "trusted-logo--filiz" },
-  { src: "/clients/ahrefs.svg", alt: "Ahrefs", class: "trusted-logo--ahrefs" },
+  {
+    src: "/clients/jimo.svg",
+    alt: "Jimo",
+    class: "trusted-logo--jimo",
+    width: 72,
+    height: 36,
+  },
+  {
+    src: "/clients/lucis.svg",
+    alt: "Lucis",
+    class: "trusted-logo--lucis",
+    width: 246,
+    height: 74,
+  },
+  {
+    src: "/clients/filz.svg",
+    alt: "Filiz",
+    class: "trusted-logo--filiz",
+    width: 598,
+    height: 240,
+  },
+  {
+    src: "/clients/ahrefs.svg",
+    alt: "Ahrefs",
+    class: "trusted-logo--ahrefs",
+    width: 74,
+    height: 19,
+  },
 ];
 
 const faqs = [
@@ -235,10 +286,7 @@ const faqs = [
 ];
 ---
 
-<Layout
-  title="Trust Center"
-  description="Give prospects one clear place to request access, sign the right NDA, and download watermarked documents while your team keeps control."
->
+<Layout title={pageTitle} description={pageDescription}>
   <main class="-mt-16 overflow-hidden pt-16">
     <div class="relative isolate overflow-hidden">
       <div
@@ -297,7 +345,10 @@ const faqs = [
         {
           overviewFeatures.map((feature) => (
             <div class="overview-feature">
-              <i class:list={["ph overview-feature-icon", feature.icon]} />
+              <i
+                class:list={["ph overview-feature-icon", feature.icon]}
+                aria-hidden="true"
+              />
               <div class="overview-feature-copy">
                 <h3>{feature.title}</h3>
                 <p>{feature.description}</p>
@@ -360,7 +411,10 @@ const faqs = [
                 <ul class="text-muted-foreground space-y-3 text-[16px] leading-6">
                   {feature.bullets.map((bullet) => (
                     <li class="flex gap-2">
-                      <i class="ph ph-check inline-flex size-6 shrink-0 items-center justify-center text-[24px] leading-none text-current" />
+                      <i
+                        class="ph ph-check inline-flex size-6 shrink-0 items-center justify-center text-[24px] leading-none text-current"
+                        aria-hidden="true"
+                      />
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -406,6 +460,8 @@ const faqs = [
                     class={asset.className}
                     src={asset.src}
                     alt=""
+                    width={asset.width}
+                    height={asset.height}
                     loading="lazy"
                     decoding="async"
                   />
@@ -499,7 +555,14 @@ const faqs = [
                 {
                   trustedLogos.map((logo) => (
                     <span class:list={["trusted-logo-item", logo.class]}>
-                      <img src={logo.src} alt={logo.alt} loading="lazy" />
+                      <img
+                        src={logo.src}
+                        alt={logo.alt}
+                        width={logo.width}
+                        height={logo.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </span>
                   ))
                 }
