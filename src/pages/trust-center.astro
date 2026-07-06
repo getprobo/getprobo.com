@@ -1417,28 +1417,32 @@ const faqs = [
     top: 48px;
     left: 48px;
     --trust-asset-delay: 80ms;
-    --trust-hover-translate: 0 -6px;
+    --trust-hover-delay: 0ms;
+    --trust-hover-translate: 0 -10px;
   }
 
   .trust-category-security-card--privacy {
     top: 48px;
     left: 269.015px;
     --trust-asset-delay: 140ms;
-    --trust-hover-translate: 0 -6px;
+    --trust-hover-delay: 60ms;
+    --trust-hover-translate: 0 -10px;
   }
 
   .trust-category-security-card--monitoring {
     top: 238.717px;
     left: 48px;
     --trust-asset-delay: 200ms;
-    --trust-hover-translate: 0 -6px;
+    --trust-hover-delay: 120ms;
+    --trust-hover-translate: 0 -10px;
   }
 
   .trust-category-security-card--vulnerability {
     top: 238.717px;
     left: 269.015px;
     --trust-asset-delay: 260ms;
-    --trust-hover-translate: 0 -6px;
+    --trust-hover-delay: 180ms;
+    --trust-hover-translate: 0 -10px;
   }
 
   @keyframes trust-protected-assets-enter {
@@ -1538,6 +1542,11 @@ const faqs = [
           .trust-category-security-card
         ) {
         translate: var(--trust-hover-translate, 0 0);
+      }
+
+      .trust-category-visual--security-commitments.is-visible:hover
+        .trust-category-security-card {
+        transition-delay: var(--trust-hover-delay, 0ms);
       }
     }
 
