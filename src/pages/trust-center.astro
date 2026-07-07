@@ -300,26 +300,33 @@ const faqs = [
       <div
         aria-hidden="true"
         data-node-id="241:851"
-        class="pointer-events-none absolute top-[-1314px] left-1/2 z-0 size-[2265px] -translate-x-1/2 rounded-full border-[350px] border-[#E6FF03] blur-[96px]"
+        class="animation-delay-100 animate-fade-in pointer-events-none absolute top-[-1314px] left-1/2 z-0 size-[2265px] -translate-x-1/2 rounded-full border-[350px] border-[#E6FF03] blur-[96px]"
       >
       </div>
 
       <section class="relative z-10 container py-16 text-center sm:py-24">
         <div
-          class="border-border-low text-tertiary-foreground mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
+          class="border-border-low text-tertiary-foreground animate-perspective-in mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
         >
           Trust Center
         </div>
         <h1
-          class="mx-auto mb-6 max-w-[600px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
+          class="animate-perspective-in animation-delay-100 mx-auto mb-6 max-w-[600px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
         >
           Your compliance documentation with access control.
         </h1>
-        <p class="text-muted-foreground mx-auto mb-8 max-w-[420px] text-base">
+        <p
+          class="text-muted-foreground animate-perspective-in animation-delay-200 mx-auto mb-8 max-w-[420px] text-base"
+        >
           Give prospects one clear place to request access, sign the right NDA,
           and download watermarked documents while your team keeps control.
         </p>
-        <Button href="/contact" size="lg" class="mx-auto">Book a demo</Button>
+        <Button
+          href="/contact"
+          size="lg"
+          class="animate-perspective-in animation-delay-300 mx-auto"
+          >Book a demo</Button
+        >
       </section>
 
       <section class="relative z-10 container pb-0">
@@ -331,7 +338,7 @@ const faqs = [
           loading="eager"
           decoding="async"
           fetchpriority="high"
-          class="mx-auto h-auto w-full"
+          class="animate-slide-in animation-delay-350 mx-auto h-auto w-full"
         />
       </section>
     </div>
@@ -339,11 +346,14 @@ const faqs = [
     <section class="container pt-16 pb-0 text-center sm:pt-32">
       <h2
         class="mx-auto max-w-[552px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance text-[#141e12]"
+        data-trust-reveal
       >
         Everything your buyers need to review security, in one place.
       </h2>
       <p
         class="mx-auto mt-2 max-w-[504px] text-[16px] leading-6 text-[#6b716a]"
+        data-trust-reveal
+        style="--trust-reveal-delay: 100ms"
       >
         Help buyers find the right materials faster, while your team decides
         what is public, restricted, or approval-only.
@@ -351,8 +361,12 @@ const faqs = [
 
       <div class="overview-feature-grid mt-16">
         {
-          overviewFeatures.map((feature) => (
-            <div class="overview-feature">
+          overviewFeatures.map((feature, index) => (
+            <div
+              class="overview-feature"
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 70}ms`}
+            >
               <i
                 class:list={["ph overview-feature-icon", feature.icon]}
                 aria-hidden="true"
@@ -371,11 +385,14 @@ const faqs = [
       <div class="container mb-12 text-center sm:mb-16">
         <h2
           class="mx-auto max-w-[600px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+          data-trust-reveal
         >
           Give buyers access without losing control
         </h2>
         <p
           class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
         >
           Approve requests in Slack, support SSO or magic links, and keep every
           permission attached to the right company.
@@ -384,12 +401,14 @@ const faqs = [
 
       <div class="space-y-8 sm:space-y-12">
         {
-          accessFeatures.map((feature) => (
+          accessFeatures.map((feature, index) => (
             <div
               class:list={[
                 "container flex flex-col gap-8 lg:items-center lg:gap-16",
                 feature.reverse ? "lg:flex-row-reverse" : "lg:flex-row",
               ]}
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 80}ms`}
             >
               <div class="bg-subtle relative aspect-[508/664] w-full overflow-hidden rounded-2xl lg:w-[508px] lg:flex-none">
                 <LottiePlayer
@@ -438,11 +457,14 @@ const faqs = [
       <div class="mb-16 text-center">
         <h2
           class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+          data-trust-reveal
         >
           All your trust materials, organized for security review
         </h2>
         <p
           class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
         >
           Organize policies, controls, reports, audits, and vendors into clear
           categories instead of scattered compliance materials.
@@ -451,8 +473,12 @@ const faqs = [
 
       <div class="grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
         {
-          publishCards.map((card) => (
-            <article class="flex flex-col gap-6">
+          publishCards.map((card, index) => (
+            <article
+              class="flex flex-col gap-6"
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 70}ms`}
+            >
               <div
                 class:list={[
                   "trust-category-visual",
@@ -503,11 +529,14 @@ const faqs = [
       <div class="pb-12 text-center sm:pb-16">
         <h2
           class="text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
+          data-trust-reveal
         >
           Trusted by 130+ companies
         </h2>
         <p
           class="mx-auto mt-2 max-w-[504px] text-[16px] leading-6 text-[#6b716a]"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
         >
           Security teams use Probo to share the right materials, protect
           sensitive documents, and keep access requests moving.
@@ -515,7 +544,11 @@ const faqs = [
       </div>
 
       <div class="trusted-showcase">
-        <div class="trusted-photo-card">
+        <div
+          class="trusted-photo-card"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
+        >
           <Image
             src={VybeFounders}
             alt="Fabien Devos and the Vybe founding team"
@@ -527,7 +560,11 @@ const faqs = [
           />
         </div>
 
-        <div class="trusted-quote-card">
+        <div
+          class="trusted-quote-card"
+          data-trust-reveal
+          style="--trust-reveal-delay: 180ms"
+        >
           <span class="trusted-quote-halo" aria-hidden="true"></span>
           <div class="trusted-quote-content">
             <blockquote class="trusted-quote">
@@ -582,13 +619,19 @@ const faqs = [
     <section class="container pt-16 pb-16 sm:pt-32 sm:pb-24">
       <h2
         class="mb-6 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
+        data-trust-reveal
       >
         Frequently asked questions
       </h2>
       <div class="faq-accordion mx-auto max-w-[768px]" data-faq-accordion>
         {
           faqs.map((faq, index) => (
-            <div class="faq-item" data-faq-item>
+            <div
+              class="faq-item"
+              data-faq-item
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 60}ms`}
+            >
               <h3>
                 <button
                   class="faq-trigger"
@@ -630,8 +673,11 @@ const faqs = [
     const materialVisuals = Array.from(
       document.querySelectorAll<HTMLElement>("[data-trust-material-visual]"),
     );
+    const revealTargets = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-trust-reveal]"),
+    );
 
-    if (materialVisuals.length === 0) {
+    if (materialVisuals.length === 0 && revealTargets.length === 0) {
       return;
     }
 
@@ -643,10 +689,13 @@ const faqs = [
       materialVisuals.forEach((visual) => {
         visual.classList.add("is-visible");
       });
+      revealTargets.forEach((target) => {
+        target.classList.add("is-visible");
+      });
       return;
     }
 
-    const observer = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
@@ -654,11 +703,35 @@ const faqs = [
           }
 
           entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    const materialObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          materialObserver.unobserve(entry.target);
         });
       },
       { threshold: 0.35 },
     );
+
+    revealTargets.forEach((target) => {
+      if (target.dataset.revealReady === "true") {
+        return;
+      }
+
+      target.dataset.revealReady = "true";
+      target.classList.add("is-awaiting-reveal");
+      revealObserver.observe(target);
+    });
 
     materialVisuals.forEach((visual) => {
       if (visual.dataset.motionReady === "true") {
@@ -667,7 +740,7 @@ const faqs = [
 
       visual.dataset.motionReady = "true";
       visual.classList.add("is-awaiting-animation");
-      observer.observe(visual);
+      materialObserver.observe(visual);
     });
   };
 
@@ -758,6 +831,34 @@ const faqs = [
 </script>
 
 <style>
+  [data-trust-reveal] {
+    --trust-reveal-delay: 0ms;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-trust-reveal].is-awaiting-reveal {
+      opacity: 0;
+      transform: translate3d(0, 50px, 0);
+    }
+
+    [data-trust-reveal].is-visible {
+      animation: trust-reveal-slide-in var(--spring-smooth) 850ms
+        var(--trust-reveal-delay) both;
+    }
+  }
+
+  @keyframes trust-reveal-slide-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 50px, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
   .overview-feature-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
