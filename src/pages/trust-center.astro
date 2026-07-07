@@ -878,13 +878,14 @@ const faqs = [
 
   @media (prefers-reduced-motion: no-preference) {
     .trust-hero-orb {
-      animation: trust-hero-orb-scale-in var(--spring-smooth) 900ms 80ms both;
+      animation: trust-hero-orb-scale-in cubic-bezier(0.8, 0, 0.2, 1) 900ms
+        900ms both;
     }
   }
 
   @keyframes trust-hero-orb-scale-in {
     from {
-      transform: translateX(-50%) scale(0.9);
+      transform: translateX(-50%) scale(0);
     }
 
     to {
