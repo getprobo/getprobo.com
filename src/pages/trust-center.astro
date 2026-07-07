@@ -300,13 +300,14 @@ const faqs = [
       <div
         aria-hidden="true"
         data-node-id="241:851"
-        class="animation-delay-100 animate-fade-in pointer-events-none absolute top-[-1314px] left-1/2 z-0 size-[2265px] -translate-x-1/2 rounded-full border-[350px] border-[#E6FF03] blur-[96px]"
+        class="trust-hero-orb pointer-events-none absolute top-[-1314px] left-1/2 z-0 size-[2265px] rounded-full border-[350px] border-[#E6FF03] blur-[96px]"
       >
       </div>
 
       <section class="relative z-10 container py-16 text-center sm:py-24">
         <div
           class="border-border-low text-tertiary-foreground animate-perspective-in mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
+          style="animation-delay: 100ms"
         >
           Trust Center
         </div>
@@ -315,38 +316,45 @@ const faqs = [
           aria-label="Your compliance documentation with access control."
         >
           <span aria-hidden="true" class="block overflow-hidden">
-            <span class="animate-perspective-in animation-delay-100 block"
-              >Your compliance</span
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 150ms">Your compliance</span
             >
           </span>
           <span aria-hidden="true" class="hidden overflow-hidden sm:block">
-            <span class="animate-perspective-in animation-delay-150 block"
-              >documentation with</span
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 200ms">documentation with</span
             >
           </span>
           <span aria-hidden="true" class="block overflow-hidden sm:hidden">
-            <span class="animate-perspective-in animation-delay-150 block"
-              >documentation</span
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 200ms">documentation</span
             >
           </span>
           <span aria-hidden="true" class="block overflow-hidden sm:hidden">
-            <span class="animate-perspective-in animation-delay-200 block"
-              >with</span
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 250ms">with</span
             >
           </span>
           <span aria-hidden="true" class="hidden overflow-hidden sm:block">
-            <span class="animate-perspective-in animation-delay-200 block"
-              >access control.</span
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 250ms">access control.</span
             >
           </span>
           <span aria-hidden="true" class="block overflow-hidden sm:hidden">
-            <span class="animate-perspective-in animation-delay-250 block"
-              >access control.</span
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 300ms">access control.</span
             >
           </span>
         </h1>
         <p
-          class="text-muted-foreground animate-perspective-in animation-delay-200 mx-auto mb-8 max-w-[420px] text-base"
+          class="text-muted-foreground animate-perspective-in mx-auto mb-8 max-w-[420px] text-base"
+          style="animation-delay: 350ms"
         >
           Give prospects one clear place to request access, sign the right NDA,
           and download watermarked documents while your team keeps control.
@@ -354,8 +362,8 @@ const faqs = [
         <Button
           href="/contact"
           size="lg"
-          class="animate-perspective-in animation-delay-300 mx-auto"
-          >Book a demo</Button
+          class="animate-perspective-in mx-auto"
+          style="animation-delay: 400ms">Book a demo</Button
         >
       </section>
 
@@ -368,7 +376,8 @@ const faqs = [
           loading="eager"
           decoding="async"
           fetchpriority="high"
-          class="animate-slide-in animation-delay-350 mx-auto h-auto w-full"
+          class="animate-slide-in mx-auto h-auto w-full"
+          style="animation-delay: 450ms"
         />
       </section>
     </div>
@@ -861,6 +870,28 @@ const faqs = [
 </script>
 
 <style>
+  .trust-hero-orb {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .trust-hero-orb {
+      animation: trust-hero-orb-scale-in var(--spring-smooth) 900ms 80ms both;
+    }
+  }
+
+  @keyframes trust-hero-orb-scale-in {
+    from {
+      transform: translateX(-50%) scale(0.9);
+    }
+
+    to {
+      transform: translateX(-50%) scale(1);
+    }
+  }
+
   [data-trust-reveal] {
     --trust-reveal-delay: 0ms;
   }
