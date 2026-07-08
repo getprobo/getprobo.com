@@ -8,16 +8,16 @@ import LogosScroll from "../components/LogosScroll.svelte";
 import FabienDevos from "../assets/testimonial/fabien-devos-vybe.png";
 import VybeFounders from "../assets/stories/vybe-founder.png";
 
-const pageTitle = "Trust Center Software with NDA Access Control";
+const pageTitle = "Compliance Portal Software with NDA Access Control";
 const pageDescription =
-  "Give prospects one secure Trust Center to request access, sign the right NDA, and download watermarked compliance documents while your team keeps control.";
+  "Give prospects one secure Compliance Portal to request access, sign the right NDA, and download watermarked compliance documents while your team keeps control.";
 
 const overviewFeatures = [
   {
     icon: "ph-file-c",
     title: "Compliance docs, with granular permissions",
     description:
-      "Share key security materials from one Trust Center, and decide what stays public, restricted, or approval-only.",
+      "Share key security materials from one Compliance Portal, and decide what stays public, restricted, or approval-only.",
   },
   {
     icon: "ph-slack-logo",
@@ -29,7 +29,7 @@ const overviewFeatures = [
     icon: "ph-signature",
     title: "Your documents under an NDA",
     description:
-      "Let prospects sign an NDA in the Trust Center before downloading protected, watermarked files.",
+      "Let prospects sign an NDA in the Compliance Portal before downloading protected, watermarked files.",
   },
   {
     icon: "ph-key",
@@ -52,7 +52,7 @@ const accessFeatures = [
     bullets: [
       "Review access requests directly from Slack.",
       "Notify the right owners when a prospect needs access.",
-      "Keep every decision synced with your Trust Center automatically.",
+      "Keep every decision synced with your Compliance Portal automatically.",
     ],
   },
   {
@@ -267,19 +267,40 @@ const trustedLogos = [
 
 const faqs = [
   {
-    question: "Can we make some documents public and others restricted?",
+    question: "Can we host it on our own domain?",
     answer:
-      "Yes. Keep general resources open, gate sensitive files, and decide what stays restricted or approval-only.",
+      "Yes. Add a CNAME record pointing to your Compliance Portal, and it will run on your own domain, such as trust.yourcompany.com.",
+  },
+  {
+    question: "How long does it take to set up?",
+    answer:
+      "Just a few minutes. Once your compliance content lives in Probo, publishing your Compliance Portal is nearly instant, and you can even set it up via MCP.",
+  },
+  {
+    question: "Can we show a pen test report or security questionnaire?",
+    answer:
+      "Yes. Add any document to Probo, then choose its visibility on your Compliance Portal: public, restricted, or hidden.",
+  },
+  {
+    question: "Can requests be approved from Slack?",
+    answer:
+      "Yes. Connect a Slack channel to receive access requests directly: approve or revoke access in one click, with every decision synced back to the Compliance Portal. You can also manage requests anytime from the access request page in Probo.",
+  },
+  {
+    question: "Can we list our third parties?",
+    answer:
+      "Yes. Every third party in your Probo organization is available to display. You decide which ones to show and which to keep private.",
+  },
+  {
+    question:
+      "Does it update automatically when our controls or documents change?",
+    answer:
+      "Yes. Your Compliance Portal always shows the latest version of every document, so it stays current without manual updates.",
   },
   {
     question: "Can access require an NDA?",
     answer:
       "Yes. Prospects can sign an NDA before opening protected files, so access stays controlled without slowing the review.",
-  },
-  {
-    question: "Can requests be approved from Slack?",
-    answer:
-      "Yes. The right owner can review the request in Slack, approve access, and keep the decision synced with the Trust Center.",
   },
   {
     question: "Can buyers access without creating an account?",
@@ -309,7 +330,7 @@ const faqs = [
           class="border-border-low text-tertiary-foreground animate-perspective-in mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
           style="animation-delay: 100ms"
         >
-          Trust Center
+          Compliance Portal
         </div>
         <h1
           class="mx-auto mb-6 max-w-[600px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
@@ -370,7 +391,7 @@ const faqs = [
       <section class="relative z-10 container pb-0">
         <img
           src="/trust-center/browser.svg"
-          alt="Acme Trust Center browser preview"
+          alt="Acme Compliance Portal browser preview"
           width="1146"
           height="786"
           loading="eager"
@@ -498,7 +519,7 @@ const faqs = [
           class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
           data-trust-reveal
         >
-          All your trust materials, organized for security review
+          All your compliance materials, organized for security review
         </h2>
         <p
           class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"

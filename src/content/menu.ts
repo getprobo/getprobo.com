@@ -1,7 +1,7 @@
 export const menuItems = [
   {
-    label: "Trust Center",
-    description: "Share security documents with prospects",
+    label: "Compliance Portal",
+    description: "Share compliance materials with prospects",
     href: "/trust-center",
   },
   {
