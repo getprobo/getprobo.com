@@ -13,9 +13,10 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const mediaUrl = entry.data.image;
-const isVideoMedia =
-  typeof mediaUrl === "string" && /\.(mp4|webm)$/i.test(mediaUrl);
+const mediaUrls =
+  entry.data.images ?? (entry.data.image ? [entry.data.image] : []);
+const isLogoLayout = entry.data.imagesLayout === "logos";
+const isVideoMedia = (url: string) => /\.(mp4|webm)$/i.test(url);
 const dateFormatter = Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
@@ -68,20 +69,32 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
     </p>
 
     {
-      mediaUrl &&
-        (isVideoMedia ? (
-          <video
-            src={mediaUrl}
-            controls
-            playsinline
-            class="shadow-image animate-slide-in animation-delay-200 mb-10 w-full rounded-lg"
-          />
+      mediaUrls.length > 0 &&
+        (isLogoLayout ? (
+          <div class="animate-slide-in animation-delay-200 mb-10 flex flex-wrap items-center gap-6">
+            {mediaUrls.map((url) => (
+              <img src={url} alt={entry.data.title} class="h-12 w-auto" />
+            ))}
+          </div>
         ) : (
-          <img
-            src={mediaUrl}
-            alt={entry.data.title}
-            class="shadow-image animate-slide-in animation-delay-200 mb-10 w-full rounded-lg"
-          />
+          <div class="mb-10 flex flex-col gap-6">
+            {mediaUrls.map((url) =>
+              isVideoMedia(url) ? (
+                <video
+                  src={url}
+                  controls
+                  playsinline
+                  class="shadow-image animate-slide-in animation-delay-200 w-full rounded-lg"
+                />
+              ) : (
+                <img
+                  src={url}
+                  alt={entry.data.title}
+                  class="shadow-image animate-slide-in animation-delay-200 mx-auto max-h-[600px] w-auto max-w-full rounded-lg object-contain"
+                />
+              ),
+            )}
+          </div>
         ))
     }
 

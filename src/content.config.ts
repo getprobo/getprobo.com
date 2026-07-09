@@ -51,6 +51,8 @@ const changelog = defineCollection({
     description: z.string(),
     date: z.date(),
     image: z.string().optional(),
+    images: z.array(z.string()).optional(),
+    imagesLayout: z.enum(["stacked", "logos"]).default("stacked"),
     tags: z.array(z.string()).default([]),
   }),
 });
