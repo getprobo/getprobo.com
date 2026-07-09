@@ -1,0 +1,13 @@
+---
+title: "Risk Assessment Boundaries"
+description: "Group risk assessment nodes into named boundaries so large diagrams stay readable."
+date: 2026-06-09
+image: "/changelog/2026-06-09-risk-assessment-boundaries.png"
+tags: ["Console"]
+---
+
+Risk assessment diagrams get messy once a team maps more than a handful of nodes. Everything lives on one flat canvas, so scope boundaries only exist in someone's head.
+-risk-assessment
+Boundaries fix that. Create a boundary within a risk assessment scope, then assign nodes to it. The Mermaid diagram renders each boundary as its own labeled subgraph, so you can see at a glance which nodes belong to which part of the system. Boundaries can nest inside each other too, for teams that split assessments by business unit and then by system.
+
+It's available in the console, the CLI (`prb risk-assessment boundary`), and through MCP tools.
