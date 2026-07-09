@@ -1,0 +1,12 @@
+---
+title: "DocuSign Signing Integration"
+description: "Connect DocuSign with OAuth2 and pick which account to use, no manual API key wrangling required."
+date: 2026-06-24
+tags: ["Console"]
+---
+
+Some teams run their signing workflows through DocuSign instead of Probo's built-in e-signature flow. Now you can connect the two.
+
+The integration uses a full OAuth2 authorization-code flow with PKCE, so there's no API key to copy around. If your DocuSign login has access to multiple accounts, you'll get an account picker; the account you choose is saved, and Probo resolves the correct regional data-center URL for it automatically.
+
+Connect it from the integrations page and your DocuSign account stays linked until you disconnect it.
