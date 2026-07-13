@@ -44,6 +44,28 @@ const stories = defineCollection({
   }),
 });
 
+const hub = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/hub" }),
+  schema: z.object({
+    title: z.string(),
+    /** Word/phrase within `title` to highlight in the article <h1> */
+    highlight: z.string().optional(),
+    /** Small pill shown under the <h1> (e.g. "The Complete SOC 2 Guide for 2026") */
+    eyebrow: z.string().optional(),
+    description: z.string(),
+    /** Card label on the hub index (e.g. "Guide", "Comparison", "Checklist") */
+    tag: z.string().default("Guide"),
+    /** Tailwind gradient classes for the card accent */
+    accentColor: z.string().default("from-emerald-400 to-teal-500"),
+    /** FrameworkBadge names rendered next to the <h1> */
+    badges: z.array(z.string()).default([]),
+    date: z.date(),
+    dateModified: z.date().optional(),
+    ogImage: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
 const changelog = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/changelog" }),
   schema: z.object({
@@ -72,4 +94,4 @@ const docs = defineCollection({
   schema: docsSchema(),
 });
 
-export const collections = { blog, stories, docs, changelog, jobs };
+export const collections = { blog, stories, docs, changelog, jobs, hub };

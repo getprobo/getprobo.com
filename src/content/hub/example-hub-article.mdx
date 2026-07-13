@@ -1,0 +1,43 @@
+---
+title: "Example Hub Article"
+highlight: "Hub"
+eyebrow: "A template for hub articles"
+description: "A starter template showing how a hub article is structured. Duplicate this file, update the frontmatter, and write your content in Markdown."
+tag: "Guide"
+accentColor: "from-emerald-400 to-teal-500"
+badges: []
+date: 2026-07-13
+draft: true
+---
+
+This is an example hub article. Everything above the `---` divider is
+frontmatter that powers the article header, the hub index card, and the SEO
+metadata. Everything below is written in plain Markdown (or MDX, so you can
+import and use components).
+
+The table of contents on the left is generated automatically from your `##`
+(h2) headings, and scroll-spy highlighting works out of the box.
+
+## How it works
+
+Create one `.mdx` file in `src/content/hub/`. The filename becomes the URL
+slug, so this file is served at `/hub/example-hub-article`. It appears in the
+"Articles & Comparisons" section of `/hub` automatically, sorted by `date`.
+
+## Frontmatter reference
+
+- `title` — the article `<h1>` and SEO title.
+- `highlight` — optional word inside `title` to visually highlight.
+- `eyebrow` — optional pill shown under the title.
+- `description` — the hub card text and meta description.
+- `tag` — the hub card label (e.g. "Guide", "Comparison", "Checklist").
+- `accentColor` — Tailwind gradient classes for the card accent.
+- `badges` — optional framework badge names shown next to the title.
+- `date` / `dateModified` — used for sorting and `Article` schema.
+- `ogImage` — optional Open Graph image path.
+- `draft` — set to `true` to hide the article from the build.
+
+## Publishing
+
+Remove `draft: true` (or set it to `false`) and the article goes live on the
+next build. Delete this file once you have created your own.

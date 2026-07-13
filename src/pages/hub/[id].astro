@@ -1,0 +1,223 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Prose from "../../components/Prose.astro";
+import FrameworkBadge from "../../components/FrameworkBadge.svelte";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("hub", ({ data }) => !data.draft);
+  return articles.map((article) => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { data } = article;
+const { Content, headings } = await render(article);
+
+const toc = headings.filter((heading) => heading.depth === 2);
+
+const pageUrl = `https://www.probo.com/hub/${article.id}`;
+const datePublished = data.date.toISOString().split("T")[0];
+const dateModified = (data.dateModified ?? data.date).toISOString().split("T")[0];
+
+const headlineParts =
+  data.highlight && data.title.includes(data.highlight)
+    ? data.title.split(data.highlight)
+    : null;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: data.title,
+  description: data.description,
+  author: {
+    "@type": "Organization",
+    name: "Probo",
+    url: "https://www.probo.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Probo",
+    url: "https://www.probo.com",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.probo.com/probo-logo.svg",
+    },
+  },
+  datePublished,
+  dateModified,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": pageUrl,
+  },
+  ...(data.ogImage
+    ? { image: `https://www.probo.com${data.ogImage}` }
+    : {}),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.probo.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Hub",
+      item: "https://www.probo.com/hub",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: data.title,
+      item: pageUrl,
+    },
+  ],
+};
+---
+
+<Layout title={data.title} description={data.description} ogImage={data.ogImage}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <main class="container my-10 sm:my-20">
+    <!-- Header -->
+    <header class="mb-12 text-center sm:mb-16">
+      <div class="mb-4 flex items-center justify-center gap-4">
+        <h1
+          class="text-foreground text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"
+        >
+          {
+            headlineParts ? (
+              <Fragment>
+                {headlineParts[0]}
+                <span class="highlight-text">{data.highlight}</span>
+                {headlineParts[1]}
+              </Fragment>
+            ) : (
+              data.title
+            )
+          }
+        </h1>
+        {
+          data.badges.length > 0 && (
+            <div class="flex items-center gap-2">
+              {data.badges.map((badge: string) => (
+                <FrameworkBadge name={badge} class="size-12" client:visible />
+              ))}
+            </div>
+          )
+        }
+      </div>
+      {
+        data.eyebrow && (
+          <div class="mb-6 inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-5 py-2.5 text-base text-gray-500 shadow-sm backdrop-blur-sm">
+            {data.eyebrow}
+          </div>
+        )
+      }
+    </header>
+
+    <!-- Content with TOC -->
+    <div class="flex flex-col gap-10 lg:flex-row lg:gap-16">
+      {
+        toc.length > 0 && (
+          <aside class="shrink-0 lg:w-56">
+            <nav class="lg:sticky lg:top-24">
+              <div class="flex flex-col gap-2">
+                {toc.map((item) => (
+                  <button
+                    type="button"
+                    data-section={item.slug}
+                    class="toc-link cursor-pointer border-none bg-transparent p-0 text-left text-sm leading-5 text-[#6b716a] transition-colors hover:text-[#141e12]"
+                  >
+                    {item.text}
+                  </button>
+                ))}
+              </div>
+            </nav>
+          </aside>
+        )
+      }
+
+      <article class="max-w-[720px] flex-1">
+        <Prose class="prose-h2:scroll-mt-24">
+          <Content />
+        </Prose>
+      </article>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .toc-link.active {
+    color: #5d770d;
+    font-weight: 500;
+  }
+  .highlight-text {
+    background: linear-gradient(
+      180deg,
+      transparent 65%,
+      #f0ff3c 65%,
+      #f0ff3c 85%,
+      transparent 85%
+    );
+    display: inline;
+  }
+</style>
+
+<script>
+  function initHubToc() {
+    const tocLinks = Array.from(
+      document.querySelectorAll<HTMLElement>(".toc-link"),
+    );
+    if (tocLinks.length === 0) return;
+
+    const sectionIds = tocLinks
+      .map((link) => link.dataset.section)
+      .filter((id): id is string => Boolean(id));
+
+    function scrollToSection(id: string) {
+      const element = document.getElementById(id);
+      if (!element) return;
+      window.scrollTo({ top: element.offsetTop - 100, behavior: "smooth" });
+    }
+
+    function handleScroll() {
+      const scrollPosition = window.scrollY + 200;
+      let activeId = sectionIds[0];
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sectionIds[i]);
+        if (element && element.offsetTop <= scrollPosition) {
+          activeId = sectionIds[i];
+          break;
+        }
+      }
+
+      tocLinks.forEach((link) => {
+        link.classList.toggle("active", link.dataset.section === activeId);
+      });
+    }
+
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (link.dataset.section) scrollToSection(link.dataset.section);
+      });
+    });
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+  }
+
+  document.addEventListener("astro:page-load", initHubToc);
+</script>
