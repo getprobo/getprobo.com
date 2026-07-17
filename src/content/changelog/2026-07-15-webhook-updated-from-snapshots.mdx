@@ -1,0 +1,12 @@
+---
+title: "Webhooks and n8n now show you what changed, not just what's new"
+description: "Update events now include the entity's prior state, so you can diff old vs new without a separate lookup."
+date: 2026-07-15
+tags: ["Integrations"]
+---
+
+Webhook payloads for update events just got more useful.
+
+Any star-updated event now includes an updatedFrom field alongside the usual data, carrying a full snapshot of the entity before the update. Want to know if someone's membership role changed from admin to viewer? It is right there, no extra API call needed.
+
+The Probo Trigger node in n8n picks this up too. Compare the updatedFrom value against the data value directly inside your workflow.
