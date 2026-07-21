@@ -89,9 +89,44 @@ const jobs = defineCollection({
   }),
 });
 
+const wall = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/wall" }),
+  schema: z.object({
+    /** Display name shown on the card (company or person). */
+    company: z.string(),
+    /** Person who authored the post; rendered as the overlapping avatar. */
+    author: z.string().optional(),
+    /** Follower count shown under the name (e.g. 23096 -> "23,096 followers"). */
+    followers: z.number().optional(),
+    /** Logo asset filename in src/assets/wall (e.g. "acme-logo.svg"). */
+    logo: z.string(),
+    /** Optional avatar asset filename in src/assets/wall. */
+    avatar: z.string().optional(),
+    /** Framework badge to display (must match a label in frameworks.ts). */
+    framework: z.enum(frameworks.map((f) => f.label) as any).optional(),
+    /** The post text. Line breaks are preserved. */
+    post: z.string(),
+    /** Optional English translation, shown via the language toggle. */
+    translatedPost: z.string().optional(),
+    /** Original language code shown on the toggle pill (e.g. "FR"). */
+    originalLang: z.string().optional(),
+    /** Optional attached image/thumbnail asset filename in src/assets/wall. */
+    thumbnail: z.string().optional(),
+    likes: z.number().optional(),
+    comments: z.number().optional(),
+    /** Link to the original LinkedIn post. */
+    postUrl: z.string().url().optional(),
+    date: z.date().optional(),
+    /** Manual ordering; lower shows first. Falls back to followers desc. */
+    order: z.number().optional(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+  }),
+});
+
 const docs = defineCollection({
   loader: docsLoader(),
   schema: docsSchema(),
 });
 
-export const collections = { blog, stories, docs, changelog, jobs, hub };
+export const collections = { blog, stories, docs, changelog, jobs, hub, wall };

@@ -1,0 +1,144 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import Logos from "../components/block/Logos.astro";
+import WallCard from "../components/WallCard.astro";
+
+const posts = (await getCollection("wall"))
+  // Drafts render in `astro dev` so you can preview, but never ship to prod.
+  .filter((p) => import.meta.env.DEV || !p.data.draft)
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    const ao = a.data.order ?? Number.POSITIVE_INFINITY;
+    const bo = b.data.order ?? Number.POSITIVE_INFINITY;
+    if (ao !== bo) return ao - bo;
+    return (b.data.followers ?? 0) - (a.data.followers ?? 0);
+  });
+---
+
+<Layout
+  title="Wall of Trust"
+  description="Real posts from the founders, engineers and security teams who trust Probo to fast-track their SOC 2, ISO 27001 and GDPR compliance."
+>
+  <main class="-mt-16 overflow-hidden pt-16">
+    <div class="relative isolate">
+      <div
+        aria-hidden="true"
+        class="trust-hero-orb pointer-events-none absolute top-[-1314px] left-1/2 z-0 size-[2265px] rounded-full border-[350px] border-[#E6FF03] blur-[96px]"
+      >
+      </div>
+
+      <section class="relative z-10 container py-16 text-center sm:py-24">
+        <div
+          class="border-border-low text-tertiary-foreground animate-perspective-in mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
+          style="animation-delay: 100ms"
+        >
+          Wall of Trust
+        </div>
+        <h1
+          class="mx-auto mb-6 max-w-[640px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
+          aria-label="Hear it from the teams who trust Probo."
+        >
+          <span aria-hidden="true" class="block overflow-hidden">
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 150ms">Hear it from the teams</span
+            >
+          </span>
+          <span aria-hidden="true" class="block overflow-hidden">
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 200ms">who trust Probo.</span
+            >
+          </span>
+        </h1>
+        <p
+          class="text-muted-foreground animate-perspective-in mx-auto max-w-[480px] text-base"
+          style="animation-delay: 350ms"
+        >
+          Real posts from the founders, engineers and security teams trusting
+          Probo to handle their SOC 2, ISO 27001 or other compliance framework.
+        </p>
+      </section>
+
+      <section class="relative z-10 pb-4">
+        <Logos class="animate-slide-in animation-delay-300" />
+      </section>
+    </div>
+
+    <div class="container mt-10 pb-16 sm:mt-14 sm:pb-24">
+      {
+        posts.length > 0 ? (
+          <div
+            class="animate-slide-in animation-delay-250 gap-5 sm:columns-2 lg:columns-3"
+          >
+            {posts.map((post) => (
+              <WallCard post={post} />
+            ))}
+          </div>
+        ) : (
+          <p class="text-muted-foreground py-16 text-center text-base">
+            No posts yet. Add MDX files to <code>src/content/wall/</code>.
+          </p>
+        )
+      }
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function initWall() {
+    // Language toggle (original <-> translated). Posts render in full — no clamp.
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-wall-lang]")
+      .forEach((btn) => {
+        if (btn.dataset.bound) return;
+        btn.dataset.bound = "1";
+        const card = btn.closest("article");
+        const post = card?.querySelector<HTMLElement>("[data-wall-post]");
+        if (!post) return;
+        const original = btn.dataset.original ?? "";
+        const translated = btn.dataset.translated ?? "";
+        const lang = btn.dataset.langLabel ?? "FR";
+        let showingOriginal = false;
+        // Server renders the translation by default; the pill swaps to original.
+        btn.addEventListener("click", () => {
+          showingOriginal = !showingOriginal;
+          post.textContent = showingOriginal ? original : translated;
+          btn.textContent = showingOriginal ? "EN" : lang;
+          btn.title = showingOriginal
+            ? "Show translation (EN)"
+            : `Show original (${lang})`;
+        });
+      });
+  }
+
+  initWall();
+  document.addEventListener("astro:page-load", initWall);
+</script>
+
+<style>
+  .trust-hero-orb {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .trust-hero-orb {
+      animation: trust-hero-orb-scale-in cubic-bezier(0.785, 0.135, 0.15, 0.86)
+        3s both;
+      animation-delay: -1200ms;
+    }
+  }
+
+  @keyframes trust-hero-orb-scale-in {
+    from {
+      transform: translateX(-50%) scale(0);
+    }
+
+    to {
+      transform: translateX(-50%) scale(1);
+    }
+  }
+</style>
