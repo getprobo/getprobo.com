@@ -10,7 +10,7 @@ import VybeFounders from "../../assets/stories/vybe-founder.png";
 
 const pageTitle = "Compliance Portal Software with NDA Access Control";
 const pageDescription =
-  "Give prospects one secure Compliance Portal to request access, sign the right NDA, and download watermarked compliance documents while your team keeps control.";
+  "Give prospects one secure Compliance Portal to request access, sign NDAs, and download watermarked compliance documents while your team stays in control.";
 
 const overviewFeatures = [
   {
@@ -313,9 +313,23 @@ const faqs = [
       "Probo helps structure and maintain the materials, while your team keeps control over what is public, restricted, or approval-only.",
   },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <main class="-mt-16 overflow-hidden pt-16">
     <div class="relative isolate overflow-hidden">
       <div
