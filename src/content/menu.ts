@@ -2,7 +2,7 @@ export const menuItems = [
   {
     label: "Compliance Portal",
     description: "Share compliance materials with prospects",
-    href: "/trust-center",
+    href: "/products/compliance-portal",
   },
   {
     label: "About",
