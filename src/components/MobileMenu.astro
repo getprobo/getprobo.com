@@ -1,5 +1,6 @@
 ---
 import { directMenuItems, menuGroups } from "../content/menu.ts";
+import MenuIcon from "./MenuIcon.astro";
 ---
 
 <dialog
@@ -15,10 +16,7 @@ import { directMenuItems, menuGroups } from "../content/menu.ts";
         {group.items.map((item) => (
           <a href={item.href} class="flex items-center gap-4 border-b py-4">
             <span class="grid size-11 shrink-0 place-items-center rounded-lg border">
-              <i
-                class={`ph ph-${item.icon} text-[26px] leading-none`}
-                aria-hidden="true"
-              />
+              <MenuIcon name={item.icon} />
             </span>
             <span class="flex min-w-0 flex-1 flex-col gap-0.5">
               <span class="text-lg font-medium">{item.label}</span>
@@ -57,10 +55,7 @@ import { directMenuItems, menuGroups } from "../content/menu.ts";
       directMenuItems.map((item) => (
         <a href={item.href} class="flex items-center gap-4 border-b py-4">
           <span class="grid size-11 shrink-0 place-items-center rounded-lg border">
-            <i
-              class={`ph ph-${item.icon} text-[26px] leading-none`}
-              aria-hidden="true"
-            />
+            <MenuIcon name={item.icon} />
           </span>
           <span class="flex min-w-0 flex-1 flex-col gap-0.5">
             <span class="text-lg font-medium">{item.label}</span>
