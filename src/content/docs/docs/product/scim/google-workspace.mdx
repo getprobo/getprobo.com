@@ -30,6 +30,7 @@ The Google Workspace Bridge connects to Google's Admin Directory API using OAuth
 | Last name              | `name.familyName`           |
 | Suspended status       | `active`                    |
 | Job title              | `title`                     |
+| Type of employee       | `userType`                  |
 | Department             | `enterprise:department`     |
 | Cost center            | `enterprise:costCenter`     |
 | Employee ID            | `enterprise:employeeNumber` |
@@ -113,6 +114,31 @@ After the Bridge is configured, it will begin synchronizing on its regular sched
 4. Check the **Event Log** for detailed sync activity
 
 </Steps>
+
+## Setting a User's Role
+
+Assigning a role and employment type to each Google Workspace user lets Probo attribute the right policies to the right people and run meaningful access reviews. Without these, a user shows up in Probo but can't be properly evaluated for least-privilege access.
+
+Google Workspace syncs two relevant fields to Probo via the SCIM bridge:
+
+- **Job title** → the user's role (for example, Software Engineer, Finance Manager, IT Administrator)
+- **Type of employee** → their employment type (for example, Full-time, Part-time, Intern, Contractor, Freelance)
+
+<Steps>
+
+1. In the Google Admin console, go to **Directory** → **Users**
+2. Select the user you want to update
+3. Open **User information** → **Employee information**
+4. Set the **Job title** field to the user's role
+5. Set the **Type of employee** field to their employment type
+6. Click **Save**
+7. On the next sync, both values appear on the user's profile in Probo
+
+</Steps>
+
+:::tip
+Keep job titles consistent across your team (avoid free-form variations like Eng, SWE, Engineer for the same role) so access reviews group people cleanly.
+:::
 
 ## Troubleshooting
 

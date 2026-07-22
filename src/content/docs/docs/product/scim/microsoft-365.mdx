@@ -164,6 +164,31 @@ After the initial cycle, Entra ID runs incremental sync approximately every 40 m
 
 </Steps>
 
+## Setting a User's Role
+
+Assigning a role and employment type to each Microsoft Entra ID user lets Probo attribute the right policies to the right people and run meaningful access reviews. Without these, a user shows up in Probo but can't be properly evaluated for least-privilege access.
+
+Microsoft Entra ID syncs two relevant fields to Probo via the SCIM bridge:
+
+- **Job title** → the user's role (for example, Software Engineer, Finance Manager, IT Administrator)
+- **Employee type** → their employment type (for example, Full-time, Part-time, Intern, Contractor, Freelance)
+
+<Steps>
+
+1. In the Microsoft Entra admin center, go to **Identity** → **Users** → **All users**
+2. Select the user you want to update
+3. Click **Edit properties**, then open the **Job information** tab
+4. Set the **Job title** field to the user's role
+5. Set the **Employee type** field to their employment type
+6. Click **Save**
+7. On the next sync, both values appear on the user's profile in Probo
+
+</Steps>
+
+:::tip
+Keep job titles and employment types consistent across your team (avoid free-form variations like Eng, SWE, Engineer for the same role) so access reviews group people cleanly.
+:::
+
 ## Troubleshooting
 
 ### Test Connection Fails
