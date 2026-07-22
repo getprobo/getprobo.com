@@ -8,17 +8,12 @@ interface Props {
 }
 
 const { label, items, feature } = Astro.props;
-const { pathname } = Astro.url;
-const isCurrent = (href: string) =>
-  href === "/" ? pathname === "/" : pathname.startsWith(href);
-const isActive = items.some(({ href }) => isCurrent(href));
 ---
 
 <header-menu class="relative block">
   <details class="group">
     <summary
-      class="hover:text-success aria-current-page:text-success flex list-none items-center gap-1 px-3 py-1 text-base font-medium outline-none select-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden"
-      aria-current={isActive ? "page" : undefined}
+      class="hover:text-success flex list-none items-center gap-1 px-3 py-1 text-base font-medium outline-none select-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden"
     >
       {label}
       <svg
@@ -52,10 +47,7 @@ const isActive = items.some(({ href }) => isCurrent(href));
               items.map((item) => (
                 <a
                   href={item.href}
-                  class:list={[
-                    "hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-2 outline-none",
-                    { "bg-subtle": isCurrent(item.href) },
-                  ]}
+                  class="hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-2 outline-none"
                 >
                   <span class="grid size-[52px] shrink-0 place-items-center rounded-[10px] border">
                     <i
@@ -109,7 +101,7 @@ const isActive = items.some(({ href }) => isCurrent(href));
 
           <span
             class:list={[
-              "absolute top-6 right-6 left-6 z-10 flex flex-col items-start",
+              "absolute top-5 right-5 left-5 z-10 flex flex-col items-start gap-1 [word-break:break-word]",
               { "text-[#fff]": feature.variant === "story" },
             ]}
           >
