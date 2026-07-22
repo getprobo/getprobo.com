@@ -13,11 +13,15 @@
           "bg-primary text-primary-foreground hover:bg-primary/80 disabled:bg-primary/60",
         secondary: "border bg-secondary border-b-[#0000001A]",
         highlight: "bg-highlight",
+        navigation:
+          "hover:bg-highlight aria-expanded:bg-highlight focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2",
       },
       size: {
         default: "px-3 h-9 sm:h-8 text-sm",
         lg: "text-lg px-5 h-12",
         icon: "size-8",
+        navigation:
+          "h-8 rounded-md px-[9px] gap-2.5 text-[15px] leading-[22px] tracking-[-0.1px]",
       },
     },
     defaultVariants: {
