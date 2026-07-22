@@ -1,38 +1,91 @@
 ---
-import { menuItems } from "../content/menu.ts";
+import { directMenuItems, menuGroups } from "../content/menu.ts";
 ---
 
 <dialog
   {...Astro.props}
-  class="bg-secondary group group fixed inset-0 top-14 z-50 h-full w-full px-5 py-10 transition-all transition-discrete duration-300 not-open:opacity-0 starting:opacity-0"
+  class="bg-secondary group fixed inset-0 top-14 z-50 h-full w-full overflow-y-auto px-5 pt-6 pb-28 transition-all transition-discrete duration-300 not-open:opacity-0 starting:opacity-0"
 >
   {
-    menuItems.map((item, k) => (
-      <a
-        href={item.href}
-        class="flex items-center justify-between border-b py-5"
-        style={`animation-delay: ${k * 0.1}s;`}
-      >
-        <span class="flex flex-col gap-1">
-          <span class="text-h3 font-medium">{item.label}</span>
-          <span class="text-muted-foreground">{item.description}</span>
-        </span>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7.91663 15L12.9166 10L7.91663 5"
-            stroke="#818780"
-            fill="none"
-            stroke-width="1.66667"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </a>
+    menuGroups.map((group) => (
+      <section class="mb-7">
+        <h2 class="text-muted-foreground border-b pb-2 text-xs font-medium tracking-wider uppercase">
+          {group.label}
+        </h2>
+        {group.items.map((item) => (
+          <a href={item.href} class="flex items-center gap-4 border-b py-4">
+            <span class="grid size-11 shrink-0 place-items-center rounded-lg border">
+              <i
+                class={`ph ph-${item.icon} text-[26px] leading-none`}
+                aria-hidden="true"
+              />
+            </span>
+            <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+              <span class="text-lg font-medium">{item.label}</span>
+              <span class="text-muted-foreground truncate text-sm">
+                {item.description}
+              </span>
+            </span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M7.91663 15L12.9166 10L7.91663 5"
+                stroke="#818780"
+                fill="none"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        ))}
+      </section>
     ))
   }
+  <section>
+    <h2
+      class="text-muted-foreground border-b pb-2 text-xs font-medium tracking-wider uppercase"
+    >
+      Explore
+    </h2>
+    {
+      directMenuItems.map((item) => (
+        <a href={item.href} class="flex items-center gap-4 border-b py-4">
+          <span class="grid size-11 shrink-0 place-items-center rounded-lg border">
+            <i
+              class={`ph ph-${item.icon} text-[26px] leading-none`}
+              aria-hidden="true"
+            />
+          </span>
+          <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+            <span class="text-lg font-medium">{item.label}</span>
+            <span class="text-muted-foreground truncate text-sm">
+              {item.description}
+            </span>
+          </span>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M7.91663 15L12.9166 10L7.91663 5"
+              stroke="#818780"
+              fill="none"
+              stroke-width="1.66667"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      ))
+    }
+  </section>
 </dialog>
