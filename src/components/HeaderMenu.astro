@@ -200,7 +200,8 @@ const menuId = "desktop-navigation-menu";
 
   const closeDelay = 160;
   const shellDuration = 180;
-  const contentDuration = 340;
+  const contentExitDuration = 140;
+  const contentEnterDuration = 200;
   const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
 
   class HeaderMenu extends HTMLElement {
@@ -355,24 +356,27 @@ const menuId = "desktop-navigation-menu";
         );
       });
 
-      this.transitionPanels(previousIndex, index);
+      this.transitionPanels(index);
     };
 
-    transitionPanels = (previousIndex: number, nextIndex: number) => {
+    transitionPanels = async (nextIndex: number) => {
       const nextPanel = this.panels[nextIndex];
-      const previousPanel = this.panels[previousIndex];
       const reducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
       const token = ++this.transitionToken;
+      const visiblePanel = this.panels.find((panel) => !panel.hidden);
+      const visibleIndex = visiblePanel
+        ? Number(visiblePanel.dataset.menuIndex)
+        : -1;
 
-      this.panels.forEach((panel, index) => {
+      this.panels.forEach((panel) => {
         panel.getAnimations().forEach((animation) => animation.cancel());
-        if (index !== previousIndex && index !== nextIndex) panel.hidden = true;
+        if (panel !== visiblePanel) panel.hidden = true;
       });
-      nextPanel.hidden = false;
 
-      if (previousIndex === -1 || !previousPanel) {
+      if (!visiblePanel) {
+        this.showPanel(nextPanel);
         nextPanel.animate(
           reducedMotion
             ? [{ opacity: 0 }, { opacity: 1 }]
@@ -388,38 +392,73 @@ const menuId = "desktop-navigation-menu";
         return;
       }
 
-      const direction = nextIndex > previousIndex ? 1 : -1;
-      const duration = reducedMotion ? 140 : contentDuration;
-      const previousAnimation = previousPanel.animate(
+      if (visiblePanel === nextPanel) {
+        this.showPanel(nextPanel);
+        return;
+      }
+
+      const direction = nextIndex > visibleIndex ? 1 : -1;
+      visiblePanel.inert = true;
+      visiblePanel.setAttribute("aria-hidden", "true");
+      const exitAnimation = visiblePanel.animate(
         reducedMotion
           ? [{ opacity: 1 }, { opacity: 0 }]
           : [
               { opacity: 1, transform: "translateX(0)" },
               {
                 opacity: 0,
-                transform: `translateX(${-direction * 12}%)`,
+                transform: `translateX(${-direction * 16}%)`,
               },
             ],
-        { duration, easing, fill: "both" },
+        {
+          duration: reducedMotion ? 80 : contentExitDuration,
+          easing,
+        },
       );
-      nextPanel.animate(
+
+      try {
+        await exitAnimation.finished;
+      } catch {
+        return;
+      }
+
+      if (token !== this.transitionToken || this.activeIndex !== nextIndex) {
+        return;
+      }
+
+      visiblePanel.hidden = true;
+      this.showPanel(nextPanel);
+      const enterAnimation = nextPanel.animate(
         reducedMotion
           ? [{ opacity: 0 }, { opacity: 1 }]
           : [
               {
                 opacity: 0,
-                transform: `translateX(${direction * 50}%)`,
+                transform: `translateX(${direction * 24}%)`,
               },
               { opacity: 1, transform: "translateX(0)" },
             ],
-        { duration, easing },
+        {
+          duration: reducedMotion ? 100 : contentEnterDuration,
+          easing,
+        },
       );
 
-      previousAnimation.finished
-        .catch(() => undefined)
-        .then(() => {
-          if (token === this.transitionToken) previousPanel.hidden = true;
-        });
+      try {
+        await enterAnimation.finished;
+      } catch {
+        return;
+      }
+
+      if (token === this.transitionToken && this.activeIndex === nextIndex) {
+        this.showPanel(nextPanel);
+      }
+    };
+
+    showPanel = (panel: HTMLElement) => {
+      panel.hidden = false;
+      panel.inert = false;
+      panel.removeAttribute("aria-hidden");
     };
 
     close = () => {
