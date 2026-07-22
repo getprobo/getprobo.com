@@ -203,6 +203,7 @@ const menuId = "desktop-navigation-menu";
   const contentExitDuration = 90;
   const contentEnterDuration = 180;
   const contentSwitchOpacity = 0.18;
+  const contentTravelDistance = 12;
   const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
 
   class HeaderMenu extends HTMLElement {
@@ -408,7 +409,7 @@ const menuId = "desktop-navigation-menu";
               { opacity: 1, transform: "translateX(0)" },
               {
                 opacity: contentSwitchOpacity,
-                transform: `translateX(${-direction * 6}px)`,
+                transform: `translateX(${-direction * contentTravelDistance}px)`,
               },
             ],
         {
@@ -435,7 +436,7 @@ const menuId = "desktop-navigation-menu";
           : [
               {
                 opacity: contentSwitchOpacity,
-                transform: `translateX(${direction * 8}px)`,
+                transform: `translateX(${direction * contentTravelDistance}px)`,
               },
               { opacity: 1, transform: "translateX(0)" },
             ],
