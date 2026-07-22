@@ -14,7 +14,7 @@
         secondary: "border bg-secondary border-b-[#0000001A]",
         highlight: "bg-highlight",
         navigation:
-          "hover:bg-highlight aria-expanded:bg-highlight focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2",
+          "appearance-none border-0 bg-transparent hover:bg-highlight aria-expanded:bg-highlight focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2",
       },
       size: {
         default: "px-3 h-9 sm:h-8 text-sm",

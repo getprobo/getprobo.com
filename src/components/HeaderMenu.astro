@@ -170,6 +170,7 @@ const menuId = "desktop-navigation-menu";
   class HeaderMenu extends HTMLElement {
     triggers: HTMLButtonElement[] = [];
     panels: HTMLElement[] = [];
+    links: HTMLAnchorElement[] = [];
     viewport: HTMLElement | null = null;
     corridor: HTMLElement | null = null;
     activeIndex = -1;
@@ -186,6 +187,9 @@ const menuId = "desktop-navigation-menu";
       this.panels = Array.from(
         this.querySelectorAll<HTMLElement>("[data-menu-panel]"),
       );
+      this.links = Array.from(
+        this.querySelectorAll<HTMLAnchorElement>("[data-menu-panel] a"),
+      );
       this.viewport = this.querySelector("[data-menu-viewport]");
       this.corridor = this.querySelector("[data-hover-corridor]");
 
@@ -195,6 +199,7 @@ const menuId = "desktop-navigation-menu";
         trigger.addEventListener("focus", this.onTriggerFocus);
         trigger.addEventListener("click", this.onTriggerClick);
       });
+      this.links.forEach((link) => link.addEventListener("click", this.close));
       this.addEventListener("pointerenter", this.cancelClose);
       this.addEventListener("pointerleave", this.scheduleClose);
       this.addEventListener("focusout", this.onFocusOut);
@@ -209,6 +214,9 @@ const menuId = "desktop-navigation-menu";
         trigger.removeEventListener("focus", this.onTriggerFocus);
         trigger.removeEventListener("click", this.onTriggerClick);
       });
+      this.links.forEach((link) =>
+        link.removeEventListener("click", this.close),
+      );
       this.removeEventListener("pointerenter", this.cancelClose);
       this.removeEventListener("pointerleave", this.scheduleClose);
       this.removeEventListener("focusout", this.onFocusOut);
@@ -291,7 +299,8 @@ const menuId = "desktop-navigation-menu";
       this.cancelClose();
       this.closeTimer = window.setTimeout(() => {
         this.closeTimer = null;
-        if (!this.matches(":hover") && !this.matches(":focus-within")) {
+        const hasVisibleFocus = this.querySelector(":focus-visible") !== null;
+        if (!this.matches(":hover") && !hasVisibleFocus) {
           this.close();
         }
       }, closeDelay);
@@ -309,8 +318,13 @@ const menuId = "desktop-navigation-menu";
       if (previousIndex === index && this.dataset.open === "true") return;
 
       this.activeIndex = index;
+      if (this.viewport.hidden) {
+        this.dataset.open = "false";
+        this.viewport.hidden = false;
+        // Paint the closed state before starting the opening transition.
+        this.viewport.getBoundingClientRect();
+      }
       this.dataset.open = "true";
-      this.viewport.hidden = false;
       if (this.corridor) this.corridor.hidden = false;
       this.triggers.forEach((trigger, triggerIndex) => {
         trigger.setAttribute(
@@ -480,13 +494,21 @@ const menuId = "desktop-navigation-menu";
   [data-menu-viewport] {
     opacity: 0;
     pointer-events: none;
-    transform: translateX(-50%);
-    transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateX(-50%) translateY(-8px) scale(0.985);
+    transform-origin: top center;
+    transition:
+      opacity 160ms cubic-bezier(0.64, 0, 0.78, 0),
+      transform 180ms cubic-bezier(0.64, 0, 0.78, 0);
+    will-change: opacity, transform;
   }
 
   header-menu[data-open="true"] [data-menu-viewport] {
     opacity: 1;
     pointer-events: auto;
+    transform: translateX(-50%) translateY(0) scale(1);
+    transition:
+      opacity 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .navigation-feature-halo {
@@ -511,6 +533,12 @@ const menuId = "desktop-navigation-menu";
 
   @media (prefers-reduced-motion: reduce) {
     [data-menu-viewport] {
+      transform: translateX(-50%);
+      transition: opacity 120ms linear;
+    }
+
+    header-menu[data-open="true"] [data-menu-viewport] {
+      transform: translateX(-50%);
       transition: opacity 120ms linear;
     }
   }
