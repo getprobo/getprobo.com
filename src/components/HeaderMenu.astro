@@ -15,6 +15,7 @@ const { pathname } = Astro.url;
 const isCurrent = (href: string) =>
   href === "/" ? pathname === "/" : pathname.startsWith(href);
 const isActive = items.some(({ href }) => isCurrent(href));
+const isCompany = label === "Company";
 ---
 
 <header-menu class="relative block">
@@ -46,11 +47,16 @@ const isActive = items.some(({ href }) => isCurrent(href));
       class="fixed top-16 left-1/2 z-10 w-[min(896px,calc(100vw-40px))] -translate-x-1/2 pt-3"
     >
       <div
-        class="bg-secondary grid h-[444px] grid-cols-2 gap-8 overflow-hidden rounded-2xl border p-3 shadow-[0_16px_32px_rgba(186,193,122,0.2)]"
+        class="bg-secondary grid h-[444px] grid-cols-2 items-start gap-8 overflow-hidden rounded-2xl p-3 shadow-[inset_0_0_0_1px_var(--color-border-low),0_16px_32px_rgba(186,193,122,0.2)]"
       >
-        <div class="flex min-w-0 flex-col gap-6 px-3 py-6">
+        <div
+          class:list={[
+            "flex min-w-0 flex-col items-start gap-6 self-start",
+            isCompany ? "px-2 py-5" : "px-3 py-6",
+          ]}
+        >
           <p class="text-muted-foreground px-3 text-sm font-medium">{label}</p>
-          <div class="flex flex-col">
+          <div class="flex w-full flex-col">
             {
               items.map((item) => (
                 <a
@@ -79,7 +85,7 @@ const isActive = items.some(({ href }) => isCurrent(href));
 
         <a
           href={feature.href}
-          class="bg-subtle group/feature relative block min-w-0 overflow-hidden rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current"
+          class="bg-subtle group/feature relative block aspect-square min-w-0 overflow-hidden rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current"
           aria-label={`${feature.eyebrow}: ${feature.title}`}
         >
           {
@@ -110,13 +116,13 @@ const isActive = items.some(({ href }) => isCurrent(href));
           {
             feature.variant === "guide" && (
               <>
-                <div class="absolute top-[100px] left-[-174px] flex gap-[13px]">
+                <div class="absolute top-1/2 left-[calc(50%+0.5px)] flex -translate-x-1/2 -translate-y-1/2 gap-4">
                   {[
                     ["ISO27001", "ISO 27001"],
                     ["SOC2_TYPE2", "SOC 2 Type II"],
                     ["HIPAA", "HIPAA"],
                   ].map(([icon, title]) => (
-                    <div class="h-[220px] w-[247px] shrink-0 overflow-hidden rounded-[19px] border bg-white">
+                    <div class="h-[220px] w-[247.238px] shrink-0 overflow-hidden rounded-[18.857px] border-[1.571px] border-solid border-[#ecefec] bg-white">
                       <div class="relative grid h-[151px] place-items-center border-b bg-[radial-gradient(circle,#d8dcd8_1px,transparent_1px)] [background-size:10px_10px]">
                         <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#e6ff03]/25 to-transparent" />
                         <img
@@ -138,7 +144,10 @@ const isActive = items.some(({ href }) => isCurrent(href));
 
           <span
             class:list={[
-              "absolute top-6 right-6 left-6 z-10 flex flex-col items-start",
+              "absolute z-10 flex flex-col items-start",
+              feature.variant === "guide"
+                ? "top-5 right-5 left-5"
+                : "top-6 right-6 left-6",
               { "text-white": feature.variant === "story" },
             ]}
           >
