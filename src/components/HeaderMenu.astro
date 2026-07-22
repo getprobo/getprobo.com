@@ -200,11 +200,11 @@ const menuId = "desktop-navigation-menu";
 
   const closeDelay = 160;
   const shellDuration = 180;
-  const contentExitDuration = 90;
-  const contentEnterDuration = 180;
-  const contentSwitchOpacity = 0.18;
-  const contentTravelDistance = 12;
+  const contentPhaseDuration = 120;
+  const contentSwitchOpacity = 0.35;
+  const contentTravelDistance = 48;
   const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
+  const exitEasing = "cubic-bezier(0.64, 0, 0.78, 0)";
 
   class HeaderMenu extends HTMLElement {
     triggers: HTMLButtonElement[] = [];
@@ -413,8 +413,8 @@ const menuId = "desktop-navigation-menu";
               },
             ],
         {
-          duration: reducedMotion ? 60 : contentExitDuration,
-          easing,
+          duration: reducedMotion ? 60 : contentPhaseDuration,
+          easing: reducedMotion ? easing : exitEasing,
         },
       );
 
@@ -441,7 +441,7 @@ const menuId = "desktop-navigation-menu";
               { opacity: 1, transform: "translateX(0)" },
             ],
         {
-          duration: reducedMotion ? 80 : contentEnterDuration,
+          duration: reducedMotion ? 60 : contentPhaseDuration,
           easing,
         },
       );
