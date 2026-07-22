@@ -86,11 +86,11 @@ const isActive = items.some(({ href }) => isCurrent(href));
             src={feature.asset}
             alt={feature.alt}
             class:list={[
-              "navigation-feature-media absolute max-w-none transition-transform duration-500",
+              "navigation-feature-media absolute max-w-none",
               feature.variant === "story" &&
-                "navigation-feature-media--story inset-y-0 left-0 h-full w-[calc(100%+8px)] object-cover",
+                "navigation-feature-media--story inset-0 size-full object-cover",
               feature.variant === "product" &&
-                "navigation-feature-media--product top-[100px] left-6 h-[720px] w-[1080px] rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)] group-hover/feature:-translate-y-1",
+                "navigation-feature-media--product top-[100px] left-6 h-[720px] w-[1080px] rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)]",
               feature.variant === "guide" &&
                 "navigation-feature-media--guide top-[100px] left-[-174px] h-[220px] w-[774px]",
             ]}
@@ -201,9 +201,13 @@ const isActive = items.some(({ href }) => isCurrent(href));
   }
 
   @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-    :is(.navigation-feature-media--guide, .navigation-feature-media--story) {
+    .navigation-feature-media {
       transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
+    }
+
+    a:hover .navigation-feature-media--product {
+      transform: translate3d(0, -4px, 0);
     }
 
     a:hover .navigation-feature-media--guide {
@@ -211,7 +215,7 @@ const isActive = items.some(({ href }) => isCurrent(href));
     }
 
     a:hover .navigation-feature-media--story {
-      transform: translate3d(-8px, 0, 0);
+      transform: scale(1.02);
     }
   }
 </style>
