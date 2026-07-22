@@ -86,13 +86,13 @@ const isActive = items.some(({ href }) => isCurrent(href));
             src={feature.asset}
             alt={feature.alt}
             class:list={[
-              "absolute max-w-none transition-transform duration-500",
+              "navigation-feature-media absolute max-w-none transition-transform duration-500",
               feature.variant === "story" &&
-                "inset-0 size-full object-cover group-hover/feature:scale-[1.02]",
+                "navigation-feature-media--story inset-0 size-full object-cover group-hover/feature:scale-[1.02]",
               feature.variant === "product" &&
-                "top-[100px] left-6 h-[720px] w-[1080px] rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)] group-hover/feature:-translate-y-1",
+                "navigation-feature-media--product top-[100px] left-6 h-[720px] w-[1080px] rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)] group-hover/feature:-translate-y-1",
               feature.variant === "guide" &&
-                "top-[100px] left-[-174px] h-[220px] w-[774px] group-hover/feature:-translate-y-1",
+                "navigation-feature-media--guide top-[100px] left-[-174px] h-[220px] w-[774px] group-hover/feature:-translate-y-1",
             ]}
           />
 
@@ -196,7 +196,31 @@ const isActive = items.some(({ href }) => isCurrent(href));
     position: absolute;
     inset: -21.93%;
     content: "";
-    background: url("/trust-center/ellipse.svg") center / 100% 100% no-repeat;
+    background: url("/navigation/ellipse.svg") center / 100% 100% no-repeat;
     transform: rotate(180deg) scaleY(-1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    details[open]
+      :is(.navigation-feature-media--guide, .navigation-feature-media--story) {
+      animation: navigation-feature-slide-left 820ms
+        cubic-bezier(0.22, 1, 0.36, 1) 120ms backwards;
+    }
+  }
+
+  @keyframes navigation-feature-slide-left {
+    0% {
+      opacity: 0;
+      transform: translate3d(148px, 0, 0);
+    }
+
+    42% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
 </style>
