@@ -50,7 +50,7 @@ const { label, items, feature } = Astro.props;
               items.map((item) => (
                 <a
                   href={item.href}
-                  class="hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-3 outline-none"
+                  class="navigation-menu-link relative isolate flex min-w-0 items-center gap-4 rounded-2xl p-3 outline-none"
                 >
                   <span class="grid size-12 shrink-0 place-items-center rounded-[10px] border">
                     <MenuIcon name={item.icon} />
@@ -172,6 +172,40 @@ const { label, items, feature } = Astro.props;
 </script>
 
 <style>
+  .navigation-menu-link::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    content: "";
+    background: var(--color-subtle);
+    opacity: 0;
+    transform: scale(0.94);
+    transition:
+      opacity 280ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .navigation-menu-link:focus-visible::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .navigation-menu-link:hover::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navigation-menu-link::before {
+      transform: none;
+      transition: none;
+    }
+  }
+
   .navigation-feature-halo {
     position: absolute;
     bottom: -52px;
