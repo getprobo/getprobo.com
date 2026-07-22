@@ -15,7 +15,6 @@ const { pathname } = Astro.url;
 const isCurrent = (href: string) =>
   href === "/" ? pathname === "/" : pathname.startsWith(href);
 const isActive = items.some(({ href }) => isCurrent(href));
-const isCompany = label === "Company";
 ---
 
 <header-menu class="relative block">
@@ -50,10 +49,7 @@ const isCompany = label === "Company";
         class="bg-secondary grid h-[444px] grid-cols-2 items-start gap-8 overflow-hidden rounded-2xl p-3 shadow-[inset_0_0_0_1px_var(--color-border-low),0_16px_32px_rgba(186,193,122,0.2)]"
       >
         <div
-          class:list={[
-            "flex min-w-0 flex-col items-start gap-6 self-start",
-            isCompany ? "px-2 py-5" : "px-3 py-6",
-          ]}
+          class="flex min-w-0 flex-col items-start gap-6 self-start px-2 py-5"
         >
           <p class="text-muted-foreground px-3 text-sm font-medium">{label}</p>
           <div class="flex w-full flex-col">
@@ -108,7 +104,7 @@ const isCompany = label === "Company";
               <img
                 src="/trust-center/browser.svg"
                 alt="Compliance Portal preview"
-                class="absolute top-[100px] left-6 h-[720px] w-[1080px] max-w-none rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)] transition-transform duration-500 group-hover/feature:-translate-y-1"
+                class="absolute top-[100px] left-5 h-[720px] w-[1080px] max-w-none rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)] transition-transform duration-500 group-hover/feature:-translate-y-1"
               />
             )
           }
@@ -144,10 +140,7 @@ const isCompany = label === "Company";
 
           <span
             class:list={[
-              "absolute z-10 flex flex-col items-start",
-              feature.variant === "guide"
-                ? "top-5 right-5 left-5"
-                : "top-6 right-6 left-6",
+              "absolute top-5 right-5 left-5 z-10 flex flex-col items-start",
               { "text-white": feature.variant === "story" },
             ]}
           >
