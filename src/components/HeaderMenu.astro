@@ -47,21 +47,24 @@ const isActive = items.some(({ href }) => isCurrent(href));
       <div
         class="bg-secondary grid h-[444px] grid-cols-2 gap-8 overflow-hidden rounded-2xl border p-3 shadow-[0_16px_32px_rgba(186,193,122,0.2)]"
       >
-        <div class="flex min-w-0 flex-col gap-6 px-4 py-6">
-          <p class="text-muted-foreground px-2 text-sm font-medium">{label}</p>
-          <div class="flex flex-col gap-2">
+        <div class="flex min-w-0 flex-col gap-6 px-3 py-6">
+          <p class="text-muted-foreground px-3 text-sm font-medium">{label}</p>
+          <div class="flex flex-col">
             {
               items.map((item) => (
                 <a
                   href={item.href}
                   class:list={[
-                    "hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-2 outline-none",
+                    "hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-3 outline-none",
                     { "bg-subtle": isCurrent(item.href) },
                   ]}
                 >
-                  <span class="grid size-[52px] shrink-0 place-items-center rounded-[10px] border">
+                  <span
+                    class="grid size-12 shrink-0 place-items-center rounded-[10px] border"
+                    style="font-size: 24px"
+                  >
                     <i
-                      class={`ph ph-${item.icon} text-[32px] leading-none`}
+                      class={`ph ph-${item.icon} leading-none`}
                       aria-hidden="true"
                     />
                   </span>
