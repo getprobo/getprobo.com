@@ -1,14 +1,29 @@
+export type MenuIconName =
+  | "article"
+  | "book-open-text"
+  | "briefcase"
+  | "clock-counter-clockwise"
+  | "code"
+  | "compass"
+  | "github-logo"
+  | "handshake"
+  | "paint-brush"
+  | "quotes"
+  | "shield-check"
+  | "users-three";
 export type MenuItem = {
   label: string;
   description: string;
   href: string;
-  icon: string;
+  icon: MenuIconName;
 };
 
 export type MenuFeature = {
   eyebrow: string;
   title: string;
   href: string;
+  asset: string;
+  alt: string;
   variant: "product" | "story" | "guide";
 };
 
@@ -45,6 +60,8 @@ export const menuGroups: MenuGroup[] = [
       eyebrow: "New on Probo",
       title: "Compliance Portal",
       href: "/products/compliance-portal",
+      asset: "/navigation/browser.svg",
+      alt: "Compliance Portal preview",
       variant: "product",
     },
   },
@@ -80,6 +97,8 @@ export const menuGroups: MenuGroup[] = [
       eyebrow: "Customer stories",
       title: "How Ahrefs became ISO 27001 certified in 3 months",
       href: "/stories/ahrefs-iso",
+      asset: "/navigation/ahrefs.webp",
+      alt: "Ahrefs team collaborating in their office",
       variant: "story",
     },
   },
@@ -115,6 +134,8 @@ export const menuGroups: MenuGroup[] = [
       eyebrow: "The Complete Guide",
       title: "What is SOC 2?",
       href: "/hub/soc2",
+      asset: "/navigation/frameworks.svg",
+      alt: "ISO 27001, SOC 2 Type II, and HIPAA framework cards",
       variant: "guide",
     },
   },
