@@ -20,7 +20,7 @@ type Props = {
       <Image src={Logo} alt="Logo probo" width={73} height={20} class="block" />
     </a>
     <nav class="hidden items-center lg:flex" transition:name="header-nav">
-      {menuGroups.map((group) => <HeaderMenu {...group} />)}
+      <HeaderMenu groups={menuGroups} />
       <NavLink href={directMenuItems[0].href}
         >{directMenuItems[0].label}</NavLink
       >
