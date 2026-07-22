@@ -200,8 +200,9 @@ const menuId = "desktop-navigation-menu";
 
   const closeDelay = 160;
   const shellDuration = 180;
-  const contentExitDuration = 140;
-  const contentEnterDuration = 200;
+  const contentExitDuration = 90;
+  const contentEnterDuration = 180;
+  const contentSwitchOpacity = 0.18;
   const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
 
   class HeaderMenu extends HTMLElement {
@@ -402,16 +403,16 @@ const menuId = "desktop-navigation-menu";
       visiblePanel.setAttribute("aria-hidden", "true");
       const exitAnimation = visiblePanel.animate(
         reducedMotion
-          ? [{ opacity: 1 }, { opacity: 0 }]
+          ? [{ opacity: 1 }, { opacity: contentSwitchOpacity }]
           : [
               { opacity: 1, transform: "translateX(0)" },
               {
-                opacity: 0,
-                transform: `translateX(${-direction * 16}%)`,
+                opacity: contentSwitchOpacity,
+                transform: `translateX(${-direction * 6}px)`,
               },
             ],
         {
-          duration: reducedMotion ? 80 : contentExitDuration,
+          duration: reducedMotion ? 60 : contentExitDuration,
           easing,
         },
       );
@@ -430,16 +431,16 @@ const menuId = "desktop-navigation-menu";
       this.showPanel(nextPanel);
       const enterAnimation = nextPanel.animate(
         reducedMotion
-          ? [{ opacity: 0 }, { opacity: 1 }]
+          ? [{ opacity: contentSwitchOpacity }, { opacity: 1 }]
           : [
               {
-                opacity: 0,
-                transform: `translateX(${direction * 24}%)`,
+                opacity: contentSwitchOpacity,
+                transform: `translateX(${direction * 8}px)`,
               },
               { opacity: 1, transform: "translateX(0)" },
             ],
         {
-          duration: reducedMotion ? 100 : contentEnterDuration,
+          duration: reducedMotion ? 80 : contentEnterDuration,
           easing,
         },
       );
