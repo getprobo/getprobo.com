@@ -32,8 +32,22 @@ const escapeAttr = (s: string) =>
 ---
 
 <article
-  class="bg-secondary border-border-solid mb-5 inline-block w-full break-inside-avoid overflow-hidden rounded-xl border shadow-sm transition-shadow duration-300 hover:shadow-md"
+  class:list={[
+    "bg-secondary border-border-solid mb-5 inline-block w-full break-inside-avoid overflow-hidden rounded-xl border shadow-sm transition-shadow duration-300 hover:shadow-md",
+    d.postUrl && "relative cursor-pointer",
+  ]}
 >
+  {
+    d.postUrl && (
+      <a
+        href={d.postUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="absolute inset-0 z-[1]"
+        aria-label={`View ${d.company} post on LinkedIn`}
+      />
+    )
+  }
   <div class="p-4 pb-2">
     <div class="flex items-start gap-3">
       <div class="relative flex-shrink-0">
@@ -79,7 +93,7 @@ const escapeAttr = (s: string) =>
         }
       </div>
 
-      <div class="flex flex-shrink-0 items-center gap-2">
+      <div class="relative z-[2] flex flex-shrink-0 items-center gap-2">
         {
           d.originalLang && d.translatedPost && (
             <button
@@ -161,28 +175,14 @@ const escapeAttr = (s: string) =>
       }
     </div>
 
-    <div class="flex items-center gap-3">
-      {
-        framework && (
-          <FrameworkBadge
-            client:only="svelte"
-            name={framework.badge}
-            class="block size-7"
-          />
-        )
-      }
-      {
-        d.postUrl && (
-          <a
-            href={d.postUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-primary underline-offset-2 hover:underline"
-          >
-            View post
-          </a>
-        )
-      }
-    </div>
+    {
+      framework && (
+        <FrameworkBadge
+          client:only="svelte"
+          name={framework.badge}
+          class="block size-7"
+        />
+      )
+    }
   </div>
 </article>

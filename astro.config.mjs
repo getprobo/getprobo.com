@@ -28,6 +28,10 @@ export default defineConfig({
   prefetch: false,
   trailingSlash: "never",
   redirects: {
+    "/wall-of-trust": {
+      status: 301,
+      destination: "/love-from-customer",
+    },
     "/blog/page/1": {
       status: 301,
       destination: "/blog",
