@@ -1,7 +1,6 @@
 ---
-import { Image } from "astro:assets";
-import AhrefsStory from "../assets/stories/ahrefs.jpg";
 import type { MenuGroup } from "../content/menu";
+import MenuIcon from "./MenuIcon.astro";
 import Button from "./ui/Button.svelte";
 
 interface Props {
@@ -9,9 +8,6 @@ interface Props {
 }
 
 const { groups } = Astro.props;
-const { pathname } = Astro.url;
-const isCurrent = (href: string) =>
-  href === "/" ? pathname === "/" : pathname.startsWith(href);
 const menuId = "desktop-navigation-menu";
 ---
 
@@ -19,7 +15,6 @@ const menuId = "desktop-navigation-menu";
   {
     groups.map((group, index) => {
       const triggerId = `${menuId}-trigger-${index}`;
-      const isActive = group.items.some(({ href }) => isCurrent(href));
 
       return (
         <Button
@@ -31,7 +26,6 @@ const menuId = "desktop-navigation-menu";
           data-menu-index={index}
           aria-expanded="false"
           aria-controls={menuId}
-          aria-current={isActive ? "page" : undefined}
         >
           {group.label}
           <svg
@@ -70,7 +64,7 @@ const menuId = "desktop-navigation-menu";
   >
     <div
       data-menu-shell
-      class="bg-secondary relative h-[444px] overflow-hidden rounded-2xl border shadow-[0_16px_32px_rgba(186,193,122,0.2)]"
+      class="bg-secondary relative h-[444px] overflow-hidden rounded-2xl shadow-[inset_0_0_0_1px_var(--color-border-low),0_16px_32px_rgba(186,193,122,0.2)]"
     >
       {
         groups.map((group, index) => (
@@ -79,27 +73,21 @@ const menuId = "desktop-navigation-menu";
             data-menu-index={index}
             role="group"
             aria-labelledby={`${menuId}-trigger-${index}`}
-            class="absolute inset-0 grid grid-cols-2 gap-8 p-3"
+            class="absolute inset-0 grid grid-cols-2 items-start gap-8 p-3"
             hidden
           >
-            <div class="flex min-w-0 flex-col gap-6 px-4 py-6">
-              <p class="text-muted-foreground px-2 text-sm font-medium">
+            <div class="flex min-w-0 flex-col items-start gap-6 self-start px-2 py-5">
+              <p class="text-muted-foreground px-3 text-sm font-medium">
                 {group.label}
               </p>
-              <div class="flex flex-col gap-2">
+              <div class="flex w-full flex-col">
                 {group.items.map((item) => (
                   <a
                     href={item.href}
-                    class:list={[
-                      "hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-2 outline-none",
-                      { "bg-subtle": isCurrent(item.href) },
-                    ]}
+                    class="hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-3 outline-none"
                   >
-                    <span class="grid size-[52px] shrink-0 place-items-center rounded-[10px] border">
-                      <i
-                        class={`ph ph-${item.icon} text-[32px] leading-none`}
-                        aria-hidden="true"
-                      />
+                    <span class="grid size-12 shrink-0 place-items-center rounded-[10px] border">
+                      <MenuIcon name={item.icon} />
                     </span>
                     <span class="min-w-0 text-base leading-6">
                       <span class="block truncate font-semibold">
@@ -116,61 +104,34 @@ const menuId = "desktop-navigation-menu";
 
             <a
               href={group.feature.href}
-              class="bg-subtle group/feature relative block min-w-0 overflow-hidden rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current"
+              class="bg-subtle group/feature relative block aspect-square min-w-0 overflow-hidden rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current"
               aria-label={`${group.feature.eyebrow}: ${group.feature.title}`}
             >
+              <img
+                src={group.feature.asset}
+                alt={group.feature.alt}
+                class:list={[
+                  "navigation-feature-media absolute max-w-none",
+                  group.feature.variant === "story" &&
+                    "navigation-feature-media--story inset-0 size-full object-cover",
+                  group.feature.variant === "product" &&
+                    "navigation-feature-media--product top-[100px] left-6 h-[720px] w-[1080px] rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)]",
+                  group.feature.variant === "guide" &&
+                    "navigation-feature-media--guide top-[100px] left-[-174px] h-[220px] w-[774px]",
+                ]}
+              />
+
               {group.feature.variant === "story" && (
-                <>
-                  <Image
-                    src={AhrefsStory}
-                    alt="Ahrefs team collaborating in their office"
-                    class="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover/feature:scale-[1.02]"
-                    widths={[420, 840]}
-                    sizes="420px"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/5 to-black/35" />
-                </>
+                <div class="absolute inset-0 bg-linear-to-b from-[rgba(0,0,0,0.72)] via-[rgba(0,0,0,0.05)] to-[rgba(0,0,0,0.35)]" />
               )}
-
-              {group.feature.variant === "product" && (
-                <img
-                  src="/trust-center/browser.svg"
-                  alt="Compliance Portal preview"
-                  class="absolute top-[100px] left-6 h-[720px] w-[1080px] max-w-none rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)] transition-transform duration-500 group-hover/feature:-translate-y-1"
-                />
-              )}
-
-              {group.feature.variant === "guide" && (
-                <>
-                  <div class="absolute top-[100px] left-[-174px] flex gap-[13px]">
-                    {[
-                      ["ISO27001", "ISO 27001"],
-                      ["SOC2_TYPE2", "SOC 2 Type II"],
-                      ["HIPAA", "HIPAA"],
-                    ].map(([icon, title]) => (
-                      <div class="h-[220px] w-[247px] shrink-0 overflow-hidden rounded-[19px] border bg-white">
-                        <div class="relative grid h-[151px] place-items-center border-b bg-[radial-gradient(circle,#d8dcd8_1px,transparent_1px)] [background-size:10px_10px]">
-                          <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#e6ff03]/25 to-transparent" />
-                          <img
-                            src={`/frameworks/${icon}.svg`}
-                            alt=""
-                            class="relative size-[101px]"
-                          />
-                        </div>
-                        <p class="py-[18px] text-center text-[22px] leading-8 font-medium">
-                          {title}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                  <div class="absolute inset-x-[-100px] bottom-[-110px] h-56 rounded-full bg-[#e6ff03] blur-[55px]" />
-                </>
+              {group.feature.variant !== "story" && (
+                <span class="navigation-feature-halo" aria-hidden="true" />
               )}
 
               <span
                 class:list={[
-                  "absolute top-6 right-6 left-6 z-10 flex flex-col items-start",
-                  { "text-white": group.feature.variant === "story" },
+                  "absolute top-5 right-5 left-5 z-10 flex flex-col items-start gap-1 [word-break:break-word]",
+                  { "text-[#fff]": group.feature.variant === "story" },
                 ]}
               >
                 <span
@@ -379,18 +340,10 @@ const menuId = "desktop-navigation-menu";
 
       if (!visiblePanel) {
         this.showPanel(nextPanel);
-        nextPanel.animate(
-          reducedMotion
-            ? [{ opacity: 0 }, { opacity: 1 }]
-            : [
-                { opacity: 0, transform: "scale(0.985)" },
-                { opacity: 1, transform: "scale(1)" },
-              ],
-          {
-            duration: reducedMotion ? 120 : shellDuration,
-            easing,
-          },
-        );
+        nextPanel.animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: reducedMotion ? 120 : shellDuration,
+          easing,
+        });
         return;
       }
 
@@ -493,27 +446,57 @@ const menuId = "desktop-navigation-menu";
   [data-menu-viewport] {
     opacity: 0;
     pointer-events: none;
-    transform: translateX(-50%) translateY(-4px) scale(0.99);
-    transform-origin: top center;
-    transition:
-      opacity 180ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateX(-50%);
+    transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   header-menu[data-open="true"] [data-menu-viewport] {
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .navigation-feature-halo {
+    position: absolute;
+    bottom: -52px;
+    left: 50%;
+    z-index: 2;
+    display: block;
+    width: 783px;
+    height: 783px;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .navigation-feature-halo::before {
+    position: absolute;
+    inset: -21.93%;
+    content: "";
+    background: url("/navigation/ellipse.svg") center / 100% 100% no-repeat;
+    transform: rotate(180deg) scaleY(-1);
   }
 
   @media (prefers-reduced-motion: reduce) {
     [data-menu-viewport] {
-      transform: translateX(-50%);
       transition: opacity 120ms linear;
     }
+  }
 
-    header-menu[data-open="true"] [data-menu-viewport] {
-      transform: translateX(-50%);
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+    .navigation-feature-media {
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    a:hover .navigation-feature-media--product {
+      transform: translate3d(0, -4px, 0);
+    }
+
+    a:hover .navigation-feature-media--guide {
+      transform: translate3d(-8px, 0, 0);
+    }
+
+    a:hover .navigation-feature-media--story {
+      transform: scale(1.02);
     }
   }
 </style>

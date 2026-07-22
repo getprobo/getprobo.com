@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import Article from "@phosphor-icons/core/regular/article.svg";
+import BookOpenText from "@phosphor-icons/core/regular/book-open-text.svg";
+import Briefcase from "@phosphor-icons/core/regular/briefcase.svg";
+import ClockCounterClockwise from "@phosphor-icons/core/regular/clock-counter-clockwise.svg";
+import Code from "@phosphor-icons/core/regular/code.svg";
+import Compass from "@phosphor-icons/core/regular/compass.svg";
+import GithubLogo from "@phosphor-icons/core/regular/github-logo.svg";
+import Handshake from "@phosphor-icons/core/regular/handshake.svg";
+import PaintBrush from "@phosphor-icons/core/regular/paint-brush.svg";
+import Quotes from "@phosphor-icons/core/regular/quotes.svg";
+import ShieldCheck from "@phosphor-icons/core/regular/shield-check.svg";
+import UsersThree from "@phosphor-icons/core/regular/users-three.svg";
+import type { MenuIconName } from "../content/menu";
+
+const icons = {
+  article: Article,
+  "book-open-text": BookOpenText,
+  briefcase: Briefcase,
+  "clock-counter-clockwise": ClockCounterClockwise,
+  code: Code,
+  compass: Compass,
+  "github-logo": GithubLogo,
+  handshake: Handshake,
+  "paint-brush": PaintBrush,
+  quotes: Quotes,
+  "shield-check": ShieldCheck,
+  "users-three": UsersThree,
+};
+
+interface Props {
+  name: MenuIconName;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+<Image
+  src={icons[name]}
+  alt=""
+  width={24}
+  height={24}
+  class:list={["block size-6", className]}
+/>
