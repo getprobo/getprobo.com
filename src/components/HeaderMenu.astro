@@ -102,8 +102,8 @@ const isActive = items.some(({ href }) => isCurrent(href));
             )
           }
           {
-            feature.variant === "guide" && (
-              <div class="absolute inset-x-[-100px] bottom-[-110px] h-56 rounded-full bg-[#e6ff03] blur-[55px]" />
+            feature.variant !== "story" && (
+              <span class="navigation-feature-halo" aria-hidden="true" />
             )
           }
 
@@ -178,3 +178,25 @@ const isActive = items.some(({ href }) => isCurrent(href));
 
   customElementDefine("header-menu", () => HeaderMenu);
 </script>
+
+<style>
+  .navigation-feature-halo {
+    position: absolute;
+    bottom: -52px;
+    left: 50%;
+    z-index: 2;
+    display: block;
+    width: 783px;
+    height: 783px;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .navigation-feature-halo::before {
+    position: absolute;
+    inset: -21.93%;
+    content: "";
+    background: url("/trust-center/ellipse.svg") center / 100% 100% no-repeat;
+    transform: rotate(180deg) scaleY(-1);
+  }
+</style>
