@@ -1,0 +1,211 @@
+---
+import { Image } from "astro:assets";
+import AhrefsStory from "../assets/stories/ahrefs.jpg";
+import type { MenuFeature, MenuItem } from "../content/menu";
+
+interface Props {
+  label: string;
+  items: MenuItem[];
+  feature: MenuFeature;
+}
+
+const { label, items, feature } = Astro.props;
+const { pathname } = Astro.url;
+const isCurrent = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+const isActive = items.some(({ href }) => isCurrent(href));
+---
+
+<header-menu class="relative block">
+  <details class="group">
+    <summary
+      class="hover:text-success aria-current-page:text-success flex list-none items-center gap-1 px-3 py-1 text-base font-medium outline-none select-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden"
+      aria-current={isActive ? "page" : undefined}
+    >
+      {label}
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="transition-transform duration-200 group-open:rotate-180"
+        aria-hidden="true"
+      >
+        <path
+          d="M4 5.5L7 8.5L10 5.5"
+          stroke="currentColor"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </summary>
+
+    <div
+      class="fixed top-16 left-1/2 z-10 w-[min(896px,calc(100vw-40px))] -translate-x-1/2 pt-3"
+    >
+      <div
+        class="bg-secondary grid h-[444px] grid-cols-2 gap-8 overflow-hidden rounded-2xl border p-3 shadow-[0_16px_32px_rgba(186,193,122,0.2)]"
+      >
+        <div class="flex min-w-0 flex-col gap-6 px-4 py-6">
+          <p class="text-muted-foreground px-2 text-sm font-medium">{label}</p>
+          <div class="flex flex-col gap-2">
+            {
+              items.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={[
+                    "hover:bg-subtle focus-visible:bg-subtle flex min-w-0 items-center gap-4 rounded-2xl p-2 outline-none",
+                    { "bg-subtle": isCurrent(item.href) },
+                  ]}
+                >
+                  <span class="grid size-[52px] shrink-0 place-items-center rounded-[10px] border">
+                    <i
+                      class={`ph ph-${item.icon} text-[32px] leading-none`}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span class="min-w-0 text-base leading-6">
+                    <span class="block truncate font-semibold">
+                      {item.label}
+                    </span>
+                    <span class="text-muted-foreground block truncate">
+                      {item.description}
+                    </span>
+                  </span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <a
+          href={feature.href}
+          class="bg-subtle group/feature relative block min-w-0 overflow-hidden rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current"
+          aria-label={`${feature.eyebrow}: ${feature.title}`}
+        >
+          {
+            feature.variant === "story" && (
+              <>
+                <Image
+                  src={AhrefsStory}
+                  alt="Ahrefs team collaborating in their office"
+                  class="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover/feature:scale-[1.02]"
+                  widths={[420, 840]}
+                  sizes="420px"
+                />
+                <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/5 to-black/35" />
+              </>
+            )
+          }
+
+          {
+            feature.variant === "product" && (
+              <img
+                src="/trust-center/browser.svg"
+                alt="Compliance Portal preview"
+                class="absolute top-[100px] left-6 h-[720px] w-[1080px] max-w-none rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)] transition-transform duration-500 group-hover/feature:-translate-y-1"
+              />
+            )
+          }
+
+          {
+            feature.variant === "guide" && (
+              <>
+                <div class="absolute top-[100px] left-[-174px] flex gap-[13px]">
+                  {[
+                    ["ISO27001", "ISO 27001"],
+                    ["SOC2_TYPE2", "SOC 2 Type II"],
+                    ["HIPAA", "HIPAA"],
+                  ].map(([icon, title]) => (
+                    <div class="h-[220px] w-[247px] shrink-0 overflow-hidden rounded-[19px] border bg-white">
+                      <div class="relative grid h-[151px] place-items-center border-b bg-[radial-gradient(circle,#d8dcd8_1px,transparent_1px)] [background-size:10px_10px]">
+                        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#e6ff03]/25 to-transparent" />
+                        <img
+                          src={`/frameworks/${icon}.svg`}
+                          alt=""
+                          class="relative size-[101px]"
+                        />
+                      </div>
+                      <p class="py-[18px] text-center text-[22px] leading-8 font-medium">
+                        {title}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div class="absolute inset-x-[-100px] bottom-[-110px] h-56 rounded-full bg-[#e6ff03] blur-[55px]" />
+              </>
+            )
+          }
+
+          <span
+            class:list={[
+              "absolute top-6 right-6 left-6 z-10 flex flex-col items-start",
+              { "text-white": feature.variant === "story" },
+            ]}
+          >
+            <span
+              class:list={[
+                "text-sm leading-5 font-medium",
+                feature.variant === "story"
+                  ? "text-[#e6ff03]"
+                  : "text-muted-foreground",
+              ]}
+            >
+              {feature.eyebrow}
+            </span>
+            <span class="text-[20px] leading-7 font-semibold tracking-[-0.4px]">
+              {feature.title}
+            </span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </details>
+</header-menu>
+
+<script>
+  import { customElementDefine } from "../lib/dom";
+
+  class HeaderMenu extends HTMLElement {
+    details: HTMLDetailsElement | null = null;
+
+    connectedCallback() {
+      this.details = this.querySelector("details");
+      this.details?.addEventListener("toggle", this.onToggle);
+      document.addEventListener("click", this.onDocumentClick);
+      document.addEventListener("keydown", this.onKeyDown);
+    }
+
+    disconnectedCallback() {
+      this.details?.removeEventListener("toggle", this.onToggle);
+      document.removeEventListener("click", this.onDocumentClick);
+      document.removeEventListener("keydown", this.onKeyDown);
+    }
+
+    onToggle = () => {
+      if (!this.details?.open) return;
+
+      document
+        .querySelectorAll<HTMLDetailsElement>("header-menu details[open]")
+        .forEach((menu) => {
+          if (menu !== this.details) menu.open = false;
+        });
+    };
+
+    onDocumentClick = (event: MouseEvent) => {
+      if (!this.contains(event.target as Node) && this.details) {
+        this.details.open = false;
+      }
+    };
+
+    onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && this.details?.open) {
+        this.details.open = false;
+        this.details.querySelector("summary")?.focus();
+      }
+    };
+  }
+
+  customElementDefine("header-menu", () => HeaderMenu);
+</script>

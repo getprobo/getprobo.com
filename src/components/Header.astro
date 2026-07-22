@@ -1,10 +1,13 @@
 ---
+import "@phosphor-icons/web/regular";
 import { Image } from "astro:assets";
 import Logo from "../assets/probo-logo.svg";
 import NavLink from "./NavLink.astro";
+import HeaderMenu from "./HeaderMenu.astro";
 import Button from "./ui/Button.svelte";
 import MobileMenu from "./MobileMenu.astro";
 import GithubStars from "./GithubStars.astro";
+import { directMenuItems, menuGroups } from "../content/menu";
 type Props = {
   hideBurger?: boolean;
 };
@@ -17,16 +20,14 @@ type Props = {
     <a class="mr-auto" href="/" transition:name="header-logo">
       <Image src={Logo} alt="Logo probo" width={73} height={20} class="block" />
     </a>
-    <nav class="hidden sm:flex" transition:name="header-nav">
-      <NavLink href="/products/compliance-portal">Compliance Portal</NavLink>
-      <NavLink href="/about">About</NavLink>
-      <NavLink href="/blog">Blog</NavLink>
-      <NavLink href="/stories">Stories</NavLink>
-      <NavLink href="/changelog">Changelog</NavLink>
-      <NavLink href="/docs">Docs</NavLink>
+    <nav class="hidden items-center lg:flex" transition:name="header-nav">
+      {menuGroups.map((group) => <HeaderMenu {...group} />)}
+      <NavLink href={directMenuItems[0].href}
+        >{directMenuItems[0].label}</NavLink
+      >
       <Button
         variant="secondary"
-        href="https://github.com/getprobo/probo/stargazers"
+        href={`${directMenuItems[1].href}/stargazers`}
         class="text-sm leading-tight"
       >
         <div class="flex items-center gap-1.5">
@@ -51,7 +52,7 @@ type Props = {
     <div transition:name="header-compliant">
       <Button
         href="/contact"
-        class="ml-auto h-9 px-4 whitespace-nowrap sm:ml-4 sm:h-8 sm:px-3"
+        class="ml-auto h-9 px-4 whitespace-nowrap lg:ml-4 lg:h-8 lg:px-3"
       >
         Get compliant
       </Button>
@@ -60,7 +61,7 @@ type Props = {
     {
       !Astro.props.hideBurger && (
         <burger-menu
-          class="group ml-3 grid size-9 place-items-center sm:hidden"
+          class="group ml-3 grid size-9 place-items-center lg:hidden"
           aria-label="Open mobile menu"
         >
           <svg
