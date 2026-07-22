@@ -1,8 +1,21 @@
+export type MenuIconName =
+  | "article"
+  | "book-open-text"
+  | "briefcase"
+  | "clock-counter-clockwise"
+  | "code"
+  | "compass"
+  | "github-logo"
+  | "handshake"
+  | "paint-brush"
+  | "quotes"
+  | "shield-check"
+  | "users-three";
 export type MenuItem = {
   label: string;
   description: string;
   href: string;
-  icon: string;
+  icon: MenuIconName;
 };
 
 export type MenuFeature = {
