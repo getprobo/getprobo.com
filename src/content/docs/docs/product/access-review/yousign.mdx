@@ -1,0 +1,60 @@
+---
+title: Yousign
+description: Connect Yousign as an access source using a production API key
+---
+
+Probo reads your Yousign organization's members through the Yousign API so you can review who has access.
+
+:::caution
+Use a **Production** API key created in Yousign under **Developers** > **API keys**. A **Sandbox** key will **not** work, because Probo calls the production API at `api.yousign.app` and Yousign keeps the Sandbox and Production environments fully isolated.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Owner** or **Admin** role in Yousign (Members cannot create API keys)
+- A paid Yousign API plan, since Production API access is not part of the free trial (which is Sandbox only)
+
+## Collected Fields
+
+| Probo field | Yousign field                                            | Notes                                                       |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------------------- |
+| Name        | `first_name` and `last_name`                             | Combined into the member's display name                     |
+| Email       | `email`                                                  |                                                             |
+| Role        | `role`                                                   | `owner` → Owner, `admin` → Admin, `member` → Member         |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `owner` or `admin` |
+| Status      | `is_active`                                              | A member is shown as inactive when `is_active` is false     |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews  |
+| Created at  | `created_at`                                             | When the member was added to the organization               |
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating a production API key in Yousign](/docs/access-review/yousign-create-api-key.webp)
+
+<Steps>
+
+1. In Yousign (signed in as an **Owner** or **Admin**), go to **Developers** > **API keys**.
+2. Click **New API key** (or **Start integration** for your first key). Set **Environment** to **Production**, **Scope** to **Organization** so the key sees every member, and **Permission** to **Read only**, since Probo only reads your members. Add a description (e.g. `Probo Access Review`).
+3. Click **Create API key**, then copy the key and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Yousign**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo pulls your organization's members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it's a **Production** API key created by an Owner or Admin. A Sandbox key authenticates only against Yousign's sandbox environment, which Probo does not use.
+- **No members appear.** The key must belong to the organization you're reviewing and be scoped to the **Organization** rather than a single Workspace.

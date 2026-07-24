@@ -1,0 +1,60 @@
+---
+title: Scaleway
+description: Connect Scaleway as an access source using an IAM API secret key
+---
+
+Probo reads your Scaleway Organization's IAM users through the Scaleway IAM API so you can review who has access.
+
+:::caution
+A Scaleway API key has an **access key** (`SCW…`) and a **secret key** (a UUID). Use the **secret key**. The access key is a public identifier and will **not** work, because Probo authenticates with the secret key in the `X-Auth-Token` header. The secret key is shown only once, when you create the key.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- A Scaleway API key whose bearer holds the **`IAMReadOnly`** (or **`IAMUserReadOnly`**) permission, so it can list the Organization's users. The account **Owner** has this by default
+- Your Scaleway **Organization ID**, from the console under **Organization Settings** (use **Copy ID** next to the Organization name)
+
+## Collected Fields
+
+| Probo field | Scaleway field               | Notes                                                       |
+| ----------- | ---------------------------- | ----------------------------------------------------------- |
+| Name        | `first_name` and `last_name` | Falls back to the username, then the email                  |
+| Email       | `email`                      |                                                             |
+| Role        | `type`                       | `owner` → Owner, `member` → Member                          |
+| Admin       | `type`                       | Flagged as an administrator when `type` is `owner`          |
+| Status      | `status` and `locked`        | Inactive when the account is locked or its invitation is still pending |
+| MFA         | `two_factor_enabled`         | Whether two-factor authentication is enabled (falls back to the `mfa` flag) |
+| Last login  | `last_login_at`              | When the user last signed in                                |
+| External ID | `id`                         | Stable identifier used to track the account across reviews  |
+| Created at  | `created_at`                 | When the user was added to the Organization                 |
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Generating an API key in the Scaleway console](/docs/access-review/scaleway-create-api-key.webp)
+
+<Steps>
+
+1. In the [Scaleway console](https://console.scaleway.com/iam/api-keys), open **IAM & API keys** from the top-right menu, then the **API keys** tab.
+2. Click **Generate API key**, choose the **bearer** (yourself, or an IAM application that holds the `IAMReadOnly` permission), add a description (e.g. `Probo Access Review`), and generate it.
+3. Copy the **secret key** (a UUID) and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Scaleway**, click **API Key**, paste the **secret key**, enter your **Organization ID** (from **Organization Settings**), and click **Connect**.
+
+</Steps>
+
+Probo pulls your Organization's IAM users into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm you pasted the **secret key** (a UUID), not the access key (`SCW…`) or the Organization ID. Only the secret key authenticates in the `X-Auth-Token` header.
+- **No users appear.** The key's bearer needs the `IAMReadOnly` or `IAMUserReadOnly` permission, and the **Organization ID** must match the Organization you're reviewing.

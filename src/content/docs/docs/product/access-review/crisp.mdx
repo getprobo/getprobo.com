@@ -1,0 +1,64 @@
+---
+title: Crisp
+description: Connect Crisp as an access source by installing the Probo plugin and entering your Website ID
+---
+
+Probo reads your Crisp website's operators (your team members, not your visitors) through the Crisp plugin API so you can review who has access.
+
+:::caution
+This connector does not use an API key you create or paste. Probo connects through its own Crisp Marketplace plugin: you install the **Probo Access Review** plugin on your website, then paste a Probo-provided verification code into the plugin's settings to prove you control the website. Without the plugin installed and the code saved, the connection will **not** complete.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- **Owner** access to the Crisp website, so you can install a plugin and edit its settings (Crisp operators are either Owner or Member)
+- The **Probo Access Review** plugin installed on the Crisp website you want to review
+- Your Crisp **Website ID**, from **Settings** > **Workspace Settings** > **Setup & Integrations**
+
+## Collected Fields
+
+The Probo column lists every field. The Crisp column shows the operator field the driver reads, or the `Not supported` tag when the driver leaves that field empty for Crisp.
+
+| Probo field | Crisp field                  | Notes                                                        |
+| ----------- | ---------------------------- | ----------------------------------------------------------- |
+| Name        | `first_name` and `last_name` | Falls back to the email                                      |
+| Email       | `email`                      |                                                             |
+| Role        | `role`                       | `owner` → Owner, `member` → Member                           |
+| Admin       | `role`                       | Flagged as an administrator when `role` is `owner`          |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
+| External ID | `user_id`                    | Stable identifier used to track the account across reviews   |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
+
+## Step 1: Install the Probo Plugin on Your Crisp Website
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+<Steps>
+
+1. In your Crisp dashboard (signed in as an **Owner**), install the **Probo Access Review** plugin on the website you want to review.
+2. Copy your **Website ID** from **Settings** > **Workspace Settings** > **Setup & Integrations**.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Crisp**, click **Connect**, and enter your **Website ID**.
+3. Probo shows a **verification code**. Copy it.
+4. In your Crisp dashboard, open the **Probo Access Review** plugin's settings, paste the code into the **Probo Verification Code** field, and save.
+5. Back in Probo, click **Connect**. Probo reads the code back through the plugin, confirms it matches, and connects the website.
+
+</Steps>
+
+Probo names the source after your Crisp website and pulls its operators into your campaigns.
+
+## Troubleshooting
+
+- **"Install and configure the Probo plugin" error.** The Probo Access Review plugin must be installed on the exact website whose Website ID you entered.
+- **Verification code mismatch.** Paste the exact code Probo shows for this website into the plugin's **Probo Verification Code** setting and save it before clicking **Connect**. The code is tied to your organization and this website.
+- **No operators appear.** Confirm the **Website ID** matches the website you are reviewing. Probo lists operators (agents), not visitors.

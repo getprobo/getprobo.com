@@ -1,0 +1,59 @@
+---
+title: Railway
+description: Connect Railway as an access source using an account API token
+---
+
+Probo reads the members of your Railway workspaces through the Railway GraphQL API so you can review who has access.
+
+:::caution
+Use an **account token**, created at **Account Settings** > **Tokens** with the workspace selector left on **No workspace**. A **workspace** or **project** token will **not** work, because Probo's query is scoped to your personal account (`me`), which Railway does not expose to workspace or project tokens.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- A Railway **account token** from an account that belongs to every workspace you want to review (the review only covers workspaces the token's account is a member of)
+
+## Collected Fields
+
+| Probo field | Railway field                                            | Notes                                                                        |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to the email                                                      |
+| Email       | `email`                                                  |                                                                              |
+| Role        | `role`                                                   | `ADMIN` → Admin, `MEMBER` → Member; other roles are shown as-is, and roles are combined across the account's workspaces |
+| Admin       | `role`                                                   | Flagged as an administrator when any workspace lists the member's `role` as `ADMIN` |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| MFA         | `twoFactorAuthEnabled`                                   | Whether two-factor authentication is enabled for the member                 |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                  |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+
+## Step 1: Create an Account Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating an account token in Railway](/docs/access-review/railway-create-api-key.webp)
+
+<Steps>
+
+1. In Railway, go to [**Account Settings** > **Tokens**](https://railway.com/account/tokens).
+2. Name it (e.g. `Probo Access Review`), leave the workspace selector on **No workspace** so the token is tied to your account, and create it.
+3. Copy the token and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Railway**, click **API Key**, paste the token, and click **Connect**.
+
+</Steps>
+
+Probo names the source after your Railway workspace, or after your account when the token's account belongs to several workspaces, and pulls their members into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Confirm it's an **account token**, created with **No workspace** selected. A workspace or project token won't work, because Probo's query resolves your personal account.
+- **No members appear.** The token's account must belong to the workspace you're reviewing; members of workspaces the account is not in are not visible.
