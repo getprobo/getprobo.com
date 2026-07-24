@@ -394,12 +394,22 @@ const faqSchema = {
           Give prospects one clear place to request access, sign the right NDA,
           and download watermarked documents while your team keeps control.
         </p>
-        <Button
-          href="/contact"
-          size="lg"
-          class="animate-perspective-in mx-auto"
-          style="animation-delay: 400ms">Book a demo</Button
+        <div
+          class="animate-perspective-in flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
+          style="animation-delay: 400ms"
         >
+          <Button href="/contact" size="lg">Book a demo</Button>
+          <Button
+            href="https://compliance.probo.com/"
+            variant="secondary"
+            size="lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            See it in action
+            <i class="ph ph-arrow-right" aria-hidden="true"></i>
+          </Button>
+        </div>
       </section>
 
       <section class="relative z-10 container pb-0">

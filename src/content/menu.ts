@@ -7,6 +7,7 @@ export type MenuIconName =
   | "compass"
   | "github-logo"
   | "handshake"
+  | "heart"
   | "paint-brush"
   | "quotes"
   | "shield-check"
@@ -38,7 +39,7 @@ export const menuGroups: MenuGroup[] = [
     label: "Products",
     items: [
       {
-        label: "Managed Compliance",
+        label: "Compliance Officer Service",
         description: "Expert-led compliance, end to end",
         href: "/",
         icon: "handshake",
@@ -69,10 +70,10 @@ export const menuGroups: MenuGroup[] = [
     label: "Resources",
     items: [
       {
-        label: "Guides & tools",
-        description: "Practical compliance guides and free tools",
-        href: "/hub",
-        icon: "compass",
+        label: "Probo stories",
+        description: "How teams get compliant with Probo",
+        href: "/stories",
+        icon: "quotes",
       },
       {
         label: "Blog",
@@ -81,10 +82,16 @@ export const menuGroups: MenuGroup[] = [
         icon: "article",
       },
       {
-        label: "Customer Stories",
-        description: "How teams get compliant with Probo",
-        href: "/stories",
-        icon: "quotes",
+        label: "Guides & tools",
+        description: "Practical compliance guides and free tools",
+        href: "/hub",
+        icon: "compass",
+      },
+      {
+        label: "Love from Customers",
+        description: "What customers say about working with Probo",
+        href: "/love-from-customer",
+        icon: "heart",
       },
       {
         label: "Changelog",
