@@ -1,0 +1,65 @@
+---
+title: Segment
+description: Connect Segment as an access source using a Public API token
+---
+
+Probo reads your Segment workspace's members through the Segment Public API so you can review who has access.
+
+:::caution
+Create a **Public API token**, not a Config API token. Segment runs both, and only the Public API token authenticates against the endpoints Probo reads. The Public API is available to **Team** and **Business** tier workspaces only, and only a **Workspace Owner** can create a token, so a Free workspace has none to create.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- A Segment workspace on the **Team** or **Business** tier
+- The **Workspace Owner** role in Segment (only a Workspace Owner can create a Public API token)
+- The workspace's **Region**, which the Connect dialog asks for alongside the token. Segment calls it the data processing region and sets it when the workspace is created; you cannot change it afterwards. New workspaces default to US, and EU data residency is a Business tier feature that a Segment account executive enables, so a Team workspace is always US
+
+## Collected Fields
+
+| Probo field | Segment field                                            | Notes                                                                                                          |
+| ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to the email address                                                                                |
+| Email       | `email`                                                  |                                                                                                                |
+| Role        | `permissions[].roleName`                                 | Deduplicated and sorted. A pending invitation carries no role                                                  |
+| Admin       | `permissions[].roleName`                                 | Flagged as an administrator when one of the roles is `Workspace Owner`                                         |
+| Status      | `invites`                                                | Pending invitations are listed as inactive. The users endpoint carries no status for members who have accepted, so theirs is left unknown |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews. A pending invitation is keyed by its email address |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                |
+
+Members who have been invited but have not yet accepted appear alongside accepted members, marked inactive.
+
+## Step 1: Create a Public API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the token-creation dialog to public/docs/access-review/segment-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In the [Segment app](https://app.segment.com), signed in as a **Workspace Owner**, go to **Settings** > **Workspace settings** > **Access Management** > **Tokens**.
+2. Click **+ Create Token**, choose a **Public API token**, write a description (e.g. `Probo Access Review`), and assign it **Workspace Owner** access.
+3. Click **Create**, copy the token somewhere secure, and click **Done**.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Segment**, click **API Key**, paste the token, choose your **Region**, and click **Connect**.
+
+</Steps>
+
+Probo names the source after your workspace and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Token creation is unavailable.** The Public API is a Team and Business tier feature, and only a Workspace Owner can create a token. On a Free workspace, upgrade the plan first.
+- **Token rejected.** Confirm it is a Public API token rather than a Config API token, that a Workspace Owner created it, and that the **Region** matches the workspace. Each region has its own host, and a token authenticates against its own workspace's host.
+- **Region unknown.** Segment does not document a settings screen that shows an existing workspace's region, but the URL you sign in with is a practical indicator: `app.segment.com` is the US app and `eu1.app.segment.com` the EU one.
+- **No members appear.** A token with only Workspace Member access may not be able to read the workspace's users. Create one with Workspace Owner access instead.

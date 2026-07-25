@@ -1,0 +1,61 @@
+---
+title: Dotfile
+description: Connect Dotfile as an access source using a workspace API key
+---
+
+Probo reads your Dotfile workspace's members through the Dotfile API so you can review who has access.
+
+:::caution
+Use a workspace API key created by a workspace **admin**. A Dotfile API key is workspace wide and Dotfile documents no scopes or permissions on it, so any workspace API key can call the users endpoint. Dotfile hashes and encrypts the key, so copy it when you create it. You cannot recover a lost key and will have to generate a new one.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **admin** role in the Dotfile workspace (Dotfile requires you to be an admin of the workspace to generate API keys)
+
+## Collected Fields
+
+| Probo field | Dotfile field                                            | Notes                                                       |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------------------- |
+| Name        | `first_name` and `last_name`                             | Falls back to the email address                             |
+| Email       | `email`                                                  |                                                             |
+| Role        | `role`                                                   | `owner`, `admin`, `member`, or the name of a custom role    |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `owner` or `admin` |
+| Status      | `suspended_at`                                           | Inactive once a suspension timestamp is set                 |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews  |
+| Created at  | `created_at`                                             | When the user was created in the workspace                  |
+
+Probo requests suspended users as well as active ones, so a suspended member still appears in the campaign, marked inactive.
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/dotfile-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In the [Dotfile console](https://app.dotfile.com), signed in as a workspace **admin**, go to **Workspace settings** > **API keys**.
+2. Create a new key and give it a name (e.g. `Probo Access Review`). Dotfile documents no scope or permission to set on a key.
+3. Copy the key and store it securely (password manager, secret manager). Dotfile hashes and encrypts it, so you cannot read it again.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Dotfile**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo pulls your workspace's members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm a workspace admin generated the key and that it has not been replaced since. Probo sends it in the `X-DOTFILE-API-KEY` header, so a key from a different workspace will not authenticate.
+- **No members appear.** An API key is workspace wide, so check that it belongs to the workspace you intend to review.
