@@ -1,0 +1,65 @@
+---
+title: Okta
+description: Connect Okta as an access source using an Okta API token
+---
+
+Probo reads your Okta org's users through the Okta Users API so you can review who has access.
+
+:::caution
+Create an **Okta API token** in the Admin Console under **Security** > **API** > **Tokens**. Probo sends it with Okta's `SSWS` authorization scheme, so an OAuth 2.0 access token issued by your org authorization server will **not** work. An API token also carries the permissions of the admin who created it and is rejected once that admin is deactivated, so create it from an account that stays active.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- An Okta admin role that can create tokens. Okta allows super admins, org admins, group admins, group membership admins, and read-only admins to create them
+- An admin who can view **Users**, because the token inherits that admin's permissions
+- Your **Okta Domain**, which the Connect dialog asks for alongside the token. Okta has no central API gateway, so every org authenticates against its own host, such as `acme.okta.com`, `acme.oktapreview.com`, `acme.okta-emea.com`, or a custom domain. Click your username in the upper right corner of the Admin Console and the domain appears in the dropdown
+
+## Collected Fields
+
+| Probo field | Okta field                                               | Notes                                                                                                                                                                                                                  |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `profile.displayName`                                    | Falls back to `profile.firstName` and `profile.lastName` joined with a space                                                                                                                                           |
+| Email       | `profile.email`                                          | Falls back to `profile.login`. A user with neither is skipped                                                                                                                                                          |
+| Role        | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                        |
+| Admin       | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                        |
+| Status      | `status`                                                 | `SUSPENDED` and `DEPROVISIONED` are listed as inactive. `ACTIVE`, `PROVISIONED`, `STAGED`, `RECOVERY`, `PASSWORD_EXPIRED`, and `LOCKED_OUT` are listed as active. A user Okta returns without a status is left unknown |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                        |
+| Last login  | `lastLogin`                                              | The user's last sign-in to Okta. Left empty when Okta returns `null`                                                                                                                                                   |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                                                                                                                                             |
+| Created at  | `created`                                                | When the user was created in the Okta org                                                                                                                                                                              |
+
+The users endpoint does not return role assignments, so Probo records no role and flags no account as an administrator.
+
+## Step 1: Create an API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/okta-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In the Okta Admin Console, signed in as an admin who can view **Users**, go to **Security** > **API** > **Tokens**.
+2. Click **Create token** and name the token in **What do you want your token to be named?** (e.g. `Probo Access Review`).
+3. Set **API calls made with this token must originate from** to **Any IP** unless you allowlist Probo in an Okta network zone. Click **Create token**, then copy the token value and store it securely. Okta shows it only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Okta**, click **API Key**, paste the token, enter your **Okta Domain** (the org host, for example `acme.okta.com`), and click **Connect**.
+
+</Steps>
+
+Probo names the source after your Okta org and pulls its users into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Confirm it is an Okta API token created under **Security** > **API** > **Tokens** rather than an OAuth 2.0 access token, and that the **Okta Domain** is the host of the org that issued it. A token authenticates only against its own org.
+- **A token that used to work stops working.** An Okta API token is valid for 30 days from its creation or its last use, so a token unused for 30 days expires. Okta also rejects a token once the admin who created it is deactivated. Create a new one from an account that stays active.
+- **No users appear.** The token carries the permissions of the admin who created it, so it must come from an admin who can view Users. Also check that the token is not restricted to a network zone that excludes Probo. The creation dialog can limit calls to specific IP addresses or zones.
+- **Deactivated users are missing.** Okta's users endpoint omits users whose status is `DEPROVISIONED` unless the request carries a filter or search query, and Probo sends neither, so accounts you deactivated in Okta do not reach the campaign.

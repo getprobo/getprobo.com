@@ -1,0 +1,66 @@
+---
+title: SigNoz
+description: Connect SigNoz as an access source using a service account API key
+---
+
+Probo reads your SigNoz organization's members through the SigNoz API so you can review who has access.
+
+:::caution
+Use a **service account API key**, created under **Settings** > **Service Accounts** and sent in the `SIGNOZ-API-KEY` header. An **ingestion key**, created under **Settings** > **Ingestion Settings**, does not work: it only authenticates telemetry sent to the ingest endpoints. SigNoz documents no prefix that tells the two apart, so go by where the key was created.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- A SigNoz user holding the **SigNoz-Admin** (`signoz-admin`) role. SigNoz states the requirement as a role with the transactions needed to create a service account, attach a role to it and create its API key. `signoz-admin` is the only managed role that carries them
+- A service account assigned the **SigNoz-Admin** (`signoz-admin`) role, so its key can list the organization's members. The endpoint Probo reads is admin only, and SigNoz's fine-grained access control does not cover the user resource yet, so no narrower role can read members
+- The **Base URL** of your SigNoz instance, which the Connect dialog asks for alongside the key. It is the `http` or `https` address you use to reach SigNoz: on SigNoz Cloud that is your instance URL (for example `https://your-instance.signoz.cloud`), and on a self-hosted deployment it is your own server address. Include the base path when SigNoz is served under one, for example `https://example.com/signoz`. Leave off any query string or fragment, and make sure the instance is reachable from the public internet
+
+## Collected Fields
+
+| Probo field | SigNoz field                                             | Notes                                                                                                                                                                                                                                   |
+| ----------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `displayName`                                            |                                                                                                                                                                                                                                         |
+| Email       | `email`                                                  | A user with no email address is skipped                                                                                                                                                                                                 |
+| Role        | `role`                                                   | `ADMIN` and `signoz-admin` map to Admin, `EDITOR` and `signoz-editor` to Editor, `VIEWER` and `signoz-viewer` to Viewer. A custom role is kept verbatim, and the match is exact, so a role that merely contains "admin" is not promoted |
+| Admin       | `isRoot`, `role`                                         | Flagged as an administrator when `isRoot` is true, or when `role` resolves to Admin                                                                                                                                                     |
+| Status      | `status`                                                 | `active` is listed as active, `pending_invite` and `deleted` as inactive. Any other value leaves the status unknown                                                                                                                     |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                         |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                         |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                                                                                                                                                              |
+| Created at  | `createdAt`                                              | When the user was created in the organization                                                                                                                                                                                           |
+
+SigNoz lists pending invitations in the same Members table as active users, so someone who was invited but has not accepted still appears in the campaign, marked inactive.
+
+## Step 1: Create a Service Account API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/signoz-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In SigNoz, signed in with the **SigNoz-Admin** role, open **Settings** and go to **Service Accounts**.
+2. Click **New Service Account**, enter a name (lowercase letters, numbers and hyphens only, e.g. `probo-access-review`), and click **Create**.
+3. Open the service account. In the **Overview** tab, use the **Roles** dropdown to assign the **SigNoz-Admin** role, then click **Save**.
+4. Open the **Keys** tab, click **Add Key**, name the key (e.g. `Probo Access Review`), leave the expiration date empty so the key stays valid until it is revoked, and click **Create**. Copy the key and store it securely. SigNoz shows it only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **SigNoz**, click **API Key**, paste the key, enter your **Base URL** (the address of the instance the key was created on), and click **Connect**.
+
+</Steps>
+
+Probo names the source after your SigNoz organization and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it is a service account API key from **Settings** > **Service Accounts** rather than an ingestion key from **Settings** > **Ingestion Settings**, that it has not expired or been revoked, and that the **Base URL** points at the instance the key was created on.
+- **No members appear.** Listing the organization's members requires the **SigNoz-Admin** role. Open the service account's **Overview** tab, check that the role is assigned, then sync the source again.
+- **Key creation is unavailable.** By default only the `signoz-admin` role can create service accounts and their keys. Ask a SigNoz admin to create the key. On SigNoz Cloud and Self-Hosted Enterprise an admin can instead grant a custom role scoped to that one service account. That needs an active SigNoz license and is not available on Self-Hosted Community.
+- **Connect fails on a self-hosted instance.** Probo calls the **Base URL** from its own infrastructure, so it cannot connect to a SigNoz deployment that is only reachable on a private network or on `localhost`.

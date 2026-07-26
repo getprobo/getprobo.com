@@ -1,0 +1,65 @@
+---
+title: Metabase
+description: Connect Metabase as an access source using an Administrators group API key
+---
+
+Probo reads the people in your Metabase instance through the Metabase API so you can review who has access.
+
+:::caution
+Assign the key to the **Administrators** group. A Metabase API key has exactly the permissions of the group it is assigned to, and the endpoint Probo reads returns the people list to an administrator only. A key left in **All Users** returns a permission error instead of the member list. Probo authenticates with the `X-API-Key` header, so a session token from `POST /api/session` is not an alternative.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- Membership of the **Administrators** group in Metabase (only an administrator can open Admin settings and create an API key)
+- Metabase 49 or later, the release that added API keys
+- The **Instance URL**, which the Connect dialog asks for alongside the key. It is the base URL you open Metabase with: an `http://` or `https://` address, such as `https://example.metabaseapp.com` on Metabase Cloud, or your own hostname when self-hosted. Probo calls that address directly, so it has to be reachable from the internet
+
+## Collected Fields
+
+| Probo field | Metabase field                                           | Notes                                                                                                                                                                                    |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `common_name`                                            | Metabase builds it from the first and last name and falls back to the email address when both are unset. Probo joins `first_name` and `last_name` when the response has no `common_name` |
+| Email       | `email`                                                  |                                                                                                                                                                                          |
+| Role        | `is_superuser`                                           | Probo reports `Admin` when `is_superuser` is true and `User` otherwise. Probo does not collect Metabase group membership                                                                 |
+| Admin       | `is_superuser`                                           | Probo marks the account as an administrator when `is_superuser` is true                                                                                                                  |
+| Status      | `is_active`                                              | Probo requests every status, so it lists deactivated people alongside active ones and marks them inactive                                                                                |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                          |
+| Last login  | `last_login`                                             | When the person last signed in. Empty for a person who has never signed in                                                                                                               |
+| External ID | `id`                                                     | Stable identifier Probo uses to track the account across reviews                                                                                                                         |
+| Created at  | `date_joined`                                            | When the account was created in Metabase                                                                                                                                                 |
+
+Probo skips accounts that have no email address.
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/metabase-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In Metabase, signed in as a member of the **Administrators** group, go to **Admin** > **Settings** > **Authentication** > **API keys** (`/admin/settings/authentication/api-keys` on your instance).
+2. Click **Create an API key**, enter a **Key name** (e.g. `Probo Access Review`), and set **Group this key should belong to** to **Administrators**.
+3. Click **Create**, copy the key (`mb_…`), and store it securely. Metabase does not show it again.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Metabase**, click **API Key**, paste the key, enter your **Instance URL** (the base address of your Metabase, e.g. `https://example.metabaseapp.com`), and click **Connect**.
+
+</Steps>
+
+Probo names the source after your Metabase site name and pulls its people into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm the key is assigned to the **Administrators** group, and that nobody has regenerated it since you pasted it. Regenerating a key in the **Edit API key** dialog replaces the previous value.
+- **Probo cannot reach the instance.** Paste the base address only. A URL copied from a Metabase page, such as one ending in `/admin/settings/authentication`, sends the sync to the wrong endpoint. A self-hosted instance that is only reachable on a private network or behind a VPN cannot be synced.
+- **No API keys page under Authentication.** Metabase added API keys in version 49, so upgrade an older instance first. If your instance shows no dedicated page, scroll to the **API Keys** block on the **Authentication** page and click **Manage**.
+- **No members appear.** Check the key's group first, because the people list is restricted to administrators. Probo also skips any account that has no email address.

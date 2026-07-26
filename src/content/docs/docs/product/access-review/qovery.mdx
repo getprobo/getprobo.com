@@ -1,0 +1,64 @@
+---
+title: Qovery
+description: Connect Qovery as an access source using an organization API token
+---
+
+Probo reads your Qovery organization's members through the Qovery API so you can review who has access.
+
+:::caution
+Create an organization **API token** in the Qovery Console under **Settings** > **API token**. Qovery documents these as tokens for third-party applications and scripts, sent as `Authorization: Token <token>`. That is the header Probo uses. A signed-in user's JWT, which the Console sends as `Authorization: Bearer`, is a different credential with a limited lifetime and will **not** work. Give the token the **Admin** role, because a token only carries the permissions of the role it is created with.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Owner**, **Admin** or **DevOps** role in Qovery. Those three built-in roles cover organization setup, which includes API tokens. A custom role cannot generate one
+- The **Organization ID**, which the Connect dialog asks for alongside the token. It is a UUID, and Qovery uses it as the `{organizationId}` path segment of its API. With the organization open in the Console, the ID is the segment that follows `/organization/` in the address bar
+
+## Collected Fields
+
+| Probo field | Qovery field                                             | Notes                                                                                                                                                                                                                      |
+| ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to `nickname`, then to the email address                                                                                                                                                                        |
+| Email       | `email`                                                  |                                                                                                                                                                                                                            |
+| Role        | `role`                                                   | `OWNER`, `ADMIN`, `DEVELOPER` and `VIEWER` are shown as Owner, Admin, Developer and Viewer, matched without regard to case. Any other value is shown as Qovery returns it, and a member with no role is listed without one |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `OWNER` or `ADMIN`, matched without regard to case                                                                                                                              |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                            |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                            |
+| Last login  | `last_activity_at`                                       | Qovery documents it as the last time the user was connected. Left empty when the field is absent or is not an RFC 3339 timestamp                                                                                           |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                                                                                                                                                 |
+| Created at  | `created_at`                                             | When the member joined the organization                                                                                                                                                                                    |
+
+Probo skips any member Qovery returns without an email address.
+
+## Step 1: Create an API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![The Create new API token dialog in Qovery organization settings](/docs/access-review/qovery-create-api-key.webp)
+
+<Steps>
+
+1. In the [Qovery Console](https://console.qovery.com), signed in as an **Owner**, **Admin** or **DevOps** user, open the organization you want to review, click the **Settings** tab, then open the **API token** section.
+2. Click **Add new**, enter a **Token name** (e.g. `Probo Access Review`) and a **Description**, then pick **Admin** in the **Role** list.
+3. Click **Create**, then copy the token. Qovery shows it once and you cannot retrieve it later, so store it securely.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Qovery**, click **API Key**, paste the token, enter your **Organization ID**, and click **Connect**.
+
+</Steps>
+
+Probo names the source after your organization and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Qovery answers a missing or invalid token with a 401. Confirm the value is an organization API token that is still listed under **Settings** > **API token**, and not a Console session token, which the API accepts only as a `Bearer` credential.
+- **No members appear.** A token carries only the permissions of the role it was created with, and Qovery reserves member management for the Owner and Admin roles. A token created with a narrower role can be refused at the members endpoint. Recreate the token with the **Admin** role, and confirm the **Organization ID** belongs to the same organization as the token.
+- **Organization ID unknown.** Open the organization in the Console and read the UUID that follows `/organization/` in the URL, or call `GET https://api.qovery.com/organization` with the token to list the organizations it can see, each with its `id`.
+- **Token creation is unavailable.** Only the Owner, Admin and DevOps built-in roles can generate API tokens. A custom role cannot, so ask someone holding one of those roles to create the token.

@@ -1,0 +1,63 @@
+---
+title: Neon
+description: Connect Neon as an access source using an organization API key
+---
+
+Probo reads your Neon organization's members through the Neon API so you can review who has access.
+
+:::caution
+Create an **organization API key** from the organization's **Settings** > **API keys** page in the Neon Console. Only an organization admin can create one. A **project-scoped API key** will **not** work, because it cannot perform organization-related actions such as reading the member list.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Admin** role in the Neon organization (only organization admins can create an organization API key)
+- The **Organization ID**, which the Connect dialog asks for alongside the key. Neon shows it on the organization's **Settings** page, under **General information**, in the form `org-example-12345678`
+
+## Collected Fields
+
+| Probo field | Neon field                                               | Notes                                                                                                                                                                                                                                                          |
+| ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `user.email`                                             | The members endpoint exposes no display name, so the email address is used                                                                                                                                                                                     |
+| Email       | `user.email`                                             |                                                                                                                                                                                                                                                                |
+| Role        | `member.role`                                            | `admin` and `member`, Neon's two organization roles, are shown as Admin and Member, and `editor`, `viewer` and `collaborator` as Editor, Viewer and Collaborator. Any other value is shown as Neon returns it, and a member with no role is listed without one |
+| Admin       | `member.role`                                            | Flagged as an administrator when `role` is `admin`, matched without regard to case                                                                                                                                                                             |
+| Status      | `user.deactivated_at`                                    | Listed as active when Neon omits the field, and as inactive when Neon returns a deactivation timestamp                                                                                                                                                         |
+| MFA         | `user.has_mfa`                                           | Neon reports whether the member has multi-factor authentication enabled. Left unknown when the field is absent                                                                                                                                                 |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                                                |
+| External ID | `member.user_id`                                         | Stable identifier used to track the account across reviews. Falls back to `member.id`, the membership ID, when Neon returns no user ID                                                                                                                         |
+| Created at  | `member.joined_at`                                       | When the member joined the organization                                                                                                                                                                                                                        |
+
+Probo skips any member Neon returns without an email address.
+
+## Step 1: Create an Organization API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/neon-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In the [Neon Console](https://console.neon.tech), signed in as an organization **Admin**, switch to the organization you want to review and go to **Settings** > **API keys**.
+2. Click **Create new** and name the key (e.g. `Probo Access Review`). Leave it as an organization key, which covers all of the organization's resources; do not select **Project-scoped**.
+3. Copy the key and store it securely. Neon displays the token only once, and a lost key has to be revoked and replaced.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Neon**, click **API Key**, paste the key, enter your **Organization ID**, and click **Connect**.
+
+</Steps>
+
+Probo names the source after your organization and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Neon answers a missing, invalid or revoked key with a 401. Confirm the key was created on the organization's **Settings** > **API keys** page and is still listed there.
+- **No members appear.** Check that the **Organization ID** matches the organization the key belongs to. A project-scoped key reaches only its own project and cannot read organization members.
+- **A collaborator is missing.** Someone invited to a single project is a project collaborator, not an organization member, so the members endpoint does not return them. Review those people on the project's **Collaborators** list instead.

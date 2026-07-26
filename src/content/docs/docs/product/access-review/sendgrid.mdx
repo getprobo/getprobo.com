@@ -1,0 +1,63 @@
+---
+title: SendGrid
+description: Connect SendGrid as an access source using a SendGrid API key with Teammates access
+---
+
+Probo reads your SendGrid account's teammates through the SendGrid v3 API so you can review who has access.
+
+:::caution
+Create the API key with **Full Access**, or with **Custom Access** and the **Teammates** permission set to at least **Read Access**. A **Billing Access** key will not work: it reaches only the account's billing endpoints, not the teammates endpoints Probo reads.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- SendGrid account owner or administrator access (an administrator holds every scope, including the Teammates permission the key needs)
+
+## Collected Fields
+
+| Probo field | SendGrid field                                           | Notes                                                                                                                                                                                                                      |
+| ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `first_name`, `last_name`                                | Joined into a single name, and left empty when SendGrid holds neither                                                                                                                                                      |
+| Email       | `email`                                                  |                                                                                                                                                                                                                            |
+| Role        | `user_type`                                              | `owner` becomes Owner, `admin` becomes Admin, `teammate` becomes Teammate. When SendGrid returns no `user_type`, the role falls back to Admin or Teammate according to `is_admin`. Any other value is passed through as is |
+| Admin       | `is_admin`                                               | Flagged as an administrator when `is_admin` is true                                                                                                                                                                        |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                            |
+| MFA         | `scopes`                                                 | Read from the per-teammate detail endpoint. `2fa_required` on its own reports MFA enabled and `2fa_exempt` on its own reports it disabled. Both flags together, neither flag, or a failed detail fetch report unknown      |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                            |
+| External ID | `username`                                               | Stable identifier used to track the account across reviews. On a unified teammate it is the email address                                                                                                                  |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                            |
+
+The account owner appears alongside the teammates. Probo skips any row that carries no email address.
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/sendgrid-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In the [SendGrid app](https://app.sendgrid.com/settings/api_keys), signed in as the account owner or an administrator, go to **Settings** > **API Keys**.
+2. Click **Create API Key**, name it (e.g. `Probo Access Review`), and select **Full Access**, or **Custom Access** with the **Teammates** permission set to **Read Access**.
+3. Click **Create & View**, copy the key (`SG.…`), and store it securely. SendGrid shows it only once and cannot retrieve it later.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **SendGrid**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+Probo names the source after the company name on your SendGrid account profile and pulls its teammates into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm the key has Full Access, or Custom Access including the Teammates permission. A Billing Access key reaches only billing endpoints. If you did not copy the key value when you created it, you cannot recover it, so create a new key instead.
+- **No teammates appear.** The key needs at least Read Access to Teammates. A short list can also be correct: Free and Essentials accounts allow one teammate per account, while Pro and higher allow up to 1,000.
+- **MFA is unknown for the account owner.** SendGrid reports two-factor state through the auto-set `2fa_exempt` and `2fa_required` scopes. A full-access user, including the owner, holds every scope and therefore both flags, so Probo reports unknown.
+- **The source keeps its default name.** The name comes from the **company** field on your SendGrid account profile. Probo keeps the default name when that field is blank, and when the key cannot read the profile. To have Probo pick the name up, fill in the company field and give the key read access to the account profile, or use a Full Access key.

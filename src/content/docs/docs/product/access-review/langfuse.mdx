@@ -1,0 +1,66 @@
+---
+title: Langfuse
+description: Connect Langfuse as an access source using an organization-scoped API key
+---
+
+Probo reads your Langfuse organization's members through the organization-scoped public API so you can review who has access.
+
+:::caution
+Create an **organization-scoped API key** from your organization's settings, not a project API key from a project's settings. Langfuse issues both kinds as the same `pk-lf-` public key and `sk-lf-` secret key pair, so the prefix does not tell you which kind you hold. The settings page you created the key on is the only way to tell. The organization memberships endpoint rejects a project key with `Invalid API key. Organization-scoped API key required for this operation.` Paste the pair into Probo as a single `pk-lf-…:sk-lf-…` string, public key first, because Langfuse authenticates it as an HTTP Basic credential.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Owner** role in the Langfuse organization (Langfuse grants `organization:CRUD_apiKeys` to Owner only, so an Admin, Member or Viewer cannot create the key)
+- A Langfuse plan that includes the organization management API, which Langfuse gates behind the `admin-api` entitlement. Langfuse's availability table for **SCIM & Organization-Key Scoped API Routes** lists Hobby, Core and Pro as not available, Langfuse Cloud **Enterprise** as available, and self-hosting as requiring the **Enterprise Edition**. If your organization is on a legacy or individually negotiated plan, confirm the entitlement with Langfuse. Without it Langfuse hides the **API Keys** tab and the memberships endpoint answers `This feature is not available on your current plan.`
+- The **Base URL** of the Langfuse instance you are reviewing, which the Connect dialog asks for alongside the key. On Langfuse Cloud it is the host you sign in to: `https://cloud.langfuse.com` (EU), `https://us.cloud.langfuse.com` (US), `https://jp.cloud.langfuse.com` (Japan) or `https://hipaa.cloud.langfuse.com` (HIPAA). A self-hosted instance uses its own deployment URL. Enter the host on its own, without the `/api/public` path
+
+## Collected Fields
+
+| Probo field | Langfuse field                                           | Notes                                                                                                                   |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to the email address                                                                                         |
+| Email       | `email`                                                  | A membership with no email address is skipped                                                                           |
+| Role        | `role`                                                   | `OWNER` → Owner, `ADMIN` → Admin, `MEMBER` → Member, `VIEWER` → Viewer, `NONE` → None. Any other value is kept verbatim |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `OWNER` or `ADMIN`                                                           |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                         |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                         |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                         |
+| External ID | `userId`                                                 | Stable identifier used to track the account across reviews                                                              |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                         |
+
+The memberships endpoint returns one record per organization member, with no filter on the role. Collaborators who work in a single project are still organization members with the organization role `None`, so they appear in the review as well. The endpoint does not return pending invitations.
+
+## Step 1: Create an Organization-Scoped API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/langfuse-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In Langfuse, signed in as an organization **Owner**, open the organization you want to review and click **Settings** in the sidebar to reach **Organization Settings**.
+2. Open the **API Keys** tab and click **Create new API keys**.
+3. Fill in **Note (optional)** (e.g. `Probo Access Review`) and click **Create API keys**.
+4. Copy the **Public Key** and the **Secret Key** and store them securely. Langfuse shows the secret key only once and displays a masked version after that.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Langfuse**, click **API Key**, paste the two keys as one `pk-lf-…:sk-lf-…` string (public key, a colon, then the secret key) into the API key field, enter your **Base URL** (the Langfuse host you sign in to, or your self-hosted deployment URL), and click **Connect**.
+
+</Steps>
+
+Probo names the source **Langfuse** and pulls your organization's members into your campaigns. The memberships endpoint carries no organization name, so the source keeps that generic name.
+
+## Troubleshooting
+
+- **No API Keys tab in organization settings.** Langfuse shows the tab only when the organization's plan includes the organization management API and you hold the **Owner** role. Check both before creating the key.
+- **Key rejected.** Confirm you created the key on the organization settings page rather than on a project's settings page, that you pasted both halves as `pk-lf-…:sk-lf-…` with the colon in between, and that the **Base URL** is the same Langfuse host you created the key on. Each cloud region is a separate deployment, so a key from one host does not authenticate against another.
+- **"This feature is not available on your current plan."** The organization management API is gated on the plan, not on the key. Langfuse lists it as available on Langfuse Cloud **Enterprise** and on a self-hosted **Enterprise Edition** deployment. Move the Langfuse organization onto a qualifying plan, or confirm the entitlement with Langfuse, then connect again.
+- **No members appear.** An organization-scoped key is bound to the organization you created it in and lists only that organization's members. Create the key inside the organization you want to review.

@@ -1,0 +1,66 @@
+---
+title: incident.io
+description: Connect incident.io as an access source using an API key
+---
+
+Probo reads your incident.io organization's users through the incident.io API so you can review who has access.
+
+:::caution
+Use an **API key** created in **Settings** > **API keys** and give it **account-level** permission to view users. Probo reads `GET /v2/users`, which incident.io documents as requiring the `users.view` scope. A key with only **team-scoped** permissions will **not** work. The team-scoped permission set covers team resources such as schedules, workflows and catalog entries, not the account's users.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- An incident.io plan that includes the API. incident.io lists API and webhooks on the Team, Pro and Enterprise plans, but not on Basic
+- The **Manage API keys** permission in incident.io, at the account level or the team level (only a user who holds it can create a key)
+- Permission to view users on your own incident.io account (you can only grant a key permissions you already hold)
+
+## Collected Fields
+
+| Probo field | incident.io field                                        | Notes                                                                                                                                                                                            |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Name        | `name`                                                   | Falls back to the email address when the user has no name                                                                                                                                        |
+| Email       | `email`                                                  | A user returned without an email address is skipped                                                                                                                                              |
+| Role        | `base_role.name`, `custom_roles[].name`                  | The base role is listed first, then each custom role. A user with neither falls back to the deprecated `role` enum, mapped to Owner, Administrator, Responder or Viewer; `unset` maps to no role |
+| Admin       | `base_role.slug`                                         | Flagged as an administrator when the base role slug is `owner` or `administrator`. A user with no base role falls back to the deprecated `role` enum, read the same way                          |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                  |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                  |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                  |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                                                                                                                       |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                  |
+
+The users endpoint returns no account status and no sign-in or creation timestamps, so those fields stay empty.
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/incident-io-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In the [incident.io dashboard](https://app.incident.io/~/settings/api-keys), go to **Settings** > **API keys**. You need the **Manage API keys** permission, at the account level or the team level.
+2. Create a key and name it (e.g. `Probo Access Review`).
+3. Grant it **account-level** permission to view your organization's users. Team-scoped permissions alone are not enough, and you can only grant permissions you hold yourself.
+4. Copy the token and store it securely. incident.io shows it only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **incident.io**, click **API Key**, paste the token, and click **Connect**.
+
+</Steps>
+
+Each key belongs to a single incident.io organization, so Probo pulls that organization's users into your campaigns. Because the users endpoint does not return an organization name, the source keeps the generic name **incident.io**.
+
+## Troubleshooting
+
+- **Key rejected.** `GET /v2/users` requires the `users.view` scope, so the key needs account-level permission to view users. Adjust its permissions in **Settings** > **API keys**, or create a new key that has them.
+- **Cannot create a key.** You need the **Manage API keys** permission, at the account level or the team level. The API is also a Team, Pro or Enterprise plan feature, so upgrade first if you are on Basic.
+- **No users appear.** Confirm the key has account-level permissions and not only team-scoped ones. Probo also skips any user that incident.io returns without an email address.
+- **A role looks outdated.** incident.io froze its original `role` field in March 2023 and replaced it with `base_role` and `custom_roles`. Probo reads the live roles first and falls back to the frozen field only for a user that has neither, so an old Owner, Administrator, Responder or Viewer label means that user has no RBAC role. Assign one in incident.io and the next sync picks it up.

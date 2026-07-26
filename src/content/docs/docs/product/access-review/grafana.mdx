@@ -1,0 +1,64 @@
+---
+title: Grafana
+description: Connect Grafana as an access source using a service account token
+---
+
+Probo reads the members of your Grafana organization through the Grafana HTTP API so you can review who has access.
+
+:::caution
+Use a **service account token** (`glsa_…`) created inside the Grafana instance you want to review, on a service account that holds the **Admin** role. A Grafana Cloud **Access Policy** token created in the Cloud Portal will **not** work, because Grafana Cloud Access Policies do not authorize access to the Grafana instance HTTP API.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- Admin rights in Grafana, or the `fixed:roles:reader` and `fixed:serviceaccounts:creator` roles that Grafana requires to create a service account. Both fixed roles exist wherever Grafana role-based access control does, in Grafana Enterprise and Grafana Cloud
+- A service account that can read the organization users endpoint. Grafana documents `GET /api/org/users` as accessible to users with the org admin role, through the RBAC action `org.users:read` on scope `users:*`, so the **Admin** role covers it. On Grafana Cloud or Grafana Enterprise, a narrower role that carries that action reads the endpoint too. Probo also calls `GET /api/org` to name the source, and that endpoint needs `orgs:read`
+- The **Base URL** of the Grafana instance Probo should review, which the Connect dialog asks for alongside the token. It is the root URL you sign in to. On Grafana Cloud it has the form `https://<your-stack-slug>.grafana.net`, and the Cloud Portal shows it after you select the stack and click **Details** on the **Grafana** tile. Include the subpath when Grafana is served from one, for example `https://example.com/grafana`
+
+## Collected Fields
+
+| Probo field | Grafana field                                            | Notes                                                                                                                                                                                                                                                                                                |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Probo leaves it empty when the user has no name set in Grafana                                                                                                                                                                                                                                       |
+| Email       | `email`                                                  | Falls back to `login` when the user has no email address. Probo skips a user with neither                                                                                                                                                                                                            |
+| Role        | `role`                                                   | The organization role, such as `Viewer`, `Editor` or `Admin`. Grafana returns one role per user                                                                                                                                                                                                      |
+| Admin       | `role`                                                   | Probo flags the account as an administrator when `role` is `Admin`. The comparison ignores case                                                                                                                                                                                                      |
+| Status      | `isDisabled`                                             | Probo lists the user as inactive when `isDisabled` is true. Grafana always sends the field on this endpoint, so the status is unknown only when a response omits it                                                                                                                                  |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                                                                                      |
+| Last login  | `lastSeenAt`                                             | The last time Grafana saw the user active. Grafana sets it to roughly ten years in the past when it creates a user, so someone who has never signed in shows a Last login about ten years old rather than a blank one. Probo leaves it empty when the field is empty or is not an RFC 3339 timestamp |
+| External ID | `userId`                                                 | Stable identifier Probo uses to track the account across reviews                                                                                                                                                                                                                                     |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                                                                                      |
+
+## Step 1: Create a Service Account Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/grafana-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In Grafana, signed in with **Admin** rights, click **Administration** in the left-side menu, then **Users and access** > **Service accounts** > **Add service account**.
+2. Enter a **Display name** (e.g. `Probo Access Review`), click **Create**, then assign the **Admin** role with the role picker on the service account page.
+3. Click **Add service account token**, enter a token name, optionally check **Set expiration date**, and click **Generate token**.
+4. Copy the token (`glsa_…`) and store it securely.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Grafana**, click **API Key**, paste the service account token, enter your **Base URL** (the root URL of that same Grafana instance), and click **Connect**.
+
+</Steps>
+
+Probo names the source after your Grafana organization and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Confirm it is a service account token (`glsa_…`) created inside the Grafana instance itself, and that the **Base URL** points at that same instance. A Grafana Cloud Access Policy token created in the Cloud Portal does not authorize access to the Grafana instance HTTP API.
+- **No members appear.** Reading the organization users endpoint requires the org admin role, or the `org.users:read` action on scope `users:*` where Grafana role-based access control is available. A service account left on Viewer or Editor with no such role gets a permission error instead of the member list. Assign it the **Admin** role with the role picker and connect again.
+- **Members of another organization are missing.** A service account token belongs to one Grafana organization, and Probo reads the members of that organization only. Add one Probo source per Grafana organization.
+- **Base URL rejected.** It must be an `http` or `https` URL with a host, for example `https://acme.grafana.net`. Probo calls the instance from its own servers, so it cannot connect to a Grafana that is only reachable on a private network.

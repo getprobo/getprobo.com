@@ -1,0 +1,64 @@
+---
+title: Tally
+description: Connect Tally as an access source using a Tally API key
+---
+
+Probo reads your Tally organization's users and pending invitations through the Tally API so you can review who has access.
+
+:::caution
+Use a Tally **API key** (`tly-…`) created under **Settings** > **API keys**. Tally issues one credential type and ties each key to the user who created it, so the key inherits that user's permissions and stops working once that user leaves the organization. Create it from an account that can read the organization's members and that will stay in the organization.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- A Tally account in the organization you want to review, preferably the **organization owner**. A key has no scopes of its own: it inherits the permissions of the user who created it, and the organization endpoints answer `403` when that user lacks the required permission
+- The **Organization ID** of that organization, which the Connect dialog asks for alongside the key. Retrieve it by calling `GET https://api.tally.so/users/me` with the key and reading `organizationId` from the response
+
+## Collected Fields
+
+| Probo field | Tally field                                              | Notes                                                                                                                            |
+| ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `fullName`                                               | A pending invitation carries no name                                                                                             |
+| Email       | `email`                                                  | A record with no email address is skipped                                                                                        |
+| Role        | `invites`                                                | Tally exposes no role on an organization user, so members have none. A pending invitation is listed with the role `Invited`      |
+| Admin       | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                  |
+| Status      | `isDeleted`                                              | A user flagged `isDeleted` is listed as inactive and every other user as active. Pending invitations are listed as inactive      |
+| MFA         | `hasTwoFactorEnabled`                                    | Enabled when the flag is true, disabled when it is false. A pending invitation carries no flag, so its MFA state is left unknown |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                  |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews. A pending invitation is keyed by its invite id                       |
+| Created at  | `createdAt`                                              | The timestamp Tally returns on the user record. Probo does not record one for a pending invitation                               |
+
+People who have been invited but have not yet accepted appear alongside the organization's users, marked inactive.
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/tally-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In [Tally](https://tally.so/settings/api-keys), signed in as the account the key should belong to, go to **Settings** > **API keys**.
+2. Click **Create API key**, name it (e.g. `Probo Access Review`), and click **Create**. Tally keys have no scopes, so there is nothing to set on the key.
+3. Copy the key (`tly-…`) and store it securely. Tally shows it only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Tally**, click **API Key**, paste the key, enter your **Organization ID**, and click **Connect**.
+
+</Steps>
+
+Probo names the source after your organization and pulls its users and pending invitations into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm the key is an active Tally API key (`tly-…`) copied from **Settings** > **API keys**. Tally stops every key belonging to a user once that user is removed from the organization or leaves it, so create a replacement from an account that is still a member.
+- **Access forbidden.** The organization users and invites endpoints answer `403` when the key's user lacks permission. Create the key from the organization owner's account instead.
+- **Organization ID unknown.** Call `GET https://api.tally.so/users/me` with the key and read `organizationId` from the response. It must be the organization the key's user belongs to.
+- **Few or no members appear.** A Tally account belongs to a single organization, and inviting team members is a Tally Pro feature, so a Free account's organization has only that one member.

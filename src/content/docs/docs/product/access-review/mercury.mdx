@@ -1,0 +1,64 @@
+---
+title: Mercury
+description: Connect Mercury as an access source using a Read Only API token
+---
+
+Probo reads your Mercury organization's users through the Mercury API so you can review who has access.
+
+:::caution
+Use a **Read Only** API token, and paste it with its `secret-token:` prefix. Probo sends the token as `Authorization: Bearer <token>`, which matches the form Mercury documents: `Authorization: Bearer secret-token:...`. A **Read and Write** token is refused from any IP address outside the whitelist it requires, and a **Custom** token can only call the scopes granted when it was created, so neither one reliably reaches the users endpoint.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- A Mercury user with permission to create API tokens. An admin on the Mercury account controls that permission, and a user without it sees no way to create a token
+- The Mercury organization you want to review. A token is bound to the organization it is created in, so switch to that organization before opening its settings
+
+## Collected Fields
+
+| Probo field | Mercury field                                            | Notes                                                                                                                                                                                                                    |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Name        | `firstName`, `lastName`                                  | Joined with a space. Falls back to the email address when both are empty                                                                                                                                                 |
+| Email       | `email`                                                  |                                                                                                                                                                                                                          |
+| Role        | `organizationRole`                                       | `administrator` becomes Administrator, `bookkeeper` becomes Bookkeeper, `customUser` becomes Custom User, `cardOnlyUser` becomes Card Only User, and `employee` becomes Employee. An unrecognized value is kept verbatim |
+| Admin       | `organizationRole`                                       | Flagged as an administrator when `organizationRole` is `administrator`                                                                                                                                                   |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                          |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                          |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                          |
+| External ID | `userId`                                                 | Stable identifier used to track the account across reviews                                                                                                                                                               |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                          |
+
+Mercury returns every member of the organization on one endpoint. Probo skips a record that arrives without an email address.
+
+## Step 1: Create a Read Only API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/mercury-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In [Mercury](https://app.mercury.com/settings/tokens), click your organization at the top left, click **All Settings**, and open **Tokens** in the left navigation.
+2. Click **Create an API Token**, enter a **Nickname** such as `Probo Access Review`, set **Permissions** to **Read Only**, then click **Create Token**. A **Read Only** token can fetch all available data on the account and requires no IP whitelist.
+3. Copy the token, including its `secret-token:` prefix, and store it securely. Mercury does not show it again once the dialog closes.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Mercury**, click **API Key**, paste the token, and click **Connect**.
+
+</Steps>
+
+Mercury's users endpoint carries no organization name, so the source keeps the generic name **Mercury**. Probo pulls the organization's users into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Paste the token with its `secret-token:` prefix, since Probo sends it as `Authorization: Bearer <token>`. A sandbox token is rejected as well: Probo calls `api.mercury.com`, and a token created in the sandbox belongs to the separate `api-sandbox.mercury.com` environment.
+- **The Tokens page offers no way to create a token.** The signed-in user does not hold the permission. An admin on the Mercury account can grant it or create the token instead.
+- **No users appear, or the wrong ones do.** A token is bound to the organization it was created in, so create it from the **All Settings** > **Tokens** page of the organization you want to review. A **Custom** token also reaches only the scopes granted at creation, and those cannot be edited afterwards.
+- **The source stops syncing after a quiet period.** Mercury deletes a token that goes unused for 45 days and emails account admins seven days beforehand. Create a new token and reconnect the source.

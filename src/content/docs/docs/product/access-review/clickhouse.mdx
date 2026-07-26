@@ -1,0 +1,65 @@
+---
+title: ClickHouse Cloud
+description: Connect ClickHouse Cloud as an access source using a Cloud API key ID and secret
+---
+
+Probo reads your ClickHouse Cloud organization's members through the ClickHouse Cloud API so you can review who has access.
+
+:::caution
+Use a **ClickHouse Cloud API key** created on the console's **API Keys** page, and paste both halves as `keyId:keySecret`. The Cloud API authenticates with HTTP Basic over the key ID and the key secret, so either half on its own will **not** work. The key also needs organization-level access. A key scoped only to a service role such as `Basic service API reader` reaches services but not the organization's members. A service's SQL user credentials are a database login and do not authenticate against the Cloud API.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Admin** organization role in ClickHouse Cloud (Admin performs all administrative activities for the organization, including creating API keys)
+- A key whose assigned role carries organization-level access, so it can list the organization's members. A key limited to a service role, or to the sign-in-only **Member** organization role, cannot read them
+- Both halves of the key, the **Key ID** and the **Key secret**, which the console shows only once
+
+## Collected Fields
+
+| Probo field | ClickHouse Cloud field                                   | Notes                                                                                                                                                                                                                              |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to the email address                                                                                                                                                                                                    |
+| Email       | `email`                                                  | A member with no email address is skipped                                                                                                                                                                                          |
+| Role        | `assignedRoles[].roleName`                               | The system and custom roles assigned to the member. Falls back to the deprecated `role` field for a member with none: `admin` → Admin, `developer` → Developer                                                                     |
+| Admin       | `assignedRoles[].roleName`                               | Flagged as an administrator when an assigned role is named `Admin`. With no assigned roles, flagged when the deprecated `role` is `admin`. The match is on the exact name, so a custom role such as `Billing Admin` does not count |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                    |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                    |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                    |
+| External ID | `userId`                                                 | Stable identifier used to track the account across reviews. It stays the same when a user belongs to several organizations                                                                                                         |
+| Created at  | `joinedAt`                                               | When the member joined the organization                                                                                                                                                                                            |
+
+ClickHouse Cloud marks `role` as deprecated and points API clients to `assignedRoles`. For an organization that has migrated to custom roles, `role` is frozen at its pre-migration value, which is why Probo reads `assignedRoles` first.
+
+## Step 1: Create a ClickHouse Cloud API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/clickhouse-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In the [ClickHouse Cloud console](https://console.clickhouse.cloud), signed in as an organization **Admin**, open the **API Keys** tab in the left menu.
+2. Click **New API Key** (until the organization has its first key, the page shows a create prompt instead of the button), name it (e.g. `Probo Access Review`), assign a role with organization-level access, and set an expiration.
+3. Click **Generate API Key**, then copy the **Key ID** and the **Key secret**. They are shown only on this screen.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **ClickHouse Cloud**, click **API Key**, paste the **Key ID** and the **Key secret** joined by a colon (`keyId:keySecret`), and click **Connect**.
+
+</Steps>
+
+Probo names the source **ClickHouse Cloud** and pulls your organization's members into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Paste both halves joined by a colon, `keyId:keySecret`, with no spaces. The Key ID alone or the Key secret alone fails HTTP Basic authentication, and so does a key that has been disabled or has passed its expiration date.
+- **"API key is not associated with any organization".** A key belongs to exactly one organization, and ClickHouse returns only that one. Create the key inside the organization you are reviewing.
+- **No members appear.** The key's role must grant organization-level access. A key limited to a service role, such as `Basic service API reader`, reaches services but not the organization's members.
+- **Requests fail from Probo but the key works locally.** If the key was created with **Specific locations** under **Allow access to this API Key**, only the IP addresses you listed can use it. Remove the restriction, or allowlist the addresses Probo connects from.

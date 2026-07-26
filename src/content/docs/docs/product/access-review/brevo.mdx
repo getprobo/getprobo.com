@@ -1,0 +1,64 @@
+---
+title: Brevo
+description: Connect Brevo as an access source using an API key
+---
+
+Probo reads your Brevo account's users through the Brevo API so you can review who has access.
+
+:::caution
+Create an **API key** (`xkeysib-…`) on the **API Keys & MCP** tab of **Settings** > **SMTP & API**. An **SMTP key**, created on the **SMTP** tab of the same page, will **not** work, because it authenticates Brevo's SMTP relay rather than the REST API that serves the users endpoint. Leave the **Create MCP server API key** option off: activating it deactivates the key you just generated and issues an MCP version instead.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **API Keys** permission in Brevo, under **SMTP & API** (the account owner has it; only users with that permission can open the API Keys & MCP page and generate a key)
+- A key created inside the Brevo account you want to review, since a key belongs to exactly one account
+
+## Collected Fields
+
+| Probo field | Brevo field                                              | Notes                                                                                                                                                                                                                            |
+| ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `email`                                                  | The users endpoint returns no display name, so Probo uses the email address                                                                                                                                                      |
+| Email       | `email`                                                  |                                                                                                                                                                                                                                  |
+| Role        | `feature_access`                                         | The access levels Brevo returns per feature area (marketing, crm, conversations, transactional, phone and any others), deduplicated and sorted. A feature set to `none` is dropped, so a user with access to nothing has no role |
+| Admin       | `is_owner`                                               | Flagged as an administrator when `is_owner` is true. Brevo returns a boolean, and Probo also accepts the string `"true"`                                                                                                         |
+| Status      | `status`                                                 | `active` is listed as active and any other value, such as `pending`, as inactive. A user Brevo returns without a status is left unknown                                                                                          |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                  |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                  |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews. Falls back to the email address when the response has no id                                                                                                          |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                  |
+
+The account owner is listed alongside everyone invited to the account. An invitation that has not been accepted yet still appears in the list, marked inactive. A user returned without an email address is skipped.
+
+## Step 1: Create an API Key
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/brevo-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In Brevo, signed in as the account owner or as a user with the **API Keys** permission, click your account dropdown and select **Settings** > **SMTP & API** > **API Keys & MCP**.
+2. Click **Generate a new API key**, name it (e.g. `Probo Access Review`), and set an expiry date from 7 days to 1 year, or choose no expiration. Brevo API keys have no scopes, so every key has full access to the account.
+3. Click **Generate**, copy the key (`xkeysib-…`), and click **OK**. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Brevo**, click **API Key**, paste the key, and click **Connect**.
+
+</Steps>
+
+The users endpoint returns no account name, so Probo lists the source under the fixed name Brevo and pulls the account's users into your campaigns.
+
+## Troubleshooting
+
+- **Key rejected.** Confirm it is an API key (`xkeysib-…`) from the **API Keys & MCP** tab and that it is still active. An SMTP key won't work. A key also stops working once it reaches its expiry date, and Brevo expires any key that goes unused for 90 days.
+- **Generate a new API key is unavailable.** Only the account owner and users with the **API Keys** permission, under **SMTP & API**, can open the API Keys & MCP page and create or delete a key.
+- **Calls stop working after the key worked once.** Brevo can block API calls from unauthorized IP addresses. Under **Settings** > **Security** > **Authorized IPs**, check whether blocking is active for API keys, then authorize the addresses Probo calls from or deactivate the blocking.
+- **Only the account owner appears.** The Free and Starter plans include a single user seat, so those accounts have no other users to review. Otherwise, confirm the key was created in the account whose users you want to review: a key belongs to exactly one Brevo account, and an Admin account and each of its sub-organizations have their own keys.

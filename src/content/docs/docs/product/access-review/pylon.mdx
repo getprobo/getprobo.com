@@ -1,0 +1,64 @@
+---
+title: Pylon
+description: Connect Pylon as an access source using an API token
+---
+
+Probo reads your Pylon organization's users through the Pylon API so you can review who has access.
+
+:::caution
+Use an API token created on the **API Tokens** page in Pylon's settings. Only Admin users can create one. The chat widget's **Identity Verification Secret** is a different credential and will not work, because it signs widget users instead of authenticating requests to `api.usepylon.com`.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- The **Admin** role in Pylon (only Admin users can create API tokens)
+- A token created in the Pylon organization you want to review, since a token returns only that organization's users
+
+## Collected Fields
+
+| Probo field | Pylon field                                              | Notes                                                                                                                                                                                                                          |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Name        | `name`                                                   | Falls back to the email address when the user has no name                                                                                                                                                                      |
+| Email       | `email`                                                  | The user's primary email                                                                                                                                                                                                       |
+| Role        | `role_id`                                                | Resolved to the role's `name` through Pylon's user roles endpoint. A user has one role, either a default role (`Member` or `Admin`) or a custom one. If the role catalogue does not return the `role_id`, the role stays blank |
+| Admin       | `role_id`                                                | Flagged as an administrator when the resolved role's `slug` is `admin`. When a role has no slug, Probo matches the exact name `Admin`, case-insensitively, so a custom role such as `Billing Admin` is not flagged             |
+| Status      | `status`                                                 | Probo lists `active` as active and every other value as inactive. Pylon documents `away` and `out_of_office` as user statuses too, so both count as inactive. A missing status leaves the state unknown                        |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                                                                                                                                                     |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                |
+
+Pylon users are the internal team members of your Pylon organization, not the contacts and accounts that represent your customers. Probo skips any user returned without an email address.
+
+## Step 1: Create an API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/pylon-create-api-key.webp and restore the image line here. */}
+
+<Steps>
+
+1. In Pylon, signed in as an **Admin**, go to [**Settings** > **API Tokens**](https://app.usepylon.com/settings/api-tokens).
+2. Create a token and name it (e.g. `Probo Access Review`). Actions the token performs show up under the token's name.
+3. Copy the token and store it securely, for example in a password manager.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Pylon**, click **API Key**, paste the token, and click **Connect**.
+
+</Steps>
+
+The users endpoint does not return an organization name, so Probo lists the source under the fixed name Pylon and pulls the organization's users into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Confirm the token comes from the **API Tokens** page and has not been revoked there. If you no longer have the token value, create a new token rather than trying to recover the old one.
+- **Token creation is unavailable.** Only Admin users can create API tokens. Ask an Admin in your Pylon organization to create the token, or to give you the Admin role from the **Users** page.
+- **No users appear.** A token returns the users of the organization it was created in. Confirm it was created in the Pylon organization you want to review, and that the members you expect are Pylon users rather than customer contacts.
+- **A user is listed inactive who still has access.** Pylon uses `status` for availability too, including `away` and `out_of_office`, and Probo lists any status other than `active` as inactive. Review the user's role to decide whether the access is still appropriate.
