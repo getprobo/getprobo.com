@@ -1,0 +1,65 @@
+---
+title: UpCloud
+description: Connect UpCloud as an access source using a main-account API token
+---
+
+Probo reads your UpCloud contract's main account and its subaccounts through the UpCloud API so you can review who has access.
+
+:::caution
+Use an API token (`ucat_…`) created under your **main account**. A token created under a subaccount will **not** work, because only the main account can list the contract's accounts.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- Access to the UpCloud **main account** (a subaccount only sees itself)
+
+## Collected Fields
+
+| Probo field | UpCloud field                                            | Notes                                                                        |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Name        | `first_name`, `last_name`                                | From account details. Falls back to `username` when the name is empty        |
+| Email       | `email`                                                  | From account details                                                         |
+| Role        | `roles.role`                                             | Any of `technical`, `billing`, `aux_billing`                                 |
+| Admin       | `type`                                                   | Flagged as an administrator for the main account (any type other than `sub`) |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| External ID | `username`                                               | Stable identifier used to track the account across reviews                   |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+
+The UpCloud Control Panel shows a 2FA status column under **People**, but the public API does not expose that field on any account endpoint, so Probo cannot collect it. The same applies to account status and last login.
+
+## Step 1: Create an API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![Creating an API token in the UpCloud Control Panel](/docs/access-review/upcloud-create-api-key.webp)
+
+<Steps>
+
+1. In the [UpCloud Control Panel](https://hub.upcloud.com/account/api-tokens), signed in as the main account, go to **Account** > **API tokens**.
+2. Click **Add new API token** and enter a name (e.g. `Probo Access Review`).
+3. Set **Expiration**. It defaults to 30 days, and 365 days is the maximum. The source stops syncing once the token expires, so pick the longest period your policy allows and plan to rotate the token before that date.
+4. Leave **Allow this token to create other tokens** unchecked. Probo only reads accounts.
+5. Keep **Allow access from all IP addresses** checked, or restrict it to the egress addresses your Probo deployment uses.
+6. Click **Create API token**, then copy the token (`ucat_…`) and store it securely. It's shown only once.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **UpCloud**, click **API Key**, paste the token, and click **Connect**.
+
+</Steps>
+
+Probo names the source after the account the token belongs to and pulls the contract's accounts into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Confirm the token starts with `ucat_` and has not expired. If you restricted it by IP, the restriction must cover your Probo deployment. Your UpCloud username and password won't work here.
+- **The contract's accounts don't come through.** Account listing is only available to the main account, so a token created under a subaccount is refused and the source cannot enumerate the contract. Create the token while signed in as the main account.
+- **An account is missing its name and email.** The token couldn't read that account's details. The account still appears in the review under its username.
