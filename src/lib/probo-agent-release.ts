@@ -98,24 +98,31 @@ export async function fetchLatestProboAgentRelease(): Promise<ProboAgentRelease>
   };
 }
 
-function normalizeArch(value: string | undefined): AgentArch {
+function normalizeArch(
+  value: string | undefined,
+  bitness?: string,
+): AgentArch {
   if (!value) return "unknown";
   const normalized = value.toLowerCase();
-  if (
-    normalized.includes("arm64") ||
-    normalized.includes("aarch64") ||
-    normalized === "arm"
-  ) {
+
+  // Client Hints report "x86"/"arm" with width in bitness (not "x86_64").
+  if (normalized === "x86") return bitness === "64" ? "x86_64" : "unknown";
+  if (normalized === "arm") return bitness === "64" ? "arm64" : "unknown";
+
+  if (normalized.includes("arm64") || normalized.includes("aarch64")) {
     return "arm64";
   }
   if (
     normalized.includes("x86_64") ||
     normalized.includes("amd64") ||
     normalized.includes("x64") ||
+    normalized.includes("win64") ||
+    normalized.includes("wow64") ||
     normalized.includes("intel")
   ) {
     return "x86_64";
   }
+  // "Win32" (common navigator.platform on 64-bit Windows) intentionally misses.
   return "unknown";
 }
 
@@ -144,30 +151,36 @@ export async function detectPlatform(): Promise<DetectedPlatform> {
   const uaData = (navigator as Navigator & { userAgentData?: NavigatorUAData })
     .userAgentData;
 
+  let hintsArch: AgentArch = "unknown";
   if (uaData) {
     try {
-      const highEntropy = await uaData.getHighEntropyValues([
+      const { architecture, bitness } = await uaData.getHighEntropyValues([
         "architecture",
         "bitness",
       ]);
-      return {
-        os: detectOsFromString(uaData.platform || navigator.userAgent),
-        arch: normalizeArch(highEntropy.architecture),
-      };
+      hintsArch = normalizeArch(architecture, bitness);
     } catch {
       // Fall through to UA parsing.
     }
   }
 
-  const ua = navigator.userAgent;
-  const platform = navigator.platform || "";
-  const archFromUa = normalizeArch(ua);
-  const arch = archFromUa !== "unknown" ? archFromUa : normalizeArch(platform);
+  const os = detectOsFromString(
+    uaData?.platform || navigator.platform || navigator.userAgent,
+  );
 
-  return {
-    os: detectOsFromString(platform || ua),
-    arch,
-  };
+  let arch =
+    [
+      hintsArch,
+      normalizeArch(navigator.userAgent),
+      normalizeArch(navigator.platform),
+    ].find((value) => value !== "unknown") ?? "unknown";
+
+  // Last resort: the shipped Windows agent is x86_64.
+  if (os === "windows" && arch === "unknown") {
+    arch = "x86_64";
+  }
+
+  return { os, arch };
 }
 
 function osAssetLabel(os: AgentOs): string | null {
