@@ -14,11 +14,13 @@ export const StorySchema = z.object({
     .min(1),
   image: z.string(),
   previewImage: z.string().optional(),
+  trailer: z.string().optional(),
   framework: z.enum(frameworks.map((f) => f.label) as any),
   logo: z.string(),
   logoHeight: z.number().optional(),
   logoLightBg: z.string().optional(),
   invertLogo: z.boolean().optional(),
+  logoPosition: z.enum(["top-left", "bottom-left"]).optional(),
   company: z.object({
     name: z.string(),
     url: z.string().url().optional(),

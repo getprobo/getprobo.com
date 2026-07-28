@@ -1,13 +1,21 @@
 import type { CollectionEntry } from "astro:content";
 
-const AHREFS_STORY_ID = "ahrefs-iso";
+/** Pinned to the front of listing / homepage slider, in order. */
+const PINNED_STORY_IDS = ["ahrefs-iso", "blaxel-soc2"] as const;
+
+function pinnedRank(id: string): number {
+  const index = PINNED_STORY_IDS.indexOf(
+    id as (typeof PINNED_STORY_IDS)[number],
+  );
+  return index === -1 ? PINNED_STORY_IDS.length : index;
+}
 
 export function sortStoriesForListing(
   entries: CollectionEntry<"stories">[],
 ): CollectionEntry<"stories">[] {
   return [...entries].sort((a, b) => {
-    if (a.id === AHREFS_STORY_ID && b.id !== AHREFS_STORY_ID) return -1;
-    if (b.id === AHREFS_STORY_ID && a.id !== AHREFS_STORY_ID) return 1;
+    const rankDiff = pinnedRank(a.id) - pinnedRank(b.id);
+    if (rankDiff !== 0) return rankDiff;
     return b.data.date.valueOf() - a.data.date.valueOf();
   });
 }

@@ -26,6 +26,8 @@ const stories = defineCollection({
       .min(1),
     image: z.string(),
     previewImage: z.string().optional(),
+    /** Public URL for a muted looping card trailer (e.g. /stories/trailers/foo.mp4) */
+    trailer: z.string().optional(),
     ogImage: z.string().optional(),
     framework: z.enum(frameworks.map((f) => f.label) as any),
     logo: z.string(),
@@ -34,6 +36,8 @@ const stories = defineCollection({
     /** Logo asset for light UI (e.g. story cards); falls back to `logo` */
     logoLightBg: z.string().optional(),
     invertLogo: z.boolean().optional().default(true),
+    /** Floating logo placement on story cards; default bottom-left */
+    logoPosition: z.enum(["top-left", "bottom-left"]).optional(),
     company: z.object({
       name: z.string(),
       url: z.string().url().optional(),
