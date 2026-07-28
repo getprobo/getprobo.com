@@ -3,9 +3,11 @@ title: CLI Authentication
 description: Authenticate the Probo CLI with your Probo instance
 ---
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
 The `prb auth` commands manage authentication credentials for the Probo CLI. You need to authenticate before using any other commands.
+
+Login uses OAuth 2.0 **device authorization**: the CLI opens (or prints) a browser URL, you approve access, and the CLI stores the resulting tokens locally. You do not paste an API token into `prb auth login`.
 
 ## Login
 
@@ -17,26 +19,41 @@ The `prb auth` commands manage authentication credentials for the Probo CLI. You
    prb auth login
    ```
 
-   In interactive mode, you'll be prompted for:
-   - **Hostname** — your Probo instance URL (default: `app.getprobo.com`)
-   - **Authentication token** — your API token
-   - **Organization** — the organization to use by default
+   In interactive mode, you'll be prompted to choose where your account is hosted:
 
-2. **Or provide values directly**
+   - **Probo US** — `us.probo.com`
+   - **Probo EU** — `eu.probo.com`
+   - **Other** — your self-hosted hostname (e.g. `probo.example.com`)
 
-   ```bash
-   prb auth login --hostname app.getprobo.com --token YOUR_TOKEN --org YOUR_ORG_ID
-   ```
+2. **Approve access in the browser**
+
+   The CLI prints a verification URL and one-time code, and opens the browser when possible. Complete the authorization flow, then return to the terminal.
+
+3. **Pick a default organization** (optional)
+
+   After authorization, interactive mode can set a default organization for subsequent commands.
 
 </Steps>
+
+### Non-interactive examples
+
+```bash
+# Probo US
+prb auth login --hostname us.probo.com
+
+# Probo EU
+prb auth login --hostname eu.probo.com
+
+# Self-hosted
+prb auth login --hostname probo.example.com --org YOUR_ORG_ID
+```
 
 ### Flags
 
 | Flag | Default | Description |
-|---|---|---|
-| `--hostname` | `app.getprobo.com` | Probo instance hostname |
-| `--token` | — | Authentication token |
-| `--org` | — | Default organization ID |
+| ---- | ------- | ----------- |
+| `--hostname` | Interactive region picker (falls back to `eu.probo.com` when non-interactive and unset) | Probo hostname, e.g. `us.probo.com`, `eu.probo.com`, or a custom host |
+| `--org` | — | Default organization ID to store with the host credentials |
 
 ## Check status
 
@@ -61,5 +78,9 @@ In interactive mode, you can select which host to log out of when multiple hosts
 ### Flags
 
 | Flag | Description |
-|---|---|
+| ---- | ----------- |
 | `--hostname` | Specific host to log out of |
+
+## API tokens for automation
+
+For scripts and CI that should not use device login, create a personal API token in the console under **Settings → API Tokens** (or `/me/oauth-tokens`) and pass it to tools that accept Bearer tokens (MCP, n8n, custom HTTP clients). The CLI login flow itself does not accept `--token`.

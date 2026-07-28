@@ -3,9 +3,9 @@ title: n8n Authentication
 description: Configure Probo API credentials in your n8n instance
 ---
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
-The Probo n8n node authenticates using an API key sent as a Bearer token. You need to create credentials in n8n before using any Probo node.
+The Probo n8n nodes authenticate using an API key sent as a Bearer token. You need to create credentials in n8n before using any Probo or Probo Trigger node.
 
 ## Creating credentials
 
@@ -21,10 +21,10 @@ The Probo n8n node authenticates using an API key sent as a Bearer token. You ne
 
 3. **Configure the connection**
 
-   | Field | Default | Description |
-   |---|---|---|
-   | **Probo Server** | `https://us.console.getprobo.com` | Your Probo instance URL. Change this if you use a different region or self-host Probo. |
-   | **API Key** | — | Your Probo API key |
+   | Field            | Default                | Description                                                                                                   |
+   | ---------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------- |
+   | **Probo Server** | `https://us.probo.com` | Your Probo instance URL. Use `https://eu.probo.com` for the EU region, or your own hostname if you self-host. |
+   | **API Key**      | —                      | Your Probo API token                                                                                          |
 
 4. **Test the connection**
 
@@ -32,17 +32,17 @@ The Probo n8n node authenticates using an API key sent as a Bearer token. You ne
 
 5. **Save**
 
-   Click **Save** to store the credentials. They'll be available to all Probo nodes in your workflows.
+   Click **Save** to store the credentials. They'll be available to all Probo and Probo Trigger nodes in your workflows.
 
 </Steps>
 
 ## Getting an API key
 
-You can generate an API key from the Probo console:
+You can generate a personal API token from the Probo console:
 
-1. Go to **Settings** → **API Keys** in your Probo organization.
-2. Click **Create API Key**.
-3. Copy the key — it won't be shown again.
+1. Go to **Settings → API Tokens** (or `/me/oauth-tokens`) in your Probo account.
+2. Click **Generate New Token**.
+3. Give the token a descriptive name and copy it — it won't be shown again.
 
 ## Self-hosted instances
 

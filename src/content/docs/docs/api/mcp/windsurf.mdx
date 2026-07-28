@@ -58,7 +58,7 @@ Create or edit the configuration file:
       },
       "metadata": {
         "name": "Probo Compliance",
-        "description": "Access compliance data and manage risks, vendors, and audits"
+        "description": "Access compliance data and manage risks, third parties, and audits"
       }
     }
   }
@@ -91,7 +91,7 @@ Windsurf: Let me fetch that information from Probo.
 [Uses listRisks tool]
 
 Here are the high-priority risks:
-1. Vendor data breach (Score: 20)
+1. Third-party data breach (Score: 20)
 2. Insufficient access controls (Score: 18)
 ...
 ```
@@ -109,7 +109,7 @@ def generate_compliance_report(organization_id):
     """Generate a comprehensive compliance report."""
     # Fetches data from Probo MCP
     risks = fetch_risks(organization_id)
-    vendors = fetch_vendors(organization_id)
+    thirdParties = fetch_third_parties(organization_id)
     measures = fetch_measures(organization_id)
     # ... continues with implementation
 ```
@@ -195,7 +195,7 @@ class UserDataHandler {
 Generate compliance automation scripts:
 
 ```
-You: "Write a Node.js script to check all vendors have been reviewed in the last 90 days"
+You: "Write a Node.js script to check all third parties have been reviewed in the last 90 days"
 
 Windsurf:
 [Generates complete script using Probo MCP API]
@@ -377,17 +377,17 @@ async def daily_compliance_check():
     Checks for:
     - High-priority risks without mitigations
     - Overdue obligations
-    - Vendors needing review
+    - Third parties needing review
     """
     client = ProboClient()
 
     # Windsurf generates complete implementation using Probo MCP tools
     risks = await client.list_risks(organization_id)
     obligations = await client.list_obligations(organization_id)
-    vendors = await client.list_vendors(organization_id)
+    thirdParties = await client.list_third_parties(organization_id)
 
     # Analysis and reporting logic
-    report = generate_report(risks, obligations, vendors)
+    report = generate_report(risks, obligations, thirdParties)
     send_notification(report)
 
 if __name__ == "__main__":
@@ -402,10 +402,10 @@ if __name__ == "__main__":
 import type {
   Organization,
   Risk,
-  Vendor,
+  ThirdParty,
   Measure,
   ListRisksInput,
-  AddVendorInput,
+  AddThirdPartyInput,
 } from "./probo-types";
 
 export class ProboAPIClient {
@@ -421,7 +421,7 @@ export class ProboAPIClient {
     // Windsurf generates implementation using MCP
   }
 
-  async addVendor(input: AddVendorInput): Promise<Vendor> {
+  async addThirdParty(input: AddThirdPartyInput): Promise<ThirdParty> {
     // Implementation
   }
 
@@ -544,7 +544,7 @@ Configure Windsurf to always consider compliance:
 
 Create custom commands for frequent tasks:
 
-- "Check vendor review status"
+- "Check third-party review status"
 - "List overdue obligations"
 - "Show high-priority risks"
 - "Generate compliance report"

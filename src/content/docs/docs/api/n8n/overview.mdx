@@ -1,12 +1,17 @@
 ---
 title: n8n Integration
-description: Automate your compliance workflows with the Probo n8n community node
+description: Automate your compliance workflows with the Probo n8n community nodes
 ---
 
-import { LinkCard, CardGrid } from '@astrojs/starlight/components';
-import { Steps } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import { Steps } from "@astrojs/starlight/components";
 
-The Probo n8n node (`@probo/n8n-nodes-probo`) lets you integrate Probo into your n8n workflows. Automate compliance tasks like syncing risks, creating audits, managing vendors, and more — all from your n8n instance.
+The Probo n8n package (`@probo/n8n-nodes-probo`) adds two nodes to your n8n instance:
+
+- **Probo** — run CRUD and specialized operations against Probo resources
+- **Probo Trigger** — start a workflow when Probo webhook events occur
+
+Automate compliance tasks like syncing third parties, editing documents, managing risks, running access reviews, and reacting to lifecycle events — all from n8n.
 
 ## Installation
 
@@ -24,40 +29,71 @@ The Probo n8n node (`@probo/n8n-nodes-probo`) lets you integrate Probo into your
    @probo/n8n-nodes-probo
    ```
 
-   Click **Install**. The Probo node will appear in your node palette.
+   Click **Install**. The Probo and Probo Trigger nodes will appear in your node palette.
 
 3. **Configure credentials**
 
-   When you first add a Probo node to a workflow, you'll be prompted to create credentials. See [Authentication](/docs/api/n8n/authentication) for details.
+   When you first add a Probo or Probo Trigger node to a workflow, you'll be prompted to create credentials. See [Authentication](/docs/api/n8n/authentication) for details.
 
 </Steps>
 
+## Probo Trigger
+
+Use **Probo Trigger** when you want a workflow to start the moment something happens in Probo — for example a document is signed, a rights request is opened, or a third party is updated.
+
+The trigger owns the webhook subscription lifecycle: it creates a subscription when you activate the workflow, updates it when the URL or event set changes, verifies HMAC signatures on every delivery, and deletes the subscription when you deactivate the workflow.
+
+See [Trigger](/docs/api/n8n/trigger) for configuration details and [Webhook Event Types](/docs/api/webhooks/event-types) for the full event list.
+
 ## Available resources
 
-The Probo node supports 12 resource types covering the full compliance platform:
+The Probo action node supports the following resource types:
 
-| Resource | Operations | Description |
-|---|---|---|
-| **Organization** | Create, Get, Get Many, Update, Delete | Manage organizations |
-| **User** | Create, Get, List, Invite, Update, Update Membership, Remove | Manage users and memberships |
-| **Framework** | Create, Get, Get Many, Update, Delete | Manage compliance frameworks |
-| **Control** | Create, Get, Get Many, Update, Delete | Manage framework controls |
-| **Risk** | Create, Get, Get Many, Update, Delete, Link/Unlink Document, Link/Unlink Measure, Link/Unlink Obligation | Manage risks and their relationships |
-| **Measure** | Create, Get, Get Many, Update, Delete | Manage security measures |
-| **Asset** | Create, Get, Get Many, Update, Delete | Manage assets |
-| **Audit** | Create, Get, Get Many, Update, Delete, Upload Report, Delete Report | Manage audits and reports |
-| **Vendor** | Create, Get, Get Many, Update, Delete, plus Contacts, Services, and Risk Assessments sub-resources | Manage vendors and related data |
-| **Meeting** | Create, Get, Get Many, Update, Delete | Manage meetings |
-| **Data Classification** | Create, Get, Get Many, Update, Delete | Manage data classification entries |
-| **GraphQL** | Execute | Run arbitrary GraphQL queries against the Console or Connect API |
+| Resource                       | Description                                                                      |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| **Organization**               | Manage organizations                                                             |
+| **Organization Context**       | Get and update organization context                                              |
+| **User**                       | Manage users, memberships, invites, and archive                                  |
+| **Framework**                  | Manage compliance frameworks                                                     |
+| **Control**                    | Manage framework controls and relationships                                      |
+| **Risk**                       | Manage risks and document/measure/obligation links                               |
+| **Risk Assessment**            | Manage assessments, scopes, nodes, processes, threats, and scenarios             |
+| **Measure**                    | Manage security measures and third-party links                                   |
+| **Asset**                      | Manage assets                                                                    |
+| **Audit**                      | Manage audits and reports                                                        |
+| **Audit Log**                  | Read audit log entries                                                           |
+| **Access Review**              | Create and manage access review campaigns                                        |
+| **Third Party**                | Manage third parties, contacts, services, agreements, vetting, and relationships |
+| **Document**                   | Manage documents, versions, signatures, and approvals                            |
+| **Evidence**                   | Upload and manage evidence                                                       |
+| **Finding**                    | Manage findings and audit links                                                  |
+| **Obligation**                 | Manage obligations                                                               |
+| **Task**                       | Manage tasks                                                                     |
+| **Statement of Applicability** | Manage SoA records                                                               |
+| **Data Classification**        | Manage data classification entries                                               |
+| **Processing Activity**        | Manage processing activities                                                     |
+| **DPIA**                       | Manage data protection impact assessments                                        |
+| **TIA**                        | Manage transfer impact assessments                                               |
+| **Rights Request**             | Manage data subject rights requests                                              |
+| **Compliance Portal**          | Manage compliance portal profile, commitments, files, and links                  |
+| **Cookie Banner**              | Manage cookie banners and publishing                                             |
+| **Cookie Category**            | Manage cookie categories                                                         |
+| **Cookie Consent Record**      | Read consent records                                                             |
+| **Tracker Pattern**            | Manage tracker patterns                                                          |
+| **Resource Alias**             | Set and remove resource aliases                                                  |
+| **Webhook**                    | Manage webhook subscriptions                                                     |
+| **GraphQL**                    | Run arbitrary GraphQL queries against the Console or Connect API                 |
+
+See [Resources](/docs/api/n8n/resources) for operation-level details.
 
 ## Use cases
 
-- **Sync vendors from external sources** — Pull vendor data from a spreadsheet or CRM and create/update vendors in Probo automatically.
+- **React to document lifecycle events** — Trigger Slack or email workflows when a policy is signed, approved, or published.
+- **Sync third parties from external sources** — Pull vendor data from a spreadsheet or CRM and create/update third parties in Probo automatically.
 - **Automate risk creation from scan results** — Connect security scanning tools to Probo and create risks when new vulnerabilities are found.
-- **Schedule audit reminders** — Trigger workflows on a schedule to check audit status and send Slack or email notifications.
+- **Kick off third-party vetting** — Queue an async vetting job from an onboarding form without blocking the workflow.
+- **Edit draft documents from automation** — Update document body, title, classification, and type directly from n8n.
 - **Cross-platform compliance reporting** — Pull data from Probo and push it to reporting tools, dashboards, or document generators.
-- **Onboard new frameworks** — Automate the creation of frameworks, controls, and measures from a predefined template.
 
 ## Next steps
 
@@ -66,6 +102,11 @@ The Probo node supports 12 resource types covering the full compliance platform:
     title="Authentication"
     description="Configure your Probo API credentials in n8n"
     href="/docs/api/n8n/authentication"
+  />
+  <LinkCard
+    title="Trigger"
+    description="Start workflows from Probo webhook events"
+    href="/docs/api/n8n/trigger"
   />
   <LinkCard
     title="Resources"

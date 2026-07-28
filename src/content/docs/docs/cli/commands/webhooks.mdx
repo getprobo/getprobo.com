@@ -10,8 +10,8 @@ The `prb webhook` commands let you create and manage webhook subscriptions to re
 ```bash
 prb webhook create \
   --url https://example.com/webhook \
-  --event MEETING_CREATED \
-  --event MEETING_UPDATED
+  --event DOCUMENT_CREATED \
+  --event DOCUMENT_UPDATED
 ```
 
 | Flag      | Required | Description                                  |
@@ -22,20 +22,40 @@ prb webhook create \
 
 ### Available event types
 
-| Event                | Description               |
-| -------------------- | ------------------------- |
-| `MEETING_CREATED`    | A meeting was created     |
-| `MEETING_UPDATED`    | A meeting was updated     |
-| `MEETING_DELETED`    | A meeting was deleted     |
-| `VENDOR_CREATED`     | A vendor was created      |
-| `VENDOR_UPDATED`     | A vendor was updated      |
-| `VENDOR_DELETED`     | A vendor was deleted      |
-| `USER_CREATED`       | A user was created        |
-| `USER_UPDATED`       | A user was updated        |
-| `USER_DELETED`       | A user was deleted        |
-| `OBLIGATION_CREATED` | An obligation was created |
-| `OBLIGATION_UPDATED` | An obligation was updated |
-| `OBLIGATION_DELETED` | An obligation was deleted |
+CLI event names are uppercase enums. Delivered webhook payloads use the lowercase wire format shown in [Event Types](/docs/api/webhooks/event-types).
+
+| Event                                        | Description                       |
+| -------------------------------------------- | --------------------------------- |
+| `THIRD_PARTY_CREATED`                        | A third party was created         |
+| `THIRD_PARTY_UPDATED`                        | A third party was updated         |
+| `THIRD_PARTY_DELETED`                        | A third party was deleted         |
+| `USER_CREATED`                               | A user was created                |
+| `USER_UPDATED`                               | A user was updated                |
+| `USER_DELETED`                               | A user was deleted                |
+| `OBLIGATION_CREATED`                         | An obligation was created         |
+| `OBLIGATION_UPDATED`                         | An obligation was updated         |
+| `OBLIGATION_DELETED`                         | An obligation was deleted         |
+| `RIGHT_REQUEST_CREATED`                      | A rights request was created      |
+| `RIGHT_REQUEST_UPDATED`                      | A rights request was updated      |
+| `RIGHT_REQUEST_DELETED`                      | A rights request was deleted      |
+| `DOCUMENT_CREATED`                           | A document was created            |
+| `DOCUMENT_UPDATED`                           | A document was updated            |
+| `DOCUMENT_ARCHIVED`                          | A document was archived           |
+| `DOCUMENT_UNARCHIVED`                        | A document was unarchived         |
+| `DOCUMENT_DELETED`                           | A document was deleted            |
+| `DOCUMENT_VERSION_CREATED`                   | A document version was created    |
+| `DOCUMENT_VERSION_UPDATED`                   | A document version was updated    |
+| `DOCUMENT_VERSION_PUBLISHED`                 | A document version was published  |
+| `DOCUMENT_VERSION_REJECTED`                  | A document version was rejected   |
+| `DOCUMENT_VERSION_DELETED`                   | A document version was deleted    |
+| `DOCUMENT_VERSION_SIGNATURE_REQUESTED`       | A signature was requested         |
+| `DOCUMENT_VERSION_SIGNATURE_SIGNED`          | A signature was completed         |
+| `DOCUMENT_VERSION_SIGNATURE_CANCELLED`       | A signature request was cancelled |
+| `DOCUMENT_VERSION_APPROVAL_QUORUM_REQUESTED` | An approval quorum was requested  |
+| `DOCUMENT_VERSION_APPROVAL_QUORUM_UPDATED`   | An approval quorum was updated    |
+| `DOCUMENT_VERSION_APPROVAL_QUORUM_APPROVED`  | An approval quorum was approved   |
+| `DOCUMENT_VERSION_APPROVAL_QUORUM_REJECTED`  | An approval quorum was rejected   |
+| `DOCUMENT_VERSION_APPROVAL_QUORUM_VOIDED`    | An approval quorum was voided     |
 
 ## List webhooks
 

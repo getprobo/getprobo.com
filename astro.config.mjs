@@ -282,6 +282,24 @@ export default defineConfig({
           ],
         },
         {
+          label: "Probo Agent",
+          badge: "New",
+          items: [
+            {
+              label: "Overview",
+              slug: "docs/product/probo-agent/overview",
+            },
+            {
+              label: "Installation",
+              slug: "docs/product/probo-agent/installation",
+            },
+            {
+              label: "Commands",
+              slug: "docs/product/probo-agent/commands",
+            },
+          ],
+        },
+        {
           label: "CLI",
           badge: "New",
           items: [
@@ -360,8 +378,8 @@ export default defineConfig({
                   slug: "docs/api/mcp/tools/users",
                 },
                 {
-                  label: "Vendors",
-                  slug: "docs/api/mcp/tools/vendors",
+                  label: "Third Parties",
+                  slug: "docs/api/mcp/tools/third-parties",
                 },
                 {
                   label: "Risks",
@@ -394,14 +412,6 @@ export default defineConfig({
                 {
                   label: "Documents",
                   slug: "docs/api/mcp/tools/documents",
-                },
-                {
-                  label: "Meetings",
-                  slug: "docs/api/mcp/tools/meetings",
-                },
-                {
-                  label: "Snapshots",
-                  slug: "docs/api/mcp/tools/snapshots",
                 },
                 {
                   label: "States of Applicability",
@@ -468,18 +478,21 @@ export default defineConfig({
         },
         {
           label: "n8n",
+          badge: "Updated",
           items: [
             { label: "Overview", slug: "docs/api/n8n/overview" },
             {
               label: "Authentication",
               slug: "docs/api/n8n/authentication",
             },
+            { label: "Trigger", slug: "docs/api/n8n/trigger" },
             { label: "Resources", slug: "docs/api/n8n/resources" },
             { label: "GraphQL", slug: "docs/api/n8n/graphql" },
           ],
         },
         {
           label: "Webhooks",
+          badge: "Updated",
           items: [
             { label: "Overview", slug: "docs/api/webhooks/overview" },
             {

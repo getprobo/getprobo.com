@@ -78,8 +78,8 @@ tools = [
     {
         "type": "function",
         "function": {
-            "name": "addVendor",
-            "description": "Add a new vendor to the organization",
+            "name": "addThirdParty",
+            "description": "Add a new third party to the organization",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -89,11 +89,11 @@ tools = [
                     },
                     "name": {
                         "type": "string",
-                        "description": "Vendor name"
+                        "description": "Third party name"
                     },
                     "description": {
                         "type": "string",
-                        "description": "Vendor description"
+                        "description": "Third party description"
                     }
                 },
                 "required": ["organization_id", "name"]
@@ -191,8 +191,8 @@ const tools = [
   {
     type: "function",
     function: {
-      name: "listVendors",
-      description: "List all vendors for the organization",
+      name: "listThirdParties",
+      description: "List all third parties for the organization",
       parameters: {
         type: "object",
         properties: {
@@ -247,7 +247,7 @@ async function chat(userMessage) {
 }
 
 // Usage
-const answer = await chat("Show me all vendors in my organization");
+const answer = await chat("Show me all third parties in my organization");
 console.log(answer);
 ```
 
@@ -290,10 +290,10 @@ paths:
                     items:
                       type: object
 
-  /tools/listVendors:
+  /tools/listThirdParties:
     post:
-      summary: List vendors
-      operationId: listVendors
+      summary: List third parties
+      operationId: listThirdParties
       requestBody:
         required: true
         content:
@@ -309,10 +309,10 @@ paths:
         "200":
           description: Successful response
 
-  /tools/addVendor:
+  /tools/addThirdParty:
     post:
-      summary: Add a vendor
-      operationId: addVendor
+      summary: Add a third party
+      operationId: addThirdParty
       requestBody:
         required: true
         content:
@@ -331,7 +331,7 @@ paths:
                 - name
       responses:
         "200":
-          description: Vendor created successfully
+          description: ThirdParty created successfully
 
 components:
   securitySchemes:
@@ -349,14 +349,14 @@ components:
 
 **Name**: Probo Compliance Assistant
 
-**Description**: Manage your compliance data, risks, vendors, and audits through natural conversation.
+**Description**: Manage your compliance data, risks, third parties, and audits through natural conversation.
 
 **Instructions**:
 
 ```
 You are a compliance management assistant with access to Probo compliance data.
 You can help users:
-- List and manage organizations, vendors, and people
+- List and manage organizations, third parties, and people
 - Create and update risk assessments
 - Track compliance measures and frameworks
 - Manage assets and data classifications
@@ -387,8 +387,8 @@ Try these prompts:
 
 ```
 "What organizations do I have access to?"
-"List all vendors for organization org_xxx"
-"Add a new vendor called CloudBackup Inc"
+"List all third parties for organization org_xxx"
+"Add a new third party called CloudBackup Inc"
 "Show me all high-priority risks"
 ```
 
@@ -406,7 +406,7 @@ Create `.well-known/ai-plugin.json`:
   "name_for_human": "Probo Compliance",
   "name_for_model": "probo_compliance",
   "description_for_human": "Manage compliance data, risks, and audits",
-  "description_for_model": "Access and manage compliance data including organizations, vendors, risks, measures, frameworks, assets, data classifications, findings, obligations, and audits.",
+  "description_for_model": "Access and manage compliance data including organizations, third parties, risks, measures, frameworks, assets, data classifications, findings, obligations, and audits.",
   "auth": {
     "type": "user_http",
     "authorization_type": "bearer"

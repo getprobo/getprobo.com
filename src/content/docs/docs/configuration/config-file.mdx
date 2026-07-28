@@ -70,15 +70,10 @@ probod:
       pepper: "this-is-a-secure-pepper-for-password-hashing-at-least-32-bytes"
       iterations: 1000000
 
-  trust-auth:
-    cookie-name: "TCT"
-    cookie-domain: "localhost"
-    cookie-duration: 24
-    token-duration: 720
-    report-url-duration: 15
-    token-secret: "this-is-a-secure-secret-for-trust-token-signing-at-least-32-bytes"
-    scope: "trust_center_readonly"
-    token-type: "trust_center_access"
+  trust-center:
+    http-addr: ":80"
+    https-addr: ":443"
+    base-domain: "probopage.example.com"
 
   aws:
     region: "us-east-1"
@@ -109,7 +104,7 @@ probod:
     cname-target: "custom.getprobo.com"
     acme:
       directory: "https://localhost:14000/dir"
-      email: "admin@getprobo.com"
+      email: "admin@probo.com"
       key-type: "EC256"
       root-ca: ""
 
@@ -334,69 +329,27 @@ Additional secret value used in password hashing. Should be at least 32 bytes an
 
 Number of iterations for password hashing algorithm (PBKDF2). Higher values increase security but require more computational resources.
 
-### Trust Center Authentication
+### Compliance Portal Configuration
 
-#### `trust-auth.cookie-name` (string)
-
-**Default**: `"TCT"`
-
-Name of the HTTP cookie used for trust center access tokens.
-
-#### `trust-auth.cookie-domain` (string)
-
-**Default**: `"localhost"`
-
-Domain scope for trust center cookies.
-
-#### `trust-auth.cookie-duration` (integer)
-
-**Default**: `24`
-
-Trust center cookie lifetime in hours.
-
-#### `trust-auth.token-duration` (integer)
-
-**Default**: `720`
-
-Trust center access token lifetime in hours.
-
-#### `trust-auth.report-url-duration` (integer)
-
-**Default**: `15`
-
-Validity period for generated report URLs in minutes.
-
-#### `trust-auth.token-secret` (string)
-
-**Default**: Auto-generated
-
-Secret key used for signing trust center tokens. Should be at least 32 bytes.
-
-#### `trust-auth.scope` (string)
-
-**Default**: `"trust_center_readonly"`
-
-OAuth2 scope for trust center access.
-
-#### `trust-auth.token-type` (string)
-
-**Default**: `"trust_center_access"`
-
-Type identifier for trust center access tokens.
-
-### Trust Center Configuration
+The YAML key remains `trust-center` for backward compatibility, but this block configures the **Compliance Portal** server.
 
 #### `trust-center.http-addr` (string)
 
-**Default**: `":80"`
+**Default**: unset
 
-Network address and port where the trust center HTTP server will listen for ACME HTTP-01 challenges and HTTP to HTTPS redirects.
+Network address and port where the compliance portal HTTP server listens (for example ACME HTTP-01 challenges and HTTP to HTTPS redirects). Environment variable: `PROBOD_TRUST_CENTER_HTTP_ADDR`.
 
 #### `trust-center.https-addr` (string)
 
-**Default**: `":443"`
+**Default**: unset
 
-Network address and port where the trust center HTTPS server will listen for secure connections. This server handles custom domain routing with automatic TLS certificate management.
+Network address and port where the compliance portal HTTPS server listens for secure connections and custom-domain routing. Environment variable: `PROBOD_TRUST_CENTER_HTTPS_ADDR`.
+
+#### `trust-center.base-domain` (string)
+
+**Default**: unset
+
+Base domain used for compliance portal hosting. Environment variable: `PROBOD_TRUST_CENTER_BASE_DOMAIN`.
 
 ### AWS Configuration
 
@@ -534,7 +487,7 @@ ACME directory URL. For local development, use Pebble at `"https://localhost:140
 
 #### `custom-domains.acme.email` (string)
 
-**Default**: `"admin@getprobo.com"`
+**Default**: `"admin@probo.com"`
 
 Contact email address for ACME account registration and certificate expiration notifications.
 

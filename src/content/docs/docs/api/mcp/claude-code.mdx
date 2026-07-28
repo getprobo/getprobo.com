@@ -49,9 +49,9 @@ claude
 Claude loads the Probo MCP server automatically. You can have a continuous conversation:
 
 ```
-> List all vendors
+> List all third parties
 > Add a new risk for data breaches
-> Update the vendor security measure to implemented
+> Update the third-party security measure to implemented
 ```
 
 ### Single Command Mode
@@ -71,20 +71,20 @@ Claude: Let me fetch those high-risk items.
 [Uses listRisks tool with filtering]
 
 Found 3 high-risk items:
-1. Vendor security breach (Score: 20)
+1. Third-party security breach (Score: 20)
 2. Data center failure (Score: 18)
 3. Insider threat (Score: 16)
 ```
 
-#### Adding Vendors
+#### Adding Third Parties
 
 ```
-You: "Add a vendor named 'SecureCloud' that provides backup services"
+You: "Add a third party named 'SecureCloud' that provides backup services"
 
-Claude: I'll add that vendor now.
-[Uses addVendor tool]
+Claude: I'll add that third party now.
+[Uses addThirdParty tool]
 
-Successfully added SecureCloud as a vendor.
+Successfully added SecureCloud as a third party.
 ```
 
 ## Multiple Probo Instances

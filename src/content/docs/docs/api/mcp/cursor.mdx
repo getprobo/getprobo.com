@@ -95,7 +95,7 @@ Cursor: I'll fetch the risks from Probo.
 [Uses listRisks tool]
 
 Here are the high-priority risks:
-1. Data breach from vendor systems (Risk Score: 20)
+1. Data breach from third-party systems (Risk Score: 20)
 2. Inadequate access controls (Risk Score: 18)
 ...
 ```
@@ -160,10 +160,10 @@ PROBO_PROJECT_TOKEN=your_project_token
 Generate compliance documentation automatically:
 
 ```
-You: "Create a vendor risk assessment document for CloudStorage Inc"
+You: "Create a third party risk assessment document for CloudStorage Inc"
 
 Cursor:
-[Fetches vendor details from Probo]
+[Fetches third-party details from Probo]
 [Generates formatted document with risk analysis]
 ```
 
@@ -197,13 +197,13 @@ Cursor:
 Create compliance check scripts:
 
 ```javascript
-// Cmd+K: "Create a function to check if all critical vendors have recent reviews"
+// Cmd+K: "Create a function to check if all critical third parties have recent reviews"
 
 // Cursor generates:
-async function checkVendorReviews() {
-  // Uses Probo MCP listVendors tool
+async function checkThirdPartyReviews() {
+  // Uses Probo MCP listThirdParties tool
   // Checks last review dates
-  // Returns vendors needing review
+  // Returns third parties needing review
 }
 ```
 
@@ -270,7 +270,7 @@ Create `.vscode/settings.json` (Cursor uses VS Code format):
 {
   "cursor.mcp.enabled": true,
   "cursor.mcp.autoLoadServers": true,
-  "cursor.chat.welcomeMessage": "I can help with compliance management using Probo. Try: 'List all vendors' or 'Show high-priority risks'"
+  "cursor.chat.welcomeMessage": "I can help with compliance management using Probo. Try: 'List all third parties' or 'Show high-priority risks'"
 }
 ```
 
@@ -310,7 +310,7 @@ class ProboClient {
     // Implementation using Probo MCP
   }
 
-  async addVendor(data: AddVendorInput): Promise<Vendor> {
+  async addThirdParty(data: AddThirdPartyInput): Promise<ThirdParty> {
     // Implementation
   }
 }
@@ -326,7 +326,7 @@ import unittest
 from probo_client import ProboClient
 
 class TestComplianceData(unittest.TestCase):
-    def test_all_vendors_have_reviews(self):
+    def test_all_third_parties_have_reviews(self):
         # Test using Probo MCP
         pass
 
@@ -428,9 +428,9 @@ Create snippets for common queries:
     "prefix": "@risks-high",
     "body": "Show me all risks with residual score above 15 from Probo"
   },
-  "Vendor Review Status": {
-    "prefix": "@vendors-review",
-    "body": "List all vendors and their last review dates from Probo"
+  "Third-Party Review Status": {
+    "prefix": "@third-parties-review",
+    "body": "List all third parties and their last review dates from Probo"
   }
 }
 ```

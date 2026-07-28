@@ -4,7 +4,7 @@ description: Deploy Probo using Docker Compose for single-node production setups
 ---
 
 import { Steps } from "@astrojs/starlight/components";
-import { Code } from '@astrojs/starlight/components';
+import { Code } from "@astrojs/starlight/components";
 
 Docker Compose provides the simplest way to deploy Probo with all required services on a single server. This deployment method is ideal for:
 
@@ -37,9 +37,8 @@ Docker Compose provides the simplest way to deploy Probo with all required servi
 
    ```bash
    export PROBOD_ENCRYPTION_KEY=$(openssl rand -base64 32)
-   export AUTH_COOKIE_SECRET=$(openssl rand -base64 32)
-   export AUTH_PASSWORD_PEPPER=$(openssl rand -base64 32)
-   export TRUST_AUTH_TOKEN_SECRET=$(openssl rand -base64 32)
+   export PROBOD_AUTH_COOKIE_SECRET=$(openssl rand -base64 32)
+   export PROBOD_AUTH_PASSWORD_PEPPER=$(openssl rand -base64 32)
    ```
 
 3. **Create environment file:**
@@ -48,21 +47,20 @@ Docker Compose provides the simplest way to deploy Probo with all required servi
    cat > .env << EOF
    # Required secrets
    PROBOD_ENCRYPTION_KEY=${PROBOD_ENCRYPTION_KEY}
-   AUTH_COOKIE_SECRET=${AUTH_COOKIE_SECRET}
-   AUTH_PASSWORD_PEPPER=${AUTH_PASSWORD_PEPPER}
-   TRUST_AUTH_TOKEN_SECRET=${TRUST_AUTH_TOKEN_SECRET}
+   PROBOD_AUTH_COOKIE_SECRET=${PROBOD_AUTH_COOKIE_SECRET}
+   PROBOD_AUTH_PASSWORD_PEPPER=${PROBOD_AUTH_PASSWORD_PEPPER}
 
    # Application settings
    PROBOD_BASE_URL=https://your-domain.com
-   API_ADDR=0.0.0.0:8080
-   API_CORS_ALLOWED_ORIGINS=https://your-domain.com
+   PROBOD_API_ADDR=0.0.0.0:8080
+   PROBOD_API_CORS_ALLOWED_ORIGINS=https://your-domain.com
 
    # Email settings (configure your SMTP)
-   SMTP_ADDR=smtp.example.com:587
-   SMTP_USER=your-smtp-username
-   SMTP_PASSWORD=your-smtp-password
-   SMTP_TLS_REQUIRED=true
-   MAILER_SENDER_EMAIL=no-reply@your-domain.com
+   PROBOD_SMTP_ADDR=smtp.example.com:587
+   PROBOD_SMTP_USER=your-smtp-username
+   PROBOD_SMTP_PASSWORD=your-smtp-password
+   PROBOD_SMTP_TLS_REQUIRED=true
+   PROBOD_MAILER_SENDER_EMAIL=no-reply@your-domain.com
    EOF
    ```
 

@@ -1,0 +1,140 @@
+---
+title: "Tools: Third Parties"
+description: Third-party management tools in the Probo MCP Server
+---
+
+### listThirdParties
+
+🔍 **Read-only**
+
+List all third parties for the organization.
+
+```json
+Parameters: {
+  "organization_id": "org_xxx",
+  "size": 50,
+  "cursor": "optional_cursor",
+  "filter": { "query": "search term" }
+}
+```
+
+Supports: Pagination, search, filtering  
+Returns: Array of third parties with basic information, `next_cursor` for pagination
+
+```
+Example:
+AI: "List all third parties"
+    [Uses listThirdParties tool]
+AI: "Find third parties matching 'cloud'"
+    [Uses listThirdParties tool with query filter]
+```
+
+### addThirdParty
+
+✏️ **Write**
+
+Add a new third party to the organization.
+
+```json
+Parameters: {
+  "organization_id": "org_xxx",
+  "name": "Third Party Name",
+  "description": "Description",
+  "website_url": "https://example.com"
+}
+```
+
+Returns: Created third-party object with generated ID
+
+```
+Example:
+AI: "Add a new third party called CloudBackup Inc that provides backup services"
+    [Uses addThirdParty tool]
+```
+
+### updateThirdParty
+
+✏️ **Write**
+
+Update an existing third party.
+
+```json
+Parameters: {
+  "id": "thp_xxx",
+  "name": "Updated Name",
+  "description": "Updated description"
+}
+```
+
+Returns: Updated third-party object
+
+```
+Example:
+AI: "Update third party thp_abc123 to mark them as approved"
+    [Uses updateThirdParty tool]
+```
+
+### deleteThirdParty
+
+⚠️ **Destructive**
+
+Delete a third party.
+
+```json
+Parameters: {
+  "id": "thp_xxx"
+}
+```
+
+Returns: Deleted third-party ID
+
+```
+Example:
+AI: "Delete third party thp_abc123"
+    [Uses deleteThirdParty tool]
+```
+
+### listThirdPartyRiskAssessments
+
+🔍 **Read-only**
+
+List risk assessments for a third party.
+
+```json
+Parameters: {
+  "organization_id": "org_xxx",
+  "third_party_id": "thp_xxx",
+  "size": 50,
+  "cursor": "optional_cursor"
+}
+```
+
+Returns: Array of third-party risk assessments
+
+### addThirdPartyRiskAssessment
+
+✏️ **Write**
+
+Add a risk assessment for a third party.
+
+```json
+Parameters: {
+  "third_party_id": "thp_xxx",
+  "expires_at": "2026-12-31T00:00:00Z",
+  "data_sensitivity": "HIGH",
+  "business_impact": "MEDIUM",
+  "notes": "Assessment notes"
+}
+```
+
+Returns: Created third-party risk assessment object
+
+### Contacts and services
+
+Related tools follow the same patterns:
+
+- `listThirdPartyContacts`, `addThirdPartyContact`, `updateThirdPartyContact`, `deleteThirdPartyContact`
+- `listThirdPartyServices`, `addThirdPartyService`, `updateThirdPartyService`, `deleteThirdPartyService`
+- `listChildThirdParties` — list direct child third parties
+- `vetThirdParty` — queue an asynchronous vetting job
+- `publishThirdPartyList` — publish the third-party list

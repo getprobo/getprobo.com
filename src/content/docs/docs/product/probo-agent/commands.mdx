@@ -1,0 +1,105 @@
+---
+title: Probo Agent Commands
+description: Command reference for the probo-agent CLI
+---
+
+`probo-agent` is the CLI for installing, running, inspecting, and updating the device posture agent.
+
+Global flag:
+
+| Flag          | Description                                                                |
+| ------------- | -------------------------------------------------------------------------- |
+| `-d`, `--dir` | Agent config / keystore directory (defaults to the platform-specific path) |
+
+## install
+
+Enroll this device and install the agent as a managed OS service.
+
+```bash
+sudo probo-agent install \
+  --server https://us.probo.com \
+  --enrollment-token YOUR_TOKEN
+```
+
+| Flag                 | Description                                                      |
+| -------------------- | ---------------------------------------------------------------- |
+| `--server`           | Probo server base URL (required)                                 |
+| `--enrollment-token` | One-shot enrollment token (or `PROBO_ENROLLMENT_TOKEN`)          |
+| `--skip-service`     | Register the device but skip OS service installation             |
+| `--no-auto-update`   | Persist `updates_disabled` in config and skip automatic upgrades |
+
+On success the command prints the configured device ID plus heartbeat and posture intervals.
+
+## uninstall
+
+Stop the service, unenroll the device from Probo, remove tray auto-start when present, and delete local state.
+
+```bash
+sudo probo-agent uninstall
+```
+
+On macOS, uninstall requires root (`sudo`).
+
+## run
+
+Run the agent loop in the foreground. Useful for debugging; production installs normally run under the OS service supervisor.
+
+```bash
+probo-agent run
+```
+
+## status
+
+Print the agent's local state.
+
+```bash
+probo-agent status
+```
+
+Example fields:
+
+- Server URL
+- Device ID
+- Heartbeat interval
+- Posture interval
+- Update interval
+- Auto-update enabled
+- Whether an API key is present on disk
+- Config directory
+
+## collect
+
+Run the posture check set once and print results without pushing them to the server.
+
+```bash
+probo-agent collect
+probo-agent collect --json
+```
+
+| Flag          | Description                                       |
+| ------------- | ------------------------------------------------- |
+| `--json`      | Emit JSON instead of the table                    |
+| `--print-dir` | Print the resolved agent directory before results |
+| `--once`      | Run once and exit (default `true`)                |
+
+## update
+
+Check GitHub Releases for a newer `probo-agent/v*` tag and install it in place. Releases are verified with Cosign/Sigstore before the binary is replaced.
+
+```bash
+probo-agent update
+probo-agent update --check
+```
+
+| Flag      | Description                                                 |
+| --------- | ----------------------------------------------------------- |
+| `--check` | Report whether an update is available without installing it |
+
+After a successful update, restart the OS service (or let the supervisor restart after the agent exits with the dedicated restart code).
+
+## Browser enrollment notes
+
+- Enrollment deeplinks use `probo://enroll?server=...&token=...`.
+- On macOS, browser enrollment is handled by the signed **Probo Agent.app**; CLI elevation from the deeplink is refused.
+- On Windows, tray-assisted elevated install is available after the agent is present.
+- Linux and FreeBSD enroll through `probo-agent install` or `install.sh`.

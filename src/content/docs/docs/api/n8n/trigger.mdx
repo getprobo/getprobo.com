@@ -1,0 +1,92 @@
+---
+title: n8n Trigger
+description: Start n8n workflows from Probo webhook events with the Probo Trigger node
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { LinkCard } from "@astrojs/starlight/components";
+
+The **Probo Trigger** node starts an n8n workflow when subscribed Probo events occur. It replaces polling: instead of checking on a schedule and diffing state, the trigger receives signed webhook deliveries as events happen.
+
+## How it works
+
+When you activate a workflow that includes Probo Trigger:
+
+1. The node creates a webhook subscription in Probo for the selected organization and events.
+2. Probo delivers signed `POST` requests to the node's webhook URL.
+3. The node optionally verifies the HMAC-SHA256 signature and timestamp freshness.
+4. The workflow runs with the webhook payload as its input item.
+5. When you deactivate the workflow, the node deletes the subscription.
+
+If you change the organization, event set, or webhook URL, the node deletes the stale subscription and creates a matching one on the next activation check.
+
+## Configuration
+
+| Field                             | Description                                                                                                                 |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Organization ID**               | Organization that emits the events                                                                                          |
+| **Events**                        | One or more event types to subscribe to                                                                                     |
+| **Verify Signature**              | When enabled (default), reject deliveries with an invalid HMAC signature                                                    |
+| **Timestamp Tolerance (Seconds)** | Reject deliveries whose signed timestamp is outside this window (default `300`). Set to `0` to disable the freshness check. |
+
+Credentials use the same [Probo API credentials](/docs/api/n8n/authentication) as the action node.
+
+## Supported events
+
+Probo Trigger supports the same event set as webhook subscriptions, including:
+
+- Third party created / updated / deleted
+- User created / updated / deleted
+- Obligation created / updated / deleted
+- Rights request created / updated / deleted
+- Document created / updated / archived / unarchived / deleted
+- Document version created / updated / published / rejected / deleted
+- Document version signature requested / signed / cancelled
+- Document version approval quorum requested / updated / approved / rejected / voided
+
+See the full wire-format payloads in [Webhook Event Types](/docs/api/webhooks/event-types).
+
+## Output
+
+Each trigger execution outputs the full webhook JSON body — the root envelope plus nested resource fields:
+
+| Root field       | Description                                                         |
+| ---------------- | ------------------------------------------------------------------- |
+| `eventId`        | Unique delivery identifier (good idempotency key)                   |
+| `subscriptionId` | Webhook subscription ID                                             |
+| `organizationId` | Organization ID                                                     |
+| `eventType`      | Event type (e.g. `document:updated`)                                |
+| `createdAt`      | Event timestamp                                                     |
+| `data`           | Current entity payload (resource fields live here, not at the root) |
+| `updatedFrom`    | Present on `*:updated` events — entity snapshot before the change   |
+
+Probo also sends HTTP headers such as `X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`, and `X-Probo-Webhook-Host`. The Trigger node uses the signature headers for verification; workflow expressions typically read the body root fields above. See [Webhooks Overview](/docs/api/webhooks/overview) for the full header/root field reference.
+
+Example expressions:
+
+```text
+{{ $json.eventType }}
+{{ $json.organizationId }}
+{{ $json.updatedFrom.membership.role }}
+{{ $json.data.membership.role }}
+```
+
+## Quickstart
+
+<Steps>
+
+1. **Add Probo Trigger** to a new workflow.
+2. **Select credentials** and set the **Organization ID**.
+3. **Choose events**, for example `Document Version Signature Signed`.
+4. **Activate the workflow**. The node registers the webhook subscription automatically.
+5. **Add downstream nodes** that use `$json.data` (and `$json.updatedFrom` for updates).
+
+</Steps>
+
+## Related
+
+<LinkCard
+  title="Webhook Overview"
+  description="Payload format, headers, and delivery behavior"
+  href="/docs/api/webhooks/overview"
+/>

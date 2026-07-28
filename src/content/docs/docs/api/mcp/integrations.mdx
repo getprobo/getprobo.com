@@ -191,8 +191,8 @@ The AI should use the `listOrganizations` tool and display your organizations.
 You: "Show me all high-priority risks and their mitigation status"
 Claude: [Uses listRisks tool with filtering]
 
-You: "Add a new vendor called CloudBackup Inc that provides backup services"
-Claude: [Uses addVendor tool]
+You: "Add a new third party called CloudBackup Inc that provides backup services"
+Claude: [Uses addThirdParty tool]
 
 You: "Generate a compliance status report for our SOC 2 audit"
 Claude: [Uses multiple tools to gather data and create report]
@@ -201,18 +201,18 @@ Claude: [Uses multiple tools to gather data and create report]
 ### Code Generation (Cursor/Windsurf)
 
 ```python
-# Type: "Create a function to check if all vendors have been reviewed"
+# Type: "Create a function to check if all third parties have been reviewed"
 # Cursor generates:
 
-async def check_vendor_reviews(organization_id):
-    """Check if all vendors have recent reviews."""
-    vendors = await probo.list_vendors(organization_id)
+async def check_third_party_reviews(organization_id):
+    """Check if all third parties have recent reviews."""
+    thirdParties = await probo.list_third_parties(organization_id)
 
     overdue = []
-    for vendor in vendors:
-        days_since_review = (datetime.now() - vendor.last_reviewed).days
+    for third_party in thirdParties:
+        days_since_review = (datetime.now() - third_party.last_reviewed).days
         if days_since_review > 90:
-            overdue.append(vendor)
+            overdue.append(third_party)
 
     return overdue
 ```
@@ -227,8 +227,8 @@ claude-code "Generate a daily compliance report including:
 - High-priority risks
 - Upcoming audit dates"
 
-# Vendor management
-claude-code "List all vendors that haven't been reviewed in 90 days"
+# Third-party management
+claude-code "List all third parties that haven't been reviewed in 90 days"
 ```
 
 ### Custom Applications (OpenAI/VS Code)
@@ -340,7 +340,7 @@ See [Authentication Troubleshooting](/docs/api/mcp/authentication#troubleshootin
 Build custom workflows combining multiple tools:
 
 1. **Risk Assessment Workflow**: Fetch risks, check mitigations, update status
-2. **Vendor Management**: List vendors, check reviews, send reminders
+2. **Third-Party Management**: List third parties, check reviews, send reminders
 3. **Compliance Reporting**: Gather data from multiple sources, generate reports
 4. **Audit Preparation**: Collect evidence, check compliance, identify gaps
 
@@ -356,10 +356,10 @@ class ProboClient {
     // Return sorted results
   }
 
-  async checkVendorCompliance(orgId: string) {
-    // List all vendors
+  async checkThirdPartyCompliance(orgId: string) {
+    // List all third parties
     // Check review dates
-    // Return overdue vendors
+    // Return overdue third parties
   }
 }
 ```

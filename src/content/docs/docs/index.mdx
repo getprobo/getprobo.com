@@ -9,7 +9,7 @@ Welcome to the Probo documentation. Whether you're deploying Probo for the first
 
 ## What is Probo?
 
-Probo is an open-source compliance management platform that helps organizations achieve and maintain compliance across multiple frameworks — including SOC 2, ISO 27001, ISO 27701, ISO 42001, GDPR, HIPAA, CCPA, FERPA, CASA, NIS2, and DORA. Built for startups and growing companies, Probo provides risk management, evidence collection, vendor management, policy management, and audit preparation tools.
+Probo is an open-source compliance management platform that helps organizations achieve and maintain compliance across multiple frameworks — including SOC 2, ISO 27001, ISO 27701, ISO 42001, GDPR, HIPAA, CCPA, FERPA, CASA, NIS2, and DORA. Built for startups and growing companies, Probo provides risk management, evidence collection, third-party management, policy management, and audit preparation tools.
 
 ## New to Probo?
 
@@ -66,11 +66,43 @@ Probo is an open-source compliance management platform that helps organizations 
   />
 </CardGrid>
 
-## Integrate with AI Tools
+## Device Posture
 
-Connect AI assistants to your compliance data using the Model Context Protocol (MCP). Probo's MCP server exposes 131 tools for managing your compliance posture through Claude, ChatGPT, Cursor, and other AI platforms.
+Enroll endpoints with Probo Agent to collect security posture checks for your organization.
 
 <CardGrid>
+  <LinkCard
+    title="Probo Agent"
+    description="Overview of the device posture agent, checks, and platforms"
+    href="/docs/product/probo-agent/overview"
+  />
+  <LinkCard
+    title="Install Probo Agent"
+    description="Package, install.sh, and CLI enrollment for macOS, Linux, Windows, and FreeBSD"
+    href="/docs/product/probo-agent/installation"
+  />
+  <LinkCard
+    title="Download"
+    description="Get the latest Probo Agent release"
+    href="/download"
+  />
+</CardGrid>
+
+## Automate and Integrate
+
+Receive real-time events over webhooks, automate workflows with n8n, or connect AI assistants through MCP.
+
+<CardGrid>
+  <LinkCard
+    title="Webhooks"
+    description="Subscribe to third-party, user, document, and rights-request events"
+    href="/docs/api/webhooks/overview"
+  />
+  <LinkCard
+    title="n8n Integration"
+    description="Probo action node and Probo Trigger for event-driven workflows"
+    href="/docs/api/n8n/overview"
+  />
   <LinkCard
     title="MCP API Overview"
     description="Introduction to Probo's MCP Server and available tools"
@@ -80,16 +112,6 @@ Connect AI assistants to your compliance data using the Model Context Protocol (
     title="Integration Guides"
     description="Step-by-step setup for Claude, ChatGPT, Cursor, VS Code, and more"
     href="/docs/api/mcp/integrations"
-  />
-  <LinkCard
-    title="Available Tools"
-    description="Complete reference of all 131 MCP tools by category"
-    href="/docs/api/mcp/tools"
-  />
-  <LinkCard
-    title="Authentication"
-    description="API tokens, authentication, and security"
-    href="/docs/api/mcp/authentication"
   />
 </CardGrid>
 

@@ -5,32 +5,32 @@ description: Complete reference of all tools available in the Probo MCP Server
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-The Probo MCP Server provides **131 tools** for managing compliance data. Tools are organized by resource type and follow consistent naming patterns.
+The Probo MCP Server provides **285 tools** for managing compliance data. Tools are organized by resource type and follow consistent naming patterns.
+
+Documented categories below cover the core surface. Additional tools exist for risk assessments, the compliance portal, cookie banners, access reviews, webhooks, trackers, rights requests, and more — see `pkg/server/api/mcp/v1/specification.yaml` in the Probo repository for the full schema.
 
 ## Tool Categories
 
-| Category                                                               | Description                                         | Tools |
-| ---------------------------------------------------------------------- | --------------------------------------------------- | ----- |
-| [Organizations](/docs/api/mcp/tools/organizations)                     | Manage organizations                                | 1     |
-| [Users](/docs/api/mcp/tools/users)                                     | Manage team members                                 | 7     |
-| [Vendors](/docs/api/mcp/tools/vendors)                                 | Track third-party vendors and suppliers             | 6     |
-| [Risks](/docs/api/mcp/tools/risks)                                     | Assess and manage risks                             | 8     |
-| [Measures](/docs/api/mcp/tools/measures)                               | Implement compliance controls                       | 11    |
-| [Frameworks](/docs/api/mcp/tools/frameworks)                           | Manage compliance frameworks                        | 4     |
-| [Controls](/docs/api/mcp/tools/controls)                               | Manage framework controls                           | 11    |
-| [Assets](/docs/api/mcp/tools/assets)                                   | Track organizational assets                         | 4     |
-| [Audits](/docs/api/mcp/tools/audits)                                   | Manage compliance audits                            | 4     |
-| [Tasks](/docs/api/mcp/tools/tasks)                                     | Track compliance tasks                              | 7     |
-| [Documents](/docs/api/mcp/tools/documents)                             | Manage policy documents and signatures              | 17    |
-| [Meetings](/docs/api/mcp/tools/meetings)                               | Track compliance meetings                           | 6     |
-| [Snapshots](/docs/api/mcp/tools/snapshots)                             | Point-in-time snapshots                             | 3     |
-| [States of Applicability](/docs/api/mcp/tools/states-of-applicability) | Manage ISO 27001 SoA                                | 11    |
-| [Findings](/docs/api/mcp/tools/findings)                               | Track nonconformities, observations, and exceptions | 8     |
-| [Obligations](/docs/api/mcp/tools/obligations)                         | Manage compliance obligations                       | 4     |
-| [Data Classification](/docs/api/mcp/tools/data-classification)         | Classify and manage data                            | 4     |
-| [Processing Activities](/docs/api/mcp/tools/processing-activities)     | Manage data processing activities (GDPR)            | 5     |
-| [DPIAs](/docs/api/mcp/tools/dpias)                                     | Manage Data Protection Impact Assessments           | 5     |
-| [TIAs](/docs/api/mcp/tools/tias)                                       | Manage Transfer Impact Assessments                  | 5     |
+| Category                                                               | Description                                          | Tools (approx.) |
+| ---------------------------------------------------------------------- | ---------------------------------------------------- | --------------- |
+| [Organizations](/docs/api/mcp/tools/organizations)                     | Manage organizations                                 | 3               |
+| [Users](/docs/api/mcp/tools/users)                                     | Manage team members                                  | 8               |
+| [Third Parties](/docs/api/mcp/tools/third-parties)                     | Track third parties, contacts, services, and vetting | 15              |
+| [Risks](/docs/api/mcp/tools/risks)                                     | Assess and manage risks                              | 10              |
+| [Measures](/docs/api/mcp/tools/measures)                               | Implement compliance controls                        | 12              |
+| [Frameworks](/docs/api/mcp/tools/frameworks)                           | Manage compliance frameworks                         | 4               |
+| [Controls](/docs/api/mcp/tools/controls)                               | Manage framework controls                            | 9               |
+| [Assets](/docs/api/mcp/tools/assets)                                   | Track organizational assets                          | 6               |
+| [Audits](/docs/api/mcp/tools/audits)                                   | Manage compliance audits                             | 11              |
+| [Tasks](/docs/api/mcp/tools/tasks)                                     | Track compliance tasks                               | 7               |
+| [Documents](/docs/api/mcp/tools/documents)                             | Manage policy documents and signatures               | 19              |
+| [States of Applicability](/docs/api/mcp/tools/states-of-applicability) | Manage ISO 27001 SoA                                 | 11              |
+| [Findings](/docs/api/mcp/tools/findings)                               | Track nonconformities, observations, and exceptions  | 6               |
+| [Obligations](/docs/api/mcp/tools/obligations)                         | Manage compliance obligations                        | 6               |
+| [Data Classification](/docs/api/mcp/tools/data-classification)         | Classify and manage data                             | 12              |
+| [Processing Activities](/docs/api/mcp/tools/processing-activities)     | Manage data processing activities (GDPR)             | 5               |
+| [DPIAs](/docs/api/mcp/tools/dpias)                                     | Manage Data Protection Impact Assessments            | 6               |
+| [TIAs](/docs/api/mcp/tools/tias)                                       | Manage Transfer Impact Assessments                   | 6               |
 
 ## Tool Naming Conventions
 
@@ -45,18 +45,18 @@ Tools follow consistent patterns:
 - `link*` / `unlink*`: Associate or dissociate resources
 - `assign*` / `unassign*`: Assign or remove a person from a resource
 - `export*`: Generate and download a file (e.g. PDF)
-- `take*`: Capture a point-in-time snapshot
 - `invite*`: Send an invitation
 - `remove*`: Remove membership without deleting the user
 - `publish*`: Make a draft publicly active
 - `cancel*`: Cancel a pending request
 - `archive*` / `unarchive*`: Archive or restore a resource
+- `vet*`: Queue an asynchronous vetting job
 
 ## Common Parameters
 
 ### organization_id
 
-All tools require an `organization_id` parameter to specify which organization to operate on.
+Most tools require an `organization_id` parameter to specify which organization to operate on.
 
 ### Pagination
 

@@ -1,0 +1,70 @@
+---
+title: Probo Agent Overview
+description: Device posture agent that enrolls endpoints and reports security checks to Probo
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Probo Agent (`probo-agent`) is a lightweight device posture agent. It runs as a managed OS service, enrolls a device against your Probo organization, and periodically reports security posture checks over the `/api/agent/v1` API.
+
+## What it does
+
+- **Enrolls devices** with a one-shot enrollment token from the Probo console
+- **Runs as an OS service** on macOS (`launchd`), Linux (`systemd`), FreeBSD (`rc.d`), and Windows (Service Control Manager)
+- **Collects posture checks** such as disk encryption, screen lock, firewall, time sync, OS version, auto-update, password policy, remote login, and malware protection
+- **Heartbeats and reports** posture results to Probo on a server-configured interval
+- **Auto-updates** from signed GitHub Releases (`probo-agent/v*`), with Cosign/Sigstore verification before installing a new binary
+
+## Supported platforms
+
+| Platform | Install options                            | Notes                                                          |
+| -------- | ------------------------------------------ | -------------------------------------------------------------- |
+| macOS    | Signed universal `.pkg`, `install.sh`, CLI | Browser enrollment via `Probo Agent.app` / `probo://` deeplink |
+| Linux    | `install.sh`, CLI archive                  | CLI enrollment                                                 |
+| Windows  | ZIP archive, CLI                           | Tray enrollment helper available                               |
+| FreeBSD  | `install.sh`, CLI archive                  | CLI enrollment                                                 |
+
+## How enrollment works
+
+1. Create or open a device in the Probo console and generate an enrollment token.
+2. Install the agent with the Probo server URL and enrollment token — or open the browser enrollment flow on macOS/Windows.
+3. The agent exchanges the one-shot token for a device API key, configures heartbeat/posture intervals, and starts the OS service.
+4. Posture results appear on the device in the Probo console.
+
+## Posture checks
+
+The agent evaluates this check set on each collection cycle:
+
+| Check key            | What it verifies                                        |
+| -------------------- | ------------------------------------------------------- |
+| `DISK_ENCRYPTION`    | Full-disk encryption is enabled                         |
+| `SCREEN_LOCK`        | Screen lock / idle lock is configured                   |
+| `FIREWALL_ENABLED`   | Host firewall is enabled                                |
+| `TIME_SYNC`          | System clock synchronization is active                  |
+| `OS_VERSION`         | Operating system meets the expected version policy      |
+| `AUTO_UPDATE`        | Automatic updates are enabled                           |
+| `PASSWORD_POLICY`    | Local password policy is present                        |
+| `REMOTE_LOGIN`       | Remote login exposure is assessed                       |
+| `MALWARE_PROTECTION` | Built-in malware protection is enabled where applicable |
+
+Use `probo-agent collect` to run the checks locally without pushing results.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Installation"
+    description="Install Probo Agent with the package installer, install.sh, or CLI"
+    href="/docs/product/probo-agent/installation"
+  />
+  <LinkCard
+    title="Commands"
+    description="install, uninstall, status, collect, update, and more"
+    href="/docs/product/probo-agent/commands"
+  />
+  <LinkCard
+    title="Download"
+    description="Get the latest release for your platform"
+    href="/download"
+  />
+</CardGrid>

@@ -7,7 +7,7 @@ Webhooks allow you to receive HTTP notifications when events occur in your Probo
 
 ## How it works
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
 <Steps>
 
@@ -21,7 +21,7 @@ import { Steps } from '@astrojs/starlight/components';
 
 3. **Verify and process**
 
-   Verify the request signature using your signing secret, then process the event data.
+   Verify the request signature using your signing secret, then process the root envelope and nested resource payload.
 
 </Steps>
 
@@ -33,43 +33,68 @@ import { Steps } from '@astrojs/starlight/components';
 
 Responses with any other status code or timeouts are marked as failed.
 
-## Payload format
+## Root envelope
 
-Every webhook delivery sends a JSON body with this structure:
+Every delivery body is a JSON object with a fixed root envelope. Resource-specific fields live under `data` (and optionally `updatedFrom`) — they are never promoted to the root.
 
 ```json
 {
   "eventId": "whevt_01ABC123",
   "subscriptionId": "whsub_01DEF456",
   "organizationId": "org_01GHI789",
-  "eventType": "vendor:created",
-  "createdAt": "2025-01-15T10:30:00Z",
+  "eventType": "document:updated",
+  "createdAt": "2026-07-15T10:30:00Z",
   "data": {
-    // Event-specific fields
+    "id": "doc_01VWX234",
+    "title": "Information Security Policy"
+  },
+  "updatedFrom": {
+    "id": "doc_01VWX234",
+    "title": "InfoSec Policy"
   }
 }
 ```
 
-| Field | Description |
-|-------|-------------|
-| `eventId` | Unique identifier for this webhook event |
-| `subscriptionId` | The subscription that triggered this delivery |
-| `organizationId` | The organization where the event occurred |
-| `eventType` | The type of event (e.g. `vendor:created`) |
-| `createdAt` | When the event was created (RFC 3339) |
-| `data` | Event-specific payload (see [Event Types](/docs/api/webhooks/event-types)) |
+| Root field       | Type   | Always present | Description                                                                                                                                                                                  |
+| ---------------- | ------ | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventId`        | string | Yes            | Unique ID for this webhook event / delivery                                                                                                                                                  |
+| `subscriptionId` | string | Yes            | Webhook subscription that received the event                                                                                                                                                 |
+| `organizationId` | string | Yes            | Organization where the event occurred                                                                                                                                                        |
+| `eventType`      | string | Yes            | Wire-format event name (e.g. `document:updated`, `third-party:created`)                                                                                                                      |
+| `createdAt`      | string | Yes            | When the event was created (RFC 3339)                                                                                                                                                        |
+| `data`           | object | Yes            | Current resource payload for the event. Shape depends on `eventType` — see [Event Types](/docs/api/webhooks/event-types)                                                                     |
+| `updatedFrom`    | object | No             | Present only on `*:updated` events. Full snapshot of the same resource shape as `data`, taken before the update. Omitted for create, delete, archive, signature, and other non-update events |
+
+### Working with the envelope
+
+- Route and filter on root fields (`eventType`, `organizationId`, `subscriptionId`) before inspecting `data`.
+- Diff updates with `updatedFrom` vs `data` — for example `updatedFrom.membership.role` vs `data.membership.role`.
+- Treat `eventId` as an idempotency key if your receiver might see the same delivery more than once during retries on your side.
+- Nested resource IDs (document ID, third-party ID, user ID, etc.) are inside `data`, not at the root.
 
 ## HTTP headers
 
-Each webhook request includes the following headers:
+Each request also carries metadata in headers. Some headers mirror root envelope fields so you can route or reject a delivery before parsing the body.
 
-| Header | Description |
-|--------|-------------|
-| `Content-Type` | `application/json` |
-| `X-Probo-Webhook-Event` | The event type (e.g. `vendor:created`) |
-| `X-Probo-Webhook-Organization-Id` | The organization ID |
-| `X-Probo-Webhook-Timestamp` | Unix timestamp (seconds) of the request |
-| `X-Probo-Webhook-Signature` | HMAC-SHA256 hex signature for verification |
+| Header                            | Mirrors body field | Description                                                                                      |
+| --------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------ |
+| `Content-Type`                    | —                  | Always `application/json`                                                                        |
+| `X-Probo-Webhook-Event`           | `eventType`        | Wire-format event name (e.g. `document:updated`)                                                 |
+| `X-Probo-Webhook-Organization-Id` | `organizationId`   | Organization ID                                                                                  |
+| `X-Probo-Webhook-Timestamp`       | —                  | Unix timestamp in **seconds** used when computing the signature                                  |
+| `X-Probo-Webhook-Signature`       | —                  | Hex-encoded HMAC-SHA256 of `{timestamp}:{rawBody}`                                               |
+| `X-Probo-Webhook-Host`            | —                  | Hostname of the Probo instance that sent the delivery (for multi-region / self-hosted receivers) |
+
+### Header vs body
+
+| Use case                          | Prefer                                                                                       |
+| --------------------------------- | -------------------------------------------------------------------------------------------- |
+| Signature verification            | Headers (`X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`) + **raw** body bytes      |
+| Fast allow/deny before JSON parse | Headers (`X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Host`) |
+| Business logic / diffs            | Root envelope + `data` / `updatedFrom`                                                       |
+| Idempotency                       | Root `eventId`                                                                               |
+
+`subscriptionId` and `createdAt` exist only in the body root — they are not duplicated as headers.
 
 ## Signing secret
 
@@ -83,7 +108,7 @@ When you create a webhook subscription, Probo generates a signing secret (prefix
 
 ## Next steps
 
-import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 <CardGrid>
   <LinkCard
@@ -95,5 +120,10 @@ import { LinkCard, CardGrid } from '@astrojs/starlight/components';
     title="Signature Verification"
     description="Verify that webhook requests come from Probo"
     href="/docs/api/webhooks/signature-verification"
+  />
+  <LinkCard
+    title="n8n Trigger"
+    description="Start n8n workflows from Probo webhook events"
+    href="/docs/api/n8n/trigger"
   />
 </CardGrid>

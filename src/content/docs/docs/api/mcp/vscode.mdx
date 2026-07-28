@@ -90,7 +90,7 @@ Continue: Let me fetch that from Probo.
 [Uses listRisks tool]
 
 Here are the high-priority risks:
-1. Vendor data breach (Score: 20)
+1. Third-party data breach (Score: 20)
 2. Access control gaps (Score: 18)
 ...
 ```
@@ -155,12 +155,18 @@ export class ProboClient {
     return this.callTool("listRisks", { organization_id: organizationId });
   }
 
-  async listVendors(organizationId: string) {
-    return this.callTool("listVendors", { organization_id: organizationId });
+  async listThirdParties(organizationId: string) {
+    return this.callTool("listThirdParties", {
+      organization_id: organizationId,
+    });
   }
 
-  async addVendor(organizationId: string, name: string, description?: string) {
-    return this.callTool("addVendor", {
+  async addThirdParty(
+    organizationId: string,
+    name: string,
+    description?: string,
+  ) {
+    return this.callTool("addThirdParty", {
       organization_id: organizationId,
       name,
       description,
@@ -207,15 +213,15 @@ export function activate(context: vscode.ExtensionContext) {
     },
   );
 
-  // Command: Add Vendor
-  let addVendor = vscode.commands.registerCommand(
-    "probo.addVendor",
+  // Command: Add Third Party
+  let addThirdParty = vscode.commands.registerCommand(
+    "probo.addThirdParty",
     async () => {
       const orgId = await vscode.window.showInputBox({
         prompt: "Enter Organization ID",
       });
       const name = await vscode.window.showInputBox({
-        prompt: "Enter Vendor Name",
+        prompt: "Enter Third Party Name",
       });
       const description = await vscode.window.showInputBox({
         prompt: "Enter Description (optional)",
@@ -224,17 +230,17 @@ export function activate(context: vscode.ExtensionContext) {
       if (!orgId || !name) return;
 
       try {
-        await probo.addVendor(orgId, name, description);
+        await probo.addThirdParty(orgId, name, description);
         vscode.window.showInformationMessage(
-          `Vendor "${name}" added successfully!`,
+          `Third party "${name}" added successfully!`,
         );
       } catch (error) {
-        vscode.window.showErrorMessage(`Failed to add vendor: ${error}`);
+        vscode.window.showErrorMessage(`Failed to add third party: ${error}`);
       }
     },
   );
 
-  context.subscriptions.push(listRisks, addVendor);
+  context.subscriptions.push(listRisks, addThirdParty);
 }
 
 function generateRisksHTML(risks: any): string {
@@ -296,12 +302,12 @@ export function deactivate() {}
         "title": "Probo: List Risks"
       },
       {
-        "command": "probo.listVendors",
-        "title": "Probo: List Vendors"
+        "command": "probo.listThirdParties",
+        "title": "Probo: List Third Parties"
       },
       {
-        "command": "probo.addVendor",
-        "title": "Probo: Add Vendor"
+        "command": "probo.addThirdParty",
+        "title": "Probo: Add Third Party"
       }
     ],
     "configuration": {
@@ -497,7 +503,7 @@ Add custom keybindings in `keybindings.json`:
   },
   {
     "key": "ctrl+shift+p v",
-    "command": "probo.listVendors",
+    "command": "probo.listThirdParties",
     "when": "editorTextFocus"
   }
 ]
@@ -537,37 +543,37 @@ async function generateDashboard() {
 generateDashboard().catch(console.error);
 ```
 
-### Automated Vendor Review Check
+### Automated Third-Party Review Check
 
 ```javascript
-// scripts/vendor-review-check.js
+// scripts/third-party-review-check.js
 const { ProboClient } = require("./probo-client");
 
-async function checkVendorReviews() {
+async function checkThirdPartyReviews() {
   const probo = new ProboClient();
   const orgId = process.env.PROBO_ORG_ID;
 
-  const vendors = await probo.listVendors(orgId);
-  const overdueVendors = vendors.vendors.filter((v) => {
+  const thirdParties = await probo.listThirdParties(orgId);
+  const overdueThirdParties = thirdParties.filter((v) => {
     const lastReview = new Date(v.updated_at);
     const daysSinceReview =
       (Date.now() - lastReview.getTime()) / (1000 * 60 * 60 * 24);
     return daysSinceReview > 90;
   });
 
-  if (overdueVendors.length > 0) {
-    console.log("⚠️  Vendors needing review:");
-    overdueVendors.forEach((v) => {
+  if (overdueThirdParties.length > 0) {
+    console.log("⚠️  Third parties needing review:");
+    overdueThirdParties.forEach((v) => {
       console.log(
         `  - ${v.name} (last reviewed ${new Date(v.updated_at).toLocaleDateString()})`,
       );
     });
   } else {
-    console.log("✅ All vendors have been reviewed recently");
+    console.log("✅ All third parties have been reviewed recently");
   }
 }
 
-checkVendorReviews().catch(console.error);
+checkThirdPartyReviews().catch(console.error);
 ```
 
 ## Troubleshooting

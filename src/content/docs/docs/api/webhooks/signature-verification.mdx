@@ -16,12 +16,15 @@ The signed message is the concatenation of the timestamp and the raw request bod
 ```
 
 Where:
+
 - `timestamp` is the value of the `X-Probo-Webhook-Timestamp` header (Unix seconds)
 - `body` is the raw JSON request body
 
+Use the **full signing secret string** (including the `whsec_` prefix) as the HMAC key. Do not strip the prefix or hex-decode the secret.
+
 ## Verification steps
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps } from "@astrojs/starlight/components";
 
 <Steps>
 
@@ -35,7 +38,7 @@ import { Steps } from '@astrojs/starlight/components';
 
 3. **Compute the expected signature**
 
-   Calculate `HMAC-SHA256` using your signing secret (without the `whsec_` prefix) as the key and the signed message as the input. Hex-encode the result.
+   Calculate `HMAC-SHA256` using your full signing secret (including the `whsec_` prefix) as the key and the signed message as the input. Hex-encode the result.
 
 4. **Compare signatures**
 
@@ -57,7 +60,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
 )
 
 func verifyWebhook(r *http.Request, signingSecret string) ([]byte, error) {
@@ -69,18 +71,11 @@ func verifyWebhook(r *http.Request, signingSecret string) ([]byte, error) {
 	timestamp := r.Header.Get("X-Probo-Webhook-Timestamp")
 	signature := r.Header.Get("X-Probo-Webhook-Signature")
 
-	// Remove the whsec_ prefix
-	secret := strings.TrimPrefix(signingSecret, "whsec_")
-	secretBytes, err := hex.DecodeString(secret)
-	if err != nil {
-		return nil, err
-	}
-
 	// Build the signed message
 	message := fmt.Sprintf("%s:%s", timestamp, string(body))
 
-	// Compute HMAC-SHA256
-	mac := hmac.New(sha256.New, secretBytes)
+	// Compute HMAC-SHA256 with the full signing secret (including whsec_)
+	mac := hmac.New(sha256.New, []byte(signingSecret))
 	mac.Write([]byte(message))
 	expected := hex.EncodeToString(mac.Sum(nil))
 
@@ -98,19 +93,14 @@ func verifyWebhook(r *http.Request, signingSecret string) ([]byte, error) {
 ```python
 import hashlib
 import hmac
-from binascii import unhexlify
 
 def verify_webhook(body: bytes, timestamp: str, signature: str, signing_secret: str) -> bool:
-    # Remove the whsec_ prefix
-    secret = signing_secret.removeprefix("whsec_")
-    secret_bytes = unhexlify(secret)
-
-    # Build the signed message
+    # Build the signed message using the full signing secret (including whsec_)
     message = f"{timestamp}:{body.decode()}"
 
     # Compute HMAC-SHA256
     expected = hmac.new(
-        secret_bytes,
+        signing_secret.encode(),
         message.encode(),
         hashlib.sha256,
     ).hexdigest()
@@ -125,15 +115,11 @@ def verify_webhook(body: bytes, timestamp: str, signature: str, signing_secret: 
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 function verifyWebhook(body, timestamp, signature, signingSecret) {
-  // Remove the whsec_ prefix
-  const secret = signingSecret.replace("whsec_", "");
-  const secretBytes = Buffer.from(secret, "hex");
-
-  // Build the signed message
+  // Build the signed message using the full signing secret (including whsec_)
   const message = `${timestamp}:${body}`;
 
   // Compute HMAC-SHA256
-  const expected = createHmac("sha256", secretBytes)
+  const expected = createHmac("sha256", signingSecret)
     .update(message)
     .digest("hex");
 
