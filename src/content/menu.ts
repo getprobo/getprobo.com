@@ -99,6 +99,12 @@ export const menuGroups: MenuGroup[] = [
         href: "/changelog",
         icon: "clock-counter-clockwise",
       },
+      {
+        label: "Download",
+        description: "Get the Probo Agent",
+        href: "/download",
+        icon: "code",
+      },
     ],
     feature: {
       eyebrow: "Customer stories",

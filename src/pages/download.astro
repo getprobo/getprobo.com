@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import DownloadAgent from "../components/DownloadAgent.svelte";
+import ProboLogo from "../assets/probo-logo-only.svg";
+---
+
+<Layout
+  title="Download Probo Agent"
+  description="Download the latest Probo Agent for macOS, Linux, Windows, or FreeBSD."
+  noFrameworks
+>
+  <main>
+    <animated-hero class="relative block overflow-hidden py-16 sm:py-28">
+      <section class="container">
+        <div class="mx-auto flex max-w-xl flex-col items-center text-center">
+          <Image
+            src={ProboLogo}
+            alt="Probo"
+            width={80}
+            height={80}
+            class="animate-slide-in mb-8 size-20"
+          />
+          <h1
+            class="text-h2 animate-slide-in animation-delay-100 mb-4 font-medium"
+          >
+            Download Probo Agent
+          </h1>
+          <p
+            class="text-muted-foreground animate-slide-in animation-delay-200 mb-10 max-w-xl"
+          >
+            Available for macOS, Linux, Windows, and FreeBSD.
+          </p>
+          <div class="animate-slide-in animation-delay-300 w-full">
+            <DownloadAgent client:load />
+          </div>
+        </div>
+      </section>
+    </animated-hero>
+  </main>
+</Layout>
+
+<script>
+  import { AnimatedHero } from "../lib/elements/hero";
+  import { customElementDefine } from "../lib/dom";
+
+  customElementDefine("animated-hero", () => AnimatedHero);
+</script>
