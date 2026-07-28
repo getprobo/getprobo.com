@@ -43,33 +43,52 @@ const poster = video?.replace(/\.mp4$/, ".jpg");
 
   class AutopilotVideo extends HTMLElement {
     private observer: IntersectionObserver | null = null;
+    private video: HTMLVideoElement | null = null;
+    private inView = false;
 
     connectedCallback() {
-      const video = this.querySelector("video");
-      if (!video) {
+      this.video = this.querySelector("video");
+      if (!this.video) {
         return;
       }
 
       this.observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
-            if (entry.isIntersecting) {
-              void video.play().catch(() => {
-                // Autoplay can be blocked; poster still shows.
-              });
-            } else {
-              video.pause();
-            }
+            this.inView = entry.isIntersecting;
+            this.syncPlayback();
           }
         },
         { threshold: 0.35 },
       );
-      this.observer.observe(video);
+      this.observer.observe(this.video);
+      document.addEventListener("visibilitychange", this.onVisibilityChange);
+    }
+
+    private onVisibilityChange = () => {
+      this.syncPlayback();
+    };
+
+    private syncPlayback() {
+      const video = this.video;
+      if (!video) {
+        return;
+      }
+
+      if (this.inView && document.visibilityState === "visible") {
+        void video.play().catch(() => {
+          // Autoplay can be blocked; poster still shows.
+        });
+      } else {
+        video.pause();
+      }
     }
 
     disconnectedCallback() {
+      document.removeEventListener("visibilitychange", this.onVisibilityChange);
       this.observer?.disconnect();
       this.observer = null;
+      this.video = null;
     }
   }
 

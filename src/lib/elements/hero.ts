@@ -6,7 +6,8 @@ export class AnimatedHero extends HTMLElement {
   private canvas: HTMLCanvasElement;
   // @ts-expect-error It is initialized
   private shapes: Shape[];
-  private isVisible: boolean = false;
+  private isInView: boolean = false;
+  private rafId: number | null = null;
   private observer: IntersectionObserver | null = null;
 
   connectedCallback() {
@@ -34,16 +35,60 @@ export class AnimatedHero extends HTMLElement {
       { duration: 1000 },
     );
     window.addEventListener("resize", this.resize);
+    document.addEventListener("visibilitychange", this.onVisibilityChange);
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        this.isVisible = entry.isIntersecting;
-        this.draw();
+        this.isInView = entry.isIntersecting;
+        this.syncAnimation();
       });
     });
     this.observer.observe(this);
   }
 
-  draw() {
+  private onVisibilityChange = () => {
+    if (document.visibilityState === "visible") {
+      for (const shape of this.shapes) {
+        shape.resetTiming();
+      }
+    }
+    this.syncAnimation();
+  };
+
+  private syncAnimation() {
+    const shouldRun = this.isInView && document.visibilityState === "visible";
+
+    if (shouldRun) {
+      this.startLoop();
+    } else {
+      this.stopLoop();
+    }
+  }
+
+  private startLoop() {
+    if (this.rafId !== null) {
+      return;
+    }
+
+    const tick = () => {
+      this.rafId = null;
+      if (!this.isInView || document.visibilityState !== "visible") {
+        return;
+      }
+      this.drawFrame();
+      this.rafId = window.requestAnimationFrame(tick);
+    };
+
+    this.rafId = window.requestAnimationFrame(tick);
+  }
+
+  private stopLoop() {
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+  }
+
+  private drawFrame() {
     const ctx = this.canvas.getContext("2d");
     if (!ctx) {
       return;
@@ -52,14 +97,12 @@ export class AnimatedHero extends HTMLElement {
     for (const shape of this.shapes) {
       shape.draw();
     }
-
-    if (this.isVisible) {
-      window.requestAnimationFrame(() => this.draw());
-    }
   }
 
   disconnectedCallback() {
     window.removeEventListener("resize", this.resize);
+    document.removeEventListener("visibilitychange", this.onVisibilityChange);
+    this.stopLoop();
     this.observer?.unobserve(this);
     this.observer = null;
   }
@@ -97,6 +140,10 @@ class Shape {
   updateSize() {
     this.width = Math.max((360 / 1920) * this.canvas.width, 200);
     this.height = (170 / 1080) * this.canvas.height;
+  }
+
+  public resetTiming() {
+    this.lastDrawnAt = 0;
   }
 
   public updatePosition() {
