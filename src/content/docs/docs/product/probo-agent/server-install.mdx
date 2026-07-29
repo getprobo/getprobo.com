@@ -1,12 +1,13 @@
 ---
-title: Install Probo Agent
-description: Install and enroll the Probo device posture agent on macOS, Linux, Windows, or FreeBSD
+title: Server install (Linux / FreeBSD)
+description: Install and enroll Probo Agent on Linux or FreeBSD with install.sh or the CLI
 ---
 
-import { Steps } from "@astrojs/starlight/components";
-import { LinkCard } from "@astrojs/starlight/components";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-Install Probo Agent on each endpoint you want to enroll, then complete enrollment with a one-shot token from the Probo console.
+Install and enroll Probo Agent on Linux or FreeBSD from the command line. This path is for servers and other headless hosts where there is no tray or browser enrollment.
+
+For macOS or Windows desktops (installer + Probo console enroll via the tray), see [Desktop install](/docs/product/probo-agent/desktop-install).
 
 Download the latest release from the [Download page](/download) or from [GitHub Releases](https://github.com/getprobo/probo/releases) under the `probo-agent/v*` tag.
 
@@ -20,40 +21,9 @@ You need:
   - United States: `https://us.probo.com`
   - European Union: `https://eu.probo.com`
   - Self-hosted: your instance base URL (no path)
+- Root or sudo on the host
 
-## macOS (recommended: signed package)
-
-macOS releases ship a universal (arm64 + x86*64) signed `.pkg` named `probo-agent*<version>\_darwin.pkg`.
-
-<Steps>
-
-1. **Download and install the package**
-
-   Open the `.pkg` and complete the installer. It installs `probo-agent`, registers the `probo://` URL handler, and installs the privileged helper used for browser enrollment.
-
-2. **Enroll the device**
-
-   Prefer browser enrollment from the Probo console employee/device page. Choosing your region and clicking enroll opens `probo://enroll?...`, which the signed **Probo Agent.app** handles.
-
-   Or enroll from the CLI:
-
-   ```bash
-   sudo probo-agent install \
-     --server https://us.probo.com \
-     --enrollment-token YOUR_TOKEN
-   ```
-
-3. **Confirm status**
-
-   ```bash
-   probo-agent status
-   ```
-
-</Steps>
-
-On macOS, browser enrollment must use the signed app deeplink. CLI enrollment requires `sudo probo-agent install`.
-
-## Linux and FreeBSD (`install.sh`)
+## Install with `install.sh`
 
 Each release includes an `install.sh` that downloads the matching archive, verifies its checksum, installs to `/usr/local/bin`, and enrolls the device.
 
@@ -92,21 +62,7 @@ Replace `vX.Y.Z` with the release version from the [Download page](/download).
 
 Never put the enrollment token in the curl URL.
 
-## Windows
-
-1. Download the Windows archive from the [Download page](/download).
-2. Extract `probo-agent.exe`.
-3. Run an elevated install:
-
-```powershell
-.\probo-agent.exe install `
-  --server https://us.probo.com `
-  --enrollment-token YOUR_TOKEN
-```
-
-Windows also supports tray-assisted browser enrollment after the agent is installed.
-
-## Manual CLI install (all platforms)
+## Manual CLI install
 
 If you already have the binary on disk:
 
@@ -126,6 +82,8 @@ Useful flags:
 | `--no-auto-update`   | Disable automatic upgrades                              |
 | `-d`, `--dir`        | Override the agent config/keystore directory            |
 
+The agent runs as a managed OS service (`systemd` on Linux, `rc.d` on FreeBSD). Default state directory: `/var/lib/probo-agent`.
+
 ## Verify installation
 
 ```bash
@@ -138,19 +96,22 @@ probo-agent collect
 ## Uninstall
 
 ```bash
-# macOS requires root
-sudo probo-agent uninstall
-
-# Linux / FreeBSD / Windows (elevated)
 probo-agent uninstall
 ```
 
-Uninstall stops the service, unenrolls the device, removes tray auto-start where applicable, and deletes local agent state.
+Uninstall stops the service, unenrolls the device, and deletes local agent state.
 
 ## Next steps
 
-<LinkCard
-  title="Commands"
-  description="Full command reference for install, status, collect, update, and uninstall"
-  href="/docs/product/probo-agent/commands"
-/>
+<CardGrid>
+  <LinkCard
+    title="Commands"
+    description="Full command reference for install, status, collect, update, and uninstall"
+    href="/docs/product/probo-agent/commands"
+  />
+  <LinkCard
+    title="Desktop install"
+    description="Install on macOS or Windows and enroll from the Probo console"
+    href="/docs/product/probo-agent/desktop-install"
+  />
+</CardGrid>

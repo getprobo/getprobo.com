@@ -93,6 +93,10 @@ export default defineConfig({
       status: 301,
       destination: "/yc",
     },
+    "/docs/product/probo-agent/installation": {
+      status: 301,
+      destination: "/docs/product/probo-agent/desktop-install",
+    },
   },
   build: {
     format: "file",
@@ -291,8 +295,12 @@ export default defineConfig({
               slug: "docs/product/probo-agent/overview",
             },
             {
-              label: "Installation",
-              slug: "docs/product/probo-agent/installation",
+              label: "Desktop install",
+              slug: "docs/product/probo-agent/desktop-install",
+            },
+            {
+              label: "Server install",
+              slug: "docs/product/probo-agent/server-install",
             },
             {
               label: "Commands",

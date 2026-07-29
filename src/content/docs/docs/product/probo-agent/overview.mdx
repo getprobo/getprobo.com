@@ -17,17 +17,19 @@ Probo Agent (`probo-agent`) is a lightweight device posture agent. It runs as a 
 
 ## Supported platforms
 
-| Platform | Install options                            | Notes                                                          |
-| -------- | ------------------------------------------ | -------------------------------------------------------------- |
-| macOS    | Signed universal `.pkg`, `install.sh`, CLI | Browser enrollment via `Probo Agent.app` / `probo://` deeplink |
-| Linux    | `install.sh`, CLI archive                  | CLI enrollment                                                 |
-| Windows  | ZIP archive, CLI                           | Tray enrollment helper available                               |
-| FreeBSD  | `install.sh`, CLI archive                  | CLI enrollment                                                 |
+| Platform | Install options           | Enrollment                                                   |
+| -------- | ------------------------- | ------------------------------------------------------------ |
+| macOS    | Signed universal `.pkg`   | Browser / tray via `Probo Agent.app` and `probo://` deeplink |
+| Windows  | Signed `.msi`             | Tray-assisted browser enrollment from the Probo console      |
+| Linux    | `install.sh`, CLI archive | CLI (`install.sh` or `probo-agent install`)                  |
+| FreeBSD  | `install.sh`, CLI archive | CLI (`install.sh` or `probo-agent install`)                  |
+
+macOS and Windows: [Desktop install](/docs/product/probo-agent/desktop-install). Linux and FreeBSD: [Server install](/docs/product/probo-agent/server-install).
 
 ## How enrollment works
 
 1. Create or open a device in the Probo console and generate an enrollment token.
-2. Install the agent with the Probo server URL and enrollment token — or open the browser enrollment flow on macOS/Windows.
+2. Install the agent — on desktops, prefer the package installer then enroll from [us.probo.com/enroll](https://us.probo.com/enroll) or [eu.probo.com/enroll](https://eu.probo.com/enroll); on servers, pass the server URL and token on the command line.
 3. The agent exchanges the one-shot token for a device API key, configures heartbeat/posture intervals, and starts the OS service.
 4. Posture results appear on the device in the Probo console.
 
@@ -53,9 +55,14 @@ Use `probo-agent collect` to run the checks locally without pushing results.
 
 <CardGrid>
   <LinkCard
-    title="Installation"
-    description="Install Probo Agent with the package installer, install.sh, or CLI"
-    href="/docs/product/probo-agent/installation"
+    title="Desktop install"
+    description="macOS and Windows: package installer, then enroll from the Probo console"
+    href="/docs/product/probo-agent/desktop-install"
+  />
+  <LinkCard
+    title="Server install"
+    description="Linux and FreeBSD: install.sh or CLI enrollment"
+    href="/docs/product/probo-agent/server-install"
   />
   <LinkCard
     title="Commands"

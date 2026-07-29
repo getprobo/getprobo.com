@@ -97,9 +97,7 @@ probo-agent update --check
 
 After a successful update, restart the OS service (or let the supervisor restart after the agent exits with the dedicated restart code).
 
-## Browser enrollment notes
+## Enrollment paths
 
-- Enrollment deeplinks use `probo://enroll?server=...&token=...`.
-- On macOS, browser enrollment is handled by the signed **Probo Agent.app**; CLI elevation from the deeplink is refused.
-- On Windows, tray-assisted elevated install is available after the agent is present.
-- Linux and FreeBSD enroll through `probo-agent install` or `install.sh`.
+- **macOS / Windows:** install the package (`.pkg` / `.msi`), then enroll from the Probo console via the tray / `probo://` deeplink. See [Desktop install](/docs/product/probo-agent/desktop-install).
+- **Linux / FreeBSD:** enroll with `install.sh` or `probo-agent install`. See [Server install](/docs/product/probo-agent/server-install).
