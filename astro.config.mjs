@@ -7,7 +7,6 @@ import starlight from "@astrojs/starlight";
 import sitemap from "@astrojs/sitemap";
 import { removeHtmlExtension } from "./vite-plugin-remove-html.mjs";
 import { docsSidebar } from "./src/lib/docs-sidebar.ts";
-import { redirects } from "./src/lib/redirects.mjs";
 import { generateMarkdown } from "./tools/generateMarkdown";
 
 // Post-enforce fallback: when vite-plugin-svelte cannot resolve a Svelte
@@ -32,7 +31,6 @@ export default defineConfig({
   compressHTML: false,
   prefetch: false,
   trailingSlash: "never",
-  redirects,
   build: {
     format: "file",
   },
