@@ -226,32 +226,13 @@ import SectionNav from "./SectionNav.astro";
 
   const initializeSidebarGroups = (sidebar: HTMLElement) => {
     const groups = sidebar.querySelectorAll<HTMLDetailsElement>("details");
-    const openGroups = Array.from(groups).filter((group) => group.open);
-    const currentGroup = Array.from(groups).find((group) =>
-      group.querySelector('a[aria-current="page"]'),
-    );
-    const groupToKeep = currentGroup ?? openGroups[openGroups.length - 1];
-
-    for (const group of openGroups) {
-      if (group !== groupToKeep) group.open = false;
-    }
 
     for (const group of groups) {
       if (group.dataset.accordionInitialized !== undefined) continue;
       group.dataset.accordionInitialized = "";
 
-      group.addEventListener("toggle", () => {
-        if (group.open) {
-          for (const otherGroup of groups) {
-            if (otherGroup !== group) otherGroup.open = false;
-          }
-        }
-
-        persistSidebarGroups(sidebar);
-      });
+      group.addEventListener("toggle", () => persistSidebarGroups(sidebar));
     }
-
-    if (openGroups.length > 1) persistSidebarGroups(sidebar);
   };
 
   document.addEventListener("astro:before-swap", () => {

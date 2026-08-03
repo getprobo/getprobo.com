@@ -12,27 +12,6 @@ const sidebarGroups = getSidebarGroupsForSection(
   Astro.locals.starlightRoute.sidebar,
   sectionId,
 );
-
-type SidebarEntry = {
-  type: string;
-  collapsed?: boolean;
-  entries?: SidebarEntry[];
-};
-
-function getCollapsedDetails(entries: SidebarEntry[]): boolean[] {
-  return entries.flatMap((entry) =>
-    entry.type === "group"
-      ? [
-          entry.collapsed === true,
-          ...getCollapsedDetails(entry.entries ?? []),
-        ]
-      : [],
-  );
-}
-
-const collapsedDetails = sidebarGroups.flatMap(({ group }) =>
-  getCollapsedDetails(group.entries as SidebarEntry[]),
-);
 ---
 
 <SidebarPersister>
@@ -48,10 +27,15 @@ const collapsedDetails = sidebarGroups.flatMap(({ group }) =>
   }
 </SidebarPersister>
 
-<script define:vars={{ collapsedDetails }}>
-  const details = document.querySelectorAll(".sidebar-section details");
-  collapsedDetails.forEach((collapsed, index) => {
-    if (collapsed) details[index]?.removeAttribute("open");
+<script>
+  document.addEventListener("astro:page-load", () => {
+    for (const details of document.querySelectorAll(
+      ".sidebar-section details",
+    )) {
+      if (details.querySelector('[aria-current="page"]')) {
+        details.setAttribute("open", "");
+      }
+    }
   });
 </script>
 
