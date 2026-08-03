@@ -120,6 +120,7 @@ export const docsSidebarGroups = [
       },
       {
         label: "SSO",
+        collapsed: true,
         items: [
           { label: "Overview", slug: "docs/product/sso/overview" },
           {
@@ -135,6 +136,7 @@ export const docsSidebarGroups = [
       },
       {
         label: "SCIM",
+        collapsed: true,
         items: [
           { label: "Overview", slug: "docs/product/scim/overview" },
           {

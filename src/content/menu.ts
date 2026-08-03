@@ -30,6 +30,7 @@ export type MenuFeature = {
 
 export type MenuGroup = {
   label: string;
+  href?: string;
   showLabel?: boolean;
   items: MenuItem[];
   feature: MenuFeature;
@@ -155,6 +156,7 @@ export const menuGroups: MenuGroup[] = [
   },
   {
     label: "Docs",
+    href: "/docs",
     showLabel: false,
     items: [
       {

@@ -21,7 +21,8 @@ const menuId = "desktop-navigation-menu";
         <Button
           variant="navigation"
           size="navigation"
-          type="button"
+          type={group.href ? undefined : "button"}
+          href={group.href}
           id={triggerId}
           data-menu-trigger
           data-menu-index={index}

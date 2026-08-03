@@ -258,9 +258,10 @@
   }
 
   .sl-markdown-content table:not(.not-content *) {
-    display: table;
+    display: block;
     width: 100%;
-    overflow: visible;
+    max-width: 100%;
+    overflow-x: auto;
     border-block: 1px solid var(--color-border-mid);
     border-inline: 0;
     border-radius: 0;

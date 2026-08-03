@@ -2,11 +2,17 @@
 import { directMenuItems, menuGroups } from "../content/menu.ts";
 import Icon from "./Icon.astro";
 import MenuIcon from "./MenuIcon.astro";
+
+interface Props {
+  id?: string;
+}
+
+const { id } = Astro.props;
 ---
 
 <dialog
-  {...Astro.props}
-  class="bg-secondary group fixed inset-0 top-14 z-50 h-full w-full overflow-y-auto px-5 pt-6 pb-28 transition-all transition-discrete duration-300 not-open:opacity-0 starting:opacity-0"
+  {id}
+  class="bg-secondary group fixed inset-x-0 top-14 bottom-0 z-50 m-0 h-auto max-h-none w-full max-w-none overflow-y-auto border-0 px-5 pt-6 pb-28 transition-all transition-discrete duration-300 not-open:opacity-0 starting:opacity-0"
 >
   {
     menuGroups.map((group) => (
