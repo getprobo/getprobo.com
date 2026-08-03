@@ -29,6 +29,7 @@ const accessReviewConnectorItems = [
     label: "ClickHouse Cloud",
     slug: "docs/product/access-review/clickhouse",
   },
+  { label: "GitHub", slug: "docs/product/access-review/github" },
   { label: "Grafana", slug: "docs/product/access-review/grafana" },
   {
     label: "incident.io",
