@@ -286,6 +286,7 @@ export const docsSidebarGroups = [
       { label: "Pagination", slug: "docs/developers/api/mcp/pagination" },
       {
         label: "Integrations",
+        collapsed: true,
         items: [
           {
             label: "Overview",
