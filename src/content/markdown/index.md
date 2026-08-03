@@ -2,7 +2,7 @@
 
 Our compliance officers run your program end-to-end. Stay continuously audit-ready without the overhead or complexity of traditional compliance platforms.
 
-- [Deploy Open Source](/docs/self-hosting/docker-compose)
+- [Deploy Open Source](/docs/deployment/self-hosting/docker-compose)
 - [Talk to an expert](/contact)
 
 ## Trusted by leading teams

@@ -3,6 +3,8 @@ import { ClientRouter } from "astro:transitions";
 import PostHog from "../posthog.astro";
 
 const { head } = Astro.locals.starlightRoute;
+const pathname = Astro.url.pathname.replace(/\.html$/, "").replace(/\/+$/, "");
+const markdownAlternate = pathname ? `/md${pathname}.md` : "/md/index.md";
 ---
 
 {
@@ -13,6 +15,14 @@ const { head } = Astro.locals.starlightRoute;
 <link
   href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
   rel="stylesheet"
+/>
+<link rel="alternate" type="text/markdown" href={markdownAlternate} />
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs index" />
+<link
+  rel="alternate"
+  type="text/plain"
+  href="/llms-docs.txt"
+  title="Documentation LLMs index"
 />
 
 <script>

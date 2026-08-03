@@ -1,6 +1,6 @@
 ---
 title: Scaleway
-description: Connect Scaleway as an access source using an IAM API secret key
+description: Connect Scaleway as an access source using an IAM secret key and organization ID
 ---
 
 Probo reads your Scaleway Organization's IAM users through the Scaleway IAM API so you can review who has access.
@@ -17,17 +17,17 @@ A Scaleway API key has an **access key** (`SCW…`) and a **secret key** (a UUID
 
 ## Collected Fields
 
-| Probo field | Scaleway field               | Notes                                                       |
-| ----------- | ---------------------------- | ----------------------------------------------------------- |
-| Name        | `first_name` and `last_name` | Falls back to the username, then the email                  |
-| Email       | `email`                      |                                                             |
-| Role        | `type`                       | `owner` → Owner, `member` → Member                          |
-| Admin       | `type`                       | Flagged as an administrator when `type` is `owner`          |
-| Status      | `status` and `locked`        | Inactive when the account is locked or its invitation is still pending |
+| Probo field | Scaleway field               | Notes                                                                       |
+| ----------- | ---------------------------- | --------------------------------------------------------------------------- |
+| Name        | `first_name` and `last_name` | Falls back to the username, then the email                                  |
+| Email       | `email`                      |                                                                             |
+| Role        | `type`                       | `owner` → Owner, `member` → Member                                          |
+| Admin       | `type`                       | Flagged as an administrator when `type` is `owner`                          |
+| Status      | `status` and `locked`        | Inactive when the account is locked or its invitation is still pending      |
 | MFA         | `two_factor_enabled`         | Whether two-factor authentication is enabled (falls back to the `mfa` flag) |
-| Last login  | `last_login_at`              | When the user last signed in                                |
-| External ID | `id`                         | Stable identifier used to track the account across reviews  |
-| Created at  | `created_at`                 | When the user was added to the Organization                 |
+| Last login  | `last_login_at`              | When the user last signed in                                                |
+| External ID | `id`                         | Stable identifier used to track the account across reviews                  |
+| Created at  | `created_at`                 | When the user was added to the Organization                                 |
 
 ## Step 1: Create an API Key
 
@@ -52,7 +52,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 </Steps>
 
-Probo pulls your Organization's IAM users into your campaigns.
+Probo names the source after your Organization and pulls its IAM users into your campaigns.
 
 ## Troubleshooting
 

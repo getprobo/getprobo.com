@@ -1,0 +1,134 @@
+---
+title: Core Concepts
+description: Understand the key concepts and data model in Probo
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Probo models a compliance program as connected records. Understanding those relationships helps teams avoid duplicate work and preserve traceability from a requirement to its implementation and evidence.
+
+## Organizations
+
+The top-level entity in Probo. All compliance data — frameworks, controls, risks, third parties, evidence — belongs to an organization. Users are invited as members of an organization.
+
+## Frameworks
+
+Compliance standards or custom programs your organization follows. Each framework contains controls that define expected outcomes.
+
+## Controls
+
+Specific requirements within a framework. For example, "Access controls must be implemented for all production systems" or "Data must be encrypted at rest." Controls represent what needs to be achieved.
+
+## Measures
+
+Actions and processes your organization implements to satisfy controls. A single measure can satisfy multiple controls across different frameworks. For example, a "multi-factor authentication" measure might satisfy access control requirements in both SOC 2 and ISO 27001.
+
+## Risks
+
+Potential adverse outcomes tracked by the organization. Risks can be linked to measures, obligations, vendor assessments, and structured risk-assessment scenarios.
+
+## Risk Assessments
+
+Structured analyses made from scopes, nodes, boundaries, processes, threats, and scenarios. Scenarios can link the analysis to risks in the organization’s risk register.
+
+## Third Parties
+
+External service providers and suppliers your organization relies on. Third-party management includes tracking contracts, conducting risk assessments, vetting, and monitoring compliance status.
+
+## Assets
+
+Systems, applications, databases, and infrastructure that your organization operates. Assets are inventoried and linked to the controls and risks that apply to them.
+
+## Evidence
+
+Files and URLs that support the operation of a measure. Linking evidence to the implementation record keeps it reusable across every control supported by that measure.
+
+## Tasks
+
+Actionable items assigned to team members. Tasks track work like implementing a control, reviewing a third party, completing an assessment, or remediating a finding.
+
+## Audits
+
+Formal evaluations of your compliance posture. Probo helps you prepare evidence packages, organize documentation, and track audit findings and remediation.
+
+## Documents
+
+Policies, procedures, reports, and other controlled content. Documents support versions, approval quorums, electronic signatures, publication, archival, and PDF export.
+
+## Findings
+
+Issues identified during an audit or another review. Finding kinds include major nonconformity, minor nonconformity, observation, and exception. Findings can be linked to one or more audits.
+
+## Obligations
+
+Legal and regulatory requirements your organization must fulfill. Obligations are tracked separately from framework controls to capture jurisdiction-specific requirements.
+
+## Data Classification
+
+Data records describe information handled by the organization, including sensitivity and business impact.
+
+## Processing Activities
+
+Records of data processing activities, as required for GDPR compliance. Each record documents what data is processed, the legal basis, retention periods, and data subjects involved.
+
+## DPIAs (Data Protection Impact Assessments)
+
+Assessments required for high-risk data processing activities under GDPR. DPIAs evaluate the necessity and proportionality of processing, and identify measures to mitigate risks to data subjects.
+
+## TIAs (Transfer Impact Assessments)
+
+Assessments for international data transfers. TIAs evaluate whether the destination country provides adequate data protection and what supplementary measures are needed.
+
+## Statements of Applicability (SoA)
+
+A reviewed record of which controls apply to an organization and why. It is commonly used with ISO 27001 but can represent applicability decisions for other control sets.
+
+## Access Reviews
+
+Campaigns that bring access entries from Probo memberships, CSV data, or connected providers into one review. Decisions, flags, sources, and campaign statistics remain associated with the campaign.
+
+## Compliance Portal
+
+A public-facing portal for selected certifications, commitments, references, files, and links. Portal publication is separate from internal program publication.
+
+## Devices and Agent Runs
+
+Device records represent enrolled endpoints and their reported posture. Agent runs represent in-product agent work over authorized GRC data; they are distinct from Probo Agent device enrollment.
+
+## How Concepts Relate
+
+The core workflow in Probo follows this chain:
+
+- **Frameworks** contain **Controls** that define what must be achieved
+- **Measures** implement Controls — a single Measure can satisfy multiple Controls across Frameworks
+- **Risks** are mitigated by Measures
+- **Evidence** supports Measures
+- **Tasks** drive the day-to-day work of implementing and maintaining compliance
+- **Audits** verify that everything is in place and operating as expected
+- **Findings** preserve the issues identified during review
+- **Documents** formalize approved policies, procedures, and reports
+
+## Next Steps
+
+<CardGrid>
+  <LinkCard
+    title="Product Overview"
+    description="See how Probo supports a compliance program from setup through audit"
+    href="/docs/product/getting-started/product-overview"
+  />
+  <LinkCard
+    title="Self-Hosted Quickstart"
+    description="Run Probo locally and set up your first compliance framework"
+    href="/docs/product/getting-started/quickstart"
+  />
+  <LinkCard
+    title="Glossary"
+    description="Look up Probo, security, privacy, and compliance terms"
+    href="/docs/product/getting-started/glossary"
+  />
+  <LinkCard
+    title="MCP API Overview"
+    description="Interact with all these concepts programmatically via AI tools"
+    href="/docs/developers/api/mcp/overview"
+  />
+</CardGrid>

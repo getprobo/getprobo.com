@@ -1,0 +1,26 @@
+---
+title: Self-hosting
+description: Understand the supported architectures and responsibilities for running Probo
+---
+
+Probo is distributed as a containerized application backed by PostgreSQL and S3-compatible object storage. A production deployment must provide durable data services, TLS, secrets, outbound email, backups, monitoring, and an upgrade process.
+
+## Deployment models
+
+- **Docker Compose** is intended for a single host and smaller installations. The production compose definition in the Probo repository runs `probod` with PostgreSQL and SeaweedFS.
+- **Kubernetes** uses the Probo Helm chart and is better suited to operators that already manage Kubernetes, ingress, secrets, and persistent services.
+
+The [Docker Compose](/docs/deployment/self-hosting/docker-compose) and [Kubernetes](/docs/deployment/self-hosting/kubernetes) pages contain installation procedures and can be consulted when you are ready to deploy.
+
+## Operator responsibilities
+
+A self-hosted operator is responsible for:
+
+- restricting access to the application, database, and object storage;
+- generating and rotating strong application and integration secrets;
+- backing up PostgreSQL and stored files as one consistent system;
+- monitoring health, capacity, logs, and certificate expiry;
+- testing upgrades and rollback procedures;
+- configuring email and identity services used by the organization.
+
+Review [configuration](/docs/deployment/configuration/overview) and [infrastructure security](/docs/deployment/infrastructure-security) before exposing a deployment to users.

@@ -1,0 +1,142 @@
+---
+title: Probo Trigger for n8n
+description: Start n8n workflows from Probo webhook events with the Probo Trigger node
+---
+
+import { Steps, LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+The **Probo Trigger** node starts an n8n workflow when a subscribed Probo event
+occurs. It replaces polling with a webhook subscription managed as part of the
+workflow lifecycle.
+
+## Requirements
+
+- Probo API credentials with access to the selected organization and permission
+  to manage webhook subscriptions.
+- A production webhook URL that Probo can reach over HTTPS.
+- The correct public webhook configuration in n8n, especially when n8n runs
+  behind a reverse proxy.
+
+## How it works
+
+When you activate a workflow that includes Probo Trigger:
+
+1. The node creates a webhook subscription in Probo for the selected organization and events.
+2. Probo delivers signed `POST` requests to the node's webhook URL.
+3. The node verifies the HMAC-SHA256 signature and timestamp freshness by
+   default.
+4. The workflow runs with the webhook payload as its input item.
+5. When you deactivate the workflow, the node deletes the subscription.
+
+If the organization, selected events, or webhook URL changes, the node removes
+the stale subscription and creates a matching subscription during activation.
+It avoids creating a second subscription when cleanup of the old one fails.
+
+## Configuration
+
+| Field                             | Description                                                                                                                 |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Organization ID**               | Organization that emits the events                                                                                          |
+| **Events**                        | One or more event types to subscribe to                                                                                     |
+| **Verify Signature**              | Reject deliveries with a missing or invalid HMAC signature; enabled by default                                              |
+| **Timestamp Tolerance (Seconds)** | Reject deliveries outside this past-or-future window; defaults to `300`. Set to `0` only to disable freshness checking.      |
+
+Credentials use the same [Probo API credentials](/docs/developers/api/n8n/authentication) as the action node.
+
+:::caution
+Keep signature verification enabled. Disabling it allows any system that knows
+the webhook URL to start the workflow. A valid signature without a timestamp
+tolerance can also be replayed.
+:::
+
+## Supported events
+
+Probo Trigger supports the same event set as webhook subscriptions, including:
+
+- Third party created / updated / deleted
+- User created / updated / deleted
+- Obligation created / updated / deleted
+- Rights request created / updated / deleted
+- Document created / updated / archived / unarchived / deleted
+- Document version created / updated / published / rejected / deleted
+- Document version signature requested / signed / cancelled
+- Document version approval quorum requested / updated / approved / rejected / voided
+
+See the full wire-format payloads in [Webhook Event Types](/docs/developers/api/webhooks/event-types).
+
+## Output
+
+Each trigger execution outputs the full webhook JSON body — the root envelope plus nested resource fields:
+
+| Root field       | Description                                                         |
+| ---------------- | ------------------------------------------------------------------- |
+| `eventId`        | Unique delivery identifier (good idempotency key)                   |
+| `subscriptionId` | Webhook subscription ID                                             |
+| `organizationId` | Organization ID                                                     |
+| `eventType`      | Event type (e.g. `document:updated`)                                |
+| `createdAt`      | Event timestamp                                                     |
+| `data`           | Current entity payload (resource fields live here, not at the root) |
+| `updatedFrom`    | Present on `*:updated` events — entity snapshot before the change   |
+
+Probo also sends HTTP headers such as `X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`, and `X-Probo-Webhook-Host`. The Trigger node uses the signature headers for verification; workflow expressions typically read the body root fields above. See [Webhooks Overview](/docs/developers/api/webhooks/overview) for the full header/root field reference.
+
+Example expressions:
+
+```text
+{{ $json.eventType }}
+{{ $json.organizationId }}
+{{ $json.updatedFrom.membership.role }}
+{{ $json.data.membership.role }}
+```
+
+## Quickstart
+
+<Steps>
+
+1. **Add Probo Trigger** to a new workflow.
+2. **Select credentials** and set the **Organization ID**.
+3. **Choose events**, for example `Document Version Signature Signed`.
+4. **Add downstream nodes** that use `$json.data` (and `$json.updatedFrom` for updates).
+5. **Activate the workflow**. The node registers the production webhook
+   subscription automatically.
+
+</Steps>
+
+## Build reliable event workflows
+
+- Filter on `eventType` before accessing event-specific fields under `data`.
+- Check that optional fields exist. `updatedFrom` is present only for update
+  events.
+- Use `eventId` as an idempotency key before creating an external side effect.
+- Keep the workflow response fast. The trigger acknowledges the webhook before
+  downstream execution.
+- Configure an n8n error workflow for downstream failures. Probo does not retry
+  failed webhook deliveries.
+
+## Troubleshooting
+
+| Symptom                                   | Check                                                                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Activation cannot create the subscription | `v1:webhook` scope, user permissions, organization ID, and n8n's configured production webhook URL     |
+| Probo cannot deliver                      | Public DNS, HTTPS certificate, reverse proxy, firewall, and the subscription's endpoint URL             |
+| Delivery returns `403`                    | Signature verification state, server clocks, and whether the subscription was recreated after a change |
+| Workflow receives no selected event       | The workflow is active and the event belongs to the selected organization and event set                 |
+| Duplicate downstream action               | Deduplicate with `eventId` and review manual or error-workflow retries                                  |
+
+If n8n moved to a new public URL, deactivate and reactivate the workflow so the
+node can replace the old subscription.
+
+## Related
+
+<CardGrid>
+  <LinkCard
+    title="Webhook overview"
+    description="Review the envelope, headers, and delivery behavior"
+    href="/docs/developers/api/webhooks/overview"
+  />
+  <LinkCard
+    title="Event types"
+    description="Inspect payload fields for every supported event"
+    href="/docs/developers/api/webhooks/event-types"
+  />
+</CardGrid>

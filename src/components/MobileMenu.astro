@@ -1,5 +1,6 @@
 ---
 import { directMenuItems, menuGroups } from "../content/menu.ts";
+import Icon from "./Icon.astro";
 import MenuIcon from "./MenuIcon.astro";
 ---
 
@@ -10,9 +11,11 @@ import MenuIcon from "./MenuIcon.astro";
   {
     menuGroups.map((group) => (
       <section class="mb-7">
-        <h2 class="text-muted-foreground border-b pb-2 text-xs font-medium tracking-wider uppercase">
-          {group.label}
-        </h2>
+        {group.showLabel !== false && (
+          <h2 class="text-muted-foreground border-b pb-2 text-xs font-medium tracking-wider uppercase">
+            {group.label}
+          </h2>
+        )}
         {group.items.map((item) => (
           <a href={item.href} class="flex items-center gap-4 border-b py-4">
             <span class="grid size-11 shrink-0 place-items-center rounded-lg border">
@@ -24,22 +27,7 @@ import MenuIcon from "./MenuIcon.astro";
                 {item.description}
               </span>
             </span>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M7.91663 15L12.9166 10L7.91663 5"
-                stroke="#818780"
-                fill="none"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <Icon name="caret-right" size={20} class="text-muted-foreground" />
           </a>
         ))}
       </section>
@@ -63,22 +51,7 @@ import MenuIcon from "./MenuIcon.astro";
               {item.description}
             </span>
           </span>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              d="M7.91663 15L12.9166 10L7.91663 5"
-              stroke="#818780"
-              fill="none"
-              stroke-width="1.66667"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <Icon name="caret-right" size={20} class="text-muted-foreground" />
         </a>
       ))
     }

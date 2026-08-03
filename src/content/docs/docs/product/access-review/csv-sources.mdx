@@ -1,0 +1,59 @@
+---
+title: Create a CSV Access Source
+description: Prepare and add CSV account data as an access review source
+---
+
+Use a CSV source when a system has no supported connector or when you need to review a controlled export. Probo stores the CSV with the source and parses it each time the source is included in a campaign.
+
+## Prepare the CSV
+
+The first row must contain column names. The `email` column is required; all other supported columns are optional.
+
+| Column         | Value                                                                                                          |
+| -------------- | -------------------------------------------------------------------------------------------------------------- |
+| `email`        | Account email address. Rows with an empty email are skipped.                                                   |
+| `full_name`    | Person or service-account name.                                                                                |
+| `role`         | One role value.                                                                                                |
+| `job_title`    | Account holder's job title.                                                                                    |
+| `is_admin`     | `true` for an administrator; every other value is treated as `false`.                                          |
+| `active`       | `true` for an active account; every other value is treated as `false`. Omit the column when status is unknown. |
+| `external_id`  | Stable identifier from the source system.                                                                      |
+| `account_type` | Use `SERVICE_ACCOUNT` for a non-human account. Every other value is treated as a user account.                 |
+
+Column names are case-insensitive and surrounding spaces are ignored. Extra columns are ignored.
+
+```csv
+email,full_name,role,job_title,is_admin,active,external_id,account_type
+alex@example.com,Alex Morgan,Member,Engineer,false,true,user-1042,
+deploy@example.com,Production deploy,Deployer,,true,true,svc-17,SERVICE_ACCOUNT
+```
+
+:::caution
+Check boolean values before creating the source. For `is_admin` and `active`, Probo treats only `true` as true; values such as `yes`, `1`, and `active` are treated as false.
+:::
+
+## Create the Source
+
+1. In Probo, go to **Access Reviews** > **Sources**.
+2. Click **Add source**, find **CSV**, and click **Open**.
+3. Enter a descriptive source **Name**.
+4. Paste the complete CSV, including its header row, into **CSV Data**.
+5. Click **Create**.
+
+The source is now available when you [create a campaign](/docs/product/access-review/campaigns).
+
+## Use a New Export
+
+A campaign reads the CSV stored on the source when the campaign starts. To review a newer export, update or replace the source data before starting the next campaign.
+
+Starting a campaign creates a snapshot. Later source changes do not rewrite entries or decisions in an existing campaign.
+
+The console does not currently edit a CSV source in place. Delete the old source and create a new one with the updated export, or use `prb access-review source update` from the [CLI](/docs/developers/cli/commands/access-review).
+
+## Troubleshooting
+
+- **The campaign reports a missing email column.** Add an `email` header. The spelling must match, although capitalization does not matter.
+- **A row is missing.** Probo skips rows whose email value is empty.
+- **An account has the wrong status or admin value.** Use `true` or `false`. Only `true` is recognized as true.
+- **A service account appears as a person.** Set `account_type` to `SERVICE_ACCOUNT`.
+- **A role is incomplete.** The CSV format accepts one `role` value per row. Use a concise combined label if the export contains several roles.

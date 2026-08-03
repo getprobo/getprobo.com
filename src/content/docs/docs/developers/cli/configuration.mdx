@@ -1,0 +1,210 @@
+---
+title: CLI configuration
+description: Configure prb behavior, hosts, organizations, and environment overrides
+---
+
+The CLI keeps preferences and authenticated hosts in an operating-system user
+configuration file. Use `prb config` for supported preferences and `prb auth`
+for host credentials. Do not edit token fields by hand.
+
+## Inspect and change preferences
+
+```bash
+# Show every supported preference and its current value
+prb config list
+
+# Read one value
+prb config get http_timeout
+
+# Set one value
+prb config set http_timeout 60s
+```
+
+Supported keys:
+
+| Key            | Accepted value                           | Current behavior                                                               |
+| -------------- | ---------------------------------------- | ------------------------------------------------------------------------------ |
+| `browser`      | Browser command or executable            | Opens device authorization and `prb browse` with the selected browser          |
+| `http_timeout` | Go duration such as `30s`, `2m`, `1m30s` | Sets API request timeout; defaults to `30s` when unset or invalid              |
+| `prompt`       | `enabled` or `disabled`                  | Stored for compatibility; use `--no-interactive` or environment settings today |
+| `editor`       | Editor command or executable             | Stored for compatibility; current commands do not launch an editor             |
+| `pager`        | Pager command or executable              | Stored for compatibility; current commands do not launch a pager               |
+
+`prb config set` validates `prompt` and `http_timeout`. Unknown keys are
+rejected.
+
+## Configuration file
+
+The CLI stores `config.yaml` in the platform user configuration directory:
+
+| Platform | Default path                                    |
+| -------- | ----------------------------------------------- |
+| macOS    | `~/Library/Application Support/prb/config.yaml` |
+| Linux    | `${XDG_CONFIG_HOME:-~/.config}/prb/config.yaml` |
+| Windows  | `%AppData%\prb\config.yaml`                     |
+
+The containing directory is created with user-only permissions where the
+platform supports POSIX modes, and the file is written with mode `0600`.
+
+In addition to preferences, the file contains:
+
+- `active_host`, which selects the default deployment.
+- One `hosts` entry per authenticated deployment.
+- The access token, refresh token, token endpoint, and default organization for
+  each host.
+
+:::caution
+Treat `config.yaml` as a secret. Do not commit it, attach it to support tickets,
+copy it into container images, or expose it in CI artifacts.
+:::
+
+## Host and organization selection
+
+`prb auth login` normalizes and stores the chosen host, then makes it active.
+Commands use hosts in this order:
+
+1. `PROBO_HOST`, when set.
+2. The stored `active_host`.
+3. The first stored host, sorted by name.
+
+The default organization is stored with each host during login. Commands that
+support `--org` use that flag as an operation-specific override.
+
+To change the active host, authenticate to it again:
+
+```bash
+prb auth login --hostname us.probo.com
+```
+
+Use `prb auth status` to see which host is active and which hosts have a
+default organization.
+
+## Environment overrides
+
+| Variable               | Effect                                                            |
+| ---------------------- | ----------------------------------------------------------------- |
+| `PROBO_HOST`           | Selects a deployment and overrides the stored active host         |
+| `PROBO_TOKEN`          | Replaces the selected host's access token for the current process |
+| `PROBO_NO_INTERACTIVE` | Disables prompts when set to `1` or `true`                        |
+| `CI`                   | Disables prompts when set to `1` or `true`                        |
+| `DEBIAN_FRONTEND`      | Disables prompts when set to `noninteractive`                     |
+| `NO_COLOR`             | Disables ANSI color whenever the variable is present              |
+| `TERM`                 | `dumb` disables prompts and ANSI color                            |
+
+When `PROBO_HOST` names a stored host, its saved default organization still
+applies. `PROBO_TOKEN` does not persist and does not update the configuration
+file.
+
+For a stateless CI job, set both host and token:
+
+```bash
+PROBO_HOST=https://eu.probo.com \
+PROBO_TOKEN="$PROBO_CI_TOKEN" \
+prb framework list --no-interactive --no-color --output json
+```
+
+When only `PROBO_TOKEN` is set, at least one host must already be configured.
+Set `PROBO_HOST` as well when the job should not depend on local state.
+
+## Diagnose configuration errors
+
+| Symptom                                | Likely cause or action                                                     |
+| -------------------------------------- | -------------------------------------------------------------------------- |
+| `not logged in`                        | Run `prb auth login`, or set both `PROBO_HOST` and `PROBO_TOKEN`           |
+| Token is set but no host is configured | Set `PROBO_HOST` or authenticate once to establish a host                  |
+| Requests reach the wrong deployment    | Check `PROBO_HOST` and the active host shown by `prb auth status`          |
+| Commands target the wrong organization | Pass `--org`, or log in again and choose the intended default organization |
+| Configuration cannot be parsed         | Restore valid YAML; preserve the file securely before replacing it         |
+| Requests time out too quickly          | Increase `http_timeout`, for example `prb config set http_timeout 2m`      |
+
+---
+
+title: CLI Configuration
+description: Configure the Probo CLI behavior and preferences
+
+---
+
+The `prb config` commands manage CLI configuration settings. These control how `prb` interacts with your terminal and external tools.
+
+## Configuration keys
+
+| Key            | Description                                                 |
+| -------------- | ----------------------------------------------------------- |
+| `editor`       | Text editor for editing operations                          |
+| `browser`      | Web browser for `prb browse` and other URL-opening commands |
+| `pager`        | Pager for long output (e.g., `less`)                        |
+| `prompt`       | Prompt style                                                |
+| `http_timeout` | HTTP request timeout                                        |
+
+## Set a value
+
+```bash
+prb config set editor vim
+```
+
+## Get a value
+
+```bash
+prb config get editor
+```
+
+## List all settings
+
+```bash
+prb config list
+```
+
+## Other utility commands
+
+### Open Probo in your browser
+
+```bash
+prb browse
+```
+
+| Flag                 | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `--no-browser`, `-n` | Print the URL instead of opening the browser |
+| `--org`              | Organization ID to open                      |
+
+### Shell completion
+
+Generate shell completion scripts for your shell:
+
+```bash
+prb completion bash   # Bash
+prb completion zsh    # Zsh
+prb completion fish   # Fish
+prb completion powershell  # PowerShell
+```
+
+### Version
+
+```bash
+prb version
+```
+
+### Raw GraphQL queries
+
+Execute raw GraphQL queries against the Probo API:
+
+```bash
+prb api 'query { organizations { nodes { id name } } }'
+```
+
+With variables:
+
+```bash
+prb api 'query($id: ID!) { organization(id: $id) { name } }' -f id=org_xxx
+```
+
+| Flag       | Default   | Description                                                                        |
+| ---------- | --------- | ---------------------------------------------------------------------------------- |
+| `-f`       | —         | GraphQL variables as `key=value` pairs (values parsed as JSON, fallback to string) |
+| `--schema` | `console` | Schema endpoint: `console` or `connect`                                            |
+
+Queries can also be piped from stdin:
+
+```bash
+echo 'query { organizations { nodes { id } } }' | prb api
+```

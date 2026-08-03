@@ -1,12 +1,12 @@
 ---
 title: <Provider>
 description: Connect <Provider> as an access source using a <token type, e.g. an organization Admin API key>
+draft: true
 ---
 
 {/\*
 TEMPLATE for an API-key access-review connector page.
-Copy this file to <provider>.mdx and fill in every <placeholder>. Then: 1. Add a <LinkCard> for the provider in directory.mdx. 2. Save the Step 1 screenshot as optimized WebP at
-public/docs/access-review/<provider>-create-api-key.webp.
+Copy this file to <provider>.mdx and fill in every <placeholder>. Then add a <LinkCard> for the provider in directory.mdx.
 
 Conventions (match the Anthropic and OpenAI pages): - Title-case headings, neutral voice, no em or en dashes. - Collected Fields: the Probo column ALWAYS lists every field in the fixed order below and uses
 the exact column names the Probo console shows in the campaign review table: Name, Email, Role,
@@ -16,8 +16,9 @@ The provider column holds the response field the driver reads in ListAccounts, o
 `<Badge text="Not supported" class="badge-unsupported" />` tag when the driver leaves that AccountRecord
 field empty for this provider (leave the Notes cell empty on those rows; import Badge alongside
 Steps). Ground every row and flag in the driver (`pkg/accessreview/drivers/<provider>.go`); do
-not guess support. - Exactly one screenshot, in Step 1 (the provider's key-creation dialog, cropped so no
-account email, billing, or real key value is shown). - Step 2: for key-only providers (Anthropic, OpenAI) the user just pastes the key. If the
+not guess support. - A Step 1 screenshot is optional. Include one only when it adds information
+the written steps do not convey, and crop it so no account email, billing data, or real key value
+is shown. - Step 2: for key-only providers (Anthropic, OpenAI) the user just pastes the key. If the
 connector defines ExtraSettings (an org slug, workspace/team ID, region, base URL, or
 instance URL), those render as extra fields in the SAME Connect dialog. Document each by
 its dialog label, say where the user finds the value, and add a matching Prerequisites
@@ -65,7 +66,7 @@ empty on a Not supported row.
 
 import { Steps, Badge } from "@astrojs/starlight/components";
 
-![<alt text describing the key-creation dialog>](/docs/access-review/<provider>-create-api-key.webp)
+{/_ Optional: ![<alt text describing the key-creation dialog>](/docs/access-review/<provider>-create-api-key.webp) _/}
 
 <Steps>
 

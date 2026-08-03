@@ -1,0 +1,45 @@
+---
+title: Probo Cloud Infrastructure Security
+description: High-level security, encryption, tenant isolation, and resilience controls for Probo Cloud
+---
+
+This page provides a high-level overview of security controls for **Probo Cloud**. Detailed architecture, operational procedures, and audit evidence are shared through the [Compliance Portal](https://compliance.probo.com) or during a security review.
+
+## Data and tenant isolation
+
+Probo Cloud is available in separate EU and US regions. Your organization’s data is stored in the region selected during onboarding.
+
+Customer organizations are logically isolated through tenant-scoped authorization and data access controls. Regional infrastructure is shared across Cloud customers and is not dedicated hardware for each organization.
+
+## Security controls
+
+- **Network boundaries** restrict direct access to application workloads and data services.
+- **Encryption** protects data in transit and at rest. Sensitive application fields receive additional application-level encryption.
+- **Secret management** keeps service credentials separate from application data and limits access according to operational roles.
+- **Access control** applies least-privilege permissions to infrastructure and production operations.
+- **Monitoring** supports detection and response for service and infrastructure events.
+
+## Backups and recovery
+
+Probo Cloud uses encrypted daily backups and point-in-time recovery (PITR) with a five-minute recovery point objective. Backup retention, restoration procedures, and availability commitments are defined in applicable agreements and security documentation.
+
+## Customer access
+
+- Organization owners and administrators control membership, roles, and integrations.
+- Stored integration credentials are not displayed back to users.
+- Security concerns can be reported to [security@probo.com](mailto:security@probo.com).
+
+## Shared responsibility
+
+These controls apply to **Probo Cloud**. In a [self-hosted deployment](/docs/deployment/self-hosting), your organization is responsible for infrastructure security, encryption, secrets, backups, monitoring, and production access.
+
+## Security documentation
+
+For subprocessors, certifications, control details, and audit artifacts, see the [Compliance Portal](https://compliance.probo.com). The [Privacy Policy](https://www.probo.com/privacy) describes data processing and retention.
+
+## Related documentation
+
+- [Probo Cloud](/docs/deployment/cloud)
+- [How Probo Protects Integration Credentials](/docs/product/access-review/integration-security)
+- [Privacy Policy](https://www.probo.com/privacy)
+- [Compliance Portal](https://compliance.probo.com)

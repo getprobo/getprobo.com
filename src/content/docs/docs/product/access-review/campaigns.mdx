@@ -1,0 +1,77 @@
+---
+title: Run an Access Review Campaign
+description: Create, start, review, and complete an access review campaign in the Probo console
+---
+
+An access review campaign takes a point-in-time snapshot of the accounts available from one or more access sources. Reviewers can then flag accounts, record a decision for every entry, and preserve the completed review.
+
+Before you begin, create at least one access source. Connect a provider from the [Connector Directory](/docs/product/access-review/directory), or [create a CSV source](/docs/product/access-review/csv-sources).
+
+## Create a Campaign
+
+1. In Probo, open your organization and go to **Access Reviews** > **Campaigns**.
+2. Click **New campaign**.
+3. Enter a **Name** and, optionally, a **Description**.
+4. Select the sources that belong in the review, then click **Create**.
+
+The campaign starts in **Draft**. Open it to add another source before starting. A campaign must contain at least one source.
+
+:::tip
+Give the campaign a name that identifies its period and purpose, such as `Q3 2026 privileged access review`. A clear name makes the preserved review easier to identify later.
+:::
+
+## Start the Campaign
+
+Review the source list, then click **Start campaign**. Probo queues a fetch for every source and changes the campaign status to **In progress**.
+
+Each source shows its fetch status and the number of accounts returned:
+
+- **Queued** or **Fetching** means collection is still running.
+- **Success** means the source snapshot is ready.
+- **Failed** shows the provider error. Resolve the source or credential problem before relying on the campaign.
+
+After collection finishes, the campaign moves to **Pending actions**. Starting the campaign fixes its scope: you cannot add or remove sources after this point.
+
+## Review Accounts
+
+Expand each source to review its accounts. Depending on what the provider exposes, Probo displays name, email, role, administrator status, account status, MFA status, and last login.
+
+For each account:
+
+1. Check the identity, assigned role, administrative access, status, MFA, and recent activity.
+2. Add any useful flags, such as **Orphan account**, **Dormant**, **Excessive privileges**, **SoD conflict**, or **Shared account**.
+3. Record one of these decisions:
+   - **Approve**: the current access is appropriate.
+   - **Revoke**: the access should be removed.
+   - **Modify**: the account should remain, but its access should change.
+   - **Escalate**: another reviewer or owner must decide.
+
+Approve records immediately. Revoke, Modify, and Escalate require a note explaining the decision. You can select several accounts to apply a decision or flags in bulk.
+
+:::note
+A decision records the review outcome; it does not change access in the connected provider. Complete any required remediation in that provider and retain the decision note as evidence.
+:::
+
+## Complete the Campaign
+
+The **Complete campaign** action becomes available after every entry has a decision.
+
+1. Confirm that no entries remain pending.
+2. Confirm that failed source fetches have been investigated.
+3. Click **Complete campaign**, then confirm.
+
+Completion finalizes the decisions and changes the campaign status to **Completed**. This action cannot be undone.
+
+## Campaign Statuses
+
+| Status          | Meaning                                                                    |
+| --------------- | -------------------------------------------------------------------------- |
+| Draft           | Sources can still be added and the campaign has not fetched accounts.      |
+| In progress     | Probo is fetching accounts from the selected sources.                      |
+| Pending actions | Collection finished and entries are ready for decisions.                   |
+| Completed       | Every entry has a finalized decision and the campaign is closed.           |
+| Cancelled       | The campaign was cancelled through the API or CLI and is no longer active. |
+
+The console can delete any campaign that is not **In progress**. Deletion permanently removes the campaign, so do not use it as a substitute for completing a review that must be retained as evidence.
+
+For automation, see the [CLI access-review commands](/docs/developers/cli/commands/access-review).

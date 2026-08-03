@@ -1,0 +1,5 @@
+flowchart LR
+    managed["JSON or YAML configuration"] --> probod["probod<br/>-cfg-file config"]
+    environment["PROBOD_* environment variables"] --> bootstrap["probod-bootstrap"]
+    bootstrap --> generated["Generated YAML configuration"]
+    generated --> probod

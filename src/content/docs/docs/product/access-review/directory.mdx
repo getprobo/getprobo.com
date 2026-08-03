@@ -3,9 +3,17 @@ title: Connector Directory
 description: Supported access-review connectors and their setup guides
 ---
 
-Probo connects to these providers as access sources. Each guide covers the token to create and how to connect it.
+Probo connects to these providers as access sources. Each guide covers the credential to create, the data Probo collects, and how to connect it.
+
+The connection buttons shown in **Access Reviews** > **Sources** > **Add Source** are the source of truth for the methods available in your deployment. Some providers use OAuth or client credentials even when the guides below focus on API-key connectors.
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+<LinkCard
+  title="How Probo Protects Integration Credentials"
+  description="Encryption, access control, and data handling when you connect API keys or OAuth"
+  href="/docs/product/access-review/integration-security"
+/>
 
 <CardGrid>
   <LinkCard
@@ -181,5 +189,5 @@ import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 </CardGrid>
 
 :::note
-More connectors are being added. A provider not listed yet can still be brought in via a CSV source.
+More connectors are being added. A provider not listed yet can still be brought in through a [CSV source](/docs/product/access-review/csv-sources).
 :::

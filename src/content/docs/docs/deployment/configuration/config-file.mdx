@@ -1,0 +1,165 @@
+---
+title: JSON and YAML Configuration
+description: Configure probod directly with a JSON or YAML file
+---
+
+import { Aside, CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+The `probod` binary reads its complete runtime configuration from a JSON or YAML
+file. Pass the file path explicitly with `-cfg-file`:
+
+```bash
+probod -cfg-file /etc/probod/config.yml
+```
+
+`probod` does not search for a default file when the binary is run directly.
+It validates the selected file before starting and exits if required settings
+are missing or malformed.
+
+<Aside type="note" title="Using the official container image?">
+  The image defaults to `/etc/probod/config.yml`. It can also generate this file
+  from `PROBOD_*` variables; see [Container
+  Environment](/docs/deployment/configuration/environment-variables).
+</Aside>
+
+## Configuration structure
+
+The root object contains two sections:
+
+- `unit` configures process-level metrics and OpenTelemetry export.
+- `probod` configures the application, database, authentication, storage,
+  notifications, integrations, and workers.
+
+The following YAML shows the shape of a typical production configuration. It is
+an example rather than a complete schema; available fields can change between
+releases.
+
+```yaml
+unit:
+  metrics:
+    addr: "0.0.0.0:8081"
+  tracing:
+    addr: "otel-collector:4318"
+    max-batch-size: 512
+    batch-timeout: 5
+    export-timeout: 30
+    max-queue-size: 2048
+
+probod:
+  base-url: "https://probo.example.com"
+  encryption-key: "<base64-encoded 32-byte key>"
+  chrome-dp-addr: "chrome:9222"
+
+  api:
+    addr: "0.0.0.0:8080"
+    cors:
+      allowed-origins:
+        - "https://probo.example.com"
+
+  pg:
+    addr: "postgres.example.com:5432"
+    username: "probod"
+    password: "<database password>"
+    database: "probod"
+    pool-size: 100
+    min-pool-size: 10
+
+  auth:
+    disable-signup: false
+    cookie:
+      domain: "probo.example.com"
+      secret: "<base64-encoded 32-byte key>"
+      duration: 24
+      secure: true
+      same-site: "lax"
+    password:
+      pepper: "<base64-encoded 32-byte key>"
+      iterations: 1000000
+    oauth2-server:
+      signing-keys:
+        - private-key: |
+            -----BEGIN PRIVATE KEY-----
+            ...
+            -----END PRIVATE KEY-----
+          kid: "default"
+          active: true
+
+  aws:
+    region: "eu-west-1"
+    bucket: "probo-production"
+
+  notifications:
+    mailer:
+      sender-name: "Probo"
+      sender-email: "no-reply@example.com"
+      smtp:
+        addr: "smtp.example.com:587"
+        tls-required: true
+```
+
+Omit tracing when you do not run an OpenTelemetry collector. For S3 on AWS,
+omit static access keys when the workload has an IAM role. For another
+S3-compatible service, set `endpoint` and, when required,
+`use-path-style: true`.
+
+JSON uses the same hierarchy and field names as YAML.
+
+## Protect the file
+
+A configuration file contains secrets in plaintext. Keep it outside source
+control, restrict read access to the account running `probod`, and protect
+stored copies with the same controls as other production credentials.
+
+```bash
+chmod 600 /etc/probod/config.yml
+```
+
+Values in a directly managed file are literal. Secret references such as
+`awssm://secret-id` and `awsps:///parameter-name` are only interpreted by
+`probod-bootstrap`; `probod` does not resolve them.
+
+The encryption key, session cookie secret, password pepper, and token-signing
+key must remain available for the lifetime of the deployment. See
+[Set persistent secrets before first
+boot](/docs/deployment/configuration/overview#set-persistent-secrets-before-first-boot)
+before creating a production file.
+
+## Apply changes
+
+Configuration is loaded once during startup. To apply an update:
+
+1. Prepare and protect the replacement file.
+2. Restart every `probod` instance with the same configuration.
+3. Confirm that each instance starts successfully before removing the previous
+   file.
+
+Keep the previous protected configuration available for rollback. A malformed
+or incomplete replacement prevents `probod` from starting.
+
+## Troubleshoot startup
+
+When `probod` exits during startup:
+
+1. Read the first error in the logs; later failures may be consequences of it.
+2. Confirm that `-cfg-file` points to a readable file.
+3. Check the JSON or YAML syntax, indentation, and scalar types.
+4. Check that required values are present and multiline PEM keys or
+   certificates are complete.
+5. If parsing succeeds, verify connectivity to the configured database, object
+   storage, SMTP server, Chrome endpoint, and telemetry collector.
+
+## Release compatibility
+
+The configuration schema evolves with Probo. Review configuration changes
+before upgrading and use the schema from the same version as the running
+binary. The authoritative schema for each release is defined by its
+[`pkg/probodconfig`](https://github.com/getprobo/probo/tree/main/pkg/probodconfig)
+types.
+
+<CardGrid>
+  <LinkCard
+    title="Configuration file reference"
+    description="Browse every supported JSON and YAML field, type, and serialization rule"
+    href="/docs/deployment/configuration/config-reference"
+  />
+</CardGrid>

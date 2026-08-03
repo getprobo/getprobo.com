@@ -42,7 +42,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 2. Click **Add new API token** and enter a name (e.g. `Probo Access Review`).
 3. Set **Expiration**. It defaults to 30 days, and 365 days is the maximum. The source stops syncing once the token expires, so pick the longest period your policy allows and plan to rotate the token before that date.
 4. Leave **Allow this token to create other tokens** unchecked. Probo only reads accounts.
-5. Keep **Allow access from all IP addresses** checked, or restrict it to the egress addresses your Probo deployment uses.
+5. For Probo Cloud, keep **Allow access from all IP addresses** checked. For a self-hosted deployment with fixed egress addresses, you can restrict the token to those addresses.
 6. Click **Create API token**, then copy the token (`ucat_…`) and store it securely. It's shown only once.
 
 </Steps>
@@ -60,6 +60,6 @@ Probo names the source after the account the token belongs to and pulls the cont
 
 ## Troubleshooting
 
-- **Token rejected.** Confirm the token starts with `ucat_` and has not expired. If you restricted it by IP, the restriction must cover your Probo deployment. Your UpCloud username and password won't work here.
+- **Token rejected.** Confirm the token starts with `ucat_` and has not expired. Probo Cloud requires **Allow access from all IP addresses**; a self-hosted deployment can use its fixed egress addresses. Your UpCloud username and password won't work here.
 - **The contract's accounts don't come through.** Account listing is only available to the main account, so a token created under a subaccount is refused and the source cannot enumerate the contract. Create the token while signed in as the main account.
 - **An account is missing its name and email.** The token couldn't read that account's details. The account still appears in the review under its username.

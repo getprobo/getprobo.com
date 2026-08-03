@@ -1,0 +1,135 @@
+---
+title: CLI authentication
+description: Sign in to Probo with prb and manage host credentials
+---
+
+import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+
+`prb auth login` uses OAuth 2.0 device authorization. The CLI discovers the
+deployment's OAuth endpoints, gives you a browser URL and one-time code, then
+stores the access token, refresh token, token endpoint, and optional default
+organization in its local configuration.
+
+You do not create or paste an API key during interactive login. When the access
+token expires, the CLI uses the stored refresh token to obtain a replacement
+and updates the local configuration.
+
+## Login
+
+<Steps>
+
+1. **Start login**
+
+   ```bash
+   prb auth login
+   ```
+
+   In an interactive terminal, choose Probo EU, Probo US, or a custom
+   self-hosted hostname.
+
+2. **Approve access in the browser**
+
+   The CLI prints a verification URL and one-time code. It also opens the
+   complete verification URL when the terminal is interactive and a browser is
+   available.
+
+3. **Choose a default organization**
+
+   The optional organization becomes the default for organization-scoped
+   commands. You can override it with `--org` on commands that expose that
+   flag.
+
+</Steps>
+
+### Select the deployment explicitly
+
+<Tabs>
+  <TabItem label="EU">
+
+```bash
+prb auth login --hostname eu.probo.com
+```
+
+  </TabItem>
+  <TabItem label="US">
+
+```bash
+prb auth login --hostname us.probo.com
+```
+
+  </TabItem>
+  <TabItem label="Self-hosted">
+
+```bash
+prb auth login --hostname probo.example.com --org YOUR_ORG_ID
+```
+
+  </TabItem>
+</Tabs>
+
+When `--hostname` is omitted in a non-interactive environment, the CLI uses
+`eu.probo.com`. Login still requires a person to approve the displayed device
+code in a browser.
+
+| Flag         | Description                                          |
+| ------------ | ---------------------------------------------------- |
+| `--hostname` | Probo hostname or origin to authenticate against     |
+| `--org`      | Default organization ID to store for this deployment |
+
+## Multiple deployments
+
+Each login is stored under its normalized host. The most recently authenticated
+host becomes active. You can keep credentials for Probo EU, Probo US, and
+self-hosted deployments in the same configuration.
+
+`prb auth status` lists the configured hosts, marks the active host, and shows
+whether a token and default organization are stored:
+
+```bash
+prb auth status
+```
+
+The status command does not contact the server or validate token expiration.
+Run a read command such as `prb org list` to verify connectivity and
+authorization.
+
+## Logout
+
+```bash
+# Active host, or choose interactively when several hosts exist
+prb auth logout
+
+# A specific host
+prb auth logout --hostname eu.probo.com
+```
+
+Logout attempts to revoke both refresh and access tokens when the deployment
+publishes a revocation endpoint, then removes the host from local
+configuration. Local removal still completes if server-side revocation cannot
+be performed.
+
+## Environment credentials
+
+For ephemeral automation, override stored credentials with environment
+variables:
+
+```bash
+export PROBO_HOST=https://eu.probo.com
+export PROBO_TOKEN="$PROBO_CI_TOKEN"
+prb org list --no-interactive --no-color
+```
+
+`PROBO_HOST` selects the deployment. `PROBO_TOKEN` replaces the access token
+for that invocation. When only `PROBO_TOKEN` is set, the CLI uses the active
+stored host, or the first configured host when no active host is available. It
+fails when no host has ever been configured.
+
+Create automation tokens from your account menu under **OAuth tokens**. Scope
+them to the required resource families, choose an appropriate expiration, and
+store them in the CI platform's secret manager.
+
+:::caution
+The local configuration contains bearer and refresh tokens. Keep its
+permissions restricted, do not commit or copy it into build artifacts, and
+revoke credentials immediately if the file or an environment token is exposed.
+:::

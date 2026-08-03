@@ -1,0 +1,63 @@
+---
+title: Configuration
+description: How probod loads configuration and how to manage persistent secrets
+---
+
+import { Aside, CardGrid, LinkCard } from "@astrojs/starlight/components";
+import MermaidDiagram from "../../../../../components/docs/MermaidDiagram.astro";
+import runtimeConfiguration from "./runtime-configuration.mermaid?raw";
+
+`probod` loads a JSON or YAML configuration file passed with `-cfg-file`.
+Configuration is read at startup and is not hot-reloaded. After changing the
+file, restart every application instance for the new settings to take effect.
+
+## Configuration sources
+
+You can write and manage the configuration file directly. For container-based
+deployments, the official image can instead use `probod-bootstrap` to generate
+a YAML file from `PROBOD_*` environment variables before starting `probod`.
+
+<MermaidDiagram chart={runtimeConfiguration} />
+
+`probod-bootstrap` is a one-time configuration generator. It exits after
+writing the file; it does not run beside `probod`, watch the environment, or
+reload configuration.
+
+<Aside type="note" title="Environment variables belong to probod-bootstrap">
+  The `probod` binary does not read `PROBOD_*` environment variables directly.
+  Pass it a JSON or YAML file with `-cfg-file`.
+</Aside>
+
+## Set persistent secrets before first boot
+
+Some configuration keys protect persisted data or authentication state.
+Generate them before the first production start, use the same values on every
+application instance, and keep recoverable backups of them.
+
+| Setting                      | Purpose                             | Effect of replacing or losing it                   |
+| ---------------------------- | ----------------------------------- | -------------------------------------------------- |
+| Encryption key               | Encrypts sensitive application data | Existing encrypted data becomes unreadable         |
+| Session cookie secret        | Signs authentication cookies        | Existing user sessions become invalid              |
+| Password pepper              | Protects stored password hashes     | Existing passwords can no longer be verified       |
+| OAuth 2.0 server signing key | Signs tokens issued by Probo        | Previously issued tokens can no longer be verified |
+
+<Aside type="caution" title="Do not regenerate secrets on restart">
+  Treat these values as part of the deployment's persistent state. Rotation
+  requires an application-supported migration where available; replacing a value
+  in configuration is not a safe rotation procedure.
+</Aside>
+
+## References
+
+<CardGrid>
+  <LinkCard
+    title="JSON and YAML configuration"
+    description="Create, validate, and operate a probod configuration file"
+    href="/docs/deployment/configuration/config-file"
+  />
+  <LinkCard
+    title="Container environment"
+    description="Configure the official image with PROBOD_* variables and external secrets"
+    href="/docs/deployment/configuration/environment-variables"
+  />
+</CardGrid>

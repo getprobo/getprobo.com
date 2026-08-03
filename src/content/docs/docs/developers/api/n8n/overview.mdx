@@ -1,0 +1,130 @@
+---
+title: Probo nodes for n8n
+description: Build scheduled and event-driven Probo workflows in n8n
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+The verified
+[`@probo/n8n-nodes-probo`](https://www.npmjs.com/package/@probo/n8n-nodes-probo)
+community package lets n8n workflows read and change Probo records or start
+from signed Probo events. It is available directly from the node picker on n8n
+Cloud and self-hosted n8n.
+
+It provides two nodes:
+
+| Node              | Use it to                                                                 |
+| ----------------- | ------------------------------------------------------------------------- |
+| **Probo**         | Run a resource operation or a custom GraphQL operation for each input item |
+| **Probo Trigger** | Start a workflow when a supported Probo event occurs                       |
+
+Use **Probo** after a Schedule Trigger to synchronize records, build reports,
+or enrich another system. Use **Probo Trigger** when the workflow should react
+to a document, user, obligation, rights-request, or third-party event.
+
+:::caution
+The action node includes operations that update, publish, archive, and delete
+records. Use a dedicated OAuth token with the smallest practical scope set,
+limit the Probo user's permissions, and test write workflows against
+non-production data before activation.
+:::
+
+## Before you start
+
+You need:
+
+- An n8n Cloud or self-hosted instance with verified community nodes enabled.
+- An n8n Owner or Admin who can install the Probo nodes. After installation,
+  other instance members can use them.
+- A scoped Probo OAuth token whose user can access the organizations and
+  operations the workflow needs.
+- A public HTTPS webhook URL when using Probo Trigger. Your n8n deployment must
+  advertise the URL that Probo can reach.
+
+<CardGrid>
+  <LinkCard
+    title="Install the package"
+    description="Add or update the Probo community package in self-hosted n8n"
+    href="/docs/developers/api/n8n/installation"
+  />
+  <LinkCard
+    title="Configure credentials"
+    description="Connect the correct Probo deployment with a scoped OAuth token"
+    href="/docs/developers/api/n8n/authentication"
+  />
+</CardGrid>
+
+## Choose an automation pattern
+
+### Scheduled or input-driven work
+
+Connect an upstream node to **Probo**. The action runs once for every incoming
+item, so expressions can map values from `$json` into operation fields.
+
+```text
+Schedule Trigger → Probo: Task / Get Many → Filter → Slack
+```
+
+List operations commonly expose **Return All** and **Limit**. When **Return
+All** is enabled, the node follows GraphQL connection pages automatically.
+Use a dedicated operation when one exists because it exposes typed fields in
+the n8n editor.
+
+### Event-driven work
+
+Start the workflow with **Probo Trigger**, choose an organization and one or
+more event types, then activate the workflow:
+
+```text
+Probo Trigger: Document Version Published → Edit Fields → Slack
+```
+
+Activation creates a webhook subscription in Probo. Deactivation removes it.
+Signature verification and a five-minute timestamp tolerance are enabled by
+default.
+
+## Data and errors
+
+Output shape depends on the operation. List operations return one item per
+resource, while some create, update, and specialized operations preserve part
+or all of the GraphQL response envelope. Inspect the node's execution data
+before mapping a downstream field. The custom GraphQL operation always returns
+the complete response envelope.
+
+By default, an operation error stops the node. Enable n8n's **Continue On
+Fail** setting when later items should still run; failed items then contain an
+`error` field. Handle partial success deliberately when a workflow changes
+multiple Probo records.
+
+## Explore the integration
+
+<CardGrid>
+  <LinkCard
+    title="Resource reference"
+    description="Browse all generated action-node resources and operations"
+    href="/docs/developers/api/n8n/resources"
+  />
+  <LinkCard
+    title="Execute resource"
+    description="Run a named query or mutation when no dedicated action exists"
+    href="/docs/developers/api/n8n/resources/execute"
+  />
+  <LinkCard
+    title="Probo Trigger"
+    description="Configure event subscriptions, payloads, and signature checks"
+    href="/docs/developers/api/n8n/trigger"
+  />
+</CardGrid>
+
+## Operational guidance
+
+- Create one OAuth token per n8n environment so it can be rotated and revoked
+  independently.
+- Pin a package version for controlled production deployments and test upgrades
+  before rolling them out.
+- Keep destructive operations behind explicit conditions or approval steps.
+- Use stable Probo IDs in workflow data; treat IDs and pagination cursors as
+  opaque strings.
+- Make downstream effects idempotent. Probo does not retry failed webhook
+  deliveries, but n8n executions can still be retried manually or by workflow
+  error handling.

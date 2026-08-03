@@ -1,0 +1,578 @@
+---
+title: Glossary
+description: Definitions for common Probo, security, privacy, and compliance terms
+---
+
+import GlossaryTable from "../../../../../components/docs/GlossaryTable.astro";
+
+Use this glossary as a quick reference while working in Probo. For an explanation of how the main records connect, read [Core Concepts](/docs/product/getting-started/core-concepts).
+
+<GlossaryTable>
+  <tr data-glossary-row id="access-entry">
+    <td>Access entry</td>
+    <td>
+      A snapshot of an identity and its permissions in an access review
+      campaign. An entry can include roles, administrator status, MFA status,
+      account state, and the reviewer’s decision.
+    </td>
+  </tr>
+  <tr data-glossary-row id="access-review">
+    <td>Access review</td>
+    <td>
+      A periodic review of who can access a system and whether that access
+      remains appropriate. In Probo, reviews are organized as campaigns using
+      one or more access sources. See{" "}
+      <a href="/docs/product/access-review/overview">Access Reviews overview</a>
+      .
+    </td>
+  </tr>
+  <tr data-glossary-row id="access-review-campaign">
+    <td>Access review campaign</td>
+    <td>
+      A point-in-time access review that combines one or more sources, their
+      snapshotted entries, reviewer decisions, flags, and completion statistics.
+    </td>
+  </tr>
+  <tr data-glossary-row id="access-source">
+    <td>Access source</td>
+    <td>
+      A connected provider or CSV import from which an access review campaign
+      collects identity and permission data.
+    </td>
+  </tr>
+  <tr data-glossary-row id="agent-run">
+    <td>Agent run</td>
+    <td>
+      A record of in-product agent work performed over authorized GRC data. An
+      agent run is distinct from a Probo Agent posture collection on a device.
+    </td>
+  </tr>
+  <tr data-glossary-row id="applicability-statement">
+    <td>Applicability statement</td>
+    <td>
+      The decision and rationale describing whether a particular control applies
+      within a Statement of Applicability.
+    </td>
+  </tr>
+  <tr data-glossary-row id="approval-quorum">
+    <td>Approval quorum</td>
+    <td>
+      The set or minimum number of approvers whose decisions are required for a
+      specific document version to proceed.
+    </td>
+  </tr>
+  <tr data-glossary-row id="asset">
+    <td>Asset</td>
+    <td>
+      A system, application, database, device, service, or other resource an
+      organization needs to protect. Assets can be associated with risks and
+      controls.
+    </td>
+  </tr>
+  <tr data-glossary-row id="audit">
+    <td>Audit</td>
+    <td>
+      A formal evaluation of whether an organization meets defined requirements.
+      An audit includes its scope, supporting evidence, findings, and
+      remediation work.
+    </td>
+  </tr>
+  <tr data-glossary-row id="audit-log">
+    <td>Audit log</td>
+    <td>
+      A chronological record of actions and changes in an organization, used to
+      investigate who performed an operation and when it occurred.
+    </td>
+  </tr>
+  <tr data-glossary-row id="auditor">
+    <td>Auditor</td>
+    <td>
+      An internal or external reviewer who evaluates a compliance program and
+      the evidence supporting it.
+    </td>
+  </tr>
+  <tr data-glossary-row id="authentication">
+    <td>Authentication</td>
+    <td>
+      The process of verifying the identity of a user, device, or service.
+      Passwords, SSO, API tokens, and OAuth are authentication mechanisms.
+    </td>
+  </tr>
+  <tr data-glossary-row id="authorization">
+    <td>Authorization</td>
+    <td>
+      The rules that determine which resources and actions an authenticated
+      identity is permitted to access.
+    </td>
+  </tr>
+  <tr data-glossary-row id="baa">
+    <td>BAA</td>
+    <td>
+      <strong>Business Associate Agreement.</strong> A contract required by
+      HIPAA when a business associate handles protected health information on
+      behalf of a covered entity.
+    </td>
+  </tr>
+  <tr data-glossary-row id="campaign">
+    <td>Campaign</td>
+    <td>
+      See <a href="#access-review-campaign">Access review campaign</a>.
+    </td>
+  </tr>
+  <tr data-glossary-row id="compliance-framework">
+    <td>Compliance framework</td>
+    <td>
+      An organized set of requirements or controls from a standard, regulation,
+      or assurance program, such as SOC 2, ISO 27001, or GDPR.
+    </td>
+  </tr>
+  <tr data-glossary-row id="compliance-portal">
+    <td>Compliance Portal</td>
+    <td>
+      A public-facing site where an organization shares selected certifications,
+      commitments, references, files, and links without exposing its private
+      Probo workspace.
+    </td>
+  </tr>
+  <tr data-glossary-row id="commitment">
+    <td>Commitment</td>
+    <td>
+      A statement an organization chooses to publish through its Compliance
+      Portal, organized within a commitment group.
+    </td>
+  </tr>
+  <tr data-glossary-row id="commitment-group">
+    <td>Commitment group</td>
+    <td>
+      A collection used to organize related commitments published through the
+      Compliance Portal.
+    </td>
+  </tr>
+  <tr data-glossary-row id="consent-record">
+    <td>Consent record</td>
+    <td>
+      A record of a visitor’s cookie-consent choices, including the categories
+      accepted or rejected and the banner version under which the choice was
+      made.
+    </td>
+  </tr>
+  <tr data-glossary-row id="control">
+    <td>Control</td>
+    <td>
+      A requirement or expected outcome within a framework. A control states
+      what the organization must achieve, while a measure describes how it does
+      so.
+    </td>
+  </tr>
+  <tr data-glossary-row id="control-owner">
+    <td>Control owner</td>
+    <td>
+      The person accountable for implementing, operating, or reviewing a control
+      and its supporting measures.
+    </td>
+  </tr>
+  <tr data-glossary-row id="cookie-banner">
+    <td>Cookie banner</td>
+    <td>
+      A configurable notice that presents tracking categories and records a
+      visitor’s consent choices according to the applicable consent mode.
+    </td>
+  </tr>
+  <tr data-glossary-row id="cookie-category">
+    <td>Cookie category</td>
+    <td>
+      A group of trackers with a shared purpose and consent behavior, such as
+      necessary, analytics, or marketing.
+    </td>
+  </tr>
+  <tr data-glossary-row id="data-classification">
+    <td>Data classification</td>
+    <td>
+      A category assigned to data based on its sensitivity and handling
+      requirements, such as public, internal, confidential, or restricted.
+    </td>
+  </tr>
+  <tr data-glossary-row id="data-record">
+    <td>Data record</td>
+    <td>
+      A description of information handled by an organization, including its
+      classification, sensitivity, and business impact.
+    </td>
+  </tr>
+  <tr data-glossary-row id="data-subject">
+    <td>Data subject</td>
+    <td>
+      An identified or identifiable person whose personal data is processed.
+    </td>
+  </tr>
+  <tr data-glossary-row id="device">
+    <td>Device</td>
+    <td>
+      An endpoint enrolled with Probo Agent. Its record can include ownership,
+      platform details, enrollment state, and reported posture.
+    </td>
+  </tr>
+  <tr data-glossary-row id="document">
+    <td>Document</td>
+    <td>
+      A controlled policy, procedure, report, or other compliance record that
+      supports versioning, approvals, signatures, publication, archival, and
+      export.
+    </td>
+  </tr>
+  <tr data-glossary-row id="document-version">
+    <td>Document version</td>
+    <td>
+      A preserved revision of a document. Content, approval decisions, and
+      signature requests are associated with a specific version.
+    </td>
+  </tr>
+  <tr data-glossary-row id="data-processing-agreement">
+    <td>DPA</td>
+    <td>
+      <strong>Data Processing Agreement.</strong> A contract that defines how a
+      processor handles personal data on behalf of a controller.
+    </td>
+  </tr>
+  <tr data-glossary-row id="dpia">
+    <td>DPIA</td>
+    <td>
+      <strong>Data Protection Impact Assessment.</strong> An assessment of
+      privacy risks associated with processing that could create a high risk for
+      individuals.
+    </td>
+  </tr>
+  <tr data-glossary-row id="electronic-signature">
+    <td>Electronic signature</td>
+    <td>
+      An electronically recorded signature associated with a specific document
+      version and signer.
+    </td>
+  </tr>
+  <tr data-glossary-row id="evidence">
+    <td>Evidence</td>
+    <td>
+      An artifact that demonstrates a control or measure is operating. Examples
+      include reports, configuration exports, screenshots, approvals, logs, and
+      signed documents.
+    </td>
+  </tr>
+  <tr data-glossary-row id="finding">
+    <td>Finding</td>
+    <td>
+      A gap, exception, observation, or nonconformity identified during an
+      assessment or audit. Findings are tracked through investigation and
+      remediation.
+    </td>
+  </tr>
+  <tr data-glossary-row id="framework">
+    <td>Framework</td>
+    <td>
+      See <a href="#compliance-framework">Compliance framework</a>.
+    </td>
+  </tr>
+  <tr data-glossary-row id="identity-provider">
+    <td>Identity provider (IdP)</td>
+    <td>
+      A service that authenticates users and supplies identity information to
+      applications through protocols such as SAML or OpenID Connect.
+    </td>
+  </tr>
+  <tr data-glossary-row id="impact">
+    <td>Impact</td>
+    <td>
+      The severity of the consequences if a risk event occurs. Impact is
+      commonly evaluated together with likelihood.
+    </td>
+  </tr>
+  <tr data-glossary-row id="inherent-risk">
+    <td>Inherent risk</td>
+    <td>
+      The level of risk before existing safeguards, measures, or mitigations are
+      taken into account.
+    </td>
+  </tr>
+  <tr data-glossary-row id="integration">
+    <td>Integration</td>
+    <td>
+      A connection between Probo and another application or service.
+      Integrations can support access reviews, automation, notifications, or
+      data exchange.
+    </td>
+  </tr>
+  <tr data-glossary-row id="legal-basis">
+    <td>Legal basis</td>
+    <td>
+      The lawful justification relied upon for processing personal data, such as
+      consent, contract, legal obligation, or legitimate interests.
+    </td>
+  </tr>
+  <tr data-glossary-row id="likelihood">
+    <td>Likelihood</td>
+    <td>
+      An estimate of how probable it is that a risk event or scenario will
+      occur.
+    </td>
+  </tr>
+  <tr data-glossary-row id="membership">
+    <td>Membership</td>
+    <td>
+      The relationship that grants a user a role and access within a Probo
+      organization.
+    </td>
+  </tr>
+  <tr data-glossary-row id="measure">
+    <td>Measure</td>
+    <td>
+      A safeguard, process, or recurring activity implemented to satisfy one or
+      more controls. A measure can support controls across multiple frameworks.
+    </td>
+  </tr>
+  <tr data-glossary-row id="mfa">
+    <td>MFA</td>
+    <td>
+      <strong>Multi-factor authentication.</strong> Authentication that requires
+      evidence from more than one factor, reducing reliance on a password alone.
+    </td>
+  </tr>
+  <tr data-glossary-row id="oauth">
+    <td>OAuth</td>
+    <td>
+      An authorization framework that lets an application obtain limited access
+      to another service without receiving the user’s password.
+    </td>
+  </tr>
+  <tr data-glossary-row id="obligation">
+    <td>Obligation</td>
+    <td>
+      A legal, regulatory, contractual, or other requirement the organization
+      must fulfill. Obligations can be tracked separately from framework
+      controls.
+    </td>
+  </tr>
+  <tr data-glossary-row id="organization">
+    <td>Organization</td>
+    <td>
+      The top-level workspace in Probo. Members, frameworks, controls, risks,
+      third parties, evidence, documents, and audits belong to an organization.
+    </td>
+  </tr>
+  <tr data-glossary-row id="personal-data">
+    <td>Personal data</td>
+    <td>
+      Information relating to an identified or identifiable person. Privacy laws
+      may use related terms with jurisdiction-specific definitions.
+    </td>
+  </tr>
+  <tr data-glossary-row id="policy">
+    <td>Policy</td>
+    <td>
+      A documented statement of the organization's rules, responsibilities, and
+      expected practices. Policies are reviewed, approved, and updated over
+      time.
+    </td>
+  </tr>
+  <tr data-glossary-row id="probo-agent">
+    <td>Probo Agent</td>
+    <td>
+      Probo’s endpoint agent for enrolling devices and reporting posture checks
+      such as encryption, screen-lock, firewall, and operating-system status.
+    </td>
+  </tr>
+  <tr data-glossary-row id="processing-activity">
+    <td>Processing activity</td>
+    <td>
+      A record of how personal data is collected, used, shared, stored, and
+      deleted. It includes purposes, legal bases, data subjects, recipients, and
+      retention details.
+    </td>
+  </tr>
+  <tr data-glossary-row id="publication">
+    <td>Publication</td>
+    <td>
+      The action of creating a reviewed or externally usable representation of a
+      record or list. Publication does not necessarily make internal records
+      public on the Compliance Portal.
+    </td>
+  </tr>
+  <tr data-glossary-row id="remediation">
+    <td>Remediation</td>
+    <td>
+      Work performed to correct a finding, reduce a risk, or resolve another
+      identified gap.
+    </td>
+  </tr>
+  <tr data-glossary-row id="retention-period">
+    <td>Retention period</td>
+    <td>
+      The length of time information is kept before it is deleted, anonymized,
+      or otherwise disposed of.
+    </td>
+  </tr>
+  <tr data-glossary-row id="residual-risk">
+    <td>Residual risk</td>
+    <td>
+      The risk remaining after existing measures and mitigations are taken into
+      account.
+    </td>
+  </tr>
+  <tr data-glossary-row id="rights-request">
+    <td>Rights request</td>
+    <td>
+      A request from a data subject to exercise a privacy right, such as access,
+      correction, deletion, restriction, or portability.
+    </td>
+  </tr>
+  <tr data-glossary-row id="risk">
+    <td>Risk</td>
+    <td>
+      The possibility that a threat or event will affect the organization's
+      objectives, security, privacy, or compliance posture. Risks are commonly
+      assessed by likelihood and impact.
+    </td>
+  </tr>
+  <tr data-glossary-row id="risk-assessment">
+    <td>Risk assessment</td>
+    <td>
+      A structured analysis of scope, systems, boundaries, processes, threats,
+      and scenarios used to identify and evaluate risks.
+    </td>
+  </tr>
+  <tr data-glossary-row id="risk-owner">
+    <td>Risk owner</td>
+    <td>
+      The person accountable for monitoring a risk and ensuring its treatment is
+      appropriate.
+    </td>
+  </tr>
+  <tr data-glossary-row id="risk-register">
+    <td>Risk register</td>
+    <td>
+      The maintained set of risks an organization tracks, reviews, owns, and
+      treats over time.
+    </td>
+  </tr>
+  <tr data-glossary-row id="risk-scenario">
+    <td>Risk scenario</td>
+    <td>
+      A description of how one or more threats could act within an assessment
+      scope and lead to a risk.
+    </td>
+  </tr>
+  <tr data-glossary-row id="saml">
+    <td>SAML</td>
+    <td>
+      <strong>Security Assertion Markup Language.</strong> A standard for
+      exchanging authentication and authorization information between an
+      identity provider and a service provider.
+    </td>
+  </tr>
+  <tr data-glossary-row id="scim">
+    <td>SCIM</td>
+    <td>
+      <strong>System for Cross-domain Identity Management.</strong> A standard
+      used to provision, update, and remove user accounts between an identity
+      provider and an application.
+    </td>
+  </tr>
+  <tr data-glossary-row id="scope">
+    <td>Scope</td>
+    <td>
+      The systems, processes, organizational units, locations, or other
+      boundaries included in a compliance activity, audit, or risk assessment.
+    </td>
+  </tr>
+  <tr data-glossary-row id="service-provider">
+    <td>Service provider</td>
+    <td>
+      In SSO, the application that relies on an identity provider to
+      authenticate users. Probo acts as the SAML service provider.
+    </td>
+  </tr>
+  <tr data-glossary-row id="soa">
+    <td>SoA</td>
+    <td>
+      <strong>Statement of Applicability.</strong> An ISO 27001 document that
+      records whether each Annex A control applies, why it is included or
+      excluded, and its implementation status.
+    </td>
+  </tr>
+  <tr data-glossary-row id="sso">
+    <td>SSO</td>
+    <td>
+      <strong>Single Sign-On.</strong> An authentication approach that lets
+      users access Probo through a central identity provider. Probo supports
+      SAML 2.0 SSO.
+    </td>
+  </tr>
+  <tr data-glossary-row id="subprocessor">
+    <td>Subprocessor</td>
+    <td>
+      A third party engaged by a processor to process personal data on behalf of
+      a controller.
+    </td>
+  </tr>
+  <tr data-glossary-row id="task">
+    <td>Task</td>
+    <td>
+      An assigned unit of work with an owner and status. Tasks help teams
+      implement measures, collect evidence, complete assessments, and remediate
+      findings.
+    </td>
+  </tr>
+  <tr data-glossary-row id="threat">
+    <td>Threat</td>
+    <td>
+      A potential cause of an unwanted event. In a risk assessment, threats are
+      connected to scenarios that explain how risks may arise.
+    </td>
+  </tr>
+  <tr data-glossary-row id="third-party">
+    <td>Third party</td>
+    <td>
+      A supplier, vendor, service provider, or other external organization that
+      supports the business or processes its data.
+    </td>
+  </tr>
+  <tr data-glossary-row id="tia">
+    <td>TIA</td>
+    <td>
+      <strong>Transfer Impact Assessment.</strong> An assessment of privacy and
+      legal risks associated with transferring personal data between
+      jurisdictions.
+    </td>
+  </tr>
+  <tr data-glossary-row id="tracker">
+    <td>Tracker</td>
+    <td>
+      A script, iframe, image, stylesheet, or other browser resource whose
+      loading can be classified and controlled by the cookie banner.
+    </td>
+  </tr>
+  <tr data-glossary-row id="vendor">
+    <td>Vendor</td>
+    <td>
+      See <a href="#third-party">Third party</a>.
+    </td>
+  </tr>
+  <tr data-glossary-row id="vendor-vetting">
+    <td>Vendor vetting</td>
+    <td>
+      The collection and review of information about a third party to support a
+      risk or due-diligence decision.
+    </td>
+  </tr>
+  <tr data-glossary-row id="webhook">
+    <td>Webhook</td>
+    <td>
+      An HTTP notification sent when a supported event occurs in Probo. Webhooks
+      let another system react without repeatedly polling for changes.
+    </td>
+  </tr>
+</GlossaryTable>
+
+## Next steps
+
+- Read [Core Concepts](/docs/product/getting-started/core-concepts) to understand the relationships between these terms.
+- [Set up your first organization and framework](/docs/product/getting-started/first-organization-and-framework).
+- Explore the [MCP tools reference](/docs/developers/api/mcp/tools/) for the records available through the MCP server.

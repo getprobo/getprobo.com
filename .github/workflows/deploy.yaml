@@ -14,11 +14,21 @@ jobs:
 
     steps:
       - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
       - uses: "actions/setup-node@v4"
         with:
           node-version: "24"
           cache: "npm"
+      - uses: "actions/checkout@v4"
+        with:
+          repository: "getprobo/probo"
+          path: "probo"
       - run: npm ci
+      - run: npm run check:docs
+      - run: npm run docs:check-reference
+        env:
+          PROBO_REPO_PATH: ${{ github.workspace }}/probo
       - run: npm run build
         env:
           PUBLIC_POSTHOG_API_KEY: ${{ secrets.PUBLIC_POSTHOG_API_KEY }}

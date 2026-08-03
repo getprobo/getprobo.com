@@ -1,0 +1,254 @@
+---
+title: n8n authentication
+description: Authenticate the Probo n8n nodes with a scoped OAuth token
+---
+
+import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+
+The Probo n8n nodes authenticate with an OAuth 2.0 access token created in the
+Probo UI and stored in an n8n credential. The token is static: n8n sends it as
+a bearer credential but does not run an interactive authorization flow or
+refresh it automatically.
+
+Every Probo API request includes:
+
+```http
+Authorization: Bearer <oauth-token>
+```
+
+Effective access is the intersection of the token's OAuth scopes and the
+underlying user's current Probo permissions. The token cannot access an
+organization or perform an operation that its user cannot otherwise access.
+
+:::caution
+Anyone who obtains the token can use its granted access until it expires or is
+revoked. Keep it in the n8n credential store—not in workflow fields,
+expressions, execution data, logs, or exported configuration.
+:::
+
+## Choose the Probo deployment
+
+The server and OAuth token must belong to the same Probo deployment:
+
+<Tabs>
+  <TabItem label="US">
+
+```text
+https://us.probo.com
+```
+
+  </TabItem>
+  <TabItem label="EU">
+
+```text
+https://eu.probo.com
+```
+
+  </TabItem>
+  <TabItem label="Self-hosted">
+
+```text
+https://<your-host>
+```
+
+  </TabItem>
+</Tabs>
+
+Enter the origin only. Do not append `/api`, a GraphQL path, or a trailing
+route. The node selects the API path for each operation.
+
+## Create an OAuth token
+
+<Steps>
+
+1. Sign in to the Probo deployment that contains the data.
+2. Open your account menu and select **OAuth tokens**.
+3. Select **Create token**.
+4. Enter a purpose-specific name such as `n8n production – compliance sync`.
+5. Choose an expiration and only the scopes required by the workflow.
+6. Create and copy the token. Probo displays its value only once.
+
+</Steps>
+
+Create a separate token for each n8n environment. Separate tokens provide
+independent scopes, expiration, audit history, and revocation boundaries.
+
+:::note
+Tokens created manually in the UI are standalone access tokens. They do not
+include a refresh token. Choose an expiration that fits your rotation policy
+and replace the token before it expires.
+:::
+
+## Select scopes
+
+Resource scopes use two forms:
+
+- `v1:<resource>:read` permits read operations for that resource family.
+- `v1:<resource>` permits both read and write operations for that family.
+
+For example:
+
+| Workflow capability                 | Scope examples                                            |
+| ----------------------------------- | --------------------------------------------------------- |
+| Credential test and organizations   | `v1:iam:read` for reads or `v1:iam` for writes            |
+| Read or change risks                | `v1:risk:read` or `v1:risk`                               |
+| Read or change third parties        | `v1:third-party:read` or `v1:third-party`                 |
+| Read or change documents            | `v1:document:read` or `v1:document`                       |
+| Read or change tasks                | `v1:task:read` or `v1:task`                               |
+| Activate and manage Probo Trigger   | `v1:webhook`                                              |
+
+Other families include `asset`, `audit`, `control`, `privacy`, `access-review`,
+`itam`, and `compliance-page`. The scope list shown when creating the token is
+authoritative for that deployment.
+
+The n8n credential test queries the authenticated identity, so include
+`v1:iam:read` or `v1:iam` even when the workflow primarily uses another
+resource family. A write scope includes that family's read operations; you do
+not need to select both forms.
+
+## Configure the n8n credential
+
+<Steps>
+
+1. **Open a Probo node**
+
+   Add **Probo** or **Probo Trigger** to a workflow.
+
+2. **Create a Probo credential**
+
+   Open **Credential** and select **Create New Credential**. Use a name that
+   identifies the deployment and environment, such as `Probo EU – production`.
+
+3. **Set the server and OAuth token**
+
+   | Field            | Value                                                                                               |
+   | ---------------- | --------------------------------------------------------------------------------------------------- |
+   | **Probo Server** | `https://us.probo.com`, `https://eu.probo.com`, or the origin of your self-hosted deployment        |
+   | **OAuth Token**  | Scoped OAuth token created on that deployment                                                       |
+
+4. **Test the credential**
+
+   Select **Test**. n8n sends a `viewer { id }` query to:
+
+   ```text
+   <Probo Server>/api/console/v1/graphql
+   ```
+
+   A successful test proves that n8n can reach the deployment and that the
+   token includes an IAM scope accepted by the identity query. It does not test
+   access to a particular organization or operation.
+
+5. **Save and test a read operation**
+
+   Save the credential, then run **Organization → Get Many** or another
+   read-only operation before testing writes or activating a trigger.
+
+</Steps>
+
+## Where the credential is used
+
+All Probo nodes can reuse the credential:
+
+| Node or operation             | Request made with the OAuth token                                                             |
+| ----------------------------- | --------------------------------------------------------------------------------------------- |
+| Dedicated Probo actions       | Console GraphQL API at `/api/console/v1/graphql`                                               |
+| Execute → Console API         | Custom operation at `/api/console/v1/graphql`                                                  |
+| Execute → Connect API         | Custom operation at `/api/connect/v1/graphql`                                                  |
+| Probo Trigger activation      | Creates, checks, and deletes a webhook subscription through the Console GraphQL API            |
+| Probo Trigger event delivery  | Does not send the OAuth token; Probo signs the delivery with the subscription's signing secret |
+
+Updating or revoking the OAuth token does not invalidate an already delivered
+webhook signature. It does affect the trigger's next subscription check,
+reconfiguration, or deletion.
+
+## Authorization model
+
+Credential testing does not prove that every workflow operation is authorized.
+
+Effective access is the intersection of:
+
+1. The resource scope granted to the OAuth token.
+2. The token user's current membership in the target organization.
+3. The user's permission for the requested read, create, update, publish,
+   archive, delete, or specialized operation.
+
+For example, a token can pass the credential test but fail **Risk → Create**
+when it has only `v1:risk:read`, or when its user cannot create risks in the
+selected organization. Probo Trigger requires both the `v1:webhook` scope and
+the user's permission to create and delete webhook subscriptions.
+
+To reduce access:
+
+- Grant only the resource scopes needed by the workflow.
+- Prefer `:read` scopes when the workflow does not write.
+- Use a Probo user with only the memberships and permissions required by the
+  automation.
+- Separate workflows with materially different privilege levels into
+  different n8n credentials and, where appropriate, different Probo identities.
+- Revoke tokens before removing or deactivating the user that created them.
+
+Permission and membership changes apply to subsequent API requests; the token
+does not preserve access the user no longer has.
+
+## Expiration, rotation, and revocation
+
+UI-created OAuth tokens have an explicit expiration and no refresh token. n8n
+cannot extend or refresh them.
+
+Rotate without interrupting scheduled workflows:
+
+<Steps>
+
+1. Create a replacement OAuth token on the same deployment with the required
+   scopes.
+2. Replace the token in the existing n8n credential.
+3. Test the credential and execute a representative read operation.
+4. Test an authorized write in a safe environment when the workflow writes
+   data.
+5. Confirm active trigger workflows can still check their subscriptions.
+6. Revoke the old token under **OAuth tokens**.
+
+</Steps>
+
+Revoke a token immediately when it is exposed, its workflow is retired, or its
+user should no longer be represented by the automation. Revocation is not a
+pause: requests using that token stop authenticating and it cannot be
+restored.
+
+## Self-hosted connectivity
+
+For a self-hosted Probo deployment, use the origin reachable from every n8n
+process that executes a Probo node, for example
+`https://probo.internal.example.com`. The n8n main process and workers must:
+
+- Resolve the hostname.
+- Reach the server through applicable network and firewall rules.
+- Trust the server's TLS certificate chain.
+- Preserve the `Authorization` header through any reverse proxy.
+
+The credential test targets:
+
+```text
+https://probo.internal.example.com/api/console/v1/graphql
+```
+
+Probo Trigger requires bidirectional connectivity. n8n must reach Probo to
+manage the subscription, while Probo must reach n8n's production webhook URL
+over HTTPS to deliver events. The inbound webhook uses its own signature, not
+the OAuth token.
+
+## Diagnose authentication failures
+
+| Symptom                                      | Likely cause                                                                                                               |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Credential test cannot connect               | Invalid server origin, DNS failure, untrusted TLS certificate, proxy, or firewall                                          |
+| Credential test reports authentication error | Malformed, expired, revoked, or wrong-deployment token                                                                     |
+| Credential test reports insufficient scope   | Token is missing `v1:iam:read` or `v1:iam`                                                                                 |
+| Test passes but an operation is forbidden    | Missing resource scope, organization membership, or user permission                                                        |
+| Resource is not found                        | Wrong resource ID, wrong organization, or a resource hidden by the authorization boundary                                  |
+| Execute works for Console but not Connect    | The operation is absent from that API or the token does not authorize it                                                    |
+| Trigger activation fails                     | Missing `v1:webhook`, missing user permission, incorrect organization ID, or invalid n8n production webhook configuration   |
+
+Changing bearer formatting does not fix an authorization failure after the
+credential test succeeds. Check the selected deployment, token expiration,
+granted scopes, organization, and the user's current permissions.

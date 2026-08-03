@@ -1,6 +1,6 @@
 ---
 title: Segment
-description: Connect Segment as an access source using a Public API token
+description: Connect Segment as an access source using a Public API token and workspace region
 ---
 
 Probo reads your Segment workspace's members through the Segment Public API so you can review who has access.
@@ -18,25 +18,23 @@ Create a **Public API token**, not a Config API token. Segment runs both, and on
 
 ## Collected Fields
 
-| Probo field | Segment field                                            | Notes                                                                                                          |
-| ----------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Name        | `name`                                                   | Falls back to the email address                                                                                |
-| Email       | `email`                                                  |                                                                                                                |
-| Role        | `permissions[].roleName`                                 | Deduplicated and sorted. A pending invitation carries no role                                                  |
-| Admin       | `permissions[].roleName`                                 | Flagged as an administrator when one of the roles is `Workspace Owner`                                         |
+| Probo field | Segment field                                            | Notes                                                                                                                                     |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to the email address                                                                                                           |
+| Email       | `email`                                                  |                                                                                                                                           |
+| Role        | `permissions[].roleName`                                 | Deduplicated and sorted. A pending invitation carries no role                                                                             |
+| Admin       | `permissions[].roleName`                                 | Flagged as an administrator when one of the roles is `Workspace Owner`                                                                    |
 | Status      | `invites`                                                | Pending invitations are listed as inactive. The users endpoint carries no status for members who have accepted, so theirs is left unknown |
-| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews. A pending invitation is keyed by its email address |
-| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                           |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                           |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews. A pending invitation is keyed by its email address                            |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                           |
 
 Members who have been invited but have not yet accepted appear alongside accepted members, marked inactive.
 
 ## Step 1: Create a Public API Token
 
 import { Steps, Badge } from "@astrojs/starlight/components";
-
-{/* Screenshot pending: save the token-creation dialog to public/docs/access-review/segment-create-api-key.webp and restore the image line here. */}
 
 <Steps>
 

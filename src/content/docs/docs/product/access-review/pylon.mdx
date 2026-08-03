@@ -31,11 +31,13 @@ Use an API token created on the **API Tokens** page in Pylon's settings. Only Ad
 
 Pylon users are the internal team members of your Pylon organization, not the contacts and accounts that represent your customers. Probo skips any user returned without an email address.
 
+:::note
+Pylon's `away` and `out_of_office` values describe availability, not revoked access. Probo currently displays every status other than `active` as inactive, so check the user's role before deciding whether access should be removed.
+:::
+
 ## Step 1: Create an API Token
 
 import { Steps, Badge } from "@astrojs/starlight/components";
-
-{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/pylon-create-api-key.webp and restore the image line here. */}
 
 <Steps>
 

@@ -1,0 +1,126 @@
+---
+title: Probo CLI
+description: Install prb and manage Probo from a terminal, script, or CI job
+---
+
+import {
+  CardGrid,
+  LinkCard,
+  Steps,
+  Tabs,
+  TabItem,
+} from "@astrojs/starlight/components";
+
+The Probo CLI, `prb`, lets you work with Probo from a terminal, shell script, or
+CI job. It covers organizations, frameworks, controls, risks, audits,
+documents, access reviews, privacy records, webhooks, devices, and
+administration.
+
+## Installation
+
+<Tabs>
+  <TabItem label="Homebrew">
+
+```bash
+brew install getprobo/tap/prb
+```
+
+  </TabItem>
+  <TabItem label="Go">
+
+```bash
+go install github.com/getprobo/probo/cmd/prb@latest
+```
+
+  </TabItem>
+</Tabs>
+
+Verify the installation:
+
+```bash
+prb version
+```
+
+## Sign in and run a command
+
+<Steps>
+
+1. **Sign in**
+
+   ```bash
+   prb auth login
+   ```
+
+   Choose Probo EU, Probo US, or a self-hosted deployment. The CLI starts an
+   OAuth device authorization flow and can save a default organization.
+
+2. **Check the active host**
+
+   ```bash
+   prb auth status
+   ```
+
+3. **List a resource**
+
+   ```bash
+   prb framework list
+   ```
+
+</Steps>
+
+Run `prb <command> --help` to inspect flags and examples for your installed
+version.
+
+## Global flags
+
+| Flag               | Environment equivalents                                                            | Effect                      |
+| ------------------ | ---------------------------------------------------------------------------------- | --------------------------- |
+| `--no-interactive` | `PROBO_NO_INTERACTIVE=1`, `CI=true`, `DEBIAN_FRONTEND=noninteractive`, `TERM=dumb` | Disable interactive prompts |
+| `--no-color`       | `NO_COLOR`, `TERM=dumb`                                                            | Disable ANSI color output   |
+
+The CLI also becomes non-interactive when standard input or output is not a
+terminal. Commands that require confirmation then need their explicit
+confirmation flag, such as `--yes`.
+
+## Use the CLI in automation
+
+Use the flags exposed by the specific command. Common patterns include:
+
+- `--json` or `--output json` for machine-readable output on commands that
+  support it.
+- `--org <organization-id>` to override the default organization.
+- `--limit`, `--order-by`, and `--order-direction` on list commands that expose
+  pagination and sorting.
+- `--no-interactive --no-color` for deterministic CI output.
+
+For temporary credentials, set `PROBO_HOST` and `PROBO_TOKEN`. Avoid printing
+the token, passing it as a command-line argument, or writing it into a
+repository. See [Configuration](/docs/developers/cli/configuration) for
+precedence and behavior.
+
+:::caution
+CLI commands can create, publish, archive, and delete Probo records. Use a
+purpose-specific identity for automation, test write scripts against
+non-production data, and require an explicit condition before destructive
+steps.
+:::
+
+## Explore the CLI
+
+<CardGrid>
+  <LinkCard
+    title="Authentication"
+    description="Sign in, switch deployments, and manage stored credentials"
+    href="/docs/developers/cli/authentication"
+  />
+  <LinkCard
+    title="Configuration"
+    description="Configure tools, timeouts, prompts, hosts, and environment overrides"
+    href="/docs/developers/cli/configuration"
+  />
+  <LinkCard
+    title="Command reference"
+    description="Browse every command generated from the current CLI source"
+    href="/docs/developers/cli/commands"
+  />
+</CardGrid>

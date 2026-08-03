@@ -1,5 +1,5 @@
 ---
-
+import Icon from "../Icon.astro";
 ---
 
 <starlight-menu-button
@@ -7,70 +7,98 @@
 >
   <button
     class="group grid size-9 place-items-center"
-    aria-label="Open mobile menu"
+    type="button"
+    aria-expanded="false"
+    aria-controls="starlight__sidebar"
+    aria-label="Open documentation menu"
   >
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-      class="group-aria-selected:hidden"
-    >
-      <path
-        d="M2 8H14M2 4H14M2 12H14"
-        stroke="#141E12"
-        stroke-width="1.33333"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-    </svg>
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-      class="hidden group-aria-selected:block"
-    >
-      <path
-        d="M3.33325 3.33594L12.6666 12.6693M12.6666 3.33594L3.33325 12.6693"
-        stroke="black"
-        stroke-width="1.33333"
-        stroke-linecap="round"></path>
-    </svg>
+    <Icon name="list" size={16} class="open-menu" />
+    <Icon name="x" size={16} class="close-menu" />
   </button>
 </starlight-menu-button>
 
 <script>
   import { customElementDefine } from "../../lib/dom";
+
   class StarlightMenuButton extends HTMLElement {
     btn = this.querySelector("button")!;
+    desktop = matchMedia("(min-width: 64rem)");
 
-    constructor() {
-      super();
-      // Toggle `aria-expanded` state when a user clicks the button.
-      this.btn.addEventListener("click", () => this.toggleExpanded());
+    connectedCallback() {
+      this.btn.addEventListener("click", this.toggleExpanded);
+      document.addEventListener("keydown", this.closeOnEscape);
+      document.addEventListener("astro:before-swap", this.closeBeforeSwap);
+      this.desktop.addEventListener("change", this.closeForDesktop);
+      document
+        .getElementById("starlight__sidebar")
+        ?.addEventListener("click", this.closeAfterNavigation);
+      this.setExpanded(false);
+    }
 
-      // Close the menu when a user presses the escape key.
-      const parentNav = this.closest("nav");
-      if (parentNav) {
-        parentNav.addEventListener("keyup", (e) => this.closeOnEscape(e));
-      }
+    disconnectedCallback() {
+      this.btn.removeEventListener("click", this.toggleExpanded);
+      document.removeEventListener("keydown", this.closeOnEscape);
+      document.removeEventListener("astro:before-swap", this.closeBeforeSwap);
+      this.desktop.removeEventListener("change", this.closeForDesktop);
+      document
+        .getElementById("starlight__sidebar")
+        ?.removeEventListener("click", this.closeAfterNavigation);
+      this.setExpanded(false);
     }
 
     setExpanded(expanded: boolean) {
-      this.setAttribute("aria-expanded", String(expanded));
-      document.body.toggleAttribute("data-mobile-menu-expanded", expanded);
+      const isExpanded = expanded && !this.desktop.matches;
+      const sidebar = document.getElementById("starlight__sidebar");
+
+      this.setAttribute("aria-expanded", String(isExpanded));
+      this.btn.setAttribute("aria-expanded", String(isExpanded));
+      this.btn.setAttribute(
+        "aria-label",
+        isExpanded ? "Close documentation menu" : "Open documentation menu",
+      );
+      document.body.toggleAttribute("data-mobile-menu-expanded", isExpanded);
+      sidebar?.toggleAttribute("inert", !this.desktop.matches && !isExpanded);
+
+      document
+        .querySelectorAll<HTMLElement>(
+          ".docs-content, .right-sidebar, .sl-skip-link, probo-cookie-banner",
+        )
+        .forEach((element) => {
+          element.toggleAttribute("inert", isExpanded);
+        });
+
+      if (isExpanded) {
+        window.setTimeout(
+          () =>
+            sidebar
+              ?.querySelector<HTMLElement>("a[href], button, summary")
+              ?.focus(),
+          0,
+        );
+      }
     }
 
-    toggleExpanded() {
-      this.setExpanded(this.getAttribute("aria-expanded") !== "true");
-    }
+    toggleExpanded = () =>
+      this.setExpanded(this.btn.getAttribute("aria-expanded") !== "true");
 
-    closeOnEscape(e: KeyboardEvent) {
-      if (e.code === "Escape") {
+    closeOnEscape = (event: KeyboardEvent) => {
+      if (
+        event.key === "Escape" &&
+        this.btn.getAttribute("aria-expanded") === "true"
+      ) {
         this.setExpanded(false);
         this.btn.focus();
       }
-    }
+    };
+
+    closeAfterNavigation = (event: Event) => {
+      if (event.target instanceof Element && event.target.closest("a")) {
+        this.setExpanded(false);
+      }
+    };
+
+    closeBeforeSwap = () => this.setExpanded(false);
+    closeForDesktop = () => this.setExpanded(false);
   }
 
   customElementDefine("starlight-menu-button", () => StarlightMenuButton);
@@ -95,11 +123,11 @@
       box-shadow: none;
     }
 
-    [aria-expanded="true"] button .open-menu {
+    [aria-expanded="true"] .open-menu {
       display: none;
     }
 
-    :not([aria-expanded="true"]) button .close-menu {
+    :not([aria-expanded="true"]) .close-menu {
       display: none;
     }
 
@@ -118,12 +146,6 @@
   @layer starlight.core {
     [data-mobile-menu-expanded] {
       overflow: hidden;
-    }
-
-    @media (min-width: 50rem) {
-      [data-mobile-menu-expanded] {
-        overflow: auto;
-      }
     }
   }
 </style>

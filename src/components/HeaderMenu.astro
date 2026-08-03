@@ -1,5 +1,6 @@
 ---
 import type { MenuGroup } from "../content/menu";
+import Icon from "./Icon.astro";
 import MenuIcon from "./MenuIcon.astro";
 import Button from "./ui/Button.svelte";
 
@@ -11,7 +12,7 @@ const { groups } = Astro.props;
 const menuId = "desktop-navigation-menu";
 ---
 
-<header-menu class="relative flex h-8 items-center gap-[9px]">
+<header-menu class="relative flex h-8 items-center gap-2.25">
   {
     groups.map((group, index) => {
       const triggerId = `${menuId}-trigger-${index}`;
@@ -28,22 +29,7 @@ const menuId = "desktop-navigation-menu";
           aria-controls={menuId}
         >
           {group.label}
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              d="M4 5.5L7 8.5L10 5.5"
-              stroke="currentColor"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <Icon name="caret-down" size={14} />
         </Button>
       );
     })
@@ -64,7 +50,7 @@ const menuId = "desktop-navigation-menu";
   >
     <div
       data-menu-shell
-      class="bg-secondary relative h-[444px] overflow-hidden rounded-2xl shadow-[inset_0_0_0_1px_var(--color-border-low),0_16px_32px_rgba(186,193,122,0.2)]"
+      class="bg-secondary relative h-111 overflow-hidden rounded-2xl shadow-[inset_0_0_0_1px_var(--color-border-low),0_16px_32px_rgba(186,193,122,0.2)]"
     >
       {
         groups.map((group, index) => (
@@ -77,9 +63,11 @@ const menuId = "desktop-navigation-menu";
             hidden
           >
             <div class="flex min-w-0 flex-col items-start gap-6 self-start px-2 py-5">
-              <p class="text-muted-foreground px-3 text-sm font-medium">
-                {group.label}
-              </p>
+              {group.showLabel !== false && (
+                <p class="text-muted-foreground px-3 text-sm font-medium">
+                  {group.label}
+                </p>
+              )}
               <div class="flex w-full flex-col">
                 {group.items.map((item) => (
                   <a
@@ -115,9 +103,9 @@ const menuId = "desktop-navigation-menu";
                   group.feature.variant === "story" &&
                     "navigation-feature-media--story inset-0 size-full object-cover",
                   group.feature.variant === "product" &&
-                    "navigation-feature-media--product top-[100px] left-6 h-[720px] w-[1080px] rounded-[15px] object-cover object-left-top shadow-[0_16px_32px_rgba(186,193,122,0.2)]",
+                    "navigation-feature-media--product top-25 left-6 h-180 w-270 rounded-[15px] object-cover object-top-left shadow-[0_16px_32px_rgba(186,193,122,0.2)]",
                   group.feature.variant === "guide" &&
-                    "navigation-feature-media--guide top-[100px] left-[-174px] h-[220px] w-[774px]",
+                    "navigation-feature-media--guide top-25 -left-43.5 h-55 w-193.5",
                 ]}
               />
 

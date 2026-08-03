@@ -1,0 +1,174 @@
+---
+title: Claude Desktop Configuration
+description: Configure the Probo MCP Server with Claude Desktop application
+---
+
+This guide shows you how to configure the Probo MCP Server with the Claude Desktop application, enabling Claude to interact with your compliance data directly from the desktop interface.
+
+## Prerequisites
+
+- Claude Desktop application installed (available for macOS and Windows)
+- A running Probo instance with API access
+
+## Endpoint
+
+Choose the endpoint for your Probo environment:
+
+| Environment | MCP URL                                      |
+| ----------- | -------------------------------------------- |
+| Probo US    | `https://us.probo.com/api/mcp/v1`            |
+| Probo EU    | `https://eu.probo.com/api/mcp/v1`            |
+| Custom      | `https://your-probo-instance.com/api/mcp/v1` |
+
+The `/v1` segment is required.
+
+## Configuration Steps
+
+### 1. Locate Claude Desktop Configuration File
+
+The Claude Desktop configuration file location depends on your operating system:
+
+**macOS:**
+
+```bash
+~/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+**Windows:**
+
+```bash
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
+### 2. Configure the MCP Server
+
+Edit the `claude_desktop_config.json` file and add the Probo MCP server:
+
+```json
+{
+  "mcpServers": {
+    "probo": {
+      "type": "http",
+      "url": "https://your-probo-instance.com/api/mcp/v1"
+    }
+  }
+}
+```
+
+Replace `https://your-probo-instance.com/api/mcp/v1` with your Probo instance URL.
+
+### 3. Restart Claude Desktop
+
+After saving the configuration:
+
+1. Quit Claude Desktop completely
+2. Restart the application
+3. On first use, Claude Desktop will open a browser window to authorize access to your Probo instance via OAuth — log in and grant access
+
+## Verify Connection
+
+To verify the MCP server is working:
+
+1. Open Claude Desktop
+2. Start a new conversation
+3. Try asking: "List all organizations I have access to"
+4. Claude should use the `listOrganizations` tool to fetch your data
+
+You can also check the MCP server status by looking for the Probo server in Claude Desktop's status indicators.
+
+## Example Interactions
+
+Once configured, you can interact with your Probo data naturally:
+
+### List Risks
+
+```
+You: "Show me all high-priority risks in my organization"
+
+Claude: I'll fetch the risks for you.
+[Uses listRisks tool]
+
+Here are the high-priority risks:
+1. Data breach from third-party systems
+2. Inadequate access controls
+...
+```
+
+### Add a Third Party
+
+```
+You: "Add a new third party called 'CloudStore Inc' that provides storage services"
+
+Claude: I'll add that third party for you.
+[Uses addThirdParty tool]
+
+Successfully added CloudStore Inc as a third party.
+```
+
+### Track Compliance Measures
+
+```
+You: "What compliance measures are currently in progress?"
+
+Claude: Let me check the measures.
+[Uses listMeasures tool with state filter]
+
+You have 5 measures in progress:
+- Employee security training
+- Password policy enforcement
+...
+```
+
+## Troubleshooting
+
+### MCP Server Not Loading
+
+If the Probo MCP server doesn't appear:
+
+1. Check the configuration file syntax (must be valid JSON)
+2. Verify the Probo URL is accessible from your machine
+3. Check Claude Desktop logs for errors
+
+**View Claude Desktop Logs:**
+
+**macOS:**
+
+```bash
+tail -f ~/Library/Logs/Claude/mcp*.log
+```
+
+**Windows:**
+
+```bash
+type %APPDATA%\Claude\logs\mcp*.log
+```
+
+### Connection Timeouts
+
+If requests timeout:
+
+- Verify your Probo instance is running and accessible
+- Check firewall settings
+- Ensure your network allows connections to the Probo URL
+
+### Tool Not Found Errors
+
+If Claude says tools aren't available:
+
+- Restart Claude Desktop completely
+- Verify the MCP server loaded without errors in the logs
+- Check that your Probo instance supports the MCP API
+- Ensure you're using a compatible version of Claude Desktop
+
+## Security Best Practices
+
+- **Use HTTPS**: Always connect to Probo over HTTPS in production
+- **Audit access**: Review MCP access logs in your Probo instance
+
+## Support
+
+Need help with Claude Desktop configuration?
+
+- [Claude Desktop Documentation](https://docs.anthropic.com/claude/docs)
+- [GitHub Issues](https://github.com/getprobo/probo/issues)
+- [Discord Community](https://discord.gg/8qfdJYfvpY)

@@ -9,6 +9,26 @@ import {
   existsSync,
 } from "node:fs";
 import { join, dirname, relative, basename } from "node:path";
+import { fileURLToPath } from "node:url";
+
+function frontmatterValue(content: string, field: string): string {
+  const frontmatter = content.match(/^---\s*\n([\s\S]*?)\n---/);
+  if (!frontmatter) return "";
+  const value = frontmatter[1].match(
+    new RegExp(`^${field}:\\s*["']?(.+?)["']?\\s*$`, "m"),
+  );
+  return value?.[1] || "";
+}
+
+function inlineHtmlToMarkdown(content: string): string {
+  return content
+    .replace(/[ \t]*\n[ \t]*/g, " ")
+    .replace(/<code>([\s\S]*?)<\/code>/g, "`$1`")
+    .replace(/<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g, "[$2]($1)")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\[\s+(.+?)\s+\]\(/g, "[$1](")
+    .trim();
+}
 
 /**
  * Convert an MDX file to clean markdown by stripping frontmatter,
@@ -36,16 +56,52 @@ function mdxToMarkdown(content: string): string {
     .filter((line) => !line.match(/^\s*import\s+/))
     .join("\n");
 
-  // Replace <LinkCard title="X" description="Y" href="Z" /> with markdown link
   md = md.replace(
-    /<LinkCard\s+title="([^"]+)"\s+description="([^"]+)"\s+href="([^"]+)"\s*\/>/g,
-    "- [$1]($3) — $2",
+    /^[ \t]*<LinkCard\b([\s\S]*?)\/>/gm,
+    (_, attributes: string) => {
+      const getAttribute = (name: string) =>
+        attributes.match(new RegExp(`${name}="([^"]+)"`))?.[1] || "";
+      const title = getAttribute("title");
+      const description = getAttribute("description");
+      const href = getAttribute("href");
+      if (!title || !href) return "";
+      return `- [${title}](${href})${description ? ` — ${description}` : ""}`;
+    },
   );
 
-  // Also handle different attribute order
   md = md.replace(
-    /<LinkCard\s+title="([^"]+)"\s+href="([^"]+)"\s+description="([^"]+)"\s*\/>/g,
-    "- [$1]($2) — $3",
+    /^[ \t]*<details className="mcp-tool"[^>]*>([\s\S]*?)<\/details>[ \t]*$/gm,
+    (_, tool: string) => {
+      const name = tool.match(
+        /<span className="mcp-tool__identity">\s*<code>([^<]+)<\/code>/,
+      )?.[1];
+      const title = tool.match(
+        /<span className="mcp-tool__identity">[\s\S]*?<span>([^<]+)<\/span>/,
+      )?.[1];
+      const description = tool.match(
+        /<p className="mcp-tool__description">([\s\S]*?)<\/p>/,
+      )?.[1];
+      const rows = [
+        ...tool.matchAll(
+          /<div>\s*<dt>([^<]+)<\/dt>\s*<dd>([\s\S]*?)<\/dd>\s*<\/div>/g,
+        ),
+      ];
+
+      return [
+        `### ${name ? `\`${name}\`` : ""}${title ? ` — ${title}` : ""}`,
+        "",
+        description ? inlineHtmlToMarkdown(description) : "",
+        "",
+        ...rows.map(
+          ([, label, value]) =>
+            `- **${label}:** ${inlineHtmlToMarkdown(value)}`,
+        ),
+      ].join("\n");
+    },
+  );
+  md = md.replace(
+    /^[ \t]*<\/?(?:ol(?: className="mcp-tool-list")?|li)>[ \t]*$/gm,
+    "",
   );
 
   // Remove <CardGrid> / </CardGrid> wrappers
@@ -53,6 +109,7 @@ function mdxToMarkdown(content: string): string {
 
   // Remove any remaining JSX/HTML-like component tags (self-closing and open/close)
   md = md.replace(/<\/?[A-Z][a-zA-Z]*[^>]*\/?>/g, "");
+  md = md.replace(/\{\/\*[\s\S]*?\*\/\}/g, "");
 
   // Add title as H1
   if (title) {
@@ -189,7 +246,7 @@ function findFiles(dir: string, ext: string): string[] {
   } catch {
     // Directory doesn't exist, return empty
   }
-  return results;
+  return results.sort();
 }
 
 /**
@@ -200,22 +257,143 @@ export function generateMarkdown(): AstroIntegration {
   return {
     name: "generate-markdown",
     hooks: {
+      "astro:server:setup": ({ server }) => {
+        const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
+        const docsDir = join(rootDir, "src/content/docs/docs");
+
+        server.middlewares.use((request, response, next) => {
+          const pathname = new URL(request.url || "/", "http://localhost")
+            .pathname;
+          if (
+            (pathname !== "/md/docs.md" && !pathname.startsWith("/md/docs/")) ||
+            !pathname.endsWith(".md")
+          ) {
+            next();
+            return;
+          }
+
+          const relativePath = pathname
+            .slice("/md/docs".length, -".md".length)
+            .replace(/^\/+/, "");
+          const candidates = relativePath
+            ? [
+                join(docsDir, `${relativePath}.mdx`),
+                join(docsDir, relativePath, "index.mdx"),
+              ]
+            : [join(docsDir, "index.mdx")];
+          const sourcePath = candidates.find((candidate) =>
+            existsSync(candidate),
+          );
+
+          if (!sourcePath) {
+            next();
+            return;
+          }
+
+          response.statusCode = 200;
+          response.setHeader("Content-Type", "text/markdown; charset=utf-8");
+          response.end(mdxToMarkdown(readFileSync(sourcePath, "utf-8")));
+        });
+      },
       "astro:build:done": async ({ dir }) => {
-        const distDir = dir.pathname;
+        const distDir = fileURLToPath(dir);
         const mdDir = join(distDir, "md");
-        const rootDir = join(dirname(new URL(import.meta.url).pathname), "..");
+        const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 
         // Process docs MDX files
         const docsDir = join(rootDir, "src/content/docs/docs");
         const docsFiles = findFiles(docsDir, ".mdx");
+        const llmsEntries: {
+          title: string;
+          description: string;
+          markdownUrl: string;
+          pageUrl: string;
+          markdown: string;
+        }[] = [];
+
         for (const file of docsFiles) {
           const relPath = relative(docsDir, file).replace(/\.mdx$/, ".md");
           const outPath = join(mdDir, "docs", relPath);
           const content = readFileSync(file, "utf-8");
           const md = mdxToMarkdown(content);
+          const routePath = relPath
+            .replace(/\.md$/, "")
+            .replace(/(^|\/)index$/, "")
+            .replace(/\/$/, "");
+          const pageUrl = `https://www.probo.com/docs${routePath ? `/${routePath}` : ""}`;
+          const markdownUrl = `https://www.probo.com/md/docs/${relPath}`;
+
           mkdirSync(dirname(outPath), { recursive: true });
           writeFileSync(outPath, md);
+          if (relPath === "index.md" || relPath.endsWith("/index.md")) {
+            const routeMarkdownPath = routePath
+              ? join(mdDir, "docs", `${routePath}.md`)
+              : join(mdDir, "docs.md");
+            mkdirSync(dirname(routeMarkdownPath), { recursive: true });
+            writeFileSync(routeMarkdownPath, md);
+          }
+          llmsEntries.push({
+            title: frontmatterValue(content, "title"),
+            description: frontmatterValue(content, "description"),
+            markdownUrl,
+            pageUrl,
+            markdown: md,
+          });
         }
+
+        const sectionOrder = [
+          "product/getting-started/",
+          "product/",
+          "developers/cli/",
+          "developers/api/",
+          "deployment/self-hosting/",
+          "deployment/configuration/",
+        ];
+        llmsEntries.sort((left, right) => {
+          const rank = (url: string) => {
+            const path = new URL(url).pathname.replace(/^\/md\/docs\//, "");
+            if (path === "index.md") return 0;
+            const index = sectionOrder.findIndex((section) =>
+              path.startsWith(section),
+            );
+            return index === -1 ? sectionOrder.length + 1 : index + 1;
+          };
+          return (
+            rank(left.markdownUrl) - rank(right.markdownUrl) ||
+            left.markdownUrl.localeCompare(right.markdownUrl)
+          );
+        });
+
+        const llmsIndex = [
+          "# Probo Documentation",
+          "",
+          "> Documentation for Probo, the open-source compliance management platform.",
+          "",
+          "## Documentation",
+          "",
+          ...llmsEntries.map(
+            ({ title, description, markdownUrl }) =>
+              `- [${title}](${markdownUrl})${description ? `: ${description}` : ""}`,
+          ),
+          "",
+        ].join("\n");
+        writeFileSync(join(distDir, "llms-docs.txt"), llmsIndex);
+
+        const llmsFull = [
+          "# Probo Documentation",
+          "",
+          "> Documentation for Probo, the open-source compliance management platform.",
+          "",
+          ...llmsEntries.flatMap(({ pageUrl, markdown }) => [
+            `Source: ${pageUrl}`,
+            "",
+            markdown.trim(),
+            "",
+            "---",
+            "",
+          ]),
+        ].join("\n");
+        writeFileSync(join(distDir, "llms-full.txt"), llmsFull);
 
         const blogDir = join(rootDir, "src/content/blog");
         const blogFiles = findFiles(blogDir, ".mdx");

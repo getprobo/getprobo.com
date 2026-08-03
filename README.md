@@ -8,24 +8,34 @@ Probo is an open-source compliance management platform that helps organizations 
 
 ## Setup
 
+Use Node.js 24:
+
 ```bash
-bun install
-bun run dev
+npm ci
+npm run dev
 ```
 
-Access at http://localhost:4321
+Open [http://localhost:4321](http://localhost:4321).
 
 ## Documentation
 
-This repository includes the operational documentation for deploying and configuring Probo. The docs are organized for system administrators who need to deploy Probo in production environments.
+Documentation content lives in `src/content/docs/docs/` and covers onboarding, self-hosting, configuration, product features, CLI usage, and integrations.
+
+Before opening a pull request:
+
+```bash
+npm run format
+npm run check:docs
+npm run build
+```
 
 ## Deployment
 
-The website is automatically deployed to GitHub Pages via GitHub Actions on merges to the `main` branch.
+Pushes to the `v2` branch are built by GitHub Actions and deployed to Cloudflare Pages.
 
 ## Contributing
 
-Submit issues and pull requests via GitHub.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the development and documentation workflow.
 
 ## Resources
 

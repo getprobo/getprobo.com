@@ -16,25 +16,23 @@ Use a workspace API key created by a workspace **admin**. A Dotfile API key is w
 
 ## Collected Fields
 
-| Probo field | Dotfile field                                            | Notes                                                       |
-| ----------- | -------------------------------------------------------- | ----------------------------------------------------------- |
-| Name        | `first_name` and `last_name`                             | Falls back to the email address                             |
-| Email       | `email`                                                  |                                                             |
-| Role        | `role`                                                   | `owner`, `admin`, `member`, or the name of a custom role    |
+| Probo field | Dotfile field                                            | Notes                                                         |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------- |
+| Name        | `first_name` and `last_name`                             | Falls back to the email address                               |
+| Email       | `email`                                                  |                                                               |
+| Role        | `role`                                                   | `owner`, `admin`, `member`, or the name of a custom role      |
 | Admin       | `role`                                                   | Flagged as an administrator when `role` is `owner` or `admin` |
-| Status      | `suspended_at`                                           | Inactive once a suspension timestamp is set                 |
-| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews  |
-| Created at  | `created_at`                                             | When the user was created in the workspace                  |
+| Status      | `suspended_at`                                           | Inactive once a suspension timestamp is set                   |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                               |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                               |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews    |
+| Created at  | `created_at`                                             | When the user was created in the workspace                    |
 
 Probo requests suspended users as well as active ones, so a suspended member still appears in the campaign, marked inactive.
 
 ## Step 1: Create an API Key
 
 import { Steps, Badge } from "@astrojs/starlight/components";
-
-{/* Screenshot pending: save the key-creation dialog to public/docs/access-review/dotfile-create-api-key.webp and restore the image line here. */}
 
 <Steps>
 
@@ -53,7 +51,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 </Steps>
 
-Probo pulls your workspace's members into your campaigns.
+Probo names the source after your Dotfile workspace and pulls its members into your campaigns.
 
 ## Troubleshooting
 

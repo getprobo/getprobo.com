@@ -1,0 +1,206 @@
+---
+title: Signature Verification
+description: Verify that webhook requests are genuinely from Probo
+---
+
+import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+
+Every Probo webhook includes an HMAC signature. Verify it before parsing the body or performing side effects. Signature verification proves that the payload and timestamp were produced with your subscription's signing secret; a timestamp freshness check limits replay attacks.
+
+:::danger[Verify the raw request body]
+Use the exact bytes received from the network. Parsing and re-serializing JSON can change whitespace or key order and will produce a different signature. Configure your framework to expose the raw body before its JSON middleware runs.
+:::
+
+## How it works
+
+Probo signs each webhook payload using **HMAC-SHA256** with the signing secret from your webhook subscription. The signature is sent in the `X-Probo-Webhook-Signature` header.
+
+The signed message is the concatenation of the timestamp and the raw request body, separated by a colon:
+
+```
+{timestamp}:{body}
+```
+
+Where:
+
+- `timestamp` is the value of the `X-Probo-Webhook-Timestamp` header (Unix seconds)
+- `body` is the raw JSON request body
+
+Use the **full signing secret string** (including the `whsec_` prefix) as the HMAC key. Do not strip the prefix or hex-decode the secret.
+
+## Verification steps
+
+<Steps>
+
+1. **Extract the headers**
+
+   Read `X-Probo-Webhook-Timestamp` and `X-Probo-Webhook-Signature` from the request.
+
+2. **Build the signed message**
+
+   Concatenate the timestamp, a colon (`:`), and the raw request body.
+
+3. **Compute the expected signature**
+
+   Calculate `HMAC-SHA256` using your full signing secret (including the `whsec_` prefix) as the key and the signed message as the input. Hex-encode the result.
+
+4. **Compare signatures**
+
+   Use a constant-time comparison to check if the computed signature matches the `X-Probo-Webhook-Signature` header.
+
+5. **Check timestamp freshness**
+
+   After the signature matches, reject the request if its timestamp is more than 5 minutes in the past or future. The signed timestamp prevents an attacker from substituting a fresh value.
+
+</Steps>
+
+## Examples
+
+<Tabs syncKey="programming-language">
+  <TabItem label="Go">
+
+```go
+package main
+
+import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io"
+	"net/http"
+	"strconv"
+	"time"
+)
+
+func verifyWebhook(r *http.Request, signingSecret string) ([]byte, error) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	timestamp := r.Header.Get("X-Probo-Webhook-Timestamp")
+	signature := r.Header.Get("X-Probo-Webhook-Signature")
+	if timestamp == "" || signature == "" {
+		return nil, fmt.Errorf("missing signature headers")
+	}
+
+	mac := hmac.New(sha256.New, []byte(signingSecret))
+	mac.Write([]byte(timestamp))
+	mac.Write([]byte(":"))
+	mac.Write(body)
+
+	received, err := hex.DecodeString(signature)
+	if err != nil || !hmac.Equal(mac.Sum(nil), received) {
+		return nil, fmt.Errorf("invalid signature")
+	}
+
+	signedAt, err := strconv.ParseInt(timestamp, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("invalid timestamp")
+	}
+	delta := time.Now().Unix() - signedAt
+	if delta > 300 || delta < -300 {
+		return nil, fmt.Errorf("stale timestamp")
+	}
+
+	return body, nil
+}
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+import hashlib
+import hmac
+import re
+import time
+
+def verify_webhook(
+    body: bytes,
+    timestamp: str | None,
+    signature: str | None,
+    signing_secret: str,
+) -> bool:
+    if (
+        timestamp is None
+        or signature is None
+        or re.fullmatch(r"[0-9]+", timestamp) is None
+    ):
+        return False
+
+    expected = hmac.new(
+        signing_secret.encode(),
+        timestamp.encode("ascii") + b":" + body,
+        hashlib.sha256,
+    ).digest()
+
+    if re.fullmatch(r"[0-9a-fA-F]{64}", signature) is None:
+        return False
+    if not hmac.compare_digest(expected, bytes.fromhex(signature)):
+        return False
+
+    signed_at = int(timestamp)
+    return abs(time.time() - signed_at) <= 300
+```
+
+  </TabItem>
+  <TabItem label="JavaScript">
+
+```javascript
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+function verifyWebhook(rawBody, timestamp, signature, signingSecret) {
+  if (
+    !Buffer.isBuffer(rawBody) ||
+    typeof timestamp !== "string" ||
+    typeof signature !== "string" ||
+    !/^[0-9]+$/.test(timestamp) ||
+    !/^[0-9a-fA-F]{64}$/.test(signature)
+  ) {
+    return false;
+  }
+
+  const expected = createHmac("sha256", signingSecret)
+    .update(timestamp)
+    .update(":")
+    .update(rawBody)
+    .digest();
+  const received = Buffer.from(signature, "hex");
+
+  if (
+    expected.length !== received.length ||
+    !timingSafeEqual(expected, received)
+  ) {
+    return false;
+  }
+
+  const signedAt = Number(timestamp);
+  return (
+    Number.isFinite(signedAt) && Math.abs(Date.now() / 1000 - signedAt) <= 300
+  );
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Security recommendations
+
+- Verify the signature before parsing JSON, authorizing the organization, or queuing work.
+- Reject missing, malformed, stale, and future-dated timestamps. The examples use a 5-minute tolerance.
+- Compare decoded signature bytes in constant time. Check their length first where the comparison API requires equal-length inputs.
+- Keep a separate secret for each subscription and store it in a secret manager.
+- Return a generic `400` or `403` response. Do not reveal which verification check failed.
+- Record `eventId` after verification and process it only once. Timestamp validation limits replay time; idempotency prevents duplicate side effects.
+
+## Troubleshooting
+
+| Symptom                                       | Likely cause                                                                   |
+| --------------------------------------------- | ------------------------------------------------------------------------------ |
+| Every signature fails                         | The framework parsed or modified the body before verification                  |
+| Only non-ASCII payloads fail                  | The receiver decoded and re-encoded the body instead of hashing raw bytes      |
+| `timingSafeEqual` throws                      | The received signature was not validated as 32-byte hexadecimal first          |
+| Valid deliveries are reported as stale        | The receiver clock is out of sync or the timestamp was treated as milliseconds |
+| Verification works with one subscription only | The endpoint is selecting the wrong subscription secret                        |

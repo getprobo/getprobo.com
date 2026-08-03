@@ -1,4 +1,4 @@
-const defaultCount = 829; // Default value if the github api is down
+const defaultCount = 1300; // Default value if the GitHub API is unavailable
 let count = 0; // Cached count value (to avoid multiple API calls)
 
 // Mimics GitHub's star count formatting: 999, 1k, 1.1k, 10k, 1.1M
@@ -26,12 +26,25 @@ export async function getStarsCount(): Promise<string> {
     return formatStars(count);
   }
 
-  const r = await fetch("https://api.github.com/repos/getprobo/probo");
-  if (!r.ok) {
+  try {
+    const response = await fetch("https://api.github.com/repos/getprobo/probo");
+    if (!response.ok) {
+      count = defaultCount;
+      return formatStars(count);
+    }
+
+    const json: { stargazers_count?: unknown } = await response.json();
+    if (typeof json.stargazers_count === "number") {
+      count = json.stargazers_count;
+      return formatStars(count);
+    }
+  } catch {
     count = defaultCount;
-    return formatStars(count);
   }
-  const json = await r.json();
-  count = json.stargazers_count;
+
+  if (!count) {
+    count = defaultCount;
+  }
+
   return formatStars(count);
 }

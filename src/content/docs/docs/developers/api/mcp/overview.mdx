@@ -1,0 +1,167 @@
+---
+title: Probo MCP server
+description: Connect AI clients to Probo tools and compliance data through MCP
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+The Probo MCP server lets AI assistants and developer tools work with your
+Probo data through the open
+[Model Context Protocol](https://modelcontextprotocol.io/). A connected client
+can discover Probo tools, inspect their input schemas, and—with your
+authorization—read or change organization-scoped records.
+
+Use MCP when you want to:
+
+- Ask questions that require live context from Probo.
+- Review risks, controls, evidence, audits, and other compliance records.
+- Create or update records from an AI assistant.
+- Build an agentic workflow without implementing each Probo API operation.
+
+:::caution
+MCP clients can invoke write and destructive tools. Review the requested tool
+and its arguments before approving a call, especially when the request updates
+or deletes data.
+:::
+
+## How a connection works
+
+1. Your MCP client connects to the regional or self-hosted Probo endpoint.
+2. Probo authenticates the connection with interactive OAuth or a scoped OAuth
+   token.
+3. During initialization, the client discovers the tools available from the
+   server and their JSON schemas.
+4. The client selects a tool based on your request and asks for approval when
+   its policy requires it.
+5. Probo checks both the token scopes and the underlying user's permissions
+   before running the operation.
+
+MCP does not bypass Probo's access controls. A token can only access an
+organization and perform an operation when both its granted scopes and its
+user's permissions allow it.
+
+## Connect to Probo
+
+Choose the endpoint for the deployment that contains your data:
+
+| Deployment  | MCP endpoint                      |
+| ----------- | --------------------------------- |
+| Probo US    | `https://us.probo.com/api/mcp/v1` |
+| Probo EU    | `https://eu.probo.com/api/mcp/v1` |
+| Self-hosted | `https://<your-host>/api/mcp/v1`  |
+
+The `/api/mcp/v1` path is required. Probo serves MCP over Streamable HTTP; it
+does not expose REST-style routes for individual tools.
+
+Most interactive clients discover Probo's OAuth configuration and open a
+browser authorization flow. For a client that requires static configuration,
+create a scoped OAuth token in Probo and send it as a bearer credential.
+
+<CardGrid>
+  <LinkCard
+    title="Choose an integration"
+    description="Connect Claude, Cursor, VS Code, OpenAI, or another supported client"
+    href="/docs/developers/api/mcp/integrations"
+  />
+  <LinkCard
+    title="Authentication"
+    description="Configure OAuth, scopes, token refresh, and static credentials"
+    href="/docs/developers/api/mcp/authentication"
+  />
+</CardGrid>
+
+## Start with a read-only request
+
+After connecting a client, confirm the identity and organization boundary
+before asking it to change data:
+
+```text
+Use Probo to list the organizations I can access. Do not change anything.
+```
+
+Then include an organization in a narrow request:
+
+```text
+For organization org_xxx, summarize open high-priority risks and cite the
+record names and IDs. Do not change anything.
+```
+
+Explicit organization IDs remove ambiguity when an account can access more
+than one organization. Treat all IDs and pagination cursors as opaque strings.
+
+When you are ready to test a write, state the intended result and ask the
+client to show the proposed arguments before invoking the tool:
+
+```text
+Prepare a new third party named Acme Corp for cloud hosting in organization
+org_xxx. Show me the tool and arguments first; do not create it until I approve.
+```
+
+The exact approval experience depends on the MCP client.
+
+## Tools and schemas
+
+Probo currently exposes **293 tools** generated from its server specification.
+They cover organizations, risks, controls, frameworks, evidence, documents,
+audits, findings, privacy, third parties, access reviews, webhooks, cookie
+consent, and other compliance workflows.
+
+Each tool advertises:
+
+- A name and description used by the client to select it.
+- JSON input and output schemas.
+- Behavior hints such as read-only, destructive, and idempotent.
+
+Behavior hints help clients present safer approvals, but they do not replace
+reviewing the tool arguments. The generated reference reflects the current
+server specification:
+
+<LinkCard
+  title="Browse the MCP tool reference"
+  description="Find tool names, schemas, categories, and behavior hints"
+  href="/docs/developers/api/mcp/tools"
+/>
+
+## Explore with MCP Inspector
+
+Use the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) to explore the Probo MCP Server interactively:
+
+```bash
+export PROBO_OAUTH_TOKEN="your_oauth_token"
+npx @modelcontextprotocol/inspector --cli \
+  https://us.probo.com/api/mcp/v1 \
+  --transport http \
+  --header "Authorization: Bearer $PROBO_OAUTH_TOKEN" \
+  --method tools/list
+```
+
+The command lists the tools available through the server. Replace the endpoint
+for the EU region or a self-hosted deployment. The Inspector can also browse
+schemas, call tools, and expose protocol errors while troubleshooting.
+
+## Operational guidance
+
+- Give each client or environment its own token so access can be revoked
+  independently.
+- Grant only the scopes required by the workflow.
+- Keep credentials out of source control, logs, shared configuration, and
+  prompts.
+- Require explicit approval for write and destructive tools.
+- Paginate list operations until `next_cursor` is absent when a complete result
+  set is required.
+- Revoke exposed or unused credentials promptly.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Paginate results"
+    description="Process complete result sets from Probo list tools"
+    href="/docs/developers/api/mcp/pagination"
+  />
+  <LinkCard
+    title="Browse integrations"
+    description="Follow setup instructions for your MCP client"
+    href="/docs/developers/api/mcp/integrations"
+  />
+</CardGrid>

@@ -1,0 +1,337 @@
+---
+title: Kubernetes
+description: Deploy Probo with Helm and production data services
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+The Probo Helm chart deploys the Probo application and headless Chrome. For production, connect the chart to an external PostgreSQL database and S3-compatible object storage that your team already operates and backs up.
+
+Use Kubernetes when your team already has established practices for ingress, certificates, secrets, monitoring, and database operations. Kubernetes does not make Probo highly available by itself.
+
+## Requirements
+
+- Kubernetes 1.23 or newer
+- Helm 3.8 or newer
+- `kubectl` access to the target cluster
+- A PostgreSQL database reachable from the cluster
+- An S3 or tested S3-compatible bucket
+- An ingress controller and TLS certificate
+- An SMTP relay if you want Probo to send email
+
+The database role must be able to create or use the `citext`, `pgcrypto`, `unaccent`, and `pg_stat_statements` extensions. On PostgreSQL 15 and newer, make the Probo role the owner of the `public` schema before first startup:
+
+```sql
+ALTER SCHEMA public OWNER TO probod;
+GRANT ALL ON SCHEMA public TO probod;
+```
+
+## Prepare the deployment
+
+<Steps>
+
+1. **Choose and pin a chart version**
+
+   The chart is published at `oci://artifact.probo.inc/probo/probo`. Set the version you have tested:
+
+   ```bash
+   export PROBO_CHART_VERSION="0.0.0"
+
+   helm show chart oci://artifact.probo.inc/probo/probo \
+     --version "$PROBO_CHART_VERSION"
+   ```
+
+   Replace `0.0.0` with an available chart version. Do not rely on an unpinned chart in production.
+
+2. **Generate application secrets**
+
+   ```bash
+   umask 077
+   openssl rand -base64 32
+   openssl rand -base64 32
+   openssl rand -base64 32
+   openssl rand -base64 32
+
+   openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 \
+     -out oauth2-signing-key.pem
+   ```
+
+   Record the four generated values separately as the encryption key, cookie secret, password pepper, and trust-token secret.
+
+3. **Create non-secret values**
+
+   Save the following as `values.yaml` and replace the example hostnames and service details:
+
+   ```yaml
+   replicaCount: 2
+
+   haproxy-ingress:
+     enabled: false
+
+   ingress:
+     enabled: true
+     className: nginx
+     annotations:
+       cert-manager.io/cluster-issuer: letsencrypt-prod
+     hosts:
+       - host: probo.example.com
+         paths:
+           - path: /
+             pathType: Prefix
+     tls:
+       - secretName: probo-tls
+         hosts:
+           - probo.example.com
+
+   probo:
+     baseUrl: probo.example.com
+     cors:
+       allowedOrigins:
+         - https://probo.example.com
+     auth:
+       disableSignup: true
+       cookieDomain: probo.example.com
+     trustAuth:
+       cookieDomain: probo.example.com
+     mailer:
+       senderName: Probo
+       senderEmail: no-reply@example.com
+       smtp:
+         addr: smtp.example.com:587
+         tlsRequired: true
+
+   postgresql:
+     enabled: false
+     host: postgres.example.internal
+     port: 5432
+     database: probod
+     username: probod
+
+   seaweedfs:
+     enabled: false
+
+   s3:
+     region: eu-west-1
+     bucket: probo-production
+     endpoint: ""
+     usePathStyle: false
+
+   chrome:
+     enabled: true
+
+   resources:
+     requests:
+       cpu: 500m
+       memory: 1Gi
+     limits:
+       cpu: 2
+       memory: 4Gi
+   ```
+
+   This example assumes an existing ingress controller. If you intentionally want the chart to install HAProxy Ingress, enable `haproxy-ingress` and set `ingress.className` to `haproxy`.
+
+4. **Create secret values**
+
+   Save the following as `values-secrets.yaml`, fill every placeholder, and keep the file outside version control:
+
+   ```yaml
+   probo:
+     encryptionKey: "<base64 encryption key>"
+     auth:
+       cookieSecret: "<base64 cookie secret>"
+       passwordPepper: "<base64 password pepper>"
+     trustAuth:
+       tokenSecret: "<base64 trust-token secret>"
+     mailer:
+       smtp:
+         user: "<SMTP username>"
+         password: "<SMTP password>"
+
+   postgresql:
+     password: "<database password>"
+
+   s3:
+     accessKeyId: "<S3 access key>"
+     secretAccessKey: "<S3 secret key>"
+   ```
+
+   ```bash
+   chmod 600 values-secrets.yaml oauth2-signing-key.pem
+   ```
+
+   <Aside type="caution" title="Helm stores values">
+     The current chart renders its own Kubernetes Secret from Helm values.
+     Secret values are therefore present in the Helm release metadata as well as
+     the generated Secret. Restrict access to Helm release Secrets and the
+     namespace. If your policy requires an external secret manager, review and
+     adapt the chart before deployment; adding an `ExternalSecret` alone does
+     not make the chart consume it.
+   </Aside>
+
+5. **Render and inspect the manifests**
+
+   ```bash
+   helm template probo oci://artifact.probo.inc/probo/probo \
+     --version "$PROBO_CHART_VERSION" \
+     --namespace probo \
+     --values values.yaml \
+     --values values-secrets.yaml \
+     --set-file probo.oauth2.signingKey=oauth2-signing-key.pem \
+     > rendered.yaml
+   ```
+
+   Inspect the resource names, ingress class, storage, security context, and scheduling behavior. `rendered.yaml` contains secrets; delete it securely after review and do not commit it.
+
+6. **Install Probo**
+
+   ```bash
+   kubectl create namespace probo
+
+   helm install probo oci://artifact.probo.inc/probo/probo \
+     --version "$PROBO_CHART_VERSION" \
+     --namespace probo \
+     --values values.yaml \
+     --values values-secrets.yaml \
+     --set-file probo.oauth2.signingKey=oauth2-signing-key.pem \
+     --wait \
+     --timeout 10m
+   ```
+
+7. **Verify the deployment**
+
+   ```bash
+   helm status probo --namespace probo
+
+   kubectl get pods,service,ingress \
+     --namespace probo \
+     --selector app.kubernetes.io/instance=probo
+
+   kubectl rollout status deployment/probo \
+     --namespace probo \
+     --timeout=10m
+
+   kubectl logs deployment/probo \
+     --namespace probo \
+     --tail=100
+   ```
+
+   After DNS and TLS are ready, verify the public endpoint:
+
+   ```bash
+   curl --fail https://probo.example.com/
+   ```
+
+   Also test sign-in, file upload, PDF generation, and email delivery before inviting users.
+
+</Steps>
+
+## Production decisions
+
+### Ingress and TLS
+
+The chart enables its HAProxy Ingress dependency by default. Disable it when the cluster already has an ingress controller; otherwise the installation can create an unexpected public load balancer.
+
+The chart routes the ingress to Probo's backoffice port. TLS configuration depends on your ingress controller and certificate system. Confirm that:
+
+- only intended public services receive external addresses;
+- HTTP redirects to HTTPS;
+- the configured hostname matches `probo.baseUrl`;
+- `probo.cors.allowedOrigins` contains the complete HTTPS origin;
+- cookies are scoped to the intended domain.
+
+### Replicas and local storage
+
+Do not claim high availability solely by increasing `replicaCount`.
+
+The chart mounts `/data` from `emptyDir` by default. Enabling `persistence` creates or mounts one PVC, and the production example uses `ReadWriteOnce`. Multiple pods scheduled on different nodes may not be able to mount that claim. Test the chart with your storage class and failure model before running multiple replicas.
+
+PostgreSQL and S3 remain the durable system of record. Back up both services to a consistent recovery point and test restoration regularly.
+
+### Database connections
+
+The default pool size is 100 connections per Probo pod. Account for replicas and rolling updates when setting PostgreSQL connection limits. For example, three current pods plus one surge pod can request substantially more than 300 connections.
+
+If your provider requires a custom CA, set `postgresql.caBundle` or mount a certificate and set `postgresql.caBundlePath`. Do not disable database certificate verification to work around a CA error.
+
+### S3 compatibility
+
+For AWS S3, leave `s3.endpoint` empty and `s3.usePathStyle` false. Other providers may require a custom endpoint and path-style addressing.
+
+Test upload, download, object metadata, and deletion against the exact provider before production use. Azure Blob behind an S3 compatibility proxy has known metadata compatibility limitations and should not be treated as a supported equivalent without testing.
+
+## Monitoring
+
+Probo exposes metrics on port `8081`. If Prometheus Operator is installed, enable the chart's `ServiceMonitor`:
+
+```yaml
+metrics:
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+```
+
+At minimum, alert on unavailable pods, restart loops, failed rollouts, database and object-storage errors, certificate expiry, and exhausted database connections. Application logs are written to the container output and should be collected by your cluster logging system.
+
+## Upgrade and rollback
+
+Review Probo and chart release notes, back up PostgreSQL and S3, and test the target version in a non-production environment.
+
+```bash
+export PROBO_CHART_VERSION="0.0.0"
+
+helm upgrade probo oci://artifact.probo.inc/probo/probo \
+  --version "$PROBO_CHART_VERSION" \
+  --namespace probo \
+  --values values.yaml \
+  --values values-secrets.yaml \
+  --set-file probo.oauth2.signingKey=oauth2-signing-key.pem \
+  --wait \
+  --timeout 10m
+```
+
+Database migrations run automatically when Probo starts. Watch both the rollout and application logs:
+
+```bash
+kubectl rollout status deployment/probo --namespace probo --timeout=10m
+kubectl logs deployment/probo --namespace probo --tail=200
+```
+
+If the application release must be rolled back, first determine whether its database migration is backward compatible. Then inspect and select a Helm revision:
+
+```bash
+helm history probo --namespace probo
+helm rollback probo REVISION --namespace probo --wait --timeout 10m
+```
+
+## Troubleshooting
+
+### Pods do not start
+
+```bash
+kubectl get pods --namespace probo
+kubectl describe pod POD_NAME --namespace probo
+kubectl logs POD_NAME --namespace probo --previous
+kubectl get events --namespace probo --sort-by=.metadata.creationTimestamp
+```
+
+Common causes are invalid secret formats, a missing OAuth signing key, unavailable database extensions, database network policies, and an unreachable S3 endpoint.
+
+### The ingress has no address
+
+```bash
+kubectl describe ingress probo-http --namespace probo
+kubectl get ingressclass
+```
+
+Confirm that `ingress.className` names an installed controller and inspect that controller's logs. If the chart unexpectedly installed HAProxy, review the `haproxy-ingress.enabled` value.
+
+### A rollout cannot mount `/data`
+
+```bash
+kubectl get pvc --namespace probo
+kubectl describe pvc probo --namespace probo
+```
+
+Check the volume's access mode, storage class, availability zone, and pod scheduling events. A single `ReadWriteOnce` volume is not a portable shared-storage design for replicas on multiple nodes.
+
+See the chart's [`values.yaml`](https://github.com/getprobo/probo/blob/main/contrib/helm/charts/probo/values.yaml) and the [environment variable reference](/docs/deployment/configuration/environment-reference) for additional configuration.

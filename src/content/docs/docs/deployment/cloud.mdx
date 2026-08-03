@@ -1,0 +1,76 @@
+---
+title: Probo Cloud
+description: Managed Probo with EU and US data residency and Probo-operated infrastructure
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+**Probo Cloud** is the managed offering. Probo hosts the platform, ships updates, and operates backups and security controls. It is intended for teams that want to use Probo without operating the underlying infrastructure.
+
+## Regions
+
+Choose a data region when your organization is onboarded:
+
+| Region | Console                              |
+| ------ | ------------------------------------ |
+| **EU** | [eu.probo.com](https://eu.probo.com) |
+| **US** | [us.probo.com](https://us.probo.com) |
+
+Your organization’s data is stored in the selected region. Customer organizations are logically isolated on shared regional infrastructure.
+
+## What Probo operates
+
+- application hosting and platform updates;
+- regional data storage and backups;
+- infrastructure monitoring and maintenance;
+- network, encryption, and secret-management controls.
+
+## Shared responsibility
+
+| Probo                                                              | Your organization                                                            |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Hosting, updates, backups, infrastructure security, and monitoring | Users, roles, SSO/SCIM setup, integrations, compliance content, and evidence |
+| Protecting the managed platform and its service credentials        | Deciding which integrations to connect and who has administrative access     |
+
+Contractual availability, recovery, retention, and security details are provided through customer agreements and the [Compliance Portal](https://compliance.probo.com).
+
+## Security and privacy
+
+<CardGrid>
+  <LinkCard
+    title="Infrastructure security"
+    description="Review high-level security controls and tenant isolation"
+    href="/docs/deployment/infrastructure-security"
+  />
+  <LinkCard
+    title="Integration credentials"
+    description="How API keys and OAuth tokens are stored and used"
+    href="/docs/product/access-review/integration-security"
+  />
+</CardGrid>
+
+## Cloud vs self-hosting
+
+|                                 | **Probo Cloud**            | **Self-hosted**                  |
+| ------------------------------- | -------------------------- | -------------------------------- |
+| **Who operates infrastructure** | Probo                      | Your team                        |
+| **Upgrades**                    | Managed by Probo           | Managed by your team             |
+| **Region choice**               | EU or US                   | Any hosting location you control |
+| **Best when**                   | You want a managed service | You need full control of hosting |
+
+<CardGrid>
+  <LinkCard
+    title="Docker Compose"
+    description="Single-node deployment with all services included"
+    href="/docs/deployment/self-hosting/docker-compose"
+  />
+  <LinkCard
+    title="Kubernetes"
+    description="Scalable deployment with Helm and managed services"
+    href="/docs/deployment/self-hosting/kubernetes"
+  />
+</CardGrid>
+
+## Get Probo Cloud
+
+To discuss region choice, onboarding, or a security review, [contact us](/contact).

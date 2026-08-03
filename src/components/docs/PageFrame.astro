@@ -2,61 +2,282 @@
 import MobileMenuToggle from "virtual:starlight/components/MobileMenuToggle";
 import Search from "virtual:starlight/components/Search";
 import Header from "../Header.astro";
+import SectionNav from "./SectionNav.astro";
 ---
 
-<Header hideBurger>
-  <MobileMenuToggle />
-</Header>
-<div
-  transition:animate="none"
-  class="relative mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-10 px-5 pt-20 lg:grid-cols-[260px_1fr] xl:grid-cols-[1fr_700px_1fr] xl:pt-10"
->
-  <nav
-    class="sidebar lg:sticky-top fixed top-16 w-full justify-self-start transition-all lg:max-w-60"
-    aria-label={Astro.locals.t("sidebarNav.accessibleLabel")}
-  >
-    <div class="mb-4 hidden lg:block">
-      <Search />
+<div class="docs-chrome bg-level-0 sticky top-0 z-50">
+  <Header docsChrome hideBurger>
+    <MobileMenuToggle />
+  </Header>
+  <div class="docs-horizon border-border-low bg-level-0 border-b">
+    <div
+      class="docs-subnav flex flex-col gap-3 px-[var(--docs-page-padding-x)] sm:flex-row sm:items-center sm:gap-4"
+    >
+      <SectionNav />
+      <Search class="docs-chrome-search shrink-0 sm:ms-auto" />
     </div>
-    <slot name="sidebar" />
-  </nav>
-  <slot />
+  </div>
+</div>
+
+<div transition:animate="none" class="docs-shell w-full">
+  <div class="docs-main">
+    <nav
+      id="starlight__sidebar"
+      class="sidebar"
+      aria-label={Astro.locals.t("sidebarNav.accessibleLabel")}
+    >
+      <slot name="sidebar" />
+    </nav>
+    <div class="docs-content px-[var(--docs-page-padding-x)] py-6 lg:py-8">
+      <slot />
+    </div>
+  </div>
 </div>
 
 <style>
-  @media (max-width: 64rem) {
-    body[data-mobile-menu-expanded] .sidebar {
-      transform: translateY(0);
-      pointer-events: all;
-      opacity: 1;
-    }
-    .sidebar {
-      border-top: solid 1px var(--color-border-low);
-      padding-top: 1rem;
-      padding-inline: 0.5rem;
-      height: calc(100vh - var(--sl-nav-height));
-      transition: 0.2s ease-in-out;
-      z-index: 200;
-      left: 0;
-      opacity: 0;
-      transform: translateY(-30px);
-      pointer-events: none;
-      background-color: var(--sl-color-bg);
-      box-shadow: var(--shadow-md);
-      border-right: solid 1px var(--color-border-low);
+  .docs-subnav :global(site-search.docs-chrome-search) {
+    display: block;
+    width: 100%;
+  }
+
+  @media (min-width: 40rem) {
+    .docs-subnav :global(site-search.docs-chrome-search) {
+      width: auto;
     }
   }
 
-  @media (min-width: 1024px) {
-    .sidebar,
-    :global(.right-sidebar) {
-      padding-right: 0.5rem;
-      margin-right: -0.5rem;
-      max-height: calc(100vh - 6.5rem);
+  .docs-main {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    background-color: var(--color-level-0);
+  }
+
+  @media (min-width: 64rem) {
+    .docs-main {
+      grid-template-columns: var(--docs-sidebar-width) minmax(0, 1fr);
+      min-height: calc(100vh - var(--sl-docs-chrome-height));
+    }
+
+    .sidebar {
+      position: sticky;
+      top: var(--sl-docs-chrome-height);
+      align-self: start;
+      max-height: calc(100vh - var(--sl-docs-chrome-height));
       overflow: auto;
+      padding: 1.25rem 1rem 2rem;
+      scrollbar-width: none;
+    }
+
+    .docs-content {
+      min-width: 0;
+      border-inline-start: 1px solid var(--color-border-low);
+    }
+
+    .sidebar::-webkit-scrollbar {
+      display: none;
+    }
+
+    :global(.docs-toc-pane .right-sidebar) {
+      position: sticky;
+      top: calc(var(--sl-docs-chrome-height) + 1.5rem);
+      max-height: calc(100vh - var(--sl-docs-chrome-height) - 2rem);
+      overflow: auto;
+      padding-inline-start: 0.5rem;
+    }
+  }
+
+  .docs-subnav :global(site-search.docs-chrome-search button[data-open-modal]) {
+    width: 100%;
+    max-width: none;
+    border: 1px solid var(--color-border-low);
+    border-radius: 0.5rem;
+    padding-inline: 0.625rem 0.5rem;
+    background-color: var(--color-subtle);
+    color: var(--color-muted-foreground);
+    font-size: var(--sl-text-sm);
+    height: 2rem;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
+  }
+
+  @media (min-width: 40rem) {
+    .docs-subnav
+      :global(site-search.docs-chrome-search button[data-open-modal]) {
+      width: 14rem;
+    }
+  }
+
+  .docs-subnav
+    :global(site-search.docs-chrome-search button[data-open-modal]:hover) {
+    border-color: color-mix(
+      in srgb,
+      var(--docs-accent) 45%,
+      var(--color-border-mid)
+    );
+    background-color: var(--docs-accent-soft);
+    color: var(--color-primary);
+  }
+
+  .docs-subnav
+    :global(
+      site-search.docs-chrome-search button[data-open-modal]:focus-visible
+    ) {
+    outline: 2px solid var(--docs-accent);
+    outline-offset: 2px;
+  }
+
+  .docs-subnav
+    :global(site-search.docs-chrome-search button[data-open-modal] span) {
+    display: block;
+  }
+
+  @media (max-width: 63.999rem) {
+    :global(body[data-mobile-menu-expanded]) .sidebar {
+      transform: translateY(0);
+      pointer-events: all;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar {
+      position: fixed;
+      inset: var(--sl-docs-chrome-height) 0 0;
+      z-index: 200;
+      width: min(100%, 20rem);
+      padding: 1rem 0.75rem 1.5rem;
+      transition: 0.2s ease-in-out;
+      opacity: 0;
+      transform: translateY(-12px);
+      pointer-events: none;
+      visibility: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      background-color: var(--sl-color-bg);
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sidebar {
+        transition: none;
+      }
     }
   }
 </style>
+
+<script>
+  const sidebarScrollKey = "docs-sidebar-scroll";
+
+  const restoreSidebarGroups = (sidebar: HTMLElement) => {
+    try {
+      const state = JSON.parse(
+        sessionStorage.getItem("sl-sidebar-state") || "{}",
+      );
+      const persister = sidebar.querySelector<HTMLElement>(
+        "sl-sidebar-state-persist",
+      );
+
+      if (
+        !persister ||
+        state.hash !== persister.dataset.hash ||
+        !Array.isArray(state.open)
+      ) {
+        return;
+      }
+
+      for (const restorePoint of sidebar.querySelectorAll<HTMLElement>(
+        "sl-sidebar-restore",
+      )) {
+        const index = Number.parseInt(restorePoint.dataset.index || "", 10);
+        const details = restorePoint.closest("details");
+
+        if (details && typeof state.open[index] === "boolean") {
+          details.open = state.open[index];
+        }
+      }
+    } catch {}
+  };
+
+  const persistSidebarGroups = (sidebar: HTMLElement) => {
+    const persister = sidebar.querySelector<HTMLElement>(
+      "sl-sidebar-state-persist",
+    );
+    if (!persister) return;
+
+    const open: Array<boolean | null> = [];
+    for (const restorePoint of sidebar.querySelectorAll<HTMLElement>(
+      "sl-sidebar-restore",
+    )) {
+      const index = Number.parseInt(restorePoint.dataset.index || "", 10);
+      const details = restorePoint.closest("details");
+      if (details && !Number.isNaN(index)) open[index] = details.open;
+    }
+
+    sessionStorage.setItem(
+      "sl-sidebar-state",
+      JSON.stringify({
+        hash: persister.dataset.hash,
+        open,
+        scroll: sidebar.scrollTop,
+      }),
+    );
+  };
+
+  const initializeSidebarGroups = (sidebar: HTMLElement) => {
+    const groups = sidebar.querySelectorAll<HTMLDetailsElement>("details");
+    const openGroups = Array.from(groups).filter((group) => group.open);
+    const currentGroup = Array.from(groups).find((group) =>
+      group.querySelector('a[aria-current="page"]'),
+    );
+    const groupToKeep = currentGroup ?? openGroups[openGroups.length - 1];
+
+    for (const group of openGroups) {
+      if (group !== groupToKeep) group.open = false;
+    }
+
+    for (const group of groups) {
+      if (group.dataset.accordionInitialized !== undefined) continue;
+      group.dataset.accordionInitialized = "";
+
+      group.addEventListener("toggle", () => {
+        if (group.open) {
+          for (const otherGroup of groups) {
+            if (otherGroup !== group) otherGroup.open = false;
+          }
+        }
+
+        persistSidebarGroups(sidebar);
+      });
+    }
+
+    if (openGroups.length > 1) persistSidebarGroups(sidebar);
+  };
+
+  document.addEventListener("astro:before-swap", () => {
+    const sidebar = document.getElementById("starlight__sidebar");
+    if (sidebar) {
+      sessionStorage.setItem(sidebarScrollKey, String(sidebar.scrollTop));
+    }
+  });
+
+  document.addEventListener("astro:after-swap", () => {
+    const sidebar = document.getElementById("starlight__sidebar");
+    const savedScroll = sessionStorage.getItem(sidebarScrollKey);
+
+    if (sidebar) {
+      restoreSidebarGroups(sidebar);
+      initializeSidebarGroups(sidebar);
+
+      if (savedScroll) {
+        sidebar.scrollTop = Number(savedScroll);
+      }
+    }
+  });
+
+  const initialSidebar = document.getElementById("starlight__sidebar");
+  if (initialSidebar) initializeSidebarGroups(initialSidebar);
+</script>
 
 <probo-cookie-banner
   banner-id={import.meta.env.PUBLIC_COOKIE_BANNER_ID}

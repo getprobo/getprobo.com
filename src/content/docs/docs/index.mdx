@@ -1,141 +1,102 @@
 ---
-title: Probo Documentation
-description: Documentation for Probo, the open-source compliance management platform. Deployment, configuration, product guides, and API reference.
+title: Get started
+description: Start using Probo, explore the product, deploy the platform, and connect your tools.
 ---
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-Welcome to the Probo documentation. Whether you're deploying Probo for the first time, configuring it for your team, or integrating AI tools via the MCP API, you'll find everything you need here.
+Probo is an open-source governance, risk, and compliance platform for engineering, security, and compliance teams. Use these docs to understand the product model, operate a compliance program, automate records, and choose a deployment.
 
-## What is Probo?
+## Explore Probo
 
-Probo is an open-source compliance management platform that helps organizations achieve and maintain compliance across multiple frameworks — including SOC 2, ISO 27001, ISO 27701, ISO 42001, GDPR, HIPAA, CCPA, FERPA, CASA, NIS2, and DORA. Built for startups and growing companies, Probo provides risk management, evidence collection, third-party management, policy management, and audit preparation tools.
-
-## New to Probo?
+Start with the area that matches your goal.
 
 <CardGrid>
   <LinkCard
-    title="Quickstart"
-    description="Deploy Probo and set up your first compliance framework in 15 minutes"
-    href="/docs/getting-started/quickstart"
+    title="Product overview"
+    description="Understand Probo's scope, users, interfaces, and deployment options"
+    href="/docs/product/getting-started/product-overview"
   />
   <LinkCard
-    title="Core Concepts"
-    description="Understand the key concepts and data model in Probo"
-    href="/docs/getting-started/core-concepts"
+    title="Product"
+    description="Explore compliance, risk, privacy, audit, trust, identity, consent, and device capabilities"
+    href="/docs/product"
+  />
+  <LinkCard
+    title="Developers"
+    description="Automate Probo through GraphQL, the CLI, MCP, n8n, and webhooks"
+    href="/docs/developers"
+  />
+  <LinkCard
+    title="Deployment"
+    description="Compare Probo Cloud and self-hosting, then review configuration and operations"
+    href="/docs/deployment"
   />
 </CardGrid>
 
-## Deploy and Configure
+## Core product areas
+
+Probo connects the records used throughout a compliance program instead of treating them as isolated checklists.
 
 <CardGrid>
   <LinkCard
-    title="Docker Compose"
-    description="Single-node deployment with all services included"
-    href="/docs/self-hosting/docker-compose"
+    title="Compliance program"
+    description="Frameworks, controls, measures, tasks, evidence, and applicability"
+    href="/docs/product/compliance-program"
   />
   <LinkCard
-    title="Kubernetes"
-    description="Scalable deployment with managed services"
-    href="/docs/self-hosting/kubernetes"
+    title="Risk and third parties"
+    description="Risk registers, threat-based assessments, vendors, services, and subprocessors"
+    href="/docs/product/risk-management"
   />
   <LinkCard
-    title="Configuration"
-    description="YAML config files and environment variables reference"
-    href="/docs/configuration/overview"
+    title="Privacy and trust"
+    description="Processing activities, impact assessments, documents, and the Compliance Portal"
+    href="/docs/product/privacy-management"
   />
   <LinkCard
-    title="Single Sign-On"
-    description="Set up SSO with Google Workspace, Okta, and other SAML providers"
-    href="/docs/product/sso/overview"
+    title="Identity and access"
+    description="SSO, SCIM, connected applications, and access-review campaigns"
+    href="/docs/product/access-review/overview"
   />
 </CardGrid>
 
-## Cookie Consent
+## Learn the model
 
 <CardGrid>
   <LinkCard
-    title="Cookie Banner"
-    description="GDPR-compliant cookie consent collection and management"
-    href="/docs/product/cookie-banner/overview"
+    title="Core concepts"
+    description="See how the main records relate across a compliance program"
+    href="/docs/product/getting-started/core-concepts"
   />
   <LinkCard
-    title="Cookie Banner Quickstart"
-    description="Create a banner and add it to your website in minutes"
-    href="/docs/product/cookie-banner/quickstart"
+    title="Glossary"
+    description="Look up product, security, privacy, and compliance terminology"
+    href="/docs/product/getting-started/glossary"
+  />
+  <LinkCard
+    title="Choose a deployment"
+    description="Compare managed Cloud, Docker Compose, and Kubernetes"
+    href="/docs/product/getting-started/choose-deployment"
   />
 </CardGrid>
 
-## Device Posture
-
-Enroll endpoints with Probo Agent to collect security posture checks for your organization.
+## More resources
 
 <CardGrid>
   <LinkCard
-    title="Probo Agent"
-    description="Overview of the device posture agent, checks, and platforms"
-    href="/docs/product/probo-agent/overview"
-  />
-  <LinkCard
-    title="Desktop install"
-    description="macOS and Windows: package installer, then enroll from the Probo console"
-    href="/docs/product/probo-agent/desktop-install"
-  />
-  <LinkCard
-    title="Server install"
-    description="Linux and FreeBSD: install.sh or CLI enrollment"
-    href="/docs/product/probo-agent/server-install"
-  />
-  <LinkCard
-    title="Download"
-    description="Get the latest Probo Agent release"
-    href="/download"
-  />
-</CardGrid>
-
-## Automate and Integrate
-
-Receive real-time events over webhooks, automate workflows with n8n, or connect AI assistants through MCP.
-
-<CardGrid>
-  <LinkCard
-    title="Webhooks"
-    description="Subscribe to third-party, user, document, and rights-request events"
-    href="/docs/api/webhooks/overview"
-  />
-  <LinkCard
-    title="n8n Integration"
-    description="Probo action node and Probo Trigger for event-driven workflows"
-    href="/docs/api/n8n/overview"
-  />
-  <LinkCard
-    title="MCP API Overview"
-    description="Introduction to Probo's MCP Server and available tools"
-    href="/docs/api/mcp/overview"
-  />
-  <LinkCard
-    title="Integration Guides"
-    description="Step-by-step setup for Claude, ChatGPT, Cursor, VS Code, and more"
-    href="/docs/api/mcp/integrations"
-  />
-</CardGrid>
-
-## Support
-
-<CardGrid>
-  <LinkCard
-    title="Repository"
-    description="Browse source code and contribute to Probo"
+    title="GitHub repository"
+    description="Browse the source, contribute to Probo, or follow development"
     href="https://github.com/getprobo/probo"
   />
   <LinkCard
-    title="Issues"
-    description="Report bugs and request features"
+    title="Report an issue"
+    description="Report a bug or request a feature"
     href="https://github.com/getprobo/probo/issues"
   />
   <LinkCard
     title="Community"
-    description="Join our Discord community for support and discussions"
+    description="Get help and talk with the Probo community on Discord"
     href="https://discord.gg/8qfdJYfvpY"
   />
 </CardGrid>

@@ -1,2 +1,66 @@
-<slot />
-{Astro.locals.starlightRoute.toc && <slot name="right-sidebar" />}
+---
+const hasToc = Astro.locals.starlightRoute.toc;
+---
+
+<div class="docs-body min-w-0">
+  {
+    hasToc ? (
+      <div class="docs-body__grid">
+        <div class="docs-main-pane min-w-0">
+          <slot />
+        </div>
+        <aside class="docs-toc-pane">
+          <slot name="right-sidebar" />
+        </aside>
+      </div>
+    ) : (
+      <div class="docs-main-pane min-w-0">
+        <slot />
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .docs-main-pane {
+    width: 100%;
+    max-width: var(--docs-content-max-width);
+    margin-inline: auto;
+  }
+
+  .docs-body__grid {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 79.999rem) {
+    .docs-toc-pane {
+      order: -1;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .docs-body__grid {
+      grid-template-columns:
+        1fr min(var(--docs-content-max-width), 100%)
+        1fr var(--docs-toc-width);
+      column-gap: 2.5rem;
+      align-items: start;
+    }
+
+    .docs-main-pane {
+      grid-column: 2;
+      max-width: none;
+      margin-inline: unset;
+      width: 100%;
+    }
+
+    .docs-toc-pane {
+      grid-column: 4;
+      justify-self: end;
+      width: var(--docs-toc-width);
+    }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  chart: string;
+}
+
+const { chart } = Astro.props;
+---
+
+<div class="mermaid-diagram not-content">
+  <pre class="mermaid">{chart}</pre>
+</div>
+
+<style>
+  .mermaid-diagram {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+
+  .mermaid-diagram :global(pre.mermaid) {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    min-height: 12rem;
+  }
+
+  .mermaid-diagram :global(pre.mermaid svg) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .mermaid-diagram :global(pre.mermaid-error) {
+    color: var(--sl-color-red);
+    font-size: var(--sl-text-sm);
+  }
+</style>
+
+<script>
+  import { bindMermaidLifecycle } from "./mermaid-init.ts";
+
+  bindMermaidLifecycle();
+</script>

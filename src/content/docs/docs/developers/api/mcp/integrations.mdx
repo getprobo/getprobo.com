@@ -1,0 +1,131 @@
+---
+title: Integrations
+description: Choose and configure a client for the Probo MCP server
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Connect Probo to the client where you already work. Choose an integration
+below based on whether you need a conversational assistant, a code editor, a
+terminal workflow, or an application API.
+
+Each guide covers the configuration format and credential method required by
+that client.
+
+:::note[Before you connect]
+Claude integrations use interactive OAuth and open Probo in your browser for
+authorization. Integrations configured with a bearer credential use a scoped
+OAuth token created in Probo. Review [MCP
+authentication](/docs/developers/api/mcp/authentication) before creating or
+sharing credentials.
+:::
+
+## AI assistants
+
+Choose an interactive client for investigating compliance data, reviewing
+records, and completing guided tasks through conversation.
+
+<CardGrid>
+  <LinkCard
+    title="Claude.ai"
+    description="Use Probo in the Claude web application with interactive OAuth"
+    href="/docs/developers/api/mcp/claude-ai"
+  />
+  <LinkCard
+    title="Claude Desktop"
+    description="Use Probo from the macOS or Windows desktop application with interactive OAuth"
+    href="/docs/developers/api/mcp/claude-desktop"
+  />
+</CardGrid>
+
+## Code editors
+
+Use a code-editor integration when Probo context should be available alongside
+your repository and development workflow. These clients use a scoped OAuth
+token in their MCP configuration.
+
+<CardGrid>
+  <LinkCard
+    title="Cursor"
+    description="Add Probo as a remote server in a project or user mcp.json file"
+    href="/docs/developers/api/mcp/cursor"
+  />
+  <LinkCard
+    title="Visual Studio Code"
+    description="Connect GitHub Copilot agent mode with native MCP support"
+    href="/docs/developers/api/mcp/vscode"
+  />
+  <LinkCard
+    title="Windsurf"
+    description="Make Probo tools available to Cascade through a remote MCP server"
+    href="/docs/developers/api/mcp/windsurf"
+  />
+  <LinkCard
+    title="Zed"
+    description="Connect Probo as a context server in the Zed editor"
+    href="/docs/developers/api/mcp/zed"
+  />
+</CardGrid>
+
+## Terminal clients
+
+Choose a terminal client for command-line investigation, scripted development
+tasks, or workflows that do not require a graphical interface.
+
+<CardGrid>
+  <LinkCard
+    title="Claude Code"
+    description="Connect the Claude Code CLI with interactive OAuth"
+    href="/docs/developers/api/mcp/claude-code"
+  />
+  <LinkCard
+    title="OpenCode"
+    description="Add Probo to an OpenCode configuration with a scoped OAuth token"
+    href="/docs/developers/api/mcp/opencode"
+  />
+</CardGrid>
+
+## Application APIs
+
+Use an application API when you need a repeatable workflow, control over the
+available tools, or integration with your own product.
+
+<CardGrid>
+  <LinkCard
+    title="OpenAI Responses API"
+    description="Expose selected Probo tools to an application using the OpenAI SDK"
+    href="/docs/developers/api/mcp/openai"
+  />
+</CardGrid>
+
+## Connect safely
+
+Whichever client you choose:
+
+1. Connect to the MCP endpoint for the Probo deployment that contains your
+   data.
+2. Grant only the scopes needed for the intended workflow.
+3. Use a separate credential for every client or environment when interactive
+   OAuth is unavailable.
+4. Start with a read-only request and review tool arguments before approving a
+   write.
+
+If a client cannot connect, review [authentication
+errors](/docs/developers/api/mcp/authentication#authentication-errors) or test
+the endpoint with [MCP
+Inspector](/docs/developers/api/mcp/overview#explore-with-mcp-inspector).
+
+## Continue exploring
+
+<CardGrid>
+  <LinkCard
+    title="Browse MCP tools"
+    description="Find available operations, schemas, and behavior hints"
+    href="/docs/developers/api/mcp/tools"
+  />
+  <LinkCard
+    title="Paginate results"
+    description="Retrieve complete result sets from list operations"
+    href="/docs/developers/api/mcp/pagination"
+  />
+</CardGrid>

@@ -1,0 +1,40 @@
+---
+title: API fundamentals
+description: Understand Probo endpoints, OAuth tokens, identifiers, pagination, and errors
+---
+
+Probo’s public interfaces operate on the same organization-scoped records. The web console uses GraphQL, MCP exposes purpose-built tools, `prb` provides terminal commands, and n8n packages common operations for visual workflows.
+
+## Endpoints
+
+For a Probo origin such as `https://probo.example.com`, API routes are mounted below `/api`:
+
+- Console GraphQL: `/api/console/v1/graphql`
+- MCP: `/api/mcp/v1`
+- Cookie banner: `/api/cookie-banner/v1`
+- Device agent: `/api/agent/v1`
+
+Some services, including OAuth discovery, use `/.well-known` routes on the same origin.
+
+## Authentication
+
+Create a scoped access token from your account menu under **OAuth tokens** for
+clients that use static bearer authentication. Select only the required
+resource scopes, store the token in a secret manager, and rotate it after
+suspected disclosure.
+
+Interactive clients can use supported OAuth authorization flows instead. SSO
+sessions and SCIM tokens serve different purposes and should not be substituted
+for an OAuth access token.
+
+## Organization scope and identifiers
+
+Most records belong to an organization. Supply the organization identifier required by the operation and do not assume that an authenticated user can access every organization. Probo uses globally unique IDs that encode an entity type; clients must still treat IDs as opaque strings.
+
+## Pagination
+
+List operations commonly use cursor pagination. Request a bounded page, process its edges, and continue with the returned end cursor while another page is available. Do not derive cursors or rely on database ordering.
+
+## Errors
+
+Public APIs distinguish unauthenticated, forbidden, not found, invalid, and conflict conditions. Unexpected failures return a generic internal error; implementation details are intentionally not exposed. Log request context on the client without logging credentials or sensitive record content.

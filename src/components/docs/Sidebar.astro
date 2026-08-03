@@ -1,0 +1,74 @@
+---
+import MobileMenuFooter from "virtual:starlight/components/MobileMenuFooter";
+import SidebarPersister from "@astrojs/starlight/components/SidebarPersister.astro";
+import SidebarSublist from "@astrojs/starlight/components/SidebarSublist.astro";
+import {
+  getDocsSectionForPath,
+  getSidebarGroupsForSection,
+} from "../../lib/docs-navigation";
+
+const sectionId = getDocsSectionForPath(Astro.url.pathname);
+const sidebarGroups = getSidebarGroupsForSection(
+  Astro.locals.starlightRoute.sidebar,
+  sectionId,
+);
+---
+
+<SidebarPersister>
+  {
+    sidebarGroups.map(({ group, showHeading }) => (
+      <section class="sidebar-section" aria-label={group.label}>
+        {showHeading && <h2>{group.label}</h2>}
+        <div class="sidebar-section-links">
+          <SidebarSublist sublist={group.entries} nested />
+        </div>
+      </section>
+    ))
+  }
+</SidebarPersister>
+
+<div class="md:sl-hidden">
+  <MobileMenuFooter />
+</div>
+
+<style>
+  .sidebar-section + .sidebar-section {
+    margin-top: 1rem;
+    border-top: 1px solid var(--sl-color-hairline-light);
+    padding-top: 1rem;
+  }
+
+  h2 {
+    margin: 0 0 0.35rem;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  :global(.sidebar) {
+    interpolate-size: allow-keywords;
+  }
+
+  :global(.sidebar details::details-content) {
+    block-size: 0;
+    overflow-y: clip;
+    opacity: 0;
+    transition:
+      block-size 180ms cubic-bezier(0.4, 0, 0.2, 1),
+      content-visibility 180ms allow-discrete,
+      opacity 180ms ease;
+  }
+
+  :global(.sidebar details[open]::details-content) {
+    block-size: auto;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.sidebar details::details-content) {
+      transition: none;
+    }
+  }
+</style>

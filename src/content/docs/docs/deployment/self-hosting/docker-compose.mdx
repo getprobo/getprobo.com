@@ -1,0 +1,246 @@
+---
+title: Docker Compose
+description: Run Probo and its dependencies on a single host with Docker Compose
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+The Probo repository includes a Compose definition that runs Probo, PostgreSQL, SeaweedFS, and headless Chrome on one host. Use it for evaluation, internal deployments, or small installations where a single-host failure is acceptable.
+
+<Aside type="caution" title="Understand the trade-off">
+  This is not a high-availability architecture. The supplied Compose definition
+  also exposes database and storage ports, uses fixed development credentials
+  for PostgreSQL and SeaweedFS, and tracks the `latest` Probo image. Review and
+  harden it before exposing the host to the internet.
+</Aside>
+
+For workloads that require independent scaling, managed data services, or rolling updates, use the [Kubernetes deployment](/docs/deployment/self-hosting/kubernetes).
+
+## Requirements
+
+- A Linux host with Docker Engine and Docker Compose v2
+- A DNS record for the hostname you will use
+- A TLS-terminating reverse proxy or load balancer
+- An SMTP relay if you want Probo to send email
+- Enough memory for Probo and its dependencies; the supplied PostgreSQL configuration alone requests 4 GB of shared buffers
+
+## Install Probo
+
+<Steps>
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/getprobo/probo.git
+   cd probo
+   ```
+
+   Keep `compose.prod.yaml` and the `compose/` directory together. The Compose definition mounts the PostgreSQL initialization script and SeaweedFS configuration from that directory.
+
+2. **Generate application secrets**
+
+   ```bash
+   umask 077
+   openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 \
+     -out oauth2-signing-key.pem
+
+   export PROBOD_ENCRYPTION_KEY="$(openssl rand -base64 32)"
+   export PROBOD_AUTH_COOKIE_SECRET="$(openssl rand -base64 32)"
+   export PROBOD_AUTH_PASSWORD_PEPPER="$(openssl rand -base64 32)"
+   export PROBOD_TRUST_AUTH_TOKEN_SECRET="$(openssl rand -base64 32)"
+   ```
+
+   Preserve these values. Changing encryption, signing, or authentication secrets after users and data exist can invalidate sessions or make stored data inaccessible.
+
+3. **Create the environment file**
+
+   Replace `probo.example.com` and the SMTP values, then run:
+
+   ```bash
+   cat > .env <<EOF
+   PROBOD_ENCRYPTION_KEY=${PROBOD_ENCRYPTION_KEY}
+   PROBOD_AUTH_COOKIE_SECRET=${PROBOD_AUTH_COOKIE_SECRET}
+   PROBOD_AUTH_PASSWORD_PEPPER=${PROBOD_AUTH_PASSWORD_PEPPER}
+   PROBOD_TRUST_AUTH_TOKEN_SECRET=${PROBOD_TRUST_AUTH_TOKEN_SECRET}
+
+   PROBOD_BASE_URL=https://probo.example.com
+   PROBOD_API_ADDR=0.0.0.0:8080
+   PROBOD_API_CORS_ALLOWED_ORIGINS=https://probo.example.com
+
+   PROBOD_SMTP_ADDR=smtp.example.com:587
+   PROBOD_SMTP_USER=replace-with-smtp-user
+   PROBOD_SMTP_PASSWORD=replace-with-smtp-password
+   PROBOD_SMTP_TLS_REQUIRED=true
+   PROBOD_MAILER_SENDER_EMAIL=no-reply@example.com
+   EOF
+   ```
+
+   ```bash
+   chmod 600 .env oauth2-signing-key.pem
+   ```
+
+4. **Add the required OAuth signing key**
+
+   The current `compose.prod.yaml` does not pass the OAuth signing key to Probo. Create `compose.local.yaml`:
+
+   ```yaml
+   services:
+     probo:
+       environment:
+         PROBOD_OAUTH2_SERVER_SIGNING_KEY: ${PROBOD_OAUTH2_SERVER_SIGNING_KEY}
+         PROBOD_SMTP_ADDR: ${PROBOD_SMTP_ADDR}
+         PROBOD_SMTP_USER: ${PROBOD_SMTP_USER}
+         PROBOD_SMTP_PASSWORD: ${PROBOD_SMTP_PASSWORD}
+         PROBOD_SMTP_TLS_REQUIRED: ${PROBOD_SMTP_TLS_REQUIRED}
+         PROBOD_MAILER_SENDER_EMAIL: ${PROBOD_MAILER_SENDER_EMAIL}
+   ```
+
+   Export the key before every Compose command:
+
+   ```bash
+   export PROBOD_OAUTH2_SERVER_SIGNING_KEY="$(cat oauth2-signing-key.pem)"
+   ```
+
+   <Aside type="note">
+     Docker Compose only interpolates variables referenced by the Compose files.
+     Adding the key to `.env` alone is not sufficient with the current
+     `compose.prod.yaml`.
+   </Aside>
+
+5. **Review the rendered configuration**
+
+   ```bash
+   docker compose \
+     -f compose.prod.yaml \
+     -f compose.local.yaml \
+     config
+   ```
+
+   Do not continue if a required value is empty. The rendered output contains secrets, so do not save or share it.
+
+6. **Start the services**
+
+   ```bash
+   docker compose \
+     -f compose.prod.yaml \
+     -f compose.local.yaml \
+     up -d
+   ```
+
+7. **Verify startup**
+
+   ```bash
+   docker compose \
+     -f compose.prod.yaml \
+     -f compose.local.yaml \
+     ps
+
+   docker compose \
+     -f compose.prod.yaml \
+     -f compose.local.yaml \
+     logs --tail=100 probo
+
+   curl --fail http://127.0.0.1:8080/
+   ```
+
+   A successful HTTP response and a running `probo` service confirm that the application is reachable. Also test sign-in, file upload, and email delivery before inviting users.
+
+</Steps>
+
+## Put Probo behind HTTPS
+
+Terminate TLS at a reverse proxy or load balancer and forward requests to port `8080`. Preserve the original `Host`, `X-Forwarded-For`, and `X-Forwarded-Proto` headers.
+
+The supplied Compose definition publishes Probo, PostgreSQL, SeaweedFS, and Chrome ports on every host interface. Before making the server public:
+
+- restrict inbound traffic with the host or cloud firewall;
+- expose only ports `80` and `443` through the reverse proxy;
+- prevent external access to ports `5432`, `8080`, `8081`, `8333`, `8443`, `9222`, and `9333`;
+- replace the bundled PostgreSQL and SeaweedFS credentials, or use external managed services;
+- pin the Probo image to a tested release instead of `latest`.
+
+Mounting a certificate into the Probo container does not configure TLS by itself.
+
+## Data and backups
+
+The deployment stores state in three named volumes:
+
+- `probo-data` for local Probo data;
+- `postgres-data` for PostgreSQL;
+- `seaweedfs-data` for object storage.
+
+Back up PostgreSQL and SeaweedFS as one recovery point. A database dump without its corresponding objects can leave document records whose files cannot be restored.
+
+Create a database dump with:
+
+```bash
+docker compose \
+  -f compose.prod.yaml \
+  -f compose.local.yaml \
+  exec -T postgres \
+  pg_dump -U postgres -d probod --format=custom > probod.dump
+```
+
+Use a volume-aware backup tool or a storage snapshot for SeaweedFS. Stop writes while taking an offline volume backup, and test restoration on another host. Copy `.env`, `oauth2-signing-key.pem`, and any proxy configuration into your encrypted backup system separately.
+
+## Upgrade
+
+Read the release notes and take a tested backup first. Then pull and recreate the containers:
+
+```bash
+export PROBOD_OAUTH2_SERVER_SIGNING_KEY="$(cat oauth2-signing-key.pem)"
+
+docker compose \
+  -f compose.prod.yaml \
+  -f compose.local.yaml \
+  pull
+
+docker compose \
+  -f compose.prod.yaml \
+  -f compose.local.yaml \
+  up -d
+```
+
+Check the Probo logs and repeat the functional checks used during installation. Database migrations run when Probo starts; do not interrupt startup while a migration is running.
+
+## Troubleshooting
+
+### Probo exits during startup
+
+```bash
+docker compose \
+  -f compose.prod.yaml \
+  -f compose.local.yaml \
+  logs --tail=200 probo
+```
+
+If the logs report a missing `PROBOD_OAUTH2_SERVER_SIGNING_KEY`, confirm that the key is exported in the current shell and that both Compose files are included in the command.
+
+### PostgreSQL is unhealthy
+
+```bash
+docker compose \
+  -f compose.prod.yaml \
+  -f compose.local.yaml \
+  logs --tail=200 postgres
+
+docker compose \
+  -f compose.prod.yaml \
+  -f compose.local.yaml \
+  exec postgres pg_isready -U postgres -d probod
+```
+
+The supplied PostgreSQL settings require considerably more than 4 GB of total host memory. If PostgreSQL is killed by the kernel, increase host memory or review its configuration before reducing limits.
+
+### Uploads or PDF generation fail
+
+Inspect the Probo, SeaweedFS, and Chrome logs:
+
+```bash
+docker compose \
+  -f compose.prod.yaml \
+  -f compose.local.yaml \
+  logs --tail=200 probo seaweedfs chrome
+```
+
+See the [environment variable reference](/docs/deployment/configuration/environment-reference) when adding optional integrations or changing runtime behavior.

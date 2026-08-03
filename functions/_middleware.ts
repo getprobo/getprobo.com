@@ -5,35 +5,69 @@ export async function onRequest(context: {
     ASSETS: { fetch: (req: Request | URL | string) => Promise<Response> };
   };
 }): Promise<Response> {
-  const accept = context.request.headers.get("Accept") || "";
-  if (!accept.includes("text/markdown")) {
-    return context.next();
-  }
-
   const url = new URL(context.request.url);
+  const isMarkdownAlternate =
+    url.pathname.endsWith(".md") && !url.pathname.startsWith("/md/");
 
-  // Skip API routes and static assets
   if (
     url.pathname.startsWith("/api/") ||
     url.pathname.startsWith("/_astro/") ||
     url.pathname.startsWith("/static/") ||
-    url.pathname.match(/\.\w+$/)
+    (url.pathname.match(/\.\w+$/) && !isMarkdownAlternate)
   ) {
     return context.next();
   }
 
-  const path = url.pathname === "/" ? "/index" : url.pathname;
-  const mdUrl = new URL(`/md${path}.md`, url.origin);
-  const response = await context.env.ASSETS.fetch(mdUrl);
+  const accept = context.request.headers.get("Accept")?.toLowerCase() || "";
+  if (isMarkdownAlternate || accept.includes("text/markdown")) {
+    const requestPath = isMarkdownAlternate
+      ? url.pathname.slice(0, -3)
+      : url.pathname;
+    const path = requestPath === "/" ? "" : requestPath.replace(/\/+$/, "");
+    const candidates = path
+      ? [`/md${path}.md`, `/md${path}/index.md`]
+      : ["/md/index.md"];
 
-  if (response.ok) {
-    return new Response(response.body, {
-      headers: {
-        "Content-Type": "text/markdown; charset=utf-8",
-        Vary: "Accept",
-      },
-    });
+    for (const candidate of candidates) {
+      const response = await context.env.ASSETS.fetch(
+        new URL(candidate, url.origin),
+      );
+
+      if (response.ok) {
+        const headers = new Headers(response.headers);
+        headers.set("Content-Type", "text/markdown; charset=utf-8");
+        addVaryAccept(headers);
+
+        return new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers,
+        });
+      }
+    }
   }
 
-  return context.next();
+  const response = await context.next();
+  const headers = new Headers(response.headers);
+  addVaryAccept(headers);
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
+function addVaryAccept(headers: Headers): void {
+  const vary = headers.get("Vary");
+  const values = vary
+    ? vary
+        .split(",")
+        .map((value) => value.trim())
+        .filter(Boolean)
+    : [];
+
+  if (!values.some((value) => value.toLowerCase() === "accept")) {
+    headers.set("Vary", [...values, "Accept"].join(", "));
+  }
 }

@@ -1,0 +1,132 @@
+---
+title: Container Environment
+description: Generate probod configuration from environment variables with the official container image
+---
+
+import { Aside, CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+The official container image uses `probod-bootstrap` to convert `PROBOD_*`
+environment variables into a YAML configuration file before starting `probod`.
+
+<Aside type="caution" title="probod does not read these variables">
+  Environment variables are an input to `probod-bootstrap`, not to the
+  application process. When running `probod` directly, pass a [JSON or YAML
+  file](/docs/deployment/configuration/config-file) with `-cfg-file`.
+</Aside>
+
+## Startup behavior
+
+`CONFIG_FILE` selects the generated or mounted configuration file and defaults
+to `/etc/probod/config.yml`.
+
+On every container start:
+
+1. When `PROBOD_ENCRYPTION_KEY` is set, the entrypoint generates
+   `CONFIG_FILE` from the environment. Existing file content is replaced.
+2. Otherwise, the entrypoint uses the existing `CONFIG_FILE`.
+3. Startup fails when neither source is available.
+
+This makes `PROBOD_ENCRYPTION_KEY` the switch between environment-generated and
+directly managed configuration.
+
+## Required inputs
+
+`probod-bootstrap` requires four persistent secrets:
+
+| Variable                           | Purpose                                           |
+| ---------------------------------- | ------------------------------------------------- |
+| `PROBOD_ENCRYPTION_KEY`            | Encrypts sensitive application data at rest       |
+| `PROBOD_AUTH_COOKIE_SECRET`        | Signs session cookies                             |
+| `PROBOD_AUTH_PASSWORD_PEPPER`      | Adds a deployment secret to password hashing      |
+| `PROBOD_OAUTH2_SERVER_SIGNING_KEY` | PEM RSA private key used to sign OAuth 2.0 tokens |
+
+Generate separate random values for the first three settings and an RSA key for
+the signing key:
+
+```bash
+openssl rand -base64 32
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048
+```
+
+Set these values before the first production start, keep them stable across
+restarts and application instances, and include them in recovery procedures.
+
+<Aside type="danger" title="Do not rotate the encryption key by replacement">
+  Replacing `PROBOD_ENCRYPTION_KEY` does not re-encrypt existing records. Use an
+  application-supported migration procedure when one is available.
+</Aside>
+
+## Configure the application
+
+Set infrastructure and application values alongside the required secrets. This
+minimal example shows the main inputs; it is not a complete variable list.
+
+```bash
+PROBOD_BASE_URL=https://probo.example.com
+PROBOD_API_ADDR=0.0.0.0:8080
+PROBOD_API_CORS_ALLOWED_ORIGINS=https://probo.example.com
+
+PROBOD_PG_ADDR=postgres.example.com:5432
+PROBOD_PG_USERNAME=probod
+PROBOD_PG_PASSWORD=replace-me
+PROBOD_PG_DATABASE=probod
+
+PROBOD_AWS_REGION=eu-west-1
+PROBOD_AWS_BUCKET=probo-production
+```
+
+The bootstrap process applies documented defaults, converts strings to the
+required types, and fails before writing the file when a required value is
+missing or a value cannot be parsed.
+
+## Special input behavior
+
+- `PROBOD_PG_CA_BUNDLE_PATH` reads a PostgreSQL CA bundle from a file and takes
+  precedence over the inline `PROBOD_PG_CA_BUNDLE`.
+- When both `PROBOD_SAML_CERTIFICATE` and `PROBOD_SAML_PRIVATE_KEY` are absent,
+  bootstrap generates a pair. Configure a stable pair when SAML sessions must
+  survive container replacement.
+- Setting a connector client ID enables that connector and makes its client
+  secret required. Slack also requires its signing secret; Vercel also requires
+  its integration slug.
+- Comma-separated inputs are trimmed and converted to lists.
+- Boolean values use `true` or `false`. Numeric durations are expressed in the
+  unit stated in the [complete
+  reference](/docs/deployment/configuration/environment-reference).
+- PEM values must preserve their line breaks.
+
+## External secret references
+
+Every value read by `probod-bootstrap` can be a literal or an AWS secret
+reference:
+
+| Syntax                     | Service                             |
+| -------------------------- | ----------------------------------- |
+| `awssm://<secret-id>`      | AWS Secrets Manager                 |
+| `aws://<secret-id>`        | AWS Secrets Manager alias           |
+| `awsps://<parameter-name>` | AWS Systems Manager Parameter Store |
+
+```bash
+PROBOD_ENCRYPTION_KEY=awssm://probo/production/encryption-key
+PROBOD_AUTH_COOKIE_SECRET=awsps:///probo/production/cookie-secret
+```
+
+Secret resolution uses the standard AWS SDK credential and region chain.
+`PROBOD_AWS_*` configures Probo object storage; it does not authenticate secret
+resolution.
+
+## Apply changes
+
+The generated file is a startup artifact, and `probod` does not hot-reload it.
+After changing an environment variable or referenced secret, restart every
+application instance and confirm that each instance starts successfully.
+
+## Reference
+
+<CardGrid>
+  <LinkCard
+    title="Environment variable reference"
+    description="Browse every supported PROBOD_* variable, type, default, and requirement"
+    href="/docs/deployment/configuration/environment-reference"
+  />
+</CardGrid>

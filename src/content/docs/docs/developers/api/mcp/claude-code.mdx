@@ -1,0 +1,188 @@
+---
+title: Claude Code Configuration
+description: Configure the Probo MCP Server with Claude Code CLI
+---
+
+This guide shows you how to configure the Probo MCP Server with Claude Code, Anthropic's official CLI tool, enabling Claude to interact with your compliance data directly from the command line.
+
+## Prerequisites
+
+- Claude Code CLI installed (`npm install -g @anthropic-ai/claude-code`)
+- A running Probo instance with API access
+
+## Endpoint
+
+Choose the endpoint for your Probo environment:
+
+| Environment | MCP URL                                      |
+| ----------- | -------------------------------------------- |
+| Probo US    | `https://us.probo.com/api/mcp/v1`            |
+| Probo EU    | `https://eu.probo.com/api/mcp/v1`            |
+| Custom      | `https://your-probo-instance.com/api/mcp/v1` |
+
+The `/v1` segment is required.
+
+## Add the Probo MCP Server
+
+Run the following command:
+
+```bash
+claude mcp add --transport http probo https://your-probo-instance.com/api/mcp/v1
+```
+
+Replace `https://your-probo-instance.com/api/mcp/v1` with your Probo instance URL.
+
+On first use, Claude Code will open a browser window to authorize access to your Probo instance via OAuth — log in and click **Authorize**. No token generation or configuration needed.
+
+## Verify the Connection
+
+List your configured MCP servers:
+
+```bash
+claude mcp list
+```
+
+You should see `probo` in the list. Then start Claude Code and ask:
+
+```
+"List all organizations I have access to"
+```
+
+Claude should use the `listOrganizations` tool and return your organizations.
+
+## Using Claude Code with Probo
+
+### Interactive Mode
+
+```bash
+claude
+```
+
+Claude loads the Probo MCP server automatically. You can have a continuous conversation:
+
+```
+> List all third parties
+> Add a new risk for data breaches
+> Update the third-party security measure to implemented
+```
+
+### Single Command Mode
+
+```bash
+claude "List all open nonconformities"
+```
+
+### Example Commands
+
+#### Managing Risks
+
+```
+You: "Show me all risks with a residual risk score above 15"
+
+Claude: Let me fetch those high-risk items.
+[Uses listRisks tool with filtering]
+
+Found 3 high-risk items:
+1. Third-party security breach (Score: 20)
+2. Data center failure (Score: 18)
+3. Insider threat (Score: 16)
+```
+
+#### Adding Third Parties
+
+```
+You: "Add a third party named 'SecureCloud' that provides backup services"
+
+Claude: I'll add that third party now.
+[Uses addThirdParty tool]
+
+Successfully added SecureCloud as a third party.
+```
+
+## Multiple Probo Instances
+
+To connect to additional environments (e.g. staging, a different region), add them with distinct names:
+
+```bash
+claude mcp add --transport http probo-staging https://staging.probo.com/api/mcp/v1
+```
+
+Each instance prompts its own OAuth authorization on first use.
+
+## Automation Scripts
+
+### Batch Operations Script
+
+```bash
+#!/bin/bash
+# update-compliance.sh
+
+claude << EOF
+Connect to Probo and:
+1. List all risks with status 'open'
+2. For each risk, check if mitigation measures are in place
+3. Update risk status to 'mitigated' where appropriate
+4. Generate a summary report
+EOF
+```
+
+### Daily Compliance Check
+
+```bash
+#!/bin/bash
+# daily-check.sh
+
+claude "Generate a compliance status report including:
+- Number of open nonconformities
+- Risks with scores above 15
+- Overdue obligations
+- In-progress audits"
+```
+
+### CI/CD Integration
+
+```yaml
+# .github/workflows/compliance-check.yml
+name: Compliance Check
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Every Monday at 9 AM
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Compliance
+        run: |
+          npx -y @anthropic-ai/claude-code "Review current compliance status and report any critical issues"
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+## Troubleshooting
+
+### MCP Server Not Found
+
+```bash
+# List configured servers
+claude mcp list
+
+# Remove and re-add if needed
+claude mcp remove probo
+claude mcp add --transport http probo https://your-probo-instance.com/api/mcp/v1
+```
+
+### Debug Mode
+
+```bash
+claude --debug
+```
+
+## Support
+
+Need help with Claude Code configuration?
+
+- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
+- [GitHub Issues](https://github.com/getprobo/probo/issues)
+- [Discord Community](https://discord.gg/8qfdJYfvpY)

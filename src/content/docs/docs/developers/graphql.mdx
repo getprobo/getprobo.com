@@ -1,0 +1,31 @@
+---
+title: GraphQL API
+description: Query and mutate Probo records through the console GraphQL endpoint
+---
+
+The Probo console and automation clients use the GraphQL API at `/api/console/v1/graphql`. Its schema covers organizations, frameworks, controls, measures, risks, audits, privacy, access reviews, the Compliance Portal, cookie consent, devices, and other product resources.
+
+## Request shape
+
+Send GraphQL documents as authenticated `POST` requests with a JSON body containing `query` and, when needed, `variables`. Use variables for IDs and user input instead of interpolating values into a query string.
+
+```json
+{
+  "query": "query Viewer { viewer { id } }",
+  "variables": {}
+}
+```
+
+The schema is the contract for field nullability, input types, enums, and pagination. Introspect the supported deployment rather than copying fields from an unrelated version.
+
+## Connections
+
+List fields use GraphQL connections. Request only the fields the integration needs, pass a bounded `first` value, and follow `pageInfo.endCursor` while `pageInfo.hasNextPage` is true.
+
+## Mutations and errors
+
+Mutations validate authorization and current record state. A successful HTTP response can still contain GraphQL errors, so inspect both `data` and `errors`. Do not retry invalid, forbidden, or conflict errors without changing the request. Retry transient internal or transport failures only with bounded backoff and idempotency in mind.
+
+## Compatibility
+
+GraphQL is a versioned endpoint, but its schema evolves with Probo releases. Generate client types from the deployment you target and review schema changes during upgrades. MCP, CLI, and n8n operations are maintained alongside GraphQL, but transport-specific capabilities and release timing can differ.

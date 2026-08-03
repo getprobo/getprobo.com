@@ -1,0 +1,80 @@
+---
+import Article from "@phosphor-icons/core/regular/article.svg?raw";
+import BookOpenText from "@phosphor-icons/core/regular/book-open-text.svg?raw";
+import Briefcase from "@phosphor-icons/core/regular/briefcase.svg?raw";
+import CaretDown from "@phosphor-icons/core/regular/caret-down.svg?raw";
+import CaretRight from "@phosphor-icons/core/regular/caret-right.svg?raw";
+import ClockCounterClockwise from "@phosphor-icons/core/regular/clock-counter-clockwise.svg?raw";
+import Code from "@phosphor-icons/core/regular/code.svg?raw";
+import Compass from "@phosphor-icons/core/regular/compass.svg?raw";
+import Copy from "@phosphor-icons/core/regular/copy.svg?raw";
+import GithubLogo from "@phosphor-icons/core/regular/github-logo.svg?raw";
+import Handshake from "@phosphor-icons/core/regular/handshake.svg?raw";
+import Heart from "@phosphor-icons/core/regular/heart.svg?raw";
+import List from "@phosphor-icons/core/regular/list.svg?raw";
+import MagnifyingGlass from "@phosphor-icons/core/regular/magnifying-glass.svg?raw";
+import MarkdownLogo from "@phosphor-icons/core/regular/markdown-logo.svg?raw";
+import Notepad from "@phosphor-icons/core/regular/notepad.svg?raw";
+import PaintBrush from "@phosphor-icons/core/regular/paint-brush.svg?raw";
+import Question from "@phosphor-icons/core/regular/question.svg?raw";
+import Quotes from "@phosphor-icons/core/regular/quotes.svg?raw";
+import ShieldCheck from "@phosphor-icons/core/regular/shield-check.svg?raw";
+import Sparkle from "@phosphor-icons/core/regular/sparkle.svg?raw";
+import TerminalWindow from "@phosphor-icons/core/regular/terminal-window.svg?raw";
+import UsersThree from "@phosphor-icons/core/regular/users-three.svg?raw";
+import X from "@phosphor-icons/core/regular/x.svg?raw";
+
+const icons = {
+  article: Article,
+  "book-open-text": BookOpenText,
+  briefcase: Briefcase,
+  "caret-down": CaretDown,
+  "caret-right": CaretRight,
+  "clock-counter-clockwise": ClockCounterClockwise,
+  code: Code,
+  compass: Compass,
+  copy: Copy,
+  "github-logo": GithubLogo,
+  handshake: Handshake,
+  heart: Heart,
+  list: List,
+  "magnifying-glass": MagnifyingGlass,
+  "markdown-logo": MarkdownLogo,
+  notepad: Notepad,
+  "paint-brush": PaintBrush,
+  question: Question,
+  quotes: Quotes,
+  "shield-check": ShieldCheck,
+  sparkle: Sparkle,
+  "terminal-window": TerminalWindow,
+  "users-three": UsersThree,
+  x: X,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  size?: number | string;
+  class?: string;
+  label?: string;
+}
+
+const { name, size = 24, class: className, label } = Astro.props;
+const content = icons[name]
+  .replace(/^<svg[^>]*>/, "")
+  .replace(/<\/svg>\s*$/, "");
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 256 256"
+  width={size}
+  height={size}
+  fill="currentColor"
+  class={className}
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  set:html={content}
+/>

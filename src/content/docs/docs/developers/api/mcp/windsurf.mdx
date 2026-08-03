@@ -1,0 +1,148 @@
+---
+title: Windsurf
+description: Connect Windsurf Cascade to the Probo MCP server
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Windsurf Cascade supports remote HTTP MCP servers. Connect it directly to Probo with the MCP endpoint and a Bearer token.
+
+:::caution
+OAuth tokens are limited by both their scopes and your Probo permissions. Use
+a dedicated token, keep it out of version control, and review tool calls before
+approving write operations.
+:::
+
+## Prerequisites
+
+- A current version of [Windsurf](https://windsurf.com/)
+- Access to a Probo instance
+- A scoped Probo OAuth token
+
+## Endpoint
+
+Choose the endpoint for your Probo environment:
+
+| Environment | MCP URL                                      |
+| ----------- | -------------------------------------------- |
+| Probo US    | `https://us.probo.com/api/mcp/v1`            |
+| Probo EU    | `https://eu.probo.com/api/mcp/v1`            |
+| Custom      | `https://your-probo-instance.com/api/mcp/v1` |
+
+The `/v1` segment is required.
+
+## Configure Windsurf
+
+<Steps>
+
+1. **Create a Probo OAuth token**
+
+   In Probo, open your account menu, select **OAuth tokens**, and create a
+   scoped token named `Windsurf`. See
+   [Authentication](/docs/developers/api/mcp/authentication) for scope and
+   expiration guidance.
+
+2. **Set the token in your environment**
+
+   ```bash
+   export PROBO_API_TOKEN="your_api_token_here"
+   ```
+
+   Restart Windsurf after setting the variable so the application can read it.
+
+3. **Open the MCP configuration**
+
+   In the Cascade panel, open **MCPs** and select **View Raw Config**. Windsurf stores this configuration at:
+
+   ```text
+   ~/.codeium/windsurf/mcp_config.json
+   ```
+
+4. **Add the remote server**
+
+   ```json
+   {
+     "mcpServers": {
+       "probo": {
+         "serverUrl": "https://us.probo.com/api/mcp/v1",
+         "headers": {
+           "Authorization": "Bearer ${env:PROBO_API_TOKEN}"
+         }
+       }
+     }
+   }
+   ```
+
+   Replace the URL if you use the EU region or a self-hosted instance.
+
+5. **Refresh the server list**
+
+   Save the file, return to the MCP panel, and click **Refresh**. Confirm that `probo` is connected and enable the tools you want Cascade to use.
+
+</Steps>
+
+## Verify the connection
+
+Start with a read-only request:
+
+```text
+Use Probo to list the organizations I can access.
+```
+
+Cascade should ask for approval before running the tool and then return your Probo organizations. You can also ask:
+
+```text
+List the open risks for organization org_xxx.
+Summarize overdue compliance tasks without changing anything.
+```
+
+## Multiple Probo instances
+
+Give each environment its own server name and token:
+
+```json
+{
+  "mcpServers": {
+    "probo-development": {
+      "serverUrl": "http://localhost:8080/api/mcp/v1",
+      "headers": {
+        "Authorization": "Bearer ${env:PROBO_DEV_TOKEN}"
+      }
+    },
+    "probo-production": {
+      "serverUrl": "https://us.probo.com/api/mcp/v1",
+      "headers": {
+        "Authorization": "Bearer ${env:PROBO_PROD_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Use distinct token names so credentials cannot be sent to the wrong instance.
+
+## Troubleshooting
+
+### The server is not listed
+
+- Open the configuration through **MCPs → View Raw Config** to confirm you edited the active file.
+- Validate the JSON and click **Refresh**.
+- Restart Windsurf after changing environment variables.
+
+### The server returns 401
+
+- Confirm the environment variable is available to the Windsurf process.
+- Confirm the header begins with `Bearer `.
+- Generate a new token if the existing token was revoked or expired.
+
+### The server returns 404
+
+Confirm that `serverUrl` ends in `/api/mcp/v1`. The unversioned `/api/mcp` route is not a valid Probo MCP endpoint.
+
+### Tools are unavailable
+
+- Confirm the individual tools are enabled in the MCP panel.
+- Confirm your Probo role can access the requested organization and operation.
+- Test the same endpoint with the [MCP Inspector](/docs/developers/api/mcp/overview#server-exploration).
+
+For Windsurf-specific configuration behavior, see the [Windsurf MCP documentation](https://docs.windsurf.com/windsurf/cascade/mcp).

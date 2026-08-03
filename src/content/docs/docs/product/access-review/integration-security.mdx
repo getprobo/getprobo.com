@@ -1,0 +1,87 @@
+---
+title: How Probo Protects Integration Credentials
+description: How Probo stores and uses API keys and OAuth tokens for access sources, and what controls protect your data on Probo Cloud
+---
+
+import MermaidDiagram from "../../../../../components/docs/MermaidDiagram.astro";
+import credentialFlow from "./integration-credential-flow.mermaid?raw";
+
+When you connect an access source with an API key or OAuth, you authorize Probo to call the provider on your behalf. This page explains what happens to those credentials, what data Probo collects, and the controls in place on **Probo Cloud**. If you self-host Probo, see [Self-hosted deployments](#self-hosted-deployments) for operator responsibilities.
+
+## What you connect
+
+Access reviews support three connection methods:
+
+- **OAuth.** When **Add Source** offers **Connect** for a provider, you approve Probo on the provider's consent screen. Probo stores OAuth tokens needed to refresh access, not your provider password. OAuth availability depends on the provider and deployment configuration.
+- **API key.** You create a token on the provider and paste it into Probo during **Add Source**. Use the least-privilege token each connector guide describes.
+- **CSV.** No live credential is stored; you upload an export for tools Probo cannot connect to directly.
+
+For OAuth and API key flows, Probo must hold credentials that can be used again on each sync or campaign. That is why credentials are **encrypted at rest**, not hashed like a password.
+
+## Data flow
+
+The sequence diagram below follows the same lifecycle as the numbered steps that follow. Messages read top to bottom within each section. **CSV** uploads skip credential storage; only OAuth and API key paths use connect, store, and sync.
+
+<MermaidDiagram chart={credentialFlow} />
+
+## Credential lifecycle
+
+1. **Submission.** You connect a source over HTTPS from the Probo console. Organization administrators (and roles with equivalent connector permissions) can create connectors; viewers can see that a connector exists but never receive stored secret values.
+2. **Encryption before storage.** API keys, OAuth access and refresh tokens, and client secrets are serialized and encrypted with **AES-256-GCM** using a deployment encryption key. Each connector row stores the result in an **encrypted credential blob** with its own random nonce. Non-secret settings (for example a Crisp website ID) stay in separate configuration fields.
+3. **No echo back.** Listing connectors in the UI or API returns metadata only: connector id, provider, OAuth scopes where relevant, and creation time. Stored keys and tokens are not shown again after setup.
+4. **Use on demand.** Probo decrypts a credential only inside the application when it must authenticate an authorized request to the provider, for example during an access review sync. Listing connectors for display does not decrypt credentials.
+5. **Disconnect and delete.** Removing a source deletes the connector record and its encrypted credential from Probo. Disconnecting also stops new fetches from that integration. Revoke or rotate the token on the provider side as well so the old credential cannot be reused outside Probo.
+
+Some integrations use a **deployment-managed token** (for example the Crisp marketplace plugin). In that model Probo does not copy the shared plugin token into your organization's stored connection; you prove ownership of the resource separately. Check the connector guide for your provider.
+
+## Credential encryption
+
+Integration credentials receive application-level field encryption using AES-256-GCM and a random nonce for each encrypted credential blob. The encryption key is stored separately from application data.
+
+This matches the safeguards described in our [Privacy Policy](https://www.probo.com/privacy): encryption in transit, encryption at rest, and **row-level AES-256** for sensitive fields where applicable.
+
+Probo is not zero-knowledge: the service must process credentials to run integrations. The design goal is to **minimize exposure** (no re-display of secrets, decrypt only when needed, strict access control) and to **separate** the encryption key from the encrypted data.
+
+For network isolation, data-at-rest encryption, key custody, and backups, see [Probo Cloud Infrastructure Security](/docs/deployment/infrastructure-security).
+
+## Access control and tenant isolation
+
+- Connectors belong to your **organization**. Database access and authorization checks are scoped to your tenant.
+- **Owners and administrators** can create, reconnect, and delete connectors. **Viewers** can list connectors but cannot manage credentials.
+- Successful connector changes are subject to the same organization **audit logging** model as other sensitive actions. Engineering standards treat credentials and tokens as data that must not appear in logs; report a concern to [security@probo.com](mailto:security@probo.com) if you believe a secret was exposed.
+
+## What Probo collects from providers
+
+For access reviews, Probo collects **membership metadata** the provider exposes: name, email, role, admin flag, account status, MFA state, and last login where available. It does not aim to copy full account dumps or unrelated product data. See [What Probo Collects](/docs/product/access-review/overview#what-probo-collects) on the overview page.
+
+**Integration Data** is used only to operate the features you enable. We do not use it for advertising, resale, credit decisions, ad profiles, or training generalized AI models. Details are in the [Privacy Policy](https://www.probo.com/privacy) (Integration Data section).
+
+## Recommendations before you connect
+
+- Prefer **OAuth** when **Add Source** offers it for the provider.
+- Create a **dedicated, scoped** API token per provider (read-only where the guide allows). Avoid global or personal keys when a scoped token exists.
+- Store the token in a password manager until you paste it once into Probo; do not share it in chat or email.
+- **Rotate or revoke** at the provider when someone leaves or the integration is unused, then delete the source in Probo or reconnect with a new token.
+- Review who has **administrator** access in your Probo organization; those users can manage connectors.
+
+Some provider APIs do not offer a read-only or narrowly scoped credential for listing accounts. Their connector guides call this out explicitly. When a broad credential is required, use a dedicated account where the provider permits it, rotate the credential on a schedule, and remove the source when the review is no longer needed.
+
+## Network Restrictions
+
+Some providers can restrict API credentials to specific source IP addresses. For **Probo Cloud**, leave that restriction disabled unless Probo has supplied fixed egress addresses for your environment. For a **self-hosted deployment**, you can allowlist the fixed egress addresses configured by your infrastructure operator.
+
+An IP restriction that does not include the deployment's outbound address causes the connector test or campaign fetch to fail even when the credential itself is valid.
+
+## Self-hosted deployments
+
+When you run Probo yourself, **you** operate the encryption key, HTTPS ingress, database, object storage, backups, and access to production systems. Configure the required `encryption-key` in probod settings; it encrypts sensitive data at rest the same way as Probo Cloud's application layer. See [Configuration file](/docs/deployment/configuration/config-file#encryption-key) and [Self-hosting](/docs/deployment/self-hosting/docker-compose).
+
+Connector OAuth application IDs and secrets for each provider are also deployment configuration in self-hosted setups, not customer-pasted values in every case.
+
+## Related documentation
+
+- [Access Reviews overview](/docs/product/access-review/overview)
+- [Connector directory](/docs/product/access-review/directory)
+- [Probo Cloud Infrastructure Security](/docs/deployment/infrastructure-security)
+- [Privacy Policy](https://www.probo.com/privacy)
+- [Compliance Portal](https://compliance.probo.com)

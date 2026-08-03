@@ -1,0 +1,245 @@
+---
+import Icon from "../Icon.astro";
+import {
+  getDocsSection,
+  getDocsSectionForPath,
+} from "../../lib/docs-navigation";
+
+type Breadcrumb = {
+  label: string;
+  href?: string;
+};
+
+const { entry, sidebar } = Astro.locals.starlightRoute;
+type SidebarEntry = (typeof sidebar)[number];
+const { title, description } = entry.data;
+const pathname = Astro.url.pathname.replace(/\.html$/, "").replace(/\/+$/, "");
+const markdownUrl = pathname ? `/md${pathname}.md` : "/md/index.md";
+const activeSection = getDocsSection(getDocsSectionForPath(Astro.url.pathname));
+
+function firstHref(entries: SidebarEntry[]): string | undefined {
+  for (const entry of entries) {
+    if (entry.type === "link") return entry.href;
+    const href = firstHref(entry.entries);
+    if (href) return href;
+  }
+}
+
+function findCurrent(
+  entries: SidebarEntry[],
+  parents: Breadcrumb[] = [],
+): Breadcrumb[] | undefined {
+  for (const entry of entries) {
+    if (entry.type === "link" && entry.isCurrent) {
+      return [...parents, { label: entry.label }];
+    }
+
+    if (entry.type === "group") {
+      const result = findCurrent(entry.entries, [
+        ...parents,
+        { label: entry.label, href: firstHref(entry.entries) },
+      ]);
+      if (result) return result;
+    }
+  }
+}
+
+const sidebarCrumbs = findCurrent(sidebar) ?? [];
+const breadcrumbs = [
+  { label: "Home", href: "/docs" },
+  ...(activeSection.id === "product"
+    ? []
+    : [{ label: activeSection.label, href: activeSection.href }]),
+  ...sidebarCrumbs,
+].filter(
+  (crumb, index, crumbs) =>
+    index === 0 ||
+    crumb.label.toLocaleLowerCase() !==
+      crumbs[index - 1]?.label.toLocaleLowerCase(),
+);
+---
+
+<header class="docs-page-header">
+  <nav aria-label="Breadcrumb">
+    <ol class="docs-breadcrumbs">
+      {
+        breadcrumbs.map((crumb, index) => (
+          <li>
+            {index > 0 && (
+              <span class="docs-breadcrumbs__separator" aria-hidden="true">
+                /
+              </span>
+            )}
+            {crumb.href ? (
+              <a href={crumb.href}>{crumb.label}</a>
+            ) : (
+              <span aria-current="page">{crumb.label}</span>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <h1 id="_top">{title}</h1>
+  {description && <p class="docs-page-description">{description}</p>}
+
+  <div class="docs-page-actions" aria-label="Page actions">
+    <button
+      type="button"
+      class="docs-page-action"
+      data-copy-markdown
+      data-markdown-url={markdownUrl}
+    >
+      <Icon name="copy" size={18} />
+      <span data-copy-label aria-live="polite">Copy for LLM</span>
+    </button>
+    <span class="docs-page-actions__divider" aria-hidden="true"></span>
+    <a class="docs-page-action" href={markdownUrl}>
+      <Icon name="markdown-logo" size={18} />
+      View as Markdown
+    </a>
+  </div>
+</header>
+
+<style>
+  .docs-page-header {
+    border-bottom: 1px solid var(--color-border-low);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .docs-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    list-style: none;
+    color: var(--color-muted-foreground);
+    font-size: var(--sl-text-sm);
+  }
+
+  .docs-breadcrumbs li {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .docs-breadcrumbs a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .docs-breadcrumbs a:hover {
+    color: var(--color-primary);
+  }
+
+  .docs-breadcrumbs__separator {
+    color: var(--color-border-high);
+  }
+
+  #_top {
+    margin: 0 0 0.5rem !important;
+    color: var(--color-primary);
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 650;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  .docs-page-description {
+    max-width: 46rem;
+    margin: 0;
+    color: var(--color-muted-foreground);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.45;
+  }
+
+  .docs-page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .docs-page-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 0;
+    padding: 0.25rem 0;
+    background: transparent;
+    color: var(--color-muted-foreground);
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .docs-page-action:hover {
+    color: var(--color-primary);
+  }
+
+  .docs-page-action:focus-visible {
+    border-radius: 0.2rem;
+    outline: 2px solid var(--docs-accent);
+    outline-offset: 3px;
+  }
+
+  .docs-page-actions__divider {
+    width: 1px;
+    height: 1.15rem;
+    background: var(--color-border-mid);
+  }
+</style>
+
+<script>
+  async function copyText(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.append(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      textarea.remove();
+      if (!copied) throw new Error("Clipboard write failed");
+    }
+  }
+
+  if (!document.documentElement.dataset.docsCopyMarkdown) {
+    document.documentElement.dataset.docsCopyMarkdown = "true";
+    document.addEventListener("click", async (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const button = target.closest<HTMLButtonElement>("[data-copy-markdown]");
+      if (!button) return;
+
+      const label = button.querySelector<HTMLElement>("[data-copy-label]");
+      const url = button.dataset.markdownUrl;
+      if (!label || !url) return;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Markdown request failed`);
+        await copyText(await response.text());
+        label.textContent = "Copied";
+      } catch {
+        label.textContent = "Copy failed";
+      }
+
+      window.setTimeout(() => {
+        label.textContent = "Copy for LLM";
+      }, 1800);
+    });
+  }
+</script>

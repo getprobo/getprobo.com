@@ -1,0 +1,119 @@
+---
+title: Install the Probo n8n nodes
+description: Install, pin, update, or remove the Probo community node package
+---
+
+import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+
+The Probo integration is distributed as the
+[`@probo/n8n-nodes-probo`](https://www.npmjs.com/package/@probo/n8n-nodes-probo)
+verified community package. n8n distributes it directly through the node
+picker on n8n Cloud and self-hosted instances. It installs both the **Probo**
+action node and **Probo Trigger**.
+
+## Requirements
+
+- An n8n Cloud or self-hosted instance with verified community nodes enabled.
+- n8n 1.0 or later.
+- The Owner or Admin role in n8n.
+
+All instance members can use the nodes after an Owner or Admin installs them.
+If Probo does not appear in the node picker, ask the instance owner to enable
+verified community nodes.
+
+## Install directly from the node picker
+
+<Steps>
+
+1. Open a workflow canvas.
+2. Open the node picker by selecting **+**.
+3. Search for **Probo**.
+4. Select Probo from **More from the community**.
+5. Review the supported actions and select **Install**.
+6. Add **Probo** or **Probo Trigger** to the workflow.
+
+</Steps>
+
+This is the recommended installation method for both n8n Cloud and self-hosted
+n8n. See n8n's
+[verified community node guide](https://docs.n8n.io/integrations/community-nodes/installation-and-management/install-verified-community-nodes/)
+for instance-level controls.
+
+## Self-hosted installation options
+
+Self-hosted administrators can also install the npm package through **Settings
+→ Community Nodes**, manually, or through n8n's community-package environment
+variables. These options are useful for pinned container images, queue-mode
+deployments, and infrastructure-managed versions.
+
+To use **Settings → Community Nodes**, select **Install** and enter
+`@probo/n8n-nodes-probo`.
+
+For a manual installation:
+
+<Tabs>
+  <TabItem label="Latest">
+
+```bash
+mkdir -p ~/.n8n/nodes
+cd ~/.n8n/nodes
+npm install @probo/n8n-nodes-probo
+```
+
+  </TabItem>
+  <TabItem label="Pinned version">
+
+```bash
+mkdir -p ~/.n8n/nodes
+cd ~/.n8n/nodes
+npm install @probo/n8n-nodes-probo@<version>
+```
+
+  </TabItem>
+</Tabs>
+
+Restart every n8n process that loads nodes after installation. In queue mode,
+the main process and all workers must use the same package version.
+
+:::note
+Installing a package inside a running container is usually temporary. Add the
+package to the image or mount a persistent n8n data directory so it survives a
+redeploy.
+:::
+
+## Pin and update versions
+
+For production, pin the package version in your image or deployment
+configuration. Before updating:
+
+1. Review the package version currently installed in n8n.
+2. Test important workflows in a non-production n8n instance.
+3. Update every main and worker process together.
+4. Reactivate a trigger workflow if your deployment does not restore its
+   webhook registration automatically.
+
+Use n8n's community-node management UI for in-app updates. For a manual
+self-hosted installation:
+
+```bash
+cd ~/.n8n/nodes
+npm install @probo/n8n-nodes-probo@<version>
+```
+
+## Remove the package
+
+Deactivate workflows that use **Probo Trigger** before removal so n8n can
+delete their Probo webhook subscriptions. Then remove the package from
+**Settings → Community Nodes**, or run:
+
+```bash
+cd ~/.n8n/nodes
+npm uninstall @probo/n8n-nodes-probo
+```
+
+Restart n8n and revoke any Probo OAuth token that is no longer used.
+
+## Next step
+
+[Configure a Probo API credential](/docs/developers/api/n8n/authentication),
+then test a read-only operation before activating a workflow that changes data.

@@ -1,0 +1,86 @@
+---
+title: Set Up Your First Organization and Framework
+description: Create your Probo workspace, invite your team, and begin your first compliance framework
+---
+
+import { Steps, LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Once you can sign in to Probo, create the workspace that will hold your compliance program and select the first framework your team wants to manage.
+
+## Before you start
+
+You need:
+
+- Access to a Probo Cloud or self-hosted instance
+- Permission to create or administer an organization
+- A compliance framework your organization plans to follow
+- The names of the teammates who will help own the program
+
+If you do not have a running instance yet, [choose a deployment](/docs/product/getting-started/choose-deployment).
+
+## Create your compliance workspace
+
+<Steps>
+
+1. **Create an organization**
+
+   After signing in, create an organization for the company or business unit whose compliance program you want to manage. Compliance data, members, frameworks, risks, third parties, documents, and audits belong to this organization.
+
+2. **Add the people responsible for the program**
+
+   Invite the teammates who will administer Probo or own compliance work. Start with a small group that includes a compliance lead and the engineering or security leaders responsible for implementing controls.
+
+   You can configure [SAML single sign-on](/docs/product/sso/overview) and [SCIM provisioning](/docs/product/scim/overview) when you are ready to centralize access.
+
+3. **Choose your first framework**
+
+   Select the standard or regulation driving your immediate goal—for example, SOC 2, ISO 27001, or GDPR. Starting with one framework makes it easier to establish ownership and evidence-collection habits before expanding the program.
+
+4. **Import the framework**
+
+   Open the frameworks area in Probo and import the framework you selected. Review its controls to understand the requirements now tracked in your organization.
+
+5. **Review controls and define measures**
+
+   A control describes what must be achieved. A measure records the process, safeguard, or recurring activity your organization operates to satisfy one or more controls. Link existing measures where they already meet a requirement instead of duplicating work.
+
+6. **Assign owners and initial tasks**
+
+   Give measures and follow-up work clear owners. Prioritize gaps that block your certification or compliance target, then record due dates and the evidence each owner should provide.
+
+7. **Add your first evidence**
+
+   Attach a document, record, screenshot, export, or other artifact that demonstrates a measure is operating. Evidence should be current, attributable, and specific enough for a reviewer to understand what it proves.
+
+</Steps>
+
+## What to do next
+
+- Record the risks that matter most to the organization and link their mitigations.
+- Inventory critical vendors and begin third-party assessments.
+- Import or write policies, then assign review and approval work.
+- Establish a recurring cadence for evidence collection and control review.
+- Add other frameworks when the first program has clear owners and processes.
+
+<CardGrid>
+  <LinkCard
+    title="Core concepts"
+    description="Understand the Probo data model and how its records relate"
+    href="/docs/product/getting-started/core-concepts"
+  />
+  <LinkCard
+    title="Glossary"
+    description="Look up product and compliance terminology"
+    href="/docs/product/getting-started/glossary"
+  />
+  <LinkCard
+    title="MCP API"
+    description="Work with Probo records from supported AI tools"
+    href="/docs/developers/api/mcp/overview"
+  />
+  <LinkCard
+    title="CLI"
+    description="Automate Probo from the command line"
+    href="/docs/developers/cli/overview"
+  />
+</CardGrid>

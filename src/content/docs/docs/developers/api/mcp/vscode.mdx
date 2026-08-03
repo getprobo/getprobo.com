@@ -1,0 +1,127 @@
+---
+title: Visual Studio Code
+description: Connect VS Code and GitHub Copilot to the Probo MCP server
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Visual Studio Code supports remote MCP servers natively. Connect GitHub Copilot agent mode directly to Probo with an HTTP server configuration.
+
+:::caution
+OAuth tokens are limited by both their scopes and your Probo permissions. Use
+a dedicated token and review tool calls before approving write operations.
+:::
+
+## Prerequisites
+
+- A current version of [Visual Studio Code](https://code.visualstudio.com/)
+- GitHub Copilot with agent mode enabled
+- Access to a Probo instance
+- A scoped Probo OAuth token
+
+## Endpoint
+
+Choose the endpoint for your Probo environment:
+
+| Environment | MCP URL                                      |
+| ----------- | -------------------------------------------- |
+| Probo US    | `https://us.probo.com/api/mcp/v1`            |
+| Probo EU    | `https://eu.probo.com/api/mcp/v1`            |
+| Custom      | `https://your-probo-instance.com/api/mcp/v1` |
+
+The `/v1` segment is required.
+
+## Configure VS Code
+
+<Steps>
+
+1. **Create a Probo OAuth token**
+
+   In Probo, open your account menu, select **OAuth tokens**, and create a
+   scoped token named `VS Code`. See
+   [Authentication](/docs/developers/api/mcp/authentication) for scope and
+   expiration guidance.
+
+2. **Choose the configuration scope**
+
+   - Create `.vscode/mcp.json` for a workspace connection.
+   - Run **MCP: Open User Configuration** from the Command Palette for a connection available in every workspace.
+
+3. **Add the remote server**
+
+   ```json
+   {
+     "servers": {
+       "probo": {
+         "type": "http",
+         "url": "https://us.probo.com/api/mcp/v1",
+         "headers": {
+           "Authorization": "Bearer ${input:probo-api-token}"
+         }
+       }
+     },
+     "inputs": [
+       {
+         "type": "promptString",
+         "id": "probo-api-token",
+         "description": "Probo OAuth token",
+         "password": true
+       }
+     ]
+   }
+   ```
+
+   Replace the URL if you use the EU region or a self-hosted instance. VS Code stores the prompted secret separately instead of writing it into the workspace file.
+
+4. **Start the server**
+
+   Save `mcp.json`, then use the **Start** action shown above the `probo` configuration. You can also run **MCP: List Servers** from the Command Palette and select `probo`.
+
+</Steps>
+
+## Verify the connection
+
+Open Chat, select **Agent**, and start with a read-only request:
+
+```text
+Use Probo to list the organizations I can access.
+```
+
+VS Code should request the token on first use, ask for tool approval, and then return your Probo organizations. You can also ask:
+
+```text
+List the open risks for organization org_xxx.
+Summarize overdue compliance tasks without changing anything.
+```
+
+## Share workspace configuration safely
+
+You can commit `.vscode/mcp.json` when it uses an input variable. Do not replace `${input:probo-api-token}` with a literal token.
+
+Each collaborator supplies their own token, so Probo continues to enforce that person's organization access and role.
+
+## Troubleshooting
+
+### The server is not listed
+
+- Confirm the workspace file is `.vscode/mcp.json`.
+- Confirm the top-level property is `servers`, not `mcpServers`.
+- Validate the JSON and run **MCP: List Servers**.
+
+### The server returns 401
+
+- Run **MCP: Reset Cached Tools** or stop and restart the server, then enter a valid token.
+- Confirm the header begins with `Bearer `.
+- Generate a new token if the existing token was revoked or expired.
+
+### The server returns 404
+
+Confirm that the URL ends in `/api/mcp/v1`. The unversioned `/api/mcp` route is not a valid Probo MCP endpoint.
+
+### Tools are unavailable
+
+- Confirm the server is running with **MCP: List Servers**.
+- Confirm your Probo role can access the requested organization and operation.
+- Test the same endpoint with the [MCP Inspector](/docs/developers/api/mcp/overview#server-exploration).
+
+For VS Code-specific configuration behavior, see the [VS Code MCP server documentation](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).

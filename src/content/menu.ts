@@ -30,6 +30,7 @@ export type MenuFeature = {
 
 export type MenuGroup = {
   label: string;
+  showLabel?: boolean;
   items: MenuItem[];
   feature: MenuFeature;
 };
@@ -53,7 +54,7 @@ export const menuGroups: MenuGroup[] = [
       {
         label: "Open-source platform",
         description: "Deploy Probo on your own infrastructure",
-        href: "/docs/self-hosting/docker-compose",
+        href: "/docs/deployment/self-hosting/docker-compose",
         icon: "code",
       },
     ],
@@ -152,15 +153,47 @@ export const menuGroups: MenuGroup[] = [
       variant: "guide",
     },
   },
+  {
+    label: "Docs",
+    showLabel: false,
+    items: [
+      {
+        label: "Overview",
+        description: "Understand Probo and its core concepts",
+        href: "/docs",
+        icon: "book-open-text",
+      },
+      {
+        label: "Product",
+        description: "Explore Probo's GRC capabilities",
+        href: "/docs/product",
+        icon: "shield-check",
+      },
+      {
+        label: "Developers",
+        description: "Explore GraphQL, CLI, MCP, n8n, and webhooks",
+        href: "/docs/developers",
+        icon: "code",
+      },
+      {
+        label: "Deployment",
+        description: "Probo Cloud, self-hosting, and configuration",
+        href: "/docs/deployment",
+        icon: "compass",
+      },
+    ],
+    feature: {
+      eyebrow: "Documentation",
+      title: "Understand and operate Probo",
+      href: "/docs",
+      asset: "/navigation/browser.svg",
+      alt: "Probo documentation preview",
+      variant: "product",
+    },
+  },
 ];
 
 export const directMenuItems: MenuItem[] = [
-  {
-    label: "Docs",
-    description: "Documentation for Probo",
-    href: "/docs",
-    icon: "book-open-text",
-  },
   {
     label: "GitHub",
     description: "Explore our open-source compliance tools",

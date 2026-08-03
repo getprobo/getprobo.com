@@ -1,0 +1,86 @@
+---
+title: Paginate MCP tool results
+description: Continue through results returned by Probo MCP list tools
+---
+
+Probo list tools return one page at a time. If a tool's input schema includes
+`size` and `cursor`, continue through its results by passing the returned
+`next_cursor` into the next call.
+
+## Pagination loop
+
+1. Call the list tool without `cursor`.
+2. Read the items from the tool-specific result field.
+3. If the result includes `next_cursor`, call the same tool again with that
+   value as `cursor`.
+4. Stop when `next_cursor` is absent.
+
+Treat cursor values as opaque. Do not decode, edit, or construct them.
+
+## Example with `listRisks`
+
+The first call includes the organization and, optionally, a page size:
+
+```json
+{
+  "organization_id": "organization-id",
+  "size": 50
+}
+```
+
+`listRisks` returns its items in `risks`. When another page is available, the
+result also includes `next_cursor`:
+
+```json
+{
+  "risks": [
+    {
+      "id": "risk-id",
+      "name": "Unauthorized production access"
+    }
+  ],
+  "next_cursor": "cursor-value"
+}
+```
+
+Use that value in the next call:
+
+```json
+{
+  "organization_id": "organization-id",
+  "size": 50,
+  "cursor": "cursor-value"
+}
+```
+
+Continue until the result no longer includes `next_cursor`.
+
+## Keep the query unchanged
+
+A cursor belongs to the query that produced it. Keep the organization,
+filters, ordering, and page size unchanged when requesting the next page:
+
+```json
+{
+  "organization_id": "organization-id",
+  "size": 50,
+  "filter": {
+    "query": "access"
+  },
+  "cursor": "cursor-value"
+}
+```
+
+Filtering and ordering options differ by tool. Inspect the tool's input schema
+in your MCP client instead of assuming that every list tool accepts the same
+fields.
+
+## Result fields differ by tool
+
+The collection field matches the resource being listed. For example,
+`listRisks` returns `risks`, while `listThirdParties` returns `thirdParties`.
+Use the output schema advertised by the server to determine the field for a
+specific tool.
+
+For long-running jobs, process each page before requesting the next one instead
+of accumulating the complete result set in memory.

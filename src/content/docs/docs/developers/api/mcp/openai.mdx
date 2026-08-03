@@ -1,0 +1,170 @@
+---
+title: OpenAI API
+description: Use the Probo MCP server with the OpenAI Responses API
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+The OpenAI Responses API can connect directly to remote MCP servers. Pass the
+Probo endpoint and OAuth token as an MCP tool; do not translate MCP tools into
+custom REST routes.
+
+:::caution
+The model can access the Probo tools allowed by your token and request. Restrict the tool list and require approval for any operation that can change compliance data.
+:::
+
+## Prerequisites
+
+- An OpenAI API key
+- Access to a Probo instance
+- A scoped Probo OAuth token
+- A recent version of the OpenAI Python or JavaScript SDK
+
+## Endpoint
+
+Choose the endpoint for your Probo environment:
+
+| Environment | MCP URL                                      |
+| ----------- | -------------------------------------------- |
+| Probo US    | `https://us.probo.com/api/mcp/v1`            |
+| Probo EU    | `https://eu.probo.com/api/mcp/v1`            |
+| Custom      | `https://your-probo-instance.com/api/mcp/v1` |
+
+The `/v1` segment is required.
+
+## Example
+
+Install the SDK and set both credentials:
+
+<Tabs syncKey="programming-language">
+  <TabItem label="Python">
+
+```bash
+pip install --upgrade openai
+export OPENAI_API_KEY="your_openai_api_key"
+export PROBO_API_TOKEN="your_probo_api_token"
+```
+
+  </TabItem>
+  <TabItem label="JavaScript">
+
+```bash
+npm install openai
+export OPENAI_API_KEY="your_openai_api_key"
+export PROBO_API_TOKEN="your_probo_api_token"
+```
+
+  </TabItem>
+</Tabs>
+
+Call a read-only Probo tool through the Responses API:
+
+<Tabs syncKey="programming-language">
+  <TabItem label="Python">
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI()
+
+response = client.responses.create(
+    model="gpt-5.6",
+    input="List the Probo organizations I can access.",
+    tools=[
+        {
+            "type": "mcp",
+            "server_label": "probo",
+            "server_description": "Probo compliance management",
+            "server_url": "https://us.probo.com/api/mcp/v1",
+            "authorization": os.environ["PROBO_API_TOKEN"],
+            "allowed_tools": ["listOrganizations"],
+            "require_approval": "never",
+        }
+    ],
+)
+
+print(response.output_text)
+```
+
+  </TabItem>
+  <TabItem label="JavaScript">
+
+```javascript
+import OpenAI from "openai";
+
+const client = new OpenAI();
+
+const response = await client.responses.create({
+  model: "gpt-5.6",
+  input: "List the Probo organizations I can access.",
+  tools: [
+    {
+      type: "mcp",
+      server_label: "probo",
+      server_description: "Probo compliance management",
+      server_url: "https://us.probo.com/api/mcp/v1",
+      authorization: process.env.PROBO_API_TOKEN,
+      allowed_tools: ["listOrganizations"],
+      require_approval: "never",
+    },
+  ],
+});
+
+console.log(response.output_text);
+```
+
+  </TabItem>
+</Tabs>
+
+This request skips approval only because `allowed_tools` contains one read-only operation.
+
+## Approval policy
+
+Omit `require_approval` or set it to `"always"` when the model can use write operations. The response will contain an MCP approval request that your application must present to a user and send back in a follow-up Responses API call.
+
+For lower latency, you can skip approval for an explicit set of read-only tools:
+
+```json
+{
+  "allowed_tools": ["listOrganizations", "listRisks", "getRisk"],
+  "require_approval": {
+    "never": {
+      "tool_names": ["listOrganizations", "listRisks", "getRisk"]
+    }
+  }
+}
+```
+
+Do not use `"require_approval": "never"` without also restricting `allowed_tools` when the token can create or update data.
+
+## Authentication behavior
+
+The `authorization` value is your Probo OAuth token. OpenAI sends it to the MCP
+server for that request but does not store it in the Response object. Include
+it in every Responses API request that configures the Probo MCP tool.
+
+OAuth access is limited by both the token's scopes and the Probo permissions of
+the user who created it. See
+[Authentication](/docs/developers/api/mcp/authentication) for scope, expiration,
+and rotation guidance.
+
+## Troubleshooting
+
+### The MCP server returns 401
+
+- Confirm `PROBO_API_TOKEN` is set in the application process.
+- Confirm the token is active and has access to the requested organization.
+- Include `authorization` in every Responses API request.
+
+### The MCP server returns 404
+
+Confirm that `server_url` ends in `/api/mcp/v1`. The unversioned `/api/mcp` route and REST-style `/tools/{name}` routes are not valid Probo MCP endpoints.
+
+### The model cannot call a tool
+
+- Confirm the exact tool name is present in `allowed_tools`.
+- Confirm the tool is available in the [Probo MCP reference](/docs/developers/api/mcp/tools).
+- Test the same endpoint with the [MCP Inspector](/docs/developers/api/mcp/overview#server-exploration).
+
+For the Responses API approval flow and complete MCP tool schema, see the [OpenAI MCP documentation](https://developers.openai.com/api/docs/guides/tools-connectors-mcp).

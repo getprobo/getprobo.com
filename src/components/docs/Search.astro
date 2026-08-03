@@ -1,5 +1,6 @@
 ---
 import project from "virtual:starlight/project-context";
+import Icon from "../Icon.astro";
 
 const pagefindTranslations = {
   placeholder: Astro.locals.t("search.label"),
@@ -24,18 +25,7 @@ if (project.trailingSlash === "never")
     aria-label={Astro.locals.t("search.label")}
     aria-keyshortcuts="Control+K"
   >
-    <svg
-      aria-hidden="true"
-      class="astro-v37mnknz astro-c6vsoqas"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      style="--sl-icon-size: 1em;"
-      ><path
-        d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"
-      ></path></svg
-    >
+    <Icon name="magnifying-glass" size={16} />
     <span class="sl-hidden md:sl-block" aria-hidden="true"
       >{Astro.locals.t("search.label")}</span
     >
@@ -79,7 +69,10 @@ if (project.trailingSlash === "never")
 }
 <script is:inline>
   (() => {
-    const openBtn = document.querySelector("button[data-open-modal]");
+    const search = document.currentScript?.previousElementSibling;
+    if (!(search instanceof HTMLElement) || !search.matches("site-search"))
+      return;
+    const openBtn = search.querySelector("button[data-open-modal]");
     const shortcut = openBtn?.querySelector("kbd");
     if (!openBtn || !(shortcut instanceof HTMLElement)) return;
     const platformKey = shortcut.querySelector("kbd");
@@ -173,9 +166,10 @@ if (project.trailingSlash === "never")
       const shouldStrip = this.dataset.stripTrailingSlash !== undefined;
       const stripTrailingSlash = (path: string) =>
         path.replace(/(.)\/(#.*)?$/, "$1$2");
-      const formatURL = shouldStrip
-        ? stripTrailingSlash
-        : (path: string) => path;
+      const formatURL = (path: string) => {
+        const cleanPath = path.replace(/\.html(?=$|[?#])/, "");
+        return shouldStrip ? stripTrailingSlash(cleanPath) : cleanPath;
+      };
 
       if (import.meta.env.DEV) return;
       const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));

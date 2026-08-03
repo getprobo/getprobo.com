@@ -1,0 +1,78 @@
+---
+import { docsSections, getDocsSectionForPath } from "../../lib/docs-navigation";
+
+const activeSection = getDocsSectionForPath(Astro.url.pathname);
+---
+
+<nav
+  class="docs-section-nav flex min-w-0 [scrollbar-width:none] gap-7 overflow-x-auto [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+  aria-label="Documentation sections"
+>
+  {
+    docsSections.map((section) => {
+      const isActive = section.id === activeSection;
+      return (
+        <a
+          href={section.href}
+          class:list={[
+            "docs-section-nav__link shrink-0 text-sm transition-colors",
+            isActive ? "docs-section-nav__link--active" : "",
+          ]}
+          aria-current={isActive ? "page" : undefined}
+        >
+          {section.label}
+        </a>
+      );
+    })
+  }
+</nav>
+
+<style>
+  .docs-section-nav__link {
+    position: relative;
+    padding-block: 0.875rem;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--color-muted-foreground);
+  }
+
+  .docs-section-nav__link:hover {
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .docs-section-nav__link::after {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    height: 3px;
+    border-radius: 999px 999px 0 0;
+    background: var(--docs-accent);
+    content: "";
+    opacity: 0;
+    transform: scaleX(0.45);
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .docs-section-nav__link--active,
+  .docs-section-nav__link[aria-current="page"] {
+    color: var(--color-success);
+    font-weight: 600;
+  }
+
+  .docs-section-nav__link--active::after,
+  .docs-section-nav__link[aria-current="page"]::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .docs-section-nav__link::after {
+      transition: none;
+    }
+  }
+</style>

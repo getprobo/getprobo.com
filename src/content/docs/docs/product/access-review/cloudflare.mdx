@@ -3,6 +3,8 @@ title: Cloudflare
 description: Connect Cloudflare as an access source using a scoped API Token
 ---
 
+import { Steps, Badge } from "@astrojs/starlight/components";
+
 Probo reads your Cloudflare account's members through the Cloudflare API so you can review who has access.
 
 :::caution
@@ -31,10 +33,6 @@ Use a scoped **API Token** (newly created tokens are prefixed `cfut_`) created i
 
 ## Step 1: Create an API Token
 
-import { Steps, Badge } from "@astrojs/starlight/components";
-
-![Creating a custom API token in the Cloudflare dashboard](/docs/access-review/cloudflare-create-api-key.webp)
-
 <Steps>
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens), go to **My Profile** > **API Tokens** > **Create Token**, then choose **Get started** under **Custom token**.
@@ -52,7 +50,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 </Steps>
 
-Probo names the source after your first Cloudflare account and pulls its members into your campaigns.
+Probo pulls members from every Cloudflare account included in the token's scope. When the token covers several accounts, the source name uses the first account returned by Cloudflare even though the campaign includes members from all of them.
 
 ## Troubleshooting
 

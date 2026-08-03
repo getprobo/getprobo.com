@@ -1,0 +1,284 @@
+---
+title: MCP authentication
+description: Authenticate MCP clients with interactive OAuth or a scoped OAuth token
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+Probo uses OAuth 2.0 for MCP authentication. Interactive clients can complete
+the authorization flow automatically. Clients that require a static
+credential can use a scoped OAuth token created in the Probo UI.
+
+Both methods send an access token in the HTTP `Authorization` header:
+
+```http
+Authorization: Bearer <credential>
+```
+
+## OAuth discovery
+
+An MCP client should begin with the MCP endpoint for the deployment:
+
+- US: `https://us.probo.com/api/mcp/v1`
+- EU: `https://eu.probo.com/api/mcp/v1`
+- Self-hosted: `https://<your-host>/api/mcp/v1`
+
+An unauthenticated request returns `401 Unauthorized` with an
+
+<a href="https://www.rfc-editor.org/rfc/rfc9728.html" rel="nofollow">
+  RFC 9728 Protected Resource Metadata URL
+</a>
+:
+
+```http
+HTTP/1.1 401 Unauthorized
+WWW-Authenticate: Bearer resource_metadata="https://us.probo.com/.well-known/oauth-protected-resource"
+```
+
+Fetch that URL to discover the resource, authorization server, bearer-token
+method, and supported resource scopes:
+
+```json
+{
+  "resource": "https://us.probo.com",
+  "authorization_servers": ["https://us.probo.com"],
+  "bearer_methods_supported": ["header"],
+  "scopes_supported": ["openid", "v1:iam", "v1:risk"]
+}
+```
+
+The abbreviated response above illustrates the fields, not the complete scope
+list. Always use the values returned by the deployment.
+
+The authorization server publishes both discovery documents:
+
+<Tabs>
+  <TabItem label="US">
+
+```text
+https://us.probo.com/.well-known/oauth-authorization-server
+https://us.probo.com/.well-known/openid-configuration
+```
+
+  </TabItem>
+  <TabItem label="EU">
+
+```text
+https://eu.probo.com/.well-known/oauth-authorization-server
+https://eu.probo.com/.well-known/openid-configuration
+```
+
+  </TabItem>
+  <TabItem label="Self-hosted">
+
+```text
+https://<your-host>/.well-known/oauth-authorization-server
+https://<your-host>/.well-known/openid-configuration
+```
+
+  </TabItem>
+</Tabs>
+
+Discovery provides the deployment's authorization, token, registration,
+revocation, introspection, device authorization, and JWKS endpoints. It also
+advertises the supported grant types, token endpoint authentication methods,
+PKCE methods, and scopes.
+
+Probo supports:
+
+- Authorization Code with PKCE using `S256`
+- Refresh tokens with `offline_access`
+- OAuth 2.0 Device Authorization
+- Dynamic Client Registration
+- Client ID Metadata Documents
+
+MCP clients should use discovery instead of constructing OAuth endpoint URLs.
+
+## Access token lifetime and refresh
+
+Interactive clients that need to remain connected should request
+`offline_access`. Probo issues a refresh token only when both conditions are
+met:
+
+- The authorization request includes the `offline_access` scope.
+- The client registration includes the `refresh_token` grant type.
+
+When the access token expires, send the refresh token to the `token_endpoint`
+advertised by discovery:
+
+```http
+POST /api/connect/v1/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token=<refresh-token>&client_id=<client-id>
+```
+
+Probo rotates refresh tokens. A successful refresh returns a new access token
+and a new refresh token; replace both stored values atomically and do not reuse
+the previous refresh token. Reuse is treated as a replay and revokes the
+client's tokens for that user.
+
+Without `offline_access`, the user must authorize the client again after its
+access token expires.
+
+:::note
+OAuth tokens created manually in the Probo UI are standalone access tokens.
+They do not include a refresh token. Choose an appropriate expiration and
+create a replacement when needed.
+:::
+
+## Client registration
+
+### Dynamic Client Registration
+
+Clients can register through the `registration_endpoint` advertised by
+authorization server discovery. Public clients use
+`token_endpoint_auth_method: "none"` and PKCE. Confidential clients can use
+`client_secret_basic` or `client_secret_post`.
+
+### Client ID Metadata Documents (CIMD)
+
+Probo supports URL-based client identifiers. With CIMD, the OAuth `client_id`
+is an HTTPS URL that returns the client's metadata document. This allows
+clients such as hosted AI assistants to identify themselves without a
+pre-provisioned client ID or secret.
+
+The authorization server advertises support with:
+
+```json
+{
+  "client_id_metadata_document_supported": true
+}
+```
+
+A CIMD document used with Probo must:
+
+- Be served as JSON from the exact HTTPS URL used as `client_id`
+- Set `client_id` to that same URL
+- Include `client_name` and at least one `redirect_uri`
+- Use `token_endpoint_auth_method: "none"`
+- Use HTTPS redirect URIs, except HTTP loopback redirects for local clients
+- Request only scopes registered by the Probo deployment
+
+Example:
+
+```json
+{
+  "client_id": "https://client.example.com/oauth/client.json",
+  "client_name": "Example MCP Client",
+  "client_uri": "https://client.example.com",
+  "redirect_uris": ["https://client.example.com/oauth/callback"],
+  "grant_types": ["authorization_code", "refresh_token"],
+  "response_types": ["code"],
+  "token_endpoint_auth_method": "none",
+  "scope": "openid offline_access v1:iam:read v1:risk:read"
+}
+```
+
+:::note
+Self-hosted deployments accept only explicitly allowed CIMD client IDs.
+Configure the exact metadata URLs with
+[`PROBOD_OAUTH2_SERVER_CIMD_ALLOWED_CLIENT_IDS`](/docs/deployment/configuration/environment-variables#oauth2-server).
+An empty allowlist disables third-party CIMD clients.
+:::
+
+## Scopes
+
+OAuth access is the intersection of the granted scopes and the user's Probo
+permissions. A scope never gives a user access to an organization or operation
+that their account cannot otherwise access.
+
+Resource scopes use these forms:
+
+- `v1:<resource>:read` grants read operations for a resource family.
+- `v1:<resource>` grants both read and write operations for that family.
+
+For example:
+
+- `listOrganizations` requires an IAM scope such as `v1:iam:read`.
+- `listRisks` requires `v1:risk:read` or `v1:risk`.
+- Creating or updating risks requires `v1:risk`.
+- Reading third parties requires `v1:third-party:read` or
+  `v1:third-party`.
+
+Other resource families include `asset`, `audit`, `control`, `document`,
+`privacy`, `task`, `webhook`, `access-review`, `itam`, and
+`compliance-page`. The authorization server's `scopes_supported` value is the
+authoritative list for a deployment.
+
+Standard scopes have their usual OAuth and OpenID Connect meanings:
+
+- `openid` requests an OpenID Connect identity token.
+- `profile` and `email` request identity claims.
+- `offline_access` requests a refresh token.
+
+The Protected Resource Metadata document intentionally advertises the broader
+write scopes. The authorization server discovery document includes the full
+list, including `:read` variants.
+
+## OAuth tokens for static configuration
+
+If an MCP client cannot complete an interactive OAuth flow, create a scoped
+OAuth token in Probo:
+
+1. Open your account menu and select **OAuth tokens**.
+2. Select **Create token**.
+3. Enter a name, choose an expiration, and select only the scopes the client
+   needs.
+4. Create and copy the token. Probo displays its value only once.
+
+Store the token in the client's secret or environment-variable mechanism. For
+clients that support environment expansion:
+
+For clients that support environment expansion:
+
+```json
+{
+  "mcpServers": {
+    "probo": {
+      "url": "https://us.probo.com/api/mcp/v1",
+      "headers": {
+        "Authorization": "Bearer ${env:PROBO_OAUTH_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+The token is subject to both its selected scopes and the permissions of the
+account that created it. Create a separate token for each client or environment
+so that it can be audited and revoked independently.
+
+## Authentication errors
+
+A missing credential returns a discovery challenge:
+
+```http
+WWW-Authenticate: Bearer resource_metadata="https://us.probo.com/.well-known/oauth-protected-resource"
+```
+
+An invalid, expired, or unrecognized bearer credential returns:
+
+```http
+WWW-Authenticate: Bearer error="invalid_token", resource_metadata="https://us.probo.com/.well-known/oauth-protected-resource"
+```
+
+Once the MCP transport is authenticated, authorization failures are returned
+by the tool call:
+
+- `insufficient scope` means the OAuth token does not grant a scope mapped to
+  the requested operation.
+- `permission denied` means the authenticated user cannot perform the
+  operation on that resource.
+- `assumption required` means the operation requires an active organization
+  context.
+
+Changing the credential's formatting will not fix a scope or permission
+failure.
+
+## Credential handling
+
+Use HTTPS and keep tokens out of source control, logs, chat prompts, and MCP
+configuration files that will be shared. If an OAuth token may have been
+exposed, revoke it, issue a replacement, update the client, and review relevant
+activity.

@@ -3,14 +3,19 @@ title: Access Reviews Overview
 description: Connect third-party providers as access sources and run periodic access review campaigns
 ---
 
-Access reviews let you periodically check who has access to your third-party tools and whether that access is still appropriate. Probo connects to each provider, pulls the current members and their roles, and lets reviewers approve or flag each account. The decisions become the audit evidence that frameworks like SOC 2 and ISO 27001 ask for.
+Access reviews let an organization take a point-in-time snapshot of identities and permissions, record reviewer decisions, and preserve the result of the campaign. Sources can be connected providers or CSV data exported from another system.
 
 ## How It Works
 
-1. **Connect a provider** as an access source, over OAuth or with an API key.
-2. **Probo collects each account's** name, email, role, admin rights, account status, MFA state, and last login.
-3. **Run a campaign** over one or more sources. Probo snapshots access at that point in time.
-4. **Reviewers decide.** Each account is approved or flagged, and the decision is recorded as evidence.
+1. Create one or more access sources.
+2. Create a campaign and attach the sources that define its scope.
+3. Start the campaign to fetch and snapshot available access entries.
+4. Review entries, add flags where useful, and record decisions.
+5. Complete the campaign after every entry has a decision.
+
+Campaign statistics describe the current review state. The snapshot remains separate from the provider’s live directory, so remediation in a provider does not silently rewrite the decision history.
+
+See [Run an Access Review Campaign](/docs/product/access-review/campaigns) for the complete console workflow.
 
 ## What Probo Collects
 
@@ -28,8 +33,16 @@ For each account in a review, Probo shows the following, wherever the provider e
 
 ## Connection Methods
 
-- **OAuth.** You authorize Probo from the provider's consent screen.
-- **API key.** You generate a token on the provider and paste it into Probo. The token type and required permissions vary per provider, so check the [Connector Directory](/docs/product/access-review/directory).
-- **CSV.** Upload an exported user list for tools Probo can't connect to directly.
+- **OAuth.** When **Add Source** offers **Connect** for a provider, Probo sends you to that provider's consent screen. Availability depends on the provider and your Probo deployment.
+- **API key or client credentials.** You generate a credential on the provider and paste it into Probo. The credential type and required permissions vary, so check the [Connector Directory](/docs/product/access-review/directory).
+- **CSV.** Paste an exported account list for a system Probo cannot connect to directly. See [Create a CSV Access Source](/docs/product/access-review/csv-sources).
 
 Access reviews live under **Access Reviews** in your organization: the **Sources** tab connects providers, the **Campaigns** tab runs reviews.
+
+See [How Probo Protects Integration Credentials](/docs/product/access-review/integration-security) for encryption, access control, and data handling.
+
+## Review Boundaries
+
+Provider APIs expose different fields and may omit MFA, login, status, or role information. A blank value means the source did not provide it; it should not be interpreted as a passing or failing control. Reviewers remain responsible for deciding whether an identity and its access are appropriate.
+
+Recording a decision does not change the account in the provider. Complete revocations and role changes in the source system, then use the campaign record as evidence of the review.

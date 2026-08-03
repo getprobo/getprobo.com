@@ -1,0 +1,84 @@
+---
+title: Choose a Deployment
+description: Decide whether Probo Cloud or self-hosting fits your requirements
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+For most organizations, **Probo Cloud is the recommended starting point**. Choose self-hosting when a specific security, infrastructure, or data-location requirement makes operating Probo yourself necessary.
+
+## Make the decision
+
+Choose **Probo Cloud** if you want:
+
+- a production service without operating application infrastructure;
+- updates and security patches applied by Probo;
+- managed backups, monitoring, availability, and incident response;
+- EU or US data residency;
+- new OAuth connectors to work without configuring provider credentials at the deployment level.
+
+Choose **self-hosting** if you require:
+
+- a hosting location outside Probo Cloud's EU and US regions;
+- deployment inside a private network or an existing infrastructure boundary;
+- direct control over PostgreSQL, object storage, encryption keys, backups, and logs;
+- integration with your own ingress, secret management, monitoring, or recovery systems;
+- an internally operated platform—and a team prepared to maintain it.
+
+Self-hosting transfers operational control to your organization, but it also transfers responsibility for availability, upgrades, security patches, backups, monitoring, and connector configuration.
+
+## Before you self-host
+
+A production self-hosted deployment needs more than a running Probo container. Confirm that your team can provide and maintain:
+
+- PostgreSQL and S3-compatible object storage with coordinated backups;
+- HTTPS ingress, DNS, and certificate renewal;
+- stable encryption, cookie, signing, and password-pepper secrets;
+- outbound email and any required identity-provider configuration;
+- monitoring for application health, capacity, logs, and certificate expiry;
+- tested upgrade, rollback, restore, and incident-response procedures;
+- OAuth client credentials for each connector your organizations need.
+
+If these responsibilities are outside your team's scope, use Probo Cloud.
+
+## Choose a self-hosted architecture
+
+After deciding to self-host, choose the architecture that matches your operating environment:
+
+|                        | **Docker Compose**                            | **Kubernetes**                                            |
+| ---------------------- | --------------------------------------------- | --------------------------------------------------------- |
+| **Use when**           | You need a straightforward single-host setup  | Your team already operates Kubernetes                     |
+| **Infrastructure**     | One host running the application and services | Cluster, ingress, secrets, and persistent data services   |
+| **Operational effort** | Lower initial complexity                      | More flexibility with greater operational complexity      |
+| **Production fit**     | Smaller installations with a capable host     | Environments requiring orchestration and managed services |
+
+The local quickstart uses Docker Compose for evaluation. Do not treat its development defaults as a production configuration.
+
+## Start your deployment
+
+<CardGrid>
+  <LinkCard
+    title="Probo Cloud"
+    description="Review regions, managed operations, security, and shared responsibilities"
+    href="/docs/deployment/cloud"
+  />
+  <LinkCard
+    title="Self-hosted quickstart"
+    description="Run Probo locally with Docker Compose"
+    href="/docs/product/getting-started/quickstart"
+  />
+  <LinkCard
+    title="Docker Compose guide"
+    description="Plan and operate a production single-host deployment"
+    href="/docs/deployment/self-hosting/docker-compose"
+  />
+  <LinkCard
+    title="Kubernetes guide"
+    description="Deploy Probo with Helm and managed infrastructure services"
+    href="/docs/deployment/self-hosting/kubernetes"
+  />
+</CardGrid>
+
+Probo Cloud is provisioned through onboarding. To discuss region choice or security requirements, [contact Probo](/contact).
+
+After Probo is available, [set up your organization and first framework](/docs/product/getting-started/first-organization-and-framework).

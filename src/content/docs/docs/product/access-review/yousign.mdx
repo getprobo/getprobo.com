@@ -3,6 +3,8 @@ title: Yousign
 description: Connect Yousign as an access source using a production API key
 ---
 
+import { Steps, Badge } from "@astrojs/starlight/components";
+
 Probo reads your Yousign organization's members through the Yousign API so you can review who has access.
 
 :::caution
@@ -17,23 +19,19 @@ Use a **Production** API key created in Yousign under **Developers** > **API key
 
 ## Collected Fields
 
-| Probo field | Yousign field                                            | Notes                                                       |
-| ----------- | -------------------------------------------------------- | ----------------------------------------------------------- |
-| Name        | `first_name` and `last_name`                             | Combined into the member's display name                     |
-| Email       | `email`                                                  |                                                             |
-| Role        | `role`                                                   | `owner` → Owner, `admin` → Admin, `member` → Member         |
+| Probo field | Yousign field                                            | Notes                                                         |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------- |
+| Name        | `first_name` and `last_name`                             | Combined into the member's display name                       |
+| Email       | `email`                                                  |                                                               |
+| Role        | `role`                                                   | `owner` → Owner, `admin` → Admin, `member` → Member           |
 | Admin       | `role`                                                   | Flagged as an administrator when `role` is `owner` or `admin` |
-| Status      | `is_active`                                              | A member is shown as inactive when `is_active` is false     |
-| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                             |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews  |
-| Created at  | `created_at`                                             | When the member was added to the organization               |
+| Status      | `is_active`                                              | A member is shown as inactive when `is_active` is false       |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                               |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                               |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews    |
+| Created at  | `created_at`                                             | When the member was added to the organization                 |
 
 ## Step 1: Create an API Key
-
-import { Steps, Badge } from "@astrojs/starlight/components";
-
-![Creating a production API key in Yousign](/docs/access-review/yousign-create-api-key.webp)
 
 <Steps>
 
@@ -52,7 +50,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 </Steps>
 
-Probo pulls your organization's members into your campaigns.
+Probo names the source after your Yousign organization and pulls its members into your campaigns.
 
 ## Troubleshooting
 

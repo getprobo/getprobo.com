@@ -1,0 +1,147 @@
+---
+title: Cursor
+description: Connect Cursor to the Probo MCP server
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Cursor supports remote MCP servers directly. Connect it to Probo with an MCP URL and a Bearer token; no local proxy package is required.
+
+:::caution
+OAuth tokens are limited by both their scopes and your Probo permissions. Use
+a dedicated token, keep it out of version control, and review tool calls before
+approving write operations.
+:::
+
+## Prerequisites
+
+- A current version of [Cursor](https://www.cursor.com/)
+- Access to a Probo instance
+- A scoped Probo OAuth token
+
+## Endpoint
+
+Choose the endpoint for your Probo environment:
+
+| Environment | MCP URL                                      |
+| ----------- | -------------------------------------------- |
+| Probo US    | `https://us.probo.com/api/mcp/v1`            |
+| Probo EU    | `https://eu.probo.com/api/mcp/v1`            |
+| Custom      | `https://your-probo-instance.com/api/mcp/v1` |
+
+The `/v1` segment is required.
+
+## Configure Cursor
+
+<Steps>
+
+1. **Create a Probo OAuth token**
+
+   In Probo, open your account menu, select **OAuth tokens**, and create a
+   scoped token named `Cursor`. See
+   [Authentication](/docs/developers/api/mcp/authentication) for scope and
+   expiration guidance.
+
+2. **Choose the configuration scope**
+
+   Create one of these files:
+
+   - `.cursor/mcp.json` in a project for a project-specific connection
+   - `~/.cursor/mcp.json` for a connection available in every project
+
+3. **Set the token in your environment**
+
+   ```bash
+   export PROBO_API_TOKEN="your_api_token_here"
+   ```
+
+   Restart Cursor after setting the variable so the application can read it. Remote MCP servers do not support Cursor's `envFile` option.
+
+4. **Add the remote server**
+
+   ```json
+   {
+     "mcpServers": {
+       "probo": {
+         "url": "https://us.probo.com/api/mcp/v1",
+         "headers": {
+           "Authorization": "Bearer ${env:PROBO_API_TOKEN}"
+         }
+       }
+     }
+   }
+   ```
+
+   Replace the URL if you use the EU region or a self-hosted instance.
+
+5. **Enable the server**
+
+   Open Cursor settings, go to **Tools & MCP**, and confirm that `probo` is enabled and connected.
+
+</Steps>
+
+## Verify the connection
+
+Start with a read-only request:
+
+```text
+Use Probo to list the organizations I can access.
+```
+
+Cursor should ask for approval before running the tool and then return your Probo organizations. You can also ask:
+
+```text
+List the open risks for organization org_xxx.
+Summarize overdue compliance tasks without changing anything.
+```
+
+## Multiple Probo instances
+
+Give each environment its own server name and token:
+
+```json
+{
+  "mcpServers": {
+    "probo-development": {
+      "url": "http://localhost:8080/api/mcp/v1",
+      "headers": {
+        "Authorization": "Bearer ${env:PROBO_DEV_TOKEN}"
+      }
+    },
+    "probo-production": {
+      "url": "https://us.probo.com/api/mcp/v1",
+      "headers": {
+        "Authorization": "Bearer ${env:PROBO_PROD_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Use distinct token names so credentials cannot be sent to the wrong instance.
+
+## Troubleshooting
+
+### The server is not listed
+
+- Confirm the file is named `mcp.json`, not `mcp_config.json`.
+- For project configuration, confirm the path is `.cursor/mcp.json`.
+- Validate the JSON and restart Cursor.
+
+### The server returns 401
+
+- Confirm the environment variable is available to the Cursor process.
+- Confirm the header begins with `Bearer `.
+- Generate a new token if the existing token was revoked or expired.
+
+### The server returns 404
+
+Confirm that the URL ends in `/api/mcp/v1`. The unversioned `/api/mcp` route is not a valid Probo MCP endpoint.
+
+### Tools are unavailable
+
+- Check the server status under **Tools & MCP**.
+- Confirm your Probo role can access the requested organization and operation.
+- Test the same endpoint with the [MCP Inspector](/docs/developers/api/mcp/overview#server-exploration).
+
+For Cursor-specific configuration behavior, see the [Cursor MCP documentation](https://cursor.com/docs/mcp).
