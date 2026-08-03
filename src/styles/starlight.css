@@ -39,10 +39,6 @@
     display: none;
   }
 
-  header {
-    background: var(--color-secondary);
-  }
-
   .container {
     width: 100%;
     max-width: 1400px !important;
