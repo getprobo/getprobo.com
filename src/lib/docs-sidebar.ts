@@ -264,6 +264,10 @@ export const docsSidebarGroups = [
         slug: "docs/developers/cli/configuration",
       },
       {
+        label: "Autocomplete",
+        slug: "docs/developers/cli/autocomplete",
+      },
+      {
         label: "Command reference",
         collapsed: true,
         items: [

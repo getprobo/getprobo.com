@@ -1,0 +1,126 @@
+---
+title: CLI autocomplete
+description: Enable prb command and flag completion in Bash, Zsh, Fish, or PowerShell
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+The `prb completion` command generates an autocomplete script for your shell.
+It completes commands, subcommands, flags, and supported values.
+
+Choose your shell below to enable autocomplete for the current session or every
+new session.
+
+<Tabs>
+  <TabItem label="Bash">
+
+For the current session:
+
+```bash
+source <(prb completion bash)
+```
+
+To enable autocomplete for every session on Linux:
+
+```bash
+prb completion bash | sudo tee /etc/bash_completion.d/prb >/dev/null
+```
+
+On macOS with Homebrew:
+
+```bash
+brew install bash-completion@2
+prb completion bash > "$(brew --prefix)/etc/bash_completion.d/prb"
+```
+
+Start a new shell after installing the script. Bash must load
+`bash-completion` for the generated script to take effect.
+
+  </TabItem>
+  <TabItem label="Zsh">
+
+For the current session:
+
+```zsh
+source <(prb completion zsh)
+```
+
+To enable autocomplete for every session:
+
+```zsh
+prb completion zsh > "${fpath[1]}/_prb"
+```
+
+Start a new shell after installing the script. If completion is not already
+initialized by your Zsh configuration, add this to `~/.zshrc`:
+
+```zsh
+autoload -Uz compinit
+compinit
+```
+
+  </TabItem>
+  <TabItem label="Fish">
+
+For the current session:
+
+```fish
+prb completion fish | source
+```
+
+To enable autocomplete for every session:
+
+```fish
+mkdir -p ~/.config/fish/completions
+prb completion fish > ~/.config/fish/completions/prb.fish
+```
+
+The completion script is available the next time Fish starts.
+
+  </TabItem>
+  <TabItem label="PowerShell">
+
+For the current session:
+
+```powershell
+prb completion powershell | Out-String | Invoke-Expression
+```
+
+To enable autocomplete for every session, create your PowerShell profile if
+needed and add the command to it:
+
+```powershell
+if (!(Test-Path -Path $PROFILE)) {
+  New-Item -ItemType File -Path $PROFILE -Force
+}
+'prb completion powershell | Out-String | Invoke-Expression' | Add-Content $PROFILE
+```
+
+Reload your profile to use autocomplete immediately:
+
+```powershell
+. $PROFILE
+```
+
+  </TabItem>
+</Tabs>
+
+## Verify autocomplete
+
+Type a partial command and press <kbd>Tab</kbd>. For example:
+
+```console
+prb fram<Tab>
+```
+
+Your shell should complete it to `prb framework`. You can also test subcommands
+and flags:
+
+```console
+prb framework l<Tab>
+prb framework list --o<Tab>
+```
+
+If completion does not work, confirm that `prb` is available in the new shell
+and regenerate the script after upgrading the CLI so it includes the latest
+commands and flags.
