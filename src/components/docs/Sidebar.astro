@@ -1,6 +1,5 @@
 ---
 import MobileMenuFooter from "virtual:starlight/components/MobileMenuFooter";
-import SidebarPersister from "@astrojs/starlight/components/SidebarPersister.astro";
 import SidebarSublist from "@astrojs/starlight/components/SidebarSublist.astro";
 import {
   getDocsSectionForPath,
@@ -14,28 +13,50 @@ const sidebarGroups = getSidebarGroupsForSection(
 );
 ---
 
-<SidebarPersister>
-  {
-    sidebarGroups.map(({ group, showHeading }) => (
-      <section class="sidebar-section" aria-label={group.label}>
-        {showHeading && <h2>{group.label}</h2>}
-        <div class="sidebar-section-links">
-          <SidebarSublist sublist={group.entries} nested />
-        </div>
-      </section>
-    ))
-  }
-</SidebarPersister>
+{
+  sidebarGroups.map(({ group, showHeading }) => (
+    <section class="sidebar-section" aria-label={group.label}>
+      {showHeading && <h2>{group.label}</h2>}
+      <div class="sidebar-section-links">
+        <SidebarSublist sublist={group.entries} nested />
+      </div>
+    </section>
+  ))
+}
 
 <script>
+  let hasScrolledToActiveLink = false;
+
   document.addEventListener("astro:page-load", () => {
-    for (const details of document.querySelectorAll(
-      ".sidebar-section details",
-    )) {
-      if (details.querySelector('[aria-current="page"]')) {
-        details.setAttribute("open", "");
-      }
-    }
+    if (hasScrolledToActiveLink) return;
+
+    const sidebar = document.getElementById("starlight__sidebar");
+    if (!sidebar) return;
+
+    const activeLink = sidebar.querySelector<HTMLElement>(
+      '[aria-current="page"]',
+    );
+    if (!activeLink) return;
+    hasScrolledToActiveLink = true;
+
+    window.requestAnimationFrame(() => {
+      if (!sidebar.isConnected) return;
+
+      const sidebarRect = sidebar.getBoundingClientRect();
+      const activeLinkRect = activeLink.getBoundingClientRect();
+      const top =
+        sidebar.scrollTop +
+        activeLinkRect.top -
+        sidebarRect.top -
+        (sidebarRect.height - activeLinkRect.height) / 2;
+
+      sidebar.scrollTo({
+        top,
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    });
   });
 </script>
 

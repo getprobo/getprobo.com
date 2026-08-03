@@ -231,6 +231,16 @@ import SectionNav from "./SectionNav.astro";
       if (group.dataset.accordionInitialized !== undefined) continue;
       group.dataset.accordionInitialized = "";
 
+      group.querySelector(":scope > summary")?.addEventListener("click", () => {
+        if (group.open) return;
+
+        for (const otherGroup of groups) {
+          const isRelatedGroup =
+            otherGroup.contains(group) || group.contains(otherGroup);
+          if (otherGroup !== group && !isRelatedGroup) otherGroup.open = false;
+        }
+      });
+
       group.addEventListener("toggle", () => persistSidebarGroups(sidebar));
     }
   };
