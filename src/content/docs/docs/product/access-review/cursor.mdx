@@ -8,7 +8,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 Probo reads your Cursor team's members through the Cursor Admin API so you can review who has access.
 
 :::caution
-Use a **Cursor Admin API key** (`key_…`) created by a team administrator in the Cursor dashboard. A personal **User API Key** will **not** work, because it is not a team-admin key and cannot list team members through the Admin API.
+Use a team API key (`crsr_…`) with the **Read-only** scope, created by a team administrator in the Cursor dashboard. A personal **User API Key** will **not** work because it cannot list team members through the Admin API.
 :::
 
 ## Prerequisites
@@ -36,8 +36,8 @@ Use a **Cursor Admin API key** (`key_…`) created by a team administrator in th
 <Steps>
 
 1. In Cursor (signed in as a team administrator), open the dashboard at `cursor.com/dashboard`, then go to **Settings** > **Cursor Admin API Keys** (newer dashboards label this **API Keys** > **New API Key**).
-2. Create the key and name it (e.g. `Probo Access Review`). Admin API keys are team-admin scoped, so there is no scope to select.
-3. Copy the key (`key_…`) and store it securely. It's shown only once.
+2. Click **New API Key**, name it (e.g. `Probo Access Review`), and change its **Scope** from **Admin** to **Read-only**.
+3. Create and copy the key (`crsr_…`), then store it securely. It's shown only once.
 
 </Steps>
 
@@ -54,5 +54,5 @@ The Admin API exposes no team or organization name endpoint, so Probo lists the 
 
 ## Troubleshooting
 
-- **Key rejected.** Confirm it's a Cursor Admin API key (`key_…`) created by a team administrator. A personal User API Key won't work, and because the Admin API accepts only Basic auth, Bearer tokens are rejected.
+- **Key rejected.** Confirm it's a team API key (`crsr_…`) with the **Read-only** scope, created by a team administrator. A personal User API Key won't work, and because the Admin API accepts only Basic auth, Bearer tokens are rejected.
 - **No members appear.** The key must be created by a team administrator and belong to the team you're reviewing on a paid Business plan.
