@@ -27,6 +27,7 @@
 /docs/getting-started/product-overview /docs/product/getting-started/product-overview 301
 /docs/getting-started/quickstart /docs/product/getting-started/quickstart 301
 /docs/cli/authentication /docs/developers/cli/authentication 301
+/docs/cli/autocomplete /docs/developers/cli/autocomplete 301
 /docs/cli/commands/access-review /docs/developers/cli/commands/access-review 301
 /docs/cli/commands/api /docs/developers/cli/commands/api 301
 /docs/cli/commands/asset /docs/developers/cli/commands/asset 301
