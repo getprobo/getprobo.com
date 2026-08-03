@@ -48,7 +48,7 @@ const collapsedDetails = sidebarGroups.flatMap(({ group }) =>
   }
 </SidebarPersister>
 
-<script define:vars={{ collapsedDetails }} data-astro-rerun>
+<script define:vars={{ collapsedDetails }}>
   const details = document.querySelectorAll(".sidebar-section details");
   collapsedDetails.forEach((collapsed, index) => {
     if (collapsed) details[index]?.removeAttribute("open");
