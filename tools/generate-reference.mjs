@@ -391,7 +391,7 @@ function categoryForTool(name) {
     ],
     [
       "Compliance portal",
-      /CompliancePortal|Commitment|CustomDomain|ComplianceCustom|ResourceAlias/,
+      /CompliancePortal|Commitment|CustomDomain|ComplianceCustom|ResourceAlias|MailingList/,
     ],
     ["Cookie consent", /Cookie|Tracker/],
     ["Documents and approvals", /Document|Signature/],
@@ -675,7 +675,22 @@ async function generateEnvironmentReference() {
   const builderPath = join(bootstrapRoot, "builder.go");
   const builderSource = sources.get(builderPath);
   if (!builderSource) throw new Error(`Missing ${builderPath}`);
-  addDynamicConnectorVariables(occurrences, builderSource, builderPath);
+  const providerRoot = join(sourceRoot, "pkg/connector/provider");
+  const builtinProviderSource = await readFile(
+    join(providerRoot, "builtin.go"),
+    "utf8",
+  );
+  const connectorProviderSource = await readFile(
+    join(sourceRoot, "pkg/coredata/connector_provider.go"),
+    "utf8",
+  );
+  addDynamicConnectorVariables(
+    occurrences,
+    builderSource,
+    builderPath,
+    builtinProviderSource,
+    connectorProviderSource,
+  );
 
   const required = new Set([
     "PROBOD_ENCRYPTION_KEY",
@@ -731,7 +746,13 @@ async function generateEnvironmentReference() {
   );
 }
 
-function addDynamicConnectorVariables(occurrences, source, file) {
+function addDynamicConnectorVariables(
+  occurrences,
+  source,
+  file,
+  builtinProviderSource,
+  connectorProviderSource,
+) {
   const lines = source.split("\n");
   const providerPattern =
     /\{"(CONNECTOR_[A-Z0-9_]+)",\s*\[\]string\{([^}]*)\}\}/g;
@@ -760,12 +781,52 @@ function addDynamicConnectorVariables(occurrences, source, file) {
     }
   }
 
+  const providerValues = new Map(
+    [
+      ...connectorProviderSource.matchAll(
+        /ConnectorProvider([A-Za-z0-9]+)\s+ConnectorProvider\s*=\s*"([A-Z0-9_]+)"/g,
+      ),
+    ].map((match) => [match[1], match[2]]),
+  );
+  const builtinProviders = builtinProviderSource.match(
+    /for _, reg := range \[\]\*Registration\{([\s\S]*?)\}\s*\{/,
+  );
+  if (!builtinProviders) throw new Error("Cannot find builtin provider list");
+  const endpointFields = source.match(
+    /connectorEndpointFields\s*=\s*\[\]string\{([^}]*)\}/,
+  );
+  if (!endpointFields) throw new Error("Cannot find connector endpoint fields");
+  const endpointLine = source
+    .slice(0, source.indexOf('"PROBOD_CONNECTOR_" + string(r.Provider)'))
+    .split("\n").length;
+  const fields = [...endpointFields[1].matchAll(/"([A-Z0-9_]+)"/g)].map(
+    (match) => match[1],
+  );
+  for (const registration of builtinProviders[1].matchAll(
+    /([a-z][A-Za-z0-9]+)Registration\(\)/g,
+  )) {
+    const providerName =
+      registration[1][0].toUpperCase() + registration[1].slice(1);
+    const provider = [...providerValues].find(
+      ([name]) => name.toLowerCase() === providerName.toLowerCase(),
+    )?.[1];
+    if (!provider) {
+      throw new Error(`Cannot resolve connector provider ${providerName}`);
+    }
+    for (const field of fields) {
+      const name = `PROBOD_CONNECTOR_${provider}_ENDPOINT_${field}`;
+      if (!occurrences.has(name)) {
+        occurrences.set(name, { file, line: endpointLine });
+      }
+    }
+  }
+
   const unresolved = lines
     .map((value, index) => ({ value, line: index + 1 }))
     .filter(({ value }) => /"PROBOD_[A-Z0-9_]*"\s*\+/.test(value));
-  if (unresolved.length !== 4) {
+  if (unresolved.length !== 5) {
     throw new Error(
-      `Expected four dynamic PROBOD variable expressions in ${file}, found ${unresolved.length}`,
+      `Expected five dynamic PROBOD variable expressions in ${file}, found ${unresolved.length}`,
     );
   }
 }
