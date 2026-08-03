@@ -1,69 +1,82 @@
 # Probo
 
-> Probo is an open-source compliance automation platform that helps companies achieve SOC 2, ISO 27001, GDPR, HIPAA, and other security certifications with expert guidance and done-for-you services. Backed by Y Combinator (W25).
+> Probo is an open-source compliance management platform with expert-led services that help companies become and stay compliant.
 
-Probo provides dedicated compliance officers who manage your program end-to-end — policies, controls, risk assessments, vendor reviews, and audit coordination. Open source, Slack-native, and backed by Y Combinator (W25).
+Probo combines compliance software with dedicated compliance officers who manage policies, controls, risk assessments, vendor reviews, evidence, and audit coordination. Probo supports frameworks including SOC 2, ISO 27001, ISO 27701, ISO 42001, GDPR, HIPAA, CCPA, FERPA, CASA, NIS2, and DORA. Probo is open source and backed by Y Combinator (W25).
 
-## How to read this site
+## LLM resources
 
-Every page on this site supports content negotiation. Request any URL with the `Accept: text/markdown` header to get a clean markdown version — no navigation, scripts, or styling. This is the recommended way for LLMs and AI agents to consume this site.
+- [Documentation index for LLMs](https://www.probo.com/llms-docs.txt): Links to every documentation page in clean Markdown.
+- [Complete documentation corpus](https://www.probo.com/llms-full.txt): All Probo documentation in one text file.
+- [XML sitemap](https://www.probo.com/sitemap-index.xml): Discover all public pages.
 
-Example: `curl -H "Accept: text/markdown" https://www.probo.com/about`
+For a token-efficient Markdown version of a supported page, request its canonical URL with the `Accept: text/markdown` header:
 
-## Pages
+`curl -H "Accept: text/markdown" https://www.probo.com/docs/product/getting-started/product-overview`
 
-- [Homepage](https://www.probo.com/)
-- [About](https://www.probo.com/about)
-- [Contact](https://www.probo.com/contact)
-- [Customer Stories](https://www.probo.com/stories)
-- [Blog](https://www.probo.com/blog)
+## Product and services
+
+- [Probo homepage](https://www.probo.com/): Expert-led compliance, done for you.
+- [Compliance Portal](https://www.probo.com/products/compliance-portal): Share security and compliance documents with customers.
+- [Open-source deployment](https://www.probo.com/docs/deployment/self-hosting): Run Probo on your own infrastructure.
+- [Download Probo Agent](https://www.probo.com/download): Install the desktop agent.
+
+## Resources
+
+- [Guides and tools](https://www.probo.com/hub): Compliance guides, comparisons, and free tools.
+- [Customer stories](https://www.probo.com/stories): How companies use Probo to achieve compliance.
+- [Blog](https://www.probo.com/blog): Compliance and security articles from the Probo team.
+- [Changelog](https://www.probo.com/changelog): Product updates and new features.
 
 ## Compliance Guides
 
-- [What is SOC 2? The Complete Guide](https://www.probo.com/hub/soc2)
-- [What is ISO 27001? The Complete Guide](https://www.probo.com/hub/iso27001)
-- [NIS2 Compliance Guide](https://www.probo.com/hub/nis2-compliance)
-- [NIS2 for Tech Teams](https://www.probo.com/hub/nis2-tech-teams)
-- [SOC 2 vs ISO 27001: Which Framework?](https://www.probo.com/hub/which-compliance-framework)
-- [What is Compliance Software?](https://www.probo.com/hub/what-is-compliance-software)
-- [Probo vs Vanta](https://www.probo.com/hub/probo-vs-vanta)
-- [AI Coding Tools & SOC 2 Compliance](https://www.probo.com/hub/ai-coding-tools-soc2-compliance)
-- [Third-Party Risk Management](https://www.probo.com/hub/third-party-risk-management)
-- [Cloud Security Best Practices](https://www.probo.com/hub/cloud-security-best-practices)
-- [ISO 27001 certification cost: what founders actually pay in 2026](https://www.probo.com/hub/iso27001-certification-cost)
-- [Evaluate SOC 2 Report Quality](https://www.probo.com/hub/evaluate-soc2-report-quality)
-- [Top Compliance Automation Tools 2026](https://www.probo.com/hub/top-compliance-automation-tools-2026)
-- [Top GRC Tools 2026](https://www.probo.com/hub/top-grc-tools-2026)
-- [Compliance Recommender](https://www.probo.com/hub/compliance-recommender)
+- [SOC 2 guide](https://www.probo.com/hub/soc2)
+- [ISO 27001 guide](https://www.probo.com/hub/iso27001)
+- [NIS2 compliance guide](https://www.probo.com/hub/nis2-compliance)
+- [SOC 2 vs. ISO 27001](https://www.probo.com/hub/which-compliance-framework)
+- [What is compliance software?](https://www.probo.com/hub/what-is-compliance-software)
+- [Third-party risk management](https://www.probo.com/hub/third-party-risk-management)
+- [Compliance framework recommender](https://www.probo.com/hub/compliance-recommender)
 
 ## Documentation
 
-- [Documentation Index](https://www.probo.com/docs)
-- [Product Overview](https://www.probo.com/docs/product/getting-started/product-overview)
-- [Core Concepts](https://www.probo.com/docs/product/getting-started/core-concepts)
-- [Product Reference](https://www.probo.com/docs/product)
-- [Compliance Program](https://www.probo.com/docs/product/compliance-program)
-- [Risk Management](https://www.probo.com/docs/product/risk-management)
-- [Third-Party Management](https://www.probo.com/docs/product/third-party-management)
-- [Privacy Management](https://www.probo.com/docs/product/privacy-management)
-- [Audits and Findings](https://www.probo.com/docs/product/audits-and-findings)
-- [Document Management](https://www.probo.com/docs/product/document-management)
+- [Documentation overview](https://www.probo.com/docs)
+- [Product overview](https://www.probo.com/docs/product/getting-started/product-overview)
+- [Choose a deployment](https://www.probo.com/docs/product/getting-started/choose-deployment)
+- [Core concepts](https://www.probo.com/docs/product/getting-started/core-concepts)
+- [Product documentation](https://www.probo.com/docs/product)
+- [Identity and access](https://www.probo.com/docs/product/identity-and-access)
+- [Access reviews](https://www.probo.com/docs/product/access-review/overview)
 - [Compliance Portal](https://www.probo.com/docs/product/compliance-portal)
-- [Access Reviews](https://www.probo.com/docs/product/access-review/overview)
-- [Cookie Consent](https://www.probo.com/docs/product/cookie-banner/overview)
+- [Cookie consent](https://www.probo.com/docs/product/cookie-banner/overview)
 - [Probo Agent](https://www.probo.com/docs/product/probo-agent/overview)
-- [Developer Documentation](https://www.probo.com/docs/developers)
-- [API Fundamentals](https://www.probo.com/docs/developers/api-overview)
+
+## Developer documentation
+
+- [Developer overview](https://www.probo.com/docs/developers)
+- [API fundamentals](https://www.probo.com/docs/developers/api-overview)
 - [GraphQL API](https://www.probo.com/docs/developers/graphql)
 - [CLI](https://www.probo.com/docs/developers/cli/overview)
-- [CLI Command Reference](https://www.probo.com/docs/developers/cli/commands)
-- [MCP](https://www.probo.com/docs/developers/api/mcp/overview)
-- [MCP Tool Reference](https://www.probo.com/docs/developers/api/mcp/tools)
-- [n8n](https://www.probo.com/docs/developers/api/n8n/overview)
+- [CLI command reference](https://www.probo.com/docs/developers/cli/commands)
+- [MCP server](https://www.probo.com/docs/developers/api/mcp/overview)
+- [MCP tool reference](https://www.probo.com/docs/developers/api/mcp/tools)
+- [n8n integration](https://www.probo.com/docs/developers/api/n8n/overview)
 - [Webhooks](https://www.probo.com/docs/developers/api/webhooks/overview)
-- [Deployment](https://www.probo.com/docs/deployment)
+
+## Deployment documentation
+
+- [Deployment overview](https://www.probo.com/docs/deployment)
 - [Probo Cloud](https://www.probo.com/docs/deployment/cloud)
-- [Self-Hosting](https://www.probo.com/docs/deployment/self-hosting)
+- [Self-hosting](https://www.probo.com/docs/deployment/self-hosting)
 - [Docker Compose](https://www.probo.com/docs/deployment/self-hosting/docker-compose)
 - [Kubernetes](https://www.probo.com/docs/deployment/self-hosting/kubernetes)
 - [Configuration](https://www.probo.com/docs/deployment/configuration/overview)
+
+## Company and community
+
+- [About Probo](https://www.probo.com/about)
+- [Careers](https://www.probo.com/careers)
+- [Contact](https://www.probo.com/contact)
+- [Security and compliance portal](https://compliance.probo.com)
+- [GitHub repository](https://github.com/getprobo/probo)
+- [Discord community](https://discord.com/invite/8qfdJYfvpY)
