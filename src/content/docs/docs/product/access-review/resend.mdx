@@ -3,7 +3,7 @@ title: Resend
 description: Connect Resend as an access source using a Full access API key
 ---
 
-Probo reads your Resend account's API keys through the Resend API so you can review which programmatic credentials have access.
+Probo reads your Resend account's API keys through the Resend API so you can review which programmatic credentials have access. It does not collect the people on your Resend team, because the Resend API does not expose them.
 
 :::caution
 Use a **Full access** API key (`re_…`) created in the Resend dashboard. A **Sending access** key (also prefixed `re_…`) will **not** work, because it can only send emails and cannot read your account's API keys.
@@ -17,7 +17,7 @@ Use a **Full access** API key (`re_…`) created in the Resend dashboard. A **Se
 
 ## Collected Fields
 
-Resend exposes the account's API keys rather than human members, so each reviewed account is an API key (a service account).
+The Resend dashboard lists your team members under **Settings** > **Team**, but the public API has no endpoint that returns them, so Probo cannot collect them. Resend exposes the account's API keys instead, so each reviewed account is an API key (a service account) with no email or role, and no account is flagged admin. To review the people on your Resend team, add them through a [CSV source](/docs/product/access-review/csv-sources).
 
 The Full access key used to connect Probo is part of the same API-key inventory and can therefore appear in the campaign. Review it like any other privileged programmatic credential.
 
@@ -62,3 +62,4 @@ Probo lists the source as **Resend** and pulls the account's API keys into your 
 
 - **Key rejected.** Confirm it is a **Full access** key (`re_…`). A Sending access key only sends emails and will not connect.
 - **No API keys appear.** The key must have **Full access** and belong to the Resend account you are reviewing.
+- **Team members do not appear.** The Resend API returns no team members, so this source only ever contains API keys. Review the people on your team from **Settings** > **Team** in the Resend dashboard, and track them in Probo with a [CSV source](/docs/product/access-review/csv-sources).
