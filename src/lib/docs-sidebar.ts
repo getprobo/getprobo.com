@@ -240,6 +240,7 @@ export const docsSidebarGroups = [
         label: "Install",
         collapsed: true,
         items: [
+          { label: "Overview", slug: "docs/product/probo-agent/install" },
           { label: "macOS", slug: "docs/product/probo-agent/macos" },
           { label: "Windows", slug: "docs/product/probo-agent/windows" },
           { label: "Linux", slug: "docs/product/probo-agent/linux" },

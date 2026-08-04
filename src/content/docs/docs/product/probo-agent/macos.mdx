@@ -4,7 +4,6 @@ description: Install Probo Agent on macOS with the signed package and enroll fro
 ---
 
 import { Steps } from "@astrojs/starlight/components";
-import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 The recommended way to set up Probo Agent on a Mac is:
 
@@ -98,23 +97,3 @@ sudo probo-agent uninstall
 ```
 
 Uninstall stops the service, unenrolls the device, removes tray auto-start where applicable, and deletes local agent state.
-
-## Next steps
-
-<CardGrid>
-  <LinkCard
-    title="Commands"
-    description="Full command reference for install, status, collect, update, and uninstall"
-    href="/docs/product/probo-agent/commands"
-  />
-  <LinkCard
-    title="Windows"
-    description="Install with the signed MSI and enroll from the Probo console"
-    href="/docs/product/probo-agent/windows"
-  />
-  <LinkCard
-    title="Linux"
-    description="Install and enroll on Linux with install.sh or the CLI"
-    href="/docs/product/probo-agent/linux"
-  />
-</CardGrid>

@@ -1,0 +1,46 @@
+---
+title: Install Probo Agent
+description: Choose the install and enrollment path for your operating system
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Install Probo Agent on each device you want to enroll, then complete enrollment so posture checks report to your organization.
+
+## Choose your platform
+
+| Platform | Best for                         | Install path                                      |
+| -------- | -------------------------------- | ------------------------------------------------- |
+| macOS    | Laptops and desktops             | Signed `.pkg`, then enroll in the browser         |
+| Windows  | Laptops and desktops             | Signed `.msi`, then enroll in the browser         |
+| Linux    | Servers and headless hosts       | `install.sh` or `probo-agent install` with a token |
+| FreeBSD  | Servers and headless hosts       | `install.sh` or `probo-agent install` with a token |
+
+On macOS and Windows, prefer the package installer and Probo console enrollment. On Linux and FreeBSD, pass the server URL and enrollment token on the command line.
+
+Download the latest release from the [Download page](/download) or from [GitHub Releases](https://github.com/getprobo/probo/releases) under the `probo-agent/v*` tag.
+
+## Platform guides
+
+<CardGrid>
+  <LinkCard
+    title="macOS"
+    description="Signed universal .pkg, then enroll from the Probo console"
+    href="/docs/product/probo-agent/macos"
+  />
+  <LinkCard
+    title="Windows"
+    description="Signed .msi, then enroll from the Probo console"
+    href="/docs/product/probo-agent/windows"
+  />
+  <LinkCard
+    title="Linux"
+    description="install.sh or CLI enrollment with a one-shot token"
+    href="/docs/product/probo-agent/linux"
+  />
+  <LinkCard
+    title="FreeBSD"
+    description="install.sh or CLI enrollment with a one-shot token"
+    href="/docs/product/probo-agent/freebsd"
+  />
+</CardGrid>

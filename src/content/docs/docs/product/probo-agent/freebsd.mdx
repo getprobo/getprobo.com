@@ -3,8 +3,6 @@ title: FreeBSD
 description: Install and enroll Probo Agent on FreeBSD with install.sh or the CLI
 ---
 
-import { LinkCard, CardGrid } from "@astrojs/starlight/components";
-
 Install and enroll Probo Agent on FreeBSD from the command line. This path is for servers and other headless hosts where there is no tray or browser enrollment.
 
 Download the latest release from the [Download page](/download) or from [GitHub Releases](https://github.com/getprobo/probo/releases) under the `probo-agent/v*` tag.
@@ -98,23 +96,3 @@ probo-agent uninstall
 ```
 
 Uninstall stops the service, unenrolls the device, and deletes local agent state.
-
-## Next steps
-
-<CardGrid>
-  <LinkCard
-    title="Commands"
-    description="Full command reference for install, status, collect, update, and uninstall"
-    href="/docs/product/probo-agent/commands"
-  />
-  <LinkCard
-    title="Linux"
-    description="Install and enroll on Linux with install.sh or the CLI"
-    href="/docs/product/probo-agent/linux"
-  />
-  <LinkCard
-    title="macOS"
-    description="Install with the signed package and enroll from the Probo console"
-    href="/docs/product/probo-agent/macos"
-  />
-</CardGrid>
