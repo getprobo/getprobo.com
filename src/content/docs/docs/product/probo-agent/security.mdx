@@ -64,6 +64,22 @@ When auto-update is enabled, the agent checks GitHub Releases under the `probo-a
 
 You can disable automatic upgrades at install time (`--no-auto-update` / `PROBO_NO_AUTO_UPDATE`). See [Commands](/docs/product/probo-agent/commands).
 
+## Implementation
+
+The agent core is written in **Go**: garbage-collected memory, bounds-checked slices, and a single static binary per platform. That choice reduces whole classes of memory-corruption bugs common in C/C++ agents, without introducing a scripted or interpreted runtime on the device.
+
+We also keep **dependencies to a minimum**. The agent prefers the Go standard library and a small set of well-scoped packages (for example Cosign/Sigstore verification and OS APIs) instead of a large third-party tree. Fewer dependencies means a smaller supply-chain surface to review, pin, and update.
+
+The agent is **open source**. Source, release workflows, and signed artifacts live in the [getprobo/probo](https://github.com/getprobo/probo) repository (`cmd/probo-agent`, `pkg/deviceagent`), so security teams can audit the check set, API client, and update verifier themselves—not take those claims on trust alone.
+
+A few notes on scope:
+
+- Posture collection, heartbeat, enrollment exchange, and self-update logic all live in that Go binary—the same code path on macOS, Windows, Linux, and FreeBSD.
+- Platform helpers stay narrow. On macOS, a small signed **Swift** privileged helper exists only to complete browser enrollment over XPC; it is not a general remote-control or scripting surface.
+- Auto-update never runs unsigned bits: only Cosign/Sigstore-verified release artifacts replace the binary (see [Updates and integrity](#updates-and-integrity)).
+
+Language choice and a lean dependency set support the push-only model; they do not replace it. The stronger guarantee remains that Probo cannot send the agent work to do.
+
 ## Compared to MDM
 
 Mobile Device Management products are built to **control** endpoints: push configuration profiles, enforce settings, install apps, lock or wipe devices, and often run remote actions. Probo Agent is built to **observe** endpoints for compliance evidence.
