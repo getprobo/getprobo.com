@@ -1,0 +1,91 @@
+---
+title: Security
+description: How Probo Agent reports posture without remote control—push-only design, fixed checks, and signed updates
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Probo Agent is a **posture reporter**, not a device management tool. It enrolls a device, runs a fixed set of local security checks, and pushes the results to your Probo organization. It is deliberately **not** an MDM: the Probo server cannot send commands to the device, install software, change settings, or run arbitrary checks.
+
+## Design philosophy
+
+The agent follows a simple rule: **the device talks to Probo; Probo never talks back with work to do.**
+
+| This agent does                         | This agent does not                                      |
+| --------------------------------------- | -------------------------------------------------------- |
+| Collect local posture signals           | Receive shell commands, scripts, or policies from Probo  |
+| Push heartbeats and check results       | Open a control channel for the server to call the device |
+| Enroll and unenroll with local consent  | Lock, wipe, or reconfigure the machine like an MDM       |
+| Self-update from signed GitHub Releases | Download and run unsigned or server-supplied binaries    |
+
+That boundary exists so employees and operators can treat the agent as observability for compliance—not as remote administration of their laptop or server.
+
+## Push-only communication
+
+All agent API traffic is **agent-initiated** HTTPS to `/api/agent/v1`. The published surface is:
+
+| Endpoint     | Direction                         | Purpose                                      |
+| ------------ | --------------------------------- | -------------------------------------------- |
+| `POST /enroll`     | Agent → server              | Exchange a one-shot enrollment token for a device API key |
+| `POST /heartbeat`  | Agent → server              | Report host identity and receive schedule intervals       |
+| `POST /postures`   | Agent → server              | Push posture check results                                |
+| `POST /unenroll`   | Agent → server              | Ask the server to revoke the device                       |
+
+There is no WebSocket, long-poll command queue, or reverse-shell style channel. The Probo server does not open connections to enrolled devices.
+
+When the agent heartbeats, the response contains only scheduling metadata: device id, heartbeat interval, posture interval, and server time. It does **not** include commands, check definitions, scripts, or file payloads.
+
+## Fixed check set
+
+Posture checks are **compiled into the agent binary**. Each platform registers the same named checks at build time (for example disk encryption, screen lock, firewall, time sync, OS version, auto-update, password policy, remote login, and malware protection).
+
+The server cannot:
+
+- Add a new check at runtime
+- Change how an existing check is evaluated
+- Ask the agent to run an arbitrary executable or script
+
+Local helper commands used by checks resolve to **pinned absolute paths** on the device. They are not taken from the network or from PATH alone.
+
+You can run the same check set offline with `probo-agent collect`—that prints results locally and does not push anything to Probo.
+
+## Authentication and local secrets
+
+- **Enrollment** uses a one-shot token from the Probo console. The agent exchanges it once for a long-lived **device API key**, then stores that key locally (file mode `0600` in the agent state directory).
+- Later heartbeats and posture pushes authenticate with that device API key over HTTPS.
+- If an administrator **revokes** the device in Probo, subsequent agent calls receive unauthorized responses and the agent stops treating the enrollment as valid.
+- Uninstall / unenroll clears local agent state on the device.
+
+Do not put enrollment tokens in URLs, chat, or logs. Prefer the desktop enroll flow (installer + browser) on macOS and Windows when possible.
+
+## Updates and integrity
+
+When auto-update is enabled, the agent checks GitHub Releases under the `probo-agent/v*` tag, verifies release artifacts with **Cosign / Sigstore**, and only then replaces its binary. Verification pins the signing identity to Probo’s release workflow on a tagged commit. Failed verification aborts the update.
+
+You can disable automatic upgrades at install time (`--no-auto-update` / `PROBO_NO_AUTO_UPDATE`). See [Commands](/docs/product/probo-agent/commands).
+
+## Compared to MDM
+
+Mobile Device Management products are built to **control** endpoints: push configuration profiles, enforce settings, install apps, lock or wipe devices, and often run remote actions. Probo Agent is built to **observe** endpoints for compliance evidence.
+
+Use your existing MDM (or configuration management) if you need remote control. Use Probo Agent when you need continuous posture evidence in Probo without giving the compliance platform a command channel onto the machine.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Overview"
+    description="What the agent does and which platforms it supports"
+    href="/docs/product/probo-agent/overview"
+  />
+  <LinkCard
+    title="Commands"
+    description="install, status, collect, update, and uninstall"
+    href="/docs/product/probo-agent/commands"
+  />
+  <LinkCard
+    title="macOS install"
+    description="Signed package and browser enrollment"
+    href="/docs/product/probo-agent/macos"
+  />
+</CardGrid>

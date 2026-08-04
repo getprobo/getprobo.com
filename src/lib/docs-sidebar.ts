@@ -233,6 +233,10 @@ export const docsSidebarGroups = [
     items: [
       { label: "Overview", slug: "docs/product/probo-agent/overview" },
       {
+        label: "Security",
+        slug: "docs/product/probo-agent/security",
+      },
+      {
         label: "Install",
         collapsed: true,
         items: [

@@ -15,6 +15,8 @@ Probo Agent (`probo-agent`) is a lightweight device posture agent. It runs as a 
 - **Heartbeats and reports** posture results to Probo on a server-configured interval
 - **Auto-updates** from signed GitHub Releases (`probo-agent/v*`), with Cosign/Sigstore verification before installing a new binary
 
+It is **not** an MDM. The Probo server cannot push arbitrary checks, shell commands, or device control actions to the agent. See [Security](/docs/product/probo-agent/security).
+
 ## Supported platforms
 
 | Platform | Install options           | Enrollment                                                   |
@@ -78,6 +80,11 @@ Use `probo-agent collect` to run the checks locally without pushing results.
     title="Commands"
     description="install, uninstall, status, collect, update, and more"
     href="/docs/product/probo-agent/commands"
+  />
+  <LinkCard
+    title="Security"
+    description="Push-only design, fixed checks, and why this is not an MDM"
+    href="/docs/product/probo-agent/security"
   />
   <LinkCard
     title="Download"
