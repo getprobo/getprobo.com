@@ -161,7 +161,9 @@
 /docs/configuration/environment-reference /docs/deployment/configuration/environment-reference 301
 /docs/configuration/environment-variables /docs/deployment/configuration/environment-variables 301
 /docs/configuration/overview /docs/deployment/configuration/overview 301
-/docs/product/probo-agent/installation /docs/product/probo-agent/desktop-install 301
+/docs/product/probo-agent/installation /docs/product/probo-agent/macos 301
+/docs/product/probo-agent/desktop-install /docs/product/probo-agent/macos 301
+/docs/product/probo-agent/server-install /docs/product/probo-agent/linux 301
 /docs/product/access-review/infrastructure-security /docs/deployment/infrastructure-security 301
 /docs/product/access-review/clerk /docs/product/access-review/directory 301
 /docs/developers/api/mcp/tools/assets /docs/developers/api/mcp/tools/catalog/assets-and-data 301

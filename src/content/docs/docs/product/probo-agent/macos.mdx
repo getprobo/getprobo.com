@@ -1,0 +1,120 @@
+---
+title: macOS
+description: Install Probo Agent on macOS with the signed package and enroll from the Probo console
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+The recommended way to set up Probo Agent on a Mac is:
+
+1. Install the signed universal `.pkg`
+2. Enroll the device from the Probo console in your browser
+
+You do **not** need the command line for a normal install. After the installer finishes, enrollment opens **Probo Agent.app**, which completes the link for you.
+
+CLI enrollment exists only as an advanced fallback for administrators. Prefer the installer and Probo console flow below whenever possible.
+
+## Before you begin
+
+Make sure you have:
+
+- Access to the Probo console for your region:
+  - United States: [https://us.probo.com](https://us.probo.com)
+  - European Union: [https://eu.probo.com](https://eu.probo.com)
+- The Mac you want to enroll
+- Permission to install software (you may be asked for an admin password)
+
+Download the macOS `.pkg` from the [Download page](/download), or from [GitHub Releases](https://github.com/getprobo/probo/releases) under the `probo-agent/v*` tag.
+
+## How enrollment works
+
+After the agent is installed, someone with access to the Probo console starts enrollment for your device. In the Probo console, choose your region if prompted, then click enroll. Your browser opens a `probo://enroll?...` link. Because the installer already registered that link handler, macOS hands it to **Probo Agent.app**, which finishes enrollment without a terminal.
+
+You should see a short confirmation in the tray or in **Probo Agent.app**. The device then appears as enrolled in the Probo console and begins reporting posture checks.
+
+## Install the signed package
+
+macOS releases ship a universal signed `.pkg` that works on both Apple silicon and Intel Macs—for example `probo-agent_1.2.3_darwin.pkg`. Use this package; do not rely on a manual CLI install for day-to-day enrollment.
+
+<Steps>
+
+1. **Download the package**
+
+   From the [Download page](/download), download the macOS `.pkg` for the latest Probo Agent release.
+
+2. **Run the installer**
+
+   Open the downloaded `.pkg` and follow the installer screens. Approve the installation if macOS asks for your password.
+
+   The package installs the agent, registers the `probo://` URL handler so browser enrollment works, and installs the privileged helper that completes enrollment securely.
+
+3. **Enroll from the Probo console**
+
+   Open the enroll page for your region: [us.probo.com/enroll](https://us.probo.com/enroll) or [eu.probo.com/enroll](https://eu.probo.com/enroll).
+
+   Choose your region if prompted, then click enroll.
+
+   Your browser opens a `probo://enroll?...` link. Allow macOS to open it with **Probo Agent.app** if prompted. The app (and tray) completes enrollment for you.
+
+4. **Confirm enrollment**
+
+   Check **Probo Agent.app** or the menu bar tray for a successful enrollment message. You can also refresh the device page in the Probo console—it should show the device as enrolled and start showing posture results shortly after.
+
+</Steps>
+
+On macOS, browser enrollment must use the signed app deeplink after the `.pkg` install.
+
+## Advanced: CLI enrollment
+
+CLI enrollment is **not** the recommended path on macOS. Prefer the installer and Probo console enroll steps above. Use the command below only if browser enrollment is unavailable and an administrator asks you to enroll from a terminal.
+
+To get a one-shot enrollment token, open the **Employee Portal**, go to the **Devices** tab, and use the **Try creating it manually** link. Copy the token from there—do not share it, and do not put it in a URL or chat log.
+
+Then run an elevated install with your region’s server URL and that token:
+
+```bash
+sudo probo-agent install \
+  --server https://us.probo.com \
+  --enrollment-token YOUR_TOKEN
+```
+
+Use `https://eu.probo.com` for EU organizations, or your self-hosted base URL. See [Commands](/docs/product/probo-agent/commands) for optional flags.
+
+## Verify installation
+
+After enrollment (installer path or CLI), you can confirm local state:
+
+```bash
+probo-agent status
+```
+
+`status` prints the server URL, device ID, heartbeat/posture/update intervals, and whether auto-update is enabled. In most cases, confirming the device page in the Probo console is enough.
+
+## Uninstall
+
+```bash
+sudo probo-agent uninstall
+```
+
+Uninstall stops the service, unenrolls the device, removes tray auto-start where applicable, and deletes local agent state.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Commands"
+    description="Full command reference for install, status, collect, update, and uninstall"
+    href="/docs/product/probo-agent/commands"
+  />
+  <LinkCard
+    title="Windows"
+    description="Install with the signed MSI and enroll from the Probo console"
+    href="/docs/product/probo-agent/windows"
+  />
+  <LinkCard
+    title="Linux"
+    description="Install and enroll on Linux with install.sh or the CLI"
+    href="/docs/product/probo-agent/linux"
+  />
+</CardGrid>

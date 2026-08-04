@@ -1,0 +1,120 @@
+---
+title: Windows
+description: Install Probo Agent on Windows with the signed MSI and enroll from the Probo console
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+The recommended way to set up Probo Agent on a Windows computer is:
+
+1. Install the signed `.msi`
+2. Enroll the device from the Probo console in your browser
+
+You do **not** need the command line for a normal install. After the installer finishes, enrollment uses the system tray helper, which completes the link for you.
+
+CLI enrollment exists only as an advanced fallback for administrators. Prefer the installer and Probo console flow below whenever possible.
+
+## Before you begin
+
+Make sure you have:
+
+- Access to the Probo console for your region:
+  - United States: [https://us.probo.com](https://us.probo.com)
+  - European Union: [https://eu.probo.com](https://eu.probo.com)
+- The Windows computer you want to enroll
+- Permission to install software (you may be asked for User Account Control approval)
+
+Download the Windows `.msi` from the [Download page](/download), or from [GitHub Releases](https://github.com/getprobo/probo/releases) under the `probo-agent/v*` tag.
+
+## How enrollment works
+
+After the agent is installed, someone with access to the Probo console starts enrollment for your device. In the Probo console, choose your region if prompted, then click enroll. Your browser opens the enrollment link. The Windows tray helper assists with any elevation needed and finishes enrollment without a terminal.
+
+You should see a short confirmation in the system tray. The device then appears as enrolled in the Probo console and begins reporting posture checks.
+
+## Install the signed MSI
+
+Windows releases ship a signed `.msi` installer. Install with this package first, then enroll from the Probo console. That is the supported path for employees and most administrators.
+
+<Steps>
+
+1. **Download the MSI**
+
+   From the [Download page](/download), download the Windows `.msi` for the latest Probo Agent release.
+
+2. **Run the installer**
+
+   Open the `.msi` and complete the setup wizard. Approve User Account Control (UAC) if Windows asks for permission.
+
+   The installer places the agent on the machine, starts the tray helper, and enables browser enrollment support.
+
+3. **Enroll from the Probo console**
+
+   Open the enroll page for your region: [us.probo.com/enroll](https://us.probo.com/enroll) or [eu.probo.com/enroll](https://eu.probo.com/enroll).
+
+   Choose your region if prompted, then click enroll.
+
+   Your browser opens the enrollment link. The Windows tray helper assists with any elevation needed and finishes enrollment.
+
+4. **Confirm enrollment**
+
+   Check the system tray icon for a successful enrollment message. You can also refresh the device page in the Probo console—it should show the device as enrolled and start showing posture results shortly after.
+
+</Steps>
+
+## Advanced: CLI enrollment
+
+CLI enrollment is **not** the recommended path on Windows. Prefer the installer and Probo console enroll steps above. Use the command below only if browser enrollment is unavailable and an administrator asks you to enroll from a terminal.
+
+To get a one-shot enrollment token, open the **Employee Portal**, go to the **Devices** tab, and use the **Try creating it manually** link. Copy the token from there—do not share it, and do not put it in a URL or chat log.
+
+Then run an elevated install with your region’s server URL and that token:
+
+```powershell
+# Elevated PowerShell or Command Prompt
+probo-agent.exe install `
+  --server https://us.probo.com `
+  --enrollment-token YOUR_TOKEN
+```
+
+Use `https://eu.probo.com` for EU organizations, or your self-hosted base URL. See [Commands](/docs/product/probo-agent/commands) for optional flags.
+
+## Verify installation
+
+After enrollment (installer path or CLI), you can confirm local state:
+
+```powershell
+probo-agent status
+```
+
+`status` prints the server URL, device ID, heartbeat/posture/update intervals, and whether auto-update is enabled. In most cases, confirming the device page in the Probo console is enough.
+
+## Uninstall
+
+```powershell
+# Elevated, or uninstall via Apps & features / the MSI
+probo-agent uninstall
+```
+
+Uninstall stops the service, unenrolls the device, removes tray auto-start where applicable, and deletes local agent state.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Commands"
+    description="Full command reference for install, status, collect, update, and uninstall"
+    href="/docs/product/probo-agent/commands"
+  />
+  <LinkCard
+    title="macOS"
+    description="Install with the signed package and enroll from the Probo console"
+    href="/docs/product/probo-agent/macos"
+  />
+  <LinkCard
+    title="Linux"
+    description="Install and enroll on Linux with install.sh or the CLI"
+    href="/docs/product/probo-agent/linux"
+  />
+</CardGrid>

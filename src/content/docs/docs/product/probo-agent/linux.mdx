@@ -1,0 +1,120 @@
+---
+title: Linux
+description: Install and enroll Probo Agent on Linux with install.sh or the CLI
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Install and enroll Probo Agent on Linux from the command line. This path is for servers and other headless hosts where there is no tray or browser enrollment.
+
+Download the latest release from the [Download page](/download) or from [GitHub Releases](https://github.com/getprobo/probo/releases) under the `probo-agent/v*` tag.
+
+## Before you begin
+
+You need:
+
+- A Probo organization with permission to manage devices
+- A one-shot **enrollment token** for the device
+- The Probo server URL for your region:
+  - United States: `https://us.probo.com`
+  - European Union: `https://eu.probo.com`
+  - Self-hosted: your instance base URL (no path)
+- Root or sudo on the host
+
+## Install with `install.sh`
+
+Each release includes an `install.sh` that downloads the matching archive, verifies its checksum, installs to `/usr/local/bin`, and enrolls the device.
+
+Interactive:
+
+```bash
+curl -fsSL "https://github.com/getprobo/probo/releases/download/probo-agent/vX.Y.Z/install.sh" | sudo sh
+```
+
+Unattended / MDM:
+
+```bash
+curl -fsSL "https://github.com/getprobo/probo/releases/download/probo-agent/vX.Y.Z/install.sh" | sudo \
+  PROBO_SERVER_URL=https://us.probo.com \
+  PROBO_ENROLLMENT_TOKEN='YOUR_TOKEN' sh
+```
+
+Or pass flags:
+
+```bash
+curl -fsSL "https://github.com/getprobo/probo/releases/download/probo-agent/vX.Y.Z/install.sh" | sudo sh -s -- \
+  --server https://us.probo.com \
+  --enrollment-token 'YOUR_TOKEN'
+```
+
+Replace `vX.Y.Z` with the release version from the [Download page](/download).
+
+### Useful environment variables
+
+| Variable                 | Description                                                         |
+| ------------------------ | ------------------------------------------------------------------- |
+| `PROBO_SERVER_URL`       | Probo server base URL                                               |
+| `PROBO_ENROLLMENT_TOKEN` | One-shot enrollment token                                           |
+| `PROBO_NO_AUTO_UPDATE`   | Set to `true` to disable automatic upgrades                         |
+| `PROBO_AGENT_STATE_DIR`  | Override the agent state directory (default `/var/lib/probo-agent`) |
+
+Never put the enrollment token in the curl URL.
+
+## Manual CLI install
+
+If you already have the binary on disk:
+
+```bash
+sudo probo-agent install \
+  --server https://us.probo.com \
+  --enrollment-token YOUR_TOKEN
+```
+
+Useful flags:
+
+| Flag                 | Description                                             |
+| -------------------- | ------------------------------------------------------- |
+| `--server`           | Probo server base URL (required)                        |
+| `--enrollment-token` | One-shot enrollment token (or `PROBO_ENROLLMENT_TOKEN`) |
+| `--skip-service`     | Register the device but do not install the OS service   |
+| `--no-auto-update`   | Disable automatic upgrades                              |
+| `-d`, `--dir`        | Override the agent config/keystore directory            |
+
+The agent runs as a managed `systemd` service. Default state directory: `/var/lib/probo-agent`.
+
+## Verify installation
+
+```bash
+probo-agent status
+probo-agent collect
+```
+
+`status` prints the server URL, device ID, heartbeat/posture/update intervals, and whether auto-update is enabled. `collect` runs the posture checks once locally.
+
+## Uninstall
+
+```bash
+probo-agent uninstall
+```
+
+Uninstall stops the service, unenrolls the device, and deletes local agent state.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Commands"
+    description="Full command reference for install, status, collect, update, and uninstall"
+    href="/docs/product/probo-agent/commands"
+  />
+  <LinkCard
+    title="FreeBSD"
+    description="Install and enroll on FreeBSD with install.sh or the CLI"
+    href="/docs/product/probo-agent/freebsd"
+  />
+  <LinkCard
+    title="macOS"
+    description="Install with the signed package and enroll from the Probo console"
+    href="/docs/product/probo-agent/macos"
+  />
+</CardGrid>

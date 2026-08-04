@@ -98,7 +98,13 @@ export const redirects = {
     "/docs/deployment/configuration",
   ),
   "/docs/product/probo-agent/installation": redirect(
-    "/docs/product/probo-agent/desktop-install",
+    "/docs/product/probo-agent/macos",
+  ),
+  "/docs/product/probo-agent/desktop-install": redirect(
+    "/docs/product/probo-agent/macos",
+  ),
+  "/docs/product/probo-agent/server-install": redirect(
+    "/docs/product/probo-agent/linux",
   ),
   "/docs/product/access-review/infrastructure-security": redirect(
     "/docs/deployment/infrastructure-security",

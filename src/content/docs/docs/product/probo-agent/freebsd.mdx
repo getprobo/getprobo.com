@@ -1,13 +1,11 @@
 ---
-title: Server install (Linux / FreeBSD)
-description: Install and enroll Probo Agent on Linux or FreeBSD with install.sh or the CLI
+title: FreeBSD
+description: Install and enroll Probo Agent on FreeBSD with install.sh or the CLI
 ---
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-Install and enroll Probo Agent on Linux or FreeBSD from the command line. This path is for servers and other headless hosts where there is no tray or browser enrollment.
-
-For macOS or Windows desktops (installer + Probo console enroll via the tray), see [Desktop install](/docs/product/probo-agent/desktop-install).
+Install and enroll Probo Agent on FreeBSD from the command line. This path is for servers and other headless hosts where there is no tray or browser enrollment.
 
 Download the latest release from the [Download page](/download) or from [GitHub Releases](https://github.com/getprobo/probo/releases) under the `probo-agent/v*` tag.
 
@@ -82,7 +80,7 @@ Useful flags:
 | `--no-auto-update`   | Disable automatic upgrades                              |
 | `-d`, `--dir`        | Override the agent config/keystore directory            |
 
-The agent runs as a managed OS service (`systemd` on Linux, `rc.d` on FreeBSD). Default state directory: `/var/lib/probo-agent`.
+The agent runs as a managed `rc.d` service. Default state directory: `/var/lib/probo-agent`.
 
 ## Verify installation
 
@@ -110,8 +108,13 @@ Uninstall stops the service, unenrolls the device, and deletes local agent state
     href="/docs/product/probo-agent/commands"
   />
   <LinkCard
-    title="Desktop install"
-    description="Install on macOS or Windows and enroll from the Probo console"
-    href="/docs/product/probo-agent/desktop-install"
+    title="Linux"
+    description="Install and enroll on Linux with install.sh or the CLI"
+    href="/docs/product/probo-agent/linux"
+  />
+  <LinkCard
+    title="macOS"
+    description="Install with the signed package and enroll from the Probo console"
+    href="/docs/product/probo-agent/macos"
   />
 </CardGrid>

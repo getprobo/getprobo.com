@@ -233,6 +233,16 @@ export const docsSidebarGroups = [
     items: [
       { label: "Overview", slug: "docs/product/probo-agent/overview" },
       {
+        label: "Install",
+        collapsed: true,
+        items: [
+          { label: "macOS", slug: "docs/product/probo-agent/macos" },
+          { label: "Windows", slug: "docs/product/probo-agent/windows" },
+          { label: "Linux", slug: "docs/product/probo-agent/linux" },
+          { label: "FreeBSD", slug: "docs/product/probo-agent/freebsd" },
+        ],
+      },
+      {
         label: "Commands",
         slug: "docs/product/probo-agent/commands",
       },
