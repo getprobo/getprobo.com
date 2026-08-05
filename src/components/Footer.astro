@@ -3,10 +3,8 @@ import { Image } from "astro:assets";
 import Logo from "../assets/probo-logo.svg";
 import Frameworks from "./block/Frameworks.astro";
 import OpenStatus from "../components/OpenStatus.svelte";
-import Cookie from "../components/Cookie.svelte";
 import Newsletter from "./block/Newsletter.astro";
 import { Toaster } from "svelte-sonner";
-import { meta } from "astro:schema";
 
 const menus = [
   {
@@ -80,6 +78,13 @@ type Props = {
                   </a>
                 </li>
               ))}
+              {menu.label === "Legal" && (
+                <li>
+                  <probo-settings-link class="text-tertiary-foreground flex-nowrap text-sm whitespace-nowrap hover:text-white hover:underline">
+                    <a href="#">Cookie Settings</a>
+                  </probo-settings-link>
+                </li>
+              )}
             </ul>
           </div>
         ))
