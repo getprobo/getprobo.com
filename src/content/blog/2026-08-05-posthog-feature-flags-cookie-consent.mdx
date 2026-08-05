@@ -6,7 +6,7 @@ author:
   name: "Émile Ré"
 faqs:
   - question: "Should feature flags stay off while PostHog is cookieless?"
-    answer: "Yes, if you treat flags as a product surface that depends on an identified person. Keep the flag false until the visitor has explicitly granted analytics consent and you have called identify(). That way cookieless / rejected traffic never sees a gated beta feature just because isFeatureEnabled returned undefined or a stale cache."
+    answer: "Yes, if the feature depends on knowing who the visitor is. Keep it hidden until they have accepted analytics and you have identified them to PostHog. That way cookieless or rejected traffic never sees a beta surface just because a flag answer was still loading or left over from an earlier session."
   - question: "Why use cookieless_mode on_reject instead of always for consent-aware PostHog?"
     answer: "With cookieless_mode: always, posthog-js forbids identify() and stays cookieless for the session even after opt_in_capturing(). Feature flags that need a stable distinct_id never become eligible mid-session. on_reject keeps identity/session persistence disabled while the visitor is opted out, then allows cookies and identify() after they accept."
   - question: "Is the PostHog __ph_opt_in_out_* cookie an analytics tracker?"
@@ -21,11 +21,11 @@ This companion guide covers the init choice that makes that possible, why the co
 
 ## TL;DR
 
-- For **feature flags + consent**, always init Track 2 with `cookieless_mode: "on_reject"` and `opt_out_capturing_by_default: !analyticsAllowed`. Do **not** boot with `"always"` when analytics is denied — you will not be able to `identify()` after a mid-session accept.
-- While rejected / pending, posthog-js disables identity and session persistence under `on_reject`. Tracking cookies stay off until `opt_in_capturing()`.
-- PostHog may still write `__ph_opt_in_out_<token>` to remember the opt-out. Treat it like `probo_consent`: **necessary consent storage**, disclose it as essential.
-- App rule: flag is **false** unless `get_explicit_consent_status() === "granted"` **and** you have identified the user; only then call `isFeatureEnabled(key)`.
-- On grant: `opt_in_capturing()` then `identify(id)`. On revoke: `reset()` then `opt_out_capturing()` (`reset()` clears consent, so order matters).
+- If you need feature flags after consent, start PostHog in **reject → cookieless** mode (`cookieless_mode: "on_reject"`), and opt out by default whenever analytics is not already allowed. Do **not** start in hard cookieless (`"always"`) when analytics is denied — then a later accept in the same visit cannot attach a stable user id, so person-level flags never unlock.
+- While the visitor has rejected (or not yet chosen) analytics, PostHog must not keep tracking cookies or a lasting visitor id. Full capture and identity only start after they accept.
+- PostHog may still store a small **opt-in/out preference** (`__ph_opt_in_out_<token>`). Treat that like Probo’s `probo_consent` cookie: necessary privacy storage, list it as essential — not an analytics tracker.
+- In your app, keep the gated feature **hidden** until analytics consent is granted **and** you have told PostHog who the user is. Only then ask PostHog whether the flag is on. If consent is missing, the user is anonymous, or the flag answer is still loading, treat it as **off**.
+- When they accept: turn capturing on, then identify them. When they revoke: clear PostHog’s local state, then turn capturing off again (clear first — otherwise a previous accept can leave capture running).
 
 ## Why not `cookieless_mode: "always"` when analytics is denied?
 
