@@ -12,6 +12,7 @@
     "docs:check-reference": "node tools/generate-reference.mjs --check",
     "docs:generate": "node tools/generate-reference.mjs",
     "redirects:generate": "node tools/generate-redirects.mjs",
+    "indexnow:submit": "node --env-file=.env tools/submit-indexnow.mjs",
     "format": "node tools/format-changed.mjs",
     "preview": "astro preview",
     "astro": "astro",
