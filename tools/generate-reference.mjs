@@ -408,6 +408,7 @@ function categoryForTool(name) {
     ["Risks", /Risk/],
     ["Audits and findings", /Audit|Finding/],
     ["Assets and data", /Asset|Datum|Data(?:List)?$/],
+    ["Business functions", /BusinessFunction/],
     ["Obligations", /Obligation/],
     ["Organizations", /Organization/],
   ];
