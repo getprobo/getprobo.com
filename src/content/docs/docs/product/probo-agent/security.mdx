@@ -24,12 +24,12 @@ That boundary exists so employees and operators can treat the agent as observabi
 
 All agent API traffic is **agent-initiated** HTTPS to `/api/agent/v1`. The published surface is:
 
-| Endpoint     | Direction                         | Purpose                                      |
-| ------------ | --------------------------------- | -------------------------------------------- |
-| `POST /enroll`     | Agent → server              | Exchange a one-shot enrollment token for a device API key |
-| `POST /heartbeat`  | Agent → server              | Report host identity and receive schedule intervals       |
-| `POST /postures`   | Agent → server              | Push posture check results                                |
-| `POST /unenroll`   | Agent → server              | Ask the server to revoke the device                       |
+| Endpoint          | Direction      | Purpose                                                   |
+| ----------------- | -------------- | --------------------------------------------------------- |
+| `POST /enroll`    | Agent → server | Exchange a one-shot enrollment token for a device API key |
+| `POST /heartbeat` | Agent → server | Report host identity and receive schedule intervals       |
+| `POST /postures`  | Agent → server | Push posture check results                                |
+| `POST /unenroll`  | Agent → server | Ask the server to revoke the device                       |
 
 There is no WebSocket, long-poll command queue, or reverse-shell style channel. The Probo server does not open connections to enrolled devices.
 
@@ -89,6 +89,16 @@ Use your existing MDM (or configuration management) if you need remote control. 
 ## Next steps
 
 <CardGrid>
+  <LinkCard
+    title="Device Agent API"
+    description="Build your own agent using the enrollment and posture protocol"
+    href="/docs/developers/api/agent/overview"
+  />
+  <LinkCard
+    title="Contributing"
+    description="Contribute to the official agent; expect extensive security review"
+    href="/docs/developers/api/agent/contributing"
+  />
   <LinkCard
     title="macOS"
     description="Signed package, then enroll from the Probo console"

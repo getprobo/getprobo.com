@@ -1,0 +1,157 @@
+---
+title: Device Agent Authentication
+description: Exchange an enrollment token for a device API key
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+The Device Agent API uses two credentials with different purposes:
+
+| Credential       | Purpose                                       | Sent as                           |
+| ---------------- | --------------------------------------------- | --------------------------------- |
+| Enrollment token | One-time exchange for a device API key        | `token` in the `/enroll` body     |
+| Device API key   | Heartbeat, posture, and unenrollment requests | `Authorization: Bearer <api-key>` |
+
+Both credentials are 96-character hexadecimal strings. Probo stores only their
+SHA-256 hashes.
+
+## Enrollment tokens
+
+An enrollment token belongs to one device record. It is single-use and expires
+after seven days by default. Self-hosted deployments can configure a different
+validity period.
+
+Create the device and obtain its token before calling the Device Agent API:
+
+- In the Probo console, use the device enrollment flow.
+- Through the console GraphQL API, use `createDevice` or `enrollDevice`.
+- Through MCP, use the `createDevice` tool.
+- Through the CLI, use [`prb device create`](/docs/developers/cli/commands/device).
+- Through n8n, use the [device create](/docs/developers/api/n8n/resources/device) operation.
+
+Those interfaces return the Probo server URL alongside the token. Device
+creation is not part of `/api/agent/v1`.
+
+:::caution[Protect enrollment tokens]
+Do not put an enrollment token in an ordinary web URL, log, shell history, or
+chat message. Anyone who exchanges it before it expires receives the device API
+key.
+:::
+
+## Exchange a token
+
+Send the token once to the server URL supplied with the enrollment:
+
+<Tabs>
+  <TabItem label="US">
+
+```bash
+curl --request POST \
+  --url https://us.probo.com/api/agent/v1/enroll \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{"token":"<enrollment-token>"}'
+```
+
+  </TabItem>
+  <TabItem label="EU">
+
+```bash
+curl --request POST \
+  --url https://eu.probo.com/api/agent/v1/enroll \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{"token":"<enrollment-token>"}'
+```
+
+  </TabItem>
+  <TabItem label="Self-hosted">
+
+```bash
+curl --request POST \
+  --url https://probo.example.com/api/agent/v1/enroll \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{"token":"<enrollment-token>"}'
+```
+
+  </TabItem>
+</Tabs>
+
+A successful exchange returns:
+
+```json
+{
+  "api_key": "<device-api-key>"
+}
+```
+
+The server deletes the enrollment token after the exchange. Reusing it, using
+an expired token, or using an unknown token returns `401 Unauthorized`.
+
+Persist the API key before starting the service. The official agent stores it
+in its state directory with access restricted to the service account. A custom
+agent can use the operating system's secret store instead.
+
+## Authenticate device requests
+
+Send the device API key as a bearer token on every endpoint except `/enroll`:
+
+```http
+Authorization: Bearer <device-api-key>
+```
+
+For example:
+
+```bash
+curl --request POST \
+  --url https://us.probo.com/api/agent/v1/heartbeat \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer <device-api-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "hardware_uuid": "example-hardware-id",
+    "hostname": "example-device",
+    "platform": "LINUX",
+    "os_version": "Example Linux 1.0",
+    "agent_version": "1.0.0"
+  }'
+```
+
+The API key remains valid until the device is revoked by an administrator or
+unenrolled by the agent. Probo displays the plaintext key only in the
+enrollment response.
+
+## Handle unauthorized responses
+
+Treat any `401 Unauthorized` response from an authenticated endpoint as a dead
+credential:
+
+1. Stop heartbeat and posture uploads.
+2. Delete the API key and queued posture data from local storage.
+3. Require a new device enrollment and enrollment token.
+
+Do not retry a rejected API key indefinitely.
+
+One important exception during bring-up: `/postures` also returns `401` when the
+device is still `PENDING` because no successful heartbeat has activated it yet.
+Activate with `/heartbeat` before the first posture upload so a valid key is not
+cleared as revoked.
+
+## Desktop enrollment links
+
+The official desktop flow can pass enrollment input through this custom URI:
+
+```text
+probo://enroll?server=https%3A%2F%2Fus.probo.com&token=<enrollment-token>
+```
+
+If your agent implements this flow, register the `probo` scheme securely,
+validate that `server` is an HTTPS origin, reject unexpected parameters, and
+avoid logging the URI. A custom URI is optional; command-line and managed
+installation flows can pass the server and token separately.
+
+## Next step
+
+See [Endpoints](/docs/developers/api/agent/endpoints) for request and response
+schemas.

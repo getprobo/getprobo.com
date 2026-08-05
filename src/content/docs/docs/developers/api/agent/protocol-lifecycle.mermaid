@@ -1,0 +1,36 @@
+sequenceDiagram
+  actor Admin as Organization administrator
+  participant Probo as Probo server
+  participant Agent as Device agent
+
+  Admin->>Probo: Create device
+  Probo-->>Admin: Server URL and one-shot enrollment token
+  Admin->>Agent: Configure server URL and token
+
+  Agent->>Probo: POST /enroll with token
+  Probo-->>Agent: Device API key
+  Agent->>Probo: POST /heartbeat with API key
+  Probo-->>Agent: Device ID, heartbeat interval, posture interval, server time
+
+  par Heartbeat schedule
+    loop Every heartbeat_interval_seconds
+      Agent->>Probo: POST /heartbeat with device identity
+      Probo-->>Agent: Updated intervals and server time
+    end
+  and Posture schedule
+    loop Every posture_interval_seconds
+      Agent->>Agent: Run local posture checks
+      Agent->>Probo: POST /postures with results
+      Probo-->>Agent: 204 No Content
+    end
+  end
+
+  alt Device is revoked
+    Agent->>Probo: POST /heartbeat or /postures
+    Probo-->>Agent: 401 Unauthorized
+    Agent->>Agent: Stop reporting and delete API key
+  else Agent is removed
+    Agent->>Probo: POST /unenroll
+    Probo-->>Agent: 204 No Content
+    Agent->>Agent: Delete local credentials
+  end

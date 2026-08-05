@@ -1,0 +1,265 @@
+---
+title: Device Agent Endpoints
+description: Reference for enrollment, heartbeat, posture, and unenrollment
+---
+
+All Device Agent API routes use `POST` and are relative to
+`{probo-origin}/api/agent/v1`.
+
+| Endpoint     | Authentication           | Success response |
+| ------------ | ------------------------ | ---------------- |
+| `/enroll`    | Enrollment token in body | `200` JSON       |
+| `/heartbeat` | Device API key           | `200` JSON       |
+| `/postures`  | Device API key           | `204`            |
+| `/unenroll`  | Device API key           | `204`            |
+
+## Request headers
+
+Send these headers with every request:
+
+```http
+Accept: application/json
+Content-Type: application/json
+User-Agent: my-probo-agent/1.0.0
+```
+
+For every route except `/enroll`, also send:
+
+```http
+Authorization: Bearer <device-api-key>
+```
+
+`User-Agent` is recommended for troubleshooting and is not used for
+authentication.
+
+## Enroll
+
+Exchanges a one-shot enrollment token for a device API key.
+
+```http
+POST /api/agent/v1/enroll
+```
+
+The request body is limited to 16 KiB.
+
+### Request
+
+```json
+{
+  "token": "<enrollment-token>"
+}
+```
+
+| Field   | Type   | Required | Description               |
+| ------- | ------ | -------- | ------------------------- |
+| `token` | string | Yes      | One-shot enrollment token |
+
+### Response
+
+`200 OK`
+
+```json
+{
+  "api_key": "<device-api-key>"
+}
+```
+
+Store the key securely before starting the service. The enrollment token is
+deleted after a successful exchange and cannot be reused.
+
+## Heartbeat
+
+Reports the device identity and retrieves its reporting schedule. The first
+successful heartbeat changes a `PENDING` device to `ACTIVE`. Heartbeat and
+posture intervals are independent; update each local timer from the response.
+
+```http
+POST /api/agent/v1/heartbeat
+Authorization: Bearer <device-api-key>
+```
+
+The request body is limited to 16 KiB.
+
+### Request
+
+```json
+{
+  "hardware_uuid": "example-hardware-id",
+  "serial_number": "example-serial-number",
+  "hostname": "example-device",
+  "platform": "LINUX",
+  "os_version": "Example Linux 1.0",
+  "agent_version": "1.0.0"
+}
+```
+
+| Field           | Type   | Required | Description                                   |
+| --------------- | ------ | -------- | --------------------------------------------- |
+| `hardware_uuid` | string | Yes      | Stable hardware identifier                    |
+| `serial_number` | string | No       | Hardware serial number                        |
+| `hostname`      | string | Yes      | Current device hostname                       |
+| `platform`      | string | Yes      | One of the supported platform values below    |
+| `os_version`    | string | Yes      | Human-readable operating-system version       |
+| `agent_version` | string | Yes      | Version of the reporting agent implementation |
+
+Valid `platform` values are:
+
+| Value     | Platform |
+| --------- | -------- |
+| `DARWIN`  | macOS    |
+| `LINUX`   | Linux    |
+| `FREEBSD` | FreeBSD  |
+| `WINDOWS` | Windows  |
+
+The hardware UUID must be stable across restarts. Probo rejects activation if
+another device in the organization already uses it.
+
+### Response
+
+`200 OK`
+
+```json
+{
+  "device_id": "<device-id>",
+  "heartbeat_interval_seconds": 300,
+  "posture_interval_seconds": 3600,
+  "server_time": "2026-08-05T14:00:00Z"
+}
+```
+
+| Field                        | Type    | Description                                |
+| ---------------------------- | ------- | ------------------------------------------ |
+| `device_id`                  | string  | Probo identifier for the enrolled device   |
+| `heartbeat_interval_seconds` | integer | Delay between heartbeat requests           |
+| `posture_interval_seconds`   | integer | Delay between posture collection cycles    |
+| `server_time`                | string  | Current server time in RFC 3339 UTC format |
+
+The current defaults are 300 seconds for heartbeats and 3,600 seconds for
+posture collection. Treat the response as authoritative: update each local
+timer after every successful heartbeat instead of hard-coding these values or
+assuming the schedules stay in lockstep.
+
+## Postures
+
+Pushes a batch of locally evaluated posture checks. The device must have sent a
+successful heartbeat before reporting posture. A posture request while the
+device is still `PENDING` returns `401 Unauthorized`—the same status used for
+revocation—so activate with `/heartbeat` first.
+
+```http
+POST /api/agent/v1/postures
+Authorization: Bearer <device-api-key>
+```
+
+The request body is limited to 1 MiB and can contain at most 100 results.
+
+### Request
+
+```json
+{
+  "results": [
+    {
+      "check_key": "FIREWALL_ENABLED",
+      "status": "PASS",
+      "evidence": {
+        "backend": "ufw",
+        "raw": "Status: active"
+      },
+      "observed_at": "2026-08-05T14:00:00Z"
+    }
+  ]
+}
+```
+
+| Field            | Type        | Required | Description                                               |
+| ---------------- | ----------- | -------- | --------------------------------------------------------- |
+| `results`        | array       | Yes      | Up to 100 posture results                                 |
+| `check_key`      | string      | Yes      | Stable identifier for the check                           |
+| `status`         | string      | Yes      | Result status                                             |
+| `evidence`       | JSON object | No       | Details supporting the result                             |
+| `observed_at`    | string      | Yes      | Observation time in RFC 3339 format                       |
+| `correlation_id` | string      | No       | Probo posture-report ID used to group related result sets |
+
+An empty `results` array is accepted as a no-op. A successful request returns
+`204 No Content`.
+
+### Status values
+
+| Value            | Meaning                                  |
+| ---------------- | ---------------------------------------- |
+| `PASS`           | The check passed                         |
+| `FAIL`           | The check failed                         |
+| `UNKNOWN`        | The agent could not determine the result |
+| `NOT_APPLICABLE` | The check does not apply to this device  |
+
+### Canonical check keys
+
+Use the official keys when your check has the same meaning. This allows Probo
+to interpret and display the evidence consistently.
+
+| Check key            | What it evaluates                  |
+| -------------------- | ---------------------------------- |
+| `DISK_ENCRYPTION`    | Full-disk encryption               |
+| `SCREEN_LOCK`        | Screen or idle-lock configuration  |
+| `FIREWALL_ENABLED`   | Host firewall                      |
+| `TIME_SYNC`          | System clock synchronization       |
+| `OS_VERSION`         | Operating-system version           |
+| `AUTO_UPDATE`        | Automatic operating-system updates |
+| `PASSWORD_POLICY`    | Local password policy              |
+| `REMOTE_LOGIN`       | Remote-login exposure              |
+| `MALWARE_PROTECTION` | Built-in malware protection        |
+
+The API accepts other non-empty check keys, but Probo might display their
+evidence as unknown. Use a stable uppercase identifier and keep its semantics
+consistent across agent versions.
+
+### Evidence
+
+Evidence is free-form JSON. Prefer an object with concise machine-readable
+fields. Do not include secrets, full configuration files, or command output
+that might contain personal or sensitive data.
+
+The official agent's evidence schemas are the best reference when implementing
+a canonical check. See the
+[`checks`](https://github.com/getprobo/probo/tree/main/pkg/deviceagent/checks)
+package.
+
+### Correlation IDs
+
+Results from one collection cycle should belong to one posture report. If
+`correlation_id` is omitted, Probo creates one ID and applies it to every result
+in the request.
+
+Only provide a correlation ID when you already have a valid Probo
+device-posture-report ID for the same tenant. Invalid IDs, IDs for another
+entity type, and IDs from another tenant return `400 Bad Request`.
+
+## Unenroll
+
+Revokes the current device API key.
+
+```http
+POST /api/agent/v1/unenroll
+Authorization: Bearer <device-api-key>
+```
+
+No request fields are required. A successful request returns
+`204 No Content`. Delete local credentials whether or not this best-effort
+request succeeds during uninstall.
+
+## Errors
+
+| Status | Meaning                                                                                      |
+| ------ | -------------------------------------------------------------------------------------------- |
+| `400`  | Invalid JSON, missing fields, invalid enum, or oversized batch                               |
+| `401`  | Invalid enrollment token, missing/invalid API key, revocation, or posture before activation |
+| `405`  | The route was called with a method other than `POST`                                         |
+| `500`  | Unexpected server error                                                                      |
+
+Do not depend on the exact error message. Log the status and safe request
+context without logging credentials or posture evidence. Retry temporary
+network failures and `5xx` responses with bounded exponential backoff. Do not
+retry `400` responses without changing the request, and
+[clear credentials after `401`](/docs/developers/api/agent/authentication#handle-unauthorized-responses)
+except during bring-up when a posture request precedes the first successful
+heartbeat.

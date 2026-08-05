@@ -5,7 +5,7 @@ description: Device posture agent that enrolls endpoints and reports security ch
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-Probo Agent (`probo-agent`) is a lightweight device posture agent. It runs as a managed OS service, enrolls a device against your Probo organization, and periodically reports security posture checks over the `/api/agent/v1` API.
+Probo Agent (`probo-agent`) is a lightweight device posture agent. It runs as a managed OS service, enrolls a device against your Probo organization, and periodically reports security posture checks over the [Device Agent API](/docs/developers/api/agent/overview) (`/api/agent/v1`).
 
 ## What it does
 
@@ -65,5 +65,15 @@ Use `probo-agent collect` to run the checks locally without pushing results.
     title="Security"
     description="Push-only design, fixed checks, and why this is not an MDM"
     href="/docs/product/probo-agent/security"
+  />
+  <LinkCard
+    title="Contributing"
+    description="Contribute to the official agent; security review takes time"
+    href="/docs/developers/api/agent/contributing"
+  />
+  <LinkCard
+    title="Device Agent API"
+    description="Build a custom agent with the enrollment and posture protocol"
+    href="/docs/developers/api/agent/overview"
   />
 </CardGrid>

@@ -1,0 +1,112 @@
+---
+title: Device Agent API
+description: Build a custom device posture agent for Probo
+---
+
+import MermaidDiagram from "../../../../../../components/docs/MermaidDiagram.astro";
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+import protocolLifecycle from "./protocol-lifecycle.mermaid?raw";
+
+The Device Agent API is the JSON protocol used by the official
+[`probo-agent`](/docs/product/probo-agent/overview). You can implement this
+protocol to enroll devices and report posture from operating systems,
+appliances, or environments that the official agent does not yet support.
+
+The protocol is deliberately small and push-only. The device initiates every
+request; Probo cannot send commands, scripts, or check definitions to it.
+
+## Base URL
+
+Append `/api/agent/v1` to the origin of the Probo deployment where the device
+was created.
+
+| Deployment  | Base URL                                 |
+| ----------- | ---------------------------------------- |
+| US cloud    | `https://us.probo.com/api/agent/v1`      |
+| EU cloud    | `https://eu.probo.com/api/agent/v1`      |
+| Self-hosted | `https://probo.example.com/api/agent/v1` |
+
+The API is intended for native agents, not browser clients, and does not expose
+cross-origin browser access.
+
+## Device states
+
+Each device record moves through a small state machine. Only the Device Agent
+API and administrator revocation change these states after creation.
+
+| State     | Meaning                                                               |
+| --------- | --------------------------------------------------------------------- |
+| `PENDING` | Enrollment token issued; no successful heartbeat yet                  |
+| `ACTIVE`  | First heartbeat succeeded; heartbeats and posture uploads are allowed |
+| `REVOKED` | Enrollment ended by an administrator or by `/unenroll`                |
+
+The first successful `/heartbeat` activates a `PENDING` device. `/postures`
+requires `ACTIVE`. A revoked device cannot be un-revoked; create a new device
+and enroll again.
+
+## Protocol lifecycle
+
+The sequence diagram shows enrollment, independent heartbeat and posture
+schedules, and the two ways an agent enrollment ends.
+
+<MermaidDiagram chart={protocolLifecycle} />
+
+Heartbeat and posture intervals are separate values returned by every
+successful heartbeat. Treat each as its own timer. The server returns
+scheduling metadata, but it never sends work to the device. See
+[Probo Agent security](/docs/product/probo-agent/security) for the security
+boundary and threat model.
+
+## Implementation checklist
+
+- Accept the Probo origin and enrollment token as separate inputs.
+- Require HTTPS outside local development and reject server URLs containing
+  credentials, query strings, or fragments.
+- Store the device API key in an OS-appropriate secret store or a file readable
+  only by the service account.
+- Send `Content-Type: application/json` and `Accept: application/json`.
+- Identify the implementation with a `User-Agent`, such as
+  `my-probo-agent/1.0.0`.
+- Send a successful `/heartbeat` before the first `/postures` request.
+- Honor the intervals returned by every successful heartbeat as separate
+  timers.
+- Batch no more than 100 posture results in one request.
+- Do not log enrollment tokens, API keys, or sensitive posture evidence.
+- On `401 Unauthorized` after activation, stop reporting and clear the device
+  API key.
+
+## Reference implementation
+
+Use the official agent as a working reference when implementing the protocol:
+
+- [`cmd/probo-agent`](https://github.com/getprobo/probo/tree/main/cmd/probo-agent)
+- [`pkg/deviceagent`](https://github.com/getprobo/probo/tree/main/pkg/deviceagent)
+
+Prefer contributing to the official agent when the change belongs in the shared
+binary. See [Contributing to Probo Agent](/docs/developers/api/agent/contributing)
+for source paths, DCO requirements, and the security review timeline. Pull
+requests that touch the device agent can take longer to merge because we review
+them extensively for endpoint security.
+
+If you need support sooner than the official release cycle allows, implement this
+API in your own agent instead.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Authentication"
+    description="Exchange an enrollment token and protect the device API key"
+    href="/docs/developers/api/agent/authentication"
+  />
+  <LinkCard
+    title="Endpoints"
+    description="Implement enrollment, heartbeat, posture, and unenrollment"
+    href="/docs/developers/api/agent/endpoints"
+  />
+  <LinkCard
+    title="Contributing"
+    description="Contribute to the official agent and what to expect from review"
+    href="/docs/developers/api/agent/contributing"
+  />
+</CardGrid>

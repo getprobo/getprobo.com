@@ -1,11 +1,11 @@
 ---
 title: Developers
-description: Automate Probo through GraphQL, the CLI, MCP, n8n, and webhooks
+description: Automate and integrate Probo through its developer interfaces
 ---
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-Probo exposes the same GRC records through several interfaces. Choose the interface that fits the work: GraphQL for application integrations, `prb` for terminals and CI, MCP for AI agents, n8n for visual workflows, and webhooks for event-driven systems.
+Probo exposes the same GRC records through several interfaces. Choose the interface that fits the work: GraphQL for application integrations, `prb` for terminals and CI, MCP for AI agents, n8n for visual workflows, webhooks for event-driven systems, and the Device Agent API for endpoint posture.
 
 ## Interfaces
 
@@ -39,6 +39,11 @@ Probo exposes the same GRC records through several interfaces. Choose the interf
     title="Webhooks"
     description="Receive signed notifications when supported records change"
     href="/docs/developers/api/webhooks/overview"
+  />
+  <LinkCard
+    title="Device Agent API"
+    description="Build an agent that enrolls devices and reports security posture"
+    href="/docs/developers/api/agent/overview"
   />
 </CardGrid>
 

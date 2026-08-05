@@ -72,6 +72,9 @@
 /docs/cli/commands/webhook /docs/developers/cli/commands/webhook 301
 /docs/cli/configuration /docs/developers/cli/configuration 301
 /docs/cli/overview /docs/developers/cli/overview 301
+/docs/api/agent/authentication /docs/developers/api/agent/authentication 301
+/docs/api/agent/endpoints /docs/developers/api/agent/endpoints 301
+/docs/api/agent/overview /docs/developers/api/agent/overview 301
 /docs/api/mcp/authentication /docs/developers/api/mcp/authentication 301
 /docs/api/mcp/claude-ai /docs/developers/api/mcp/claude-ai 301
 /docs/api/mcp/claude-code /docs/developers/api/mcp/claude-code 301

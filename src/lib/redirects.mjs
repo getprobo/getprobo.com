@@ -97,6 +97,9 @@ export const redirects = {
     "/docs/configuration",
     "/docs/deployment/configuration",
   ),
+  "/docs/product/probo-agent/contributing": redirect(
+    "/docs/developers/api/agent/contributing",
+  ),
   "/docs/product/probo-agent/installation": redirect(
     "/docs/product/probo-agent/macos",
   ),

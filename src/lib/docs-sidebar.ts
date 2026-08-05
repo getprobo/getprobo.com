@@ -407,6 +407,29 @@ export const docsSidebarGroups = [
     ],
   },
   {
+    id: "device-agent",
+    sectionId: "developers",
+    label: "Device agent",
+    items: [
+      {
+        label: "Overview",
+        slug: "docs/developers/api/agent/overview",
+      },
+      {
+        label: "Authentication",
+        slug: "docs/developers/api/agent/authentication",
+      },
+      {
+        label: "Endpoints",
+        slug: "docs/developers/api/agent/endpoints",
+      },
+      {
+        label: "Contributing",
+        slug: "docs/developers/api/agent/contributing",
+      },
+    ],
+  },
+  {
     id: "deployment-overview",
     sectionId: "deployment",
     label: "Deployment Overview",

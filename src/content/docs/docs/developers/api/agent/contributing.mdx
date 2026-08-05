@@ -1,0 +1,83 @@
+---
+title: Contributing
+description: How to contribute to the official Probo Agent, including security review expectations
+---
+
+import { LinkCard, CardGrid, Aside } from "@astrojs/starlight/components";
+
+The official Probo Agent is open source. Contributions that improve platform
+support, posture checks, packaging, or documentation are welcome.
+
+## Source code
+
+The agent lives in the [getprobo/probo](https://github.com/getprobo/probo)
+repository:
+
+| Path                                                           | Role                                      |
+| -------------------------------------------------------------- | ----------------------------------------- |
+| [`cmd/probo-agent`](https://github.com/getprobo/probo/tree/main/cmd/probo-agent)     | CLI, installers, service integration      |
+| [`pkg/deviceagent`](https://github.com/getprobo/probo/tree/main/pkg/deviceagent)     | Enrollment client, heartbeat, check logic |
+
+Read the repository
+[CONTRIBUTING.md](https://github.com/getprobo/probo/blob/main/CONTRIBUTING.md)
+for the full development setup before opening a pull request.
+
+## What to contribute
+
+Good fit for the official agent:
+
+- Support for additional operating systems, distributions, or architectures
+- Platform-specific fixes for existing posture checks
+- Packaging, install, or auto-update improvements that preserve the security model
+- Documentation and test coverage
+
+If you need an agent for an environment the official binary will not cover soon,
+you can also implement the [Device Agent API](/docs/developers/api/agent/overview)
+yourself. That path does not require merging into the official agent.
+
+## Security review timeline
+
+<Aside type="caution" title="Expect a longer review">
+Pull requests that touch the device agent can take longer to merge. The agent
+runs on employee and server endpoints, so we perform an extensive security
+review before accepting changes. That review covers the threat model, check
+implementations, dependency surface, packaging, and update path—not only
+functional correctness.
+</Aside>
+
+Plan for iteration. We may ask for smaller diffs, additional tests, or design
+changes that keep the agent a posture reporter rather than remote control
+software. Thank you for the patience; the review protects users who install the
+official agent.
+
+## Platforms we test today
+
+Our end-to-end environment currently covers:
+
+- FreeBSD
+- Linux
+- Windows on AMD64
+- macOS on Apple silicon (M series)
+
+Windows on ARM is planned but is not yet part of that environment. Contributions
+that add or harden coverage for additional platforms are especially useful.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Security"
+    description="Push-only design, fixed checks, and why this is not an MDM"
+    href="/docs/product/probo-agent/security"
+  />
+  <LinkCard
+    title="Device Agent API"
+    description="Build a custom agent without waiting on the official binary"
+    href="/docs/developers/api/agent/overview"
+  />
+  <LinkCard
+    title="Repository CONTRIBUTING.md"
+    description="Development environment and DCO requirements"
+    href="https://github.com/getprobo/probo/blob/main/CONTRIBUTING.md"
+  />
+</CardGrid>

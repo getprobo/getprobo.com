@@ -3,7 +3,7 @@ title: API fundamentals
 description: Understand Probo endpoints, OAuth tokens, identifiers, pagination, and errors
 ---
 
-Probo’s public interfaces operate on the same organization-scoped records. The web console uses GraphQL, MCP exposes purpose-built tools, `prb` provides terminal commands, and n8n packages common operations for visual workflows.
+Probo’s public interfaces operate on the same organization-scoped records. The web console uses GraphQL, MCP exposes purpose-built tools, `prb` provides terminal commands, n8n packages common operations for visual workflows, and the Device Agent API accepts enrollment and posture reports from endpoint agents.
 
 ## Endpoints
 
@@ -12,7 +12,7 @@ For a Probo origin such as `https://probo.example.com`, API routes are mounted b
 - Console GraphQL: `/api/console/v1/graphql`
 - MCP: `/api/mcp/v1`
 - Cookie banner: `/api/cookie-banner/v1`
-- Device agent: `/api/agent/v1`
+- [Device agent](/docs/developers/api/agent/overview): `/api/agent/v1`
 
 Some services, including OAuth discovery, use `/.well-known` routes on the same origin.
 
