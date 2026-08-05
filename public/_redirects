@@ -113,6 +113,7 @@
 /docs/api/n8n/authentication /docs/developers/api/n8n/authentication 301
 /docs/api/n8n/installation /docs/developers/api/n8n/installation 301
 /docs/api/n8n/overview /docs/developers/api/n8n/overview 301
+/docs/api/n8n/resources/access-review-source /docs/developers/api/n8n/resources/access-review-source 301
 /docs/api/n8n/resources/access-review /docs/developers/api/n8n/resources/access-review 301
 /docs/api/n8n/resources/asset /docs/developers/api/n8n/resources/asset 301
 /docs/api/n8n/resources/audit-log /docs/developers/api/n8n/resources/audit-log 301

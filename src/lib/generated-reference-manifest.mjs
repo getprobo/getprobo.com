@@ -256,6 +256,10 @@ export const n8nResourceItems = [
     slug: "docs/developers/api/n8n/resources/access-review",
   },
   {
+    label: "Access Review Source",
+    slug: "docs/developers/api/n8n/resources/access-review-source",
+  },
+  {
     label: "Asset",
     slug: "docs/developers/api/n8n/resources/asset",
   },
