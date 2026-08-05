@@ -24,10 +24,12 @@ This guide walks you through creating a cookie banner in the Probo console and a
    | --- | --- |
    | **Name** | An internal name to identify this banner (e.g. "Main Website") |
    | **Origin** | The full origin of your website (e.g. `https://www.example.com`) |
-   | **Privacy Policy URL** | Link to your privacy policy page |
+   | **Cookie Policy URL** | Link to your cookie policy page (required) |
+   | **Privacy Policy URL** | Link to your privacy policy page (optional) |
    | **Consent Expiry** | Number of days before consent expires and the banner reappears (default: 365) |
-   | **Consent Mode** | Choose **Opt-in** (recommended for GDPR) or **Opt-out**. This is the default for visitors in countries with no specific regulation — Probo automatically overrides it based on the visitor's location when a regulation applies. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation). |
    | **Default Language** | The fallback language for the banner (default: `en`). The SDK uses this when the visitor's language is not available. |
+
+   Consent mode and presentation are **not** chosen at create time — they are resolved automatically from the visitor's location. See [Geolocation and Regulations](/docs/product/cookie-banner/geolocation).
 
 2. **Configure cookie categories**
 
@@ -40,7 +42,7 @@ This guide walks you through creating a cookie banner in the Probo console and a
 
 3. **Customize translations (optional)**
 
-   Go to the **Translations** tab. Built-in translations for English, French, German, and Spanish are created automatically. You can:
+   Go to the **Translations** tab. Built-in translations for 14 languages (en, de, es, fr, id, it, ja, ko, nl, pl, pt, tr, uk, zh) are created automatically. You can:
    - **Edit UI text** for any language — banner title, description, button labels, and ARIA attributes
    - **Translate category names and descriptions** per language
    - **Add new languages** for any locale not included by default
@@ -74,9 +76,12 @@ This guide walks you through creating a cookie banner in the Probo console and a
      data-base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
      data-position="bottom-left"
    ></script>
+
+   <!-- Required in the header or footer -->
+   <probo-settings-link>Cookie settings</probo-settings-link>
    ```
 
-   Replace `YOUR_BANNER_ID` and the base URL with the values shown in the console.
+   Replace `YOUR_BANNER_ID` and the base URL with the values shown in the console. The settings link lets visitors reopen preferences (under CCPA it shows “Your Privacy Choices” with the official opt-out icon and opens the Privacy Choices panel).
 
    The SDK automatically detects the visitor's language from your page's `<html lang="...">` attribute or the browser's language setting. To force a specific language, add `data-lang`:
 
@@ -113,8 +118,8 @@ This guide walks you through creating a cookie banner in the Probo console and a
 
 Once the banner is live:
 
-- New visitors see the consent dialog and can accept all, reject all, or customize their preferences.
+- New visitors see the dialog appropriate for their regulation (opt-in, opt-out, or notice) and can accept, reject, customize, or acknowledge as applicable.
 - Consent is stored in a `probo_consent` cookie and recorded server-side for audit purposes.
 - Third-party resources tagged with `data-cookie-consent` load only when the visitor has consented to the matching category.
-- A floating settings button lets visitors change their preferences at any time. You can replace it with your own link (e.g. in the footer) using the `<probo-settings-link>` element — see the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#custom-re-open-link) docs for details.
+- `<probo-settings-link>` in your header or footer lets visitors change their preferences at any time. Under CCPA the banner starts closed and the link shows “Your Privacy Choices” with the official opt-out icon, opening the Privacy Choices panel — see the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#settings-link) docs for details.
 - When you update categories or banner settings, a new draft version is created. Publish it to push changes to visitors. Existing consent remains valid until it expires or the visitor updates their preferences.

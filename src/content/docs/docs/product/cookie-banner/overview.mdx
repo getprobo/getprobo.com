@@ -19,18 +19,18 @@ Draft changes do not alter the configuration already shown to visitors. Publish 
 
 ## Browser behavior
 
-The JavaScript client fetches published configuration from `/api/cookie-banner/v1`, resolves a language and consent mode, reads existing consent, and renders the selected UI. It can block configured scripts, iframes, images, and other resources until their category is allowed.
+The JavaScript client fetches published configuration from `/api/cookie-banner/v1`, resolves language, regulation, and layout (presentation), reads existing consent, and renders the selected UI. It can block configured scripts, iframes, images, and other resources until their category is allowed.
 
 The package supports a ready-made banner and lower-level web components for custom interfaces. The Consent Manager API exposes current choices and change events to other application code.
 
 ## Privacy and legal responsibility
 
-Geolocation, opt-in or opt-out modes, Global Privacy Control handling, version history, and consent records help teams implement a consent program. They do not determine which law applies, classify every tracker automatically, or guarantee legal compliance. The site operator remains responsible for tracker inventory, category purpose, copy, retention, and legal review.
+Geolocation, presentations (opt-in, opt-out, and notice), Global Privacy Control handling, version history, and consent records help teams implement a consent program. They do not determine which law applies, classify every tracker automatically, or guarantee legal compliance. The site operator remains responsible for tracker inventory, category purpose, copy, retention, and legal review.
 
 <CardGrid>
   <LinkCard
     title="Geolocation and regulations"
-    description="Understand how location and configured defaults affect consent mode"
+    description="Understand how location determines presentation and consent mode"
     href="/docs/product/cookie-banner/geolocation"
   />
   <LinkCard

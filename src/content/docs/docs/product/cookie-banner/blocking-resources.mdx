@@ -7,7 +7,7 @@ The Probo cookie banner SDK can block third-party resources from loading until t
 
 ## How It Works
 
-Add a `data-cookie-consent` attribute to any element you want to gate behind consent. The attribute value must match a cookie category name (lowercased) from your banner configuration — for example, `analytics`, `advertising`, or `functional`.
+Add a `data-cookie-consent` attribute to any element you want to gate behind consent. The attribute value must match a cookie category **slug** from your banner configuration — for example, `analytics`, `advertising`, or `functional`.
 
 The SDK scans the page for elements with this attribute and keeps them inactive until the visitor consents to the matching category. It also watches for dynamically added elements using a `MutationObserver`, so resources injected after page load are handled automatically.
 
@@ -133,18 +133,18 @@ Replace `href` with `data-href` on `<link>` tags:
 ></iframe>
 ```
 
-## Category Names
+## Category Slugs
 
-The `data-cookie-consent` attribute value is matched against the **lowercased category name** from your banner configuration. The default categories use these values:
+The `data-cookie-consent` attribute value is matched against the category **slug** in consent state (not the display name). Default categories use these slugs:
 
-| Category      | Attribute Value |
-| ------------- | --------------- |
-| Necessary     | `necessary`     |
-| Analytics     | `analytics`     |
-| Advertising   | `advertising`   |
-| Functional    | `functional`    |
-| Uncategorised | `uncategorised` |
+| Category      | Attribute Value (`slug`) |
+| ------------- | ------------------------ |
+| Necessary     | `necessary`              |
+| Analytics     | `analytics`              |
+| Advertising   | `advertising`            |
+| Functional    | `functional`             |
+| Uncategorised | `uncategorised`          |
 
-If you create a custom category named "Social Media", use `data-cookie-consent="social media"`.
+For a custom category, use the **slug** you set in the console (for example `social-media`), not the display name.
 
 System categories like Necessary are always consented to, so tagging elements with `data-cookie-consent="necessary"` is valid but has no blocking effect — those resources load immediately. The Uncategorised category is where cookies that haven't been assigned to a category yet are collected. You should move cookies out of Uncategorised and into the appropriate category in the console so visitors see meaningful groupings in the preference panel.

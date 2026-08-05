@@ -46,9 +46,9 @@ The themed banner is a Web Component. Register it once and place the custom elem
    }
    ```
 
-2. **Add it to your layout**
+2. **Add it to your layout with a settings link**
 
-   Render `<CookieBanner />` once at the root of your application — typically in your layout or `App` component:
+   Render `<CookieBanner />` once at the root of your application, and place `<probo-settings-link>` in your header or footer so visitors can reopen preferences:
 
    ```tsx
    // src/App.tsx
@@ -59,6 +59,9 @@ The themed banner is a Web Component. Register it once and place the custom elem
        <>
          {/* your app */}
          <CookieBanner />
+         <footer>
+           <probo-settings-link>Cookie settings</probo-settings-link>
+         </footer>
        </>
      );
    }
@@ -66,7 +69,7 @@ The themed banner is a Web Component. Register it once and place the custom elem
 
 </Steps>
 
-The banner handles everything from there — it fetches the configuration, shows the consent dialog, records consent, and manages the floating settings button.
+The banner handles everything from there — it fetches the configuration, shows the consent dialog when needed, and records consent. Under CCPA the dialog starts closed; the settings link shows “Your Privacy Choices” with the official opt-out icon and opens the Privacy Choices panel.
 
 ### TypeScript
 
@@ -80,10 +83,27 @@ declare namespace JSX {
       React.HTMLAttributes<HTMLElement> & {
         "banner-id": string;
         "base-url": string;
-        position?: "bottom-left" | "bottom-right";
+        position?:
+          | "bottom-left"
+          | "bottom-right"
+          | "bottom-center"
+          | "top-left"
+          | "top-right"
+          | "top-center";
         lang?: string;
-        "reopen-widget"?: "floating" | "custom";
       },
+      HTMLElement
+    >;
+    "probo-settings-link": React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLElement>,
+      HTMLElement
+    >;
+    "probo-acknowledge-button": React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLElement>,
+      HTMLElement
+    >;
+    "probo-privacy-choices": React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLElement>,
       HTMLElement
     >;
   }
@@ -276,64 +296,87 @@ export function CustomConsentBanner() {
   }, []);
 
   return (
-    <probo-cookie-banner-root
-      banner-id="YOUR_BANNER_ID"
-      base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
-    >
-      <probo-banner>
-        <div className="my-banner">
-          <p>We use cookies to improve your experience.</p>
-          <probo-accept-button>
-            <button>Accept all</button>
-          </probo-accept-button>
-          <probo-reject-button>
-            <button>Reject all</button>
-          </probo-reject-button>
-          <probo-customize-button>
-            <button>Customize</button>
-          </probo-customize-button>
-        </div>
-      </probo-banner>
+    <>
+      <probo-cookie-banner-root
+        banner-id="YOUR_BANNER_ID"
+        base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+      >
+        <probo-banner>
+          <div className="my-banner">
+            <p>We use cookies to improve your experience.</p>
+            <probo-accept-button>
+              <button>Accept all</button>
+            </probo-accept-button>
+            <probo-reject-button>
+              <button>Reject all</button>
+            </probo-reject-button>
+            <probo-customize-button>
+              <button>Customize</button>
+            </probo-customize-button>
+            <probo-acknowledge-button>
+              <button>Got it</button>
+            </probo-acknowledge-button>
+          </div>
+        </probo-banner>
 
-      <probo-preference-panel>
-        <div className="my-preferences">
-          <probo-category-list>
-            <template>
-              <div className="category">
-                <span data-slot="name"></span>
-                <span data-slot="description"></span>
-                <probo-category-toggle>
-                  <input type="checkbox" />
-                </probo-category-toggle>
-              </div>
-            </template>
-          </probo-category-list>
-          <probo-save-button>
-            <button>Save preferences</button>
-          </probo-save-button>
-        </div>
-      </probo-preference-panel>
-    </probo-cookie-banner-root>
+        <probo-preference-panel>
+          <div className="my-preferences">
+            <probo-category-list>
+              <template>
+                <div className="category">
+                  <span data-slot="name"></span>
+                  <span data-slot="description"></span>
+                  <probo-category-toggle>
+                    <input type="checkbox" />
+                  </probo-category-toggle>
+                </div>
+              </template>
+            </probo-category-list>
+            <probo-save-button>
+              <button>Save preferences</button>
+            </probo-save-button>
+          </div>
+        </probo-preference-panel>
+
+        <probo-privacy-choices>
+          <div className="my-privacy-choices">
+            <probo-reject-button>
+              <button>Do Not Sell or Share My Personal Information</button>
+            </probo-reject-button>
+          </div>
+        </probo-privacy-choices>
+      </probo-cookie-banner-root>
+
+      <probo-settings-link>Cookie settings</probo-settings-link>
+    </>
   );
 }
 ```
 
-See the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#headless-components-full-control) docs for the full component reference.
+Use `resolveLayout` / `resolveBannerText` from `@probo/cookie-banner/headless` to show the right controls for `OPT_IN`, `OPT_OUT`, or `NOTICE`. See the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#headless-components-full-control) docs for the full component reference and [Layout API](/docs/product/cookie-banner/javascript-sdk#layout-api).
 
-## Custom Re-open Link
+## Settings Link
 
-To replace the floating settings button with a link in your React app (e.g. in the footer), use the `<probo-settings-link>` element:
+Place `<probo-settings-link>` in your header or footer. It is required for all embeds — there is no floating settings button.
 
 ```tsx
 export function Footer() {
   return (
     <footer>
-      <probo-settings-link>
-        <button>Cookie Settings</button>
-      </probo-settings-link>
+      <probo-settings-link>Cookie settings</probo-settings-link>
     </footer>
   );
 }
 ```
 
-This automatically hides the floating button and opens the preference panel when clicked. It works regardless of how the banner is loaded — see [Custom Re-open Link](/docs/product/cookie-banner/javascript-sdk#custom-re-open-link) for details.
+Put your default label as children (shown for non-CCPA visitors). Under CCPA the SDK always replaces the content with the statutory “Your Privacy Choices” label and official opt-out icon, and opens the Privacy Choices panel. Style the host for font size and color:
+
+```css
+probo-settings-link {
+  font-size: 14px;
+  color: #334155;
+  text-decoration: underline;
+}
+```
+
+See [Settings link](/docs/product/cookie-banner/javascript-sdk#settings-link) for full behavior by regulation.
