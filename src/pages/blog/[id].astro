@@ -5,6 +5,8 @@ import Prose from "../../components/Prose.astro";
 import Sharer from "../../components/block/Sharer.svelte";
 import WrittenBy from "../../components/block/WrittenBy.astro";
 import Newsletter from "../../components/block/Newsletter.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { getCanonicalUrl } from "../../lib/i18n.ts";
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
@@ -20,11 +22,16 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+const articleImage = post.data.ogImage
+  ? `https://www.probo.com${post.data.ogImage}`
+  : "https://www.probo.com/og.png";
+
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
   headline: post.data.title,
   description: post.data.excerpt,
+  image: articleImage,
   datePublished: post.data.date.toISOString(),
   dateModified: post.data.date.toISOString(),
   author: {
@@ -41,7 +48,7 @@ const articleSchema = {
   },
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": Astro.url.toString(),
+    "@id": getCanonicalUrl(Astro.url),
   },
 };
 
@@ -92,6 +99,10 @@ const faqSchema = post.data.faqs
     )
   }
   <main class="@container container my-10 max-w-[720px] sm:my-20">
+    <Breadcrumbs
+      items={[{ label: "Blog", href: "/blog" }, { label: post.data.title }]}
+      class="animate-fade-in animation-delay-100 mb-4"
+    />
     <a
       href="/blog"
       class="text-quaternary animate-fade-in animation-delay-200 mb-4 flex items-center gap-2"

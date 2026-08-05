@@ -5,17 +5,11 @@ import AntoinePortrait from "../../assets/about/antoine-bourchardy.png";
 
 const articleSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
   name: "Compliance Framework Recommender",
   description:
     "Find the right security and compliance frameworks for your business. Get a free personalized compliance report based on your industry, business model, and target customers.",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
+  url: "https://www.probo.com/hub/compliance-recommender",
   author: {
     "@type": "Organization",
     name: "Probo",
@@ -65,7 +59,7 @@ const benefits = [
 
 <Layout
   title="Compliance Framework Recommender for Your Business"
-  description="Enter your website and we'll analyze your business to recommend you the most relevant compliance frameworks."
+  description="Enter your website and we'll analyze your business to recommend the most relevant compliance frameworks for your industry and customers."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script

@@ -1,6 +1,6 @@
 ---
 title: Webhooks Overview
-description: Build reliable integrations that react to changes in Probo
+description: Explains how Probo webhooks work, covering the signed JSON envelope, delivery requirements, HTTP headers, retry behavior, and a receiver checklist.
 ---
 
 Webhooks let your application react when resources change in Probo without polling the API. A subscription connects one HTTPS endpoint to a set of events in one organization. When an event occurs, Probo sends a signed `POST` request containing a JSON snapshot of the affected resource.

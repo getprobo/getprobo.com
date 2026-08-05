@@ -60,12 +60,24 @@ export const docsSidebarGroups = [
     items: [
       { label: "Overview", slug: "docs" },
       {
+        label: "Getting started",
+        slug: "docs/product/getting-started",
+      },
+      {
         label: "Product overview",
         slug: "docs/product/getting-started/product-overview",
       },
       {
         label: "Choose a deployment",
         slug: "docs/product/getting-started/choose-deployment",
+      },
+      {
+        label: "Quickstart",
+        slug: "docs/product/getting-started/quickstart",
+      },
+      {
+        label: "Set up your first organization and framework",
+        slug: "docs/product/getting-started/first-organization-and-framework",
       },
       {
         label: "Core concepts",

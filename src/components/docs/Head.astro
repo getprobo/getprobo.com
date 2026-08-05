@@ -2,9 +2,11 @@
 import { ClientRouter } from "astro:transitions";
 import PostHog from "../posthog.astro";
 
-const { head } = Astro.locals.starlightRoute;
+const { head, entry, siteTitle } = Astro.locals.starlightRoute;
 const pathname = Astro.url.pathname.replace(/\.html$/, "").replace(/\/+$/, "");
 const markdownAlternate = pathname ? `/md${pathname}.md` : "/md/index.md";
+const seoTitle = `${entry.data.title} | ${siteTitle}`;
+const description = entry.data.description;
 ---
 
 {
@@ -12,6 +14,15 @@ const markdownAlternate = pathname ? `/md${pathname}.md` : "/md/index.md";
     <Tag {...attrs} set:html={content} />
   ))
 }
+<meta property="og:image" content="https://www.probo.com/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={entry.data.title} />
+<meta name="twitter:site" content="@getprobo" />
+<meta name="twitter:creator" content="@getprobo" />
+<meta name="twitter:title" content={seoTitle} />
+{description && <meta name="twitter:description" content={description} />}
+<meta name="twitter:image" content="https://www.probo.com/og.png" />
 <link
   href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
   rel="stylesheet"

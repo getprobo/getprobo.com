@@ -1,5 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import TakeawayScopeSharedResponsibility from "../../assets/hub/cloud-security-best-practices/takeaway-scope-shared-responsibility.png";
+import TakeawaySystemBoundary from "../../assets/hub/cloud-security-best-practices/takeaway-system-boundary.png";
+import ProboHomepageScreenshot from "../../assets/hub/cloud-security-best-practices/probo-homepage-screenshot.jpg";
+import TakeawayGuardrails from "../../assets/hub/cloud-security-best-practices/takeaway-guardrails.png";
+import BlogLinkCodeReviews from "../../assets/hub/cloud-security-best-practices/blog-link-code-reviews.png";
+import CtaComplianceDoneForYou from "../../assets/hub/cloud-security-best-practices/cta-compliance-done-for-you.png";
+import StoryLinkAhrefsIso27001 from "../../assets/hub/cloud-security-best-practices/story-link-ahrefs-iso27001.png";
+import CtaStayAuditReady from "../../assets/hub/cloud-security-best-practices/cta-stay-audit-ready.png";
 
 const tableOfContents = [
   {
@@ -286,10 +295,11 @@ const breadcrumbSchema = {
 
             <!-- Key takeaway image -->
             <div class="mt-8">
-              <img
-                src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767720260944.png"
+              <Image
+                src={TakeawayScopeSharedResponsibility}
                 alt="Cloud security best practices key takeaway"
                 class="border-border-low w-full rounded-lg border"
+                width={1440}
               />
             </div>
           </div>
@@ -359,10 +369,11 @@ const breadcrumbSchema = {
 
             <!-- Key takeaway image -->
             <div class="mt-8">
-              <img
-                src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767720305548.png"
+              <Image
+                src={TakeawaySystemBoundary}
                 alt="System boundary key takeaway"
                 class="border-border-low w-full rounded-lg border"
+                width={1440}
               />
             </div>
 
@@ -539,10 +550,11 @@ const breadcrumbSchema = {
 
             <!-- Probo cover image -->
             <div class="mt-8">
-              <img
-                src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767718444305.jpg"
+              <Image
+                src={ProboHomepageScreenshot}
                 alt="Probo compliance platform"
                 class="border-border-low w-full rounded-lg border"
+                width={1440}
               />
             </div>
           </div>
@@ -631,10 +643,11 @@ const breadcrumbSchema = {
 
             <!-- Key takeaway image -->
             <div class="mt-8">
-              <img
-                src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767720341153.png"
+              <Image
+                src={TakeawayGuardrails}
                 alt="Guardrails key takeaway"
                 class="border-border-low w-full rounded-lg border"
+                width={1440}
               />
             </div>
 
@@ -727,10 +740,11 @@ const breadcrumbSchema = {
               href="/blog/2025-11-09-do-you-need-code-reviews"
               class="mt-8 block"
             >
-              <img
-                src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767719599209.png"
+              <Image
+                src={BlogLinkCodeReviews}
                 alt="Do you need code reviews - blog post"
                 class="border-border-low w-full rounded-lg border transition-colors hover:border-[#5d770d]"
+                width={1440}
               />
             </a>
 
@@ -874,10 +888,11 @@ const breadcrumbSchema = {
               rel="noopener noreferrer"
               class="mt-8 block"
             >
-              <img
-                src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767719318077.png"
+              <Image
+                src={CtaComplianceDoneForYou}
                 alt="Get started with Probo"
                 class="border-border-low w-full rounded-lg border transition-colors hover:border-[#5d770d]"
+                width={1440}
               />
             </a>
 
@@ -1069,10 +1084,11 @@ const breadcrumbSchema = {
 
             <!-- Ahrefs story link -->
             <a href="/stories/ahrefs-iso" class="mt-8 block">
-              <img
-                src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767718823643.png"
+              <Image
+                src={StoryLinkAhrefsIso27001}
                 alt="Ahrefs ISO 27001 story"
                 class="border-border-low w-full rounded-lg border transition-colors hover:border-[#5d770d]"
+                width={1440}
               />
             </a>
 
@@ -1302,10 +1318,11 @@ const breadcrumbSchema = {
             rel="noopener noreferrer"
             class="mt-8 block"
           >
-            <img
-              src="https://cdn.coverseo.com/articles/e2vSAOHNFHQSfFFEMrEkXA0FwobhZBy4/YIbklJY-vtTUJOnTg1BbX/content-1767719032489.png"
+            <Image
+              src={CtaStayAuditReady}
               alt="Get started with Probo"
               class="border-border-low w-full rounded-lg border transition-colors hover:border-[#5d770d]"
+              width={1440}
             />
           </a>
         </section>

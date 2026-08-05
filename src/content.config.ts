@@ -8,13 +8,32 @@ export const pageSize = 10;
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/blog" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    /** Meta description / preview excerpt; keep 120-160 chars for SEO. */
+    excerpt: z.string().min(120),
+    author: z.object({
+      name: z.string(),
+    }),
+    ogImage: z.string().optional(),
+    faqs: z
+      .array(
+        z.object({
+          question: z.string(),
+          answer: z.string(),
+        }),
+      )
+      .optional(),
+  }),
 });
 
 const stories = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/stories" }),
   schema: z.object({
     title: z.string(),
-    description: z.string().optional(),
+    /** Meta description; keep 120+ chars for SEO when set. */
+    description: z.string().min(120).optional(),
     date: z.date(),
     impacts: z
       .array(
@@ -56,7 +75,8 @@ const hub = defineCollection({
     highlight: z.string().optional(),
     /** Small pill shown under the <h1> (e.g. "The Complete SOC 2 Guide for 2026") */
     eyebrow: z.string().optional(),
-    description: z.string(),
+    /** Meta description; keep 120+ chars for SEO. */
+    description: z.string().min(120),
     /** Card label on the hub index (e.g. "Guide", "Comparison", "Checklist") */
     tag: z.string().default("Guide"),
     /** Tailwind gradient classes for the card accent */
@@ -74,7 +94,8 @@ const changelog = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/changelog" }),
   schema: z.object({
     title: z.string(),
-    description: z.string(),
+    /** Meta description; keep 120+ chars for SEO. */
+    description: z.string().min(120),
     date: z.date(),
     image: z.string().optional(),
     images: z.array(z.string()).optional(),
@@ -130,7 +151,12 @@ const wall = defineCollection({
 
 const docs = defineCollection({
   loader: docsLoader(),
-  schema: docsSchema(),
+  schema: docsSchema({
+    extend: z.object({
+      /** Meta description; keep 120+ chars for SEO. */
+      description: z.string().min(120),
+    }),
+  }),
 });
 
 export const collections = { blog, stories, docs, changelog, jobs, hub, wall };
