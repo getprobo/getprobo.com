@@ -30,6 +30,10 @@ export const cliCommandItems = [
     slug: "docs/developers/cli/commands/browse",
   },
   {
+    label: "Business Function",
+    slug: "docs/developers/cli/commands/business-function",
+  },
+  {
     label: "Completion",
     slug: "docs/developers/cli/commands/completion",
   },
@@ -181,6 +185,10 @@ export const mcpCategoryItems = [
     slug: "docs/developers/api/mcp/tools/catalog/audits-and-findings",
   },
   {
+    label: "Business functions",
+    slug: "docs/developers/api/mcp/tools/catalog/business-functions",
+  },
+  {
     label: "Compliance portal",
     slug: "docs/developers/api/mcp/tools/catalog/compliance-portal",
   },
@@ -258,6 +266,10 @@ export const n8nResourceItems = [
   {
     label: "Audit Log",
     slug: "docs/developers/api/n8n/resources/audit-log",
+  },
+  {
+    label: "Business Function",
+    slug: "docs/developers/api/n8n/resources/business-function",
   },
   {
     label: "Compliance Portal",
