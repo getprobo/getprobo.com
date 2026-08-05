@@ -12,7 +12,7 @@ faqs:
   - question: "What's the difference between opt-in and opt-out consent?"
     answer: "Opt-in (GDPR, UK GDPR, ePrivacy, LGPD, FADP, POPIA, PIPL, PIPA, DPDP, PDPL) requires non-essential cookies and analytics to be blocked until the visitor explicitly accepts. Opt-out (CCPA/CPRA, PIPEDA, LFPDPPP, APPI) allows them by default but you must give the visitor a clear way to opt out. The Probo cookie banner detects the visitor's country via geolocation and applies the correct mode automatically — your code doesn't have to."
   - question: "Why does cookieless mode break session replay and feature flags?"
-    answer: "Both rely on persistent browser storage that cookieless mode forbids. Session replay needs a session ID kept across page loads. Feature flag caching needs to store the last resolved flag values. Without storage, replays can't be captured at all and feature flags must be re-fetched on every page load (or bootstrapped server-side). You also lose identify() because a stable distinct_id would qualify as personal data under GDPR."
+    answer: "With cookieless_mode: 'always' (Track 1), both rely on persistent browser storage the SDK forbids — no session replay, no identify(), and no reliable person-level feature flags. With Track 2's cookieless_mode: 'on_reject', persistence stays off while the visitor is rejected, then opt_in_capturing() + identify() unlock flags after consent. See the companion guide on PostHog feature flags behind a cookie banner."
   - question: "Does PostHog have to be the same domain to bypass ad blockers?"
     answer: "Not strictly, but it helps. Loading posthog-js from a first-party subdomain (e.g. t.yourdomain.com) via a reverse proxy reduces the chance that uBlock Origin, Brave, or Safari ITP will block or strip the request. PostHog has a built-in reverse proxy guide. Probo uses t.probo.com for this exact reason."
 ---
@@ -235,6 +235,10 @@ Same as Track 1: enable **Cookieless server hash mode** under **Project Settings
 ### Wiring the banner category
 
 In the Probo console, the banner has an **Analytics** category by default. Either keep its slug as `analytics` (matching the constant in the example) or flag a different category with **PostHog consent** in the console and use its slug in your code. See the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk) and [Consent Manager API](/docs/product/cookie-banner/consent-manager) docs for the full reference.
+
+### Want feature flags?
+
+If you need PostHog feature flags (or `identify()` mid-session after an accept), keep Track 2 on `cookieless_mode: "on_reject"` for every boot — not `"always"` when analytics is denied at init — and gate the UI until consent is granted and the user is identified. Full pattern, `__ph_opt_in_out_*` as necessary consent storage, and a working example: [PostHog feature flags behind a cookie banner](/blog/2026-08-05-posthog-feature-flags-cookie-consent).
 
 ---
 

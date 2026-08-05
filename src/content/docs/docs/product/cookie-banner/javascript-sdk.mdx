@@ -356,6 +356,9 @@ The integration detects `window.gtag` or `window.dataLayer` automatically. If ne
 
 PostHog isn't auto-synced by the SDK — but the [Consent Manager API](/docs/product/cookie-banner/consent-manager) gives you everything you need to wire it up in a few lines and stay compliant with GDPR, CCPA, and the other regulations the banner handles.
 
-See the dedicated guide: [How to set up PostHog: GDPR, CCPA, and global privacy laws](/blog/2026-05-27-posthog-cookie-banner-gdpr-ccpa-compliance). It covers both the cookieless-only setup and the consent-aware setup (full PostHog features behind a regulation-aware banner), with a minimum working example for each.
+See the dedicated guides:
 
-A complete working integration lives in the [`cookie-banner-react`](https://github.com/getprobo/probo/tree/main/examples/cookie-banner-react) example.
+- [How to set up PostHog: GDPR, CCPA, and global privacy laws](/blog/2026-05-27-posthog-cookie-banner-gdpr-ccpa-compliance) — cookieless-only vs consent-aware setup, with a minimum working example for each.
+- [PostHog feature flags behind a cookie banner](/blog/2026-08-05-posthog-feature-flags-cookie-consent) — evaluate flags only after analytics consent and `identify()`, and why Track 2 should always use `cookieless_mode: "on_reject"`.
+
+A complete working integration (including a consent-gated feature flag demo) lives in the [`cookie-banner-react`](https://github.com/getprobo/probo/tree/main/examples/cookie-banner-react) example.
