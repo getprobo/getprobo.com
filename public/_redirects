@@ -35,6 +35,7 @@
 /docs/cli/commands/audit /docs/developers/cli/commands/audit 301
 /docs/cli/commands/auth /docs/developers/cli/commands/auth 301
 /docs/cli/commands/browse /docs/developers/cli/commands/browse 301
+/docs/cli/commands/business-function /docs/developers/cli/commands/business-function 301
 /docs/cli/commands/completion /docs/developers/cli/commands/completion 301
 /docs/cli/commands/compliance-portal /docs/developers/cli/commands/compliance-portal 301
 /docs/cli/commands/config /docs/developers/cli/commands/config 301
@@ -85,6 +86,7 @@
 /docs/api/mcp/tools/catalog/assets-and-data /docs/developers/api/mcp/tools/catalog/assets-and-data 301
 /docs/api/mcp/tools/catalog/audit-logs /docs/developers/api/mcp/tools/catalog/audit-logs 301
 /docs/api/mcp/tools/catalog/audits-and-findings /docs/developers/api/mcp/tools/catalog/audits-and-findings 301
+/docs/api/mcp/tools/catalog/business-functions /docs/developers/api/mcp/tools/catalog/business-functions 301
 /docs/api/mcp/tools/catalog/compliance-portal /docs/developers/api/mcp/tools/catalog/compliance-portal 301
 /docs/api/mcp/tools/catalog/cookie-consent /docs/developers/api/mcp/tools/catalog/cookie-consent 301
 /docs/api/mcp/tools/catalog/devices /docs/developers/api/mcp/tools/catalog/devices 301
@@ -111,6 +113,7 @@
 /docs/api/n8n/resources/asset /docs/developers/api/n8n/resources/asset 301
 /docs/api/n8n/resources/audit-log /docs/developers/api/n8n/resources/audit-log 301
 /docs/api/n8n/resources/audit /docs/developers/api/n8n/resources/audit 301
+/docs/api/n8n/resources/business-function /docs/developers/api/n8n/resources/business-function 301
 /docs/api/n8n/resources/compliance-portal /docs/developers/api/n8n/resources/compliance-portal 301
 /docs/api/n8n/resources/control /docs/developers/api/n8n/resources/control 301
 /docs/api/n8n/resources/cookie-banner /docs/developers/api/n8n/resources/cookie-banner 301
