@@ -73,6 +73,7 @@
 /docs/cli/configuration /docs/developers/cli/configuration 301
 /docs/cli/overview /docs/developers/cli/overview 301
 /docs/api/agent/authentication /docs/developers/api/agent/authentication 301
+/docs/api/agent/contributing /docs/developers/api/agent/contributing 301
 /docs/api/agent/endpoints /docs/developers/api/agent/endpoints 301
 /docs/api/agent/overview /docs/developers/api/agent/overview 301
 /docs/api/mcp/authentication /docs/developers/api/mcp/authentication 301
@@ -167,6 +168,7 @@
 /docs/configuration/environment-reference /docs/deployment/configuration/environment-reference 301
 /docs/configuration/environment-variables /docs/deployment/configuration/environment-variables 301
 /docs/configuration/overview /docs/deployment/configuration/overview 301
+/docs/product/probo-agent/contributing /docs/developers/api/agent/contributing 301
 /docs/product/probo-agent/installation /docs/product/probo-agent/macos 301
 /docs/product/probo-agent/desktop-install /docs/product/probo-agent/macos 301
 /docs/product/probo-agent/server-install /docs/product/probo-agent/linux 301
