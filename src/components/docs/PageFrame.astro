@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import Logo from "../../assets/probo-logo.svg";
 import MobileMenuToggle from "virtual:starlight/components/MobileMenuToggle";
 import Search from "virtual:starlight/components/Search";
 import Header from "../Header.astro";
@@ -11,7 +13,7 @@ import SectionNav from "./SectionNav.astro";
   </Header>
   <div class="docs-horizon border-border-low bg-level-0 border-b">
     <div
-      class="docs-subnav flex flex-col gap-3 px-[var(--docs-page-padding-x)] pb-3 sm:flex-row sm:items-center sm:gap-4 sm:pb-0"
+      class="docs-subnav flex flex-col gap-3 px-(--docs-page-padding-x) pb-3 sm:flex-row sm:items-center sm:gap-4 sm:pb-0"
     >
       <SectionNav />
       <Search class="docs-chrome-search shrink-0 sm:ms-auto" />
@@ -28,139 +30,167 @@ import SectionNav from "./SectionNav.astro";
     >
       <slot name="sidebar" />
     </nav>
-    <div class="docs-content px-[var(--docs-page-padding-x)] py-6 lg:py-8">
+    <div class="docs-content px-(--docs-page-padding-x) py-6 lg:py-8">
       <slot />
     </div>
   </div>
+
+  <footer class="docs-site-footer border-border-low mt-auto w-full border-t">
+    <div
+      class="mx-auto flex w-full items-center justify-between gap-4 px-4 py-3"
+    >
+      <a href="/" class="logo block leading-none opacity-85 hover:opacity-100">
+        <Image src={Logo} alt="Probo" width={73} height={20} />
+      </a>
+      <probo-settings-link
+        class="cookie-settings text-tertiary-foreground hover:text-foreground text-sm whitespace-nowrap hover:underline"
+      >
+        <a href="#">Cookie Settings</a>
+      </probo-settings-link>
+    </div>
+  </footer>
 </div>
 
 <style>
-  .docs-subnav :global(site-search.docs-chrome-search) {
-    display: block;
-    width: 100%;
-  }
+  @layer starlight.core {
+    .docs-site-footer {
+      /* Slightly darker than the page background in both themes */
+      background: color-mix(in srgb, var(--color-level-0) 98%, black);
+    }
 
-  @media (min-width: 40rem) {
+    .cookie-settings :global(a) {
+      color: inherit;
+      text-decoration: none;
+    }
+
     .docs-subnav :global(site-search.docs-chrome-search) {
-      width: auto;
+      display: block;
+      width: 100%;
     }
-  }
 
-  .docs-main {
-    display: grid;
-    width: 100%;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    background-color: var(--color-level-0);
-  }
+    @media (min-width: 40rem) {
+      .docs-subnav :global(site-search.docs-chrome-search) {
+        width: auto;
+      }
+    }
 
-  @media (min-width: 64rem) {
     .docs-main {
-      grid-template-columns: var(--docs-sidebar-width) minmax(0, 1fr);
-      min-height: calc(100vh - var(--sl-docs-chrome-height));
+      display: grid;
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      background-color: var(--color-level-0);
     }
 
-    .sidebar {
-      position: sticky;
-      top: var(--sl-docs-chrome-height);
-      align-self: start;
-      max-height: calc(100vh - var(--sl-docs-chrome-height));
-      overflow: auto;
-      padding: 1.25rem 1rem 2rem;
-      scrollbar-width: none;
+    @media (min-width: 64rem) {
+      .docs-main {
+        grid-template-columns: var(--docs-sidebar-width) minmax(0, 1fr);
+        min-height: calc(100vh - var(--sl-docs-chrome-height));
+      }
+
+      .sidebar {
+        position: sticky;
+        top: var(--sl-docs-chrome-height);
+        align-self: start;
+        max-height: calc(100vh - var(--sl-docs-chrome-height));
+        overflow: auto;
+        padding: 1.25rem 1rem 2rem;
+        scrollbar-width: none;
+      }
+
+      .docs-content {
+        min-width: 0;
+        border-inline-start: 1px solid var(--color-border-low);
+      }
+
+      .sidebar::-webkit-scrollbar {
+        display: none;
+      }
+
+      :global(.docs-toc-pane .right-sidebar) {
+        position: sticky;
+        top: calc(var(--sl-docs-chrome-height) + 1.5rem);
+        max-height: calc(100vh - var(--sl-docs-chrome-height) - 2rem);
+        overflow: auto;
+        padding-inline-start: 0.5rem;
+      }
     }
 
-    .docs-content {
-      min-width: 0;
-      border-inline-start: 1px solid var(--color-border-low);
-    }
-
-    .sidebar::-webkit-scrollbar {
-      display: none;
-    }
-
-    :global(.docs-toc-pane .right-sidebar) {
-      position: sticky;
-      top: calc(var(--sl-docs-chrome-height) + 1.5rem);
-      max-height: calc(100vh - var(--sl-docs-chrome-height) - 2rem);
-      overflow: auto;
-      padding-inline-start: 0.5rem;
-    }
-  }
-
-  .docs-subnav :global(site-search.docs-chrome-search button[data-open-modal]) {
-    width: 100%;
-    max-width: none;
-    border: 1px solid var(--color-border-low);
-    border-radius: 0.5rem;
-    padding-inline: 0.625rem 0.5rem;
-    background-color: var(--color-subtle);
-    color: var(--color-muted-foreground);
-    font-size: var(--sl-text-sm);
-    height: 2rem;
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
-  }
-
-  @media (min-width: 40rem) {
     .docs-subnav
       :global(site-search.docs-chrome-search button[data-open-modal]) {
-      width: 14rem;
-    }
-  }
-
-  .docs-subnav
-    :global(site-search.docs-chrome-search button[data-open-modal]:hover) {
-    border-color: color-mix(
-      in srgb,
-      var(--docs-accent) 45%,
-      var(--color-border-mid)
-    );
-    background-color: var(--docs-accent-soft);
-    color: var(--color-primary);
-  }
-
-  .docs-subnav
-    :global(
-      site-search.docs-chrome-search button[data-open-modal]:focus-visible
-    ) {
-    outline: 2px solid var(--docs-accent);
-    outline-offset: 2px;
-  }
-
-  .docs-subnav
-    :global(site-search.docs-chrome-search button[data-open-modal] span) {
-    display: block;
-  }
-
-  @media (max-width: 63.999rem) {
-    :global(body[data-mobile-menu-expanded]) .sidebar {
-      transform: translateY(0);
-      pointer-events: all;
-      opacity: 1;
-      visibility: visible;
+      width: 100%;
+      max-width: none;
+      border: 1px solid var(--color-border-low);
+      border-radius: 0.5rem;
+      padding-inline: 0.625rem 0.5rem;
+      background-color: var(--color-subtle);
+      color: var(--color-muted-foreground);
+      font-size: var(--sl-text-sm);
+      height: 2rem;
+      box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
     }
 
-    .sidebar {
-      position: fixed;
-      inset: var(--sl-docs-chrome-height) 0 0;
-      z-index: 200;
-      width: min(100%, 20rem);
-      padding: 1rem 0.75rem 1.5rem;
-      transition: 0.2s ease-in-out;
-      opacity: 0;
-      transform: translateY(-12px);
-      pointer-events: none;
-      visibility: hidden;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      scrollbar-gutter: stable;
-      background-color: var(--sl-color-bg);
-      box-shadow: var(--shadow-md);
+    @media (min-width: 40rem) {
+      .docs-subnav
+        :global(site-search.docs-chrome-search button[data-open-modal]) {
+        width: 14rem;
+      }
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    .docs-subnav
+      :global(site-search.docs-chrome-search button[data-open-modal]:hover) {
+      border-color: color-mix(
+        in srgb,
+        var(--docs-accent) 45%,
+        var(--color-border-mid)
+      );
+      background-color: var(--docs-accent-soft);
+      color: var(--color-primary);
+    }
+
+    .docs-subnav
+      :global(
+        site-search.docs-chrome-search button[data-open-modal]:focus-visible
+      ) {
+      outline: 2px solid var(--docs-accent);
+      outline-offset: 2px;
+    }
+
+    .docs-subnav
+      :global(site-search.docs-chrome-search button[data-open-modal] span) {
+      display: block;
+    }
+
+    @media (max-width: 63.999rem) {
+      :global(body[data-mobile-menu-expanded]) .sidebar {
+        transform: translateY(0);
+        pointer-events: all;
+        opacity: 1;
+        visibility: visible;
+      }
+
       .sidebar {
-        transition: none;
+        position: fixed;
+        inset: var(--sl-docs-chrome-height) 0 0;
+        z-index: 200;
+        width: min(100%, 20rem);
+        padding: 1rem 0.75rem 1.5rem;
+        transition: 0.2s ease-in-out;
+        opacity: 0;
+        transform: translateY(-12px);
+        pointer-events: none;
+        visibility: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+        background-color: var(--sl-color-bg);
+        box-shadow: var(--shadow-md);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .sidebar {
+          transition: none;
+        }
       }
     }
   }

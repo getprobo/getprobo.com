@@ -70,6 +70,7 @@ export default defineConfig({
         ContentPanel: "./src/components/docs/ContentPanel.astro",
         Footer: "./src/components/docs/Footer.astro",
         Head: "./src/components/docs/Head.astro",
+        Footer: "./src/components/docs/Footer.astro",
         PageFrame: "./src/components/docs/PageFrame.astro",
         PageTitle: "./src/components/docs/PageTitle.astro",
         Search: "./src/components/docs/Search.astro",
