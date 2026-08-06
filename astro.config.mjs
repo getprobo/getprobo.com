@@ -8,6 +8,7 @@ import sitemap from "@astrojs/sitemap";
 import { removeHtmlExtension } from "./vite-plugin-remove-html.mjs";
 import { docsSidebar } from "./src/lib/docs-sidebar.ts";
 import { generateMarkdown } from "./tools/generateMarkdown";
+import { generateSecurityTxt } from "./tools/generateSecurityTxt";
 
 // Post-enforce fallback: when vite-plugin-svelte cannot resolve a Svelte
 // virtual CSS module (e.g. during dev re-optimization), return empty CSS so
@@ -109,6 +110,7 @@ export default defineConfig({
       sidebar: docsSidebar,
     }),
     generateMarkdown(),
+    generateSecurityTxt(),
     mdx(),
     svelte(),
     sitemap({
