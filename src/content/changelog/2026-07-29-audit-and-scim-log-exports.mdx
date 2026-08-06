@@ -1,0 +1,13 @@
+---
+title: "Log Exports for Audits"
+description: "Pull a CSV of audit logs or SCIM events straight from the console instead of asking Probo for a data dump."
+date: 2026-07-29
+images: ["/changelog/2026-07-29-audit-and-scim-log-exports-1.png"]
+tags: ["Console"]
+---
+
+Until now, getting your audit log or SCIM event history out of Probo meant asking us for it. Now you can request a CSV export straight from the console, Connect, MCP, or the CLI.
+
+The export runs as a background job. A worker streams the rows and uploads the finished file to S3, so it works the same way whether you're pulling a week of activity or a year's worth.
+
+Useful for auditors who want the raw log outside the app, or for teams piping activity into their own SIEM.
