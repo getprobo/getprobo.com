@@ -7,7 +7,7 @@ const newsletter = tv({
   base: "",
   variants: {
     variant: {
-      default: "bg-subtle rounded-3xl p-6 sm:p-8 @sm:flex items-center gap-20",
+      default: "bg-subtle rounded-3xl p-6 sm:p-8",
       footer: "sm:max-w-[320px]",
     },
   },
@@ -17,86 +17,93 @@ const newsletter = tv({
 });
 
 const props = Astro.props;
+
+// Listmonk posts back into a hidden iframe so the visitor never leaves the
+// site; the name has to be unique since this component can render twice on
+// the same page (e.g. footer + inline blog post widget).
+const iframeName = `newsletter-frame-${crypto.randomUUID()}`;
+const PROBO_NEWSLETTER_LIST_UUID = "d1e033d7-270d-4cf0-af1e-3782f4d49b49";
 ---
 
 <newsletter-form>
-  <form class={newsletter(Astro.props)}>
-    <div
+  <div class={newsletter(Astro.props)}>
+    <form
+      class={clsx(props.variant !== "footer" && "@sm:flex items-center gap-20")}
+      method="post"
+      action="https://lists.probo.com/subscription/form"
+      target={iframeName}
+    >
+      <div
+        class={clsx(
+          "mb-6 @sm:max-w-65 @sm:mb-0",
+          props.variant === "footer" ? "text-sm" : "text-lg font-medium",
+        )}
+      >
+        Sign up for our newsletter to get actionable insights about compliance,
+        right to your inbox.
+      </div>
+      <div class="space-y-3">
+        <input type="hidden" name="nonce" value="" />
+        <input type="hidden" name="l" value={PROBO_NEWSLETTER_LIST_UUID} />
+        <input
+          class={clsx(
+            "border-border-mid placeholder:text-quaternary w-full rounded-lg border px-3 bg-secondary ",
+            props.variant === "footer" ? "h-8" : "h-11 sm:h-8",
+          )}
+          name="email"
+          type="email"
+          required
+          placeholder="Enter your email"
+          aria-label="Your email"
+        />
+        <Button
+          type="submit"
+          class={clsx(
+            "w-full text-base sm:w-max",
+            props.variant === "footer" ? "h-9 w-max" : "h-11 sm:h-8",
+          )}>Subscribe</Button
+        >
+      </div>
+    </form>
+    <p
       class={clsx(
-        "mb-6 @sm:max-w-65 @sm:mb-0",
+        "hidden",
         props.variant === "footer" ? "text-sm" : "text-lg font-medium",
       )}
+      data-success
     >
-      Sign up for our newsletter to get actionable insights about compliance,
-      right to your inbox.
-    </div>
-    <div class="space-y-3">
-      <input
-        class={clsx(
-          "border-border-mid placeholder:text-quaternary w-full rounded-lg border px-3 bg-secondary ",
-          props.variant === "footer" ? "h-8" : "h-11 sm:h-8",
-        )}
-        name="email"
-        type="email"
-        required
-        placeholder="Enter your email"
-        aria-label="Your email"
-      />
-      <Button
-        type="submit"
-        class={clsx(
-          "w-full text-base sm:w-max",
-          props.variant === "footer" ? "h-9 w-max" : "h-11 sm:h-8",
-        )}>Subscribe</Button
-      >
-    </div>
-  </form>
+      You're subscribed — thanks for signing up!
+    </p>
+  </div>
+  <iframe name={iframeName} hidden></iframe>
 </newsletter-form>
 
 <script>
-  import { toast } from "svelte-sonner";
   import { customElementDefine } from "../../lib/dom";
 
   class NewsletterForm extends HTMLElement {
     connectedCallback() {
       const form = this.querySelector("form");
-      if (!form) return;
+      const success = this.querySelector("[data-success]");
+      const iframe = this.querySelector("iframe");
+      if (!form || !success || !iframe) return;
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      const button = form.querySelector("button") as HTMLButtonElement;
 
-        const formData = new FormData(form);
-        const button = form.querySelector("button") as HTMLButtonElement;
-        const originalText = button?.textContent || "Subscribe";
-
-        // Disable button during submission
+      form.addEventListener("submit", () => {
         if (button) {
           button.disabled = true;
           button.textContent = "Subscribing...";
         }
 
-        try {
-          const response = await fetch("/api/newsletter", {
-            method: "POST",
-            body: formData,
-          });
-
-          if (response.ok) {
-            toast.success("Successfully subscribed to our newsletter!");
-            form.reset();
-          } else {
-            const result = await response.json();
-            toast.error(result.error || "An error occurred. Please try again.");
-          }
-        } catch (error) {
-          console.error("Newsletter subscription error:", error);
-          toast.error("An error occurred. Please try again.");
-        } finally {
-          if (button) {
-            button.disabled = false;
-            button.textContent = originalText;
-          }
-        }
+        iframe.addEventListener(
+          "load",
+          () => {
+            form.hidden = true;
+            success.classList.remove("hidden");
+          },
+          { once: true },
+        );
       });
     }
   }
