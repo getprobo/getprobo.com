@@ -1,44 +1,18 @@
-import { readdirSync } from "node:fs";
-import { join } from "node:path";
-import { fileURLToPath } from "node:url";
-
-const docsContentDirectory = fileURLToPath(
-  new URL("../content/docs/docs/", import.meta.url),
-);
-
 /**
+ * Redirects an entire moved documentation section with a single wildcard
+ * rule instead of one rule per file. Cloudflare Pages enforces a small cap
+ * on the number of redirect rules it will actually apply (well under the
+ * ~190 rules a per-file enumeration produced here), so any section move
+ * must collapse to a couple of rules rather than one per page.
  * @param {string} fromPrefix
  * @param {string} toPrefix
  * @returns {Record<string, { status: 301; destination: string }>}
  */
 function movedDocsRedirects(fromPrefix, toPrefix) {
-  /** @type {Record<string, { status: 301; destination: string }>} */
-  const redirects = {};
-  const sectionDirectory = join(
-    docsContentDirectory,
-    ...toPrefix.replace(/^\/docs\//, "").split("/"),
-  );
-
-  function collect(directory, segments = []) {
-    for (const entry of readdirSync(directory, { withFileTypes: true })) {
-      if (entry.name.startsWith("_")) continue;
-      if (entry.isDirectory()) {
-        collect(join(directory, entry.name), [...segments, entry.name]);
-      } else if (entry.name.endsWith(".mdx")) {
-        const name = entry.name.replace(/\.mdx$/, "");
-        const routeSegments = name === "index" ? segments : [...segments, name];
-        const suffix =
-          routeSegments.length > 0 ? `/${routeSegments.join("/")}` : "";
-        redirects[`${fromPrefix}${suffix}`] = {
-          status: 301,
-          destination: `${toPrefix}${suffix}`,
-        };
-      }
-    }
-  }
-
-  collect(sectionDirectory);
-  return redirects;
+  return {
+    [fromPrefix]: redirect(toPrefix),
+    [`${fromPrefix}/*`]: { status: 301, destination: `${toPrefix}/:splat` },
+  };
 }
 
 /**
