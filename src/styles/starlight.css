@@ -54,7 +54,7 @@
     --sl-docs-chrome-height: calc(
       var(--sl-nav-height) + var(--sl-docs-section-nav-height)
     );
-    --docs-sidebar-width: 16.5rem;
+    --docs-sidebar-width: 17.5rem;
     --docs-toc-width: 13.5rem;
     --docs-content-max-width: 820px;
     --docs-page-padding-x: clamp(1.25rem, 2.5vw, 2.5rem);
@@ -361,9 +361,13 @@
     margin-inline-start: 0.5rem;
   }
 
+  .docs-shell .sidebar .sidebar-section-links > ul > li + li {
+    margin-block-start: 0.375rem;
+  }
+
   .docs-toc-pane h2,
   .right-sidebar h2 {
-    font-size: 0.6875rem;
+    font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;

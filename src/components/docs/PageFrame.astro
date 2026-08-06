@@ -99,21 +99,51 @@ import SectionNav from "./SectionNav.astro";
       }
 
       .docs-content {
+        --docs-header-glow: color-mix(
+          in srgb,
+          var(--color-accent) 12%,
+          transparent
+        );
+        position: relative;
+        isolation: isolate;
         min-width: 0;
         border-inline-start: 1px solid var(--color-border-low);
+      }
+
+      .docs-content::before {
+        position: absolute;
+        z-index: 0;
+        inset: 0 0 auto;
+        height: 24rem;
+        content: "";
+        pointer-events: none;
+      }
+
+      .docs-content::before {
+        background: radial-gradient(
+          ellipse 70% 90% at 62% 12%,
+          var(--docs-header-glow) 0,
+          transparent 72%
+        );
+      }
+
+      .docs-content :global(.docs-body) {
+        position: relative;
+        z-index: 1;
+      }
+
+      :global(:root[data-theme="dark"]) .docs-content {
+        --docs-header-glow: color-mix(
+          in srgb,
+          var(--color-accent) 7%,
+          transparent
+        );
       }
 
       .sidebar::-webkit-scrollbar {
         display: none;
       }
 
-      :global(.docs-toc-pane .right-sidebar) {
-        position: sticky;
-        top: calc(var(--sl-docs-chrome-height) + 1.5rem);
-        max-height: calc(100vh - var(--sl-docs-chrome-height) - 2rem);
-        overflow: auto;
-        padding-inline-start: 0.5rem;
-      }
     }
 
     .docs-subnav

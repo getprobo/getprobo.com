@@ -5,22 +5,68 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
 
 {
   Astro.locals.starlightRoute.toc && (
-    <aside class="right-sidebar lg:sticky-top justify-self-end text-sm">
-      <div class="lg:sl-hidden">
+    <aside class="right-sidebar text-sm">
+      <div class="right-sidebar__mobile">
         <MobileTableOfContents />
       </div>
-      <div class="sl-hidden lg:sl-block">
+      <div class="right-sidebar__desktop">
         <TableOfContents />
       </div>
     </aside>
   )
 }
 
+<script>
+  type StarlightToc = Element & { _current?: Element | null };
+
+  const highlightLastHeading = () => {
+    const scrolled = window.innerHeight + window.scrollY;
+    if (scrolled < document.documentElement.scrollHeight - 2) return;
+
+    for (const toc of document.querySelectorAll<StarlightToc>("starlight-toc")) {
+      const links = toc.querySelectorAll("a");
+      const last = links[links.length - 1];
+      if (!last || last.getAttribute("aria-current") === "true") continue;
+      for (const link of links) link.removeAttribute("aria-current");
+      last.setAttribute("aria-current", "true");
+      // Keep Starlight's own pointer in sync so it clears our highlight later.
+      toc._current = last;
+    }
+  };
+
+  let queued = false;
+  const schedule = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      highlightLastHeading();
+    });
+  };
+
+  window.addEventListener("scroll", schedule, { passive: true });
+
+  // Starlight's intersection observer can overwrite the highlight after a scroll.
+  for (const toc of document.querySelectorAll("starlight-toc")) {
+    new MutationObserver(schedule).observe(toc, {
+      subtree: true,
+      attributeFilter: ["aria-current"],
+    });
+  }
+</script>
+
 <style>
   @layer starlight.core {
+    .right-sidebar {
+      width: 100%;
+    }
+
+    .right-sidebar__desktop {
+      display: none;
+    }
+
     .right-sidebar :global(h2) {
       color: var(--sl-color-white);
-      font-size: var(--sl-text-h5);
       font-weight: 600;
       line-height: var(--sl-line-height-headings);
       margin-bottom: 0.5rem;
@@ -34,15 +80,60 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
     .right-sidebar :global(:where(a):hover) {
       color: var(--sl-color-white);
     }
+    .right-sidebar :global(a[aria-current="true"]) {
+      color: var(--docs-accent);
+      font-weight: 600;
+    }
+
+    .right-sidebar__desktop :global(ul) {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .right-sidebar__desktop :global(li > ul) {
+      margin-block-start: 0.5rem;
+    }
+
+    .right-sidebar__desktop :global(a) {
+      padding-block: 0.125rem;
+      padding-inline: 0;
+      line-height: 1.45;
+    }
+
+    .right-sidebar__desktop
+      :global(li:not([style*="--depth: 0"])) {
+      border-inline-start: 1px solid var(--color-border-low);
+    }
+
+    .right-sidebar__desktop
+      :global(li:not([style*="--depth: 0"]) > a) {
+      padding-inline-start: 1rem;
+    }
+
     .right-sidebar :global(nav) {
       left: 0;
       width: 100%;
-      background-color: var(--color-level-0);
       border: none;
+      background-color: var(--color-level-0);
     }
-    @media (max-width: 72rem) {
+
+    @media (max-width: 63.999rem) {
       .right-sidebar :global(nav) {
         border-bottom: solid 1px var(--color-border-low);
+      }
+    }
+
+    @media (min-width: 64rem) {
+      .right-sidebar__mobile {
+        display: none;
+      }
+
+      .right-sidebar__desktop {
+        display: block;
+      }
+
+      .right-sidebar :global(nav) {
+        background-color: transparent;
       }
     }
   }
