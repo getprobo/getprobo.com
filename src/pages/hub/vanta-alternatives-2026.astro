@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -16,73 +18,28 @@ const tableOfContents = [
   { id: "decision-tree", label: "Which should you pick?" },
   { id: "related-reading", label: "Related reading" },
 ];
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline:
-    "Vanta Alternatives in 2026: 7 Platforms Compared Honestly (Including a Free One)",
-  description:
-    "Honest comparison of 7 Vanta alternatives for compliance automation. Probo is the only open-source, free-tier option with a dedicated compliance officer included.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
-  },
-  datePublished: "2026-04-23",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/vanta-alternatives-2026",
-  },
-  image: "https://www.probo.com/og.png",
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Vanta Alternatives in 2026",
-      item: "https://www.probo.com/hub/vanta-alternatives-2026",
-    },
-  ],
-};
 ---
 
 <Layout
   title={"7 Vanta Alternatives in 2026: Honest Comparison"}
   description={"Honest comparison of 7 Vanta alternatives for compliance automation. Probo is the only open-source option with a dedicated compliance officer included."}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="Vanta Alternatives in 2026: 7 Platforms Compared Honestly (Including a Free One)"
+    description="Honest comparison of 7 Vanta alternatives for compliance automation. Probo is the only open-source, free-tier option with a dedicated compliance officer included."
+    url="https://www.probo.com/hub/vanta-alternatives-2026"
+    image="https://www.probo.com/og.png"
+    datePublished="2026-04-23"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "Vanta Alternatives in 2026" },
+      ]}
+      class="mb-6"
+    />
     <header class="mx-auto mb-12 max-w-[900px] text-center sm:mb-16">
       <h1
         class="text-foreground mb-6 text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[3.5rem]"

@@ -33,7 +33,7 @@ const articleSchema = {
   description: post.data.excerpt,
   image: articleImage,
   datePublished: post.data.date.toISOString(),
-  dateModified: post.data.date.toISOString(),
+  dateModified: (post.data.dateModified ?? post.data.date).toISOString(),
   author: {
     "@type": "Person",
     name: post.data.author.name,

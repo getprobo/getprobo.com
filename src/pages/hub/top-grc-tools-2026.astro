@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -13,73 +15,28 @@ const tableOfContents = [
   { id: "trends", label: "What GRC Teams Should Expect" },
   { id: "conclusion", label: "Final Thoughts" },
 ];
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline:
-    "Top 5 GRC Tools in 2026: A Practical Guide for Modern Risk & Compliance Teams",
-  description:
-    "Discover the best GRC tools in 2026. We review Probo, Vanta, Drata, Hyperproof, and OneTrust based on risk management, governance, and compliance capabilities.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
-  },
-  datePublished: "2026-01-01",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/top-grc-tools-2026",
-  },
-  image: "https://www.probo.com/og.png",
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Top 5 GRC Tools in 2026",
-      item: "https://www.probo.com/hub/top-grc-tools-2026",
-    },
-  ],
-};
 ---
 
 <Layout
   title="Top 5 GRC Tools in 2026 for Modern Compliance"
   description="Discover the best GRC tools in 2026. We review Probo, Vanta, Drata, Hyperproof, and OneTrust based on risk management, governance, and compliance capabilities."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="Top 5 GRC Tools in 2026: A Practical Guide for Modern Risk & Compliance Teams"
+    description="Discover the best GRC tools in 2026. We review Probo, Vanta, Drata, Hyperproof, and OneTrust based on risk management, governance, and compliance capabilities."
+    url="https://www.probo.com/hub/top-grc-tools-2026"
+    image="https://www.probo.com/og.png"
+    datePublished="2026-01-01"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "Top 5 GRC Tools in 2026" },
+      ]}
+      class="mb-6"
+    />
     <!-- Header -->
     <header class="mx-auto mb-12 max-w-[900px] text-center sm:mb-16">
       <h1

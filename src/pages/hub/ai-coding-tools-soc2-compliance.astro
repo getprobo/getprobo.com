@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -16,72 +18,28 @@ const tableOfContents = [
   },
   { id: "conclusion", label: "Conclusion" },
 ];
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "Using AI Coding Tools While Staying SOC 2 Compliant",
-  description:
-    "Can you use Claude, Copilot, or Cursor and stay SOC 2 compliant? Here's the practical checklist for startups using AI coding assistants in 2026.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
-  },
-  datePublished: "2026-01-28",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/ai-coding-tools-soc2-compliance",
-  },
-  image: "https://www.probo.com/hub/ai-coding-tools-soc2-compliance.jpg",
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Using AI Coding Tools While Staying SOC 2 Compliant",
-      item: "https://www.probo.com/hub/ai-coding-tools-soc2-compliance",
-    },
-  ],
-};
 ---
 
 <Layout
   title="Using AI Coding Tools While Staying SOC 2 Compliant"
   description="Can you use Claude, Copilot, or Cursor and stay SOC 2 compliant? Here's the practical checklist for startups using AI coding assistants in 2026."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="Using AI Coding Tools While Staying SOC 2 Compliant"
+    description="Can you use Claude, Copilot, or Cursor and stay SOC 2 compliant? Here's the practical checklist for startups using AI coding assistants in 2026."
+    url="https://www.probo.com/hub/ai-coding-tools-soc2-compliance"
+    image="https://www.probo.com/hub/ai-coding-tools-soc2-compliance.jpg"
+    datePublished="2026-01-28"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "Using AI Coding Tools While Staying SOC 2 Compliant" },
+      ]}
+      class="mb-6"
+    />
     <!-- Header -->
     <header class="mx-auto mb-12 max-w-[900px] text-center sm:mb-16">
       <h1

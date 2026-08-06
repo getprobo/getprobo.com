@@ -1,0 +1,49 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  datePublished: string;
+  dateModified?: string;
+}
+
+const {
+  title,
+  description,
+  url,
+  image = "https://www.probo.com/og.png",
+  datePublished,
+  dateModified,
+} = Astro.props;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  image,
+  author: {
+    "@type": "Organization",
+    name: "Probo",
+    url: "https://www.probo.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Probo",
+    url: "https://www.probo.com",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.probo.com/probo-logo.svg",
+    },
+  },
+  datePublished,
+  dateModified: dateModified ?? datePublished,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": url,
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />

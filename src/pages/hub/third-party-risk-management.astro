@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 
 const tableOfContents = [
   { id: "intro", label: "What Is TPRM?" },
@@ -8,72 +10,28 @@ const tableOfContents = [
   { id: "best-practices", label: "TPRM Best Practices" },
   { id: "probo-support", label: "How Probo Supports TPRM" },
 ];
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "What Is Third-Party Risk Management (TPRM)?",
-  description:
-    "Learn what Third-Party Risk Management (TPRM) is, why it matters for compliance frameworks like ISO 27001 and SOC 2, and best practices for managing vendor and supplier risks.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
-  },
-  datePublished: "2025-01-01",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/third-party-risk-management",
-  },
-  image: "https://www.probo.com/og.png",
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Third-Party Risk Management",
-      item: "https://www.probo.com/hub/third-party-risk-management",
-    },
-  ],
-};
 ---
 
 <Layout
   title="What Is Third-Party Risk Management (TPRM)?"
   description="Learn what Third-Party Risk Management (TPRM) is, why it matters for ISO 27001 and SOC 2, and best practices for managing vendor and supplier risks."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="What Is Third-Party Risk Management (TPRM)?"
+    description="Learn what Third-Party Risk Management (TPRM) is, why it matters for compliance frameworks like ISO 27001 and SOC 2, and best practices for managing vendor and supplier risks."
+    url="https://www.probo.com/hub/third-party-risk-management"
+    image="https://www.probo.com/og.png"
+    datePublished="2025-01-01"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "Third-Party Risk Management" },
+      ]}
+      class="mb-6"
+    />
     <!-- Header -->
     <header class="mx-auto mb-12 max-w-[900px] text-center sm:mb-16">
       <h1

@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/about/antoine-bourchardy.png";
 
@@ -20,72 +22,28 @@ const tableOfContents = [
   { id: "how-to-choose", label: "How to Choose the Right Tool" },
   { id: "conclusion", label: "Conclusion" },
 ];
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "Top 5 Compliance Automation Tools in 2026",
-  description:
-    "Compare the top 5 compliance automation tools for 2026. Discover why open source Probo ranks #1 and how its hands-on service eliminates the DIY compliance burden.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
-  },
-  datePublished: "2026-01-22",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/top-compliance-automation-tools-2026",
-  },
-  image: "https://www.probo.com/hub/Top5-Compliance-tool-2026.jpg",
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Top 5 Compliance Automation Tools in 2026",
-      item: "https://www.probo.com/hub/top-compliance-automation-tools-2026",
-    },
-  ],
-};
 ---
 
 <Layout
   title="Top 5 Compliance Automation Tools in 2026"
   description="Compare the top 5 compliance automation tools for 2026. Discover why open-source Probo ranks #1 and how its service eliminates the DIY compliance burden."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="Top 5 Compliance Automation Tools in 2026"
+    description="Compare the top 5 compliance automation tools for 2026. Discover why open source Probo ranks #1 and how its hands-on service eliminates the DIY compliance burden."
+    url="https://www.probo.com/hub/top-compliance-automation-tools-2026"
+    image="https://www.probo.com/hub/Top5-Compliance-tool-2026.jpg"
+    datePublished="2026-01-22"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "Top 5 Compliance Automation Tools in 2026" },
+      ]}
+      class="mb-6"
+    />
     <!-- Header -->
     <header class="mx-auto mb-12 max-w-[900px] text-center sm:mb-16">
       <h1

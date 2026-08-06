@@ -1,6 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import FrameworkBadge from "../../components/FrameworkBadge.svelte";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import FAQSchema from "../../components/schema/FAQSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 
 const tableOfContents = [
   { id: "introduction", label: "Introduction" },
@@ -13,113 +16,53 @@ const tableOfContents = [
   { id: "trust-service-criteria", label: "Trust Service Criteria" },
   { id: "real-scenarios", label: "Real Scenarios" },
   { id: "conclusion", label: "Conclusion" },
+  { id: "faq", label: "FAQ" },
 ];
 
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "SOC 2 Type 1 vs Type 2: Which Certification Do You Need?",
-  description:
-    "SOC 2 Type 1 vs Type 2 explained: Type 1 is point-in-time (3-6 months), Type 2 requires 6-12 month observation. Learn which you need and when to upgrade.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
+const faqs = [
+  {
+    question: "What is the difference between SOC 2 Type 1 and Type 2?",
+    answer:
+      "SOC 2 Type 1 is a point-in-time assessment that evaluates whether your controls are properly designed on a specific date. SOC 2 Type 2 evaluates both design and operating effectiveness over a 3-12 month observation period, proving controls actually work consistently over time.",
   },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
+  {
+    question: "How much does SOC 2 Type 1 cost compared to Type 2?",
+    answer:
+      "SOC 2 Type 1 typically costs $15,000-$40,000 and takes 3-6 months. SOC 2 Type 2 costs $30,000-$100,000 and requires 6-12 months minimum due to the observation period.",
   },
-  datePublished: "2026-04-07",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/soc2-type1-vs-type2",
+  {
+    question: "Should I start with SOC 2 Type 1 or go straight to Type 2?",
+    answer:
+      "Start with Type 1 if you need certification quickly for a specific deal, are early-stage selling to SMBs, or want to test compliance ROI. Go straight to Type 2 if you're selling to enterprise customers, operating in regulated industries like fintech or healthcare, or your competitors already have Type 2.",
   },
-  image: "https://www.probo.com/og.png",
-};
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What is the difference between SOC 2 Type 1 and Type 2?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "SOC 2 Type 1 is a point-in-time assessment that evaluates whether your controls are properly designed on a specific date. SOC 2 Type 2 evaluates both design and operating effectiveness over a 3-12 month observation period, proving controls actually work consistently over time.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How much does SOC 2 Type 1 cost compared to Type 2?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "SOC 2 Type 1 typically costs $15,000-$40,000 and takes 3-6 months. SOC 2 Type 2 costs $30,000-$100,000 and requires 6-12 months minimum due to the observation period.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Should I start with SOC 2 Type 1 or go straight to Type 2?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Start with Type 1 if you need certification quickly for a specific deal, are early-stage selling to SMBs, or want to test compliance ROI. Go straight to Type 2 if you're selling to enterprise customers, operating in regulated industries like fintech or healthcare, or your competitors already have Type 2.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do enterprise customers accept SOC 2 Type 1?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Most enterprise customers require SOC 2 Type 2. Fortune 500 companies and large enterprises typically won't accept Type 1 as equivalent. Type 1 is more commonly accepted by mid-market companies and SMBs.",
-      },
-    },
-  ],
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "SOC 2 Type 1 vs Type 2",
-      item: "https://www.probo.com/hub/soc2-type1-vs-type2",
-    },
-  ],
-};
+  {
+    question: "Do enterprise customers accept SOC 2 Type 1?",
+    answer:
+      "Most enterprise customers require SOC 2 Type 2. Fortune 500 companies and large enterprises typically won't accept Type 1 as equivalent. Type 1 is more commonly accepted by mid-market companies and SMBs.",
+  },
+];
 ---
 
 <Layout
   title="SOC 2 Type 1 vs Type 2: Which Certification Do You Need?"
   description="SOC 2 Type 1 vs Type 2 explained: Type 1 is point-in-time (3-6 months), Type 2 requires 6-12 month observation. Learn which you need and when to upgrade."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="SOC 2 Type 1 vs Type 2: Which Certification Do You Need?"
+    description="SOC 2 Type 1 vs Type 2 explained: Type 1 is point-in-time (3-6 months), Type 2 requires 6-12 month observation. Learn which you need and when to upgrade."
+    url="https://www.probo.com/hub/soc2-type1-vs-type2"
+    datePublished="2026-04-07"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
+  <FAQSchema faqs={faqs} />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "SOC 2 Type 1 vs Type 2" },
+      ]}
+      class="mb-6"
+    />
     <!-- Header -->
     <header class="mb-12 text-center sm:mb-16">
       <div class="mb-4 flex items-center justify-center gap-4">
@@ -1746,6 +1689,29 @@ const breadcrumbSchema = {
               than defaulting to Type 1 because it's faster without considering
               whether it will actually satisfy your customers.
             </p>
+          </div>
+        </section>
+
+        <hr class="border-border-low mb-12" />
+
+        <!-- FAQ -->
+        <section id="faq" class="mb-12 scroll-mt-24">
+          <h2
+            class="text-foreground mb-6 text-2xl font-semibold tracking-[-0.01em] sm:text-[1.75rem]"
+          >
+            FAQ
+          </h2>
+          <div class="text-muted-foreground space-y-8 leading-relaxed">
+            {
+              faqs.map((faq) => (
+                <div>
+                  <h3 class="text-foreground mb-2 text-lg font-semibold">
+                    {faq.question}
+                  </h3>
+                  <p>{faq.answer}</p>
+                </div>
+              ))
+            }
           </div>
         </section>
 

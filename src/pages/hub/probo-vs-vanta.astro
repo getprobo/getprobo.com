@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 
 const tableOfContents = [
   { id: "intro", label: "Introduction" },
@@ -11,72 +13,25 @@ const tableOfContents = [
   { id: "which-solution", label: "Which Solution Is Right" },
   { id: "conclusion", label: "Conclusion" },
 ];
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "Probo vs Vanta: Full-Service Compliance vs DIY Tools",
-  description:
-    "Probo vs Vanta: One gives you a tool, the other does the work. Compare full-service compliance with hands-off experts vs DIY automation platforms.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
-  },
-  datePublished: "2026-02-04",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/probo-vs-vanta",
-  },
-  image: "https://www.probo.com/hub/Probo-vs-vanta.jpg",
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Probo vs Vanta",
-      item: "https://www.probo.com/hub/probo-vs-vanta",
-    },
-  ],
-};
 ---
 
 <Layout
   title="Probo vs Vanta: Full-Service Compliance vs DIY Tools"
   description="Probo vs Vanta: One gives you a tool, the other does the work. Compare full-service compliance with hands-off experts vs DIY automation platforms."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="Probo vs Vanta: Full-Service Compliance vs DIY Tools"
+    description="Probo vs Vanta: One gives you a tool, the other does the work. Compare full-service compliance with hands-off experts vs DIY automation platforms."
+    url="https://www.probo.com/hub/probo-vs-vanta"
+    image="https://www.probo.com/hub/Probo-vs-vanta.jpg"
+    datePublished="2026-02-04"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[{ label: "Hub", href: "/hub" }, { label: "Probo vs Vanta" }]}
+      class="mb-6"
+    />
     <!-- Header -->
     <header class="mx-auto mb-12 max-w-[900px] text-center sm:mb-16">
       <h1

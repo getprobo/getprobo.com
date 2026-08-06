@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ArticleSchema from "../../components/schema/ArticleSchema.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import FrameworkBadge from "../../components/FrameworkBadge.svelte";
 
 const tableOfContents = [
@@ -12,60 +14,6 @@ const tableOfContents = [
   { id: "timeline-costs", label: "Timeline and Costs" },
   { id: "probo-help", label: "How Probo Helps" },
 ];
-
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: "What is ISO 27001? The Complete Guide for 2026",
-  description:
-    "Learn what ISO 27001 is, why it matters for your business, and how to achieve certification. Complete 2026 guide covering requirements, costs, and timelines.",
-  author: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Probo",
-    url: "https://www.probo.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.probo.com/probo-logo.svg",
-    },
-  },
-  datePublished: "2024-01-15",
-  dateModified: new Date().toISOString().split("T")[0],
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": "https://www.probo.com/hub/iso27001",
-  },
-  image: "https://www.probo.com/hub/ISO27001-og.png",
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "ISO 27001 Compliance Guide",
-      item: "https://www.probo.com/hub/iso27001",
-    },
-  ],
-};
 ---
 
 <Layout
@@ -73,12 +21,22 @@ const breadcrumbSchema = {
   description="Learn what ISO 27001 is, why it matters for your business, and how to achieve certification. Complete 2026 guide covering requirements, costs, and timelines."
   ogImage="/hub/ISO27001-og.png"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
+  <ArticleSchema
+    title="What is ISO 27001? The Complete Guide for 2026"
+    description="Learn what ISO 27001 is, why it matters for your business, and how to achieve certification. Complete 2026 guide covering requirements, costs, and timelines."
+    url="https://www.probo.com/hub/iso27001"
+    image="https://www.probo.com/hub/ISO27001-og.png"
+    datePublished="2024-01-15"
+    dateModified={new Date().toISOString().split("T")[0]}
   />
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "ISO 27001 Compliance Guide" },
+      ]}
+      class="mb-6"
+    />
     <!-- Header -->
     <header class="mb-12 text-center sm:mb-16">
       <div class="mb-4 flex items-center justify-center gap-4">

@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import AntoinePortrait from "../../assets/about/antoine-bourchardy.png";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -15,31 +16,6 @@ const articleSchema = {
     name: "Probo",
     url: "https://www.probo.com",
   },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: "https://www.probo.com",
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Hub",
-      item: "https://www.probo.com/hub",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Compliance Framework Recommender",
-      item: "https://www.probo.com/hub/compliance-recommender",
-    },
-  ],
 };
 
 const features = [
@@ -62,13 +38,16 @@ const benefits = [
   description="Enter your website and we'll analyze your business to recommend the most relevant compliance frameworks for your industry and customers."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbSchema)}
-  />
   <script async src="https://tally.so/widgets/embed.js"></script>
 
   <main class="container my-10 sm:my-20">
+    <Breadcrumbs
+      items={[
+        { label: "Hub", href: "/hub" },
+        { label: "Compliance Framework Recommender" },
+      ]}
+      class="mb-6"
+    />
     <!-- Hero Section -->
     <div class="mx-auto mb-10 max-w-[800px] text-center sm:mb-16">
       <div
