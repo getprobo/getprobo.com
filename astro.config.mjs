@@ -28,7 +28,7 @@ function svelteVirtualCssFallback() {
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.probo.com",
-  compressHTML: false,
+  compressHTML: true,
   prefetch: false,
   trailingSlash: "never",
   build: {

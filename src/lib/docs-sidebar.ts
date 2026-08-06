@@ -220,12 +220,20 @@ export const docsSidebarGroups = [
         slug: "docs/product/cookie-banner/overview",
       },
       {
+        label: "Quickstart",
+        slug: "docs/product/cookie-banner/quickstart",
+      },
+      {
         label: "Geolocation and regulations",
         slug: "docs/product/cookie-banner/geolocation",
       },
       {
         label: "JavaScript SDK",
         slug: "docs/product/cookie-banner/javascript-sdk",
+      },
+      {
+        label: "React Integration",
+        slug: "docs/product/cookie-banner/react",
       },
       {
         label: "Consent Manager API",
