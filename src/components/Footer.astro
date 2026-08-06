@@ -4,6 +4,7 @@ import Logo from "../assets/probo-logo.svg";
 import Frameworks from "./block/Frameworks.astro";
 import OpenStatus from "../components/OpenStatus.svelte";
 import Newsletter from "./block/Newsletter.astro";
+import AskAi from "./AskAi.astro";
 import { Toaster } from "svelte-sonner";
 
 const menus = [
@@ -91,12 +92,15 @@ type Props = {
       }
     </div>
   </div>
-  <p
-    class="text-tertiary-foreground text-xxs container flex items-center gap-3"
+  <div
+    class="container flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
   >
-    Copyright © 2025-2026 Probo. All rights reserved.
-    <OpenStatus client:visible />
-  </p>
+    <p class="text-tertiary-foreground text-xxs flex items-center gap-3">
+      Copyright © 2025-2026 Probo. All rights reserved.
+      <OpenStatus client:visible />
+    </p>
+    <AskAi />
+  </div>
 </footer>
 
 <Toaster richColors position="top-center" client:only="svelte" />
