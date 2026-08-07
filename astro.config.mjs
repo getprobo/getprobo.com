@@ -75,6 +75,7 @@ export default defineConfig({
         PageFrame: "./src/components/docs/PageFrame.astro",
         PageTitle: "./src/components/docs/PageTitle.astro",
         Search: "./src/components/docs/Search.astro",
+        ThemeSelect: "./src/components/docs/ThemeToggle.astro",
         MobileMenuToggle: "./src/components/docs/MobileMenuToggle.astro",
         Sidebar: "./src/components/docs/Sidebar.astro",
         TwoColumnContent: "./src/components/docs/TwoColumnContent.astro",

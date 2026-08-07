@@ -5,6 +5,7 @@ import MobileMenuToggle from "virtual:starlight/components/MobileMenuToggle";
 import Search from "virtual:starlight/components/Search";
 import Header from "../Header.astro";
 import SectionNav from "./SectionNav.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <div class="docs-chrome bg-level-0 sticky top-0 z-50">
@@ -16,7 +17,10 @@ import SectionNav from "./SectionNav.astro";
       class="docs-subnav flex flex-col gap-3 px-(--docs-page-padding-x) pb-3 sm:flex-row sm:items-center sm:gap-4 sm:pb-0"
     >
       <SectionNav />
-      <Search class="docs-chrome-search shrink-0 sm:ms-auto" />
+      <div class="flex items-center gap-2 sm:ms-auto">
+        <Search class="docs-chrome-search min-w-0 flex-1 sm:flex-none" />
+        <ThemeToggle />
+      </div>
     </div>
   </div>
 </div>

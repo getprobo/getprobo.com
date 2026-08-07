@@ -1,0 +1,130 @@
+---
+import Icon, { type IconName } from "../Icon.astro";
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+
+const themes: { value: string; label: string; icon: IconName }[] = [
+  { value: "light", label: "Light", icon: "sun" },
+  { value: "dark", label: "Dark", icon: "moon" },
+  { value: "auto", label: "System", icon: "monitor" },
+];
+---
+
+<docs-theme-toggle
+  class:list={["theme-toggle", className]}
+  role="group"
+  aria-label="Theme"
+>
+  {
+    themes.map(({ value, label, icon }) => (
+      <button
+        type="button"
+        data-theme={value}
+        aria-pressed="false"
+        title={`${label} theme`}
+      >
+        <Icon name={icon} size={14} label={`${label} theme`} />
+      </button>
+    ))
+  }
+</docs-theme-toggle>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.125rem;
+    border: 1px solid var(--color-border-low);
+    border-radius: 999px;
+    padding: 0.125rem;
+    background: var(--color-subtle);
+  }
+
+  .theme-toggle button {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-tertiary-foreground);
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .theme-toggle button:hover {
+    color: var(--color-primary);
+  }
+
+  .theme-toggle button[aria-pressed="true"] {
+    background: var(--color-level-1);
+    box-shadow: inset 0 0 0 1px var(--color-border-mid);
+    color: var(--color-primary);
+  }
+
+  .theme-toggle button:focus-visible {
+    outline: 2px solid var(--docs-accent);
+    outline-offset: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle button {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  type Theme = "auto" | "dark" | "light";
+
+  /** Shared with Starlight's inlined `ThemeProvider` script, which avoids FOUC. */
+  const storageKey = "starlight-theme";
+
+  const parseTheme = (theme: unknown): Theme =>
+    theme === "dark" || theme === "light" ? theme : "auto";
+
+  const loadTheme = (): Theme => parseTheme(localStorage.getItem(storageKey));
+
+  const preferredColorScheme = (): Theme =>
+    matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+
+  const applyTheme = (theme: Theme) => {
+    document.documentElement.dataset.theme =
+      theme === "auto" ? preferredColorScheme() : theme;
+    localStorage.setItem(storageKey, theme === "auto" ? "" : theme);
+
+    for (const button of document.querySelectorAll<HTMLButtonElement>(
+      "docs-theme-toggle button[data-theme]",
+    )) {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.theme === theme),
+      );
+    }
+  };
+
+  matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+    if (loadTheme() === "auto") applyTheme("auto");
+  });
+
+  class DocsThemeToggle extends HTMLElement {
+    connectedCallback() {
+      applyTheme(loadTheme());
+      this.addEventListener("click", (event) => {
+        const button = (event.target as Element).closest<HTMLButtonElement>(
+          "button[data-theme]",
+        );
+        if (button) applyTheme(parseTheme(button.dataset.theme));
+      });
+    }
+  }
+
+  customElements.define("docs-theme-toggle", DocsThemeToggle);
+</script>
