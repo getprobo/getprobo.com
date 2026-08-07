@@ -23,7 +23,9 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
     const scrolled = window.innerHeight + window.scrollY;
     if (scrolled < document.documentElement.scrollHeight - 2) return;
 
-    for (const toc of document.querySelectorAll<StarlightToc>("starlight-toc")) {
+    for (const toc of document.querySelectorAll<StarlightToc>(
+      "starlight-toc",
+    )) {
       const links = toc.querySelectorAll("a");
       const last = links[links.length - 1];
       if (!last || last.getAttribute("aria-current") === "true") continue;
@@ -81,7 +83,7 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
       color: var(--sl-color-white);
     }
     .right-sidebar :global(a[aria-current="true"]) {
-      color: var(--docs-accent);
+      color: var(--color-success);
       font-weight: 600;
     }
 
@@ -100,13 +102,11 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
       line-height: 1.45;
     }
 
-    .right-sidebar__desktop
-      :global(li:not([style*="--depth: 0"])) {
+    .right-sidebar__desktop :global(li:not([style*="--depth: 0"])) {
       border-inline-start: 1px solid var(--color-border-low);
     }
 
-    .right-sidebar__desktop
-      :global(li:not([style*="--depth: 0"]) > a) {
+    .right-sidebar__desktop :global(li:not([style*="--depth: 0"]) > a) {
       padding-inline-start: 1rem;
     }
 
