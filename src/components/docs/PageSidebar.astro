@@ -17,22 +17,59 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
 }
 
 <script>
-  type StarlightToc = Element & { _current?: Element | null };
+  type StarlightToc = HTMLElement & { _current?: Element | null };
+
+  const tableOfContents = () =>
+    document.querySelectorAll<StarlightToc>("starlight-toc");
+
+  const setCurrent = (toc: StarlightToc, link: Element | undefined) => {
+    if (!link || link.getAttribute("aria-current") === "true") return;
+    for (const other of toc.querySelectorAll("a"))
+      other.removeAttribute("aria-current");
+    link.setAttribute("aria-current", "true");
+    // Keep Starlight's own pointer in sync so it clears our highlight later.
+    toc._current = link;
+  };
+
+  /** Bottom of the band Starlight's intersection observer watches. */
+  const observedBandBottom = (toc: StarlightToc) => {
+    const navBarHeight =
+      document.querySelector("header")?.getBoundingClientRect().height || 0;
+    const mobileTocHeight =
+      toc.querySelector("summary")?.getBoundingClientRect().height || 0;
+    return navBarHeight + mobileTocHeight + 32 + 53;
+  };
+
+  // Starlight only highlights a heading once it crosses that band, so a freshly
+  // loaded page stays unhighlighted until the first scroll.
+  const highlightHeadingAtRest = () => {
+    for (const toc of tableOfContents()) {
+      if (toc.querySelector('a[aria-current="true"]')) continue;
+
+      const links = [...toc.querySelectorAll("a")];
+      const bottom = observedBandBottom(toc);
+      let current = links[0];
+
+      for (const link of links) {
+        const heading = document.getElementById(
+          decodeURIComponent(link.hash.slice(1)),
+        );
+        if (!heading) continue;
+        if (heading.getBoundingClientRect().top > bottom) break;
+        current = link;
+      }
+
+      setCurrent(toc, current);
+    }
+  };
 
   const highlightLastHeading = () => {
     const scrolled = window.innerHeight + window.scrollY;
     if (scrolled < document.documentElement.scrollHeight - 2) return;
 
-    for (const toc of document.querySelectorAll<StarlightToc>(
-      "starlight-toc",
-    )) {
+    for (const toc of tableOfContents()) {
       const links = toc.querySelectorAll("a");
-      const last = links[links.length - 1];
-      if (!last || last.getAttribute("aria-current") === "true") continue;
-      for (const link of links) link.removeAttribute("aria-current");
-      last.setAttribute("aria-current", "true");
-      // Keep Starlight's own pointer in sync so it clears our highlight later.
-      toc._current = last;
+      setCurrent(toc, links[links.length - 1]);
     }
   };
 
@@ -46,15 +83,23 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
     });
   };
 
-  window.addEventListener("scroll", schedule, { passive: true });
+  const init = () => {
+    highlightHeadingAtRest();
 
-  // Starlight's intersection observer can overwrite the highlight after a scroll.
-  for (const toc of document.querySelectorAll("starlight-toc")) {
-    new MutationObserver(schedule).observe(toc, {
-      subtree: true,
-      attributeFilter: ["aria-current"],
-    });
-  }
+    // Starlight's intersection observer can overwrite the highlight after a scroll.
+    for (const toc of tableOfContents()) {
+      if (toc.dataset.proboTocWatched !== undefined) continue;
+      toc.dataset.proboTocWatched = "";
+      new MutationObserver(schedule).observe(toc, {
+        subtree: true,
+        attributeFilter: ["aria-current"],
+      });
+    }
+  };
+
+  window.addEventListener("scroll", schedule, { passive: true });
+  document.addEventListener("astro:page-load", init);
+  init();
 </script>
 
 <style>
