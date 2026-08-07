@@ -81,6 +81,17 @@ const themes: { value: string; label: string; icon: IconName }[] = [
   }
 </style>
 
+<style is:global>
+  /* Theme swaps repaint in a single frame, but elements with a `transition`
+     animate towards the new palette instead, which desyncs text from its
+     background. Freeze transitions while the new theme is applied. */
+  html[data-theme-switching] *,
+  html[data-theme-switching] *::before,
+  html[data-theme-switching] *::after {
+    transition: none !important;
+  }
+</style>
+
 <script>
   type Theme = "auto" | "dark" | "light";
 
@@ -96,8 +107,13 @@ const themes: { value: string; label: string; icon: IconName }[] = [
     matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 
   const applyTheme = (theme: Theme) => {
-    document.documentElement.dataset.theme =
-      theme === "auto" ? preferredColorScheme() : theme;
+    const root = document.documentElement;
+    root.dataset.themeSwitching = "";
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => delete root.dataset.themeSwitching),
+    );
+
+    root.dataset.theme = theme === "auto" ? preferredColorScheme() : theme;
     localStorage.setItem(storageKey, theme === "auto" ? "" : theme);
 
     for (const button of document.querySelectorAll<HTMLButtonElement>(
