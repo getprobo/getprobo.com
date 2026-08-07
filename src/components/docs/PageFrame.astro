@@ -67,6 +67,14 @@ import ThemeToggle from "./ThemeToggle.astro";
       text-decoration: none;
     }
 
+    .docs-subnav {
+      --docs-search-highlight: rgb(255 255 255 / 0.7);
+    }
+
+    :global(:root[data-theme="dark"]) .docs-subnav {
+      --docs-search-highlight: rgb(255 255 255 / 0.05);
+    }
+
     .docs-subnav :global(site-search.docs-chrome-search) {
       display: block;
       width: 100%;
@@ -177,7 +185,7 @@ import ThemeToggle from "./ThemeToggle.astro";
       color: var(--color-muted-foreground);
       font-size: var(--sl-text-sm);
       height: 2rem;
-      box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
+      box-shadow: inset 0 1px 0 var(--docs-search-highlight);
     }
 
     @media (min-width: 40rem) {
