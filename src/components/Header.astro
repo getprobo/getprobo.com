@@ -48,7 +48,10 @@ const { hideBurger = false, docsChrome = false } = Astro.props;
         class="logo-dark hidden"
       />
     </a>
-    <nav class="hidden items-center lg:flex" transition:name="header-nav">
+    <nav
+      class="hidden items-center gap-2.25 lg:flex"
+      transition:name="header-nav"
+    >
       <HeaderMenu groups={menuGroups} />
       <Button
         variant="secondary"
