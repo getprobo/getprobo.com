@@ -122,8 +122,8 @@ export const cliCommandItems = [
     slug: "docs/developers/cli/commands/risk",
   },
   {
-    label: "Risk Assessment",
-    slug: "docs/developers/cli/commands/risk-assessment",
+    label: "Risk Analysis",
+    slug: "docs/developers/cli/commands/risk-analysis",
   },
   {
     label: "SCIM",
@@ -360,8 +360,8 @@ export const n8nResourceItems = [
     slug: "docs/developers/api/n8n/resources/risk",
   },
   {
-    label: "Risk Assessment",
-    slug: "docs/developers/api/n8n/resources/risk-assessment",
+    label: "Risk Analysis",
+    slug: "docs/developers/api/n8n/resources/risk-analysis",
   },
   {
     label: "Statement of Applicability",
