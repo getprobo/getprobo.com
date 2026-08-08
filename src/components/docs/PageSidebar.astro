@@ -40,13 +40,48 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
     return navBarHeight + mobileTocHeight + 32 + 53;
   };
 
+  const headingIdsInHiddenTabPanels = () => {
+    const ids = new Set<string>();
+    for (const panel of document.querySelectorAll<HTMLElement>(
+      '[role="tabpanel"][hidden]',
+    )) {
+      for (const heading of panel.querySelectorAll<HTMLElement>(
+        "h2[id], h3[id], h4[id]",
+      )) {
+        if (heading.id) ids.add(heading.id);
+      }
+    }
+    return ids;
+  };
+
+  /** Hide TOC entries for headings that live in inactive tab panels. */
+  const syncTocWithTabs = () => {
+    const hiddenIds = headingIdsInHiddenTabPanels();
+    for (const toc of tableOfContents()) {
+      for (const link of toc.querySelectorAll<HTMLAnchorElement>(
+        "a[href^='#']",
+      )) {
+        const id = decodeURIComponent(link.hash.slice(1));
+        const item = link.closest("li");
+        if (!item) continue;
+        item.hidden = hiddenIds.has(id);
+      }
+    }
+  };
+
+  const visibleTocLinks = (toc: StarlightToc) =>
+    [...toc.querySelectorAll<HTMLAnchorElement>("a")].filter(
+      (link) => !link.closest("li")?.hidden,
+    );
+
   // Starlight only highlights a heading once it crosses that band, so a freshly
   // loaded page stays unhighlighted until the first scroll.
   const highlightHeadingAtRest = () => {
     for (const toc of tableOfContents()) {
-      if (toc.querySelector('a[aria-current="true"]')) continue;
+      if (toc.querySelector('li:not([hidden]) a[aria-current="true"]'))
+        continue;
 
-      const links = [...toc.querySelectorAll("a")];
+      const links = visibleTocLinks(toc);
       const bottom = observedBandBottom(toc);
       let current = links[0];
 
@@ -68,7 +103,7 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
     if (scrolled < document.documentElement.scrollHeight - 2) return;
 
     for (const toc of tableOfContents()) {
-      const links = toc.querySelectorAll("a");
+      const links = visibleTocLinks(toc);
       setCurrent(toc, links[links.length - 1]);
     }
   };
@@ -83,8 +118,23 @@ import TableOfContents from "virtual:starlight/components/TableOfContents";
     });
   };
 
+  const watchTabPanels = () => {
+    for (const panel of document.querySelectorAll<HTMLElement>(
+      '[role="tabpanel"]',
+    )) {
+      if (panel.dataset.proboTocTabWatched !== undefined) continue;
+      panel.dataset.proboTocTabWatched = "";
+      new MutationObserver(() => {
+        syncTocWithTabs();
+        highlightHeadingAtRest();
+      }).observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+    }
+  };
+
   const init = () => {
+    syncTocWithTabs();
     highlightHeadingAtRest();
+    watchTabPanels();
 
     // Starlight's intersection observer can overwrite the highlight after a scroll.
     for (const toc of tableOfContents()) {

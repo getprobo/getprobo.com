@@ -13,7 +13,7 @@ Use this glossary as a quick reference while working in Probo. For an explanatio
     <td>
       A snapshot of an identity and its permissions in an access review
       campaign. An entry can include roles, administrator status, MFA status,
-      account state, and the reviewer’s decision.
+      account state, optional flags, and the reviewer’s decision.
     </td>
   </tr>
   <tr data-glossary-row id="access-review">
@@ -31,6 +31,15 @@ Use this glossary as a quick reference while working in Probo. For an explanatio
     <td>
       A point-in-time access review that combines one or more sources, their
       snapshotted entries, reviewer decisions, flags, and completion statistics.
+    </td>
+  </tr>
+  <tr data-glossary-row id="access-review-flag">
+    <td>Access review flag</td>
+    <td>
+      An optional reviewer label on an access entry, such as orphan account,
+      dormant, excessive privileges, or SoD conflict. Flags highlight findings
+      for evidence; they do not replace a decision. See{" "}
+      <a href="/docs/product/access-review/campaigns#flags">Flags</a>.
     </td>
   </tr>
   <tr data-glossary-row id="access-source">
@@ -81,7 +90,8 @@ Use this glossary as a quick reference while working in Probo. For an explanatio
     <td>Audit log</td>
     <td>
       A chronological record of actions and changes in an organization, used to
-      investigate who performed an operation and when it occurred.
+      investigate who performed an operation and when it occurred. See
+      <a href="/docs/product/audit-log">Audit log</a>.
     </td>
   </tr>
   <tr data-glossary-row id="auditor">
@@ -317,8 +327,11 @@ Use this glossary as a quick reference while working in Probo. For an explanatio
   <tr data-glossary-row id="membership">
     <td>Membership</td>
     <td>
-      The relationship that grants a user a role and access within a Probo
-      organization.
+      The relationship that grants a user a role (
+      <code>OWNER</code>, <code>ADMIN</code>, <code>VIEWER</code>,
+      <code>AUDITOR</code>, or <code>EMPLOYEE</code>) and access within a Probo
+      organization. Managed under <strong>People</strong>. See
+      <a href="/docs/product/roles-and-permissions">Roles and permissions</a>.
     </td>
   </tr>
   <tr data-glossary-row id="measure">

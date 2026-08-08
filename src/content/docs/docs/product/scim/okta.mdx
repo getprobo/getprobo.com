@@ -1,9 +1,9 @@
 ---
 title: Okta SCIM
-description: Configure direct SCIM 2.0 provisioning from Okta so Probo accounts are created, updated, and deactivated automatically as assignments change.
+description: Configure Native SCIM 2.0 provisioning from Okta so Probo accounts are created, updated, and deactivated automatically as assignments change.
 ---
 
-This guide walks you through setting up direct SCIM provisioning from Okta to automatically synchronize users into Probo.
+This guide walks you through setting up Native SCIM provisioning from Okta to automatically synchronize users into Probo.
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ This guide walks you through setting up direct SCIM provisioning from Okta to au
 
 ## How It Works
 
-Okta pushes user changes to Probo's SCIM 2.0 endpoint in real time. When you assign users or groups to the Probo application in Okta, it automatically:
+In Native mode, Okta pushes user changes to Probo's SCIM 2.0 endpoint in real time. When you assign users or groups to the Probo application in Okta, it automatically:
 
 - **Creates** Probo accounts for newly assigned users
 - **Updates** user attributes when they change in Okta
@@ -154,13 +154,15 @@ You can remove mappings for attributes you don't use. Only `userName`, `displayN
 
 Only assigned users (or members of assigned groups) will be provisioned. This gives you fine-grained control over who gets a Probo account.
 
+Probo membership roles are assigned in [People](/docs/product/roles-and-permissions) or mapped with the SAML [Role Attribute](/docs/product/sso/overview#membership-roles-from-saml). SCIM creates people as **Employee** by default. Job title (`title`) and user type (`userType`) sync as profile context for access reviews, not as the membership role.
+
 ## Step 7: Verify Provisioning
 
 <Steps>
 
 1. In Okta, go to the Probo application > **Provisioning** tab > **To App** to check provisioning status
 2. Go to **Reports** > **System Log** and filter by application to see provisioning events
-3. In Probo, go to **Organization Settings** > **Members** to verify users have been provisioned
+3. In Probo, go to **People** to verify users have been provisioned
 4. Check **Organization Settings** > **Authentication** > **Auto-Provisioning** > **Event Log** for detailed SCIM events
 
 </Steps>
@@ -211,7 +213,7 @@ import { LinkCard, CardGrid } from "@astrojs/starlight/components";
   />
   <LinkCard
     title="SCIM Overview"
-    description="Learn more about SCIM features and direct provisioning"
+    description="Compare Native and Bridge synchronization modes"
     href="/docs/product/scim/overview"
   />
 </CardGrid>

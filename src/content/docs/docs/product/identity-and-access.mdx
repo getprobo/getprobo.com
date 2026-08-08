@@ -1,16 +1,23 @@
 ---
 title: Identity and access
-description: Understand how SAML SSO and SCIM provisioning work together in Probo to authenticate members, automate their lifecycle, and control access reviews.
+description: Understand how memberships, roles, SAML SSO, and SCIM provisioning work together in Probo to authenticate members and automate their lifecycle.
 ---
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import MermaidDiagram from "../../../../components/docs/MermaidDiagram.astro";
+import identityResponsibilities from "./identity-responsibilities.mermaid?raw";
 
-Probo separates authentication from user provisioning. Use SAML single sign-on (SSO) to authenticate organization members through your identity provider, and use SCIM to create, update, and deactivate their access.
+Probo separates authentication from user provisioning. Invite and role-manage members in the organization, use SAML single sign-on (SSO) to authenticate them through your identity provider, and use SCIM to create, update, and deactivate their access.
 
 <CardGrid>
   <LinkCard
+    title="Roles and permissions"
+    description="Choose roles and decide whether to manage them in Probo or via SAML"
+    href="/docs/product/roles-and-permissions"
+  />
+  <LinkCard
     title="Single sign-on"
-    description="Configure SAML authentication, verify domains, and enforce SSO"
+    description="Configure SAML authentication, verify domains, and optionally map roles"
     href="/docs/product/sso/overview"
   />
   <LinkCard
@@ -18,22 +25,33 @@ Probo separates authentication from user provisioning. Use SAML single sign-on (
     description="Automate user provisioning and deprovisioning from your identity provider"
     href="/docs/product/scim/overview"
   />
+  <LinkCard
+    title="Audit log"
+    description="Investigate who changed people, roles, and organization records"
+    href="/docs/product/audit-log"
+  />
 </CardGrid>
 
 ## How the capabilities work together
 
 SSO verifies a member's identity when they sign in, but it does not create or remove organization memberships. SCIM manages those memberships and user records, but it does not authenticate users. Organizations commonly configure both against the same identity provider so that assignment controls access and SSO protects authentication.
 
+<MermaidDiagram
+  chart={identityResponsibilities}
+  caption="SSO authenticates, SCIM provisions, and the membership role decides what is permitted."
+/>
+
 ## Recommended rollout
 
-1. Verify the email domain used by organization members.
-2. Configure SSO as optional and test both service-provider and identity-provider initiated sign-in.
-3. Configure SCIM with a limited group and confirm provisioning, updates, and deprovisioning.
-4. Expand the SCIM assignment to the intended population.
-5. Require SSO only after confirming that expected members can sign in and that a recovery path is available.
+1. Invite initial owners and administrators under [Roles and permissions](/docs/product/roles-and-permissions).
+2. Verify the email domain used by organization members.
+3. Configure SSO as optional and test both service-provider and identity-provider initiated sign-in.
+4. Configure SCIM with a limited group and confirm provisioning, updates, and deprovisioning.
+5. Expand the SCIM assignment to the intended population.
+6. Require SSO only after confirming that expected members can sign in and that a recovery path is available.
 
 Probo provides setup guides for Google Workspace, Microsoft Entra ID or Microsoft 365, and Okta under the SSO and SCIM sections.
 
-## Related access controls
+## Role management choices
 
-Use [access reviews](/docs/product/access-review/overview) to periodically verify accounts and permissions in Probo and connected applications. Access reviews record reviewer decisions; they do not provision, deprovision, or change authentication policies.
+Keep membership roles in [People](/docs/product/roles-and-permissions), or map them from your identity provider with the SAML **Role Attribute**. SCIM creates and deactivates people and usually starts them as **Employee**; set their Probo role in People afterward. See [Where to manage Probo roles](/docs/product/roles-and-permissions#where-to-manage-probo-roles).

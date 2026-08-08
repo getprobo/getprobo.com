@@ -3,6 +3,8 @@ title: Assets and obligations
 description: Learn how Probo's asset inventory and obligation tracking capture systems, data stores, and legal or contractual requirements outside a framework.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
 Assets and obligations provide context that does not always fit neatly into a framework.
 
 ## Assets
@@ -23,3 +25,38 @@ Link obligations to:
 - documents that formalize the organization’s response.
 
 Publishing asset and obligation lists creates reviewed snapshots for reporting. Continue to maintain the underlying records as systems and requirements change.
+
+## Automation
+
+<CardGrid>
+  <LinkCard
+    title="CLI asset"
+    description="Manage the asset inventory with prb asset"
+    href="/docs/developers/cli/commands/asset"
+  />
+  <LinkCard
+    title="CLI obligation"
+    description="Track obligations outside a framework"
+    href="/docs/developers/cli/commands/obligation"
+  />
+  <LinkCard
+    title="MCP assets and data"
+    description="Operate assets and related records through MCP"
+    href="/docs/developers/api/mcp/tools/catalog/assets-and-data"
+  />
+  <LinkCard
+    title="MCP obligations"
+    description="Manage obligations from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/obligations"
+  />
+  <LinkCard
+    title="n8n Asset"
+    description="Automate asset inventory workflows in n8n"
+    href="/docs/developers/api/n8n/resources/asset"
+  />
+  <LinkCard
+    title="n8n Obligation"
+    description="Automate obligation workflows in n8n"
+    href="/docs/developers/api/n8n/resources/obligation"
+  />
+</CardGrid>

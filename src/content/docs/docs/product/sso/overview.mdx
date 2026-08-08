@@ -16,7 +16,13 @@ The service-provider metadata, entity ID, and assertion consumer URL are derived
 
 Verify ownership of an email domain before applying its SSO policy. A SAML configuration can be disabled, optional, or required. Roll out optional authentication first, confirm that expected users can sign in, and retain a tested recovery path before requiring SSO.
 
-SSO authenticates a person; it does not provision or remove memberships. Use [SCIM](/docs/product/scim/overview) for lifecycle automation.
+SSO authenticates a person; it does not provision or remove memberships by itself. Use [SCIM](/docs/product/scim/overview) for lifecycle automation, or enable automatic signup on the SAML configuration when new users should join on first sign-in.
+
+## Membership roles from SAML
+
+You can keep Probo roles under [People](/docs/product/roles-and-permissions), or map them from the identity provider.
+
+Set **Role Attribute** on the SAML configuration to the assertion attribute that carries the Probo role. Accepted values are `OWNER`, `ADMIN`, `EMPLOYEE`, and `VIEWER`. Leave the field empty when owners and admins should assign roles only in Probo. Provider setup pages show where to declare the attribute and map it in Probo.
 
 ## Security boundary
 

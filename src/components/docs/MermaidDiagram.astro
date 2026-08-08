@@ -1,18 +1,25 @@
 ---
 interface Props {
   chart: string;
+  caption?: string;
+  class?: string;
 }
 
-const { chart } = Astro.props;
+const { chart, caption, class: className } = Astro.props;
 ---
 
-<div class="mermaid-diagram not-content">
+<figure class:list={["mermaid-diagram not-content", className]}>
   <pre class="mermaid">{chart}</pre>
-</div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
 
 <style>
   .mermaid-diagram {
     margin: 1.5rem 0;
+    border: 1px solid var(--color-border-low);
+    border-radius: 0.5rem;
+    background: var(--docs-surface-raised);
+    box-shadow: 0 1px 2px rgb(20 30 18 / 0.03);
     overflow-x: auto;
   }
 
@@ -20,7 +27,7 @@ const { chart } = Astro.props;
     display: flex;
     justify-content: center;
     margin: 0;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     background: transparent;
     border: none;
     min-height: 12rem;
@@ -34,6 +41,14 @@ const { chart } = Astro.props;
   .mermaid-diagram :global(pre.mermaid-error) {
     color: var(--sl-color-red);
     font-size: var(--sl-text-sm);
+  }
+
+  .mermaid-diagram figcaption {
+    border-top: 1px solid var(--color-border-low);
+    padding: 0.625rem 1rem;
+    color: var(--color-muted-foreground);
+    font-size: var(--sl-text-xs);
+    text-align: center;
   }
 </style>
 

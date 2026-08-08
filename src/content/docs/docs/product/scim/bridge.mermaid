@@ -1,0 +1,15 @@
+sequenceDiagram
+  participant Dir as Directory
+  participant Bridge as Probo Bridge
+  participant SCIM as Probo SCIM endpoint
+  participant People as Organization people
+
+  Note over Bridge: Runs on a schedule
+  Bridge->>+Dir: Read users
+  Dir-->>-Bridge: Directory snapshot
+  Bridge->>Bridge: Drop excluded identities
+  Bridge->>Bridge: Diff against current people
+  Bridge->>+SCIM: SCIM create / update / deactivate
+  SCIM->>People: Apply changes
+  SCIM-->>-Bridge: Result
+  Note over Bridge,People: Probo pulls and reconciles each cycle

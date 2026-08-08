@@ -110,18 +110,20 @@ After the Bridge is configured, it will begin synchronizing on its regular sched
 
 1. Go to **Organization Settings** > **Authentication** > **Auto-Provisioning**
 2. Check the Bridge state — it should transition from **Pending** to **Syncing** and then to **Active**
-3. Go to **Organization Settings** > **Members** to verify users have been provisioned
+3. Go to **People** to verify users have been provisioned
 4. Check the **Event Log** for detailed sync activity
 
 </Steps>
 
 ## Setting a User's Role
 
-Assigning a role and employment type to each Google Workspace user lets Probo attribute the right policies to the right people and run meaningful access reviews. Without these, a user shows up in Probo but can't be properly evaluated for least-privilege access.
+Probo membership roles (**Owner**, **Admin**, and so on) are assigned in [People](/docs/product/roles-and-permissions) or mapped with the SAML [Role Attribute](/docs/product/sso/overview#membership-roles-from-saml). SCIM creates people as **Employee** by default.
+
+Separately, syncing a job title and employment type helps Probo attribute policies and run meaningful access reviews. Without those profile fields, a user can still sign in but is harder to evaluate for least-privilege access.
 
 Google Workspace syncs two relevant fields to Probo via the SCIM bridge:
 
-- **Job title** → the user's role (for example, Software Engineer, Finance Manager, IT Administrator)
+- **Job title** → the user's position (for example, Software Engineer, Finance Manager, IT Administrator)
 - **Type of employee** → their employment type (for example, Full-time, Part-time, Intern, Contractor, Freelance)
 
 <Steps>
@@ -129,7 +131,7 @@ Google Workspace syncs two relevant fields to Probo via the SCIM bridge:
 1. In the Google Admin console, go to **Directory** → **Users**
 2. Select the user you want to update
 3. Open **User information** → **Employee information**
-4. Set the **Job title** field to the user's role
+4. Set the **Job title** field to the user's position
 5. Set the **Type of employee** field to their employment type
 6. Click **Save**
 7. On the next sync, both values appear on the user's profile in Probo
@@ -186,7 +188,7 @@ import { LinkCard, CardGrid } from "@astrojs/starlight/components";
   />
   <LinkCard
     title="SCIM Overview"
-    description="Learn more about SCIM features and direct provisioning"
+    description="Compare Native and Bridge synchronization modes"
     href="/docs/product/scim/overview"
   />
 </CardGrid>

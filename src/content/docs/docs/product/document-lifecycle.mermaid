@@ -1,0 +1,14 @@
+stateDiagram-v2
+  state "Draft version" as draft
+  state "Approval quorum" as review
+  state "Published version" as published
+  state "Signature requested" as signing
+
+  [*] --> draft: Create a version
+  draft --> review: Request approval
+  review --> draft: Rejected
+  review --> published: Approved and published
+  draft --> published: Publish
+  published --> signing: Request signatures
+  signing --> published: Signed, cancelled, or voided
+  published --> [*]: Superseded by a new version

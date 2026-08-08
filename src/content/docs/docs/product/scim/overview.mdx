@@ -1,17 +1,47 @@
 ---
 title: SCIM provisioning
-description: Learn how Probo's SCIM provisioning works, comparing push-based direct provisioning with pull-based Bridge synchronization, tokens, and events.
+description: Learn how Probo's SCIM provisioning works, comparing Native (push) with Bridge (pull) synchronization, tokens, and events.
 ---
 
-Probo supports SCIM 2.0 for automating user lifecycle changes. SCIM provisioning manages user records and organization access; [SAML SSO](/docs/product/sso/overview) handles authentication.
+import MermaidDiagram from "../../../../../components/docs/MermaidDiagram.astro";
+import nativeMode from "./native.mermaid?raw";
+import bridgeMode from "./bridge.mermaid?raw";
+
+Probo supports SCIM 2.0 for automating user lifecycle changes. SCIM provisioning manages user records and organization access; [SAML SSO](/docs/product/sso/overview) handles authentication. New people usually receive the **Employee** membership role — set a different role in [People](/docs/product/roles-and-permissions). For attribute-driven roles at sign-in without SCIM managing the profile, use the SAML [Role Attribute](/docs/product/sso/overview#membership-roles-from-saml).
 
 ## Synchronization modes
 
-**Direct provisioning** is push-based. An identity provider calls Probo when an assigned user is created, updated, deactivated, or removed.
+Probo offers two ways to keep organization people in sync with your directory. Both end at the same SCIM Users resource; they differ in **who initiates** the change.
 
-**SCIM Bridge** is pull-based. Probo periodically reads a supported directory and reconciles it with organization users. Bridge exclusions can keep service accounts, shared mailboxes, or other selected identities out of synchronization.
+| Aspect | **Native** | **SCIM Bridge** |
+| ------ | ---------- | --------------- |
+| When to use | Provider has solid SCIM push support | Provider does not support SCIM, or supports it poorly |
+| Direction | Push — the identity provider calls Probo | Pull — Probo reads the directory |
+| Timing | Near real time on assignment changes | Periodic reconciliation on a schedule |
+| Typical providers | [Okta](/docs/product/scim/okta) | [Google Workspace](/docs/product/scim/google-workspace), [Microsoft 365 / Entra ID](/docs/product/scim/microsoft-365) |
+| Who is synced | Whoever you assign to the Probo app in the IdP | Directory users, minus Bridge exclusions (for example service accounts or shared mailboxes) |
 
-Choose one authoritative direction for a population. Running overlapping push and pull automation without a clear owner can cause repeated or conflicting changes.
+### Native
+
+The provider pushes changes directly to Probo. This is the standard IdP → app pattern when the provider can push SCIM reliably: when someone is assigned to the Probo application (or removed), the provider sends SCIM create, update, or deactivate requests to Probo’s endpoint. [Okta](/docs/product/scim/okta) is the primary Native path.
+
+For Microsoft Entra ID, prefer [SCIM Bridge](/docs/product/scim/microsoft-365) over Native push — both paths are documented on that page.
+
+<MermaidDiagram
+  chart={nativeMode}
+  caption="The identity provider pushes each SCIM operation to Probo as assignments change."
+/>
+
+### SCIM Bridge
+
+The Bridge covers providers that do not support SCIM or support it poorly — including **Microsoft Entra ID**, where Bridge is recommended (Native remains available). Instead of waiting for the IdP to push, Probo connects to a supported directory, reads users on a schedule, and reconciles them with organization people through the same SCIM path. Use exclusions to keep identities you do not want in Probo out of the sync.
+
+<MermaidDiagram
+  chart={bridgeMode}
+  caption="Each Bridge cycle reads the directory, applies exclusions, diffs against Probo people, and writes create, update, or deactivate through SCIM."
+/>
+
+Choose one authoritative mode for a population. Running overlapping push and pull automation without a clear owner can cause repeated or conflicting changes.
 
 ## Endpoint and credentials
 

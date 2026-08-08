@@ -3,6 +3,10 @@ title: Compliance program
 description: Learn how a Probo compliance program connects frameworks, controls, measures, tasks, and evidence, plus how Statements of Applicability record scope.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import MermaidDiagram from "../../../../components/docs/MermaidDiagram.astro";
+import programChain from "./compliance-program-chain.mermaid?raw";
+
 A Probo organization is the boundary for a company’s compliance records and memberships. Inside it, a compliance program connects external requirements to the work and proof that demonstrate how those requirements are met.
 
 ## Core model
@@ -12,6 +16,11 @@ A Probo organization is the boundary for a company’s compliance records and me
 3. A **measure** describes what the organization actually operates to satisfy one or more controls.
 4. A **task** assigns a concrete piece of work, optionally with a due date.
 5. **Evidence** is a file or URL supporting the operation of a measure.
+
+<MermaidDiagram
+  chart={programChain}
+  caption="From a requirement to the work and proof that satisfy it."
+/>
 
 Controls and measures are many-to-many. A reusable measure such as an access review can support controls in several frameworks, which avoids duplicating the same implementation work.
 
@@ -27,4 +36,46 @@ Publishing a list or statement creates a stable representation for review. Draft
 
 ## Ownership and access
 
-Organization membership determines access to the program. Assign work to named users and use the audit log to investigate important changes. SSO and SCIM manage access to Probo itself; [access reviews](/docs/product/access-review/overview) review access imported from Probo and connected systems.
+Organization membership determines access to the program. Assign work to named users and use the [audit log](/docs/product/audit-log) to investigate important changes. See [Roles and permissions](/docs/product/roles-and-permissions). SSO and SCIM manage access to Probo itself; [access reviews](/docs/product/access-review/overview) review access imported from Probo and connected systems.
+
+## Automation
+
+Frameworks, controls, measures, tasks, evidence, and statements of applicability are available through the console and developer interfaces.
+
+<CardGrid>
+  <LinkCard
+    title="CLI framework"
+    description="Import and manage frameworks from the command line"
+    href="/docs/developers/cli/commands/framework"
+  />
+  <LinkCard
+    title="CLI measure"
+    description="Manage measures that implement controls"
+    href="/docs/developers/cli/commands/measure"
+  />
+  <LinkCard
+    title="CLI SoA"
+    description="Work with statements of applicability"
+    href="/docs/developers/cli/commands/soa"
+  />
+  <LinkCard
+    title="MCP frameworks and controls"
+    description="Operate frameworks and controls from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/frameworks-and-controls"
+  />
+  <LinkCard
+    title="MCP measures, tasks, and evidence"
+    description="Create and update implementation work through MCP"
+    href="/docs/developers/api/mcp/tools/catalog/measures-tasks-and-evidence"
+  />
+  <LinkCard
+    title="n8n Framework"
+    description="Automate framework operations in n8n"
+    href="/docs/developers/api/n8n/resources/framework"
+  />
+  <LinkCard
+    title="n8n Measure"
+    description="Automate measure operations in n8n"
+    href="/docs/developers/api/n8n/resources/measure"
+  />
+</CardGrid>

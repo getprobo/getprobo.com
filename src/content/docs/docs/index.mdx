@@ -7,9 +7,34 @@ import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 Probo is an open-source governance, risk, and compliance platform for engineering, security, and compliance teams. Use these docs to understand the product model, operate a compliance program, automate records, and choose a deployment.
 
-## Explore Probo
+## Choose your path
 
-Start with the area that matches your goal.
+Start with the path that matches your role.
+
+<CardGrid>
+  <LinkCard
+    title="Compliance lead"
+    description="Learn the product model, import a framework, and operate the compliance program"
+    href="/docs/product/getting-started"
+  />
+  <LinkCard
+    title="Cloud customer"
+    description="Review Probo Cloud regions, shared responsibility, and first-organization setup"
+    href="/docs/deployment/cloud"
+  />
+  <LinkCard
+    title="Self-host operator"
+    description="Deploy with Docker Compose or Kubernetes, then configure the platform"
+    href="/docs/deployment/self-hosting"
+  />
+  <LinkCard
+    title="Integrator"
+    description="Automate Probo through GraphQL, the CLI, MCP, n8n, and webhooks"
+    href="/docs/developers"
+  />
+</CardGrid>
+
+## Explore Probo
 
 <CardGrid>
   <LinkCard
@@ -56,8 +81,8 @@ Probo connects the records used throughout a compliance program instead of treat
   />
   <LinkCard
     title="Identity and access"
-    description="SSO, SCIM, connected applications, and access-review campaigns"
-    href="/docs/product/access-review/overview"
+    description="Members, roles, SSO, SCIM, and access-review campaigns"
+    href="/docs/product/identity-and-access"
   />
 </CardGrid>
 

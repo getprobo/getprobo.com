@@ -7,9 +7,32 @@ Webhooks let your application react when resources change in Probo without polli
 
 Common uses include synchronizing users and third parties, starting document approval workflows, and recording compliance events in another system.
 
+## What webhooks cover
+
+Webhook subscriptions currently deliver events for:
+
+| Domain | Event families |
+| ------ | -------------- |
+| Third parties | `third-party:*` |
+| Users | `user:*` |
+| Obligations | `obligation:*` |
+| Rights requests | `right-request:*` |
+| Documents | `document:*`, `document-version:*`, signature and approval quorum events |
+
+Other product areas — including frameworks, controls, measures, risks, access reviews, devices, and cookie consent — are available through [GraphQL](/docs/developers/graphql), the [CLI](/docs/developers/cli/overview), [MCP](/docs/developers/api/mcp/overview), and [n8n](/docs/developers/api/n8n/overview), but they do not emit webhook events today. Use polling or a scheduled reconcile job for those domains when your integration must stay current.
+
+See [Event types](/docs/developers/api/webhooks/event-types) for the full payload reference for supported events.
+
 ## How it works
 
 import { Steps } from "@astrojs/starlight/components";
+import MermaidDiagram from "../../../../../../components/docs/MermaidDiagram.astro";
+import webhookDelivery from "./webhook-delivery.mermaid?raw";
+
+<MermaidDiagram
+  chart={webhookDelivery}
+  caption="One delivery, from the change in Probo to your acknowledgement."
+/>
 
 <Steps>
 

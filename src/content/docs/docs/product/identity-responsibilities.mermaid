@@ -1,0 +1,14 @@
+flowchart TB
+  idp["Identity provider"]
+  sso["SAML SSO<br/>authenticates"]
+  scim["SCIM<br/>provisions and deactivates"]
+  profile["Profile and membership"]
+  signin["Sign-in allowed"]
+  permitted["What the person can do"]
+
+  idp --> sso
+  idp --> scim
+  scim --> profile
+  sso --> signin
+  profile --> signin
+  profile --> permitted

@@ -1,0 +1,38 @@
+---
+title: Audit log
+description: Review immutable records of create, update, and delete actions in your Probo organization, including who acted and which resource changed.
+---
+
+The audit log is a chronological record of write actions in your organization. Use it to investigate who changed people, roles, compliance records, and settings — and when those changes happened.
+
+Open **Settings** → **Audit Log**. Entries are immutable: Probo does not modify or delete them after they are written.
+
+## What each entry shows
+
+| Field | Meaning |
+| ----- | ------- |
+| **Date** | When the action was recorded |
+| **Actor** | Who performed it — a user, an API key, or the system — plus the actor identifier |
+| **Action** | The operation, typically as `resource:verb` (for example create, update, or delete) |
+| **Resource** | The type and identifier of the record that changed |
+
+Actions cover organization records such as memberships, invitations, documents, risks, third parties, and authentication configuration. The log records write operations; it is not a full session or login history.
+
+## Who can view and export
+
+Owners and admins can open the audit log in **Settings**. Browse recent entries in the console, then load more as needed.
+
+For a dated trail outside the console, export entries for a time range. Exports are delivered as a CSV download link. You can also list and export through the [CLI](/docs/developers/cli/commands/audit-log), [MCP](/docs/developers/api/mcp/tools/catalog/audit-logs), or [n8n](/docs/developers/api/n8n/resources/audit-log).
+
+## When to use it
+
+- Confirm who invited, promoted, deactivated, or removed a person.
+- Trace changes to SSO, SCIM, or other organization settings.
+- Provide evidence for an internal investigation or an external audit.
+
+## Current limitations
+
+- Retention is not configurable.
+- There is no SIEM export or streaming integration yet, even though the export format is compatible with common SIEM ingest paths.
+
+If you need configurable retention or SIEM export, [contact sales](/contact).

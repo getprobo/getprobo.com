@@ -4,8 +4,15 @@ description: Understand how Probo's data model connects frameworks, controls, me
 ---
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import MermaidDiagram from "../../../../../components/docs/MermaidDiagram.astro";
+import recordModel from "./record-model.mermaid?raw";
 
 Probo models a compliance program as connected records. Understanding those relationships helps teams avoid duplicate work and preserve traceability from a requirement to its implementation and evidence.
+
+<MermaidDiagram
+  chart={recordModel}
+  caption="How the main records relate. Every record belongs to one organization."
+/>
 
 ## Organizations
 
@@ -107,6 +114,8 @@ The core workflow in Probo follows this chain:
 - **Audits** verify that everything is in place and operating as expected
 - **Findings** preserve the issues identified during review
 - **Documents** formalize approved policies, procedures, and reports
+
+See [Compliance program](/docs/product/compliance-program) for how this chain is operated day to day.
 
 ## Next Steps
 

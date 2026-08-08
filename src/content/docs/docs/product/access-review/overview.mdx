@@ -3,6 +3,8 @@ title: Access Reviews Overview
 description: Learn how Probo access reviews connect providers or CSV data as sources, snapshot identities and permissions, and record reviewer decisions.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
 Access reviews let an organization take a point-in-time snapshot of identities and permissions, record reviewer decisions, and preserve the result of the campaign. Sources can be connected providers or CSV data exported from another system.
 
 ## How It Works
@@ -10,7 +12,7 @@ Access reviews let an organization take a point-in-time snapshot of identities a
 1. Create one or more access sources.
 2. Create a campaign and attach the sources that define its scope.
 3. Start the campaign to fetch and snapshot available access entries.
-4. Review entries, add flags where useful, and record decisions.
+4. Review entries, add [flags](/docs/product/access-review/campaigns#flags) where useful, and record decisions.
 5. Complete the campaign after every entry has a decision.
 
 Campaign statistics describe the current review state. The snapshot remains separate from the provider’s live directory, so remediation in a provider does not silently rewrite the decision history.
@@ -46,3 +48,23 @@ See [How Probo Protects Integration Credentials](/docs/product/access-review/int
 Provider APIs expose different fields and may omit MFA, login, status, or role information. A blank value means the source did not provide it; it should not be interpreted as a passing or failing control. Reviewers remain responsible for deciding whether an identity and its access are appropriate.
 
 Recording a decision does not change the account in the provider. Complete revocations and role changes in the source system, then use the campaign record as evidence of the review.
+
+## Automation
+
+<CardGrid>
+  <LinkCard
+    title="CLI access-review"
+    description="Manage sources and campaigns with prb access-review"
+    href="/docs/developers/cli/commands/access-review"
+  />
+  <LinkCard
+    title="MCP access reviews"
+    description="Operate access reviews from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/access-reviews"
+  />
+  <LinkCard
+    title="n8n Access Review"
+    description="Automate campaign workflows in n8n"
+    href="/docs/developers/api/n8n/resources/access-review"
+  />
+</CardGrid>

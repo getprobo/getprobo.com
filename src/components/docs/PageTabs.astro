@@ -1,0 +1,154 @@
+---
+/**
+ * Page-level tab navigation for docs that present alternate paths on one page
+ * (for example SCIM Bridge vs Native). Wraps Starlight Tabs with Stripe-style
+ * underline chrome, keeps the "On this page" TOC in sync with the active tab,
+ * and mirrors the active tab in a query param so links stay shareable.
+ *
+ * Usage:
+ *   import PageTabs from "../../../../../components/docs/PageTabs.astro";
+ *   import { TabItem } from "@astrojs/starlight/components";
+ *
+ *   <PageTabs>
+ *     <TabItem label="SCIM Bridge">...</TabItem>
+ *     <TabItem label="Native">...</TabItem>
+ *   </PageTabs>
+ *
+ * The tab label is slugified into the query param, so the example above is
+ * shareable as `?tab=native`.
+ */
+import { Tabs } from "@astrojs/starlight/components";
+
+interface Props {
+  /** Query parameter name used to deep-link the active tab. */
+  param?: string;
+}
+
+const { param = "tab" } = Astro.props;
+---
+
+<docs-page-tabs class="docs-page-tabs" data-param={param}>
+  <Tabs>
+    <slot />
+  </Tabs>
+</docs-page-tabs>
+
+<script>
+  const slugify = (label: string) =>
+    label
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  /** Slides the incoming panel in from the side the reader moved towards. */
+  const slideIn = (panel: HTMLElement, direction: 1 | -1) => {
+    if (
+      typeof panel.animate !== "function" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    // `clip` keeps the offset panel from widening the page without turning the
+    // container into a scroll box.
+    const container = panel.parentElement;
+    if (container) container.style.overflowX = "clip";
+
+    const animation = panel.animate(
+      [
+        { opacity: 0, transform: `translateX(${direction * 24}px)` },
+        { opacity: 1, transform: "translateX(0)" },
+      ],
+      { duration: 220, easing: "cubic-bezier(0.22, 0.61, 0.36, 1)" },
+    );
+
+    animation.finished
+      .catch(() => {})
+      .then(() => {
+        if (container) container.style.removeProperty("overflow-x");
+      });
+  };
+
+  class DocsPageTabs extends HTMLElement {
+    #initialized = false;
+    // Panels are hidden and unhidden while the page settles (deep-linked tab,
+    // Starlight hydration, router swaps). Sliding only starts once that is
+    // done, so a fresh load never animates.
+    #canAnimate = false;
+
+    connectedCallback() {
+      if (this.#initialized) return;
+      this.#initialized = true;
+
+      const tabs = [
+        ...this.querySelectorAll<HTMLAnchorElement>(
+          ':scope > starlight-tabs > .tablist-wrapper [role="tab"]',
+        ),
+      ];
+      const panels = [
+        ...this.querySelectorAll<HTMLElement>(
+          ':scope > starlight-tabs > [role="tabpanel"]',
+        ),
+      ];
+      if (tabs.length !== panels.length) return;
+
+      const param = this.dataset.param || "tab";
+      const slugs = tabs.map((tab) => slugify(tab.textContent || ""));
+
+      const requested = new URL(window.location.href).searchParams.get(param);
+      const requestedIndex = requested ? slugs.indexOf(requested) : -1;
+      if (requestedIndex > 0) this.#activate(tabs, panels, requestedIndex);
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+          const url = new URL(window.location.href);
+          // The first tab is the default, so it needs no marker in the URL.
+          if (index === 0) url.searchParams.delete(param);
+          else url.searchParams.set(param, slugs[index]);
+          history.replaceState(history.state, "", url);
+        });
+      });
+
+      // Watching panel visibility rather than clicks animates pointer and
+      // keyboard switching alike.
+      let activeIndex = panels.findIndex((panel) => !panel.hidden);
+      const observer = new MutationObserver(() => {
+        const nextIndex = panels.findIndex((panel) => !panel.hidden);
+        if (nextIndex === -1 || nextIndex === activeIndex) return;
+        const direction = nextIndex > activeIndex ? 1 : -1;
+        activeIndex = nextIndex;
+        if (this.#canAnimate) slideIn(panels[nextIndex], direction);
+      });
+      for (const panel of panels) {
+        observer.observe(panel, {
+          attributes: true,
+          attributeFilter: ["hidden"],
+        });
+      }
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          this.#canAnimate = true;
+        });
+      });
+    }
+
+    // Mirrors what Starlight's own tab switching does, so the initial state is
+    // applied before its custom element hydrates.
+    #activate(tabs: HTMLAnchorElement[], panels: HTMLElement[], index: number) {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute("aria-selected", i === index ? "true" : "false");
+        if (i === index) tab.removeAttribute("tabindex");
+        else tab.setAttribute("tabindex", "-1");
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+    }
+  }
+
+  if (!customElements.get("docs-page-tabs")) {
+    customElements.define("docs-page-tabs", DocsPageTabs);
+  }
+</script>

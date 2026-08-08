@@ -3,6 +3,8 @@ title: Risk management
 description: Learn how Probo's risk register tracks business and security risks while structured risk assessments model systems, threats, and scenarios.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
 Probo supports two related ways to reason about risk: a risk register for tracked business or security risks, and structured risk assessments for modeling systems, threats, scenarios, and their resulting risks.
 
 ## Risk register
@@ -25,3 +27,38 @@ Assessments and register entries have separate lifecycles: the assessment docume
 ## Publication and review
 
 Publishing risk records creates a reviewed list without preventing continued program operation. Revisit risks when systems, vendors, controls, or business assumptions change. Use measures and tasks for treatment work instead of placing implementation details only in the risk description.
+
+## Automation
+
+<CardGrid>
+  <LinkCard
+    title="CLI risk"
+    description="Manage risk register entries with prb risk"
+    href="/docs/developers/cli/commands/risk"
+  />
+  <LinkCard
+    title="CLI risk analysis"
+    description="Work with threat-based risk assessments"
+    href="/docs/developers/cli/commands/risk-analysis"
+  />
+  <LinkCard
+    title="MCP risks"
+    description="Query and update risks from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/risks"
+  />
+  <LinkCard
+    title="MCP risk assessments"
+    description="Operate structured risk assessments through MCP"
+    href="/docs/developers/api/mcp/tools/catalog/risk-assessments"
+  />
+  <LinkCard
+    title="n8n Risk"
+    description="Automate risk register operations in n8n"
+    href="/docs/developers/api/n8n/resources/risk"
+  />
+  <LinkCard
+    title="n8n Risk Analysis"
+    description="Automate risk assessment operations in n8n"
+    href="/docs/developers/api/n8n/resources/risk-analysis"
+  />
+</CardGrid>

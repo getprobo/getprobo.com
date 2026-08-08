@@ -1,0 +1,24 @@
+flowchart TB
+  subgraph required [What is required]
+    direction LR
+    framework["Framework"] --> control["Control"]
+    obligation["Obligation"] --> control
+    control --> soa["Statement of<br/>Applicability"]
+  end
+
+  subgraph operated [What you operate]
+    direction LR
+    measure["Measure"] --> task["Task"]
+    measure --> evidence["Evidence"]
+    measure --> document["Document"]
+  end
+
+  subgraph assurance [Risk and assurance]
+    direction LR
+    asset["Asset"] --> risk["Risk"]
+    audit["Audit"] --> finding["Finding"]
+  end
+
+  control <-->|many-to-many| measure
+  measure -->|mitigates| risk
+  evidence -->|supports| audit

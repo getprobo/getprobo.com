@@ -3,6 +3,8 @@ title: Audits and findings
 description: Learn how Probo audits scope a compliance review, connect controls, record findings like nonconformities, and preserve evidence for reports.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
 An audit in Probo represents a defined review of an organization’s compliance program. It provides a place to scope the review, connect relevant controls, and collect the findings produced by that work.
 
 ## Audit scope
@@ -18,3 +20,33 @@ Use a finding for the reviewed issue and tasks or measures for remediation work.
 ## Reports and evidence
 
 Audit reports are generated from current audit records. Before sharing a report, verify the scope, linked controls, finding classification, and supporting evidence. Document publication and electronic signatures provide separate approval records when a report or policy requires formal sign-off.
+
+## Automation
+
+<CardGrid>
+  <LinkCard
+    title="CLI audit"
+    description="Manage audits with prb audit"
+    href="/docs/developers/cli/commands/audit"
+  />
+  <LinkCard
+    title="CLI finding"
+    description="Create and update findings from the command line"
+    href="/docs/developers/cli/commands/finding"
+  />
+  <LinkCard
+    title="MCP audits and findings"
+    description="Operate audits and findings from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/audits-and-findings"
+  />
+  <LinkCard
+    title="n8n Audit"
+    description="Automate audit operations in n8n"
+    href="/docs/developers/api/n8n/resources/audit"
+  />
+  <LinkCard
+    title="n8n Finding"
+    description="Automate finding operations in n8n"
+    href="/docs/developers/api/n8n/resources/finding"
+  />
+</CardGrid>

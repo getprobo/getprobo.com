@@ -1,0 +1,14 @@
+stateDiagram-v2
+  state "Draft" as draft
+  state "In progress" as inProgress
+  state "Pending actions" as pending
+  state "Completed" as completed
+  state "Cancelled" as cancelled
+
+  [*] --> draft: Create campaign with sources
+  draft --> inProgress: Start campaign
+  inProgress --> pending: Source fetches finish
+  pending --> completed: Every entry has a decision
+  draft --> cancelled: Cancel through API or CLI
+  pending --> cancelled: Cancel through API or CLI
+  completed --> [*]

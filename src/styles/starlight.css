@@ -217,6 +217,57 @@
     line-height: 1.7;
   }
 
+  /* Page-level alternate-path tabs (Bridge vs Native, API versions, etc.). */
+  .docs-page-tabs {
+    margin-block: 1.25rem 2.5rem;
+  }
+
+  .docs-page-tabs,
+  .docs-page-tabs starlight-tabs {
+    display: block;
+  }
+
+  .docs-page-tabs .tablist-wrapper {
+    overflow-x: auto;
+  }
+
+  .docs-page-tabs [role="tablist"] {
+    gap: 0;
+    margin: 0;
+    border-bottom: 1px solid var(--color-border-low);
+    padding: 0;
+  }
+
+  .docs-page-tabs .tab > [role="tab"] {
+    --sl-tab-color-border: transparent;
+    gap: 0.4rem;
+    margin: 0 2.5rem 0 0;
+    border: 0;
+    border-radius: 0;
+    padding: 1.1rem 0.15rem;
+    background: transparent;
+    box-shadow: inset 0 -2px 0 var(--sl-tab-color-border);
+    color: var(--color-muted-foreground);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .docs-page-tabs .tab > [role="tab"]:hover {
+    color: var(--color-primary);
+  }
+
+  .docs-page-tabs .tab > [role="tab"][aria-selected="true"] {
+    --sl-tab-color-border: var(--color-primary);
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .docs-page-tabs .tablist-wrapper ~ [role="tabpanel"] {
+    margin-top: 2.25rem;
+  }
+
   .sl-markdown-content :is(h1, h2, h3, h4) {
     color: var(--color-primary);
     font-weight: 600;

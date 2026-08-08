@@ -3,6 +3,8 @@ title: Compliance Portal
 description: Learn how the Compliance Portal lets you publish certifications, commitments, references, and files publicly with visitor authentication and NDA controls.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
 The Compliance Portal is the public-facing counterpart to an organization’s private Probo workspace. It lets an organization share approved compliance information without granting visitors access to the console.
 
 ## Published content
@@ -18,3 +20,18 @@ The portal supports visitor authentication and NDA-controlled access for protect
 ## Operational boundary
 
 Portal availability depends on the `trust-center` service configuration in a self-hosted deployment. The configuration name is retained for compatibility; the product name is Compliance Portal. Operators must configure public URLs, OAuth behavior, email delivery, TLS, and domain routing consistently.
+
+## Automation
+
+<CardGrid>
+  <LinkCard
+    title="MCP Compliance Portal"
+    description="Manage portal content from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/compliance-portal"
+  />
+  <LinkCard
+    title="n8n Compliance Portal"
+    description="Automate portal operations in n8n"
+    href="/docs/developers/api/n8n/resources/compliance-portal"
+  />
+</CardGrid>

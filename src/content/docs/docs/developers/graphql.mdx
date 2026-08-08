@@ -1,13 +1,30 @@
 ---
 title: GraphQL API
-description: Use the Probo console GraphQL API at /api/console/v1/graphql to query and mutate records, with guidance on connections, errors, and compatibility.
+description: Use the Probo console GraphQL API at /api/console/v1/graphql to query and mutate records, with authentication, organization scoping, and copy-paste examples.
 ---
 
 The Probo console and automation clients use the GraphQL API at `/api/console/v1/graphql`. Its schema covers organizations, frameworks, controls, measures, risks, audits, privacy, access reviews, the Compliance Portal, cookie consent, devices, and other product resources.
 
+For endpoint layout, identifiers, and error classes shared across interfaces, see [API fundamentals](/docs/developers/api-overview).
+
+## Authentication
+
+Create a scoped access token from your account menu under **OAuth tokens**. Send it as a bearer credential on every request:
+
+```http
+POST /api/console/v1/graphql HTTP/1.1
+Host: eu.probo.com
+Authorization: Bearer <oauth-token>
+Content-Type: application/json
+```
+
+Use the origin that matches the token’s deployment (`https://eu.probo.com`, `https://us.probo.com`, or your self-hosted origin). Effective access is the intersection of the token’s OAuth scopes and the underlying user’s current Probo permissions.
+
+Interactive clients can use supported OAuth authorization flows instead. SSO sessions and SCIM tokens are not substitutes for an OAuth access token.
+
 ## Request shape
 
-Send GraphQL documents as authenticated `POST` requests with a JSON body containing `query` and, when needed, `variables`. Use variables for IDs and user input instead of interpolating values into a query string.
+Send GraphQL documents as authenticated `POST` requests with a JSON body containing `query` and, when needed, `variables`. Use variables for IDs and user input instead of interpolating values into a query string. Named operations are preferred; anonymous shorthand can be rejected by some clients.
 
 ```json
 {
@@ -18,14 +35,71 @@ Send GraphQL documents as authenticated `POST` requests with a JSON body contain
 
 The schema is the contract for field nullability, input types, enums, and pagination. Introspect the supported deployment rather than copying fields from an unrelated version.
 
+## Organization scope
+
+Most compliance records belong to an organization. List the organizations the token can access, then pass an organization ID into organization-scoped fields and mutations. Do not assume that an authenticated user can access every organization on the deployment.
+
+```graphql
+query ListOrganizations {
+  organizations {
+    nodes {
+      id
+      name
+    }
+  }
+}
+```
+
+```graphql
+query Organization($id: ID!) {
+  organization(id: $id) {
+    id
+    name
+  }
+}
+```
+
+```json
+{
+  "query": "query Organization($id: ID!) { organization(id: $id) { id name } }",
+  "variables": { "id": "org_01EXAMPLE" }
+}
+```
+
+Probo uses globally unique IDs that encode an entity type; treat them as opaque strings.
+
 ## Connections
 
-List fields use GraphQL connections. Request only the fields the integration needs, pass a bounded `first` value, and follow `pageInfo.endCursor` while `pageInfo.hasNextPage` is true.
+List fields use GraphQL connections. Request only the fields the integration needs, pass a bounded `first` value, and follow `pageInfo.endCursor` while `pageInfo.hasNextPage` is true. Do not derive cursors or rely on database ordering.
+
+Confirm connection field names and arguments against the schema for your deployment. Nested lists under `organization(id:)` are organization-scoped; top-level list fields such as `organizations` return only records the token can access.
 
 ## Mutations and errors
 
 Mutations validate authorization and current record state. A successful HTTP response can still contain GraphQL errors, so inspect both `data` and `errors`. Do not retry invalid, forbidden, or conflict errors without changing the request. Retry transient internal or transport failures only with bounded backoff and idempotency in mind.
 
+## Try a request
+
+With `curl`:
+
+```bash
+curl https://eu.probo.com/api/console/v1/graphql \
+  --header "Authorization: Bearer $PROBO_OAUTH_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"query":"query Viewer { viewer { id } }"}'
+```
+
+With the CLI:
+
+```bash
+prb api 'query { organizations { nodes { id name } } }'
+prb api 'query($id: ID!) { organization(id: $id) { name } }' -f id=org_01EXAMPLE
+```
+
+See [`prb api`](/docs/developers/cli/commands/api) and [CLI configuration](/docs/developers/cli/configuration#raw-graphql-queries) for flags and stdin usage.
+
 ## Compatibility
 
 GraphQL is a versioned endpoint, but its schema evolves with Probo releases. Generate client types from the deployment you target and review schema changes during upgrades. MCP, CLI, and n8n operations are maintained alongside GraphQL, but transport-specific capabilities and release timing can differ.
+
+When a higher-level interface already covers the workflow, prefer the [CLI](/docs/developers/cli/overview), [MCP](/docs/developers/api/mcp/overview), or [n8n](/docs/developers/api/n8n/overview) references for day-to-day automation, and use GraphQL when you need a custom client or query shape.

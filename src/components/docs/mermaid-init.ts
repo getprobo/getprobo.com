@@ -1,23 +1,20 @@
 import type mermaidType from "mermaid";
+import { mermaidConfig } from "./mermaid-theme.ts";
 
 let mermaidModule: typeof mermaidType | null = null;
 
-function themeFromDocument(): "default" | "dark" {
+function themeFromDocument(): "light" | "dark" {
   const htmlTheme = document.documentElement.getAttribute("data-theme");
   const bodyTheme = document.body.getAttribute("data-theme");
   const dataTheme = htmlTheme || bodyTheme;
-  return dataTheme === "dark" ? "dark" : "default";
+  return dataTheme === "dark" ? "dark" : "light";
 }
 
 async function getMermaid() {
   if (!mermaidModule) {
     const mod = await import("mermaid");
     mermaidModule = mod.default;
-    mermaidModule.initialize({
-      startOnLoad: false,
-      theme: themeFromDocument(),
-      securityLevel: "strict",
-    });
+    mermaidModule.initialize(mermaidConfig(themeFromDocument()));
   }
   return mermaidModule;
 }
@@ -27,7 +24,7 @@ export async function renderMermaidDiagrams(root: ParentNode = document) {
   if (nodes.length === 0) return;
 
   const mermaid = await getMermaid();
-  mermaid.initialize({ theme: themeFromDocument() });
+  mermaid.initialize(mermaidConfig(themeFromDocument()));
 
   for (const node of nodes) {
     if (!(node instanceof HTMLPreElement)) continue;

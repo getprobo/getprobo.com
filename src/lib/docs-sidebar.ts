@@ -31,6 +31,7 @@ const accessReviewConnectorItems = [
   },
   { label: "GitHub", slug: "docs/product/access-review/github" },
   { label: "Grafana", slug: "docs/product/access-review/grafana" },
+  { label: "HubSpot", slug: "docs/product/access-review/hubspot" },
   {
     label: "incident.io",
     slug: "docs/product/access-review/incident-io",
@@ -58,34 +59,40 @@ export const docsSidebarGroups = [
     label: "Overview",
     showHeading: false,
     items: [
-      { label: "Overview", slug: "docs" },
+      { label: "Documentation home", slug: "docs" },
       {
         label: "Getting started",
-        slug: "docs/product/getting-started",
-      },
-      {
-        label: "Product overview",
-        slug: "docs/product/getting-started/product-overview",
-      },
-      {
-        label: "Choose a deployment",
-        slug: "docs/product/getting-started/choose-deployment",
-      },
-      {
-        label: "Quickstart",
-        slug: "docs/product/getting-started/quickstart",
-      },
-      {
-        label: "Set up your first organization and framework",
-        slug: "docs/product/getting-started/first-organization-and-framework",
-      },
-      {
-        label: "Core concepts",
-        slug: "docs/product/getting-started/core-concepts",
-      },
-      {
-        label: "Glossary",
-        slug: "docs/product/getting-started/glossary",
+        collapsed: false,
+        items: [
+          {
+            label: "Overview",
+            slug: "docs/product/getting-started",
+          },
+          {
+            label: "Product overview",
+            slug: "docs/product/getting-started/product-overview",
+          },
+          {
+            label: "Choose a deployment",
+            slug: "docs/product/getting-started/choose-deployment",
+          },
+          {
+            label: "Quickstart",
+            slug: "docs/product/getting-started/quickstart",
+          },
+          {
+            label: "First organization and framework",
+            slug: "docs/product/getting-started/first-organization-and-framework",
+          },
+          {
+            label: "Core concepts",
+            slug: "docs/product/getting-started/core-concepts",
+          },
+          {
+            label: "Glossary",
+            slug: "docs/product/getting-started/glossary",
+          },
+        ],
       },
     ],
   },
@@ -94,7 +101,7 @@ export const docsSidebarGroups = [
     sectionId: "product",
     label: "Compliance Program",
     items: [
-      { label: "Product", slug: "docs/product" },
+      { label: "Product hub", slug: "docs/product" },
       {
         label: "Compliance program",
         slug: "docs/product/compliance-program",
@@ -132,6 +139,14 @@ export const docsSidebarGroups = [
         slug: "docs/product/identity-and-access",
       },
       {
+        label: "Roles and permissions",
+        slug: "docs/product/roles-and-permissions",
+      },
+      {
+        label: "Audit log",
+        slug: "docs/product/audit-log",
+      },
+      {
         label: "SSO",
         collapsed: true,
         items: [
@@ -156,11 +171,11 @@ export const docsSidebarGroups = [
             label: "Microsoft 365",
             slug: "docs/product/scim/microsoft-365",
           },
-          { label: "Okta", slug: "docs/product/scim/okta" },
           {
             label: "Google Workspace",
             slug: "docs/product/scim/google-workspace",
           },
+          { label: "Okta", slug: "docs/product/scim/okta" },
         ],
       },
     ],
@@ -191,7 +206,7 @@ export const docsSidebarGroups = [
         collapsed: true,
         items: [
           {
-            label: "Overview",
+            label: "Connector directory",
             slug: "docs/product/access-review/directory",
           },
           ...accessReviewConnectorItems,

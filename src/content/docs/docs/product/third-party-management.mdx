@@ -3,6 +3,8 @@ title: Third-party management
 description: Learn how to record vendor relationships in Probo, including contacts, services, DPAs, subprocessor hierarchies, and third-party risk assessments.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
 A third party represents an external organization that provides a product or service, processes data, or otherwise contributes risk to your compliance program.
 
 ## What to record
@@ -25,3 +27,21 @@ An assessment belongs to a third party and records the review performed for that
 ## Access and automation
 
 Third-party records are available through the web console and automation interfaces. Use [access reviews](/docs/product/access-review/overview) for identities imported from connected applications; use third-party management for the contractual, privacy, and operational relationship with the provider itself.
+
+<CardGrid>
+  <LinkCard
+    title="CLI thirdparty"
+    description="Manage vendors and related records with prb thirdparty"
+    href="/docs/developers/cli/commands/thirdparty"
+  />
+  <LinkCard
+    title="MCP third parties"
+    description="Operate third-party records from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/third-parties"
+  />
+  <LinkCard
+    title="n8n Third Party"
+    description="Automate vendor workflows in n8n"
+    href="/docs/developers/api/n8n/resources/third-party"
+  />
+</CardGrid>

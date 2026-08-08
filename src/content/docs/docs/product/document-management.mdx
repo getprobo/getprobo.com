@@ -3,7 +3,16 @@ title: Document management
 description: See how Probo documents move through draft versions, approval quorums, electronic signatures, publication, archival, and PDF export.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import MermaidDiagram from "../../../../components/docs/MermaidDiagram.astro";
+import documentLifecycle from "./document-lifecycle.mermaid?raw";
+
 Probo documents are controlled records for policies, procedures, reports, and other compliance material. A document has a lifecycle; its versions preserve the content and decisions that were current at a point in time.
+
+<MermaidDiagram
+  chart={documentLifecycle}
+  caption="Lifecycle of a single document version. Archiving applies to the document, not to one version."
+/>
 
 ## Versions and publication
 
@@ -21,4 +30,24 @@ Signature requests also belong to a document version. A request can be completed
 
 Documents can be exported as PDF and linked to controls and measures. A controlled document explains what the organization intends to do; evidence demonstrates that a measure operated. Keeping those roles distinct makes audit review clearer.
 
-Access to drafts, approvals, and signatures follows organization authorization. Use the audit log when investigating changes to controlled records.
+Access to drafts, approvals, and signatures follows organization authorization. Use the audit log when investigating changes to controlled records. See [Roles and permissions](/docs/product/roles-and-permissions).
+
+## Automation
+
+<CardGrid>
+  <LinkCard
+    title="CLI document"
+    description="Manage documents and versions with prb document"
+    href="/docs/developers/cli/commands/document"
+  />
+  <LinkCard
+    title="MCP documents and approvals"
+    description="Operate documents, quorums, and signatures through MCP"
+    href="/docs/developers/api/mcp/tools/catalog/documents-and-approvals"
+  />
+  <LinkCard
+    title="n8n Document"
+    description="Automate document lifecycle workflows in n8n"
+    href="/docs/developers/api/n8n/resources/document"
+  />
+</CardGrid>

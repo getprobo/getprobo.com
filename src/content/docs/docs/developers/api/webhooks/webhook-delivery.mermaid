@@ -1,0 +1,12 @@
+sequenceDiagram
+  participant P as Probo
+  participant E as Your endpoint
+
+  Note over P: A subscribed resource changes
+  P->>P: Queue event, poll every ~5s
+  P->>+E: POST signed JSON
+  E->>E: Verify signature
+  E->>E: Reject stale timestamp
+  E->>E: Record eventId, enqueue
+  E-->>-P: 2xx within 30s
+  Note over P,E: Failed deliveries are not retried

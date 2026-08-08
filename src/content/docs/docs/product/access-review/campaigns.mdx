@@ -1,7 +1,10 @@
 ---
 title: Run an Access Review Campaign
-description: Follow the full console workflow for an access review campaign, from creating and starting it through reviewing accounts and recording decisions.
+description: Follow the full console workflow for an access review campaign, from creating and starting it through reviewing accounts, applying flags, and recording decisions.
 ---
+
+import MermaidDiagram from "../../../../../components/docs/MermaidDiagram.astro";
+import campaignLifecycle from "./campaign-lifecycle.mermaid?raw";
 
 An access review campaign takes a point-in-time snapshot of the accounts available from one or more access sources. Reviewers can then flag accounts, record a decision for every entry, and preserve the completed review.
 
@@ -39,7 +42,7 @@ Expand each source to review its accounts. Depending on what the provider expose
 For each account:
 
 1. Check the identity, assigned role, administrative access, status, MFA, and recent activity.
-2. Add any useful flags, such as **Orphan account**, **Dormant**, **Excessive privileges**, **SoD conflict**, or **Shared account**.
+2. Add any useful [flags](#flags) that describe what you found.
 3. Record one of these decisions:
    - **Approve**: the current access is appropriate.
    - **Revoke**: the access should be removed.
@@ -52,6 +55,40 @@ Approve records immediately. Revoke, Modify, and Escalate require a note explain
 A decision records the review outcome; it does not change access in the connected provider. Complete any required remediation in that provider and retain the decision note as evidence.
 :::
 
+## Flags
+
+Flags are optional labels reviewers attach to an account during a campaign. They do not replace a decision: every entry still needs Approve, Revoke, Modify, or Escalate before the campaign can complete. Use flags to call out risk themes, group similar findings, and leave clearer evidence for auditors.
+
+An entry can carry more than one flag. You can set flags on a single account or apply them in bulk to a selection.
+
+### Account
+
+| Flag                 | Use when                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------- |
+| Orphan account       | The account has no clear owner, or it no longer maps to a known person in the organization.       |
+| Dormant              | The account looks unused for a long period relative to your review policy.                        |
+| Terminated user      | The person has left the organization and the account should no longer have access.                |
+| Contractor expired   | A contractor or temporary worker's engagement has ended, but the account remains.                 |
+
+### Privileges
+
+| Flag                   | Use when                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Excessive privileges   | The account has more access than the role or job requires.                                        |
+| SoD conflict           | The account combines duties that your segregation-of-duties policy separates.                     |
+| Privileged access      | The account holds elevated or administrative rights that deserve explicit review.                 |
+| Role creep             | Access has accumulated over time beyond what the current role needs.                              |
+
+### Anomaly
+
+| Flag              | Use when                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------- |
+| No justification  | There is no clear business reason for the account or its level of access.                         |
+| Out of department | The account belongs outside the team or department that should own this system.                   |
+| Shared account    | More than one person uses the same login, or the account is otherwise shared.                     |
+
+Flags are reviewer annotations. Probo does not auto-detect them from provider data; choose them based on what the snapshot and your internal context show.
+
 ## Complete the Campaign
 
 The **Complete campaign** action becomes available after every entry has a decision.
@@ -63,6 +100,11 @@ The **Complete campaign** action becomes available after every entry has a decis
 Completion finalizes the decisions and changes the campaign status to **Completed**. This action cannot be undone.
 
 ## Campaign Statuses
+
+<MermaidDiagram
+  chart={campaignLifecycle}
+  caption="Campaign statuses and the transitions between them. Sources can be added while a campaign is a draft; the scope is fixed once it starts."
+/>
 
 | Status          | Meaning                                                                    |
 | --------------- | -------------------------------------------------------------------------- |

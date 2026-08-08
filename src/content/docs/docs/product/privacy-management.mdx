@@ -3,6 +3,8 @@ title: Privacy management
 description: Learn how Probo tracks data records, processing activities, DPIAs, transfer impact assessments, and data subject rights requests for privacy programs.
 ---
 
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
 Probo keeps privacy records connected to the same controls, measures, risks, vendors, and evidence used by the wider compliance program.
 
 ## Data and processing activities
@@ -23,3 +25,43 @@ These assessments are first-class records rather than attachments. Link them to 
 Rights requests track requests such as access or erasure through their operational lifecycle. Limit access to the people who need to process the request, avoid placing unnecessary personal data in free-text fields, and use tasks to coordinate work with accountable owners.
 
 Probo organizes privacy work; it does not determine which law applies or replace legal advice.
+
+## Automation
+
+<CardGrid>
+  <LinkCard
+    title="CLI processing activity"
+    description="Manage processing activities from the command line"
+    href="/docs/developers/cli/commands/processing-activity"
+  />
+  <LinkCard
+    title="CLI DPIA"
+    description="Work with data protection impact assessments"
+    href="/docs/developers/cli/commands/dpia"
+  />
+  <LinkCard
+    title="CLI TIA"
+    description="Work with transfer impact assessments"
+    href="/docs/developers/cli/commands/tia"
+  />
+  <LinkCard
+    title="CLI rights request"
+    description="Track data subject rights requests"
+    href="/docs/developers/cli/commands/rights-request"
+  />
+  <LinkCard
+    title="MCP privacy"
+    description="Operate privacy records from supported AI tools"
+    href="/docs/developers/api/mcp/tools/catalog/privacy"
+  />
+  <LinkCard
+    title="n8n Processing Activity"
+    description="Automate processing-activity workflows in n8n"
+    href="/docs/developers/api/n8n/resources/processing-activity"
+  />
+  <LinkCard
+    title="n8n Rights Request"
+    description="Automate rights-request workflows in n8n"
+    href="/docs/developers/api/n8n/resources/rights-request"
+  />
+</CardGrid>

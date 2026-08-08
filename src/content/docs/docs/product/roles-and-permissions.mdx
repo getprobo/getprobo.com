@@ -1,0 +1,59 @@
+---
+title: Roles and permissions
+description: Choose the right Probo role for each person in your organization, from owners and admins to viewers, auditors, and employees.
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Every person in a Probo organization has one **role**. The role decides what they can see and change in the compliance program. Manage people and roles under **People** in the organization sidebar.
+
+## Choose a role
+
+Use the least privilege that still lets someone do their job.
+
+| Role | Who it is for | What they can do |
+| ---- | ------------- | ---------------- |
+| **Owner** | A small set of trusted leads who must never lose access to the organization | Everything, including organization settings, SSO/SCIM setup, and removing people |
+| **Admin** | Compliance, security, or IT teammates who run the program day to day | Manage the compliance program and most people; cannot delete the organization, remove members, change SSO/SCIM setup, or grant Owner |
+| **Viewer** | Stakeholders who need visibility without editing the program | Read the program; sign and approve documents when asked |
+| **Auditor** | Internal or external auditors reviewing evidence | Read the records needed for audit; no day-to-day program administration |
+| **Employee** | Staff who only need to complete assigned work | See assigned employee documents, sign, and approve when asked |
+
+The person who creates the organization becomes an **Owner**. Keep at least two owners so settings and access remain recoverable if one person leaves.
+
+## Invite people and assign roles
+
+1. Open **People** and click **Add Person**.
+2. Enter their name and email, then choose a role.
+3. Optionally note whether they are an employee, contractor, or service account — this is organizational context only and does not change permissions.
+4. Send the invitation so they can activate their account.
+
+Until they accept the invitation, they cannot use the organization. Resend the invitation from **People** if needed.
+
+When someone should no longer have access:
+
+- **Deactivate** them to block sign-in while keeping the record.
+- **Remove** them when they should no longer appear in the organization at all.
+
+Only owners can remove people. Probo will not let you deactivate, remove, or demote the last remaining owner.
+
+## Where to manage Probo roles
+
+Keep membership roles in **People**, or let your identity provider set them. SCIM creates people as **Employee**; assign the final role in **People**.
+
+<CardGrid>
+  <LinkCard
+    title="Map roles with SAML"
+    description="Send OWNER, ADMIN, EMPLOYEE, or VIEWER at sign-in with the Role Attribute"
+    href="/docs/product/sso/overview#membership-roles-from-saml"
+  />
+  <LinkCard
+    title="Provision people with SCIM"
+    description="Create and deactivate memberships from your directory"
+    href="/docs/product/scim/overview"
+  />
+</CardGrid>
+
+## Review who has access
+
+Open the [audit log](/docs/product/audit-log) under **Settings** → **Audit Log** to see who changed people, roles, and other organization records. Owners and admins can export the log when you need a dated trail for an audit.

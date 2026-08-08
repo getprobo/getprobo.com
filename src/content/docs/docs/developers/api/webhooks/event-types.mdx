@@ -3,7 +3,7 @@ title: Webhook Event Types
 description: Reference for every Probo webhook event type and its data payload shape, covering third parties, users, obligations, and the document lifecycle.
 ---
 
-This reference maps each event name to the exact object delivered in `data`. Events cover third parties, users, obligations, rights requests, and the complete document lifecycle.
+This reference maps each event name to the exact object delivered in `data`. Events cover third parties, users, obligations, rights requests, and the complete document lifecycle. Frameworks, controls, measures, risks, access reviews, devices, and cookie consent do not emit webhook events — use GraphQL, the CLI, MCP, or n8n for those domains. See [What webhooks cover](/docs/developers/api/webhooks/overview#what-webhooks-cover).
 
 Webhook bodies and the `X-Probo-Webhook-Event` header use lowercase wire names such as `third-party:created`. The console API, CLI, and n8n node use uppercase enum names such as `THIRD_PARTY_CREATED`.
 
