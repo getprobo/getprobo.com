@@ -155,11 +155,11 @@ Use [`resolveLayout`](#layout-api) / [`resolveBannerText`](#layout-api) to show 
 | Component                    | Description                                                                                                                                                                                                    |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `<probo-cookie-banner-root>` | Root element. Requires `banner-id` and `base-url`. Optional `lang` attribute to force a language. Manages client lifecycle and state. |
-| `<probo-banner>`             | Container for the first-layer banner card. Visibility follows `layout.initial_state` (e.g. closed under CCPA — see [Settings link](#settings-link)).                                                           |
+| `<probo-banner>`             | Container for the first-layer banner card. Visibility follows `layout.initial_state` (closed in every opt-out jurisdiction — see [Settings link](#settings-link)).                                             |
 | `<probo-accept-button>`      | Wraps a button that records `ACCEPT_ALL` consent.                                                                                                                                                              |
 | `<probo-reject-button>`      | Wraps a button that records `REJECT_ALL` consent (opt-out / Do Not Sell).                                                                                                                                      |
 | `<probo-customize-button>`   | Wraps a button that opens the preference panel.                                                                                                                                                                |
-| `<probo-acknowledge-button>` | Wraps a button that records `ACKNOWLEDGE` for **NOTICE** presentations (informational dismiss). Do not reuse accept-all for this.                                                                              |
+| `<probo-acknowledge-button>` | Wraps a button that records `ACKNOWLEDGE` for **NOTICE** presentations (informational dismiss, currently Mexico only). Do not reuse accept-all for this.                                                       |
 | `<probo-preference-panel>`   | Container for per-category consent toggles.                                                                                                                                                                    |
 | `<probo-privacy-choices>`    | CCPA Privacy Choices surface (sale/sharing opt-out + sensitive PI rights statement). Shown when state is `privacy_choices`.                                                                                    |
 | `<probo-category-list>`      | Renders a `<template>` once per cookie category. Fills `data-slot="name"` and `data-slot="description"`.                                                                                                       |
@@ -216,10 +216,12 @@ Behavior by presentation / regulation (driven by `layout`):
 
 | Presentation | Typical regulations | Label shown | Banner on first visit | Click opens |
 | ------------ | ------------------- | ----------- | --------------------- | ----------- |
-| **OPT_OUT** (CCPA) | CCPA / CPRA | Always replaced with the statutory **“Your Privacy Choices”** text and [official opt-out icon](https://www.law.cornell.edu/regulations/california/11-CCR-7015) (English; not translated) | Closed by default | **Privacy Choices** panel (`privacy_choices`) |
-| **OPT_OUT** (other) | PIPEDA, LGPD | Your children (e.g. “Cookie settings”), or a localized fallback if empty | Closed by default | Compact opt-out banner |
-| **OPT_IN** | GDPR, UK GDPR, FADP, … | Your children, or a localized fallback if empty | Open until the visitor chooses | Preference panel |
-| **NOTICE** | APPI, LFPDPPP, unregulated countries | Your children, or a localized fallback if empty | Open (informational dismiss) | Notice banner again |
+| **OPT_OUT** (CCPA) | CCPA / CPRA, and US visitors whose state cannot be resolved | Always replaced with the statutory **“Your Privacy Choices”** text and [official opt-out icon](https://www.law.cornell.edu/regulations/california/11-CCR-7015) (English; not translated) | Closed by default | **Privacy Choices** panel (`privacy_choices`) |
+| **OPT_OUT** (other) | Other US state laws, PIPEDA and provincial PIPA, APPI, and countries with no cookie-consent law | Your children (e.g. “Cookie settings”), or a localized fallback if empty | Closed by default | Compact opt-out banner |
+| **OPT_IN** | GDPR, UK GDPR, FADP, Law 25, LGPD, … | Your children, or a localized fallback if empty | Open until the visitor chooses | Preference panel |
+| **NOTICE** | LFPDPPP (Mexico) | Your children, or a localized fallback if empty | Open (informational dismiss) | Notice banner again |
+
+Most visitors fall under `OPT_OUT`, where nothing opens on its own. In those jurisdictions the settings link is not a convenience — it is the visitor's only route to their choices, so it must be present on every page. See [Geolocation and regulations](/docs/product/cookie-banner/geolocation) for the full mapping.
 
 When a Global Privacy Control (GPC) opt-out preference signal was applied, the settings link may show a small **GPC honored** badge next to the label.
 

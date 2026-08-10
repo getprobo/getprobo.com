@@ -81,7 +81,7 @@ This guide walks you through creating a cookie banner in the Probo console and a
    <probo-settings-link>Cookie settings</probo-settings-link>
    ```
 
-   Replace `YOUR_BANNER_ID` and the base URL with the values shown in the console. The settings link lets visitors reopen preferences (under CCPA it shows “Your Privacy Choices” with the official opt-out icon and opens the Privacy Choices panel).
+   Replace `YOUR_BANNER_ID` and the base URL with the values shown in the console. The settings link is not optional: in opt-out jurisdictions — which is most of the world outside Europe — the banner never opens on its own, so this link is the only way a visitor reaches their choices. Under CCPA it shows “Your Privacy Choices” with the official opt-out icon and opens the Privacy Choices panel.
 
    The SDK automatically detects the visitor's language from your page's `<html lang="...">` attribute or the browser's language setting. To force a specific language, add `data-lang`:
 
@@ -118,8 +118,8 @@ This guide walks you through creating a cookie banner in the Probo console and a
 
 Once the banner is live:
 
-- New visitors see the dialog appropriate for their regulation (opt-in, opt-out, or notice) and can accept, reject, customize, or acknowledge as applicable.
+- New visitors see only what their regulation requires. In opt-in jurisdictions the banner opens and blocks non-essential cookies until they choose; in opt-out jurisdictions nothing opens and cookies fire immediately, with the settings link available to opt out. See [Geolocation and regulations](/docs/product/cookie-banner/geolocation) for the full mapping.
 - Consent is stored in a `probo_consent` cookie and recorded server-side for audit purposes.
 - Third-party resources tagged with `data-cookie-consent` load only when the visitor has consented to the matching category.
-- `<probo-settings-link>` in your header or footer lets visitors change their preferences at any time. Under CCPA the banner starts closed and the link shows “Your Privacy Choices” with the official opt-out icon, opening the Privacy Choices panel — see the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#settings-link) docs for details.
+- `<probo-settings-link>` in your header or footer lets visitors change their preferences at any time. Under CCPA the link shows “Your Privacy Choices” with the official opt-out icon, opening the Privacy Choices panel — see the [JavaScript SDK](/docs/product/cookie-banner/javascript-sdk#settings-link) docs for details.
 - When you update categories or banner settings, a new draft version is created. Publish it to push changes to visitors. Existing consent remains valid until it expires or the visitor updates their preferences.

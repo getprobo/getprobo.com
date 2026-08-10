@@ -21,6 +21,8 @@ Draft changes do not alter the configuration already shown to visitors. Publish 
 
 The JavaScript client fetches published configuration from `/api/cookie-banner/v1`, resolves language, regulation, and layout (presentation), reads existing consent, and renders the selected UI. It can block configured scripts, iframes, images, and other resources until their category is allowed.
 
+The client shows the least the visitor's jurisdiction allows. A banner opens on first load only where a law requires a proactive disclosure — opt-in regimes such as the GDPR, plus Mexico's visible-notice rule. Everywhere else nothing opens and the `<probo-settings-link>` you place in your footer carries the visitor's choices, which is why that link is required on every embed.
+
 The package supports a ready-made banner and lower-level web components for custom interfaces. The Consent Manager API exposes current choices and change events to other application code.
 
 ## Privacy and legal responsibility

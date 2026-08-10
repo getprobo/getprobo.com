@@ -69,7 +69,7 @@ The themed banner is a Web Component. Register it once and place the custom elem
 
 </Steps>
 
-The banner handles everything from there — it fetches the configuration, shows the consent dialog when needed, and records consent. Under CCPA the dialog starts closed; the settings link shows “Your Privacy Choices” with the official opt-out icon and opens the Privacy Choices panel.
+The banner handles everything from there — it fetches the configuration, shows the consent dialog when needed, and records consent. In opt-out jurisdictions the dialog never opens on its own and the settings link is the visitor's only route to their choices; under CCPA that link shows “Your Privacy Choices” with the official opt-out icon and opens the Privacy Choices panel.
 
 ### TypeScript
 
@@ -357,7 +357,7 @@ Use `resolveLayout` / `resolveBannerText` from `@probo/cookie-banner/headless` t
 
 ## Settings Link
 
-Place `<probo-settings-link>` in your header or footer. It is required for all embeds — there is no floating settings button.
+Place `<probo-settings-link>` in your header or footer. It is required for all embeds — there is no floating settings button, and in opt-out jurisdictions it is the only banner surface a visitor ever sees.
 
 ```tsx
 export function Footer() {
