@@ -3,7 +3,8 @@ title: React Integration
 description: Integrate the Probo cookie banner into React or Next.js, including a useConsent hook, TypeScript declarations, and App Router or Pages Router setup.
 ---
 
-import { Steps } from "@astrojs/starlight/components";
+import AccordionStep from "../../../../../components/docs/AccordionStep.astro";
+import AccordionSteps from "../../../../../components/docs/AccordionSteps.astro";
 
 This guide shows how to integrate the Probo cookie banner into a React application, build a `useConsent` hook for consent-aware rendering, and handle Next.js-specific requirements.
 
@@ -17,57 +18,59 @@ npm install @probo/cookie-banner
 
 The themed banner is a Web Component. Register it once and place the custom element in your layout.
 
-<Steps>
+<AccordionSteps>
+  <AccordionStep title="Create a CookieBanner component">
 
-1. **Create a `CookieBanner` component**
+```tsx
+// src/components/CookieBanner.tsx
+import { useEffect } from "react";
+import { registerCookieBanner } from "@probo/cookie-banner";
 
-   ```tsx
-   // src/components/CookieBanner.tsx
-   import { useEffect } from "react";
-   import { registerCookieBanner } from "@probo/cookie-banner";
+let registered = false;
 
-   let registered = false;
+export function CookieBanner() {
+  useEffect(() => {
+    if (!registered) {
+      registerCookieBanner();
+      registered = true;
+    }
+  }, []);
 
-   export function CookieBanner() {
-     useEffect(() => {
-       if (!registered) {
-         registerCookieBanner();
-         registered = true;
-       }
-     }, []);
+  return (
+    <probo-cookie-banner
+      banner-id="YOUR_BANNER_ID"
+      base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
+      position="bottom-left"
+    />
+  );
+}
+```
 
-     return (
-       <probo-cookie-banner
-         banner-id="YOUR_BANNER_ID"
-         base-url="https://your-probo-instance.com/api/cookie-banner/v1/"
-         position="bottom-left"
-       />
-     );
-   }
-   ```
+  </AccordionStep>
 
-2. **Add it to your layout with a settings link**
+  <AccordionStep title="Add it to your layout with a settings link">
 
-   Render `<CookieBanner />` once at the root of your application, and place `<probo-settings-link>` in your header or footer so visitors can reopen preferences:
+Render `<CookieBanner />` once at the root of your application, and place `<probo-settings-link>` in your header or footer so visitors can reopen preferences:
 
-   ```tsx
-   // src/App.tsx
-   import { CookieBanner } from "./components/CookieBanner";
+```tsx
+// src/App.tsx
+import { CookieBanner } from "./components/CookieBanner";
 
-   export default function App() {
-     return (
-       <>
-         {/* your app */}
-         <CookieBanner />
-         <footer>
-           <probo-settings-link>Cookie settings</probo-settings-link>
-         </footer>
-       </>
-     );
-   }
-   ```
+export default function App() {
+  return (
+    <>
+      {/* your app */}
+      <CookieBanner />
+      <footer>
+        <probo-settings-link>Cookie settings</probo-settings-link>
+      </footer>
+    </>
+  );
+}
+```
 
-</Steps>
+  </AccordionStep>
+</AccordionSteps>
 
 The banner handles everything from there — it fetches the configuration, shows the consent dialog when needed, and records consent. In opt-out jurisdictions the dialog never opens on its own and the settings link is the visitor's only route to their choices; under CCPA that link shows “Your Privacy Choices” with the official opt-out icon and opens the Privacy Choices panel.
 

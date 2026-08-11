@@ -1,0 +1,148 @@
+---
+interface Props {
+  title: string;
+  open?: boolean;
+}
+
+const { title, open = true } = Astro.props;
+---
+
+<li class="accordion-step">
+  <details open={open}>
+    <summary>
+      <span class="step-number" aria-hidden="true"></span>
+      <span class="step-title">{title}</span>
+      <span class="step-caret" aria-hidden="true"></span>
+    </summary>
+    <div class="step-body">
+      <slot />
+    </div>
+  </details>
+</li>
+
+<style>
+  .accordion-step {
+    margin: 0;
+    border-block-end: 1px solid var(--color-border-low);
+    counter-increment: accordion-step;
+  }
+
+  .accordion-step::before,
+  .accordion-step::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  details {
+    margin: 0;
+    border-inline-start: 0 !important;
+    padding-inline-start: 0 !important;
+  }
+
+  summary {
+    display: grid;
+    position: relative;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 4rem;
+    margin: 0;
+    padding: 0.9rem 0;
+    color: var(--color-primary);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before {
+    display: none !important;
+  }
+
+  .step-number {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    color: var(--color-quaternary);
+    font-size: 1.125rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1.35;
+    transform: translateY(-50%);
+  }
+
+  .step-number::before {
+    content: counter(accordion-step);
+  }
+
+  summary:hover .step-title {
+    color: var(--docs-accent);
+  }
+
+  summary:focus-visible {
+    border-radius: 0.25rem;
+    outline: 2px solid var(--docs-nav-active);
+    outline-offset: 3px;
+  }
+
+  .step-title {
+    padding-inline-start: 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+    transition: color 160ms ease;
+  }
+
+  .step-caret {
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-inline: 0.2rem;
+    border-inline-end: 1.5px solid currentColor;
+    border-block-end: 1.5px solid currentColor;
+    color: var(--color-quaternary);
+    transform: rotate(45deg) translate(-1px, 1px);
+    transition: transform 160ms ease;
+  }
+
+  details[open] .step-caret {
+    transform: rotate(225deg) translate(-1px, 1px);
+  }
+
+  .step-body {
+    padding: 0 0 1.75rem;
+  }
+
+  .step-body :global(> :first-child) {
+    margin-block-start: 0;
+  }
+
+  .step-body :global(> :last-child) {
+    margin-block-end: 0;
+  }
+
+  @media (max-width: 39.999rem) {
+    summary {
+      gap: 0.5rem;
+    }
+
+    .step-number {
+      font-size: 1rem;
+    }
+
+    .step-title {
+      padding-inline-start: 1.75rem;
+      font-size: 1rem;
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .step-caret,
+    .step-title {
+      transition: none;
+    }
+  }
+</style>
