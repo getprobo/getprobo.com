@@ -1,0 +1,36 @@
+---
+title: Rights Requests
+description: Let verified Compliance Portal visitors submit and track privacy rights requests, then process each request in Probo's privacy management workflow.
+---
+
+Rights requests let a signed-in portal visitor submit a privacy request and follow its status from the portal. Requests are scoped to the visitor's verified email address.
+
+## Enable requests
+
+Open the portal's **Overview** tab and turn on **Rights requests**. Turning the feature off removes the requests page from the portal; it does not delete requests already recorded in Probo.
+
+{/* Screenshot: /docs/compliance-portal/rights-requests-toggle.webp — Rights requests toggle in portal status settings */}
+
+## Visitor workflow
+
+A visitor selects **Requests**, opens **Data Requests**, and signs in before submitting a request. The form supports data access, deletion, rectification, processing objection, and abuse-report requests. Probo uses the verified account email as the contact address; the visitor can add a data-subject name and request details.
+
+An unsigned portal NDA does not block this workflow. Rights requests remain available to authenticated visitors so an agreement for compliance documents cannot prevent the exercise of privacy rights.
+
+New portal requests:
+
+- are created in the portal's organization;
+- start in the **To do** state;
+- receive a deadline 30 days after submission;
+- emit a `right-request:created` webhook event;
+- appear in the visitor's personal request list.
+
+The visitor can see the request type, status, submission time, and any response recorded in **Action taken**.
+
+{/* Screenshot: /docs/compliance-portal/rights-request-form.webp — Visitor form for submitting a data rights request */}
+
+## Process requests
+
+Manage submitted requests in Probo's privacy management workflow. Verify identity and scope before disclosing or deleting data, record the work performed, and update the request state and action taken. The initial 30-day deadline can be adjusted in the console when the applicable law or an extension requires it.
+
+For automation, use the [CLI rights-request commands](/docs/developers/cli/commands/rights-request), [n8n Rights Request operations](/docs/developers/api/n8n/resources/rights-request), or the [MCP privacy tools](/docs/developers/api/mcp/tools/catalog/privacy).

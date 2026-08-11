@@ -1,0 +1,96 @@
+---
+title: Branding
+description: Configure the Compliance Portal’s public organization profile, light and dark logos, custom links, default domain, and custom domain.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Use the **Brand** tab to make the portal recognizable and give visitors clear ways to verify your organization or contact the right team.
+
+## Profile
+
+The profile appears at the top of the public portal. Complete it with information that customers and prospects will recognize:
+
+| Field                    | What to enter                                                                                       |
+| ------------------------ | --------------------------------------------------------------------------------------------------- |
+| **Entity name**          | The legal entity or product name your customers know.                                               |
+| **Description**          | What the organization does and what visitors can find in the portal.                                |
+| **Website URL**          | The official organization website, so visitors can confirm the portal belongs to you.               |
+| **Email**                | A monitored address for security, compliance, or privacy questions.                                 |
+| **Headquarters address** | The address customers can use to identify the legal entity behind the portal, when they require it. |
+
+Keep the description short and factual. The portal should help with due diligence, not repeat the content of your marketing website.
+
+## Visual identity
+
+Upload your primary logo and, if needed, a separate version for dark mode. The logos appear throughout the public portal and help visitors recognize that it is an official resource.
+
+Use square images with transparent backgrounds and enough contrast for their intended display mode. Probo accepts PNG, JPEG, SVG, and WebP images up to 5 MB. You can replace or remove either logo independently.
+
+{/* Screenshot placeholder: Profile and visual identity settings — /docs/compliance-portal/brand-settings.webp */}
+
+## Custom links
+
+Custom links connect the portal to useful resources that do not belong in its document library. They appear after your contact details at the top of the portal and open in a new tab.
+
+Common examples include:
+
+- Service status and incident history
+- Security contact or vulnerability disclosure
+- Privacy notice and data-processing information
+- Corporate website or support center
+- LinkedIn, X, or Facebook profile
+
+Use a short, descriptive label such as **Service status** instead of a raw hostname. Probo displays a matching icon for supported social networks and a web icon for other links.
+
+<Steps>
+
+1. Open **Brand** and find **Custom links**.
+2. Select **Add link**.
+3. Enter the visitor-facing name and complete `https://` URL.
+4. Save the link, then drag links into the order you want visitors to see.
+5. Open the public portal and test every link.
+
+</Steps>
+
+Do not use custom links for confidential documents. Add those to the portal as restricted content so access requests, approvals, and NDA controls still apply.
+
+## Domains
+
+Every portal receives a Probo-managed domain based on its hosting region:
+
+- **United States:** `<portal-slug>.us.probopages.com`
+- **European Union:** `<portal-slug>.eu.probopages.com`
+
+Probo obtains and renews TLS certificates for the managed domain automatically, so no DNS configuration is required. Certificates may be issued by Google Trust Services or Let’s Encrypt. After your custom domain becomes active, the managed `probopages.com` address redirects visitors to it.
+
+### Connect a custom domain
+
+<Steps>
+
+1. In the **Domains** section, select **Configure**.
+2. Enter the hostname you want to use, such as `compliance.example.com`.
+3. Create the DNS records shown by Probo. Copy the record type, name, value, and TTL exactly.
+4. Wait for the domain and TLS certificate status to become active.
+5. Open the portal from the custom hostname and verify that it loads over HTTPS. Then open the managed address and confirm that it redirects to the custom hostname.
+
+</Steps>
+
+{/* Screenshot placeholder: Custom domain DNS instructions — /docs/compliance-portal/custom-domain-dns.webp */}
+
+DNS propagation and certificate provisioning can take time. Keep the records in place after activation so the domain can continue to resolve and its certificate can renew.
+
+### Troubleshoot certificate provisioning
+
+If the custom domain remains pending or reports a provisioning error, first confirm that its CNAME record exactly matches the value shown by Probo and is visible through public DNS.
+
+Then check for Certificate Authority Authorization (CAA) records. Probo uses both **Google Trust Services** and **Let’s Encrypt** for managed and custom-domain certificates. If your domain has a restrictive CAA policy, it must authorize both issuers:
+
+```dns
+example.com. CAA 0 issue "letsencrypt.org"
+example.com. CAA 0 issue "pki.goog"
+```
+
+A CAA record on `example.com` also applies to `compliance.example.com` unless the subdomain defines its own policy. Existing authorizations for other certificate authorities can remain.
+
+If no CAA records exist, you do not need to create them. If records do exist and exclude the certificate authority selected by Probo, certificate issuance and renewal fail. Correct the records, wait for their DNS TTL to expire, and check the domain status again.

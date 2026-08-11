@@ -1,0 +1,50 @@
+---
+title: Publish subprocessors
+description: Prepare third-party records, publish selected vendors as subprocessors, and keep the Compliance Portal’s public vendor catalog current.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+The Compliance Portal can publish selected vendors from your organization’s third-party inventory. Use this catalog to tell visitors which external organizations process or host data for your service.
+
+## Prepare the inventory
+
+Create and maintain third-party records under [Third-party management](/docs/product/third-party-management) before publishing them. The portal uses the source record’s:
+
+- Name
+- Category
+- Description
+- Website URL
+- Countries
+
+Only top-level third parties are available in the portal picker. Complete the public-facing fields before adding a record.
+
+## Add a subprocessor
+
+<Steps>
+
+1. Open **Compliance Portals** and select the portal.
+2. Open the **Subprocessors** tab.
+3. Select **Add subprocessor**.
+4. Choose an available third party.
+5. Confirm the addition.
+
+</Steps>
+
+The subprocessor appears on the public portal immediately when the portal is active. There is no restricted visibility option for this catalog.
+
+{/* Screenshot placeholder: Subprocessor publishing tab — /docs/compliance-portal/subprocessors-settings.webp */}
+
+## Visitor experience
+
+Visitors can search the catalog and filter it by category and country. Entries are grouped by category and show the vendor name, description, website-derived logo, and listed countries.
+
+{/* Screenshot placeholder: Public subprocessor catalog — /docs/compliance-portal/subprocessors-catalog.webp */}
+
+## Update or remove an entry
+
+Edit the underlying third-party record to correct its public details. Remove the entry from the **Subprocessors** tab when it should no longer be disclosed on this portal.
+
+Removing a subprocessor from the portal removes only the portal association; it does not delete the source third-party record.
+
+Review the published list whenever your vendor inventory or data-processing relationships change.

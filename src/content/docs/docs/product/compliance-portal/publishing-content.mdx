@@ -1,0 +1,117 @@
+---
+title: Publishing content
+description: Choose the right Compliance Portal content type, publish approved frameworks and resources, and control what visitors can open or request access to.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Your Compliance Portal is a curated view of your organization’s compliance program. Creating or updating a record elsewhere in Probo does not automatically expose it: you choose what appears on each portal.
+
+This guide covers frameworks, references, documents, audits, and files. [Commitments](/docs/product/compliance-portal/commitments) and [subprocessors](/docs/product/compliance-portal/subprocessors) have dedicated publishing guides.
+
+## Choose the right content type
+
+Use the source that best represents the information you want to share:
+
+- **Frameworks** highlight standards and regulations in your compliance program. They do not include evidence or an audit report.
+- **References** display approved customer or partner logos as trust signals.
+- **Commitments** explain your security and privacy practices in your own words. See [Commitments](/docs/product/compliance-portal/commitments).
+- **Documents** publish the latest approved version of content managed in Probo, such as policies and procedures.
+- **Audits** share an audit entry and its report.
+- **Files** publish standalone material that is not maintained in document management, such as a security brief or completed questionnaire.
+
+Prefer **Documents** for material that requires versioning and approval in Probo. Use **Files** for supplemental material that only needs to be uploaded and shared through the portal.
+
+## Understand visibility
+
+Documents, audits, and files can require different levels of access:
+
+- **Public** — anyone who visits the portal can open the resource.
+- **Restricted** — the resource is listed, but a visitor must sign in, request access, and receive approval before opening it.
+- **Not published** — the resource does not appear to visitors. This option is available for portal files.
+
+Documents and audits have a separate **Displayed** control. Selecting it adds the resource to the portal as **Restricted** by default. Clearing it removes the resource from that portal without deleting the source document or audit from Probo.
+
+Frameworks, references, and commitments are public when you add them to a portal; they do not have a Restricted setting.
+
+{/* Screenshot placeholder: Portal content and visibility controls — /docs/compliance-portal/publishing-content.webp */}
+
+## Publish frameworks
+
+Frameworks give visitors a quick view of your compliance coverage.
+
+<Steps>
+
+1. Open the portal’s **Overview** tab.
+2. Under **Compliance frameworks**, select each framework you want to display.
+3. Select a highlighted framework again to remove it from the portal.
+
+</Steps>
+
+Only use a framework card to communicate scope at a high level. Publish a certification, attestation, or other supporting evidence as a document or audit report, with the appropriate visibility.
+
+## Add references
+
+References can showcase customers, partners, or other organizations that support your credibility.
+
+1. Open **References** and select **Add reference**.
+2. Enter the organization’s name and website URL.
+3. Upload its logo and add an optional description.
+4. Save the reference.
+5. Drag references into the order in which they should appear.
+
+Obtain permission before publishing another organization’s name, logo, or endorsement. Removing a reference from one portal does not affect references on another portal.
+
+## Publish managed documents
+
+The **Documents** tab lists active documents that have at least one published version. Draft-only, inactive, or archived documents are not available to add.
+
+For each document you want to share:
+
+1. Confirm the correct version is published in [Document Management](/docs/product/document-management).
+2. Open the portal’s **Documents** tab.
+3. Select **Displayed** next to the document. It is added as **Restricted**.
+4. Keep **Restricted** or change the visibility to **Public**.
+5. Use the public portal to verify the title, document type, and access behavior.
+
+The portal follows the document’s latest published version. Publishing a newer version therefore changes what portal visitors receive; it does not require you to add the document again. Complete approval and redaction before publishing a replacement version.
+
+If a document does not appear in the list, check that it is active and has a published version.
+
+## Publish audits and reports
+
+The **Audits** tab lists audits from the organization, including their framework, name, validity date, and state.
+
+1. Locate the audit you want to share.
+2. Review its state, validity date, scope, and attached report.
+3. Select **Displayed**. The audit is added as **Restricted**.
+4. Keep **Restricted** or change the visibility to **Public**.
+5. Verify the audit entry and report from the public portal.
+
+Do not make a report public solely because the audit is complete. Reports can contain findings, testing details, customer names, or scope information intended only for qualified recipients.
+
+## Upload standalone files
+
+Use **Files** when the content is not managed as a versioned Probo document.
+
+1. Open **Files** and select **Add file**.
+2. Upload one supported document, spreadsheet, presentation, text, image, or data file. The maximum file size is 10 MB.
+3. Enter the visitor-facing name and category.
+4. Choose **Not published**, **Restricted**, or **Public**.
+5. Select **Add file**, then verify it from the portal.
+
+Choose **Not published** to stage a file before release. You can later change its visibility without uploading it again. To replace the underlying file, delete the existing portal file and upload the replacement.
+
+## Review before release
+
+Before making content available:
+
+- Open every document and file; do not rely on its filename or title.
+- Remove secrets, personal data, internal comments, hidden spreadsheet tabs, and unsupported claims.
+- Confirm that links, validity dates, and published versions are current.
+- Check that you have permission to publish third-party names, logos, and reports.
+- Use **Restricted** when a requester’s identity or business need should be reviewed.
+- Test public resources while signed out.
+- Test restricted resources with a visitor account, including the request and approval flow.
+
+For access approvals, revocation, and NDA requirements, see [Visitor access and NDA](/docs/product/compliance-portal/visitor-access-and-nda).

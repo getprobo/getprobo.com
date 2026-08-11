@@ -223,6 +223,56 @@ export const docsSidebarGroups = [
         label: "Overview",
         slug: "docs/product/compliance-portal",
       },
+      {
+        label: "Quickstart",
+        slug: "docs/product/compliance-portal/quickstart",
+      },
+      {
+        label: "Branding",
+        slug: "docs/product/compliance-portal/branding-and-domains",
+      },
+      {
+        label: "Content management",
+        collapsed: true,
+        items: [
+          {
+            label: "Publishing content",
+            slug: "docs/product/compliance-portal/publishing-content",
+          },
+          {
+            label: "Commitments",
+            slug: "docs/product/compliance-portal/commitments",
+          },
+          {
+            label: "Subprocessors",
+            slug: "docs/product/compliance-portal/subprocessors",
+          },
+          {
+            label: "Updates and mailing list",
+            slug: "docs/product/compliance-portal/updates-and-mailing-list",
+          },
+        ],
+      },
+      {
+        label: "Visitor access and NDA",
+        slug: "docs/product/compliance-portal/visitor-access-and-nda",
+      },
+      {
+        label: "Rights requests",
+        slug: "docs/product/compliance-portal/rights-requests",
+      },
+      {
+        label: "Multiple portals",
+        slug: "docs/product/compliance-portal/multiple-portals",
+      },
+      {
+        label: "SEO and discoverability",
+        slug: "docs/product/compliance-portal/seo-and-discoverability",
+      },
+      {
+        label: "Permissions and integrations",
+        slug: "docs/product/compliance-portal/permissions-and-integrations",
+      },
     ],
   },
   {

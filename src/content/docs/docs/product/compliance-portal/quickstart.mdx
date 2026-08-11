@@ -1,0 +1,60 @@
+---
+title: Compliance Portal quickstart
+description: Create a Compliance Portal, complete its public profile, add approved content, review access controls, preview it, and activate it.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+This guide takes you from an empty organization to an active Compliance Portal.
+
+## Prerequisites
+
+- Access to an organization in the Probo console
+- Permission to create and update Compliance Portals
+- Approved content to publish
+
+## Create and launch a portal
+
+<Steps>
+
+1. **Create the portal**
+
+   Open **Compliance Portals** in the organization sidebar and select **Create Compliance Portal**. Enter the legal or customer-facing entity name, then create the portal.
+
+   Creating a portal assigns it a public URL and opens its configuration page. The portal remains inactive until you enable it.
+
+   {/* Screenshot placeholder: Create Compliance Portal form — /docs/compliance-portal/create-portal.webp */}
+
+2. **Complete the public profile**
+
+   Open the **Brand** tab. Add a description, website URL, contact email, and headquarters address. Upload separate logos for light and dark backgrounds if needed.
+
+3. **Add public content**
+
+   Use the **References**, **Commitments**, **Audits**, **Documents**, **Files**, and **Subprocessors** tabs to choose what the portal presents. Adding an internal record to the portal is a separate action; records are not published automatically.
+
+   See [Publishing content](/docs/product/compliance-portal/publishing-content) for the available content types and visibility settings.
+
+4. **Review access controls**
+
+   On the **Overview** tab, upload an NDA if visitors must accept one. For each document, audit report, or portal file, confirm whether its visibility should be **Public** or **Restricted**.
+
+5. **Review the configuration**
+
+   Check the profile, links, content labels, visibility settings, and public URL. Inactive portals return a not-found response to visitors, so activate the portal before testing the public experience.
+
+6. **Activate and verify the portal**
+
+   Return to **Overview** and enable **Activate compliance portal**. Once active, use **Open** in the page header to visit the portal. Verify it while signed out and, if you publish restricted content, with a visitor account.
+
+   Search engine indexing can be enabled only while the portal is active. Leave it disabled if the portal should not be included in search engine indexes.
+
+   {/* Screenshot placeholder: Portal status settings — /docs/compliance-portal/portal-status.webp */}
+
+</Steps>
+
+## Next steps
+
+- [Customize branding and domains](/docs/product/compliance-portal/branding-and-domains)
+- [Configure visitor access and an NDA](/docs/product/compliance-portal/visitor-access-and-nda)
+- [Publish subprocessors](/docs/product/compliance-portal/subprocessors)

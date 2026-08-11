@@ -1,0 +1,42 @@
+---
+title: Permissions and Integrations
+description: Control who can read and manage Compliance Portals, connect access notifications to Slack, and automate portal workflows through OAuth, CLI, MCP, or n8n.
+---
+
+Compliance Portal administration follows the person's organization role and the organization boundary.
+
+## Console permissions
+
+- **Owners and admins** have full Compliance Portal management access for their organization. They can create, update, activate, and delete portals; manage published content and access; send updates; and configure custom domains.
+- **Viewers** have read-only access to portal settings, visitor access, files, references, commitments, frameworks, custom links, and domains.
+- Managed domains cannot be deleted through the custom-domain delete permission.
+- Auditor and employee roles do not receive the Compliance Portal management policies.
+
+Use the least-privileged role that fits the person's work. See [Roles and permissions](/docs/product/roles-and-permissions) for organization-wide role guidance.
+
+{/* Screenshot: /docs/compliance-portal/portal-permissions.webp — Read-only Compliance Portal view for a Viewer */}
+
+## Slack
+
+The portal overview can connect a Slack workspace and select a channel for Compliance Portal access-request notifications. Connecting or changing the channel requires permission to initiate connectors. A connection without a selected channel is shown as not configured.
+
+{/* Screenshot: /docs/compliance-portal/slack-integration.webp — Configured Slack channel in the portal overview */}
+
+## API and automation access
+
+OAuth clients can request one of two Compliance Portal scopes:
+
+- `v1:compliance-page:read` grants portal read operations, including lists of access records, files, references, mailing-list updates and subscribers, frameworks, links, domains, and commitments.
+- `v1:compliance-page` adds create, update, delete, access-management, mailing-list, domain, and publishing operations.
+
+The caller must still be authorized for the target organization. Keep credentials out of workflows and grant write access only where an automation must change portal state.
+
+Use the supported interface for the job:
+
+- [CLI Compliance Portal reference](/docs/developers/cli/commands/compliance-portal) for scripts and operator workflows;
+- [MCP Compliance Portal tools](/docs/developers/api/mcp/tools/catalog/compliance-portal) for supported AI clients;
+- [n8n Compliance Portal operations](/docs/developers/api/n8n/resources/compliance-portal) for workflow automation.
+
+Rights-request automation is documented separately in the [CLI](/docs/developers/cli/commands/rights-request), [MCP privacy catalog](/docs/developers/api/mcp/tools/catalog/privacy), and [n8n](/docs/developers/api/n8n/resources/rights-request) references.
+
+To notify another system when a portal visitor creates or changes a rights request, subscribe to the corresponding [webhook events](/docs/developers/api/webhooks/event-types#rights-request).

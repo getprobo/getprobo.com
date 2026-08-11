@@ -1,0 +1,50 @@
+---
+title: Multiple Portals
+description: Create and operate separate Compliance Portals for legal entities, brands, products, regions, or audiences while keeping every publishing surface distinct.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+An organization can have multiple Compliance Portals. Each portal is an independent publishing surface with its own URL, activation state, brand profile, domains, content selection, visitor access, mailing list, and feature settings.
+
+## When to use separate portals
+
+Create another portal when you need a distinct public experience for:
+
+- separate legal entities or brands;
+- products with different certifications or subprocessors;
+- regional audiences;
+- different sets of public and restricted material.
+
+Do not use portals as a replacement for Probo organizations when teams require separate memberships, permission boundaries, or compliance records. Portals under the same organization draw from that organization's records.
+
+## Create a portal
+
+<Steps>
+
+1. Open **Compliance Portals** in the organization.
+2. Select **Create compliance portal**.
+3. Enter the entity name shown to visitors.
+4. Configure the portal before activating it.
+
+</Steps>
+
+A new portal starts inactive and not indexable. Probo assigns a unique slug and, when a managed base domain is configured, provisions a portal-specific managed domain.
+
+{/* Screenshot: /docs/compliance-portal/multiple-portals.webp — Compliance Portals overview showing more than one portal */}
+
+## Keep portals distinct
+
+Review these settings separately for every portal:
+
+- entity profile, logos, and contact details;
+- frameworks, documents, audits, files, and subprocessors;
+- public versus restricted visibility;
+- NDA and visitor access decisions;
+- custom domain and search indexing;
+- mailing-list subscribers and updates;
+- rights-request availability.
+
+Deleting a portal removes its portal configuration, portal files, domains, certificate association, and mailing list. It does not serve as a way to delete the organization's source compliance records.
+
+You can also create and list portals with the [CLI Compliance Portal commands](/docs/developers/cli/commands/compliance-portal), [n8n Compliance Portal operations](/docs/developers/api/n8n/resources/compliance-portal), or [MCP Compliance Portal tools](/docs/developers/api/mcp/tools/catalog/compliance-portal).

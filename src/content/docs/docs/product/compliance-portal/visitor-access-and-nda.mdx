@@ -1,0 +1,165 @@
+---
+title: Visitor access and NDA
+description: Protect sensitive Compliance Portal resources, understand the visitor request journey, require an NDA, and review or revoke access from the Probo console.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Access control applies to individual documents, audit reports, and portal files. This lets visitors browse public information while protecting resources that require identity verification, approval, or an NDA.
+
+## Choose what requires approval
+
+Set the visibility of each resource before activating or promoting the portal:
+
+- **Public** — any visitor can open the resource without signing in.
+- **Restricted** — visitors can see the resource in the catalog, but they must sign in, request access, and receive approval before opening it.
+- **Not published** — the resource does not appear in the visitor catalog. This option is available for portal files.
+
+Visibility and visitor grants solve different problems. Visibility determines the default access policy for everyone; a grant allows one visitor to open one restricted resource.
+
+See [Publishing content](/docs/product/compliance-portal/publishing-content) to configure resource visibility.
+
+{/* Screenshot placeholder: Public document catalog — /docs/compliance-portal/portal-documents.webp */}
+
+## How a visitor requests access
+
+Restricted resources remain discoverable so customers can request exactly what they need.
+
+<Steps>
+
+1. **Find restricted content**
+
+   The visitor opens **Documents** and can filter the catalog by public or restricted content. A restricted resource shows **Request Access** instead of **View**.
+
+   {/* Screenshot placeholder: Restricted document prompt — /docs/compliance-portal/restricted-document.webp */}
+
+2. **Sign in and identify themselves**
+
+   When required, Probo asks the visitor to sign in and complete their profile before submitting the request.
+
+3. **Review and sign the NDA**
+
+   If the portal has an NDA, the visitor must complete the signing flow before the restricted-resource request can proceed. Public content remains available without an NDA.
+
+4. **Submit the request**
+
+   The visitor can request one resource or select multiple restricted documents, audit reports, and files and request them together.
+
+   {/* Screenshot placeholder: Bulk access request — /docs/compliance-portal/bulk-access-request.webp */}
+
+5. **Wait for a decision**
+
+   The resource shows **Access requested** while the request is pending. A pending request does not grant access.
+
+6. **Open approved resources**
+
+   After approval, **View** replaces the request action. The grant applies only to the approved visitor and resources.
+
+</Steps>
+
+## Configure an NDA
+
+Use an NDA when visitors must accept confidentiality terms before requesting restricted resources.
+
+Before uploading an agreement:
+
+- Complete legal review outside Probo.
+- Confirm that the agreement identifies the correct legal entity.
+- Remove signature fields that conflict with the portal’s electronic-signature flow.
+- Export the final agreement as a PDF no larger than 10 MB.
+
+To configure it:
+
+<Steps>
+
+1. Open the portal’s **Overview** tab.
+2. Find **Non-disclosure agreement** and select **Upload NDA**.
+3. Choose the reviewed PDF and upload it.
+4. Open the public portal with a test visitor account.
+5. Request a restricted resource and complete the signing flow.
+
+</Steps>
+
+{/* Screenshot placeholder: NDA upload section — /docs/compliance-portal/nda-settings.webp */}
+
+Replacing the PDF changes the agreement presented in future signing flows. Treat replacement as a controlled legal change: review the new version, record its effective date, and verify the visitor experience again.
+
+An NDA controls the terms under which content is shared. It does not make unsuitable material safe to publish and does not replace per-resource approval.
+
+## The NDA signing experience
+
+When an NDA is required, the visitor:
+
+<Steps>
+
+1. Opens the agreement in the portal’s PDF viewer.
+2. Reviews the consent text and agreement.
+3. Selects **Sign** to provide electronic consent.
+4. Waits while Probo seals the signature.
+5. Returns to the resource or request flow they started.
+
+</Steps>
+
+Probo records the signature status, completion time, certificate, and signing events. If signing is incomplete, the portal displays a reminder to the visitor.
+
+{/* Screenshot placeholder: Visitor NDA signing flow — /docs/compliance-portal/nda-signing.webp */}
+
+## Review access requests
+
+Open the portal’s **Access** tab. Each row shows:
+
+- Visitor name and email address
+- Date the visitor profile was created
+- Number of active grants
+- Number of pending requests
+- NDA signature status
+
+Select an active visitor to review their documents, audit reports, and portal files. Check the resource name, type, and category before making a decision.
+
+For each resource:
+
+- **Requested** means no decision has been saved yet.
+- **Granted** allows that visitor to open the restricted resource.
+- **Rejected** declines a pending request.
+- **Revoked** removes a grant that the visitor previously held.
+
+Select **Grant** or **Reject** for individual resources. Use **Grant all** or **Reject or revoke all** only when the same decision is appropriate for every listed resource. Review the resulting statuses, then save the update.
+
+{/* Screenshot placeholder: Visitor access review dialog — /docs/compliance-portal/access-review.webp */}
+
+## Review the NDA record
+
+When a visitor has started or completed the NDA flow, their access details include an electronic-signature record. Use it to review:
+
+- Current signature status
+- Signing completion date
+- Downloadable signature certificate
+- Recorded activity and event timestamps
+
+The signature record supports auditability, but it does not determine which resources the visitor should receive. Make the access decision separately.
+
+## Revoke access
+
+Revoke a grant when the visitor no longer has a valid business need, their engagement ends, or the resource should no longer be shared with them.
+
+<Steps>
+
+1. Open **Access** and select the visitor.
+2. Find each currently granted resource.
+3. Select **Revoke**, or use **Reject or revoke all** when appropriate.
+4. Review the changes and save.
+5. Confirm that the active-grant count has been updated.
+
+</Steps>
+
+Revocation removes the visitor’s portal access to the resource. It cannot recall copies they previously downloaded.
+
+## Access-review practices
+
+- Grant only the resources needed by the requester.
+- Verify the requester’s organization, identity, and business need when the email address alone is insufficient.
+- Check the request against the resource’s intended audience and owner approval.
+- Investigate unexpected bulk requests instead of approving them by default.
+- Review active grants periodically and revoke access that is no longer required.
+- Review the NDA signature status, but do not treat a signature as automatic authorization.
+- Keep sensitive information out of the portal when it should not be distributed, even under NDA.

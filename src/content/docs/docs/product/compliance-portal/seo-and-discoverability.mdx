@@ -1,0 +1,134 @@
+---
+title: SEO and Discoverability
+description: Prepare your Compliance Portal for discovery, control crawler access, understand its generated metadata and machine-readable files, and troubleshoot indexing.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+A Compliance Portal starts inactive with search-engine indexing disabled. Activate and review the portal before inviting crawlers to discover it.
+
+## Understand activation and indexing
+
+Activation and indexing are separate controls:
+
+- An **inactive portal** is not available to visitors or crawlers.
+- An **active portal with indexing disabled** is available to anyone who knows its URL, but its `robots.txt` asks compliant crawlers not to crawl it.
+- An **active portal with indexing enabled** allows crawling and advertises its generated sitemap.
+
+The indexing setting is unavailable until the portal is active.
+
+Search-engine directives are not access controls. They are instructions that well-behaved crawlers may follow. Use [restricted visibility and visitor access controls](/docs/product/compliance-portal/visitor-access-and-nda) to protect content.
+
+## Prepare the portal
+
+Search engines use the portal’s public profile and content to understand the page. Before enabling indexing:
+
+- Use the organization or product name customers will search for.
+- Write a concise description that explains what the organization does and what the portal contains.
+- Add the official website URL and a monitored contact email.
+- Upload a recognizable logo.
+- Publish current frameworks, documents, audits, and subprocessors.
+- Remove placeholder, duplicate, expired, or test content.
+- Configure and verify an organization-owned [custom domain](/docs/product/compliance-portal/branding-and-domains#connect-a-custom-domain) when appropriate.
+- Review the complete portal while signed out.
+
+Restricted resources are visible in the catalog by name even though their contents are protected. Do not use a sensitive customer name, project name, incident reference, or other confidential detail in a restricted resource title.
+
+## Enable indexing
+
+<Steps>
+
+1. Open the portal’s **Overview** tab.
+2. Enable **Activate compliance portal**.
+3. Use **Open** in the page header to review the public portal.
+4. Return to **Overview** and enable **Search engine indexing**.
+5. Verify the generated crawler files on the active portal hostname.
+
+</Steps>
+
+{/* Screenshot: /docs/compliance-portal/search-engine-indexing.webp — Active portal with search engine indexing enabled */}
+
+Enabling indexing does not guarantee inclusion or ranking. Each search engine decides whether and when to crawl and index a page.
+
+## Verify crawler directives
+
+Open these URLs on the portal hostname:
+
+- `https://<portal-domain>/robots.txt`
+- `https://<portal-domain>/sitemap.xml`
+
+When indexing is enabled, `robots.txt` allows crawling and points to `sitemap.xml`. When indexing is disabled, it contains a site-wide `Disallow` directive.
+
+The sitemap includes the main overview, documents, subprocessors, and updates pages, plus detail URLs for public documents, portal files, and audit reports. Restricted resources are not added as detail URLs.
+
+After publishing or removing content, check the sitemap again to confirm that it reflects the intended public resources.
+
+## Generated search metadata
+
+Probo generates metadata for every portal page:
+
+- The page title uses the portal’s entity name.
+- The meta description uses the portal description, with the generated page title as a fallback.
+- A self-referencing canonical URL uses the current managed or custom portal hostname.
+- Language alternates identify every supported translation, with English as the default.
+- The portal logo is used as the favicon when available; otherwise Probo’s favicon is used.
+
+After changing the entity name, description, logo, or domain, allow search engines time to recrawl the portal before expecting search results to update.
+
+## Custom domains and canonical URLs
+
+Use one stable hostname when promoting the portal. After a custom domain becomes active, the managed `probopages.com` address redirects to it, and generated canonical URLs use the custom hostname requested by visitors.
+
+Before enabling indexing on a new custom domain:
+
+<Steps>
+
+1. Confirm that the domain is active and loads over HTTPS.
+2. Open several public portal pages from the custom hostname.
+3. Verify that the managed hostname redirects to the custom hostname.
+4. Check `robots.txt` and `sitemap.xml` on the custom hostname.
+
+</Steps>
+
+If the portal was already indexed on another hostname, search results can take time to consolidate around the redirected custom domain.
+
+## Machine-readable portal summary
+
+Each active portal serves:
+
+```text
+https://<portal-domain>/llms.txt
+```
+
+This Markdown document summarizes the organization and its published compliance information for machine-readable clients. It can include the public profile, frameworks, public documents and audits, subprocessors, references, and custom links.
+
+Restricted document and audit contents are excluded. The file remains reachable on an active portal even when search-engine indexing is disabled; `robots.txt` controls whether compliant crawlers are invited to fetch it.
+
+Treat `llms.txt` as another public representation of the portal. Review it after changing visibility or public profile information.
+
+## Troubleshoot indexing
+
+### The portal does not appear in search results
+
+- Confirm that the portal is active and **Search engine indexing** is enabled.
+- Open `robots.txt` and verify that it allows crawling.
+- Open `sitemap.xml` and confirm that the expected public URLs are present.
+- Verify that the portal and its public resources return successfully over HTTPS.
+- Allow time for the search engine to discover and recrawl the site.
+- For a custom domain, use the search engine’s webmaster tools to inspect or submit the sitemap when needed.
+
+### Search results show old text or branding
+
+Confirm that the entity name, description, and logo are correct in **Brand**. Search engines cache metadata, so updates are not immediate even when the live portal is correct.
+
+### Search results use the old domain
+
+Confirm that the custom domain is active and the managed hostname redirects to it. Check that canonical URLs and the sitemap use the custom hostname, then allow time for recrawling.
+
+### A restricted resource name appears publicly
+
+Restricted visibility protects the resource contents, not its catalog entry. Rename the resource to remove sensitive information, or remove it from the portal entirely.
+
+### You disabled indexing but results remain
+
+Disabling indexing updates `robots.txt`, but it does not immediately remove URLs already known to a search engine. Removal timing is controlled by the search engine. Use its temporary-removal tools if a result must be hidden quickly, and remove or restrict the underlying content rather than relying on crawler directives.
