@@ -1,5 +1,6 @@
 <script lang="ts">
-  import lottie, { type AnimationItem } from "lottie-web";
+  import type { AnimationItem } from "lottie-web";
+  import lottie from "lottie-web/build/player/lottie_light";
   import { onDestroy, onMount } from "svelte";
   import { useIntersectionObserver } from "../lib/runes/useIntersectionObserver.svelte.ts";
 
