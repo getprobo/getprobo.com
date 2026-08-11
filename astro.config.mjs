@@ -83,6 +83,7 @@ export default defineConfig({
       },
       disable404Route: true,
       title: "Probo Documentation",
+      favicon: "/favicon-192.png",
       logo: {
         replacesTitle: true,
         src: "./src/assets/probo-logo.svg",
