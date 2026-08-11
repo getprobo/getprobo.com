@@ -3,8 +3,9 @@ title: Self-Hosted Quickstart
 description: Deploy a local Probo evaluation environment with Docker Compose in about 15 minutes, then import your first compliance framework.
 ---
 
-import { Steps } from "@astrojs/starlight/components";
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import AccordionStep from "../../../../../components/docs/AccordionStep.astro";
+import AccordionSteps from "../../../../../components/docs/AccordionSteps.astro";
 
 This guide walks you through deploying Probo locally with Docker Compose and setting up your first compliance framework. You should be up and running in about 15 minutes.
 
@@ -21,67 +22,79 @@ This quickstart creates a local evaluation environment at `http://localhost:8080
 
 ## Deploy Probo
 
-<Steps>
+<AccordionSteps>
+  <AccordionStep title="Clone the repository" open>
 
-1. **Clone the repository**
+```bash
+git clone https://github.com/getprobo/probo.git
+cd probo
+```
 
-   ```bash
-   git clone https://github.com/getprobo/probo.git
-   cd probo
-   ```
+  </AccordionStep>
 
-2. **Create the local environment**
+  <AccordionStep title="Create the local environment">
 
-   Generate the required secrets and application settings:
+Generate the required secrets and application settings:
 
-   ```bash
-   cat > .env <<EOF
-   PROBOD_ENCRYPTION_KEY=$(openssl rand -base64 32)
-   PROBOD_AUTH_COOKIE_SECRET=$(openssl rand -base64 32)
-   PROBOD_AUTH_PASSWORD_PEPPER=$(openssl rand -base64 32)
-   PROBOD_TRUST_AUTH_TOKEN_SECRET=$(openssl rand -base64 32)
-   PROBOD_BASE_URL=http://localhost:8080
-   PROBOD_API_ADDR=0.0.0.0:8080
-   PROBOD_API_CORS_ALLOWED_ORIGINS=http://localhost:8080
-   EOF
-   ```
+```bash
+cat > .env <<EOF
+PROBOD_ENCRYPTION_KEY=$(openssl rand -base64 32)
+PROBOD_AUTH_COOKIE_SECRET=$(openssl rand -base64 32)
+PROBOD_AUTH_PASSWORD_PEPPER=$(openssl rand -base64 32)
+PROBOD_TRUST_AUTH_TOKEN_SECRET=$(openssl rand -base64 32)
+PROBOD_BASE_URL=http://localhost:8080
+PROBOD_API_ADDR=0.0.0.0:8080
+PROBOD_API_CORS_ALLOWED_ORIGINS=http://localhost:8080
+EOF
+```
 
-   Keep `.env` private. These values protect encrypted data and authentication sessions.
+Keep `.env` private. These values protect encrypted data and authentication sessions.
 
-3. **Start the services**
+  </AccordionStep>
 
-   ```bash
-   docker compose -f compose.prod.yaml up -d
-   ```
+  <AccordionStep title="Start the services">
 
-   This starts the Probo server, PostgreSQL, SeaweedFS, and the headless browser used for document generation.
+```bash
+docker compose -f compose.prod.yaml up -d
+```
 
-4. **Verify the deployment**
+This starts the Probo server, PostgreSQL, SeaweedFS, and the headless browser used for document generation.
 
-   ```bash
-   curl --fail http://localhost:8080/healthz
-   docker compose -f compose.prod.yaml ps
-   ```
+  </AccordionStep>
 
-   The health request should succeed and each service should report a running or healthy state. If it does not, inspect the application logs:
+  <AccordionStep title="Verify the deployment">
 
-   ```bash
-   docker compose -f compose.prod.yaml logs probo
-   ```
+```bash
+curl --fail http://localhost:8080/healthz
+docker compose -f compose.prod.yaml ps
+```
 
-5. **Access the web interface**
+The health request should succeed and each service should report a running or healthy state. If it does not, inspect the application logs:
 
-   Open [http://localhost:8080](http://localhost:8080) in your browser. Create your account and log in.
+```bash
+docker compose -f compose.prod.yaml logs probo
+```
 
-6. **Create your organization**
+  </AccordionStep>
 
-   After logging in, create your first organization. This is the top-level entity that contains all your compliance data.
+  <AccordionStep title="Access the web interface">
 
-7. **Import a compliance framework**
+Open [http://localhost:8080](http://localhost:8080) in your browser. Create your account and log in.
 
-   Navigate to the frameworks section and import the framework relevant to your business — for example, SOC 2 or ISO 27001. This gives you a set of controls to work with.
+  </AccordionStep>
 
-</Steps>
+  <AccordionStep title="Create your organization">
+
+After logging in, create your first organization. This is the top-level entity that contains all your compliance data.
+
+  </AccordionStep>
+
+  <AccordionStep title="Import a compliance framework">
+
+Navigate to the frameworks section and import the framework relevant to your business — for example, SOC 2 or ISO 27001. This gives you a set of controls to work with.
+
+  </AccordionStep>
+</AccordionSteps>
 
 ## Next Steps
 
