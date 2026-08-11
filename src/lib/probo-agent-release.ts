@@ -1,5 +1,5 @@
-const RELEASES_URL =
-  "https://api.github.com/repos/getprobo/probo/releases?per_page=30";
+const RELEASES_URL = "https://api.github.com/repos/getprobo/probo/releases";
+const RELEASES_PER_PAGE = 100;
 const AGENT_TAG_PREFIX = /^probo-agent\/v/;
 
 export type AgentOs = "macos" | "linux" | "windows" | "freebsd" | "unknown";
@@ -64,21 +64,36 @@ export function listBinaryAssets(release: ProboAgentRelease): ReleaseAsset[] {
 }
 
 export async function fetchLatestProboAgentRelease(): Promise<ProboAgentRelease> {
-  const response = await fetch(RELEASES_URL, {
-    headers: {
-      Accept: "application/vnd.github+json",
-    },
-  });
+  let page = 1;
+  let release: GithubRelease | undefined;
 
-  if (!response.ok) {
-    throw new Error(`GitHub releases request failed (${response.status})`);
+  while (!release) {
+    const url = new URL(RELEASES_URL);
+    url.searchParams.set("per_page", String(RELEASES_PER_PAGE));
+    url.searchParams.set("page", String(page));
+
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/vnd.github+json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub releases request failed (${response.status})`);
+    }
+
+    const releases = (await response.json()) as GithubRelease[];
+    release = releases.find(
+      (item) =>
+        AGENT_TAG_PREFIX.test(item.tag_name) && !item.draft && !item.prerelease,
+    );
+
+    if (release || releases.length < RELEASES_PER_PAGE) {
+      break;
+    }
+
+    page += 1;
   }
-
-  const releases = (await response.json()) as GithubRelease[];
-  const release = releases.find(
-    (item) =>
-      AGENT_TAG_PREFIX.test(item.tag_name) && !item.draft && !item.prerelease,
-  );
 
   if (!release) {
     throw new Error("No probo-agent release found");
