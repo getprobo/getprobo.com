@@ -26,7 +26,7 @@
     "@astrojs/svelte": "^9.0.1",
     "@phosphor-icons/core": "^2.1.1",
     "@phosphor-icons/web": "^2.1.2",
-    "@probo/cookie-banner": "^0.13.0",
+    "@probo/cookie-banner": "^0.14.0",
     "@splidejs/splide": "^4.1.4",
     "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "@splidejs/splide-extension-intersection": "^0.2.0",
@@ -40,7 +40,7 @@
     "fuse.js": "^7.5.0",
     "lottie-web": "^5.13.0",
     "mermaid": "^11.16.1",
-    "posthog-js": "^1.413.3",
+    "posthog-js": "^1.415.4",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-svelte": "^4.1.1",
@@ -56,7 +56,7 @@
     "@astrojs/starlight-tailwind": "^5.0.0",
     "@tailwindcss/typography": "^0.5.20",
     "tailwind-variants": "^3.3.1",
-    "wrangler": "^4.119.0"
+    "wrangler": "^4.120.1"
   },
   "overrides": {
     "zod": "^4.3.6"
