@@ -54,8 +54,16 @@ function isBinaryAsset(name: string): boolean {
     return false;
   }
 
+  // Prefer the signed Windows MSI; hide zip archives used for auto-update.
+  if (/^probo-agent_Windows_(x86_64|arm64)\.zip$/.test(name)) {
+    return false;
+  }
+
   return (
-    name.endsWith(".pkg") || name.endsWith(".tar.gz") || name.endsWith(".zip")
+    name.endsWith(".pkg") ||
+    name.endsWith(".msi") ||
+    name.endsWith(".tar.gz") ||
+    name.endsWith(".zip")
   );
 }
 
@@ -227,13 +235,27 @@ export function resolvePrimaryAsset(
     return pkg ?? null;
   }
 
+  if (platform.os === "windows") {
+    if (platform.arch === "unknown") {
+      return null;
+    }
+
+    const exact = `probo-agent_${release.version}_windows_${platform.arch}.msi`;
+    const msi = release.assets.find(
+      (asset) =>
+        asset.name === exact ||
+        (asset.name.startsWith("probo-agent_") &&
+          asset.name.endsWith(`_windows_${platform.arch}.msi`)),
+    );
+    return msi ?? null;
+  }
+
   const osLabel = osAssetLabel(platform.os);
   if (!osLabel || platform.arch === "unknown") {
     return null;
   }
 
-  const extension = platform.os === "windows" ? "zip" : "tar.gz";
-  const expected = `probo-agent_${osLabel}_${platform.arch}.${extension}`;
+  const expected = `probo-agent_${osLabel}_${platform.arch}.tar.gz`;
   return release.assets.find((asset) => asset.name === expected) ?? null;
 }
 
@@ -258,6 +280,13 @@ export function describeAsset(name: string): string {
     return "macOS (.pkg installer)";
   }
 
+  const msiMatch = name.match(
+    /^probo-agent_.+_windows_(x86_64|arm64)\.msi$/,
+  );
+  if (msiMatch) {
+    return `Windows (.msi ${msiMatch[1]})`;
+  }
+
   const match = name.match(
     /^probo-agent_(Darwin|Linux|Windows|Freebsd)_(x86_64|arm64)\.(tar\.gz|zip)$/,
   );
@@ -265,10 +294,10 @@ export function describeAsset(name: string): string {
     return name;
   }
 
-  const [, os, arch] = match;
+  const [, os, arch, extension] = match;
 
   if (os === "Windows") {
-    return `Windows (.msi ${arch})`;
+    return `Windows (.${extension} ${arch})`;
   }
 
   const osMap: Record<string, string> = {
