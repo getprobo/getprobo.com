@@ -6,6 +6,10 @@ export const cliCommandItems = [
     slug: "docs/developers/cli/commands/access-review",
   },
   {
+    label: "Ai System",
+    slug: "docs/developers/cli/commands/ai-system",
+  },
+  {
     label: "API",
     slug: "docs/developers/cli/commands/api",
   },
@@ -173,6 +177,10 @@ export const mcpCategoryItems = [
     slug: "docs/developers/api/mcp/tools/catalog/access-reviews",
   },
   {
+    label: "AI systems",
+    slug: "docs/developers/api/mcp/tools/catalog/ai-systems",
+  },
+  {
     label: "Assets and data",
     slug: "docs/developers/api/mcp/tools/catalog/assets-and-data",
   },
@@ -258,6 +266,10 @@ export const n8nResourceItems = [
   {
     label: "Access Review Source",
     slug: "docs/developers/api/n8n/resources/access-review-source",
+  },
+  {
+    label: "AI System",
+    slug: "docs/developers/api/n8n/resources/ai-system",
   },
   {
     label: "Asset",
