@@ -1,0 +1,158 @@
+---
+title: "What is a trust center?"
+date: 2026-08-12
+excerpt: "Every SaaS company is building one. Most of them publish too much. Here is what belongs on the page, what belongs behind an NDA, and what we decide to name it Compliance Portal at Probo."
+author:
+  name: "Arthur Mayoux"
+faqs:
+  - question: "What is a trust center?"
+    answer: "A trust center is a page where you publish your security posture so buyers can review it themselves instead of emailing you for documents. Typical contents include certifications, audit reports, policies, subprocessors, and security commitments, usually at a subdomain like compliance.company.com or trust.company.com."
+  - question: "What should be public vs restricted on a trust center?"
+    answer: "Claims can be public. Evidence should be gated. Certification badges, security commitments, subprocessors, and legal templates can sit in the open. SOC 2 reports, penetration test reports, and architecture docs should require authentication, approval, and usually an NDA."
+  - question: "Do I need an NDA to share a SOC 2 report?"
+    answer: "Yes for most companies. A SOC 2 report describes your system in enough detail to help an attacker. The practical pattern is: show publicly that you hold a current report, then require sign-in, access approval, and an electronically signed NDA before export."
+  - question: "How do I keep a trust center from going stale?"
+    answer: "Publish from live compliance data, not a second copy. When a policy is approved in your workspace, the page should show the new version automatically. Nothing should be exposed by default, and adding a document to your program should never publish it on its own."
+---
+
+A prospect reaches procurement. Their security team sends you a 200-row questionnaire. You spend two days on it. Then they ask for your SOC 2 report, so you send an NDA, and their legal team takes eleven days to sign it.
+
+The deal sits still the whole time.
+
+Then the next prospect arrives and asks the same questions. Same answers. Same two days.
+
+## Key takeaways
+
+- **A trust center is a self-serve security page:** certifications, reports, policies, subprocessors, and commitments at a predictable URL, so buyers stop emailing you for the same documents.
+- **Claims can be public. Evidence should be gated:** badges and commitments in the open; SOC 2 reports, pentests, and architecture docs behind auth, approval, and an NDA.
+- **The name does not create trust:** a wall of logos asserts trustworthiness. A working system with current documents and access control is what buyers can actually verify.
+- **Stale pages come from second copies:** publish from live compliance data, expose nothing by default, and keep a record of who accessed what.
+
+## What a trust center actually is
+
+A trust center is a page where you publish your security posture so buyers can review it themselves instead of emailing you for documents. Certifications, audit reports, policies, subprocessors, security commitments. Usually at a subdomain like `compliance.company.com` or `trust.company.com`.
+
+That is the definition. Now the honest part.
+
+## Why we don't call ours a trust center
+
+We built this product and refused to give it that name.
+
+Go and look at a dozen pages carrying the label. A good share of them offer you everything except trust. Four certification logos. A paragraph of marketing prose. No documents. No dates. Nothing you can verify.
+
+Calling a page a trust center does not produce trust. It asserts it. And asserting your own trustworthiness is roughly the least trustworthy thing a security page can do.
+
+What buyers are reviewing is not trust. It is compliance. Real certifications, current documents, a named auditor, a subprocessor list they can check against their own DPA. Trust is what happens afterwards, if you earned it.
+
+So we call ours a [Compliance Portal](/products/compliance-portal) and we host it at `compliance.probo.com`.
+
+You will also see the same thing sold as a trust portal, a security portal, or just a security page. The names do not matter much. What matters is whether the page is a wall of logos or a working system with access control behind it.
+
+## What goes on the page
+
+Six categories cover most of it.
+
+**Frameworks and audit reports.** SOC 2 Type I and Type II, ISO 27001, ISO 27701, HIPAA, GDPR. Show the status and the audit history, not just the current report.
+
+**Policies and procedures.** Information security policy, incident response plan, business continuity plan, access control policy. These are what buyers map against their own control requirements.
+
+**Protected assets.** Penetration test reports, vulnerability assessments, architecture documentation. This is the sensitive tier. More on it below.
+
+**Subprocessors.** Every third party that processes customer data for you. If you handle EU personal data this is not optional. Your customers need it to meet their own GDPR obligations.
+
+**Security commitments.** Plain statements of what you actually commit to. Encryption at rest and in transit, MFA enforcement, monitoring, retention periods. Buyers scan these first, so write them to be scanned.
+
+**Data and rights requests.** A route for customers and data subjects to file access, deletion, or export requests, handled through a defined flow instead of an inbox.
+
+## The part nobody writes about
+
+Every document on that list is useful to a buyer. Several of them are also useful to an attacker.
+
+A trust center is the one place a company voluntarily collects its security documentation, organises it, and puts it behind a predictable URL.
+
+**A SOC 2 report is an infrastructure map.** Section III describes your system. Cloud providers, network architecture, authentication mechanisms, monitoring stack, deployment process, who holds production access. It exists to demonstrate control design. It also tells an attacker exactly what they are up against and where to start.
+
+**A subprocessor list is a supply chain map.** It names every vendor with access to your customer data. If the front door is hard, that list shows which side doors exist. It is also a ready-made phishing script. An email referencing the right subprocessor by name is far more convincing than a generic one.
+
+**A penetration test report is a vulnerability inventory.** Findings get fixed. Patterns do not. A report tells you what classes of weakness this codebase produces and where the team's blind spots are.
+
+**A documented control exception is an unlocked window.** Auditors record exceptions and management responses. Published openly, that is a specific, dated, self-reported statement of where your controls failed.
+
+None of this is an argument against having the page. It is an argument against the version where everything is public because gating it felt like friction.
+
+### A rough rule
+
+| Content | Default |
+| --- | --- |
+| Certification badges and framework status | Public |
+| Security commitments | Public |
+| Subprocessor list | Public, often legally required |
+| Privacy policy, terms, DPA template | Public |
+| Information security policy | Restricted |
+| SOC 2 Type II report | Restricted plus NDA |
+| Penetration test report | Restricted plus NDA |
+| Architecture and network documentation | Restricted plus NDA, or not published |
+| Incident post-mortems | Not published |
+
+The pattern: claims can be public, evidence should be gated.
+
+A buyer needs to know you hold a SOC 2 report and can get it within a day. They do not need it open in a browser tab before they have told you who they are.
+
+## How to share without losing control
+
+Six things the page needs to be safe.
+
+**Three visibility states, not two.** Public and private is not enough. The third state is where the value sits: the visitor can see that a document exists but has to sign in, request access, and be approved before opening it. That is how you signal "we have a current pentest report" without handing it over.
+
+**An NDA gate on export.** Attach an NDA and require electronic signature before anything can be exported. This removes the eleven-day legal round trip and still leaves you with a signed, timestamped agreement.
+
+**Watermarking.** Documents should carry the identity of whoever accessed them. It will not stop a determined leak. It makes casual redistribution traceable, and knowing that changes behaviour.
+
+**Authentication without account creation.** Magic links or SSO. Forcing a security reviewer to create another account produces abandoned reviews and shared logins, and shared logins destroy your audit trail.
+
+**Approvals where your team already works.** Access requests that land in an inbox get answered in three days. The same request in Slack gets answered in three minutes.
+
+**A record of who accessed what.** You need to be able to answer "who downloaded our SOC 2 report last year, and are they still a customer?" That is an access review question. If the page cannot answer it, you have published documents you cannot account for.
+
+## Setting one up
+
+The page is the easy part. Having current, approved, versioned documents to put on it is the project.
+
+If your policies live in a shared drive and the last review was eighteen months ago, start there.
+
+Once the compliance program is in one place, publishing is fast. In Probo's [Compliance Portal](/products/compliance-portal) you pick which frameworks, documents, audits, commitments and subprocessors to expose, set the visibility of each one, point a CNAME at `compliance.yourcompany.com`, and activate. Nothing is exposed by default. Adding a document to your workspace never publishes it.
+
+The portal reads from live compliance data, so when a policy is approved the page shows the new version. There is no second copy to forget about, which is the usual reason these pages go stale.
+
+Ours is at [compliance.probo.com](https://compliance.probo.com). Same product, same access tiers, same NDA flow.
+
+## Before you publish
+
+Four questions:
+
+- Which documents on this page are claims, and which are evidence?
+- For every gated document, who approved the last three access requests, and how long did they take?
+- If a competitor read everything currently public, what would they learn about our architecture?
+- When a policy is updated next month, does this page update itself?
+
+If any answer is "not sure," you are publishing faster than you are controlling.
+
+Calling the page a trust center will not earn you trust. Showing current evidence to the right people, under controls you can account for, might.
+
+## Frequently Asked Questions
+
+**What is a trust center?**
+
+A trust center is a page where you publish your security posture so buyers can review it themselves instead of emailing you for documents. Typical contents include certifications, audit reports, policies, subprocessors, and security commitments, usually at a subdomain like `compliance.company.com` or `trust.company.com`.
+
+**What should be public vs restricted?**
+
+Claims can be public. Evidence should be gated. Certification badges, security commitments, subprocessors, and legal templates can sit in the open. SOC 2 reports, penetration test reports, and architecture docs should require authentication, approval, and usually an NDA.
+
+**Do I need an NDA to share a SOC 2 report?**
+
+Yes for most companies. A SOC 2 report describes your system in enough detail to help an attacker. The practical pattern is: show publicly that you hold a current report, then require sign-in, access approval, and an electronically signed NDA before export.
+
+**How do I keep the page from going stale?**
+
+Publish from live compliance data, not a second copy. When a policy is approved in your workspace, the page should show the new version automatically. Nothing should be exposed by default, and adding a document to your program should never publish it on its own.
