@@ -101,7 +101,27 @@ const changelog = defineCollection({
     image: z.string().optional(),
     images: z.array(z.string()).optional(),
     imagesLayout: z.enum(["stacked", "logos"]).default("stacked"),
-    tags: z.array(z.string()).default([]),
+    tags: z
+      .array(
+        z.enum([
+          "TPRM",
+          "Risk Management",
+          "Governance",
+          "Privacy",
+          "Audits",
+          "Documents",
+          "Assets",
+          "IAM",
+          "Access Review",
+          "Cookie Banner",
+          "Compliance Portal",
+          "Devices",
+          "Internationalization",
+          "Integrations",
+          "Infra",
+        ]),
+      )
+      .default([]),
   }),
 });
 

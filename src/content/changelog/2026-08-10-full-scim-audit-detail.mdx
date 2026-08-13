@@ -3,7 +3,7 @@ title: "Full SCIM Audit Detail"
 description: "SCIM provisioning events now store the full request and response body, so admins can see exactly what the identity provider sent and received."
 date: 2026-08-10
 images: ["/changelog/2026-08-10-full-scim-audit-detail-1.png"]
-tags: ["Console"]
+tags: ["IAM"]
 ---
 
 Until now, SCIM audit entries told you that something happened, not what. Now each SCIM event stores the full request and response body exchanged with your identity provider. Password fields and other credential attributes get redacted automatically, no matter which schema URN the provisioning client used to send them.
