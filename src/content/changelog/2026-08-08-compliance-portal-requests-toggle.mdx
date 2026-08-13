@@ -1,0 +1,13 @@
+---
+title: "Compliance Portal Requests Toggle"
+description: "Admins can now turn the public Requests surface on a compliance portal on or off, instead of it always being there."
+date: 2026-08-08
+images: ["/changelog/2026-08-08-compliance-portal-requests-toggle-1.png"]
+tags: ["Compliance Portal"]
+---
+
+Not every portal wants visitors filing data subject requests through a public page. Now you can turn the Requests surface off entirely from the console overview.
+
+When it's off, the portal drops the nav item and the /requests route returns not found instead of a broken or half-visible page.
+
+The prb CLI got the same control a day earlier with a rights requests flag on compliance-portal update. This release brings it to the console, where most admins will actually flip it.
