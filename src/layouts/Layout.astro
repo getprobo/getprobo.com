@@ -6,13 +6,20 @@ import Footer from "../components/Footer.astro";
 import PostHog from "../components/posthog.astro";
 import { getCanonicalUrl } from "../lib/i18n.ts";
 
-const { title, description, ogImage, noIndex } = Astro.props;
+const {
+  title,
+  description,
+  ogImage,
+  noIndex,
+  ogType = "website",
+} = Astro.props;
 interface Props {
   noFrameworks?: boolean;
   noIndex?: boolean;
   title: string;
   description?: string;
   ogImage?: string;
+  ogType?: "website" | "article";
 }
 const seoTitle = title
   ? `${title} | Probo`
@@ -75,7 +82,7 @@ const canonical = getCanonicalUrl(Astro.url);
         : "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"}
     />
     <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Probo" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={seoTitle} />

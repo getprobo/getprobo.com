@@ -1,48 +1,119 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ChangelogFeed from "../components/ChangelogFeed.svelte";
 import { getCollection } from "astro:content";
+import { getCanonicalUrl } from "../lib/i18n.ts";
+import {
+  buildWeekBars,
+  CHANGELOG_SEO,
+  changeCountLabel,
+  formatWeekRange,
+  toIsoDate,
+  uniqueTagsByFrequency,
+  type ChangelogEntry,
+} from "../lib/changelog.ts";
 
-const entries = (await getCollection("changelog")).sort(
+const collection = (await getCollection("changelog")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
-const dateFormatter = Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const entries: ChangelogEntry[] = collection.map((entry) => ({
+  id: entry.id,
+  title: entry.data.title,
+  description: entry.data.description,
+  date: toIsoDate(entry.data.date),
+  tags: entry.data.tags,
+}));
+
+const tags = uniqueTagsByFrequency(entries);
+const dates = entries.map((entry) => entry.date);
+const weekBars = buildWeekBars(dates);
+const maxWeekCount = Math.max(1, ...weekBars.map((bar) => bar.count));
+
+const cutoff = new Date();
+cutoff.setUTCDate(cutoff.getUTCDate() - 90);
+const shippedLast90Days = dates.filter(
+  (date) => date >= toIsoDate(cutoff),
+).length;
+
+const site = Astro.site ?? new URL("https://www.probo.com");
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Probo Changelog",
+  description: CHANGELOG_SEO.description,
+  url: getCanonicalUrl(Astro.url),
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Probo",
+    url: site.origin,
+  },
+  about: tags.map((tag) => ({ "@type": "Thing", name: tag })),
+  mainEntity: {
+    "@type": "ItemList",
+    name: "Probo product updates",
+    itemListOrder: "https://schema.org/ItemListOrderDescending",
+    numberOfItems: entries.length,
+    itemListElement: entries.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: entry.title,
+      url: new URL(`/changelog/${entry.id}`, site).href,
+    })),
+  },
+};
 ---
 
-<Layout
-  title="Changelog"
-  description="Latest product updates and new features from Probo: access review connectors, cookie banner improvements, and compliance portal updates."
->
+<Layout title={CHANGELOG_SEO.title} description={CHANGELOG_SEO.description}>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(collectionSchema)}
+  />
   <main class="container my-10 max-w-[720px] sm:my-20">
-    <h1 class="text-h2 animate-slide-in mb-3 font-medium">Changelog</h1>
-    <p
-      class="text-muted-foreground animate-slide-in animation-delay-100 mb-10 text-base sm:mb-16"
+    <div
+      class="animate-slide-in mb-5 flex items-end justify-between gap-4 sm:mb-6"
     >
-      New updates and improvements to Probo.
-    </p>
-    <ul class="animate-slide-in animation-delay-300 space-y-2">
+      <div>
+        <h1 class="text-h2 mb-3 font-medium">Changelog</h1>
+        <p class="text-muted-foreground text-base">
+          Every change we ship, in plain language.
+        </p>
+      </div>
+      <div class="shrink-0 text-right">
+        <p class="text-tertiary-foreground text-xxs tracking-[0.04em]">
+          Last 90 days
+        </p>
+        <p class="mt-0.5 text-sm font-medium">
+          {shippedLast90Days} shipped
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="animate-slide-in animation-delay-100 mb-6 flex h-[34px] items-end gap-0.5 border-b pb-1.5"
+      role="img"
+      aria-label={`Shipping cadence over the last ${weekBars.length} weeks. Most recent week: ${changeCountLabel(weekBars.at(-1)?.count ?? 0)}.`}
+    >
       {
-        entries.map((entry) => (
-          <li class="flex items-baseline gap-3">
-            <time class="text-muted-foreground shrink-0 text-sm">
-              {dateFormatter.format(new Date(entry.data.date))}
-            </time>
-            <a href={`/changelog/${entry.id}`} class="hover:underline">
-              {entry.data.title}
-            </a>
-            {entry.data.tags.length > 0 &&
-              entry.data.tags.map((tag) => (
-                <span class="bg-highlight shrink-0 rounded-full px-2 py-0.5 text-xs font-medium">
-                  {tag}
-                </span>
-              ))}
-          </li>
-        ))
+        weekBars.map((bar, index) => {
+          const recent = index >= weekBars.length - 2;
+          const height = Math.max(12, (bar.count / maxWeekCount) * 100);
+          return (
+            <div
+              class:list={[
+                "min-h-0.5 flex-1 rounded-t-[2px]",
+                recent ? "bg-accent" : "bg-border-mid",
+              ]}
+              style={`height:${height}%`}
+              title={`${changeCountLabel(bar.count)} · ${formatWeekRange(bar.start, bar.end)}`}
+            />
+          );
+        })
       }
-    </ul>
+    </div>
+
+    <div class="animate-slide-in animation-delay-300">
+      <ChangelogFeed {entries} {tags} client:load />
+    </div>
   </main>
 </Layout>

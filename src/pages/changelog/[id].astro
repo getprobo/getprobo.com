@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import Prose from "../../components/Prose.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import { getCanonicalUrl } from "../../lib/i18n.ts";
+import { mediaAlt, tagClass, toIsoDate } from "../../lib/changelog.ts";
 
 export async function getStaticPaths() {
   const entries = await getCollection("changelog");
@@ -26,6 +27,8 @@ const dateFormatter = Intl.DateTimeFormat("en-US", {
 });
 
 const changelogImage = mediaUrls.find((url) => !isVideoMedia(url));
+const published = entry.data.date.toISOString();
+const mediaKind = isLogoLayout ? "logos" : "stacked";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -35,8 +38,10 @@ const articleSchema = {
   image: changelogImage
     ? `https://www.probo.com${changelogImage}`
     : "https://www.probo.com/og.png",
-  datePublished: entry.data.date.toISOString(),
-  dateModified: entry.data.date.toISOString(),
+  datePublished: published,
+  dateModified: published,
+  articleSection: entry.data.tags[0] ?? "Changelog",
+  keywords: entry.data.tags.join(", "),
   author: {
     "@type": "Organization",
     name: "Probo",
@@ -59,7 +64,22 @@ const articleSchema = {
 <Layout
   title={`${entry.data.title} — Changelog`}
   description={entry.data.description}
+  ogImage={changelogImage}
+  ogType="article"
 >
+  <meta slot="head" property="article:published_time" content={published} />
+  <meta slot="head" property="article:modified_time" content={published} />
+  <meta
+    slot="head"
+    property="article:author"
+    content="https://www.probo.com/about"
+  />
+  <meta slot="head" property="article:section" content="Changelog" />
+  {
+    entry.data.tags.map((tag) => (
+      <meta slot="head" property="article:tag" content={tag} />
+    ))
+  }
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <main class="container my-10 max-w-[720px] sm:my-20">
     <Breadcrumbs
@@ -83,17 +103,18 @@ const articleSchema = {
       Back to Changelog
     </a>
 
-    <div class="text-muted-foreground animate-fade-in animation-delay-100 mb-3">
+    <time
+      datetime={toIsoDate(entry.data.date)}
+      class="text-muted-foreground animate-fade-in animation-delay-100 mb-3 block"
+    >
       {dateFormatter.format(new Date(entry.data.date))}
-    </div>
+    </time>
 
     {
       entry.data.tags.length > 0 && (
         <div class="animate-fade-in animation-delay-100 mb-5 flex gap-2">
           {entry.data.tags.map((tag) => (
-            <span class="bg-highlight rounded-full px-2.5 py-0.5 text-xs font-medium">
-              {tag}
-            </span>
+            <span class={tagClass(tag)}>{tag}</span>
           ))}
         </div>
       )
@@ -112,28 +133,44 @@ const articleSchema = {
       mediaUrls.length > 0 &&
         (isLogoLayout ? (
           <div class="animate-slide-in animation-delay-200 mb-10 flex flex-wrap items-center gap-6">
-            {mediaUrls.map((url) => (
-              <img src={url} alt={entry.data.title} class="h-12 w-auto" />
+            {mediaUrls.map((url, index) => (
+              <img
+                src={url}
+                alt={mediaAlt(entry.data.title, {
+                  layout: "logos",
+                  index,
+                  total: mediaUrls.length,
+                })}
+                class="h-12 w-auto"
+              />
             ))}
           </div>
         ) : (
           <div class="mb-10 flex flex-col gap-6">
-            {mediaUrls.map((url) =>
-              isVideoMedia(url) ? (
+            {mediaUrls.map((url, index) => {
+              const alt = mediaAlt(entry.data.title, {
+                layout: mediaKind,
+                index,
+                total: mediaUrls.length,
+                isVideo: isVideoMedia(url),
+              });
+              return isVideoMedia(url) ? (
                 <video
                   src={url}
                   controls
                   playsinline
+                  title={alt}
+                  aria-label={alt}
                   class="shadow-image animate-slide-in animation-delay-200 w-full rounded-lg"
                 />
               ) : (
                 <img
                   src={url}
-                  alt={entry.data.title}
+                  alt={alt}
                   class="shadow-image animate-slide-in animation-delay-200 mx-auto max-h-[600px] w-auto max-w-full rounded-lg object-contain"
                 />
-              ),
-            )}
+              );
+            })}
           </div>
         ))
     }

@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
+import { CHANGELOG_SEO } from "../lib/changelog.ts";
 
 export async function GET(context: APIContext) {
   const entries = (await getCollection("changelog")).sort(
@@ -9,7 +10,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: "Probo Changelog",
-    description: "New updates and improvements to Probo.",
+    description: CHANGELOG_SEO.description,
     site: context.site!,
     items: entries.map((entry) => ({
       title: entry.data.title,
