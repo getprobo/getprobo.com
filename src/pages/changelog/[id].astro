@@ -2,7 +2,6 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Prose from "../../components/Prose.astro";
-import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import { getCanonicalUrl } from "../../lib/i18n.ts";
 import { mediaAlt, tagClass, toIsoDate } from "../../lib/changelog.ts";
 
@@ -59,6 +58,31 @@ const articleSchema = {
     "@id": getCanonicalUrl(Astro.url),
   },
 };
+
+const site = Astro.site ?? new URL("https://www.probo.com");
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: new URL("/", site).toString(),
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Changelog",
+      item: new URL("/changelog", site).toString(),
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: entry.data.title,
+    },
+  ],
+};
 ---
 
 <Layout
@@ -81,53 +105,45 @@ const articleSchema = {
     ))
   }
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
   <main class="container my-10 max-w-[720px] sm:my-20">
-    <Breadcrumbs
-      items={[
-        { label: "Changelog", href: "/changelog" },
-        { label: entry.data.title },
-      ]}
-      class="animate-fade-in animation-delay-100 mb-4"
-    />
-    <a
-      href="/changelog"
-      class="text-quaternary animate-fade-in animation-delay-200 mb-4 flex items-center gap-2"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-        ><path
-          fill="#C3C8C2"
-          fill-rule="evenodd"
-          d="M18.566 10.234a.8.8 0 0 1 0 1.132L13.93 16l4.635 4.634a.8.8 0 0 1-1.132 1.132l-5.2-5.2a.8.8 0 0 1 0-1.132l5.2-5.2a.8.8 0 0 1 1.132 0Z"
-          clip-rule="evenodd"></path></svg
+    <header class="animate-slide-in mb-10">
+      <div
+        class="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-2"
       >
-      Back to Changelog
-    </a>
-
-    <time
-      datetime={toIsoDate(entry.data.date)}
-      class="text-muted-foreground animate-fade-in animation-delay-100 mb-3 block"
-    >
-      {dateFormatter.format(new Date(entry.data.date))}
-    </time>
-
-    {
-      entry.data.tags.length > 0 && (
-        <div class="animate-fade-in animation-delay-100 mb-5 flex gap-2">
-          {entry.data.tags.map((tag) => (
-            <span class={tagClass(tag)}>{tag}</span>
-          ))}
+        <a
+          href="/changelog"
+          class="text-muted-foreground hover:text-foreground text-sm transition-colors"
+        >
+          ← Changelog
+        </a>
+        <div
+          class="text-muted-foreground flex flex-wrap items-center gap-x-2.5 gap-y-2 text-sm"
+        >
+          <time datetime={toIsoDate(entry.data.date)}>
+            {dateFormatter.format(new Date(entry.data.date))}
+          </time>
+          {
+            entry.data.tags.length > 0 && (
+              <span class="flex flex-wrap gap-1.5">
+                {entry.data.tags.map((tag) => (
+                  <span class={tagClass(tag)}>{tag}</span>
+                ))}
+              </span>
+            )
+          }
         </div>
-      )
-    }
-
-    <h1 class="text-h3 sm:text-h2 animate-slide-in mb-4 font-medium">
-      {entry.data.title}
-    </h1>
-    <p
-      class="text-muted-foreground animate-slide-in animation-delay-100 mb-10 text-lg"
-    >
-      {entry.data.description}
-    </p>
+      </div>
+      <h1 class="text-h3 sm:text-h2 mb-4 font-medium">
+        {entry.data.title}
+      </h1>
+      <p class="text-muted-foreground text-lg">
+        {entry.data.description}
+      </p>
+    </header>
 
     {
       mediaUrls.length > 0 &&

@@ -4,10 +4,7 @@ import ChangelogFeed from "../components/ChangelogFeed.svelte";
 import { getCollection } from "astro:content";
 import { getCanonicalUrl } from "../lib/i18n.ts";
 import {
-  buildWeekBars,
   CHANGELOG_SEO,
-  changeCountLabel,
-  formatWeekRange,
   toIsoDate,
   uniqueTagsByFrequency,
   type ChangelogEntry,
@@ -26,15 +23,6 @@ const entries: ChangelogEntry[] = collection.map((entry) => ({
 }));
 
 const tags = uniqueTagsByFrequency(entries);
-const dates = entries.map((entry) => entry.date);
-const weekBars = buildWeekBars(dates);
-const maxWeekCount = Math.max(1, ...weekBars.map((bar) => bar.count));
-
-const cutoff = new Date();
-cutoff.setUTCDate(cutoff.getUTCDate() - 90);
-const shippedLast90Days = dates.filter(
-  (date) => date >= toIsoDate(cutoff),
-).length;
 
 const site = Astro.site ?? new URL("https://www.probo.com");
 const collectionSchema = {
@@ -70,49 +58,14 @@ const collectionSchema = {
     set:html={JSON.stringify(collectionSchema)}
   />
   <main class="container my-10 max-w-[720px] sm:my-20">
-    <div
-      class="animate-slide-in mb-5 flex items-end justify-between gap-4 sm:mb-6"
-    >
-      <div>
-        <h1 class="text-h2 mb-3 font-medium">Changelog</h1>
-        <p class="text-muted-foreground text-base">
-          Every change we ship, in plain language.
-        </p>
-      </div>
-      <div class="shrink-0 text-right">
-        <p class="text-tertiary-foreground text-xxs tracking-[0.04em]">
-          Last 90 days
-        </p>
-        <p class="mt-0.5 text-sm font-medium">
-          {shippedLast90Days} shipped
-        </p>
-      </div>
+    <div class="animate-slide-in mb-5 sm:mb-6">
+      <h1 class="text-h2 mb-3 font-medium">Changelog</h1>
+      <p class="text-muted-foreground text-base">
+        Every change we ship, in plain language.
+      </p>
     </div>
 
-    <div
-      class="animate-slide-in animation-delay-100 mb-6 flex h-[34px] items-end gap-0.5 border-b pb-1.5"
-      role="img"
-      aria-label={`Shipping cadence over the last ${weekBars.length} weeks. Most recent week: ${changeCountLabel(weekBars.at(-1)?.count ?? 0)}.`}
-    >
-      {
-        weekBars.map((bar, index) => {
-          const recent = index >= weekBars.length - 2;
-          const height = Math.max(12, (bar.count / maxWeekCount) * 100);
-          return (
-            <div
-              class:list={[
-                "min-h-0.5 flex-1 rounded-t-[2px]",
-                recent ? "bg-accent" : "bg-border-mid",
-              ]}
-              style={`height:${height}%`}
-              title={`${changeCountLabel(bar.count)} · ${formatWeekRange(bar.start, bar.end)}`}
-            />
-          );
-        })
-      }
-    </div>
-
-    <div class="animate-slide-in animation-delay-300">
+    <div class="animate-slide-in animation-delay-100">
       <ChangelogFeed {entries} {tags} client:load />
     </div>
   </main>

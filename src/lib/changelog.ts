@@ -6,12 +6,6 @@ export type ChangelogEntry = {
   tags: string[];
 };
 
-export type WeekBar = {
-  count: number;
-  start: string;
-  end: string;
-};
-
 export type MonthGroup = {
   key: string;
   label: string;
@@ -47,25 +41,10 @@ export function mediaAlt(
 }
 
 export const TAG_PILL =
-  "inline-flex h-fit shrink-0 items-center rounded-full px-2.5 py-[3px] text-[11px] leading-none font-medium whitespace-nowrap";
+  "inline-flex h-fit shrink-0 items-center rounded-full border border-border-mid px-2 py-[3px] text-[11px] leading-none font-medium whitespace-nowrap text-muted-foreground";
 
-const TAG_STYLES: Record<string, string> = {
-  "Access Review": "bg-[#D9E4F5] text-[#163A6B]",
-  "Compliance Portal": "bg-[#D4EFE6] text-[#04342C]",
-  "Compliance Page": "bg-[#D4EFE6] text-[#04342C]",
-  Console: "bg-[#EBE8DF] text-[#2C2C2A]",
-  "Cookie Banner": "bg-[#F5DED6] text-[#4A1B0C]",
-  Documents: "bg-[#E3E1F8] text-[#26215C]",
-  IAM: "bg-[#D7EAF6] text-[#0C3A4A]",
-  MCP: "bg-[#D5EBD9] text-[#1B4332]",
-  CLI: "bg-[#E8E8E8] text-[#1F2937]",
-  n8n: "bg-[#F6D5E6] text-[#831843]",
-  "Open-source": "bg-active text-success",
-  Integrations: "bg-[#DDE3F8] text-[#312E81]",
-};
-
-export function tagClass(tag: string): string {
-  return `${TAG_PILL} ${TAG_STYLES[tag] ?? "bg-highlight text-primary"}`;
+export function tagClass(_tag?: string): string {
+  return TAG_PILL;
 }
 
 export function toIsoDate(date: Date): string {
@@ -75,61 +54,6 @@ export function toIsoDate(date: Date): string {
 function parseUtcDate(iso: string): Date {
   const [year, month, day] = iso.slice(0, 10).split("-").map(Number);
   return new Date(Date.UTC(year, month - 1, day));
-}
-
-function mondayOf(date: Date): Date {
-  const day = date.getUTCDay();
-  const diff = day === 0 ? 6 : day - 1;
-  const monday = new Date(date);
-  monday.setUTCDate(monday.getUTCDate() - diff);
-  return monday;
-}
-
-export function buildWeekBars(
-  dates: string[],
-  weeks = 9,
-  now = new Date(),
-): WeekBar[] {
-  const today = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
-  );
-  const thisMonday = mondayOf(today);
-  const bars: WeekBar[] = [];
-
-  for (let i = weeks - 1; i >= 0; i--) {
-    const start = new Date(thisMonday);
-    start.setUTCDate(start.getUTCDate() - i * 7);
-    const end = new Date(start);
-    end.setUTCDate(end.getUTCDate() + 6);
-    const startIso = toIsoDate(start);
-    const endIso = toIsoDate(end);
-    const count = dates.filter(
-      (date) => date >= startIso && date <= endIso,
-    ).length;
-    bars.push({ count, start: startIso, end: endIso });
-  }
-
-  return bars;
-}
-
-export function formatWeekRange(start: string, end: string): string {
-  const startDate = parseUtcDate(start);
-  const endDate = parseUtcDate(end);
-  const monthDay = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  });
-  const day = new Intl.DateTimeFormat("en-US", {
-    day: "numeric",
-    timeZone: "UTC",
-  });
-
-  if (startDate.getUTCMonth() === endDate.getUTCMonth()) {
-    return `${monthDay.format(startDate)}–${day.format(endDate)}`;
-  }
-
-  return `${monthDay.format(startDate)} – ${monthDay.format(endDate)}`;
 }
 
 export function groupByMonth(entries: ChangelogEntry[]): MonthGroup[] {

@@ -16,6 +16,9 @@
   } = $props();
 
   let activeTag = $state("all");
+  let scroller: HTMLDivElement | undefined;
+  let fadeStart = $state(false);
+  let fadeEnd = $state(false);
 
   let filtered = $derived(
     activeTag === "all"
@@ -36,7 +39,14 @@
       : "text-muted-foreground border-border-mid hover:bg-highlight bg-transparent";
   }
 
-  function selectTag(tag: string) {
+  function syncOverflow() {
+    const el = scroller;
+    if (!el) return;
+    fadeStart = el.scrollLeft > 2;
+    fadeEnd = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+  }
+
+  function selectTag(tag: string, node: HTMLElement) {
     activeTag = tag;
     const url = new URL(window.location.href);
     if (tag === "all") {
@@ -45,6 +55,11 @@
       url.searchParams.set("tag", tag);
     }
     history.replaceState({}, "", url);
+    node.scrollIntoView({
+      inline: "nearest",
+      block: "nearest",
+      behavior: "smooth",
+    });
   }
 
   onMount(() => {
@@ -52,32 +67,67 @@
     if (tag && (tag === "all" || tags.includes(tag))) {
       activeTag = tag;
     }
+
+    const el = scroller;
+    if (!el) return;
+
+    const observer = new ResizeObserver(syncOverflow);
+    observer.observe(el);
+    requestAnimationFrame(() => {
+      el.querySelector<HTMLElement>('[aria-pressed="true"]')?.scrollIntoView({
+        inline: "center",
+        block: "nearest",
+      });
+      syncOverflow();
+    });
+
+    return () => observer.disconnect();
   });
 </script>
 
-<div class="mb-7 flex flex-wrap gap-1.5">
-  <button
-    type="button"
-    aria-pressed={activeTag === "all"}
-    class="rounded-full border px-3 py-1.5 text-xs font-medium transition-colors {chipClass(
-      activeTag === 'all',
-    )}"
-    onclick={() => selectTag("all")}
+<div class="relative mb-7">
+  {#if fadeStart}
+    <div
+      class="from-level-0 pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-linear-to-r to-transparent"
+      aria-hidden="true"
+    ></div>
+  {/if}
+  <div
+    bind:this={scroller}
+    role="group"
+    aria-label="Filter by product"
+    onscroll={syncOverflow}
+    class="scrollbar-none flex gap-1.5 overflow-x-auto overscroll-x-contain"
   >
-    All
-  </button>
-  {#each tags as tag (tag)}
     <button
       type="button"
-      aria-pressed={activeTag === tag}
-      class="rounded-full border px-3 py-1.5 text-xs font-medium transition-colors {chipClass(
-        activeTag === tag,
+      aria-pressed={activeTag === "all"}
+      class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors {chipClass(
+        activeTag === 'all',
       )}"
-      onclick={() => selectTag(tag)}
+      onclick={(event) => selectTag("all", event.currentTarget)}
     >
-      {tag}
+      All
     </button>
-  {/each}
+    {#each tags as tag (tag)}
+      <button
+        type="button"
+        aria-pressed={activeTag === tag}
+        class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors {chipClass(
+          activeTag === tag,
+        )}"
+        onclick={(event) => selectTag(tag, event.currentTarget)}
+      >
+        {tag}
+      </button>
+    {/each}
+  </div>
+  {#if fadeEnd}
+    <div
+      class="from-level-0 pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-linear-to-l to-transparent"
+      aria-hidden="true"
+    ></div>
+  {/if}
 </div>
 
 {#if groups.length === 0}
