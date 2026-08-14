@@ -56,6 +56,11 @@ probod:
       allowed-origins:
         - "https://probo.example.com"
 
+  trust-center:
+    http-addr: "0.0.0.0:80"
+    https-addr: "0.0.0.0:443"
+    tls-mode: "direct"
+
   pg:
     addr: "postgres.example.com:5432"
     username: "probod"
@@ -101,6 +106,11 @@ Omit tracing when you do not run an OpenTelemetry collector. For S3 on AWS,
 omit static access keys when the workload has an IAM role. For another
 S3-compatible service, set `endpoint` and, when required,
 `use-path-style: true`.
+
+The Compliance Portal `tls-mode` accepts `direct` or `external` and defaults to
+`direct`. Direct mode serves portal TLS itself from `https-addr`. External mode
+expects a trusted layer-7 proxy to terminate TLS and forward requests to
+`http-addr`; see [Compliance Portal TLS](/docs/deployment/configuration/environment-variables#compliance-portal-tls) for the required routing and header controls.
 
 JSON uses the same hierarchy and field names as YAML.
 

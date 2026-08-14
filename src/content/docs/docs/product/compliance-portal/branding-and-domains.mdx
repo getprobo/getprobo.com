@@ -3,7 +3,7 @@ title: Branding
 description: Configure the Compliance Portal’s public organization profile, light and dark logos, custom links, default domain, and custom domain.
 ---
 
-import { Steps } from "@astrojs/starlight/components";
+import { Aside, Steps } from "@astrojs/starlight/components";
 
 Use the **Brand** tab to make the portal recognizable and give visitors clear ways to verify your organization or contact the right team.
 
@@ -57,7 +57,7 @@ Do not use custom links for confidential documents. Add those to the portal as r
 
 ## Domains
 
-Every portal receives a Probo-managed domain based on its hosting region:
+On Probo Cloud, every portal receives a Probo-managed domain based on its hosting region:
 
 - **United States:** `<portal-slug>.us.probopages.com`
 - **European Union:** `<portal-slug>.eu.probopages.com`
@@ -70,7 +70,7 @@ Probo obtains and renews TLS certificates for the managed domain automatically, 
 
 1. In the **Domains** section, select **Configure**.
 2. Enter the hostname you want to use, such as `compliance.example.com`.
-3. Create the DNS records shown by Probo. Copy the record type, name, value, and TTL exactly.
+3. Create the DNS records shown by Probo. Copy the record type, name, value, and TTL exactly. Self-hosted deployments must show an operator-owned CNAME target, not `custom.getprobo.com`.
 4. Wait for the domain and TLS certificate status to become active.
 5. Open the portal from the custom hostname and verify that it loads over HTTPS. Then open the managed address and confirm that it redirects to the custom hostname.
 
@@ -80,17 +80,46 @@ Probo obtains and renews TLS certificates for the managed domain automatically, 
 
 DNS propagation and certificate provisioning can take time. Keep the records in place after activation so the domain can continue to resolve and its certificate can renew.
 
+### Self-hosted domains
+
+<Aside type="caution" title="Replace the Probo Cloud CNAME target">
+  `custom.getprobo.com` routes to Probo Cloud. A self-hosted deployment must set
+  `PROBOD_CUSTOM_DOMAINS_CNAME_TARGET`, or
+  `probo.customDomains.cnameTarget` in the Helm chart, to a stable hostname that
+  reaches its own Compliance Portal entry point. Probo displays this value in
+  the DNS instructions and requires connected domains to resolve through it.
+</Aside>
+
+For example, set the deployment target to `portals.probo.example.com`, route that hostname to your proxy or load balancer, and create this customer-facing record:
+
+```text
+compliance.example.com. CNAME portals.probo.example.com.
+```
+
+The Compliance Portal uses separate HTTP and HTTPS listeners from the console and API. Route the domain according to where TLS terminates:
+
+| TLS mode  | Use when                                         | Required routing                                                                                                                                 |
+| --------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `direct`  | Probo obtains and serves the portal certificate. | Pass TCP ports 80 and 443 through to the portal HTTP and HTTPS listeners. Preserve TLS SNI; do not terminate TLS before Probo.                    |
+| `external` | A trusted layer-7 proxy terminates TLS.          | Forward requests to the portal HTTP listener. Preserve the original `Host`, set one `X-Forwarded-Proto` value, and overwrite `X-Forwarded-Host` if you send it. |
+
+`direct` is the default. To use external termination, set `PROBOD_TRUST_CENTER_TLS_MODE=external`, or `probo.trustCenter.tlsMode: external` with Helm. Prevent clients from reaching the portal HTTP listener directly: external mode treats the proxy-provided host and protocol as trusted routing data.
+
+In either mode, allow plain HTTP requests for `/.well-known/acme-challenge/` to reach the portal HTTP listener. Probo uses that route while provisioning and renewing certificates. See the [container environment guide](/docs/deployment/configuration/environment-variables#compliance-portal-tls) and [Kubernetes deployment guide](/docs/deployment/self-hosting/kubernetes#compliance-portal-custom-domains) for operator configuration.
+
 ### Troubleshoot certificate provisioning
 
 If the custom domain remains pending or reports a provisioning error, first confirm that its CNAME record exactly matches the value shown by Probo and is visible through public DNS.
 
-Then check for Certificate Authority Authorization (CAA) records. Probo uses both **Google Trust Services** and **Let’s Encrypt** for managed and custom-domain certificates. If your domain has a restrictive CAA policy, it must authorize both issuers:
+Then check for Certificate Authority Authorization (CAA) records. Probo Cloud uses both **Google Trust Services** and **Let’s Encrypt** for managed and custom-domain certificates. If your domain has a restrictive CAA policy, it must authorize both issuers:
 
-```dns
+```text
 example.com. CAA 0 issue "letsencrypt.org"
 example.com. CAA 0 issue "pki.goog"
 ```
 
 A CAA record on `example.com` also applies to `compliance.example.com` unless the subdomain defines its own policy. Existing authorizations for other certificate authorities can remain.
+
+For self-hosted Probo, authorize the certificate authority configured by `PROBOD_CUSTOM_DOMAINS_CAA_ISSUER_DOMAIN` and `PROBOD_ACME_DIRECTORY`. The defaults use Let’s Encrypt.
 
 If no CAA records exist, you do not need to create them. If records do exist and exclude the certificate authority selected by Probo, certificate issuance and renewal fail. Correct the records, wait for their DNS TTL to expire, and check the domain status again.
