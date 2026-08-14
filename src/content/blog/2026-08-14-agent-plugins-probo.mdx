@@ -1,0 +1,137 @@
+---
+title: "Agent Plugins, and how to set one up for Probo"
+date: 2026-08-14
+excerpt: "Agent Plugins bundle an MCP server with agent skills. Here's what the standard is, what it leaves out, and how to point your assistant at your Probo data."
+author:
+  name: "Arthur Mayoux"
+faqs:
+  - question: "Do I need both the skills and the MCP server?"
+    answer: "They work best together, but you can start with either. The MCP server alone gives your agent access to your Probo data. The skills alone give it Probo's compliance methodology. The point of the plugin format is that you don't have to choose: you get the method and the tools in one setup."
+  - question: "Is this Claude-only?"
+    answer: "No. Agent Plugins are a cross-client standard backed by Amazon, Cursor, GitHub, Microsoft, OpenAI, and Vercel. The Probo package is portable, and Claude Code, Codex, OpenCode, and Cursor are all supported today through their own plugin or MCP configuration."
+  - question: "Can the agent change my compliance data?"
+    answer: "Only within your permissions. The MCP server enforces Probo's existing access controls: a token acts inside its granted scopes and the user's permissions, never beyond them. A good practice is to let the agent draft and propose, and keep a human in the loop for approvals and publishing."
+  - question: "Is the plugin really open source?"
+    answer: "Yes. It lives in Probo's main open-source repository at packages/skills, MIT licensed, and it's published on npm as @probo/skills. You can read every skill, fork it, and adapt it. Open source and data ownership are the point, not the exception."
+  - question: "What if I self-host Probo?"
+    answer: "Install the plugin the same way, then point it at your own instance. Because the 1.0.0 spec doesn't expand placeholders in bundled MCP URLs, you add a self-hosted server in the agent: claude mcp add --transport http probo https://<your-host>/api/mcp/v1."
+---
+
+Your AI assistant can write you a decent password policy from memory. What it can't do is read your actual controls, see which measures are still open, or file the policy back into your compliance platform as a draft.
+
+It's guessing at a company it can't see.
+
+Agent Plugins are the standard that closes that gap.
+
+## Key takeaways
+
+- **A plugin is two things in one folder:** an MCP server (the tools your agent can call) and agent skills (the instructions that tell it how to do the work well).
+- **It's a new open standard:** built jointly by Amazon, Cursor, GitHub, Microsoft, OpenAI, and Vercel, and already supported by several AI clients.
+- **It's deliberately lean:** no central directory, no universal installer. Each client installs it its own way.
+- **Probo ships a real one:** an Agent Plugins 1.0.0 package (MIT, published as `@probo/skills`) that pairs four compliance skills with two hosted MCP servers scoped to your real Probo data.
+
+## What is an Agent Plugin?
+
+Until now, extending an AI agent meant two separate, unrelated jobs. You connected an MCP server (the Model Context Protocol: tools the agent can call). Then, separately, you fed it skills or prompts to tell it how to use them. Two mechanisms, two install flows, no relationship between them.
+
+An [Agent Plugin](https://agent-plugins.org/) packages both into one distributable folder:
+
+- **`plugin.json` (required):** defines the name, version, and details.
+- **`skills/`:** the instructions. How to write a policy, how to run a gap assessment, what "done" looks like.
+- **`mcp.json`:** the MCP configuration. The tools the agent can actually call.
+
+The split matters. The MCP server is the hands, the skills are the method.
+
+Tools without instructions give you an agent that can technically do anything and reliably does nothing useful. Instructions without tools give you good advice about a system the agent can't touch. A plugin ships them together so the person installing it gets both at once.
+
+## What it deliberately doesn't fix
+
+The spec is intentionally small, and that's a feature. It does not try to solve:
+
+1. **Discoverability.** There's no central directory of plugins to browse. You find them the way you find any open-source project.
+2. **Installation.** There's no one command that works everywhere. Each client (VS Code, Cursor, Claude, and others) keeps its own install method.
+3. **Extra agent tooling.** Hooks, custom commands, and the rest are out of scope.
+
+If you were hoping for an app store for agent capabilities, this isn't that. It's a common file format so that a plugin someone writes once works across clients, instead of being rebuilt per tool.
+
+That's a smaller promise, and a more honest one.
+
+## Why this matters for compliance
+
+Compliance is exactly the kind of work that falls apart when the agent can't see your real state.
+
+Generic advice is cheap. "You should have an access control policy" is true for every company and useful to none of them. The value shows up when the agent can read your specific controls, your open measures, your actual vendors and risks, and act on them. That's the tools half.
+
+But raw data access isn't enough either. An agent with write access to your compliance platform and no method will happily generate a risk register full of high ratings with no treatment decisions, which is worse than useless. The skills half is what encodes the method: risk-first, mapped to your context, structured the way an auditor expects to read it.
+
+One more honest note. A plugin does not do compliance for you. It removes the mechanical friction, the reading, the drafting, the filing, so a human can make the decisions that were always the actual work.
+
+Automation speeds up tasks. It doesn't own the outcome.
+
+## How to set it up for Probo
+
+Probo ships a proper Agent Plugins 1.0.0 package. It lives in the open-source repo at [`packages/skills`](https://github.com/getprobo/probo/tree/main/packages/skills), published to npm as `@probo/skills` under an MIT license. The portable core is exactly the three pieces the standard describes: `plugin.json`, `skills/`, and `mcp.json`.
+
+**The skills** are the compliance workflows. Today the package ships four, each written to lean on your real data rather than generic advice:
+
+- `open-source-compliance`: assess and automate GRC work end to end, from vendor reviews and control mapping to evidence, risk registers, and policy workflows.
+- `access-review`: run a semi-automated access review campaign, deciding approve, revoke, or escalate per entry.
+- `missing-signatures`: a read-only, per-person recap of who still owes document signatures or approvals.
+- `compliance-portal-commitments`: draft the public security commitments for your compliance portal, grounded strictly in your published policies.
+
+It's a small, sharp set on purpose, not a dumping ground. Two of them (`access-review` and `missing-signatures`) also ship as Claude Code commands for semi-automated runs.
+
+**The MCP server** is what those skills act through. `mcp.json` bundles both hosted regions, so the plugin wires them up for you:
+
+- `probo-us`: `https://us.probo.com/api/mcp/v1`
+- `probo-eu`: `https://eu.probo.com/api/mcp/v1`
+
+There's no API key or bearer token to paste anywhere. Probo MCP authenticates with OAuth 2.0, discovered automatically from the instance, and it never bypasses your existing access controls. A session can only reach an organization and run an operation when both the token's scopes and your permissions allow it.
+
+The agent sees exactly what you'd see, and nothing more.
+
+Here's the setup in Claude Code, which reads the marketplace catalog at the repo root:
+
+```bash
+claude plugin marketplace add getprobo/probo
+claude plugin install probo@probo
+claude mcp login probo-us   # pick your region, or run /mcp in session
+```
+
+Any other Agent Plugins client works the same way in spirit: point it at the package, and it reads `plugin.json`, discovers the skills, and loads both servers from `mcp.json`. Claude Code, Codex, OpenCode, and Cursor are all supported today.
+
+Self-hosting Probo? The 1.0.0 spec has no placeholder expansion for remote MCP URLs, so you add your own instance in the agent rather than in the package:
+
+```bash
+claude mcp add --transport http probo https://probo.example.com/api/mcp/v1
+```
+
+That's it. Once it's in, your assistant can pull up a live control, run a real access review, draft your portal commitments from your actual policies, and write the results back to Probo for a human to review.
+
+An MCP server on its own is a box of tools with no manual. A skills library on its own is a manual for tools you don't have. The Agent Plugin standard is just the agreement to ship them together, in a format that works across clients.
+
+For compliance, where the whole job is acting correctly on your specific state, that pairing is the difference between an agent that gives advice and one that does the work.
+
+The skills are open source and the MCP server is live today. If you want your agent working from your real compliance posture instead of guessing, that's the setup.
+
+## Frequently Asked Questions
+
+**Do I need both the skills and the MCP server?**
+
+They work best together, but you can start with either. The MCP server alone gives your agent access to your Probo data. The skills alone give it Probo's compliance methodology. The point of the plugin format is that you don't have to choose: you get the method and the tools in one setup.
+
+**Is this Claude-only?**
+
+No. Agent Plugins are a cross-client standard backed by Amazon, Cursor, GitHub, Microsoft, OpenAI, and Vercel. The Probo package is portable, and Claude Code, Codex, OpenCode, and Cursor are all supported today through their own plugin or MCP configuration.
+
+**Can the agent change my compliance data?**
+
+Only within your permissions. The MCP server enforces Probo's existing access controls: a token acts inside its granted scopes and the user's permissions, never beyond them. A good practice is to let the agent draft and propose, and keep a human in the loop for approvals and publishing.
+
+**Is the plugin really open source?**
+
+Yes. It lives in Probo's main open-source repository at [`packages/skills`](https://github.com/getprobo/probo/tree/main/packages/skills), MIT licensed, and it's published on npm as `@probo/skills`. You can read every skill, fork it, and adapt it. Open source and data ownership are the point, not the exception.
+
+**What if I self-host Probo?**
+
+Install the plugin the same way, then point it at your own instance. Because the 1.0.0 spec doesn't expand placeholders in bundled MCP URLs, you add a self-hosted server in the agent: `claude mcp add --transport http probo https://<your-host>/api/mcp/v1`.
