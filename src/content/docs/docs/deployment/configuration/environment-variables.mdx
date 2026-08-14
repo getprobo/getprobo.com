@@ -79,6 +79,50 @@ The bootstrap process applies documented defaults, converts strings to the
 required types, and fails before writing the file when a required value is
 missing or a value cannot be parsed.
 
+## Compliance Portal TLS
+
+Compliance Portals listen separately from the console and API because they
+route requests by the visitor-facing domain. Choose the mode that matches the
+network path for those portal requests:
+
+| Variable value | TLS endpoint | Portal listener |
+| -------------- | ------------ | --------------- |
+| `PROBOD_TRUST_CENTER_TLS_MODE=direct` | Probo | `PROBOD_TRUST_CENTER_HTTP_ADDR` for HTTP and `PROBOD_TRUST_CENTER_HTTPS_ADDR` for HTTPS |
+| `PROBOD_TRUST_CENTER_TLS_MODE=external` | Trusted layer-7 proxy | `PROBOD_TRUST_CENTER_HTTP_ADDR` for forwarded HTTP requests |
+
+`direct` is the default. It requires TCP passthrough so Probo receives TLS SNI
+and can select the certificate for the requested portal domain.
+
+Use `external` when a reverse proxy, ingress controller, tunnel, or hosting
+platform terminates TLS. The proxy must:
+
+- forward portal traffic to `PROBOD_TRUST_CENTER_HTTP_ADDR`, not
+  `PROBOD_API_ADDR`;
+- preserve the original `Host` header, or overwrite `X-Forwarded-Host` with the
+  original host;
+- overwrite `X-Forwarded-Proto` with one `http` or `https` value instead of
+  appending to a client-provided value;
+- prevent direct public access to the portal HTTP listener; and
+- route HTTP ACME challenges under `/.well-known/acme-challenge/` to the same
+  listener.
+
+<Aside type="danger" title="Forwarded headers are a trust boundary">
+  In external mode, Probo uses the forwarded protocol and host to select a
+  Compliance Portal and construct redirects. Do not enable this mode on a
+  listener that untrusted clients can reach without passing through a proxy
+  that replaces those headers.
+</Aside>
+
+`PROBOD_TRUST_CENTER_PROXY_PROTOCOL_TRUSTED_PROXIES` enables the PROXY protocol
+when the upstream proxy sends it. List only the proxy source addresses or CIDR
+ranges. This setting does not replace network isolation or forwarded-header
+sanitization.
+
+For custom domains, also replace the Probo Cloud default in
+`PROBOD_CUSTOM_DOMAINS_CNAME_TARGET` with a stable hostname that routes to this
+portal entry point. The value is displayed to portal administrators and used
+for DNS validation. See [Branding and domains](/docs/product/compliance-portal/branding-and-domains#self-hosted-domains).
+
 ## Special input behavior
 
 - `PROBOD_PG_CA_BUNDLE_PATH` reads a PostgreSQL CA bundle from a file and takes

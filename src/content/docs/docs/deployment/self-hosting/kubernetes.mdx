@@ -231,13 +231,51 @@ GRANT ALL ON SCHEMA public TO probod;
 
 The chart enables its HAProxy Ingress dependency by default. Disable it when the cluster already has an ingress controller; otherwise the installation can create an unexpected public load balancer.
 
-The chart routes the ingress to Probo's backoffice port. TLS configuration depends on your ingress controller and certificate system. Confirm that:
+The chart routes the configured ingress to Probo's backoffice port. Compliance Portals use separate service ports and require the routing described below. TLS configuration depends on your ingress controller and certificate system. Confirm that:
 
 - only intended public services receive external addresses;
 - HTTP redirects to HTTPS;
 - the configured hostname matches `probo.baseUrl`;
 - `probo.cors.allowedOrigins` contains the complete HTTPS origin;
 - cookies are scoped to the intended domain.
+
+### Compliance Portal custom domains
+
+Choose a stable, operator-owned hostname that resolves to the public entry point for Compliance Portals. Portal administrators will point their custom domains at this target. Enable custom domains and set the target in your Helm values:
+
+```yaml
+probo:
+  customDomains:
+    enabled: true
+    cnameTarget: portals.probo.example.com
+    renewalInterval: 3600
+    provisionInterval: 30
+    acme:
+      directory: https://acme-v02.api.letsencrypt.org/directory
+      email: admin@example.com
+      keyType: EC256
+```
+
+The default TLS mode is `direct`. Probo terminates portal TLS in this mode, so the load balancer must pass TCP ports 80 and 443 to the chart's `http` and `https` service ports without terminating TLS. The bundled HAProxy TCP configuration provides this path when enabled.
+
+When an ingress controller, tunnel, or hosting platform terminates TLS, select external mode:
+
+```yaml
+probo:
+  trustCenter:
+    tlsMode: external
+```
+
+Create a separate layer-7 route for every Compliance Portal host, or a dynamic route that accepts those hosts, and send it to the chart's `http` service port. Do not send portal requests to the `backoffice` port used by the main ingress. In external mode, the chart removes the portal HTTPS service port and the bundled HAProxy HTTPS TCP passthrough.
+
+The layer-7 proxy must preserve the original `Host` or replace `X-Forwarded-Host`, replace `X-Forwarded-Proto` with exactly one value, and be the only network path to the portal HTTP listener. Route plain HTTP requests for `/.well-known/acme-challenge/` to the same listener so Probo can provision and renew certificates.
+
+<Aside type="caution" title="Test a domain before inviting portal admins">
+  Create a CNAME from a test hostname to `probo.customDomains.cnameTarget`,
+  connect it in Probo, and verify DNS validation, certificate activation, HTTP
+  to HTTPS redirects, and the final portal response. A working backoffice
+  ingress does not verify the separate Compliance Portal route.
+</Aside>
 
 ### Replicas and local storage
 

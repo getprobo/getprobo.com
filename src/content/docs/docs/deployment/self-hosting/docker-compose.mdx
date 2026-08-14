@@ -161,6 +161,41 @@ The supplied Compose definition publishes Probo, PostgreSQL, SeaweedFS, and Chro
 
 Mounting a certificate into the Probo container does not configure TLS by itself.
 
+### Expose Compliance Portal custom domains
+
+The console on port `8080` and Compliance Portals use different listeners. To terminate portal TLS at your reverse proxy, add these values to `.env`:
+
+```bash
+PROBOD_TRUST_CENTER_HTTP_ADDR=0.0.0.0:10080
+PROBOD_TRUST_CENTER_TLS_MODE=external
+PROBOD_CUSTOM_DOMAINS_CNAME_TARGET=portals.probo.example.com
+PROBOD_ACME_DIRECTORY=https://acme-v02.api.letsencrypt.org/directory
+PROBOD_ACME_EMAIL=admin@example.com
+PROBOD_ACME_KEY_TYPE=EC256
+```
+
+Pass them through by extending `compose.local.yaml`. When the reverse proxy runs on the same host, bind the published portal port to loopback:
+
+```yaml
+services:
+  probo:
+    environment:
+      PROBOD_TRUST_CENTER_HTTP_ADDR: ${PROBOD_TRUST_CENTER_HTTP_ADDR}
+      PROBOD_TRUST_CENTER_TLS_MODE: ${PROBOD_TRUST_CENTER_TLS_MODE}
+      PROBOD_CUSTOM_DOMAINS_CNAME_TARGET: ${PROBOD_CUSTOM_DOMAINS_CNAME_TARGET}
+      PROBOD_ACME_DIRECTORY: ${PROBOD_ACME_DIRECTORY}
+      PROBOD_ACME_EMAIL: ${PROBOD_ACME_EMAIL}
+      PROBOD_ACME_KEY_TYPE: ${PROBOD_ACME_KEY_TYPE}
+    ports:
+      - "127.0.0.1:10080:10080"
+```
+
+Point `portals.probo.example.com` at the reverse proxy. Configure the proxy to accept each connected portal hostname, terminate TLS, and forward to `127.0.0.1:10080`. If the proxy runs on another host, publish the port only on a private interface and restrict it to the proxy's source address instead of using the loopback binding shown above.
+
+The proxy must preserve the original `Host` or replace `X-Forwarded-Host`, replace `X-Forwarded-Proto` with one value, and pass HTTP requests for `/.well-known/acme-challenge/` to Probo.
+
+Do not expose port `10080` publicly. External TLS mode trusts the proxy's host and protocol headers. Verify the complete flow with a test custom domain before sharing the DNS instructions with portal administrators.
+
 ## Data and backups
 
 The deployment stores state in three named volumes:
