@@ -1,6 +1,8 @@
 import { randomInt } from "../number.ts";
 import { distanceSquared, normalVec, type Position } from "../2d.ts";
 
+const FRAME_INTERVAL = 1000 / 15;
+
 export class AnimatedHero extends HTMLElement {
   // @ts-expect-error It is initialized
   private canvas: HTMLCanvasElement;
@@ -9,10 +11,11 @@ export class AnimatedHero extends HTMLElement {
   private isInView: boolean = false;
   private rafId: number | null = null;
   private observer: IntersectionObserver | null = null;
+  private lastFrameAt = 0;
 
   connectedCallback() {
     this.canvas = document.createElement("canvas");
-    this.canvas.setAttribute("class", "absolute inset-0 -z-1 blur-[100px]");
+    this.canvas.setAttribute("class", "absolute inset-0 -z-1 blur-[60px]");
     this.canvas.style.setProperty("background", "#F8FAF4");
     this.append(this.canvas);
 
@@ -69,12 +72,15 @@ export class AnimatedHero extends HTMLElement {
       return;
     }
 
-    const tick = () => {
+    const tick = (now: number) => {
       this.rafId = null;
       if (!this.isInView || document.visibilityState !== "visible") {
         return;
       }
-      this.drawFrame();
+      if (now - this.lastFrameAt >= FRAME_INTERVAL) {
+        this.lastFrameAt = now;
+        this.drawFrame();
+      }
       this.rafId = window.requestAnimationFrame(tick);
     };
 

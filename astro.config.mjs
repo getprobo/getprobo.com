@@ -95,7 +95,7 @@ export default defineConfig({
       pagination: false,
       editLink: {
         baseUrl:
-          "https://github.com/getprobo/getprobo.com/edit/v2/src/content/docs/docs/",
+          "https://github.com/getprobo/probo.com/edit/v2/src/content/docs/docs/",
       },
       social: [
         {
