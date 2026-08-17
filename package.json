@@ -24,6 +24,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/starlight": "^0.41.7",
     "@astrojs/svelte": "^9.0.1",
+    "@n8n_io/n8n-demo-component": "^1.0.20",
     "@phosphor-icons/core": "^2.1.1",
     "@phosphor-icons/web": "^2.1.2",
     "@probo/cookie-banner": "^0.14.0",

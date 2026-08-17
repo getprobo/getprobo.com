@@ -37,9 +37,10 @@ const {
 
 {
   /*
-  Vendored from @n8n_io/n8n-demo-component@1.0.20 so it loads from 'self' under
-  our CSP. The component renders n8n's hosted preview in an iframe, which is why
+  The component renders n8n's hosted preview in an iframe, which is why
   n8n-preview-service.internal.n8n.cloud is allowlisted in frame-src (public/_headers).
 */
 }
-<script is:inline type="module" src="/vendor/n8n-demo-1.0.20.js"></script>
+<script>
+  import "@n8n_io/n8n-demo-component";
+</script>
