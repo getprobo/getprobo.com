@@ -1,0 +1,45 @@
+---
+interface Props {
+  /** Workflow JSON (nodes + connections), imported from src/data/n8n. */
+  workflow: unknown;
+  /** Public n8n.io template URL, shown as the caption link. */
+  url: string;
+  /** Caption text next to the link. */
+  title: string;
+  /** Canvas height in px. */
+  height?: number;
+  class?: string;
+}
+
+const {
+  workflow,
+  url,
+  title,
+  height = 480,
+  class: className = "",
+} = Astro.props;
+---
+
+<figure class={`not-prose my-8 ${className}`}>
+  <div class="border-border-solid overflow-hidden rounded-xl border">
+    <n8n-demo
+      workflow={JSON.stringify(workflow)}
+      frame="true"
+      clicktointeract="true"
+      hidecanvaserrors="true"
+      style={`display:block;--n8n-workflow-min-height:${height}px`}></n8n-demo>
+  </div>
+  <figcaption class="text-muted-foreground mt-3 text-sm">
+    <a href={url} target="_blank" rel="noopener" class="underline">{title}</a> on
+    n8n.io. Scroll and drag inside the canvas to inspect each node.
+  </figcaption>
+</figure>
+
+{
+  /*
+  Vendored from @n8n_io/n8n-demo-component@1.0.20 so it loads from 'self' under
+  our CSP. The component renders n8n's hosted preview in an iframe, which is why
+  n8n-preview-service.internal.n8n.cloud is allowlisted in frame-src (public/_headers).
+*/
+}
+<script is:inline type="module" src="/vendor/n8n-demo-1.0.20.js"></script>

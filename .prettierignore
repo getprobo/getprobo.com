@@ -1,0 +1,3 @@
+dist
+# Vendored third-party bundles are kept byte-identical to the published package
+public/vendor

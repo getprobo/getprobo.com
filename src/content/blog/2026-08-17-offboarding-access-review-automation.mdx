@@ -1,0 +1,205 @@
+---
+title: "Someone left your company. Who still has access?"
+date: 2026-08-17
+excerpt: "Off-boarding is where access control quietly fails. Why leftover access matters for SOC 2 and ISO 27001, how to run an access review in Probo, and how to fire one automatically the day someone leaves."
+author:
+  name: "Arthur Mayoux"
+faqs:
+  - question: "Does an access review actually revoke access?"
+    answer: "No. A campaign records a point-in-time snapshot and the decisions your reviewers make against it. Recording Revoke in Probo does not change anything in GitHub, Cloudflare, or anywhere else. A human still has to go into the tool and remove the account. That separation is deliberate: the review is the evidence, the revocation is the action, and an auditor wants to see both."
+  - question: "Isn't SCIM enough on its own?"
+    answer: "SCIM covers the tools your identity provider actually manages. It deactivates the person in Probo and in whatever else is wired into the IdP. It does nothing about the tool someone bought on a company card, the invite sent to a personal Gmail, or the API token issued outside SSO. Those are exactly the accounts a review is designed to surface."
+  - question: "How often should we run an access review?"
+    answer: "Most SOC 2 and ISO 27001 programs settle on quarterly for the standing population, and that is fine as a baseline. But quarterly means the average leaver keeps their leftover access for about 45 days. Run the quarterly campaign for everyone, and a targeted one on each departure."
+  - question: "What if a tool isn't in Probo's connector directory?"
+    answer: "Use a CSV source. You export the user list from the tool, upload it, and it becomes entries in the campaign like any other source. It's manual, so it ages, but a CSV source in the review beats a tool nobody looked at."
+  - question: "Do I need n8n to automate this?"
+    answer: "No. The webhook and the API are the actual interface, so anything that can receive an HTTPS POST works. n8n is just the fastest way to get from a webhook to a campaign plus notifications without writing and hosting a service. Probo also ships a CLI and an MCP server if you'd rather script it."
+---
+
+import N8nWorkflow from "../../components/ui/N8nWorkflow.astro";
+import offboardingWorkflow from "../../data/n8n/18272-offboarding-access-review.json";
+
+Your ops lead left in March. Their Google account was disabled the same afternoon, and everyone moved on.
+
+Five months later the GitHub seat is still active. So is the Cloudflare invite from before you had SSO, and the Metabase login someone created with a personal Gmail during the trial.
+
+Nobody notices until an auditor pulls a sample of leavers, or until something goes wrong.
+
+## Key takeaways
+
+- **Disabling the SSO account is not off-boarding.** It covers the tools behind SSO. Anything bought on a card, invited by personal email, or authenticated with an API token survives.
+- **Auditors sample leavers.** SOC 2 CC6.2 and ISO 27001 Annex A 5.18 both ask you to remove access when it is no longer needed, and to show the evidence.
+- **An access review records decisions, it does not revoke anything.** A human still has to open the tool and click remove.
+- **Quarterly is an audit cadence, not a security one.** The risk window is the week after someone leaves, so trigger a review on the departure itself.
+
+## Why off-boarding is where access control breaks
+
+Joiners are easy. Someone asks for access, someone grants it, and the person immediately tells you if it didn't work.
+
+Leavers have no feedback loop. Nobody complains that a former employee still has a Supabase seat.
+
+And the picture is worse than most founders think, because SSO gives false confidence. Your identity provider covers the tools you deliberately put behind it. It does not cover:
+
+- **Tools bought on a company card.** The design tool, the transcription tool, the AI API account. Someone expensed it, invited three people, and it never went near your IdP.
+- **Personal-email invites.** Very common in the first two years. The account isn't in your domain, so deleting the domain user changes nothing.
+- **API tokens and service credentials.** A personal access token keeps working after the human account is gone.
+- **Anything with its own user table.** Plenty of infra and data tools still manage users locally.
+
+This is also the specific thing auditors test. SOC 2 CC6.2 asks that access be removed when it is no longer required. ISO 27001 Annex A 5.18 asks that access rights be provisioned, reviewed, modified, and removed in line with your policy, and A 5.11 covers return of assets. In practice the auditor picks three or four people who left, and asks you to prove their access is gone. Not "we have a policy." Proof.
+
+Off-boarding is where access control gets graded.
+
+## What an access review actually is
+
+An [access review campaign](https://www.probo.com/docs/product/access-review/overview) takes a point-in-time snapshot of who has access to what, records a decision on each account, and preserves the result.
+
+Four moving parts:
+
+- **Sources.** Connections to your tools, through OAuth, API credentials, or CSV import.
+- **Entries.** One row per account, with the fields the provider exposes: name, email, role, admin status, account status, MFA, last login. Blank means the provider didn't return it, not that the answer is no.
+- **Decisions.** Approve, Revoke, Modify, or Escalate on each entry.
+- **Flags.** Optional labels for context, like Orphan, Dormant, Terminated user, or Privileged access.
+
+Now the honest part, because it's the thing people get wrong: recording a decision does not change the account in the provider. Marking an entry Revoke in Probo does not remove anyone from GitHub. Somebody has to go do that.
+
+That separation is on purpose. The review is your evidence. The revocation is the work. An auditor wants both, and a tool that pretended to do the second one automatically would be lying to you about a lot of edge cases.
+
+**A review tells you what's wrong. It doesn't fix it.**
+
+## How to run an access review in Probo
+
+The whole thing lives under **Access Reviews**, split into two tabs: Sources and Campaigns.
+
+### 1. Connect your sources
+
+Start in the Connector Directory. Probo ships more than 30 connectors today, covering the stack most startups actually run: GitHub, Cloudflare, Okta, 1Password, Supabase, Neon, Grafana, Metabase, Tailscale, HubSpot, Render, Railway, Scaleway, OpenAI, Anthropic, and more. For anything not on the list, create a CSV source and upload the export.
+
+Do the boring inventory work here. A campaign is only as good as the sources in it, and a tool you never connected is a blind spot that the review will happily not mention.
+
+### 2. Create the campaign
+
+Go to **Campaigns**, hit **New campaign**, give it a name and an optional description, pick your sources, and click **Create**. It opens in **Draft**, where you can still add sources.
+
+### 3. Start it
+
+Click **Start campaign**. Probo queues data collection and moves to **In progress**. Each source reports its own fetch status: Queued, Fetching, Success, or Failed. When collection finishes, the campaign moves to **Pending actions**.
+
+One thing to know: you cannot add or remove sources after you start. Get the list right in Draft.
+
+### 4. Review and decide
+
+For every entry, record one of four decisions:
+
+- **Approve** if the access is still appropriate.
+- **Revoke** if it should be removed.
+- **Modify** if it should change, usually a downgrade from admin.
+- **Escalate** if you're not the right person to decide.
+
+Approve records immediately. Revoke, Modify, and Escalate require a note explaining why. That note is what makes the campaign readable to an auditor six months later, so write a real one.
+
+Flags are optional and sit alongside the decision, grouped into Account (Orphan, Dormant, Terminated user, Contractor expired), Privileges (Excessive privileges, SoD conflict, Privileged access, Role creep), and Anomaly (No justification, Out of department, Shared account). They don't replace decisions, they add context.
+
+### 5. Complete it
+
+Once every entry has a decision, click **Complete campaign**. Status moves to **Completed** and the record is frozen. This cannot be undone, which is the point: it's evidence.
+
+Then go actually revoke the accounts you marked.
+
+## The problem with quarterly
+
+Most programs land on quarterly reviews. That's a reasonable baseline and your auditor will accept it.
+
+It's also a terrible fit for off-boarding. On a quarterly cadence, someone who leaves the day after a campaign closes keeps their leftover access for nearly three months. On average, about 45 days.
+
+Quarterly answers the question "do we periodically check?" It does not answer "is this specific person gone?"
+
+So run both. Keep the quarterly campaign for the standing population, and fire a targeted campaign the moment someone leaves. The second one is small, fast, and the one that actually reduces risk.
+
+Doing that by hand means someone remembering, on the right day, every time. That's exactly the kind of task that survives for two months and then quietly stops happening.
+
+So automate the trigger.
+
+## Automating it: SCIM, webhooks, and n8n
+
+Three pieces, each doing one job.
+
+### SCIM makes your IdP the source of truth
+
+[Probo supports SCIM 2.0](https://www.probo.com/docs/product/scim/overview), so user lifecycle changes flow from your identity provider instead of from someone updating a spreadsheet. SCIM creates people in Probo and deactivates them, usually starting them as Employee.
+
+The endpoint is `/api/connect/v1/scim/2.0`, authenticated with a bearer token generated specifically for SCIM (not your personal API key). Two modes:
+
+- **Native**, where your IdP pushes changes to Probo. Best fit for Okta.
+- **SCIM Bridge**, where Probo pulls from your directory on a schedule. Recommended for Microsoft Entra ID and Google Workspace.
+
+Pick one authoritative mode per population. Running push and pull at the same time with no clear owner gets you repeated or conflicting changes. And monitor failed events and bridge status rather than assuming the directory change landed.
+
+The result: when HR deactivates someone in the IdP, that person goes inactive in Probo without anyone touching Probo.
+
+### The webhook turns that into an event
+
+Probo emits [signed webhooks](https://www.probo.com/docs/developers/api/webhooks/event-types) on `user:created`, `user:updated`, and `user:deleted`. The payload carries the user object, including `membership.state`.
+
+That gives you a clean definition of an off-boarding signal:
+
+- a `user:updated` where `membership.state` moves out of `ACTIVE`, or
+- a `user:deleted` while the user was still `ACTIVE`.
+
+Everything else is noise you ignore. A name change, a role change, a new hire, none of those should launch a campaign.
+
+Worth noting: access reviews themselves don't emit webhook events. Users do. So the user event is your trigger, and the campaign is what you build on top of it.
+
+### n8n does the orchestration
+
+Now you need something to catch that webhook and turn it into a campaign plus notifications. We published the workflow we use, as a template you can import:
+
+<N8nWorkflow
+  workflow={offboardingWorkflow}
+  url="https://n8n.io/workflows/18272-launch-off-boarding-access-reviews-with-probo-email-and-slack/"
+  title="Launch off-boarding access reviews with Probo, email and Slack"
+  height={480}
+/>
+
+Here's what it does, end to end:
+
+1. **Receives the Probo user webhook** and normalizes the payload into a single shape, then checks whether it's an off-boarding signal. If not, it stops. Nothing else runs.
+2. **Creates an access review campaign** in Probo for that user's organization, and fetches every access review source.
+3. **Checks each source's connection status.** Any source that isn't `CONNECTED` gets aggregated and posted to a Slack alert channel, because a broken connector is a blind spot and you want to know now, not at audit time.
+4. **Attaches the connected sources** to the campaign, starts it, and waits two minutes while Probo collects the current access data.
+5. **Reads the campaign entries** and works out which tools still show the departing person as active, then maps those tools to their admins.
+6. **Emails each tool admin** the list of tools they need to revoke access in, with a fallback admin when no owner is found, and posts a Slack recap with the results and a link to the campaign.
+
+Setup is short:
+
+- A Probo API credential in n8n, and a Probo organization ID available in the webhook payload.
+- A user webhook in Probo (`user:updated` and `user:deleted`) pointing at the workflow's webhook URL.
+- An SMTP credential and a sender address.
+- A Slack OAuth credential, plus the recap channel ID and the alert channel ID.
+- Values for `fallbackAdminEmail` and `proboAppBaseUrl` to match your instance.
+
+If Slack isn't where your team lives, the recap node is easy to swap for Teams, Discord, or plain email. The rest of the workflow doesn't care.
+
+## What this doesn't solve
+
+Being straight about the limits, because they matter:
+
+**It still doesn't revoke anything.** The workflow produces a campaign, a decision surface, and an email telling a named human what to remove. Someone opens GitHub and removes the seat. That is by design, and it's the same tradeoff as the manual review.
+
+**The two-minute wait is a guess.** It's fine for a typical startup stack. With many sources or slow providers, collection can take longer, and you'll want to raise it or poll the campaign status instead.
+
+**Unconnected sources are invisible.** A campaign only reviews the sources attached to it. That's why the Slack alert on disconnected sources exists, and why it's worth acting on.
+
+**It only covers the leaver.** The campaign is org-wide, but the notification logic focuses on the departing person. You still want the quarterly review for role creep, dormant accounts, and everyone who didn't leave.
+
+**SCIM can drift.** If the bridge fails silently, no user event fires and no campaign gets created. Monitor it.
+
+None of that makes the automation less worth doing. It moves off-boarding from "someone has to remember" to "someone has to act on an email," and that second one is a much easier problem.
+
+## The point
+
+Deactivating the SSO account is the part everyone remembers. The leftovers are the part that shows up in the audit.
+
+An access review is how you find them, and a webhook is how you stop relying on memory to start one. **Automation doesn't do the off-boarding for you. It makes sure nobody forgets to start it.**
+
+If you'd rather not build and maintain this yourself, that's what [Probo](https://www.probo.com) does: we run the compliance program, access reviews included, so your engineers can stay on product.
