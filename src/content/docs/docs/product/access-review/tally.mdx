@@ -6,14 +6,15 @@ description: Connect Tally as an access review source using a user-scoped API ke
 Probo reads your Tally organization's users and pending invitations through the Tally API so you can review who has access.
 
 :::caution
-Use a Tally **API key** (`tly-…`) created under **Settings** > **API keys**. Tally issues one credential type and ties each key to the user who created it, so the key inherits that user's permissions and stops working once that user leaves the organization. Create it from an account that can read the organization's members and that will stay in the organization.
+Use a Tally **API key** (`tly-…`) created under **Settings** > **API keys**. Tally ties each key to the user who created it, so the key inherits that user's permissions and stops working once that user leaves the organization. Create it from an account that can read the organization's members and that will stay in the organization.
 :::
 
 ## Prerequisites
 
 - Probo organization administrator access
-- A Tally account in the organization you want to review, preferably the **organization owner**. A key has no scopes of its own: it inherits the permissions of the user who created it, and the organization endpoints answer `403` when that user lacks the required permission
-- The **Organization ID** of that organization, which the Connect dialog asks for alongside the key. Retrieve it by calling `GET https://api.tally.so/users/me` with the key and reading `organizationId` from the response
+- A Tally account in the organization you want to review, preferably the **organization owner**. A key has no scopes of its own: it inherits the permissions of the user who created it, so calls made with the key can do no more than that user can
+
+Probo resolves the organization from the key, so the Connect dialog asks only for the key.
 
 ## Collected Fields
 
@@ -48,15 +49,14 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 <Steps>
 
 1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
-2. Find **Tally**, click **API Key**, paste the key, enter your **Organization ID**, and click **Connect**.
+2. Find **Tally**, click **API Key**, paste the key, and click **Connect**.
 
 </Steps>
 
-Probo names the source after your organization and pulls its users and pending invitations into your campaigns.
+Probo checks the key against the Tally API before it creates the connection, so a rejected key fails at the Connect step and never becomes a broken source. Probo resolves the organization the key belongs to and names the source after the organization owner, because the Tally API exposes no organization name.
 
 ## Troubleshooting
 
-- **Key rejected.** Confirm the key is an active Tally API key (`tly-…`) copied from **Settings** > **API keys**. Tally stops every key belonging to a user once that user is removed from the organization or leaves it, so create a replacement from an account that is still a member.
-- **Access forbidden.** The organization users and invites endpoints answer `403` when the key's user lacks permission. Create the key from the organization owner's account instead.
-- **Organization ID unknown.** Call `GET https://api.tally.so/users/me` with the key and read `organizationId` from the response. It must be the organization the key's user belongs to.
-- **Few or no members appear.** A Tally account belongs to a single organization, and inviting team members is a Tally Pro feature, so a Free account's organization has only that one member.
+- **Tally rejected the API key.** The Connect dialog shows this error when the key fails the check against the Tally API. Confirm the value is an active Tally API key (`tly-…`) copied from **Settings** > **API keys**. A key also stops working once its user is removed from the organization or leaves it, so create a replacement from an account that is still a member.
+- **The source connects but fails to sync.** The Connect check only proves Tally accepts the key. The sync then reads the organization's users and invites with that key, and it can do no more than the key's user can, so an under-permissioned key passes Connect and fails later. Create the key from the organization owner's account instead.
+- **Few or no members appear.** A Tally account belongs to a single organization, and inviting team members is a Tally Pro feature, so a Free account's organization typically has only that one member.
