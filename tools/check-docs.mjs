@@ -77,7 +77,11 @@ for (const file of files) {
     "/docs/self-hosting/",
     "/docs/getting-started/",
   ]) {
-    if (content.includes(legacyPrefix)) {
+    const escaped = legacyPrefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const internalLink = new RegExp(
+      `(?:\\]\\(|href=["'])${escaped}`,
+    );
+    if (internalLink.test(content)) {
       errors.push(
         `${displayPath(file)}: links to legacy route prefix ${legacyPrefix}`,
       );
