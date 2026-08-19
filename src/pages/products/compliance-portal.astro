@@ -127,12 +127,19 @@ const publishCards = [
 
 const visualAssets: Record<
   string,
-  { className: string; src: string; width: number; height: number }[]
+  {
+    className: string;
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  }[]
 > = {
   "protected-assets": [
     {
       className: "trust-category-browser",
       src: "/trust-center/pdf.svg",
+      alt: "Watermarked PDF of a protected compliance document",
       width: 740,
       height: 1071,
     },
@@ -141,18 +148,21 @@ const visualAssets: Record<
     {
       className: "trust-category-audit-row trust-category-audit-row--one",
       src: "/trust-center/audit-row-1.svg",
+      alt: "Audit history row in the Compliance Portal",
       width: 702,
       height: 140,
     },
     {
       className: "trust-category-audit-row trust-category-audit-row--two",
       src: "/trust-center/audit-row-2.svg",
+      alt: "Audit history row in the Compliance Portal",
       width: 520,
       height: 140,
     },
     {
       className: "trust-category-audit-row trust-category-audit-row--three",
       src: "/trust-center/audit-row-3.svg",
+      alt: "Audit history row in the Compliance Portal",
       width: 702,
       height: 140,
     },
@@ -162,6 +172,7 @@ const visualAssets: Record<
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--docusign",
       src: "/trust-center/subprocessor-docusign.svg",
+      alt: "DocuSign listed as a subprocessor",
       width: 281,
       height: 221,
     },
@@ -169,6 +180,7 @@ const visualAssets: Record<
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--hubspot",
       src: "/trust-center/subprocessor-hubspot.svg",
+      alt: "HubSpot listed as a subprocessor",
       width: 281,
       height: 221,
     },
@@ -176,6 +188,7 @@ const visualAssets: Record<
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--linear",
       src: "/trust-center/subprocessor-linear.svg",
+      alt: "Linear listed as a subprocessor",
       width: 281,
       height: 221,
     },
@@ -183,6 +196,7 @@ const visualAssets: Record<
       className:
         "trust-category-subprocessor-card trust-category-subprocessor-card--stripe",
       src: "/trust-center/subprocessor-stripe.svg",
+      alt: "Stripe listed as a subprocessor",
       width: 281,
       height: 221,
     },
@@ -191,6 +205,7 @@ const visualAssets: Record<
     {
       className: "trust-category-data-requests",
       src: "/trust-center/data-requests.svg",
+      alt: "Data request flow from identity check to export",
       width: 1024,
       height: 192,
     },
@@ -200,6 +215,7 @@ const visualAssets: Record<
       className:
         "trust-category-security-card trust-category-security-card--encryption",
       src: "/trust-center/security-encryption.svg",
+      alt: "Encryption security commitment",
       width: 201,
       height: 171,
     },
@@ -207,6 +223,7 @@ const visualAssets: Record<
       className:
         "trust-category-security-card trust-category-security-card--privacy",
       src: "/trust-center/security-privacy.svg",
+      alt: "Privacy security commitment",
       width: 201,
       height: 171,
     },
@@ -214,6 +231,7 @@ const visualAssets: Record<
       className:
         "trust-category-security-card trust-category-security-card--monitoring",
       src: "/trust-center/security-monitoring.svg",
+      alt: "Monitoring security commitment",
       width: 201,
       height: 171,
     },
@@ -221,6 +239,7 @@ const visualAssets: Record<
       className:
         "trust-category-security-card trust-category-security-card--vulnerability",
       src: "/trust-center/security-vulnerability.svg",
+      alt: "Vulnerability management security commitment",
       width: 201,
       height: 171,
     },
@@ -594,7 +613,7 @@ const softwareApplicationSchema = {
                   <img
                     class={asset.className}
                     src={asset.src}
-                    alt=""
+                    alt={asset.alt}
                     width={asset.width}
                     height={asset.height}
                     loading="lazy"
@@ -605,7 +624,7 @@ const softwareApplicationSchema = {
                 {card.visual === "documents" && (
                   <img
                     src="/trust-center/documents.svg"
-                    alt=""
+                    alt="Compliance document library with SOC 2, ISO, and pentest reports"
                     width="653"
                     height="224"
                     loading="lazy"

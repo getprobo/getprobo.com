@@ -15,7 +15,7 @@ export type MonthGroup = {
 export const CHANGELOG_SEO = {
   title: "Changelog: Product Updates",
   description:
-    "Every change we ship to Probo, in plain language. New access review connectors, compliance portal updates, cookie banner improvements, document exports, and console releases.",
+    "Every change we ship to Probo, in plain language. Access review connectors, compliance portals, cookie banners, document exports, and console releases.",
 };
 
 export function mediaAlt(
