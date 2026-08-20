@@ -70,7 +70,7 @@ Each trigger execution outputs the full webhook JSON body — the root envelope 
 
 | Root field       | Description                                                         |
 | ---------------- | ------------------------------------------------------------------- |
-| `eventId`        | Unique delivery identifier (good idempotency key)                   |
+| `eventId`        | Unique delivery identifier. Stable across retries; use it as an idempotency key |
 | `subscriptionId` | Webhook subscription ID                                             |
 | `organizationId` | Organization ID                                                     |
 | `eventType`      | Event type (e.g. `document:updated`)                                |
@@ -78,7 +78,7 @@ Each trigger execution outputs the full webhook JSON body — the root envelope 
 | `data`           | Current entity payload (resource fields live here, not at the root) |
 | `updatedFrom`    | Present on `*:updated` events — entity snapshot before the change   |
 
-Probo also sends HTTP headers such as `X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`, and `X-Probo-Webhook-Host`. The Trigger node uses the signature headers for verification; workflow expressions typically read the body root fields above. See [Webhooks Overview](/docs/developers/api/webhooks/overview) for the full header/root field reference.
+Probo also sends HTTP headers such as `Idempotency-Key`, `X-Probo-Webhook-Delivery-Id`, `X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`, and `X-Probo-Webhook-Host`. The Trigger node uses the signature headers for verification; workflow expressions typically read the body root fields above. See [Webhooks Overview](/docs/developers/api/webhooks/overview) for the full header/root field reference.
 
 Example expressions:
 
@@ -108,10 +108,11 @@ Example expressions:
 - Check that optional fields exist. `updatedFrom` is present only for update
   events.
 - Use `eventId` as an idempotency key before creating an external side effect.
-- Keep the workflow response fast. The trigger acknowledges the webhook before
-  downstream execution.
-- Configure an n8n error workflow for downstream failures. Probo does not retry
-  failed webhook deliveries.
+  Probo retries transient HTTP failures with the same `eventId`.
+- Keep the workflow response fast. Probo times out the HTTP delivery after 15
+  seconds. The trigger acknowledges the webhook before downstream execution.
+- Configure an n8n error workflow for failures after the trigger has already
+  returned `2xx`. Probo only retries when the HTTP delivery itself fails.
 
 ## Troubleshooting
 

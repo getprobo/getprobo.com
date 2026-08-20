@@ -125,6 +125,6 @@ multiple Probo records.
 - Keep destructive operations behind explicit conditions or approval steps.
 - Use stable Probo IDs in workflow data; treat IDs and pagination cursors as
   opaque strings.
-- Make downstream effects idempotent. Probo does not retry failed webhook
-  deliveries, but n8n executions can still be retried manually or by workflow
-  error handling.
+- Make downstream effects idempotent. Probo retries transient webhook failures
+  with the same `eventId`, and n8n executions can also be retried manually or
+  by workflow error handling.

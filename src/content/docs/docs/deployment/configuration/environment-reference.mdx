@@ -528,9 +528,9 @@ A dash in the default column means the variable has no bootstrap default. Option
 
 | Variable                                         | Type    | Default | Requirement | Source                                                                                  |
 | ------------------------------------------------ | ------- | ------- | ----------- | --------------------------------------------------------------------------------------- |
-| `PROBOD_DOCUMENT_NOTIFICATION_DEBOUNCE_DELAY`    | integer | `900`   | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L227) |
-| `PROBOD_DOCUMENT_NOTIFICATION_INTERVAL`          | integer | `300`   | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L226) |
-| `PROBOD_DOCUMENT_NOTIFICATION_REMINDER_INTERVAL` | integer | `86400` | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L228) |
+| `PROBOD_DOCUMENT_NOTIFICATION_DEBOUNCE_DELAY`    | integer | `900`   | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L232) |
+| `PROBOD_DOCUMENT_NOTIFICATION_INTERVAL`          | integer | `300`   | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L231) |
+| `PROBOD_DOCUMENT_NOTIFICATION_REMINDER_INTERVAL` | integer | `86400` | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L233) |
 | `PROBOD_MAILER_INTERVAL`                         | integer | `60`    | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L208) |
 | `PROBOD_MAILER_SENDER_EMAIL`                     | string  | —       | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L207) |
 | `PROBOD_MAILER_SENDER_NAME`                      | string  | —       | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L206) |
@@ -540,8 +540,13 @@ A dash in the default column means the variable has no bootstrap default. Option
 | `PROBOD_SMTP_PASSWORD`                           | string  | —       | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L212) |
 | `PROBOD_SMTP_TLS_REQUIRED`                       | boolean | `false` | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L213) |
 | `PROBOD_SMTP_USER`                               | string  | —       | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L211) |
-| `PROBOD_WEBHOOK_CACHE_TTL`                       | integer | `86400` | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L223) |
+| `PROBOD_WEBHOOK_CACHE_TTL`                       | integer | `86400` | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L224) |
+| `PROBOD_WEBHOOK_MAX_CONCURRENCY`                 | integer | `5`     | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L228) |
+| `PROBOD_WEBHOOK_REQUEST_TIMEOUT`                 | integer | `15`    | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L223) |
+| `PROBOD_WEBHOOK_RETRY_BASE`                      | integer | `30`    | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L226) |
+| `PROBOD_WEBHOOK_RETRY_MAX`                       | integer | `14400` | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L227) |
 | `PROBOD_WEBHOOK_SENDER_INTERVAL`                 | integer | `5`     | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L222) |
+| `PROBOD_WEBHOOK_STALE_AFTER`                     | integer | `300`   | Optional    | [View usage](https://github.com/getprobo/probo/blob/main/pkg/bootstrap/builder.go#L225) |
 
 ## Electronic signatures
 

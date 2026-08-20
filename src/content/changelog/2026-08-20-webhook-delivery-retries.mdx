@@ -1,0 +1,14 @@
+---
+title: "Webhook Deliveries Now Retry Automatically"
+description: "Outbound webhooks are now durable delivery jobs with automatic retries, exponential backoff, Retry-After support, and stable idempotency headers so a timeout or 5xx no longer drops the event after one attempt."
+date: 2026-08-20
+tags: ["Integrations"]
+---
+
+Webhook delivery used to be a single shot. If your endpoint timed out or returned 5xx, the event was marked failed and Probo moved on.
+
+Deliveries are now durable jobs. Each subscription gets its own delivery ID, Probo keeps that ID across retries, and it sends `Idempotency-Key` plus `X-Probo-Webhook-Delivery-Id` so receivers can ignore duplicates. Transient failures — network errors, timeouts, `408`, `425`, `429`, and `5xx` — retry with exponential backoff, up to 12 attempts. `Retry-After` is honored on retryable responses.
+
+A successful delivery is any `2xx` within 15 seconds. Other `4xx` responses still fail immediately. Status stays `PENDING` while retries remain, then `FAILED` when the job is done retrying.
+
+If you already keyed idempotency on `eventId`, you do not need to change that. If you treated every HTTP POST as a new event, start using the delivery ID before creating side effects.
