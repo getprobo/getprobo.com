@@ -3,6 +3,7 @@ Makefile
 
 # build output
 dist/
+.cache/
 
 # generated types
 .astro/

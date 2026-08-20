@@ -7,12 +7,15 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm run check:assets",
     "build": "astro build",
     "check:docs": "node tools/check-docs.mjs",
     "docs:check-reference": "node tools/generate-reference.mjs --check",
     "docs:generate": "node tools/generate-reference.mjs",
     "redirects:generate": "node tools/generate-redirects.mjs",
     "indexnow:submit": "node --env-file=.env tools/submit-indexnow.mjs",
+    "optimize:assets": "node tools/optimize-assets.mjs",
+    "check:assets": "node tools/optimize-assets.mjs --check",
     "format": "node tools/format-changed.mjs",
     "preview": "astro preview",
     "astro": "astro",
@@ -56,6 +59,7 @@
   "devDependencies": {
     "@astrojs/starlight-tailwind": "^5.0.0",
     "@tailwindcss/typography": "^0.5.20",
+    "sharp": "^0.35.3",
     "tailwind-variants": "^3.3.1",
     "wrangler": "^4.120.1"
   },
