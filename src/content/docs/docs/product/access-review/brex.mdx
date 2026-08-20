@@ -1,0 +1,61 @@
+---
+title: Brex
+description: Connect Brex as an access review source using OAuth or a Business API key so Probo can list every user of your Brex organization.
+---
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+Probo reads your Brex organization's users through the Brex Team API so you can review who has access. Connecting with **Connect** (OAuth) is the recommended method and requires no token management. A Business API key is also available if you would rather not authorize an OAuth connection.
+
+## Prerequisites
+
+- Probo organization administrator access
+- Brex **account admin** or **card admin** access. Brex requires this level of access to create a Business API key, and to authorize a new connected app through OAuth
+
+## Collected Fields
+
+| Probo field | Brex field                                               | Notes                                                                        |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Name        | `first_name`, `last_name`                                | Joined with a space                                                          |
+| Email       | `email`                                                  |                                                                              |
+| Role        | `role`                                                   | Used exactly as returned by Brex; Probo does not relabel it                  |
+| Admin       | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| Status      | `status`                                                 | Active only when `status` is `ACTIVE`; any other value is listed as inactive |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                   |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+
+Brex returns every member of the organization on one endpoint. Probo skips a record that arrives without an email address.
+
+## Connect Brex
+
+### Option A: Connect with Brex (recommended)
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Brex** and click **Connect**.
+3. Sign in to Brex as an account admin or card admin and authorize Probo. Probo requests the **`users.readonly`** and **`companies.readonly`** scopes, plus `openid` and `offline_access` so the connection keeps syncing without you reconnecting.
+
+</Steps>
+
+### Option B: Business API Key
+
+<Steps>
+
+1. In Brex ([dashboard.brex.com](https://dashboard.brex.com)), signed in as an account admin or card admin, go to **Developer** > **Settings**, and click **Create Token**.
+2. Name it (e.g. `Probo Access Review`), and grant it read access to the **Team** and company profile data. Confirm your selection and click **Allow Access**.
+3. Copy the token. Brex shows it only once.
+4. In Probo, go to **Access Reviews** > **Sources** > **Add Source**, find **Brex**, open the dropdown next to **Connect**, and click **Connect with API Key**.
+5. Paste the token and click **Connect**.
+
+</Steps>
+
+Probo names the source after your Brex company's legal name and pulls its users into your campaigns.
+
+## Troubleshooting
+
+- **Key or token rejected, or no users appear.** Confirm the Business API key (or OAuth authorization) grants read access to Team/Users data; a key scoped only to Expenses, Payments, or another API cannot list users.
+- **The source keeps the generic name "Brex" instead of your company name.** Resolving the company name requires the `companies.readonly` scope. A Business API key without read access to company data, or an OAuth connection authorized before this scope was requested, will 403 on the lookup. Reconnect through OAuth, or recreate the API key with company data access, to pick up the name.
+- **The source stops syncing after a quiet period.** Brex expires a Business API key after 90 days of inactivity, and revokes a token tied to a user who is no longer active. Create a new token, or reconnect via OAuth, to restore the source.
