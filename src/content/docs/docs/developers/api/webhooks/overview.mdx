@@ -101,7 +101,7 @@ Every delivery body is a JSON object with a fixed root envelope. Resource-specif
 1. Verify the signature using the headers and untouched request body.
 2. Parse the JSON only after verification succeeds.
 3. Confirm `organizationId` and `eventType` are ones your endpoint expects.
-4. Atomically record `eventId` before producing side effects. Ignore an ID you have already processed.
+4. Atomically record `eventId` (or the `Idempotency-Key` / `X-Probo-Webhook-Delivery-Id` header — they are the same value) before producing side effects. Ignore an ID you have already processed.
 5. Enqueue the event and return a successful response.
 
 For update events, compare `updatedFrom` with `data` to identify the change. Resource IDs such as a document or user ID are nested under `data`; they are not root fields.

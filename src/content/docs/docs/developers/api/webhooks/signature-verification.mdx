@@ -193,7 +193,7 @@ function verifyWebhook(rawBody, timestamp, signature, signingSecret) {
 - Compare decoded signature bytes in constant time. Check their length first where the comparison API requires equal-length inputs.
 - Keep a separate secret for each subscription and store it in a secret manager. The secret is issued when the subscription is created and changes only if you delete that subscription and create a new one. See [Signing secret](/docs/developers/api/webhooks/overview#signing-secret).
 - Return a generic `400` or `403` response. Do not reveal which verification check failed.
-- Record `eventId` after verification and process it only once. Retries reuse the same `eventId` with a new timestamp and signature. Timestamp validation limits replay time; idempotency prevents duplicate side effects.
+- Record `eventId` after verification and process it only once. The same value is sent as `Idempotency-Key` and `X-Probo-Webhook-Delivery-Id`. Retries reuse it with a new timestamp and signature. Timestamp validation limits replay time; idempotency prevents duplicate side effects.
 
 ## Troubleshooting
 
