@@ -116,7 +116,7 @@ const heroLogoPosition =
     : "absolute bottom-4 left-4 z-10 max-w-[calc(100%-2rem)] sm:bottom-5 sm:left-5 sm:max-w-[calc(100%-2.5rem)]";
 
 const trailer = story.data.trailer;
-const posterSrc = trailer?.replace(/\.mp4$/i, ".jpg");
+const posterSrc = trailer?.replace(/\.mp4$/i, ".webp");
 const mediaShell =
   size === "default"
     ? "relative overflow-hidden rounded-t-3xl"
@@ -141,12 +141,23 @@ const mediaRadius =
             playsinline
             loop
             preload="none"
-            poster={posterSrc}
             data-src={trailer}
             class={clsx(classNames.image(), "object-center")}
           />
+          <img
+            src={posterSrc}
+            alt=""
+            width="1280"
+            height="1280"
+            loading="lazy"
+            decoding="async"
+            class={clsx(
+              classNames.image(),
+              "absolute inset-0 z-1 h-full object-center transition-opacity duration-300 group-data-playing/trailer:opacity-0",
+            )}
+          />
           <div
-            class="pointer-events-none absolute top-1/2 left-1/2 z-[2] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out group-data-[playing]/trailer:opacity-40"
+            class="pointer-events-none absolute top-1/2 left-1/2 z-2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out group-data-playing/trailer:opacity-40"
             aria-hidden="true"
           >
             <div class="flex size-10 items-center justify-center rounded-full bg-[#d2d8d6] text-[#141e12] sm:size-12">
