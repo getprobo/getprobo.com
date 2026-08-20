@@ -15,6 +15,7 @@ export const StorySchema = z.object({
   image: z.string(),
   previewImage: z.string().optional(),
   trailer: z.string().optional(),
+  trailerPoster: z.string().optional(),
   framework: z.enum(frameworks.map((f) => f.label) as any),
   logo: z.string(),
   logoHeight: z.number().optional(),

@@ -48,6 +48,8 @@ const stories = defineCollection({
     previewImage: z.string().optional(),
     /** Public URL for a muted looping card trailer (e.g. /stories/trailers/foo.mp4) */
     trailer: z.string().optional(),
+    /** Public URL for the trailer poster; defaults to the trailer URL with a .webp extension */
+    trailerPoster: z.string().optional(),
     ogImage: z.string().optional(),
     framework: z.enum(frameworks.map((f) => f.label) as any),
     logo: z.string(),
