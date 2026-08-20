@@ -78,7 +78,7 @@ Each trigger execution outputs the full webhook JSON body — the root envelope 
 | `data`           | Current entity payload (resource fields live here, not at the root) |
 | `updatedFrom`    | Present on `*:updated` events — entity snapshot before the change   |
 
-Probo also sends HTTP headers such as `Idempotency-Key`, `X-Probo-Webhook-Delivery-Id`, `X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`, and `X-Probo-Webhook-Host`. The Trigger node uses the signature headers for verification; workflow expressions typically read the body root fields above. See [Webhooks Overview](/docs/developers/api/webhooks/overview) for the full header/root field reference.
+Probo also sends HTTP headers such as `Idempotency-Key`, `X-Probo-Webhook-Delivery-Id`, `X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`, and `X-Probo-Webhook-Host`. The Trigger node uses the signature headers for verification; workflow expressions typically read the body root fields above. See [Delivery and recovery](/docs/developers/api/webhooks/delivery-and-recovery) for the full header and root-field reference.
 
 Example expressions:
 
@@ -132,12 +132,22 @@ node can replace the old subscription.
 <CardGrid>
   <LinkCard
     title="Webhook overview"
-    description="Review the envelope, headers, and delivery behavior"
+    description="See which events webhooks cover and how delivery works"
     href="/docs/developers/api/webhooks/overview"
   />
   <LinkCard
     title="Event types"
     description="Inspect payload fields for every supported event"
     href="/docs/developers/api/webhooks/event-types"
+  />
+  <LinkCard
+    title="Signature verification"
+    description="Verify HMAC-SHA256 signatures on the raw request body"
+    href="/docs/developers/api/webhooks/signature-verification"
+  />
+  <LinkCard
+    title="Delivery and recovery"
+    description="Review the envelope, headers, retries, and failed-job recovery"
+    href="/docs/developers/api/webhooks/delivery-and-recovery"
   />
 </CardGrid>

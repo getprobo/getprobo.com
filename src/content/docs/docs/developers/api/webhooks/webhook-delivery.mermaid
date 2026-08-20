@@ -5,7 +5,8 @@ sequenceDiagram
   Note over P: A subscribed resource changes
   P->>P: Enqueue a per-subscription delivery
   loop Until 2xx or the delivery is failed
-    P->>+E: POST signed JSON (stable eventId)
+    Note over P: Same eventId and JSON body. New timestamp and signature.
+    P->>+E: POST signed JSON
     E->>E: Verify signature
     E->>E: Reject stale timestamp
     E->>E: Record eventId, enqueue

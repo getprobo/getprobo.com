@@ -1,11 +1,11 @@
 ---
 title: Signature Verification
-description: How to verify Probo webhook signatures with HMAC-SHA256 over the raw body and timestamp, with worked examples in Go, Python, and JavaScript.
+description: Verify Probo webhook signatures with HMAC-SHA256 over the raw body and timestamp, with Go, Python, and TypeScript examples and framework-specific raw-body notes.
 ---
 
-import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+import { Steps, Tabs, TabItem, LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-Every Probo webhook includes an HMAC signature. Verify it before parsing the body or performing side effects. Signature verification proves that the payload and timestamp were produced with your subscription's signing secret; a timestamp freshness check limits replay attacks.
+Every Probo webhook includes an HMAC signature. Verify it before parsing the body or performing side effects. Signature verification proves that the payload and timestamp were produced with your subscription's signing secret. A timestamp freshness check limits replay attacks.
 
 :::danger[Verify the raw request body]
 Use the exact bytes received from the network. Parsing and re-serializing JSON can change whitespace or key order and will produce a different signature. Configure your framework to expose the raw body before its JSON middleware runs.
@@ -27,6 +27,8 @@ Where:
 - `body` is the raw JSON request body
 
 Use the **full signing secret string** (including the `whsec_` prefix) as the HMAC key. Do not strip the prefix or hex-decode the secret.
+
+Probo generates that secret when you create the subscription. It does not change if you later update the endpoint URL or selected events. Store it in a secret manager, scope it to the receiving service, and never log it. See [Signing secret](/docs/developers/api/webhooks/delivery-and-recovery#signing-secret) for rotation.
 
 ## Verification steps
 
@@ -53,6 +55,42 @@ Use the **full signing secret string** (including the `whsec_` prefix) as the HM
    After the signature matches, reject the request if its timestamp is more than 5 minutes in the past or future. The signed timestamp prevents an attacker from substituting a fresh value.
 
 </Steps>
+
+Cloud and default self-hosted senders stamp the timestamp at the start of each attempt, so a delayed retry still passes a 5-minute check. Self-hosted operators can change sender lease recovery with `PROBOD_WEBHOOK_STALE_AFTER`; that setting does not change this receiver check. Keep a 5-minute window unless you operate both sides and have a reason to change it.
+
+## Preserve the raw body
+
+Read the body as bytes before any JSON parser touches it.
+
+| Runtime | Typical approach |
+| ------- | ---------------- |
+| Go `net/http` | `io.ReadAll(r.Body)` before `json.Unmarshal` |
+| Python Flask | `request.get_data()` — not `request.json` or `request.get_json()` |
+| Python FastAPI / Starlette | `await request.body()` before `request.json()` |
+| Node `http` | Concatenate `data` chunks from the request stream |
+| Express | Mount `express.raw({ type: "application/json" })` on the webhook route so `req.body` is a `Buffer`. Do not use `express.json()` on that path |
+
+Express example:
+
+```javascript
+import express from "express";
+
+const app = express();
+app.post(
+  "/webhooks/probo",
+  express.raw({ type: "application/json" }),
+  (req, res) => {
+    const rawBody = req.body; // Buffer
+    // verify, then JSON.parse(rawBody.toString("utf8"))
+  },
+);
+```
+
+## Choose the signing secret
+
+Verify with the secret that belongs to the subscription that sent the request. `subscriptionId` is only in the JSON body, so you cannot use it to select a secret until after verification succeeds.
+
+Give each subscription its own URL path (or its own endpoint) and load the matching secret from your secret manager before you compute the HMAC. Do not try every stored secret on a shared URL.
 
 ## Examples
 
@@ -146,12 +184,17 @@ def verify_webhook(
 ```
 
   </TabItem>
-  <TabItem label="JavaScript">
+  <TabItem label="TypeScript">
 
-```javascript
+```typescript
 import { createHmac, timingSafeEqual } from "node:crypto";
 
-function verifyWebhook(rawBody, timestamp, signature, signingSecret) {
+function verifyWebhook(
+  rawBody: Buffer,
+  timestamp: string | undefined,
+  signature: string | undefined,
+  signingSecret: string,
+): boolean {
   if (
     !Buffer.isBuffer(rawBody) ||
     typeof timestamp !== "string" ||
@@ -186,14 +229,21 @@ function verifyWebhook(rawBody, timestamp, signature, signingSecret) {
   </TabItem>
 </Tabs>
 
+Complete HTTP handlers that verify, parse, deduplicate, and acknowledge are in the [quickstart](/docs/developers/api/webhooks/quickstart).
+
+## Failure responses
+
+Return a generic `400` or `403` when verification fails. Do not reveal whether the timestamp, signature, or secret was the problem.
+
+Probo treats most `4xx` responses as terminal failures and does not retry them. A rejected signature should fail closed. Do not return `5xx` or `429` for an invalid signature — those codes look like transient errors and trigger retries. See [Delivery and recovery](/docs/developers/api/webhooks/delivery-and-recovery) for retryable status codes.
+
 ## Security recommendations
 
 - Verify the signature before parsing JSON, authorizing the organization, or queuing work.
 - Reject missing, malformed, stale, and future-dated timestamps. The examples use a 5-minute tolerance.
 - Compare decoded signature bytes in constant time. Check their length first where the comparison API requires equal-length inputs.
-- Keep a separate secret for each subscription and store it in a secret manager. The secret is issued when the subscription is created and changes only if you delete that subscription and create a new one. See [Signing secret](/docs/developers/api/webhooks/overview#signing-secret).
-- Return a generic `400` or `403` response. Do not reveal which verification check failed.
-- Record `eventId` after verification and process it only once. The same value is sent as `Idempotency-Key` and `X-Probo-Webhook-Delivery-Id`. Retries reuse it with a new timestamp and signature. Timestamp validation limits replay time; idempotency prevents duplicate side effects.
+- Keep a separate secret for each subscription. Load it by endpoint path, not by parsing the body first.
+- After verification, record `eventId` and process it only once. The same value is sent as `Idempotency-Key` and `X-Probo-Webhook-Delivery-Id`. Retries reuse it with a new timestamp and signature.
 
 ## Troubleshooting
 
@@ -204,3 +254,24 @@ function verifyWebhook(rawBody, timestamp, signature, signingSecret) {
 | `timingSafeEqual` throws                      | The received signature was not validated as 32-byte hexadecimal first          |
 | Valid deliveries are reported as stale        | The receiver clock is out of sync or the timestamp was treated as milliseconds |
 | Verification works with one subscription only | The endpoint is selecting the wrong subscription secret                        |
+| Express handlers always fail                  | `express.json()` ran on the webhook route instead of `express.raw()`           |
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Quickstart"
+    description="Copy a complete receiver that verifies, deduplicates, and acknowledges"
+    href="/docs/developers/api/webhooks/quickstart"
+  />
+  <LinkCard
+    title="Event types"
+    description="Inspect data and updatedFrom for each event"
+    href="/docs/developers/api/webhooks/event-types"
+  />
+  <LinkCard
+    title="Delivery and recovery"
+    description="Handle retries, idempotency, and failed deliveries"
+    href="/docs/developers/api/webhooks/delivery-and-recovery"
+  />
+</CardGrid>

@@ -1,0 +1,464 @@
+---
+title: Webhooks Quickstart
+description: Stand up a Probo webhook receiver, create a subscription, trigger a test event, and confirm delivery with complete Go, Python, and TypeScript handlers.
+---
+
+import { Steps, Tabs, TabItem, LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+This guide takes you from an empty HTTPS endpoint to a confirmed Probo delivery. The handlers verify the signature on the raw body, parse the envelope, ignore duplicate `eventId` values, enqueue work, and return `2xx` quickly.
+
+You need:
+
+- A Probo organization where you can manage webhook subscriptions.
+- A public **HTTPS** URL. Probo does not deliver to `http://` endpoints.
+- The `whsec_` signing secret shown when you create the subscription.
+
+If you are developing on localhost, put a TLS tunnel in front of your process (for example Cloudflare Tunnel or ngrok) and use that `https://` URL as the subscription endpoint.
+
+## 1. Run a receiver
+
+Store the signing secret in `PROBO_WEBHOOK_SECRET`. Pick a language and start the server, then expose it on HTTPS.
+
+<Tabs syncKey="programming-language">
+  <TabItem label="Go">
+
+```go
+package main
+
+import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"strconv"
+	"sync"
+	"time"
+)
+
+type envelope struct {
+	EventID        string          `json:"eventId"`
+	SubscriptionID string          `json:"subscriptionId"`
+	OrganizationID string          `json:"organizationId"`
+	EventType      string          `json:"eventType"`
+	CreatedAt      time.Time       `json:"createdAt"`
+	Data           json.RawMessage `json:"data"`
+}
+
+func main() {
+	secret := os.Getenv("PROBO_WEBHOOK_SECRET")
+	if secret == "" {
+		log.Fatal("PROBO_WEBHOOK_SECRET is required")
+	}
+
+	seen := newIDSet()
+	jobs := make(chan envelope, 64)
+
+	go func() {
+		for event := range jobs {
+			log.Printf("processing %s %s", event.EventType, event.EventID)
+		}
+	}()
+
+	http.HandleFunc("/webhooks/probo", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		body, err := verifyWebhook(r, secret)
+		if err != nil {
+			http.Error(w, "unauthorized", http.StatusForbidden)
+			return
+		}
+
+		var event envelope
+		if err := json.Unmarshal(body, &event); err != nil || event.EventID == "" {
+			http.Error(w, "bad request", http.StatusBadRequest)
+			return
+		}
+
+		if seen.has(event.EventID) {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		select {
+		case jobs <- event:
+			seen.record(event.EventID)
+			w.WriteHeader(http.StatusOK)
+		default:
+			w.Header().Set("Retry-After", "30")
+			http.Error(w, "try again", http.StatusTooManyRequests)
+		}
+	})
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func verifyWebhook(r *http.Request, signingSecret string) ([]byte, error) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	timestamp := r.Header.Get("X-Probo-Webhook-Timestamp")
+	signature := r.Header.Get("X-Probo-Webhook-Signature")
+	if timestamp == "" || signature == "" {
+		return nil, fmt.Errorf("missing signature headers")
+	}
+
+	mac := hmac.New(sha256.New, []byte(signingSecret))
+	mac.Write([]byte(timestamp))
+	mac.Write([]byte(":"))
+	mac.Write(body)
+
+	received, err := hex.DecodeString(signature)
+	if err != nil || !hmac.Equal(mac.Sum(nil), received) {
+		return nil, fmt.Errorf("invalid signature")
+	}
+
+	signedAt, err := strconv.ParseInt(timestamp, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("invalid timestamp")
+	}
+	delta := time.Now().Unix() - signedAt
+	if delta > 300 || delta < -300 {
+		return nil, fmt.Errorf("stale timestamp")
+	}
+
+	return body, nil
+}
+
+type idSet struct {
+	mu sync.Mutex
+	m  map[string]struct{}
+}
+
+func newIDSet() *idSet {
+	return &idSet{m: make(map[string]struct{})}
+}
+
+func (s *idSet) has(id string) bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	_, ok := s.m[id]
+	return ok
+}
+
+func (s *idSet) record(id string) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.m[id] = struct{}{}
+}
+```
+
+```bash
+export PROBO_WEBHOOK_SECRET='whsec_...'
+go run .
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+import hashlib
+import hmac
+import json
+import os
+import re
+import threading
+import time
+from queue import Full, Queue
+
+from flask import Flask, request
+
+SECRET = os.environ["PROBO_WEBHOOK_SECRET"]
+SEEN = set()
+SEEN_LOCK = threading.Lock()
+JOBS: Queue = Queue(maxsize=64)
+
+app = Flask(__name__)
+
+
+def verify_webhook(body: bytes, timestamp: str | None, signature: str | None) -> bool:
+    if (
+        timestamp is None
+        or signature is None
+        or re.fullmatch(r"[0-9]+", timestamp) is None
+        or re.fullmatch(r"[0-9a-fA-F]{64}", signature) is None
+    ):
+        return False
+
+    expected = hmac.new(
+        SECRET.encode(),
+        timestamp.encode("ascii") + b":" + body,
+        hashlib.sha256,
+    ).digest()
+    if not hmac.compare_digest(expected, bytes.fromhex(signature)):
+        return False
+
+    return abs(time.time() - int(timestamp)) <= 300
+
+
+def worker() -> None:
+    while True:
+        event = JOBS.get()
+        print(f"processing {event['eventType']} {event['eventId']}", flush=True)
+        JOBS.task_done()
+
+
+threading.Thread(target=worker, daemon=True).start()
+
+
+@app.post("/webhooks/probo")
+def probo_webhook():
+    body = request.get_data()
+    if not verify_webhook(
+        body,
+        request.headers.get("X-Probo-Webhook-Timestamp"),
+        request.headers.get("X-Probo-Webhook-Signature"),
+    ):
+        return ("unauthorized", 403)
+
+    try:
+        event = json.loads(body)
+    except json.JSONDecodeError:
+        return ("bad request", 400)
+
+    event_id = event.get("eventId")
+    if not event_id:
+        return ("bad request", 400)
+
+    with SEEN_LOCK:
+        already_seen = event_id in SEEN
+    if already_seen:
+        return ("", 200)
+
+    try:
+        JOBS.put_nowait(event)
+    except Full:
+        return ("try again", 429, {"Retry-After": "30"})
+
+    with SEEN_LOCK:
+        SEEN.add(event_id)
+    return ("", 200)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
+```
+
+```bash
+python -m pip install flask
+export PROBO_WEBHOOK_SECRET='whsec_...'
+python app.py
+```
+
+  </TabItem>
+  <TabItem label="TypeScript">
+
+```typescript
+import { createHmac, timingSafeEqual } from "node:crypto";
+import { createServer, type IncomingMessage } from "node:http";
+
+type Envelope = {
+  eventId: string;
+  subscriptionId: string;
+  organizationId: string;
+  eventType: string;
+  createdAt: string;
+  data: unknown;
+};
+
+const secret = process.env.PROBO_WEBHOOK_SECRET;
+if (!secret) {
+  throw new Error("PROBO_WEBHOOK_SECRET is required");
+}
+
+const seen = new Set<string>();
+const jobs: Envelope[] = [];
+
+async function readRawBody(req: IncomingMessage): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of req) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
+
+function verifyWebhook(
+  rawBody: Buffer,
+  timestamp: string | undefined,
+  signature: string | undefined,
+): boolean {
+  if (
+    typeof timestamp !== "string" ||
+    typeof signature !== "string" ||
+    !/^[0-9]+$/.test(timestamp) ||
+    !/^[0-9a-fA-F]{64}$/.test(signature)
+  ) {
+    return false;
+  }
+
+  const expected = createHmac("sha256", secret)
+    .update(timestamp)
+    .update(":")
+    .update(rawBody)
+    .digest();
+  const received = Buffer.from(signature, "hex");
+  if (
+    expected.length !== received.length ||
+    !timingSafeEqual(expected, received)
+  ) {
+    return false;
+  }
+
+  const signedAt = Number(timestamp);
+  return (
+    Number.isFinite(signedAt) && Math.abs(Date.now() / 1000 - signedAt) <= 300
+  );
+}
+
+createServer(async (req, res) => {
+  if (req.method !== "POST" || req.url !== "/webhooks/probo") {
+    res.writeHead(404).end();
+    return;
+  }
+
+  const rawBody = await readRawBody(req);
+  if (
+    !verifyWebhook(
+      rawBody,
+      req.headers["x-probo-webhook-timestamp"] as string | undefined,
+      req.headers["x-probo-webhook-signature"] as string | undefined,
+    )
+  ) {
+    res.writeHead(403).end("unauthorized");
+    return;
+  }
+
+  let event: Envelope;
+  try {
+    event = JSON.parse(rawBody.toString("utf8")) as Envelope;
+  } catch {
+    res.writeHead(400).end("bad request");
+    return;
+  }
+
+  if (!event.eventId) {
+    res.writeHead(400).end("bad request");
+    return;
+  }
+
+  if (seen.has(event.eventId)) {
+    res.writeHead(200).end();
+    return;
+  }
+
+  if (jobs.length >= 64) {
+    res.writeHead(429, { "Retry-After": "30" }).end("try again");
+    return;
+  }
+
+  seen.add(event.eventId);
+  jobs.push(event);
+  queueMicrotask(() => {
+    const next = jobs.shift();
+    if (next) {
+      console.log(`processing ${next.eventType} ${next.eventId}`);
+    }
+  });
+
+  res.writeHead(200).end();
+}).listen(8080);
+```
+
+```bash
+export PROBO_WEBHOOK_SECRET='whsec_...'
+npx --yes tsx server.ts
+```
+
+  </TabItem>
+</Tabs>
+
+Replace the in-memory `eventId` set with a unique index in your database before you handle production traffic. Replace the in-process queue with your job system.
+
+These examples log the event. In production, keep slow work off the request path so you can return `2xx` within 15 seconds. See [Delivery and recovery](/docs/developers/api/webhooks/delivery-and-recovery).
+
+## 2. Create a subscription
+
+Subscribe only to the events you will handle. Copy the signing secret immediately — Probo shows the `whsec_` value when you create the subscription, and the CLI does not print it later.
+
+<Tabs>
+  <TabItem label="Console">
+
+<Steps>
+
+1. Open **Settings > Webhooks**.
+2. Enter your public HTTPS URL, including the path (for example `https://hooks.example.com/webhooks/probo`).
+3. Select a small event set, such as **User created**.
+4. Save the subscription and store the `whsec_` secret as `PROBO_WEBHOOK_SECRET`.
+5. Restart the receiver if it started before the secret was set.
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="CLI">
+
+Sign in with [`prb`](/docs/developers/cli/overview), then create a subscription. Use uppercase enums, not wire names:
+
+```bash
+prb webhook create \
+  --url https://hooks.example.com/webhooks/probo \
+  --event USER_CREATED
+```
+
+Store the signing secret from **Settings > Webhooks** (or from the create confirmation in the console) as `PROBO_WEBHOOK_SECRET`. The CLI prints the subscription ID, endpoint, and events; it does not print the secret.
+
+The `--event` flag can be repeated. See [Event types](/docs/developers/api/webhooks/event-types#wire-names-and-api-enums) for the full mapping.
+
+  </TabItem>
+</Tabs>
+
+You can also create subscriptions with [`createWebhookSubscription`](/docs/developers/api/mcp/tools/catalog/webhooks) or the [n8n Probo Trigger](/docs/developers/api/n8n/trigger). Those clients need the `v1:webhook` OAuth scope.
+
+## 3. Trigger an event and confirm delivery
+
+Make a matching change in Probo. For a `USER_CREATED` subscription, invite or create a user in the same organization.
+
+Then check that Probo accepted the delivery:
+
+```bash
+prb webhook event list <webhook-subscription-id>
+```
+
+The list shows each delivery ID, status (`PENDING`, `SUCCEEDED`, or `FAILED`), and creation time. You can also open **Settings > Webhooks** and inspect delivery history there.
+
+On the receiver, you should see a log line for the new `eventId`. A second POST with the same ID is a retry — the handler returns `200` without enqueueing again.
+
+If the status stays `PENDING` or becomes `FAILED`, see [Delivery and recovery](/docs/developers/api/webhooks/delivery-and-recovery). Common first-run failures are HTTP instead of HTTPS, a body that was parsed before verification, and the wrong signing secret.
+
+## Next steps
+
+<CardGrid>
+  <LinkCard
+    title="Signature verification"
+    description="Framework raw-body notes, secret selection, and troubleshooting"
+    href="/docs/developers/api/webhooks/signature-verification"
+  />
+  <LinkCard
+    title="Event types"
+    description="Choose events and inspect data and updatedFrom"
+    href="/docs/developers/api/webhooks/event-types"
+  />
+  <LinkCard
+    title="Delivery and recovery"
+    description="Retries, ordering, monitoring, and reconciling failed jobs"
+    href="/docs/developers/api/webhooks/delivery-and-recovery"
+  />
+</CardGrid>

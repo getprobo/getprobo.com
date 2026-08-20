@@ -1,15 +1,17 @@
 ---
 title: Webhooks Overview
-description: Explains how Probo webhooks work, covering the signed JSON envelope, delivery requirements, HTTP headers, retry behavior, and a receiver checklist.
+description: Receive signed HTTPS notifications when Probo resources change, covering supported event domains, delivery guarantees, and the path to a production receiver.
 ---
 
-Webhooks let your application react when resources change in Probo without polling the API. A subscription connects one HTTPS endpoint to a set of events in one organization. When an event occurs, Probo sends a signed `POST` request containing a JSON snapshot of the affected resource.
+import MermaidDiagram from "../../../../../../components/docs/MermaidDiagram.astro";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import webhookDelivery from "./webhook-delivery.mermaid?raw";
 
-Common uses include synchronizing users and third parties, starting document approval workflows, and recording compliance events in another system.
+Webhooks let your application react when records change in Probo without polling. A subscription connects one HTTPS endpoint to a set of events in one organization. When a subscribed event occurs, Probo sends a signed `POST` request with a JSON snapshot of the affected resource.
+
+Use webhooks to synchronize users and third parties, start document approval or signature workflows, and record privacy or compliance events in another system.
 
 ## What webhooks cover
-
-Webhook subscriptions currently deliver events for:
 
 | Domain | Event families |
 | ------ | -------------- |
@@ -19,186 +21,60 @@ Webhook subscriptions currently deliver events for:
 | Rights requests | `right-request:*` |
 | Documents | `document:*`, `document-version:*`, signature and approval quorum events |
 
-Other product areas — including frameworks, controls, measures, risks, access reviews, devices, and cookie consent — are available through [GraphQL](/docs/developers/graphql), the [CLI](/docs/developers/cli/overview), [MCP](/docs/developers/api/mcp/overview), and [n8n](/docs/developers/api/n8n/overview), but they do not emit webhook events today. Use polling or a scheduled reconcile job for those domains when your integration must stay current.
+Other product areas — including frameworks, controls, measures, risks, access reviews, devices, and cookie consent — do not emit webhook events. Use [GraphQL](/docs/developers/graphql), the [CLI](/docs/developers/cli/overview), [MCP](/docs/developers/api/mcp/overview), or [n8n](/docs/developers/api/n8n/overview) for those domains, and poll or reconcile when your integration must stay current.
 
-See [Event types](/docs/developers/api/webhooks/event-types) for the full payload reference for supported events.
+See [Event types](/docs/developers/api/webhooks/event-types) for every payload shape. Bodies and the `X-Probo-Webhook-Event` header use lowercase wire names such as `user:created`. The console, CLI, MCP, and n8n use uppercase enums such as `USER_CREATED`.
 
-## How it works
-
-import { Steps } from "@astrojs/starlight/components";
-import MermaidDiagram from "../../../../../../components/docs/MermaidDiagram.astro";
-import webhookDelivery from "./webhook-delivery.mermaid?raw";
+## How delivery works
 
 <MermaidDiagram
   chart={webhookDelivery}
-  caption="A delivery from the change in Probo through retries until your endpoint accepts it or the job fails."
+  caption="A delivery from the change in Probo through retries until your endpoint accepts it or the job fails. Retries keep the same eventId and JSON body, and sign a fresh timestamp."
 />
 
-<Steps>
+Each delivery is a durable job for one subscription:
 
-1. **Expose an HTTPS endpoint**
+- Probo sends `POST` with `Content-Type: application/json` over **HTTPS**.
+- The body is a fixed root envelope (`eventId`, `subscriptionId`, `organizationId`, `eventType`, `createdAt`, `data`, and optional `updatedFrom`). Resource fields live under `data`.
+- The request is HMAC-SHA256 signed. Verify the signature against the **raw** body before parsing JSON.
+- A `2xx` within **15 seconds** is success. Transient failures retry automatically, up to **12 attempts**. Non-retryable `4xx` responses fail immediately.
+- Retries reuse the same `eventId` and JSON body. Each attempt signs a new `X-Probo-Webhook-Timestamp`.
+- Delivery is **at-least-once**. Concurrent sends and retries can arrive out of order. Treat webhooks as notifications, not as your system of record.
 
-   Your endpoint must accept `POST` requests with an `application/json` body.
+The envelope, headers, retry schedule, and recovery steps are in [Delivery and recovery](/docs/developers/api/webhooks/delivery-and-recovery).
 
-2. **Create a subscription**
+## Build a receiver
 
-   In Probo, open **Settings > Webhooks**, enter the endpoint URL, and select the events to receive. You can also manage subscriptions with the [CLI](/docs/developers/cli/commands/webhook).
+1. Expose an HTTPS endpoint and create a narrowly scoped subscription. Copy the `whsec_` signing secret when Probo shows it.
+2. Verify every request, then parse the envelope and ignore duplicate `eventId` values.
+3. Enqueue work and return `2xx` before the 15-second timeout.
+4. Alert on `FAILED` deliveries and reconcile missed changes with the [Probo API](/docs/developers/graphql).
 
-3. **Verify every delivery**
+The [quickstart](/docs/developers/api/webhooks/quickstart) walks through that path with complete Go, Python, and TypeScript handlers.
 
-   Verify the signature against the raw request body and reject stale timestamps before parsing or acting on the payload.
-
-4. **Acknowledge quickly**
-
-   Persist or enqueue the event, then return an accepted `2xx` response. Perform slow work asynchronously.
-
-</Steps>
-
-## Endpoint requirements
-
-- The URL must use **HTTPS**.
-- The endpoint must return a `2xx` status (`200`–`299`).
-- The HTTP request times out after **15 seconds**. Return `2xx` before that, and do slow work after you acknowledge.
-
-A timeout is a transient failure and is retried like a network error, `408`, `425`, `429`, or `5xx`. Other `4xx` responses fail immediately. After retries are exhausted, the delivery is marked `FAILED`. Monitor delivery history and reconcile with the API if missing an event would be critical.
-
-The 15-second limit is the HTTP request timeout. It is separate from the 5-minute signature freshness window on `X-Probo-Webhook-Timestamp`.
-
-## Root envelope
-
-Every delivery body is a JSON object with a fixed root envelope. Resource-specific fields live under `data` (and optionally `updatedFrom`) — they are never promoted to the root.
-
-```json
-{
-  "eventId": "whevt_01ABC123",
-  "subscriptionId": "whsub_01DEF456",
-  "organizationId": "org_01GHI789",
-  "eventType": "document:updated",
-  "createdAt": "2026-07-15T10:30:00Z",
-  "data": {
-    "id": "doc_01VWX234",
-    "title": "Information Security Policy"
-  },
-  "updatedFrom": {
-    "id": "doc_01VWX234",
-    "title": "InfoSec Policy"
-  }
-}
-```
-
-| Root field       | Type   | Always present | Description                                                                                                                                                                                  |
-| ---------------- | ------ | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `eventId`        | string | Yes            | Unique delivery ID. Never assigned to another delivery. Retries of this delivery reuse the same ID. Safe as a unique idempotency key                                                         |
-| `subscriptionId` | string | Yes            | Webhook subscription that received the event                                                                                                                                                 |
-| `organizationId` | string | Yes            | Organization where the event occurred                                                                                                                                                        |
-| `eventType`      | string | Yes            | Wire-format event name (e.g. `document:updated`, `third-party:created`)                                                                                                                      |
-| `createdAt`      | string | Yes            | When the event was created (RFC 3339)                                                                                                                                                        |
-| `data`           | object | Yes            | Current resource payload for the event. Shape depends on `eventType` — see [Event Types](/docs/developers/api/webhooks/event-types)                                                          |
-| `updatedFrom`    | object | No             | Present only on `*:updated` events. Full snapshot of the same resource shape as `data`, taken before the update. Omitted for create, delete, archive, signature, and other non-update events |
-
-### Process a delivery safely
-
-1. Verify the signature using the headers and untouched request body.
-2. Parse the JSON only after verification succeeds.
-3. Confirm `organizationId` and `eventType` are ones your endpoint expects.
-4. Atomically record `eventId` (or the `Idempotency-Key` / `X-Probo-Webhook-Delivery-Id` header — they are the same value) before producing side effects. Ignore an ID you have already processed.
-5. Enqueue the event and return a successful response.
-
-For update events, compare `updatedFrom` with `data` to identify the change. Resource IDs such as a document or user ID are nested under `data`; they are not root fields.
-
-## HTTP headers
-
-Each request also carries metadata in headers. Some headers mirror root envelope fields so you can route or reject a delivery before parsing the body.
-
-| Header                            | Mirrors body field | Description                                                                                      |
-| --------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------ |
-| `Content-Type`                    | —                  | Always `application/json`                                                                        |
-| `Idempotency-Key`                 | `eventId`          | Stable delivery ID. Identical on every retry of the same delivery                                |
-| `X-Probo-Webhook-Delivery-Id`     | `eventId`          | Same value as `Idempotency-Key` and the body `eventId`                                           |
-| `X-Probo-Webhook-Event`           | `eventType`        | Wire-format event name (e.g. `document:updated`)                                                 |
-| `X-Probo-Webhook-Organization-Id` | `organizationId`   | Organization ID                                                                                  |
-| `X-Probo-Webhook-Timestamp`       | —                  | Unix timestamp in **seconds** used when computing the signature. Regenerated on each attempt     |
-| `X-Probo-Webhook-Signature`       | —                  | Hex-encoded HMAC-SHA256 of `{timestamp}:{rawBody}`                                               |
-| `X-Probo-Webhook-Host`            | —                  | Hostname of the Probo instance that sent the delivery (for multi-region / self-hosted receivers) |
-
-### Header vs body
-
-| Use case                          | Prefer                                                                                       |
-| --------------------------------- | -------------------------------------------------------------------------------------------- |
-| Signature verification            | Headers (`X-Probo-Webhook-Timestamp`, `X-Probo-Webhook-Signature`) + **raw** body bytes      |
-| Fast allow/deny before JSON parse | Headers (`X-Probo-Webhook-Event`, `X-Probo-Webhook-Organization-Id`, `X-Probo-Webhook-Host`) |
-| Business logic / diffs            | Root envelope + `data` / `updatedFrom`                                                       |
-| Idempotency                       | `eventId`, `Idempotency-Key`, or `X-Probo-Webhook-Delivery-Id` (same value on every retry)   |
-
-`subscriptionId` and `createdAt` exist only in the body root — they are not duplicated as headers.
-
-## Signing secret
-
-Probo generates a signing secret prefixed with `whsec_` when you create a subscription. That secret does not change if you later update the endpoint URL or selected events. There is no in-place rotation and no overlap window of two valid secrets on one subscription.
-
-To rotate, delete the subscription and create a new one. The new subscription has a new ID and a new secret. Update the receiver with the new secret before the next event; the old secret stops being used as soon as the old subscription is deleted.
-
-Store the secret in a secret manager, scope it to the receiving service, and never log it or include it in client-side code. The secret is required to [verify webhook signatures](/docs/developers/api/webhooks/signature-verification).
-
-## Delivery behavior
-
-- Probo claims pending deliveries about every 5 seconds and can send several at once.
-- A delivery succeeds when the endpoint returns any `2xx` status within **15 seconds**.
-- Each delivery has a unique `eventId`. Retries reuse that ID and the same JSON body. A later delivery never reuses an earlier ID.
-- Each attempt signs a fresh `X-Probo-Webhook-Timestamp`, so a delayed retry still passes a 5-minute freshness check.
-- Transient failures are retried automatically, up to **12 attempts**:
-  - Network errors and timeouts
-  - `408`, `425`, `429`, and `5xx` responses
-- Other `4xx` responses are not retried.
-- Retry delay uses exponential backoff with jitter, starting at 30 seconds and capping at 4 hours. If the endpoint returns `Retry-After` on a retryable response, Probo honors it up to that same 4-hour cap.
-- While retries remain, status stays `PENDING`. A successful response is `SUCCEEDED`. After a non-retryable error or the last attempt, status becomes `FAILED`.
-
-### Payload size
-
-Outbound bodies are JSON snapshots of the root envelope plus `data` (and `updatedFrom` on update events). They include resource metadata, not file binaries or full document bodies. There is no separate outbound request-size header or sender-enforced cap; current event types are far smaller than a typical 1 MB receiver limit.
-
-The 64 KB figure applies only to how much of **your HTTP response** Probo stores for troubleshooting, not to the request Probo sends.
-
-### Replay and recovery
-
-There is no dashboard button, API mutation, or support-triggered resend. Automatic retries are the only replay. They keep the original `eventId`. A `FAILED` delivery is not re-queued; recover by reconciling with the [Probo API](/docs/developers/graphql) or by waiting for a later event after you recreate the subscription.
-
-Self-hosted operators can change the timeout, retry cadence, and concurrency with the `PROBOD_WEBHOOK_*` variables. See the [environment variable reference](/docs/deployment/configuration/environment-reference).
-
-Review delivery history under **Settings > Webhooks**. Avoid returning secrets or sensitive records in your response body because the response is retained for debugging.
-
-:::caution[Treat webhooks as notifications, not as your system of record]
-Retries reduce missed events, but a delivery can still fail after 12 attempts. If missing an event would be critical, periodically reconcile your local state with the Probo API.
-:::
-
-## Receiver checklist
-
-- Preserve the raw body until signature verification is complete.
-- Accept requests only from expected organizations and event types.
-- Use `eventId` (or `Idempotency-Key`) as a unique idempotency key. A unique index on that ID is correct; the same ID on a later POST is a retry, not a new event.
-- Queue work before sending the response.
-- Return `429` with `Retry-After` when you need Probo to back off.
-- Do not expect a resend button. Alert on `FAILED` deliveries and reconcile missed changes with the API.
-- Ignore unknown JSON fields so additive payload changes do not break your receiver.
+Manage subscriptions in **Settings > Webhooks**, with [`prb webhook`](/docs/developers/cli/commands/webhook), with the [MCP webhook tools](/docs/developers/api/mcp/tools/catalog/webhooks), or from [n8n](/docs/developers/api/n8n/trigger). Programmatic create and update require the `v1:webhook` OAuth scope and permission to manage subscriptions in the organization.
 
 ## Next steps
 
-import { LinkCard, CardGrid } from "@astrojs/starlight/components";
-
 <CardGrid>
   <LinkCard
-    title="Event Types"
-    description="See all available webhook events and their payloads"
-    href="/docs/developers/api/webhooks/event-types"
+    title="Quickstart"
+    description="Stand up a receiver, create a subscription, and confirm a delivery"
+    href="/docs/developers/api/webhooks/quickstart"
   />
   <LinkCard
-    title="Signature Verification"
-    description="Verify that webhook requests come from Probo"
+    title="Signature verification"
+    description="Verify HMAC-SHA256 signatures on the raw request body"
     href="/docs/developers/api/webhooks/signature-verification"
   />
   <LinkCard
-    title="n8n Trigger"
-    description="Start n8n workflows from Probo webhook events"
-    href="/docs/developers/api/n8n/trigger"
+    title="Event types"
+    description="Look up wire names, API enums, and payload schemas"
+    href="/docs/developers/api/webhooks/event-types"
+  />
+  <LinkCard
+    title="Delivery and recovery"
+    description="Handle retries, idempotency, failed jobs, and secret rotation"
+    href="/docs/developers/api/webhooks/delivery-and-recovery"
   />
 </CardGrid>

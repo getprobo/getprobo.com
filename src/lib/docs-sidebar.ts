@@ -482,12 +482,20 @@ export const docsSidebarGroups = [
     items: [
       { label: "Overview", slug: "docs/developers/api/webhooks/overview" },
       {
-        label: "Event types",
-        slug: "docs/developers/api/webhooks/event-types",
+        label: "Quickstart",
+        slug: "docs/developers/api/webhooks/quickstart",
       },
       {
         label: "Signature verification",
         slug: "docs/developers/api/webhooks/signature-verification",
+      },
+      {
+        label: "Event types",
+        slug: "docs/developers/api/webhooks/event-types",
+      },
+      {
+        label: "Delivery and recovery",
+        slug: "docs/developers/api/webhooks/delivery-and-recovery",
       },
     ],
   },
