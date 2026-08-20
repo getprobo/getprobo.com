@@ -19,7 +19,7 @@
   --color-primary-foreground: #fcfdfc;
   --color-muted-foreground: #6b716a;
   --color-secondary: #fff;
-  --color-tertiary-foreground: #818780;
+  --color-tertiary-foreground: #606760;
   --color-level-0: #fffffb;
   --color-level-1: #ffffff;
   --color-level-3: #141e12;
@@ -27,7 +27,7 @@
   --color-border-mid: #001a0027;
   --color-border-solid: #ecefec;
 
-  --color-quaternary: #c3c8c2;
+  --color-quaternary: #6b716a;
   --color-accent: #93c926;
   --color-success: #5d770d;
   --color-active: #e4f7c7;

@@ -97,8 +97,13 @@ const menuId = "desktop-navigation-menu";
               aria-label={`${group.feature.eyebrow}: ${group.feature.title}`}
             >
               <img
-                src={group.feature.asset}
+                data-feature-image
+                data-src={group.feature.asset}
                 alt={group.feature.alt}
+                width="1080"
+                height="720"
+                decoding="async"
+                fetchpriority="low"
                 class:list={[
                   "navigation-feature-media absolute max-w-none",
                   group.feature.variant === "story" &&
@@ -298,6 +303,12 @@ const menuId = "desktop-navigation-menu";
     open = (index: number) => {
       if (!this.viewport || !this.panels[index]) return;
       this.cancelClose();
+      const featureImage = this.panels[index].querySelector<HTMLImageElement>(
+        "[data-feature-image]",
+      );
+      if (featureImage?.dataset.src && !featureImage.src) {
+        featureImage.src = featureImage.dataset.src;
+      }
       if (this.hideTimer !== null) {
         window.clearTimeout(this.hideTimer);
         this.hideTimer = null;

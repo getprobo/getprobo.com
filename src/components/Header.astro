@@ -79,6 +79,8 @@ const { hideBurger = false, docsChrome = false } = Astro.props;
       !hideBurger && (
         <burger-menu
           class="group ml-3 grid size-9 place-items-center lg:hidden"
+          role="button"
+          tabindex="0"
           aria-label="Open mobile menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -112,6 +114,7 @@ const { hideBurger = false, docsChrome = false } = Astro.props;
 
     connectedCallback() {
       this.addEventListener("click", this.toggleExpanded);
+      this.addEventListener("keydown", this.toggleFromKeyboard);
       document.addEventListener("keydown", this.closeOnEscape);
       this.menu?.addEventListener("click", this.closeAfterNavigation);
       this.menu?.addEventListener("close", this.syncClosedState);
@@ -122,6 +125,7 @@ const { hideBurger = false, docsChrome = false } = Astro.props;
 
     disconnectedCallback() {
       this.removeEventListener("click", this.toggleExpanded);
+      this.removeEventListener("keydown", this.toggleFromKeyboard);
       document.removeEventListener("keydown", this.closeOnEscape);
       this.menu?.removeEventListener("click", this.closeAfterNavigation);
       this.menu?.removeEventListener("close", this.syncClosedState);
@@ -155,6 +159,12 @@ const { hideBurger = false, docsChrome = false } = Astro.props;
 
     toggleExpanded = () =>
       this.setExpanded(this.getAttribute("aria-expanded") !== "true");
+
+    toggleFromKeyboard = (event: KeyboardEvent) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      this.toggleExpanded();
+    };
 
     closeOnEscape = (event: KeyboardEvent) => {
       if (

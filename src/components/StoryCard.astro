@@ -52,7 +52,7 @@ const card = tv({
         base: "border border-[0.5px] bg-highlight p-2 shadow-sm hover:shadow-md sm:hover:shadow-lg",
         image: "aspect-square rounded-2xl object-cover sm:aspect-704/450",
         badge: "",
-        title: "text-sm leading-snug sm:text-h5",
+        title: "text-foreground text-sm leading-snug sm:text-h5",
         body: "p-3 sm:p-8",
       },
     },
@@ -208,7 +208,6 @@ const mediaRadius =
           {framework && badge && (
             <div class="shrink-0">
               <FrameworkBadge
-                client:only
                 name={badge}
                 class={clsx(
                   "block size-10 sm:size-11",
@@ -233,7 +232,6 @@ const mediaRadius =
           {framework && badge && (
             <div class="badge shrink-0">
               <FrameworkBadge
-                client:only
                 name={badge}
                 class={clsx(
                   "block size-10 sm:size-11",
@@ -255,7 +253,6 @@ const mediaRadius =
           <div class={classNames.badge()}>
             <div class="badge flex justify-center text-center">
               <FrameworkBadge
-                client:only
                 name={badge}
                 class={clsx("mx-auto block size-15", shouldInvert && "invert")}
               />

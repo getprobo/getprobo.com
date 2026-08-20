@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "../styles/splide.css";
   import { onMount, type Snippet } from "svelte";
   import clsx from "clsx";
   import Splide from "@splidejs/splide";

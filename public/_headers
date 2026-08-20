@@ -47,6 +47,25 @@
 /vendor/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Stable media collections - cache for one month
+/clients/*
+  Cache-Control: public, max-age=2592000
+
+/navigation/*
+  Cache-Control: public, max-age=2592000
+
+/frameworks/*
+  Cache-Control: public, max-age=2592000
+
+/stories/*
+  Cache-Control: public, max-age=2592000
+
+/videos/*
+  Cache-Control: public, max-age=2592000
+
+/changelog/*
+  Cache-Control: public, max-age=2592000
+
 # Images and other static assets in /public - cache for 1 week (no immutable, no content hash)
 /*.webp
   Cache-Control: public, max-age=604800

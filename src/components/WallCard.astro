@@ -81,7 +81,7 @@ const escapeAttr = (s: string) =>
         </h3>
         {
           followers && (
-            <p class="text-muted-foreground mt-0.5 text-xxs">
+            <p class="text-muted-foreground text-xxs mt-0.5">
               {followers} followers
             </p>
           )
@@ -147,7 +147,7 @@ const escapeAttr = (s: string) =>
   }
 
   <div
-    class="border-border-solid text-muted-foreground flex items-center justify-between gap-3 border-t px-4 py-2.5 text-xxs"
+    class="border-border-solid text-muted-foreground text-xxs flex items-center justify-between gap-3 border-t px-4 py-2.5"
   >
     <div class="flex items-center gap-2">
       {
@@ -159,7 +159,7 @@ const escapeAttr = (s: string) =>
             <span class="grid size-4 place-items-center rounded-full bg-[#e0245e] text-[9px]">
               ❤️
             </span>
-            <span class="grid size-4 place-items-center rounded-full bg-accent text-[9px]">
+            <span class="bg-accent grid size-4 place-items-center rounded-full text-[9px]">
               🎉
             </span>
           </span>
@@ -177,11 +177,7 @@ const escapeAttr = (s: string) =>
 
     {
       framework && (
-        <FrameworkBadge
-          client:only="svelte"
-          name={framework.badge}
-          class="block size-7"
-        />
+        <FrameworkBadge name={framework.badge} class="block size-7" />
       )
     }
   </div>

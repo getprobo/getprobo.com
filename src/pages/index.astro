@@ -68,16 +68,15 @@ const websiteSchema = {
       <Button
         class="animate-perspective-in animation-delay-300"
         size="lg"
-        rel="nofollow noreferrer"
         href="/contact">Talk to an expert</Button
       >
     </div>
     <Badges
       count={10}
       countMobile={6}
-      client:idle
+      client:visible
       border
-      class="mx-auto grid max-w-[960px] grid-cols-3 sm:grid-cols-5"
+      class="mx-auto grid max-w-240 grid-cols-3 sm:grid-cols-5"
     />
     <section class="mt-11 mix-blend-multiply sm:mt-17">
       <h2
@@ -157,8 +156,23 @@ const websiteSchema = {
 </Layout>
 
 <script>
-  import { AnimatedHero } from "../lib/elements/hero";
-  import { customElementDefine } from "../lib/dom";
+  const registerAnimatedHero = async () => {
+    try {
+      const [{ AnimatedHero }, { customElementDefine }] = await Promise.all([
+        import("../lib/elements/hero"),
+        import("../lib/dom"),
+      ]);
+      customElementDefine("animated-hero", () => AnimatedHero);
+    } catch {
+      // The static hero remains fully usable if the decoration fails to load.
+    }
+  };
 
-  customElementDefine("animated-hero", () => AnimatedHero);
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(() => void registerAnimatedHero(), {
+      timeout: 1500,
+    });
+  } else {
+    setTimeout(() => void registerAnimatedHero(), 500);
+  }
 </script>

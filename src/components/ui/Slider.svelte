@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "../../styles/splide.css";
   import Splide, { type Options } from "@splidejs/splide";
   import clsx from "clsx";
 

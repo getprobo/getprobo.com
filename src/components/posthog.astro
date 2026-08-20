@@ -4,7 +4,7 @@
 
 <script>
   import {
-    posthog,
+    capturePosthogEvent,
     configurePosthogFromBanner,
     captureToolbarPayloadFromHash,
     loadToolbarFromCache,
@@ -40,7 +40,7 @@
           props[attr.name.slice(8).replace(/-/g, "_")] = attr.value;
         }
       });
-      posthog.capture(eventName, props);
+      capturePosthogEvent(eventName, props);
       return;
     }
 
@@ -48,9 +48,11 @@
     if (!link) return;
     const href = link.getAttribute("href")!;
     if (href === "/contact" || href.startsWith("/contact?")) {
-      posthog.capture("contact_cta_click", { source_path: location.pathname });
+      capturePosthogEvent("contact_cta_click", {
+        source_path: location.pathname,
+      });
     } else if (href.includes("github.com/getprobo")) {
-      posthog.capture("github_link_click", {
+      capturePosthogEvent("github_link_click", {
         url: href,
         source_path: location.pathname,
       });
@@ -59,7 +61,9 @@
 
   // Capture pageview and re-inject the toolbar after each Astro view-transition body swap.
   document.addEventListener("astro:after-swap", () => {
-    posthog.capture("$pageview", { page_type: getPageType(location.pathname) });
+    capturePosthogEvent("$pageview", {
+      page_type: getPageType(location.pathname),
+    });
     loadToolbarFromCache();
   });
 </script>

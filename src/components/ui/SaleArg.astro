@@ -6,26 +6,34 @@ interface Props {
   video?: string;
 }
 const { title, video, ...props } = Astro.props;
-const poster = video?.replace(/\.mp4$/, ".jpg");
+const poster = video?.replace(/\.mp4$/, ".webp");
 ---
 
 <section class={clsx("flex flex-col gap-8 sm:gap-10", props.class)}>
   <div class="space-y-2">
     {
       video && (
-        <autopilot-video class="relative mb-6 block aspect-560/360 w-full overflow-hidden rounded-2xl bg-[#EEEDE8] sm:mb-10">
+        <autopilot-video class="group/video relative mb-6 block aspect-560/360 w-full overflow-hidden rounded-2xl bg-[#EEEDE8] sm:mb-10">
           <video
             muted
             playsinline
             loop
-            preload="metadata"
-            poster={poster}
-            src={video}
+            preload="none"
+            data-src={video}
             class="relative block aspect-560/360 w-full rounded-2xl object-cover"
             width={500}
             height={360}
           />
-          <div class="from-level-0 to-level-0/0 absolute right-0 bottom-0 left-0 z-10 h-20 bg-gradient-to-t" />
+          <img
+            src={poster}
+            alt=""
+            width="1000"
+            height="720"
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 h-full w-full rounded-2xl object-cover transition-opacity duration-300 group-data-playing/video:opacity-0"
+          />
+          <div class="from-level-0 to-level-0/0 absolute right-0 bottom-0 left-0 z-10 h-20 bg-linear-to-t" />
         </autopilot-video>
       )
     }
@@ -59,11 +67,16 @@ const poster = video?.replace(/\.mp4$/, ".jpg");
             this.syncPlayback();
           }
         },
-        { threshold: 0.35 },
+        { rootMargin: "200px 0px", threshold: 0.01 },
       );
       this.observer.observe(this.video);
+      this.video.addEventListener("playing", this.onPlaying);
       document.addEventListener("visibilitychange", this.onVisibilityChange);
     }
+
+    private onPlaying = () => {
+      this.setAttribute("data-playing", "");
+    };
 
     private onVisibilityChange = () => {
       this.syncPlayback();
@@ -76,6 +89,10 @@ const poster = video?.replace(/\.mp4$/, ".jpg");
       }
 
       if (this.inView && document.visibilityState === "visible") {
+        const src = video.dataset.src;
+        if (src && video.getAttribute("src") !== src) {
+          video.src = src;
+        }
         void video.play().catch(() => {
           // Autoplay can be blocked; poster still shows.
         });
@@ -86,6 +103,7 @@ const poster = video?.replace(/\.mp4$/, ".jpg");
 
     disconnectedCallback() {
       document.removeEventListener("visibilitychange", this.onVisibilityChange);
+      this.video?.removeEventListener("playing", this.onPlaying);
       this.observer?.disconnect();
       this.observer = null;
       this.video = null;

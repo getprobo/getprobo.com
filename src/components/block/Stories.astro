@@ -46,7 +46,7 @@ const stories = sortStoriesForListing(await getCollection("stories"));
 
     <div class="slider mx-auto">
       <Slider
-        client:load
+        client:visible
         withOverflow
         navigateOnClick
         options={{
@@ -72,7 +72,7 @@ const stories = sortStoriesForListing(await getCollection("stories"));
     width: min(80vw, 720px);
   }
   .slider :global(.splide__slide) {
-    opacity: 0.4;
+    opacity: 0.65;
   }
   .slider :global(.splide__slide.is-active) {
     opacity: 1;

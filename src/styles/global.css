@@ -2,7 +2,6 @@
 
 @plugin "@tailwindcss/typography";
 @import "./animation.css";
-@import "./splide.css";
 @import "./theme.css";
 
 @media (min-width: 640px) {
@@ -21,7 +20,7 @@
   --color-highlight: #d6fbc40f;
   --color-border-mid: #e9fedf1b;
   --color-border-low: #effee214;
-  --color-tertiary-foreground: #778175;
+  --color-tertiary-foreground: #9aa299;
 }
 
 @layer base {

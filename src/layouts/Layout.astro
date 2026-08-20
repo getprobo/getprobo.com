@@ -125,11 +125,6 @@ const canonical = getCanonicalUrl(Astro.url);
         : "https://www.probo.com/og.png"}
     />
 
-    <script>
-      import { registerCookieBanner } from "@probo/cookie-banner";
-      registerCookieBanner();
-    </script>
-
     <!-- JSON-LD Organization Schema -->
     <script
       type="application/ld+json"
@@ -178,7 +173,7 @@ const canonical = getCanonicalUrl(Astro.url);
   <body class="text-primary bg-level-0 font-sans text-base">
     <a
       href="#main-content"
-      class="focus:bg-level-0 focus:text-primary sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg"
+      class="focus:bg-level-0 focus:text-primary sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:rounded-md focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg"
     >
       Skip to main content
     </a>
@@ -191,5 +186,25 @@ const canonical = getCanonicalUrl(Astro.url);
       banner-id={import.meta.env.PUBLIC_COOKIE_BANNER_ID}
       base-url={import.meta.env.PUBLIC_COOKIE_BANNER_API_BASE_URL}
       position="bottom-right"></probo-cookie-banner>
+    <script>
+      const registerBanner = async (attempt = 0) => {
+        try {
+          const { registerCookieBanner } = await import("@probo/cookie-banner");
+          registerCookieBanner();
+        } catch {
+          if (attempt < 2) {
+            setTimeout(() => void registerBanner(attempt + 1), 1500);
+          }
+        }
+      };
+
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(() => void registerBanner(), {
+          timeout: 1000,
+        });
+      } else {
+        setTimeout(() => void registerBanner(), 250);
+      }
+    </script>
   </body>
 </html>
