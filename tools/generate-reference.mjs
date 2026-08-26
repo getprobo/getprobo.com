@@ -341,7 +341,7 @@ async function generateCliReference() {
       "| --- | --- | --- | --- |",
       ...entries.map(
         (command) =>
-          `| \`${escapeTable(command.path)}\` | ${escapeTable(withPeriod(command.description))} | \`${escapeTable(usageFor(command))}\` | [View implementation](${command.source}) |`,
+          `| \`${escapeTable(command.path)}\` | ${escapeProse(withPeriod(command.description))} | \`${escapeTable(usageFor(command))}\` | [View implementation](${command.source}) |`,
       ),
       "",
     ].join("\n");
@@ -406,7 +406,7 @@ function categoryForTool(name) {
     ["Devices", /Device/],
     ["Frameworks and controls", /Framework|Control/],
     ["Measures, tasks, and evidence", /Measure|Task|Evidence/],
-    ["Risks", /Risk/],
+    ["Risks", /Risk|TreatmentPlan/],
     ["Audits and findings", /Audit|Finding/],
     ["Assets and data", /Asset|Datum|Data(?:List)?$/],
     ["Business functions", /BusinessFunction/],
@@ -445,6 +445,7 @@ async function generateConfigurationReference() {
   const connectorVariants = [
     ["OAuth 2.0", "ConnectorConfigOAuth2"],
     ["Managed API key", "ConnectorConfigAPIKey"],
+    ["GitHub App", "ConnectorConfigGitHubApp"],
   ].flatMap(([variant, type]) =>
     expandConfigStruct(structs, type, "probod.connectors[].config").map(
       (field) => ({ ...field, variant }),
@@ -643,7 +644,7 @@ function referenceFieldTable(group, fields) {
     "| --- | --- | --- | --- | --- |",
     ...fields.map(
       (field) =>
-        `| \`${escapeTable(field.path)}\` | ${escapeTable(field.type)} | ${field.omittedWhenEmpty ? "Omitted when empty" : "Always emitted"} | ${escapeTable(field.description || "—")} | [View field](${field.source}) |`,
+        `| \`${escapeTable(field.path)}\` | ${escapeTable(field.type)} | ${field.omittedWhenEmpty ? "Omitted when empty" : "Always emitted"} | ${escapeProse(field.description || "—")} | [View field](${field.source}) |`,
     ),
     "",
   ];
@@ -1158,7 +1159,7 @@ async function generateN8nReference() {
       "| --- | --- | --- | --- |",
       ...resource.operations.map(
         (operation) =>
-          `| ${escapeTable(operation.name)} | \`${escapeTable(operation.value)}\` | ${escapeTable(withPeriod(operation.description))} | [View implementation](${operation.source}) |`,
+          `| ${escapeTable(operation.name)} | \`${escapeTable(operation.value)}\` | ${escapeProse(withPeriod(operation.description))} | [View implementation](${operation.source}) |`,
       ),
       "",
       additionalContent,
@@ -1210,4 +1211,11 @@ function operationSourceFile(indexSource, operationValue) {
 
 function escapeTable(value) {
   return value.replaceAll("|", "\\|").replaceAll("\n", " ");
+}
+
+// Curly braces are only safe to leave unescaped inside a backtick code span
+// (e.g. a `{name}` path placeholder); MDX parses them as JS expressions
+// anywhere else, so prose pulled from Go doc comments must escape them.
+function escapeProse(value) {
+  return escapeTable(value).replaceAll("{", "\\{").replaceAll("}", "\\}");
 }

@@ -158,6 +158,10 @@ export const cliCommandItems = [
     slug: "docs/developers/cli/commands/tracker-resource",
   },
   {
+    label: "Treatment Plan",
+    slug: "docs/developers/cli/commands/treatment-plan",
+  },
+  {
     label: "User",
     slug: "docs/developers/cli/commands/user",
   },
@@ -394,6 +398,10 @@ export const n8nResourceItems = [
   {
     label: "Tracker Pattern",
     slug: "docs/developers/api/n8n/resources/tracker-pattern",
+  },
+  {
+    label: "Treatment Plan",
+    slug: "docs/developers/api/n8n/resources/treatment-plan",
   },
   {
     label: "User",
