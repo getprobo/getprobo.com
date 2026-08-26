@@ -1,0 +1,59 @@
+---
+title: Cal.com
+description: Connect Cal.com as an access review source using OAuth or an API key so Probo can list your team's or organization's members.
+---
+
+Probo reads your Cal.com team or organization members through the Cal.com API so you can review who has access. Connecting with **OAuth** is the recommended method and requires no token management. An API key is also available if you would rather not authorize an OAuth connection.
+
+## Prerequisites
+
+- Probo organization administrator access
+- A Cal.com account that belongs to a team or an organization. A connected account with neither returns only itself (see [Collected Fields](#collected-fields))
+
+## Collected Fields
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+| Probo field | Cal.com field                                            | Notes                                                                                                  |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Name        | `user.name`                                              | Falls back to the connected account's own name when it belongs to no team or organization              |
+| Email       | `user.email`                                             | Falls back to the connected account's own email when it belongs to no team or organization             |
+| Role        | `membership.role`                                        | Displayed as `Owner`, `Admin`, or `Member`; blank for a connected account with no team or organization |
+| Admin       | `membership.role`                                        | Flagged as administrator when the role is `OWNER` or `ADMIN`                                           |
+| Status      | `membership.accepted`                                    | Active once the member accepts their invitation; a member active in at least one team counts as active |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                        |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                        |
+| External ID | `userId`                                                 | Stable identifier used to track the account across reviews                                             |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                        |
+
+If the connected account belongs to a Cal.com **organization**, Probo lists every member of that organization. Otherwise, Probo lists members across every **team** the connected account belongs to, combining a member who is on multiple teams into a single entry with every role they hold. A connected account with no team or organization returns only itself.
+
+## Connect Cal.com
+
+### Option A: Connect with Cal.com (recommended)
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Cal.com** and click **OAuth**.
+3. Sign in to Cal.com and authorize Probo. Probo requests the **`PROFILE_READ`**, **`TEAM_PROFILE_READ`**, **`TEAM_MEMBERSHIP_READ`**, and **`ORG_MEMBERSHIP_READ`** scopes.
+
+</Steps>
+
+### Option B: API Key
+
+<Steps>
+
+1. In Cal.com, signed in as a team or organization admin, go to **Settings** > **Developer** > **API keys**, and create one.
+2. Name it (e.g. `Probo Access Review`) and copy the key. Cal.com shows it only once.
+3. In Probo, go to **Access Reviews** > **Sources** > **Add Source**, find **Cal.com**, and click **API Key**.
+4. Paste the key and click **Connect**.
+
+</Steps>
+
+Probo names the source "Cal.com" and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Key or token rejected, or no members appear.** Confirm the API key or OAuth authorization belongs to a user who is a member of the team or organization you want to review.
+- **Only the connected account appears.** The connected Cal.com account has no team or organization, so Probo can only see that account. Add it to a team, or connect an account that already belongs to one.

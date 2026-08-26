@@ -25,6 +25,8 @@ const accessReviewConnectorItems = [
     slug: "docs/product/access-review/better-stack",
   },
   { label: "Brevo", slug: "docs/product/access-review/brevo" },
+  { label: "Cal.com", slug: "docs/product/access-review/calcom" },
+  { label: "Calendly", slug: "docs/product/access-review/calendly" },
   {
     label: "ClickHouse Cloud",
     slug: "docs/product/access-review/clickhouse",

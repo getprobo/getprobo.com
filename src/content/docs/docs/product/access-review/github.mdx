@@ -1,12 +1,12 @@
 ---
 title: GitHub
-description: Connect GitHub as an access review source using OAuth or a personal access token so Probo can list your organization's members and roles.
+description: Connect GitHub as an access review source using OAuth, an installed GitHub App, or a personal access token so Probo can list your organization's members and roles.
 ---
 
-Probo reads your GitHub organization's members through the GitHub REST API so you can review who has access. Connecting with **Connect** (OAuth) is the recommended method and requires no token management. A personal access token is also available if you would rather not authorize an OAuth App.
+Probo reads your GitHub organization's members through the GitHub REST API so you can review who has access. Connecting with **OAuth** is the recommended method and requires no token management. Installing the **GitHub App** is an alternative that isn't tied to one person's GitHub account and also unlocks visibility into fine-grained personal access tokens (see [Service Accounts](#service-accounts)). A personal access token is also available if you would rather not authorize either.
 
 :::caution
-If your organization restricts third-party OAuth App access, an owner must grant Probo access before the organization appears in the picker.
+If your organization restricts third-party OAuth App access, an owner must grant Probo access before the organization appears in the picker. A GitHub App install is governed separately and isn't affected by that policy, but an organization owner must still approve the install the first time.
 :::
 
 ## Prerequisites
@@ -14,7 +14,8 @@ If your organization restricts third-party OAuth App access, an owner must grant
 - Probo organization administrator access
 - Membership in the GitHub organization you want to review, since GitHub or a token can only read organizations it belongs to
 - If your organization restricts OAuth App access (**Settings** > **Third-party Access** > **OAuth app policy** in the organization), an owner must approve Probo before it appears in the organization picker
-- For the personal access token option: the **Organization** slug, the part of `github.com/<organization>`, which the Connect dialog asks for since a token has no picker
+- For the GitHub App option: organization owner access the first time the app is installed on your organization
+- For the personal access token option: the **Organization** slug, the part of `github.com/<organization>`, which the API Key dialog asks for since a token has no picker
 
 ## Collected Fields
 
@@ -32,6 +33,19 @@ If your organization restricts third-party OAuth App access, an owner must grant
 
 Members whose `type` is `Bot` are recorded as service accounts. Probo still records their organization membership role and admin status.
 
+## Service Accounts
+
+Alongside organization members, Probo lists these as service accounts whenever the connected credential can read them:
+
+| Account type                        | GitHub source                                        | Notes                                                                  |
+| ----------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------- |
+| Installed GitHub Apps               | `GET /orgs/<organization>/installations`             | Requires **Organization Administration: read**                         |
+| Fine-grained personal access tokens | `GET /orgs/<organization>/personal-access-tokens`    | GitHub App connections only; requires **Personal access tokens: read** |
+| SAML-authorized credentials         | `GET /orgs/<organization>/credential-authorizations` | GitHub Enterprise Cloud organizations with SAML SSO only               |
+| Deploy keys                         | Repository deploy keys (GraphQL)                     | Requires **Repository Administration: read**                           |
+
+Each category is optional: Probo omits it rather than failing the review when the connected credential lacks the permission. Fine-grained personal access tokens are visible only through a GitHub App connection — GitHub does not expose that endpoint to OAuth or classic-token requests.
+
 ## Connect GitHub
 
 import { Steps, Badge } from "@astrojs/starlight/components";
@@ -41,7 +55,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 <Steps>
 
 1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
-2. Find **GitHub** and click **Connect**.
+2. Find **GitHub** and click **OAuth**.
 3. Authorize Probo on GitHub. Probo requests the **`read:org`** scope.
 4. On the new source row, pick your organization from the **Select organization** dropdown.
 
@@ -49,13 +63,25 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 If the dropdown shows **GitHub returned no organizations**, click **Review Probo's access**, ask an organization owner to approve Probo under **Organization Settings** > **Third-party Access** > **OAuth app policy**, then reopen the dropdown.
 
-### Option B: Personal Access Token
+### Option B: GitHub App
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **GitHub** and click **GitHub App**.
+3. Sign in to GitHub and authorize Probo.
+4. If the app isn't installed on an organization you can access yet, GitHub sends you to its install page. Pick your organization, review the requested repository access, and click **Install**. If it's already installed and accessible to your account, Probo skips this step and connects immediately.
+5. Back in Probo, confirm the organization on the new source row. GitHub App installs are scoped to one organization, so only that entry appears in the **Select organization** dropdown.
+
+</Steps>
+
+### Option C: Personal Access Token
 
 <Steps>
 
 1. In GitHub, signed in as a member of the organization, go to **Settings** > **Developer settings** > **Personal access tokens** > **Fine-grained tokens**, and create one scoped to the organization with the **Members** organization permission set to **Read-only**. A classic token (**Tokens (classic)**) with the **`read:org`** scope also works.
 2. Copy the token and store it securely. GitHub shows it only once.
-3. In Probo, go to **Access Reviews** > **Sources** > **Add Source**, find **GitHub**, open the dropdown next to **Connect**, and click **Connect with API Key**.
+3. In Probo, go to **Access Reviews** > **Sources** > **Add Source**, find **GitHub**, and click **API Key**.
 4. Paste the token, enter your **Organization** (the slug from `github.com/<organization>`), and click **Connect**.
 
 </Steps>
@@ -66,6 +92,7 @@ Probo names the source after your GitHub organization and pulls its members into
 
 - **The organization picker is empty.** When an organization restricts third-party OAuth App access, GitHub omits it from `GET /user/orgs` until an owner approves Probo. Click **Review Probo's access** on the source row, or ask an owner to approve Probo under **Organization Settings** > **Third-party Access** > **OAuth app policy**.
 - **Token rejected or no members appear.** Confirm the token has the `read:org` scope (classic) or the **Members: Read-only** permission (fine-grained), and that it belongs to a member of the organization entered in **Organization**.
+- **The GitHub App connection fails right after authorizing.** This happens when the app is installed on more than one organization your GitHub account can access — Probo cannot tell which one you meant. Uninstall it from the organizations you don't want to connect, or connect via OAuth or a personal access token instead.
 - **MFA shows Unknown for every member.** Reading two-factor status requires the connected account to hold the organization owner role. Probo falls back to Unknown for the whole review when GitHub rejects that request.
 - **Emails are empty.** GitHub keeps a member's email private by default. Probo cannot read an email the member has not made public.
 - **A pending invitation is missing.** GitHub's members endpoint only returns current organization members. Probo does not collect pending invitations.

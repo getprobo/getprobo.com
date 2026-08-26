@@ -1,0 +1,61 @@
+---
+title: Calendly
+description: Connect Calendly as an access review source using OAuth or an API key so Probo can list your Calendly organization's members and roles.
+---
+
+Probo reads your Calendly organization's members through the Calendly API so you can review who has access. Connecting with **OAuth** is the recommended method and requires no token management. An API key is also available if you would rather not authorize an OAuth connection.
+
+:::caution
+The connected Calendly account must belong to an **organization** (Calendly's multi-seat plan). Probo cannot list members for a personal Calendly account.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- A Calendly account that belongs to an organization
+
+## Collected Fields
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+| Probo field | Calendly field                                           | Notes                                                                                     |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   |                                                                                           |
+| Email       | `email`                                                  |                                                                                           |
+| Role        | `role`                                                   | Displayed as `Owner`, `Admin`, or `User`                                                  |
+| Admin       | `role`                                                   | Flagged as administrator when the role is `owner` or `admin`                              |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                           |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                           |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                           |
+| External ID | `uri`                                                    | The member's Calendly API URI; stable identifier used to track the account across reviews |
+| Created at  | `created_at`                                             |                                                                                           |
+
+## Connect Calendly
+
+### Option A: Connect with Calendly (recommended)
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Calendly** and click **OAuth**.
+3. Sign in to Calendly and authorize Probo. Probo requests the **`users:read`** and **`organizations:read`** scopes.
+
+</Steps>
+
+### Option B: API Key
+
+<Steps>
+
+1. In Calendly, signed in as an organization admin, go to **Integrations** > **API & Webhooks**, and under **Personal Access Tokens** click **Generate New Token**.
+2. Name it (e.g. `Probo Access Review`) and copy the token. Calendly shows it only once.
+3. In Probo, go to **Access Reviews** > **Sources** > **Add Source**, find **Calendly**, and click **API Key**.
+4. Paste the token and click **Connect**.
+
+</Steps>
+
+Probo names the source "Calendly" and pulls its members into your campaigns.
+
+## Troubleshooting
+
+- **Key or token rejected, or no members appear.** Confirm the API key or OAuth authorization belongs to a user who is a member of a Calendly organization.
+- **Connecting fails with no organization found.** The connected Calendly account has no organization. Calendly's organization features require a paid multi-seat plan; Probo cannot list members without one.
