@@ -80,14 +80,14 @@
   {#each visibleFrameworks as framework, index (index)}
     <div
       class={clsx(
-        "text-center grid place-items-center overflow-hidden",
+        "relative overflow-hidden text-center",
         border &&
           "aspect-square md:aspect-192/180 hover:bg-[#F4FCE6] transition-all",
       )}
     >
       {#key framework.badge}
         <div
-          class="transition-all duration-1000 col-1 row-1 space-y-3 size-25 aspect-square mix-blend-multiply"
+          class="absolute inset-0 m-auto size-25 space-y-3 transition-all duration-1000 mix-blend-multiply"
           transition:scale={{ duration: 750 }}
         >
           <FrameworkBadge
