@@ -19,17 +19,17 @@ If your organization restricts third-party OAuth App access, an owner must grant
 
 ## Collected Fields
 
-| Probo field | GitHub field                                             | Notes                                                                                                                                                      |
-| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Name        | `name`                                                   | Falls back to the member's `login` when the profile has no name set                                                                                        |
-| Email       | `email`                                                  | GitHub keeps a member's email private by default. Probo records whatever the public profile exposes and leaves it empty otherwise                          |
-| Role        | `role`                                                   | The organization membership role, `admin` or `member`                                                                                                      |
-| Admin       | `role`                                                   | Flagged as administrator when `role` is `admin`                                                                                                            |
-| Status      | `state`                                                  | Active when the membership `state` is `active`. Pending invitations are not collected                                                                      |
-| MFA         | `filter=2fa_disabled`                                    | Reading this requires the connected account to hold the organization owner role. Probo marks MFA Unknown for every member when GitHub rejects that request |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                            |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                                                                                 |
-| Created at  | `created_at`                                             | When the member's GitHub account was created, not when they joined the organization                                                                        |
+| Probo field | GitHub field           | Notes                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Name        | `name`                 | Falls back to the member's `login` when the profile has no name set                                                                                                                                                                                                                                                                                                                              |
+| Email       | `email`                | GitHub keeps a member's email private by default. Probo records whatever the public profile exposes and leaves it empty otherwise                                                                                                                                                                                                                                                                |
+| Role        | `role`                 | The organization membership role, `admin` or `member`                                                                                                                                                                                                                                                                                                                                            |
+| Admin       | `role`                 | Flagged as administrator when `role` is `admin`                                                                                                                                                                                                                                                                                                                                                  |
+| Status      | `state`                | Active when the membership `state` is `active`. Pending invitations are not collected                                                                                                                                                                                                                                                                                                            |
+| MFA         | `filter=2fa_disabled`  | Reading this requires the connected account to hold the organization owner role. Probo marks MFA Unknown for every member when GitHub rejects that request                                                                                                                                                                                                                                       |
+| Last login  | Organization audit log | The most recent audited organization event for the member, not a GitHub sign-in. It needs GitHub Enterprise Cloud and the audit log permission, so Probo leaves it empty on other plans and when the token cannot read the log. Probo scans only the 1,000 most recent events, so a member with no activity in that window stays empty. A service account carries its own last-used date instead |
+| External ID | `id`                   | Stable identifier used to track the account across reviews                                                                                                                                                                                                                                                                                                                                       |
+| Created at  | `created_at`           | When the member's GitHub account was created, not when they joined the organization                                                                                                                                                                                                                                                                                                              |
 
 Members whose `type` is `Bot` are recorded as service accounts. Probo still records their organization membership role and admin status.
 
@@ -54,8 +54,8 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 <Steps>
 
-1. In Probo, go to **Access Reviews** > **Connections**.
-2. Find **GitHub** and click **OAuth**.
+1. In Probo, go to **Access Review** > **Connections**.
+2. Find **GitHub** and click **OAuth**. When your deployment also offers the GitHub App, **OAuth** sits in the menu behind the arrow next to the **GitHub App** button.
 3. Authorize Probo on GitHub. Probo requests the **`read:org`** scope.
 4. On the new source row, pick your organization from the **Select organization** dropdown.
 
@@ -67,7 +67,7 @@ If the dropdown shows **GitHub returned no organizations**, click **Review Probo
 
 <Steps>
 
-1. In Probo, go to **Access Reviews** > **Connections**.
+1. In Probo, go to **Access Review** > **Connections**.
 2. Find **GitHub** and click **GitHub App**.
 3. Sign in to GitHub and authorize Probo.
 4. If the app isn't installed on an organization you can access yet, GitHub sends you to its install page. Pick your organization, review the requested repository access, and click **Install**. If it's already installed and accessible to your account, Probo skips this step and connects immediately.
@@ -81,7 +81,7 @@ If the dropdown shows **GitHub returned no organizations**, click **Review Probo
 
 1. In GitHub, signed in as a member of the organization, go to **Settings** > **Developer settings** > **Personal access tokens** > **Fine-grained tokens**, and create one scoped to the organization with the **Members** organization permission set to **Read-only**. A classic token (**Tokens (classic)**) with the **`read:org`** scope also works.
 2. Copy the token and store it securely. GitHub shows it only once.
-3. In Probo, go to **Access Reviews** > **Connections** and find **GitHub**. Click **API Key** on that row. When your deployment also offers OAuth or the GitHub App, **API Key** sits in the menu behind the arrow next to that button.
+3. In Probo, go to **Access Review** > **Connections** and find **GitHub**. Click **API Key** on that row. When your deployment also offers OAuth or the GitHub App, **API Key** sits in the menu behind the arrow next to that button.
 4. Paste the token, enter your **Organization** (the slug from `github.com/<organization>`), and click **Connect**.
 
 </Steps>

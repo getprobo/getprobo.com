@@ -80,13 +80,23 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 <Steps>
 
-1. In Probo, go to **Access Reviews** > **Connections**.
+1. In Probo, go to **Access Review** > **Connections**.
 2. Find **<Provider>**, click **API Key**, paste the key, and click **Connect**.
 
 {/_ Extra-settings providers: the Connect dialog shows extra field(s) below the API Key field
 (org slug, workspace/team ID, region, base URL, …). Rewrite step 2 as, e.g.:
 "Find <Provider>, click API Key, paste the key, enter your **<Field Label>** (<where to find
     it>), and click Connect." Repeat per required field. Delete this note for key-only providers. _/}
+
+{/_ Multi-method providers: "click API Key" is only literally true when API Key is the row's
+primary button. The row renders one primary button and hides the rest behind a chevron whose
+only name is an aria-label, so a reader cannot find them by searching the screen for a label.
+Order is WorkloadIdentity, GitHub App, OAuth2, API Key, ClientCredentials. If the provider's
+Registration declares any of the first three alongside APIKey, add: "When your deployment also
+offers OAuth, **API Key** sits in the menu behind the arrow next to the **OAuth** button."
+State it without the conditional when the other method is always configured (a PublicClient
+OAuth2 block is auto-registered on every deployment, as Resend's is). Delete this note for
+single-method providers. _/}
 
 </Steps>
 
