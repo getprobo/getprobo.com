@@ -12,8 +12,8 @@ When you connect an access source with an API key or OAuth, you authorize Probo 
 
 Access reviews support three connection methods:
 
-- **OAuth.** When **Add Source** offers **Connect** for a provider, you approve Probo on the provider's consent screen. Probo stores OAuth tokens needed to refresh access, not your provider password. OAuth availability depends on the provider and deployment configuration.
-- **API key.** You create a token on the provider and paste it into Probo during **Add Source**. Use the least-privilege token each connector guide describes.
+- **OAuth.** When a provider offers **OAuth** on the **Connections** page, you approve Probo on the provider's consent screen. Probo stores OAuth tokens needed to refresh access, not your provider password. OAuth availability depends on the provider and deployment configuration.
+- **API key.** You create a token on the provider and paste it into Probo when you connect it. Use the least-privilege token each connector guide describes.
 - **CSV.** No live credential is stored; you upload an export for tools Probo cannot connect to directly.
 
 For OAuth and API key flows, Probo must hold credentials that can be used again on each sync or campaign. That is why credentials are **encrypted at rest**, not hashed like a password.
@@ -58,7 +58,7 @@ For access reviews, Probo collects **membership metadata** the provider exposes:
 
 ## Recommendations before you connect
 
-- Prefer **OAuth** when **Add Source** offers it for the provider.
+- Prefer **OAuth** when the **Connections** page offers it for the provider.
 - Create a **dedicated, scoped** API token per provider (read-only where the guide allows). Avoid global or personal keys when a scoped token exists.
 - Store the token in a password manager until you paste it once into Probo; do not share it in chat or email.
 - **Rotate or revoke** at the provider when someone leaves or the integration is unused, then delete the source in Probo or reconnect with a new token.

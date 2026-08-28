@@ -16,17 +16,17 @@ Use an **account token**, created at **Account Settings** > **Tokens** with the 
 
 ## Collected Fields
 
-| Probo field | Railway field                                            | Notes                                                                        |
-| ----------- | -------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Name        | `name`                                                   | Falls back to the email                                                      |
-| Email       | `email`                                                  |                                                                              |
+| Probo field | Railway field                                            | Notes                                                                                                                   |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                                   | Falls back to the email                                                                                                 |
+| Email       | `email`                                                  |                                                                                                                         |
 | Role        | `role`                                                   | `ADMIN` → Admin, `MEMBER` → Member; other roles are shown as-is, and roles are combined across the account's workspaces |
-| Admin       | `role`                                                   | Flagged as an administrator when any workspace lists the member's `role` as `ADMIN` |
-| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
-| MFA         | `twoFactorAuthEnabled`                                   | Whether two-factor authentication is enabled for the member                 |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
-| External ID | `id`                                                     | Stable identifier used to track the account across reviews                  |
-| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                              |
+| Admin       | `role`                                                   | Flagged as an administrator when any workspace lists the member's `role` as `ADMIN`                                     |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                         |
+| MFA         | `twoFactorAuthEnabled`                                   | Whether two-factor authentication is enabled for the member                                                             |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                         |
+| External ID | `id`                                                     | Stable identifier used to track the account across reviews                                                              |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                         |
 
 ## Step 1: Create an Account Token
 
@@ -46,7 +46,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 <Steps>
 
-1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+1. In Probo, go to **Access Reviews** > **Connections**.
 2. Find **Railway**, click **API Key**, paste the token, and click **Connect**.
 
 </Steps>

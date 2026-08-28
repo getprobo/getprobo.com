@@ -20,17 +20,17 @@ This connector does not use an API key you create or paste. Probo connects throu
 
 The Probo column lists every field. The Crisp column shows the operator field Probo reads or marks a field as **Not supported** when Crisp does not provide it.
 
-| Probo field | Crisp field                  | Notes                                                        |
-| ----------- | ---------------------------- | ----------------------------------------------------------- |
-| Name        | `first_name` and `last_name` | Falls back to the email                                      |
-| Email       | `email`                      |                                                             |
-| Role        | `role`                       | `owner` → Owner, `member` → Member                           |
-| Admin       | `role`                       | Flagged as an administrator when `role` is `owner`          |
-| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
-| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
-| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
-| External ID | `user_id`                    | Stable identifier used to track the account across reviews   |
-| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                 |
+| Probo field | Crisp field                                              | Notes                                                      |
+| ----------- | -------------------------------------------------------- | ---------------------------------------------------------- |
+| Name        | `first_name` and `last_name`                             | Falls back to the email                                    |
+| Email       | `email`                                                  |                                                            |
+| Role        | `role`                                                   | `owner` → Owner, `member` → Member                         |
+| Admin       | `role`                                                   | Flagged as an administrator when `role` is `owner`         |
+| Status      | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| Last login  | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
+| External ID | `user_id`                                                | Stable identifier used to track the account across reviews |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                            |
 
 ## Step 1: Install the Probo Plugin on Your Crisp Website
 
@@ -47,8 +47,8 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 <Steps>
 
-1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
-2. Find **Crisp**, click **Connect**, and enter your **Website ID**.
+1. In Probo, go to **Access Reviews** > **Connections**.
+2. Find **Crisp**, click **API Key**, and enter your **Website ID**.
 3. Probo shows a **verification code**. Copy it.
 4. In your Crisp dashboard, open the **Probo Access Review** plugin's settings, paste the code into the **Probo Verification Code** field, and save.
 5. Back in Probo, click **Connect**. Probo reads the code back through the plugin, confirms it matches, and connects the website.

@@ -34,8 +34,8 @@ Brex returns every member of the organization on one endpoint. Probo skips a rec
 
 <Steps>
 
-1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
-2. Find **Brex** and click **Connect**.
+1. In Probo, go to **Access Reviews** > **Connections**.
+2. Find **Brex** and click **OAuth**.
 3. Sign in to Brex as an account admin or card admin and authorize Probo. Probo requests the **`users.readonly`** and **`companies.readonly`** scopes, plus `openid` and `offline_access` so the connection keeps syncing without you reconnecting.
 
 </Steps>
@@ -47,7 +47,7 @@ Brex returns every member of the organization on one endpoint. Probo skips a rec
 1. In Brex ([dashboard.brex.com](https://dashboard.brex.com)), signed in as an account admin or card admin, go to **Developer** > **Settings**, and click **Create Token**.
 2. Name it (e.g. `Probo Access Review`), and grant it read access to the **Team** and company profile data. Confirm your selection and click **Allow Access**.
 3. Copy the token. Brex shows it only once.
-4. In Probo, go to **Access Reviews** > **Sources** > **Add Source**, find **Brex**, open the dropdown next to **Connect**, and click **Connect with API Key**.
+4. In Probo, go to **Access Reviews** > **Connections** and find **Brex**. Click **API Key** on that row. When your deployment also offers OAuth, **API Key** sits in the menu behind the arrow next to the **OAuth** button.
 5. Paste the token and click **Connect**.
 
 </Steps>

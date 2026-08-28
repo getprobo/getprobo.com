@@ -14,17 +14,17 @@ Probo reads your HubSpot account's users through the Settings Users, CRM Owners,
 
 ## Collected Fields
 
-| Probo field | HubSpot field                                            | Notes                                                                                                                                     |
-| ----------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Probo field | HubSpot field                                            | Notes                                                                                                                                      |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | Name        | `firstName`, `lastName`                                  | Falls back to the user's email when neither name is set                                                                                    |
-| Email       | `email`                                                   |                                                                                                                                              |
-| Role        | `roleId`, `roleIds`                                       | Resolved to role names through the Roles API; `Super Admin` is added when `superAdmin` is true; falls back to `User` when nothing resolves |
-| Admin       | `superAdmin`                                              |                                                                                                                                              |
-| Status      | `archived` (CRM Owners)                                   | Inactive when the user matches an owner record with `archived` true; otherwise active                                                     |
-| MFA         | <Badge text="Not supported" class="badge-unsupported" />  | HubSpot's APIs expose no MFA field                                                                                                          |
-| Last login  | `loginAt` (Account Activity, successful logins only)      | Covers the past 90 days. Left empty when the token has no `account-info.security.read` scope                                              |
-| External ID | `id` (Settings Users), or `userIdIncludingInactive`       | Stable identifier used to track the account across reviews                                                                                 |
-| Created at  | <Badge text="Not supported" class="badge-unsupported" />  |                                                                                                                                              |
+| Email       | `email`                                                  |                                                                                                                                            |
+| Role        | `roleId`, `roleIds`                                      | Resolved to role names through the Roles API; `Super Admin` is added when `superAdmin` is true; falls back to `User` when nothing resolves |
+| Admin       | `superAdmin`                                             |                                                                                                                                            |
+| Status      | `archived` (CRM Owners)                                  | Inactive when the user matches an owner record with `archived` true; otherwise active                                                      |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> | HubSpot's APIs expose no MFA field                                                                                                         |
+| Last login  | `loginAt` (Account Activity, successful logins only)     | Covers the past 90 days. Left empty when the token has no `account-info.security.read` scope                                               |
+| External ID | `id` (Settings Users), or `userIdIncludingInactive`      | Stable identifier used to track the account across reviews                                                                                 |
+| Created at  | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                            |
 
 The Settings Users API has no status field, so Probo cross-references the CRM Owners API's archived list to mark deactivated users inactive. A deactivated user who no longer appears in Settings Users at all is still surfaced, taken from the archived owners list directly.
 
@@ -34,8 +34,8 @@ The Settings Users API has no status field, so Probo cross-references the CRM Ow
 
 <Steps>
 
-1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
-2. Find **HubSpot** and click **Connect**.
+1. In Probo, go to **Access Reviews** > **Connections**.
+2. Find **HubSpot** and click **OAuth**.
 3. Sign in as a super admin and authorize Probo on the HubSpot account you want to review. Probo requests the **`settings.users.read`**, **`crm.objects.owners.read`**, and **`account-info.security.read`** scopes.
 
 </Steps>
@@ -47,7 +47,7 @@ The Settings Users API has no status field, so Probo cross-references the CRM Ow
 1. In HubSpot (signed in as a super admin), go to **Settings** > **Integrations** > **Private Apps**, and click **Create a private app**.
 2. Name it (e.g. `Probo Access Review`), open the **Scopes** tab, and add the read scopes **`settings.users.read`**, **`crm.objects.owners.read`**, and **`account-info.security.read`**.
 3. Click **Create app**, confirm, and copy the access token (`pat-…`). It's shown only once.
-4. In Probo, go to **Access Reviews** > **Sources** > **Add Source**, find **HubSpot**, open the dropdown next to **Connect**, and click **Connect with API Key**.
+4. In Probo, go to **Access Reviews** > **Connections** and find **HubSpot**. Click **API Key** on that row. When your deployment also offers OAuth, **API Key** sits in the menu behind the arrow next to the **OAuth** button.
 5. Paste the token and click **Connect**.
 
 </Steps>
