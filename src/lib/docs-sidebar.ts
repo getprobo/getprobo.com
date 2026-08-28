@@ -4,55 +4,49 @@ import {
   n8nResourceItems,
 } from "./generated-reference-manifest.mjs";
 
+// Sorted by label so the sidebar cannot drift as connectors are added.
+// Entries are compared case-insensitively, which keeps incident.io among
+// the i's rather than after every capitalised name.
 const accessReviewConnectorItems = [
-  { label: "Anthropic", slug: "docs/product/access-review/anthropic" },
-  { label: "OpenAI", slug: "docs/product/access-review/openai" },
-  { label: "Resend", slug: "docs/product/access-review/resend" },
-  { label: "Cursor", slug: "docs/product/access-review/cursor" },
-  { label: "OpenRouter", slug: "docs/product/access-review/openrouter" },
-  { label: "Deepgram", slug: "docs/product/access-review/deepgram" },
-  { label: "Apollo.io", slug: "docs/product/access-review/apollo" },
-  { label: "Cloudflare", slug: "docs/product/access-review/cloudflare" },
-  { label: "Scaleway", slug: "docs/product/access-review/scaleway" },
-  { label: "Yousign", slug: "docs/product/access-review/yousign" },
-  { label: "Railway", slug: "docs/product/access-review/railway" },
-  { label: "Crisp", slug: "docs/product/access-review/crisp" },
-  { label: "Dotfile", slug: "docs/product/access-review/dotfile" },
-  { label: "Segment", slug: "docs/product/access-review/segment" },
   { label: "1Password", slug: "docs/product/access-review/one-password" },
-  {
-    label: "Better Stack",
-    slug: "docs/product/access-review/better-stack",
-  },
+  { label: "Anthropic", slug: "docs/product/access-review/anthropic" },
+  { label: "Apollo.io", slug: "docs/product/access-review/apollo" },
+  { label: "Better Stack", slug: "docs/product/access-review/better-stack" },
   { label: "Brevo", slug: "docs/product/access-review/brevo" },
   { label: "Cal.com", slug: "docs/product/access-review/calcom" },
   { label: "Calendly", slug: "docs/product/access-review/calendly" },
-  {
-    label: "ClickHouse Cloud",
-    slug: "docs/product/access-review/clickhouse",
-  },
+  { label: "ClickHouse Cloud", slug: "docs/product/access-review/clickhouse" },
+  { label: "Cloudflare", slug: "docs/product/access-review/cloudflare" },
+  { label: "Crisp", slug: "docs/product/access-review/crisp" },
+  { label: "Cursor", slug: "docs/product/access-review/cursor" },
+  { label: "Deepgram", slug: "docs/product/access-review/deepgram" },
+  { label: "Dotfile", slug: "docs/product/access-review/dotfile" },
   { label: "GitHub", slug: "docs/product/access-review/github" },
   { label: "Grafana", slug: "docs/product/access-review/grafana" },
   { label: "HubSpot", slug: "docs/product/access-review/hubspot" },
-  {
-    label: "incident.io",
-    slug: "docs/product/access-review/incident-io",
-  },
+  { label: "incident.io", slug: "docs/product/access-review/incident-io" },
   { label: "Langfuse", slug: "docs/product/access-review/langfuse" },
   { label: "Mercury", slug: "docs/product/access-review/mercury" },
   { label: "Metabase", slug: "docs/product/access-review/metabase" },
   { label: "Neon", slug: "docs/product/access-review/neon" },
   { label: "Okta", slug: "docs/product/access-review/okta" },
+  { label: "OpenAI", slug: "docs/product/access-review/openai" },
+  { label: "OpenRouter", slug: "docs/product/access-review/openrouter" },
   { label: "Pylon", slug: "docs/product/access-review/pylon" },
   { label: "Qovery", slug: "docs/product/access-review/qovery" },
+  { label: "Railway", slug: "docs/product/access-review/railway" },
   { label: "Render", slug: "docs/product/access-review/render" },
+  { label: "Resend", slug: "docs/product/access-review/resend" },
+  { label: "Scaleway", slug: "docs/product/access-review/scaleway" },
+  { label: "Segment", slug: "docs/product/access-review/segment" },
   { label: "SendGrid", slug: "docs/product/access-review/sendgrid" },
   { label: "SigNoz", slug: "docs/product/access-review/signoz" },
   { label: "Supabase", slug: "docs/product/access-review/supabase" },
   { label: "Tailscale", slug: "docs/product/access-review/tailscale" },
   { label: "Tally", slug: "docs/product/access-review/tally" },
   { label: "UpCloud", slug: "docs/product/access-review/upcloud" },
-];
+  { label: "Yousign", slug: "docs/product/access-review/yousign" },
+].sort((a, b) => a.label.localeCompare(b.label, "en", { sensitivity: "base" }));
 
 export const docsSidebarGroups = [
   {
