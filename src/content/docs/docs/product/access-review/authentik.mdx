@@ -1,0 +1,68 @@
+---
+title: authentik
+description: Connect authentik as an access review source using an API token and base URL so Probo can list the users of your instance.
+---
+
+Probo reads the users of your self-hosted authentik instance through the authentik API so you can review who has access. The list covers people and service accounts, and service accounts are marked.
+
+:::caution
+Use an authentik **Token** whose **Intent** is set to **API Token**, created under **Directory** > **Tokens and App passwords**. The password shown when a service account is created is an **app password** and will **not** work, because authentik matches a bearer credential against tokens whose intent is `api`, and rejects a token carrying any other intent.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- An authentik administrator to create the token. Copying a token value out of authentik requires the **View token's key** permission, which super-users hold
+- A user for the token to belong to, with read access to the data Probo collects. authentik grants permissions through roles and groups, and a service account can be added to either. The permissions are **Can view User** for the account list, **Can view TOTP Device**, **Can view WebAuthn Device**, **Can view Duo Device** and **Can view SMS Device** for the MFA state, and **Can view Brand** for the source name. Only **Can view User** is mandatory. The token usually belongs to a dedicated service account, but any authentik user works
+- The **Base URL** of the authentik instance Probo should review. The Connect dialog asks for it alongside the token. It is the root URL you sign in to, for example `https://authentik.example.com`. Include the subpath when authentik is served from one
+
+## Collected Fields
+
+| Probo field | authentik field                           | Notes                                                                                                                                                                                                                                                                                                                                                                        |
+| ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | `name`                                    | Probo leaves it empty when the user has no name set in authentik                                                                                                                                                                                                                                                                                                             |
+| Email       | `email`                                   | Falls back to `username` when the user has no email address; service accounts usually show their username here. Probo skips a user with neither                                                                                                                                                                                                                              |
+| Role        | `roles_obj` and `groups_obj`              | The `name` of every role the user holds, then the `name` of every group. Probo drops blanks and removes duplicates, so a name carried by both a role and a group is listed once                                                                                                                                                                                              |
+| Admin       | `is_superuser`                            | Probo flags the account as an administrator when `is_superuser` is true. An account whose administrative access comes only from role permissions may not carry that flag                                                                                                                                                                                                     |
+| Status      | `is_active`                               | Probo lists the user as inactive when `is_active` is false. Deactivated accounts still appear in the review                                                                                                                                                                                                                                                                  |
+| MFA         | `pk` matched against the device endpoints | Probo lists the TOTP, WebAuthn, Duo and SMS devices and reports MFA enabled when one of them references the user. Static recovery codes are excluded, since they are not a login factor. When no device references the user, Probo reports MFA disabled. The state stays unknown instead for a service account, or when one of the four device endpoints answered 403 or 404 |
+| Last login  | `last_login`                              | The last time the user signed in. Probo leaves it empty when the field is null or is not an RFC 3339 timestamp, as happens for an account that has never signed in                                                                                                                                                                                                           |
+| External ID | `uuid`                                    | Stable identifier used to track the account across reviews                                                                                                                                                                                                                                                                                                                   |
+| Created at  | `date_joined`                             | When the user was created in authentik                                                                                                                                                                                                                                                                                                                                       |
+
+## Step 1: Create an API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+<Steps>
+
+1. In the authentik Admin interface, signed in as an administrator, go to **Directory** > **Users**, click **New User**, then select **Service Account**. Enter a **Username** such as `probo-access-review`, click **Next**, then click **Close**. The password on the confirmation screen is the account's initial app password. Probo needs a different value.
+2. Give that user read access. Go to **Directory** > **Roles**, click **New Role**, enter a name, and click **Create Role**. Open the role, click the **Permissions** tab, click **Assigned global permissions**, then click **Assign permission**. In the dialog, click the plus sign, select **Can view User**, **Can view TOTP Device**, **Can view WebAuthn Device**, **Can view Duo Device**, **Can view SMS Device** and **Can view Brand**, click **Add**, then click **Assign**.
+3. Go back to **Directory** > **Users**, click the service account, open the **Roles** tab, and click **Add to existing role** to attach the role you created.
+4. Go to **Directory** > **Tokens and App passwords** and click **Create**.
+5. Enter a unique **Identifier**, select the service account in the **User** field, and set **Intent** to **API Token**.
+6. Make sure **Expiring** is off. authentik rotates an expiring API token when it expires, and a rotated token no longer matches the value stored in Probo.
+7. Click **Create**, then copy the generated value and store it securely.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **authentik**, click **API Key**, paste the token, enter your **Base URL** (the root URL of that same authentik instance), and click **Connect**.
+
+</Steps>
+
+Probo names the source after the branding title of your authentik brand, preferring the default brand, and pulls its users into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Confirm the value is a token whose **Intent** is **API Token**. The app password returned when a service account is created is a different credential and authentik does not accept it on the API. The Intent recorded in authentik is what tells the two credentials apart. Open **Directory** > **Tokens and App passwords** and check the intent recorded on the token, then create a new one if it is wrong.
+- **Token worked before and stopped working.** authentik rotates an expiring API token when it expires, and the new value differs from the one stored in Probo. Create a non-expiring token, or update the source after each rotation.
+- **The connection succeeds but the sync fails on permissions.** Probo checks the credential against an endpoint that answers for any authenticated token. A token can therefore connect and still fail to read the account list. Reading that list requires **Can view User**. Assign the permission through a role or a group and connect again.
+- **Some users are missing.** Without the global **Can view User** permission, authentik returns only the users the token holds an object permission on. Assign the permission globally so the whole directory is reviewed.
+- **MFA shows as unknown for everyone.** One of the device endpoints answered 403 or 404, either because the token lacks the matching view permission or because the stage is not installed on the instance. Add **Can view TOTP Device**, **Can view WebAuthn Device**, **Can view Duo Device** and **Can view SMS Device** to the role. A user that already has a readable device is still reported as enabled, and a service account holding no device stays unknown even when all four endpoints are readable.
+- **The source has no name.** Probo reads the brands endpoint to name the source, and that endpoint needs **Can view Brand**. Without the permission, Probo still collects the users but leaves the source unnamed.
+- **Base URL rejected.** It must be an `http` or `https` URL with a host, for example `https://authentik.example.com`. Probo calls the instance from its own servers, so it cannot reach an authentik that is only available on a private network.

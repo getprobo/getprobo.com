@@ -1,0 +1,67 @@
+---
+title: Nuki
+description: Connect Nuki as an access review source using a Nuki Web API token so Probo can list the account users and device authorizations of your Nuki Web account.
+---
+
+Probo uses the Nuki Web API to read the users of your Nuki Web account together with the device authorizations attached to them, so you can review who has access. Authorizations that belong to no account user, such as keypad codes, fobs and bridges, appear as service accounts without an email address. An account user Nuki records as a company is listed as a service account too, but keeps its name and email. Nuki exposes no administrator flag on an account user, so Probo marks no Nuki account as an administrator.
+
+:::caution
+Use a **Nuki Web API token** generated in Nuki Web under the **API** menu, one that grants at least the **View and manage account** and **View and manage authorizations** rights. A **Nuki Bridge HTTP API token** does not work, because the Bridge API only controls devices locally through a bridge and never reaches the Nuki Web API at `api.nuki.io`.
+:::
+
+## Prerequisites
+
+- Probo organization administrator access
+- Access to the Nuki Web account you want to review. An API token reaches only the devices registered in its own Nuki Web account, so add one Probo source per account
+- The Nuki Web API activated on that account. The **API** menu in Nuki Web first shows the Terms of Use of the Nuki APIs behind an **Activate Nuki Web API** button, and the token options appear once the API is active
+- A token granting the **View and manage account** and **View and manage authorizations** rights, which Nuki's API reference calls the `account` and `smartlock.auth` scopes. The account users endpoint requires both rights, and the smartlock authorizations endpoint requires `smartlock.auth`. The **View devices** right (`smartlock.readOnly`) is optional and only lets Probo read the device list to name the roles after your smart locks
+
+## Collected Fields
+
+| Probo field | Nuki field                                               | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ----------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Name        | `name`                                                   | The account user's name. When it is empty, Probo falls back to the email address, then to the account user ID. For an authorization listed as a service account, Probo uses the authorization name, then a label for its type, such as Keypad code or Fob                                                                                                                                                                                                                                                                                                                                                          |
+| Email       | `email`                                                  | The account user's email address. An authorization listed as a service account carries no email in the Nuki response, so the field stays empty                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Role        | `smartlockId`, `remoteAllowed`, `type`                   | Nuki has no role field, so Probo builds the role list from the device authorizations. Each contributes the smart lock's `name` when the token can read the device list, otherwise `Smartlock` followed by the numeric smart lock ID. When the authorization is tied to no smart lock, Probo uses the authorization type (App, Bridge, Fob, Keypad, Keypad code, Z-Key, or Virtual; any other value reads `Authorization`). Probo adds `Remote access` when any authorization allows remote access, then removes duplicates and sorts the result alphabetically. An account user with no authorization gets no role |
+| Admin       | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Status      | `enabled`, `allowedUntilDate`                            | An authorization counts as inactive when `enabled` is false, or when `allowedUntilDate` is already in the past. An account user is active when at least one of its authorizations is, and inactive when none is. The status is unknown for an account user that holds no authorization. A service account carries the status of its own authorization                                                                                                                                                                                                                                                              |
+| MFA         | <Badge text="Not supported" class="badge-unsupported" /> |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Last login  | `lastActiveDate`                                         | The most recent activity date across the account user's authorizations. It is the last activity Nuki recorded on an authorization, not a Nuki Web sign-in. Probo leaves it empty when no authorization carries a valid RFC 3339 timestamp                                                                                                                                                                                                                                                                                                                                                                          |
+| External ID | `accountUserId`                                          | Stable identifier used to track the account across reviews. An authorization listed as a service account uses its own `id` instead, or `authId` when `id` is empty                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Created at  | `creationDate`                                           | When the account user was created, or when the authorization was created for a service account                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+
+## Step 1: Create an API Token
+
+import { Steps, Badge } from "@astrojs/starlight/components";
+
+![The Generate new API token dialog in Nuki Web, with the View and manage account, View devices, and View and manage authorizations rights selected](/docs/access-review/nuki-create-api-key.webp)
+
+<Steps>
+
+1. Sign in to [Nuki Web](https://web.nuki.io) with the account whose devices and users you want to review.
+2. In the left-side menu, open **API**. The first time, tick **I have read and accept the Terms of Use APIs** and click **Activate Nuki Web API**.
+3. Under **API tokens**, click **Generate API token** and fill in the **API token name** (e.g. `Probo Access Review`).
+4. Under **Which rights would you like to grant this token?**, Nuki checks every right by default. Leave **View and manage account** and **View and manage authorizations** checked, keep **View devices** so roles carry smart lock names instead of numeric IDs, and clear the rest.
+5. Click **Save**, then copy the token and store it securely. Nuki does not let you retrieve the token again after it is created.
+
+</Steps>
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. In Probo, go to **Access Reviews** > **Sources** > **Add Source**.
+2. Find **Nuki**, click **API Key**, paste the API token, and click **Connect**.
+
+</Steps>
+
+Probo names the source after the name on your Nuki Web account and pulls its account users and device authorizations into your campaigns.
+
+## Troubleshooting
+
+- **Token rejected.** Confirm the token is a Nuki Web API token generated under the **API** menu in Nuki Web. Nuki documents that API tokens do not expire, but that they are destroyed when the password of the Nuki Web account changes. A lost token cannot be retrieved, so generate a new one and connect again.
+- **No users appear.** Reading the account users and the device authorizations requires the **View and manage account** and **View and manage authorizations** rights. Rights are fixed when the token is generated, so generate a new token with both rights and connect again.
+- **Roles read `Smartlock` followed by a number.** Probo could not read the device list, which needs the **View devices** right. The sync still runs without it, and roles fall back to the numeric smart lock ID. Generate a token that carries that right to see the smart lock names.
+- **Status and Last login are empty for a user.** Probo derives both from device authorizations. A Nuki Web user who holds no authorization on any device has no status and no last activity date.
+- **Accounts appear without an email address.** These are device authorizations that belong to no Nuki Web user, such as keypad codes, fobs and bridges. Probo lists them as service accounts, named after the authorization or after its type.
+- **The sync fails intermittently.** Nuki rate limits the Web API and rejects further requests until the limit expires. It does not publish the thresholds, so retry the sync later.
