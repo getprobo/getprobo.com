@@ -1,0 +1,10 @@
+---
+title: "Attribution Labels on Tracker Pages"
+description: "Tracker pages in the console now show whether a script is a known vendor, first party code, or still being identified, even when the underlying catalog entry has no vendor name of its own."
+date: 2026-08-25
+tags: ["Cookie Banner"]
+---
+
+Every tracker Probo detects gets checked against a catalog of known vendors. Some catalog entries do not carry a vendor name of their own, for example first party scripts or ones still being identified. Those trackers used to show up with no attribution at all.
+
+Now the console, GraphQL API, and MCP all surface that verdict directly on the tracker page: vendor name when we have one, first party, or still identifying. You get a clearer picture of what is actually running on your site without digging through the catalog separately.
