@@ -9,6 +9,8 @@ import { removeHtmlExtension } from "./vite-plugin-remove-html.mjs";
 import { docsSidebar } from "./src/lib/docs-sidebar.ts";
 import { generateMarkdown } from "./tools/generateMarkdown";
 import { generateSecurityTxt } from "./tools/generateSecurityTxt";
+import { unified } from "@astrojs/markdown-remark";
+import { remarkRequireImageAlt } from "./src/lib/remark-require-image-alt";
 
 // Post-enforce fallback: when vite-plugin-svelte cannot resolve a Svelte
 // virtual CSS module (e.g. during dev re-optimization), return empty CSS so
@@ -62,6 +64,12 @@ export default defineConfig({
       },
     },
     plugins: [svelteVirtualCssFallback(), tailwindcss()],
+  },
+
+  markdown: {
+    processor: unified({
+      remarkPlugins: [remarkRequireImageAlt],
+    }),
   },
 
   integrations: [

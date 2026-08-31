@@ -147,7 +147,7 @@ const mediaRadius =
           />
           <img
             src={posterSrc}
-            alt=""
+            alt={story.data.imageAlt ?? story.data.title}
             width="1280"
             height="1280"
             loading="lazy"
@@ -180,7 +180,7 @@ const mediaRadius =
           class={classNames.image()}
           mobile={imageSizes[0]}
           sm={imageSizes[1]}
-          alt={story.data.title}
+          alt={story.data.imageAlt ?? story.data.title}
         />
       )
     }

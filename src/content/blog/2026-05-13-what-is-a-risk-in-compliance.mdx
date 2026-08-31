@@ -29,7 +29,7 @@ This matters because most teams focus on threats without auditing their vulnerab
 
 ## A concrete example
 
-Say one of your developers leaves the company. Nobody revokes their GitHub access. One potential threat: a disgruntled ex-employee. One vulnerability: active credentials with no expiry.
+Say one of your developers leaves the company. Nobody revokes their GitHub access. One potential threat: a disgruntled ex-employee. One vulnerability: active credentials with no expiry. This is the same gap [offboarding and access review](/blog/2026-08-17-offboarding-access-review-automation) is meant to close.
 
 The resulting risk: your codebase gets tampered with or leaked.
 
@@ -78,11 +78,11 @@ Once you've evaluated a risk, you have four options:
 3. **Avoid it** — stop the activity that creates the risk entirely.
 4. **Accept it** — document that you've made a conscious decision to live with it.
 
-Most frameworks (ISO 27001, SOC 2) require you to pick one of these for every identified risk. "We didn't think about it" is not an option.
+Most frameworks ([ISO 27001](/hub/iso27001), [SOC 2](/hub/soc2)) require you to pick one of these for every identified risk. "We didn't think about it" is not an option. The same logic applies when you [review vendors](/hub/third-party-risk-management): a threat without a treatment decision is just a known problem you chose to ignore.
 
 ## Why this matters for compliance
 
-ISO 27001 is literally built around risk management. The entire framework exists to make you identify your risks, evaluate them, and treat them systematically. SOC 2 Trust Services Criteria follow the same logic.
+[ISO 27001](/hub/iso27001) is literally built around risk management. The entire framework exists to make you identify your risks, evaluate them, and treat them systematically. [SOC 2](/hub/soc2) Trust Services Criteria follow the same logic.
 
 A compliance audit isn't checking whether you have zero risks. It's checking whether you have a rational process to understand and manage them.
 

@@ -17,3 +17,12 @@ export const frameworks = [
   badge: string;
   badgeDark?: string;
 }[];
+
+export function frameworkBadgeAlt(name: string): string {
+  const key = name.replace(/_dark$/, "");
+  const match = frameworks.find(
+    (framework) => framework.badge === key || framework.badgeDark === name,
+  );
+  const label = match?.label ?? key.replaceAll("_", " ");
+  return `${label} compliance badge`;
+}

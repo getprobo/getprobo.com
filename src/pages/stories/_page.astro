@@ -67,7 +67,7 @@ const articleSchema = {
       src={image}
       height={652}
       layout="full-width"
-      alt={metaTitle}
+      alt={data.imageAlt ?? metaTitle}
       class="absolute inset-0 z-1 size-full object-cover object-[center_35%]"
       fetchpriority="high"
     />

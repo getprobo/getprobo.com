@@ -2,8 +2,10 @@
   import type { AnimationItem } from "lottie-web";
   import { onDestroy } from "svelte";
   import { useIntersectionObserver } from "../lib/runes/useIntersectionObserver.svelte.ts";
+  import { frameworkBadgeAlt } from "../content/frameworks.ts";
 
   const { name, class: className }: { name: string; class?: string } = $props();
+  const badgeAlt = frameworkBadgeAlt(name);
   const staticName = name.replace(/_dark$/, "");
   const isDark = name.endsWith("_dark");
   const intersection = useIntersectionObserver({ threshold: 0.2 });
@@ -84,18 +86,12 @@
   });
 </script>
 
-<div
-  bind:this={intersection.ref}
-  class={`${className ?? ""} relative`}
-  role="img"
-  aria-label={`Badge ${name}`}
->
+<div bind:this={intersection.ref} class={`${className ?? ""} relative`}>
   <img
     src={`/frameworks/${staticName}.svg`}
-    alt=""
+    alt={badgeAlt}
     width="60"
     height="60"
-    aria-hidden="true"
     class:invert={isDark}
     class="size-full transition-opacity duration-200"
     class:opacity-0={animationReady}

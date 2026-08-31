@@ -6,27 +6,40 @@ import { docsSchema } from "@astrojs/starlight/schema";
 
 export const pageSize = 10;
 
+const nonEmptyAlt = z
+  .string()
+  .trim()
+  .min(1, "Image alt text is required and cannot be empty");
+
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/blog" }),
-  schema: z.object({
-    title: z.string(),
-    date: z.date(),
-    dateModified: z.date().optional(),
-    /** Meta description / preview excerpt; keep 120-160 chars for SEO. */
-    excerpt: z.string().min(120),
-    author: z.object({
-      name: z.string(),
+  schema: z
+    .object({
+      title: z.string(),
+      date: z.date(),
+      dateModified: z.date().optional(),
+      /** Meta description / preview excerpt; keep 120-160 chars for SEO. */
+      excerpt: z.string().min(120),
+      author: z.object({
+        name: z.string(),
+      }),
+      ogImage: z.string().optional(),
+      /** Optional hero image shown next to the title. Requires titleImageAlt. */
+      titleImage: z.string().optional(),
+      titleImageAlt: nonEmptyAlt.optional(),
+      faqs: z
+        .array(
+          z.object({
+            question: z.string(),
+            answer: z.string(),
+          }),
+        )
+        .optional(),
+    })
+    .refine((data) => !data.titleImage || Boolean(data.titleImageAlt), {
+      message: "titleImageAlt is required when titleImage is set",
+      path: ["titleImageAlt"],
     }),
-    ogImage: z.string().optional(),
-    faqs: z
-      .array(
-        z.object({
-          question: z.string(),
-          answer: z.string(),
-        }),
-      )
-      .optional(),
-  }),
 });
 
 const stories = defineCollection({
@@ -45,6 +58,7 @@ const stories = defineCollection({
       )
       .min(1),
     image: z.string(),
+    imageAlt: nonEmptyAlt,
     previewImage: z.string().optional(),
     /** Public URL for a muted looping card trailer (e.g. /stories/trailers/foo.mp4) */
     trailer: z.string().optional(),

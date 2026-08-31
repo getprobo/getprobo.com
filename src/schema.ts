@@ -13,6 +13,7 @@ export const StorySchema = z.object({
     )
     .min(1),
   image: z.string(),
+  imageAlt: z.string().trim().min(1),
   previewImage: z.string().optional(),
   trailer: z.string().optional(),
   trailerPoster: z.string().optional(),
