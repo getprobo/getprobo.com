@@ -115,9 +115,10 @@ async function inspectImage(file, root) {
   const fileStat = await stat(file);
   const metadata = await sharp(file, { limitInputPixels: false }).metadata();
   const isOpenGraph = isOpenGraphImage(file);
+  const maxWidth = isRetinaImage(file) ? root.maxWidth * 2 : root.maxWidth;
   const dimensionsInvalid = isOpenGraph
     ? metadata.width !== 1200 || metadata.height !== 630
-    : (metadata.width ?? 0) > root.maxWidth;
+    : (metadata.width ?? 0) > maxWidth;
   const fileOversized = fileStat.size > root.maxBytes;
   const violations = [];
 
@@ -125,7 +126,7 @@ async function inspectImage(file, root) {
     violations.push(
       isOpenGraph
         ? `${file} must be 1200×630 (currently ${metadata.width}×${metadata.height})`
-        : `${file} is ${metadata.width}px wide (maximum ${root.maxWidth}px)`,
+        : `${file} is ${metadata.width}px wide (maximum ${maxWidth}px)`,
     );
   }
   if (fileOversized) {
@@ -139,7 +140,7 @@ async function inspectImage(file, root) {
     dimensionsInvalid,
     extension: path.extname(file).toLowerCase(),
     isOpenGraph,
-    maxWidth: root.maxWidth,
+    maxWidth,
     shouldOptimize:
       dimensionsInvalid || fileStat.size >= 100 * 1024 || fileOversized,
     violations,
@@ -200,6 +201,10 @@ async function optimizeImage(file, options) {
     await unlink(temporaryFile).catch(() => {});
     throw error;
   }
+}
+
+function isRetinaImage(file) {
+  return /(?:-2x|@2x)\./i.test(path.basename(file));
 }
 
 function isOpenGraphImage(file) {
