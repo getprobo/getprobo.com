@@ -18,6 +18,39 @@ export const CHANGELOG_SEO = {
     "Every change we ship to Probo, in plain language. Access review connectors, compliance portals, cookie banners, document exports, and console releases.",
 };
 
+export function isVideoMedia(url: string): boolean {
+  return /\.(mp4|webm)(\?|#|$)/i.test(url);
+}
+
+export function isLogoAsset(url: string): boolean {
+  if (isVideoMedia(url)) return false;
+  return (
+    /\.svg(\?|#|$)/i.test(url) ||
+    /google\.com\/s2\/favicons/i.test(url) ||
+    /favicon/i.test(url)
+  );
+}
+
+export function isRasterImage(url: string): boolean {
+  return !isVideoMedia(url) && !/\.svg(\?|#|$)/i.test(url);
+}
+
+export function splitChangelogMedia(
+  urls: string[],
+  layout: "logos" | "stacked",
+): { logos: string[]; media: string[] } {
+  if (layout === "logos") {
+    return { logos: urls, media: [] };
+  }
+  const logos: string[] = [];
+  const media: string[] = [];
+  for (const url of urls) {
+    if (isLogoAsset(url)) logos.push(url);
+    else media.push(url);
+  }
+  return { logos, media };
+}
+
 export function mediaAlt(
   title: string,
   options: {

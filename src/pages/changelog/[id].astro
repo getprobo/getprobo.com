@@ -1,33 +1,50 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Prose from "../../components/Prose.astro";
+import ChangelogMedia from "../../components/ChangelogMedia.astro";
 import { getCanonicalUrl } from "../../lib/i18n.ts";
-import { mediaAlt, tagClass, toIsoDate } from "../../lib/changelog.ts";
+import {
+  isRasterImage,
+  isVideoMedia,
+  tagClass,
+  toIsoDate,
+} from "../../lib/changelog.ts";
+
+interface Props {
+  entry: CollectionEntry<"changelog">;
+  newer: CollectionEntry<"changelog"> | null;
+  older: CollectionEntry<"changelog"> | null;
+}
 
 export async function getStaticPaths() {
-  const entries = await getCollection("changelog");
-  return entries.map((entry) => ({
+  const entries = (await getCollection("changelog")).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+  return entries.map((entry, index) => ({
     params: { id: entry.id },
-    props: { entry },
+    props: {
+      entry,
+      newer: entries[index - 1] ?? null,
+      older: entries[index + 1] ?? null,
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, newer, older } = Astro.props;
 const { Content } = await render(entry);
 const mediaUrls =
   entry.data.images ?? (entry.data.image ? [entry.data.image] : []);
-const isLogoLayout = entry.data.imagesLayout === "logos";
-const isVideoMedia = (url: string) => /\.(mp4|webm)$/i.test(url);
+const mediaKind = entry.data.imagesLayout === "logos" ? "logos" : "stacked";
 const dateFormatter = Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
   day: "numeric",
 });
 
-const changelogImage = mediaUrls.find((url) => !isVideoMedia(url));
+const changelogImage =
+  mediaUrls.find(isRasterImage) ?? mediaUrls.find((url) => !isVideoMedia(url));
 const published = entry.data.date.toISOString();
-const mediaKind = isLogoLayout ? "logos" : "stacked";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -110,90 +127,140 @@ const breadcrumbSchema = {
     set:html={JSON.stringify(breadcrumbSchema)}
   />
   <main class="container my-10 max-w-[720px] sm:my-20">
-    <header class="animate-slide-in mb-10">
-      <div
-        class="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-2"
+    <article>
+      <a
+        href="/changelog"
+        class="text-muted-foreground hover:text-foreground animate-slide-in mb-8 inline-flex items-center gap-1 text-sm transition-colors"
       >
-        <a
-          href="/changelog"
-          class="text-muted-foreground hover:text-foreground text-sm transition-colors"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
         >
-          ← Changelog
-        </a>
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+        Changelog
+      </a>
+
+      <header class="animate-slide-in animation-delay-100 mb-10">
         <div
-          class="text-muted-foreground flex flex-wrap items-center gap-x-2.5 gap-y-2 text-sm"
+          class="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2"
         >
-          <time datetime={toIsoDate(entry.data.date)}>
+          <time
+            datetime={toIsoDate(entry.data.date)}
+            class="text-muted-foreground text-sm"
+          >
             {dateFormatter.format(new Date(entry.data.date))}
           </time>
           {
             entry.data.tags.length > 0 && (
               <span class="flex flex-wrap gap-1.5">
                 {entry.data.tags.map((tag) => (
-                  <span class={tagClass(tag)}>{tag}</span>
+                  <a
+                    href={`/changelog?tag=${encodeURIComponent(tag)}`}
+                    class:list={[
+                      tagClass(tag),
+                      "hover:bg-highlight transition-colors",
+                    ]}
+                  >
+                    {tag}
+                  </a>
                 ))}
               </span>
             )
           }
         </div>
-      </div>
-      <h1 class="text-h3 sm:text-h2 mb-4 font-medium">
-        {entry.data.title}
-      </h1>
-      <p class="text-muted-foreground text-lg">
-        {entry.data.description}
-      </p>
-    </header>
+        <h1 class="text-h3 sm:text-h2 mb-4 font-medium text-balance">
+          {entry.data.title}
+        </h1>
+        <p class="text-muted-foreground text-lg text-pretty">
+          {entry.data.description}
+        </p>
+      </header>
+
+      {
+        mediaUrls.length > 0 && (
+          <ChangelogMedia
+            urls={mediaUrls}
+            title={entry.data.title}
+            layout={mediaKind}
+          />
+        )
+      }
+
+      <Prose class="animate-slide-in animation-delay-200">
+        <Content />
+      </Prose>
+    </article>
 
     {
-      mediaUrls.length > 0 &&
-        (isLogoLayout ? (
-          <div class="animate-slide-in animation-delay-200 mb-10 flex flex-wrap items-center gap-6">
-            {mediaUrls.map((url, index) => (
-              <img
-                src={url}
-                alt={mediaAlt(entry.data.title, {
-                  layout: "logos",
-                  index,
-                  total: mediaUrls.length,
-                })}
-                class="h-12 w-auto"
-              />
-            ))}
-          </div>
-        ) : (
-          <div class="mb-10 flex flex-col gap-6">
-            {mediaUrls.map((url, index) => {
-              const alt = mediaAlt(entry.data.title, {
-                layout: mediaKind,
-                index,
-                total: mediaUrls.length,
-                isVideo: isVideoMedia(url),
-              });
-              return isVideoMedia(url) ? (
-                <video
-                  src={url}
-                  controls
-                  playsinline
-                  preload="none"
-                  title={alt}
-                  aria-label={alt}
-                  class="shadow-image animate-slide-in animation-delay-200 w-full rounded-lg"
-                />
-              ) : (
-                <img
-                  src={url}
-                  alt={alt}
-                  class="shadow-image animate-slide-in animation-delay-200 mx-auto max-h-[600px] w-auto max-w-full rounded-lg object-contain"
-                />
-              );
-            })}
-          </div>
-        ))
+      (older || newer) && (
+        <nav
+          aria-label="Changelog"
+          class="border-border-low animate-slide-in animation-delay-300 mt-16 grid grid-cols-1 gap-8 border-t pt-8 sm:grid-cols-2"
+        >
+          {older ? (
+            <a href={`/changelog/${older.id}`} class="group min-w-0">
+              <span class="text-tertiary-foreground text-xxs mb-1 flex items-center gap-0.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+                Older
+              </span>
+              <span class="group-hover:text-muted-foreground block truncate font-medium tracking-[-0.01em] transition-colors">
+                {older.data.title}
+              </span>
+            </a>
+          ) : (
+            <div />
+          )}
+          {newer && (
+            <a
+              href={`/changelog/${newer.id}`}
+              class="group min-w-0 sm:text-right"
+            >
+              <span class="text-tertiary-foreground text-xxs mb-1 flex items-center gap-0.5 sm:justify-end">
+                Newer
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </span>
+              <span class="group-hover:text-muted-foreground block truncate font-medium tracking-[-0.01em] transition-colors">
+                {newer.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
+      )
     }
-
-    <Prose class="animate-slide-in animation-delay-200">
-      <Content />
-    </Prose>
   </main>
 </Layout>

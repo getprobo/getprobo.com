@@ -1,0 +1,101 @@
+---
+import {
+  isVideoMedia,
+  mediaAlt,
+  splitChangelogMedia,
+} from "../lib/changelog.ts";
+
+interface Props {
+  urls: string[];
+  title: string;
+  layout: "logos" | "stacked";
+}
+
+const { urls, title, layout } = Astro.props;
+const { logos, media } = splitChangelogMedia(urls, layout);
+const showLogoTile = media.length === 0 && logos.length > 0;
+const manyLogos = logos.length >= 4;
+const logoSize = manyLogos ? "h-9 max-w-[200px]" : "h-14 max-w-[160px]";
+const logoGap = manyLogos ? "gap-x-6 gap-y-5" : "gap-x-10 gap-y-6";
+const frame = "shadow-image bg-level-1 w-full rounded-xl object-contain";
+---
+
+{
+  showLogoTile && (
+    <div
+      class:list={[
+        "shadow-image bg-highlight animate-slide-in animation-delay-200 mb-12 flex min-h-[240px] flex-wrap items-center justify-center rounded-2xl px-8 py-14 sm:px-10",
+        logoGap,
+      ]}
+    >
+      {logos.map((url, index) => (
+        <img
+          src={url}
+          alt={mediaAlt(title, {
+            layout: "logos",
+            index,
+            total: logos.length,
+          })}
+          class:list={["w-auto object-contain", logoSize]}
+        />
+      ))}
+    </div>
+  )
+}
+
+{
+  media.length > 0 && (
+    <div class:list={["mb-12 flex flex-col gap-6", logos.length > 0 && "pt-7"]}>
+      {media.map((url, index) => {
+        const alt = mediaAlt(title, {
+          layout: "stacked",
+          index,
+          total: media.length,
+          isVideo: isVideoMedia(url),
+        });
+        const isFirst = index === 0;
+        return (
+          <div class="relative">
+            {isFirst && logos.length > 0 && (
+              <div class="absolute top-0 left-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 gap-2">
+                {logos.map((logo, logoIndex) => (
+                  <img
+                    src={logo}
+                    alt={mediaAlt(title, {
+                      layout: "logos",
+                      index: logoIndex,
+                      total: logos.length,
+                    })}
+                    class="shadow-mid size-12 rounded-[12px] bg-white object-contain"
+                  />
+                ))}
+              </div>
+            )}
+            {isVideoMedia(url) ? (
+              <video
+                src={url}
+                controls
+                playsinline
+                preload="none"
+                title={alt}
+                aria-label={alt}
+                class:list={[frame, "animate-slide-in animation-delay-200"]}
+              />
+            ) : (
+              <img
+                src={url}
+                alt={alt}
+                loading={isFirst ? "eager" : "lazy"}
+                decoding="async"
+                class:list={[
+                  frame,
+                  "animate-slide-in animation-delay-200 mx-auto max-h-[600px]",
+                ]}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  )
+}
