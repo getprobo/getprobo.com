@@ -1,0 +1,16 @@
+---
+title: "AWS Access Review Connector"
+description: "A new AWS connector covers an entire organization at once. You grant access in your own AWS account, so there's no credential to create, paste, or rotate for Probo to see."
+date: 2026-08-27
+images: ["/changelog/2026-08-27-aws-access-review-connector-1.webp"]
+imagesLayout: "logos"
+tags: ["Access Review"]
+---
+
+[IMAGE_PLACEHOLDER: Screenshot of the Access Review connectors page showing the AWS connector being added, with a note that no credential is required.]
+
+Most access review connectors need a token or key pasted into Probo. The new AWS connector skips that step. Probo mints a short-lived identity assertion, and your AWS account exchanges it for temporary credentials against a role you control.
+
+Connect once and every account under that AWS organization is tracked automatically as a cloud account, no per-account setup required.
+
+Nothing to rotate, nothing to leak. If you ever want to cut access, you just remove the role on your side.
