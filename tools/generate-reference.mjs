@@ -382,7 +382,7 @@ function commandLabel(count) {
 
 function categoryForTool(name) {
   const categories = [
-    ["Access reviews", /AccessReview|AccessEntr/],
+    ["Access reviews", /AccessReview|AccessEntr|Connector/],
     ["AI systems", /AiSystem/],
     ["Risk assessments", /RiskAssessment/],
     ["Third parties", /ThirdPart(?:y|ies)/],
