@@ -15,8 +15,17 @@ const { urls, title, layout } = Astro.props;
 const { logos, media } = splitChangelogMedia(urls, layout);
 const showLogoTile = media.length === 0 && logos.length > 0;
 const manyLogos = logos.length >= 4;
-const logoSize = manyLogos ? "h-9 max-w-[200px]" : "h-14 max-w-[160px]";
-const logoGap = manyLogos ? "gap-x-6 gap-y-5" : "gap-x-10 gap-y-6";
+const pairLogos = logos.length <= 2;
+const logoSize = manyLogos
+  ? "h-9 max-w-[200px] shrink-0"
+  : pairLogos
+    ? "h-16 max-w-[180px] shrink-0"
+    : "h-14 max-w-[160px] shrink-0";
+const logoGap = manyLogos
+  ? "gap-x-6 gap-y-5"
+  : pairLogos
+    ? "gap-x-16 gap-y-8"
+    : "gap-x-10 gap-y-6";
 const frame = "shadow-image bg-level-1 w-full rounded-xl object-contain";
 ---
 
