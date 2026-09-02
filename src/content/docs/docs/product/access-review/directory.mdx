@@ -3,7 +3,7 @@ title: Connector Directory
 description: Browse every access-review connector Probo supports, the credential type each one needs, and links to the setup guide for each provider.
 ---
 
-Probo connects to these providers as access sources. Each guide covers the credential to create, the data Probo collects, and how to connect it.
+Probo connects to these providers as access sources. Each guide covers the connection method, the data Probo collects, and the steps to connect.
 
 The connection buttons shown in **Access Review** > **Connections** are the source of truth for the methods available in your deployment. Some providers use OAuth or client credentials even when the guides below focus on API-key connectors.
 
@@ -16,6 +16,11 @@ import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 />
 
 <CardGrid>
+  <LinkCard
+    title="Amazon Web Services"
+    description="Workload identity (no credentials)"
+    href="/docs/product/access-review/aws"
+  />
   <LinkCard
     title="Anthropic"
     description="Claude Console Admin API key"

@@ -9,6 +9,7 @@ import {
 // the i's rather than after every capitalised name.
 const accessReviewConnectorItems = [
   { label: "1Password", slug: "docs/product/access-review/one-password" },
+  { label: "Amazon Web Services", slug: "docs/product/access-review/aws" },
   { label: "Anthropic", slug: "docs/product/access-review/anthropic" },
   { label: "Apollo.io", slug: "docs/product/access-review/apollo" },
   { label: "authentik", slug: "docs/product/access-review/authentik" },

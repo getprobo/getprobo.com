@@ -1,0 +1,106 @@
+---
+title: Amazon Web Services
+description: Connect Amazon Web Services as an access review source using workload identity so Probo can list IAM users and Identity Center assignments without storing AWS credentials.
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Probo reads the identities of one AWS account so you can review who has access. It lists the IAM users of that account. It also lists the IAM Identity Center users assigned to that account, when the role can read an Identity Center instance. Each source covers a single account, so Probo does not enumerate the other accounts in your organization.
+
+Workload identity is the strongest access pattern Probo uses for your AWS account. You create a read-only IAM role, and you keep control of it. Probo never stores AWS access keys, secret keys, or session tokens. The only value it stores is the Role ARN, which is not a secret.
+
+:::note
+Copy the issuer URL from the connect page instead of retyping it. AWS compares that URL case-sensitively, so one wrong character would stop Probo from assuming the role.
+:::
+
+## How Access Works
+
+Workload identity is the pattern AWS recommends for third-party access. There is no long-lived IAM user key that you would have to paste into Probo or rotate later.
+
+1. You create a read-only `ProboAudit` role in your AWS account. Its trust policy accepts only your Probo organization's issuer and subject.
+2. On each sync, Probo signs a token in memory. That token is valid for five minutes. AWS STS exchanges it for a session that lasts at most one hour.
+3. The token and the session both stay in memory. Probo never writes them to disk and never stores them with the connector.
+4. You can revoke access from AWS at any time. Delete the role, or change its trust policy, and Probo can no longer open a new session. A session that is already open would still expire within the hour. To stop it sooner, attach an explicit deny to the role.
+
+CloudTrail names every session `probo-<organizationId>`, so you can attribute each API call to your Probo organization.
+
+## Prerequisites
+
+- Probo organization administrator access
+- Permission to create IAM roles and an OpenID Connect provider in the AWS account you want to review. The CloudFormation stack and the Terraform module Probo supplies both need it
+- The **Role ARN** of the audit role. That ARN is the only value you paste into Probo
+
+## Collected Fields
+
+### IAM Users
+
+| Probo field | AWS field                                           | Notes                                                                                                                                                                                                     |
+| ----------- | --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | IAM user name                                       | The account root appears as `<root_account>`                                                                                                                                                              |
+| Email       | Organizations `DescribeAccount`                     | Reported for the account root only, where it is the account sign-in address. An IAM user has no email attribute. It also stays empty for a standalone account, or when the role cannot call Organizations |
+| Role        | Groups, attached policies, and inline policies      | Policy and group names on the user                                                                                                                                                                        |
+| Admin       | Attached and inline policies                        | Flagged when `AdministratorAccess` is present, or when the identity is the account root. Left unknown otherwise, because a custom policy can grant the same access                                        |
+| Status      | Credential report                                   | Active when a console password or an access key is active. Unknown when the credential report is missing                                                                                                  |
+| MFA         | Credential report                                   | Whether MFA is enabled on the user                                                                                                                                                                        |
+| Last login  | `password_last_used` and access-key last-used dates | The most recent of those timestamps. It records the last use of a password or an access key, not a sign-in event                                                                                          |
+| External ID | User ARN                                            | Stable identifier used to track the account across reviews                                                                                                                                                |
+| Created at  | `CreateDate`                                        | When the IAM user was created                                                                                                                                                                             |
+
+IAM users with an active access key and no console password are recorded as service accounts.
+
+### Identity Center Users
+
+Probo lists Identity Center users assigned to the connected account, directly or through a group.
+
+| Probo field | AWS field                                      | Notes                                                                                                                                                                    |
+| ----------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Name        | `DisplayName`                                  | Falls back to `UserName` when the profile has no display name                                                                                                            |
+| Email       | Identity store email                           |                                                                                                                                                                          |
+| Role        | Permission set names                           | Grants on the connected account                                                                                                                                          |
+| Admin       | Permission set names                           | Flagged when a grant is `AWSAdministratorAccess` or `AdministratorAccess`                                                                                                |
+| Status      | `UserStatus`                                   | Active when the status is `ENABLED`. Inactive when it is `DISABLED`                                                                                                      |
+| MFA         | Identity Center MFA devices                    | Enabled when the user has a registered MFA device. Unknown when your identity source is an external provider, because Identity Center holds no MFA state for those users |
+| Last login  | CloudTrail `UserAuthentication` sign-in events | The most recent successful sign-in to the AWS access portal. CloudTrail keeps 90 days of event history, so a user who has not signed in during that window stays empty   |
+| External ID | Identity store user ARN                        | Stable identifier used to track the account across reviews                                                                                                               |
+| Created at  | Identity store create time                     | When the user was created in the identity store                                                                                                                          |
+
+Neither MFA nor last login is an attribute on the user, so Probo reads them from elsewhere in the account. MFA comes from the registered devices in Identity Center. Last login comes from the CloudTrail sign-in events, because Identity Center itself keeps no last-login field. The audit role already allows both reads, so a role you deployed earlier needs no change.
+
+If the account has no Identity Center instance, if `ListInstances` is denied, or if the role cannot read the SSO Admin API, the review lists IAM users only.
+
+## Step 1: Deploy the Audit Role
+
+The connect page prefills the issuer, the audience (`sts.amazonaws.com`), the subject, and a suggested role name (`ProboAudit`). You can deploy the role with CloudFormation or with Terraform. Both create an OpenID Connect provider and a read-only role. The role attaches `SecurityAudit` and `ViewOnlyAccess`, plus the Identity Center read permissions those two policies miss.
+
+<Steps>
+
+1. In Probo, go to **Access Review** > **Connections**.
+2. Find **Amazon Web Services** and click **Workload Identity**.
+3. On the **Connect AWS** page, choose an install method:
+   - **Install via CloudFormation** opens the AWS console with the issuer, subject, and role name already filled in. Create the stack in the account you want to review. Leave **Deploy to the whole organization** set to **No**, unless you also want the role in your member accounts for later.
+   - **Install via Terraform** copies a module snippet for `getprobo/audit-role/aws`. Paste the issuer URL into it rather than retyping it.
+4. When the stack or the apply finishes, copy the `RoleARN` output.
+
+</Steps>
+
+You can also create the role yourself. Use the issuer, audience, and subject shown on the connect page. The trust policy must allow `sts:AssumeRoleWithWebIdentity` and pin both `aud` and `sub` with `StringEquals`.
+
+CloudFormation can deploy the same role to every member account. Probo still reviews only the account whose Role ARN you connect. To review another account, connect another source.
+
+## Step 2: Connect in Probo
+
+<Steps>
+
+1. Stay on the **Connect AWS** page. You can also reopen it from **Access Review** > **Connections** > **Amazon Web Services** > **Workload Identity**.
+2. Paste the **Role ARN** (for example `arn:aws:iam::123456789012:role/ProboAudit`) and click **Connect**.
+
+</Steps>
+
+Probo first names the source with the 12-digit account ID, for example `Amazon Web Services / 123456789012`. A background worker then replaces that ID with the account name, or with the IAM sign-in alias when AWS returns no name.
+
+## Troubleshooting
+
+- **Probo could not assume the audit role.** Confirm that the stack is in the account that owns the Role ARN, and that the issuer and subject match the values on the connect page. Copy those values rather than retyping them.
+- **Role ARN rejected.** Probo needs an IAM role ARN, for example `arn:aws:iam::123456789012:role/ProboAudit`. An access-key ID or a user ARN would be refused.
+- **Only IAM users appear.** The account has no Identity Center instance, the instance is in a region Probo does not search, or the role cannot read the SSO Admin API. The review then lists IAM users only.
+- **The source name still shows the account ID.** The worker that resolves the name has not run yet. When it runs, it prefers the account name, then the sign-in alias.

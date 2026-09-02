@@ -1,6 +1,6 @@
 ---
 title: How Probo Protects Integration Credentials
-description: How Probo stores and uses API keys and OAuth tokens for access sources, and what controls protect your data on Probo Cloud
+description: How Probo stores and uses API keys, OAuth tokens, and workload identity for access sources, and what controls protect your data on Probo Cloud
 ---
 
 import MermaidDiagram from "../../../../../components/docs/MermaidDiagram.astro";
@@ -10,17 +10,18 @@ When you connect an access source with an API key or OAuth, you authorize Probo 
 
 ## What you connect
 
-Access reviews support three connection methods:
+Access reviews support these connection methods:
 
 - **OAuth.** When a provider offers **OAuth** on the **Connections** page, you approve Probo on the provider's consent screen. Probo stores OAuth tokens needed to refresh access, not your provider password. OAuth availability depends on the provider and deployment configuration.
 - **API key.** You create a token on the provider and paste it into Probo when you connect it. Use the least-privilege token each connector guide describes.
+- **Workload identity.** Used by [Amazon Web Services](/docs/product/access-review/aws). You create a read-only IAM role in your AWS account, and Probo assumes it with a short-lived token that it signs in memory. The only value Probo stores is the Role ARN, which is not a secret.
 - **CSV.** No live credential is stored; you upload an export for tools Probo cannot connect to directly.
 
-For OAuth and API key flows, Probo must hold credentials that can be used again on each sync or campaign. That is why credentials are **encrypted at rest**, not hashed like a password.
+For OAuth and API key flows, Probo must hold credentials that can be used again on each sync or campaign. That is why those credentials are **encrypted at rest**, not hashed like a password. Workload identity holds no such credential, so it needs no encrypted credential blob.
 
 ## Data flow
 
-The sequence diagram below follows the same lifecycle as the numbered steps that follow. Messages read top to bottom within each section. **CSV** uploads skip credential storage; only OAuth and API key paths use connect, store, and sync.
+The sequence diagram below follows the same lifecycle as the numbered steps that follow. Messages read top to bottom within each section. **CSV** uploads skip credential storage, and workload identity stores only a Role ARN. The connect, store, and sync path applies to OAuth and API keys.
 
 <MermaidDiagram chart={credentialFlow} />
 
@@ -58,7 +59,7 @@ For access reviews, Probo collects **membership metadata** the provider exposes:
 
 ## Recommendations before you connect
 
-- Prefer **OAuth** when the **Connections** page offers it for the provider.
+- Use **workload identity** for Amazon Web Services. For other providers, prefer **OAuth** when the **Connections** page offers it.
 - Create a **dedicated, scoped** API token per provider (read-only where the guide allows). Avoid global or personal keys when a scoped token exists.
 - Store the token in a password manager until you paste it once into Probo; do not share it in chat or email.
 - **Rotate or revoke** at the provider when someone leaves or the integration is unused, then delete the source in Probo or reconnect with a new token.
@@ -82,6 +83,7 @@ Connector OAuth application IDs and secrets for each provider are also deploymen
 
 - [Access Reviews overview](/docs/product/access-review/overview)
 - [Connector directory](/docs/product/access-review/directory)
+- [Amazon Web Services](/docs/product/access-review/aws)
 - [Probo Cloud Infrastructure Security](/docs/deployment/infrastructure-security)
 - [Privacy Policy](https://www.probo.com/privacy)
 - [Compliance Portal](https://compliance.probo.com)
