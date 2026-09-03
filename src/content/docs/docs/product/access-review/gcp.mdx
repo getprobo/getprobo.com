@@ -1,0 +1,26 @@
+---
+title: Google Cloud
+description: Connect Google Cloud as an access review source using Workload Identity Federation so Probo can list IAM members and roles without storing service account keys.
+badge:
+  text: Coming soon
+  variant: caution
+---
+
+Probo reads the IAM members and role bindings of your Google Cloud project or organization so you can review who has access. It lists users, groups, service accounts, and their assigned roles. Each source covers your configured scope, giving you visibility into access permissions across your environment.
+
+Workload Identity Federation is the strongest access pattern Probo uses for your Google Cloud account. You configure a Workload Identity Pool and grant read-only IAM access to Probo's identity. Probo never stores Google Cloud service account keys or permanent credentials. The only values it stores are your pool and provider identifiers, which are not secrets.
+
+:::note
+Copy the issuer URL and audience from the connect page instead of retyping them. Google Cloud compares OIDC claims case-sensitively, so one wrong character would stop Probo from exchanging tokens.
+:::
+
+## How Access Works
+
+Workload Identity Federation is the pattern Google Cloud recommends for third-party access. There is no long-lived service account key that you would have to download, paste into Probo, or rotate later.
+
+1. You create a Workload Identity Pool and OIDC Provider in your Google Cloud project. Its attribute condition accepts only your Probo organization's issuer and subject.
+2. On each sync, Probo signs a token in memory. That token is valid for five minutes. Google Cloud Security Token Service (STS) exchanges it for a short-lived federated access token.
+3. The token and the session both stay in memory. Probo never writes them to disk and never stores them with the connector.
+4. You can revoke access from Google Cloud at any time. Disable or delete the Workload Identity Pool, provider, or IAM binding, and Probo can no longer request access tokens. Any existing short-lived token expires automatically within the hour.
+
+Google Cloud Audit Logs attributes every API call to your federated principal, so you can track and verify every read operation Probo performs.

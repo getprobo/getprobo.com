@@ -1,5 +1,6 @@
 ---
 import Icon from "../Icon.astro";
+import { Badge } from "@astrojs/starlight/components";
 import {
   getDocsSection,
   getDocsSectionForPath,
@@ -12,7 +13,14 @@ type Breadcrumb = {
 
 const { entry, sidebar } = Astro.locals.starlightRoute;
 type SidebarEntry = (typeof sidebar)[number];
-const { title, description } = entry.data;
+const { title, description, badge } = entry.data;
+const titleBadge =
+  badge ??
+  (typeof entry.data.sidebar?.badge === "object"
+    ? entry.data.sidebar?.badge
+    : typeof entry.data.sidebar?.badge === "string"
+      ? { text: entry.data.sidebar.badge, variant: "default" as const }
+      : undefined);
 const pathname = Astro.url.pathname.replace(/\.html$/, "").replace(/\/+$/, "");
 const markdownUrl = pathname ? `/md${pathname}.md` : "/md/index.md";
 const activeSection = getDocsSection(getDocsSectionForPath(Astro.url.pathname));
@@ -81,7 +89,19 @@ const breadcrumbs = [
     </ol>
   </nav>
 
-  <h1 id="_top">{title}</h1>
+  <h1 id="_top">
+    {title}
+    {
+      titleBadge && (
+        <Badge
+          text={titleBadge.text}
+          variant={titleBadge.variant ?? "default"}
+          class={titleBadge.class}
+          size="medium"
+        />
+      )
+    }
+  </h1>
   {description && <p class="docs-page-description">{description}</p>}
 
   <div class="docs-page-actions" aria-label="Page actions">
@@ -139,6 +159,10 @@ const breadcrumbs = [
   }
 
   #_top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
     margin: 0 0 0.5rem !important;
     color: var(--color-primary);
     font-size: clamp(2rem, 4vw, 2.5rem);

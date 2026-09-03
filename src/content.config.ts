@@ -193,6 +193,24 @@ const docs = defineCollection({
     extend: z.object({
       /** Meta description; keep 120+ chars for SEO. */
       description: z.string().min(120),
+      badge: z
+        .union([
+          z.string(),
+          z.object({
+            text: z.string(),
+            variant: z
+              .enum(["note", "danger", "success", "caution", "tip", "default"])
+              .default("default"),
+            class: z.string().optional(),
+          }),
+        ])
+        .transform((badge) => {
+          if (typeof badge === "string") {
+            return { variant: "default" as const, text: badge };
+          }
+          return badge;
+        })
+        .optional(),
     }),
   }),
 });
