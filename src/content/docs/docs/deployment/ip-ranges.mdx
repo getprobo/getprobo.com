@@ -1,0 +1,86 @@
+---
+title: Public egress IP addresses
+description: Fixed Probo Cloud outbound addresses for the EU and US regions, published as a machine-readable list you can allowlist for integrations, webhooks, and provider API-key IP restrictions.
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+Probo Cloud uses a fixed public source address when it makes outbound HTTPS requests from each region. Allowlist that address when a provider, firewall, or webhook receiver restricts inbound traffic by IP.
+
+These addresses are **egress only**. They are not the IPs your browser or API clients use to reach `eu.probo.com` or `us.probo.com`.
+
+## Current addresses
+
+Allowlist the row that matches your organization's region. Both addresses are production (`prod`).
+
+| Region | Console                              | CIDR               |
+| ------ | ------------------------------------ | ------------------ |
+| **EU** | [eu.probo.com](https://eu.probo.com) | `52.48.143.113/32` |
+| **US** | [us.probo.com](https://us.probo.com) | `3.137.44.214/32`  |
+
+Use them for:
+
+- provider API-key or token IP restrictions on [access review connectors](/docs/product/access-review/integration-security#network-restrictions);
+- firewalls in front of [webhook](/docs/developers/api/webhooks/overview) receivers.
+
+## Machine-readable list
+
+The same data is published at a stable URL:
+
+[https://www.probo.com/ip-ranges.json](https://www.probo.com/ip-ranges.json)
+
+```json
+{
+  "lastUpdated": "2026-09-03T00:00:00Z",
+  "items": [
+    {
+      "cidr": "52.48.143.113/32",
+      "environment": "prod",
+      "region": "eu",
+      "direction": ["egress"]
+    },
+    {
+      "cidr": "3.137.44.214/32",
+      "environment": "prod",
+      "region": "us",
+      "direction": ["egress"]
+    }
+  ]
+}
+```
+
+| Field                  | Meaning                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `lastUpdated`          | When this list was last published (RFC 3339)                                                     |
+| `items[].cidr`         | IPv4 prefix in CIDR notation                                                                     |
+| `items[].environment`  | `prod` for Probo Cloud production                                                                |
+| `items[].region`       | `eu` or `us`, matching the console host                                                          |
+| `items[].direction`    | Always `egress` — traffic from Probo toward your systems and third-party APIs                    |
+
+Poll the file and compare `lastUpdated`, or send a conditional request with `If-None-Match` / `If-Modified-Since`. The response is cacheable for one hour.
+
+New addresses will appear in this file before Probo Cloud sends traffic from them.
+
+## Self-hosted deployments
+
+Self-hosted Probo does not use these addresses. Allowlist the outbound IPs of the network where you run `probod`.
+
+## Related documentation
+
+<CardGrid>
+  <LinkCard
+    title="Probo Cloud"
+    description="Regions, managed operations, and shared responsibilities"
+    href="/docs/deployment/cloud"
+  />
+  <LinkCard
+    title="Integration credentials"
+    description="How API keys and OAuth tokens are stored and restricted"
+    href="/docs/product/access-review/integration-security"
+  />
+  <LinkCard
+    title="Webhook delivery"
+    description="Receive signed HTTPS notifications from Probo"
+    href="/docs/developers/api/webhooks/delivery-and-recovery"
+  />
+</CardGrid>

@@ -86,6 +86,9 @@
   Cache-Control: public, max-age=604800
 
 # Manifest and other root files
+/ip-ranges.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /*.json
   Cache-Control: public, max-age=3600
 

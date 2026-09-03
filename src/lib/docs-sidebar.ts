@@ -539,6 +539,10 @@ export const docsSidebarGroups = [
         label: "Infrastructure security",
         slug: "docs/deployment/infrastructure-security",
       },
+      {
+        label: "Egress IP addresses",
+        slug: "docs/deployment/ip-ranges",
+      },
     ],
   },
   {

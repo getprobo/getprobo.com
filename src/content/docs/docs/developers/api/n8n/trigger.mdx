@@ -119,7 +119,7 @@ Example expressions:
 | Symptom                                   | Check                                                                                                   |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Activation cannot create the subscription | `v1:webhook` scope, user permissions, organization ID, and n8n's configured production webhook URL     |
-| Probo cannot deliver                      | Public DNS, HTTPS certificate, reverse proxy, firewall, and the subscription's endpoint URL             |
+| Probo cannot deliver                      | Public DNS, HTTPS certificate, reverse proxy, firewall, and the subscription's endpoint URL. If the firewall allowlists source IPs, include the [Cloud egress address](/docs/deployment/ip-ranges) for your region |
 | Delivery returns `403`                    | Signature verification state, server clocks, and whether the subscription was recreated after a change |
 | Workflow receives no selected event       | The workflow is active and the event belongs to the selected organization and event set                 |
 | Duplicate downstream action               | Deduplicate with `eventId` and review manual or error-workflow retries                                  |
