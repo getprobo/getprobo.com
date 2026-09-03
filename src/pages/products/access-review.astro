@@ -1,0 +1,1311 @@
+---
+import "@phosphor-icons/web/regular";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/ui/Button.svelte";
+import LogosScroll from "../../components/LogosScroll.svelte";
+import PaulSinai from "../../assets/testimonial/paul-sinai.jpg";
+import BlaxelFounders from "../../assets/stories/blaxel-header.jpg";
+
+const pageTitle = "Access Review Software for SOC 2 and ISO 27001";
+const pageDescription =
+  "Review access across every system, flag risky accounts, record every decision, and export audit-ready evidence for SOC 2 and ISO 27001.";
+
+const overviewFeatures = [
+  {
+    icon: "ph-plugs-connected",
+    title: "Pull access from your whole stack",
+    description:
+      "Connect all your tools, from Google Workspace and Okta to GitHub, cloud infra, Slack, and Brex, and pull every account into one review.",
+    link: {
+      label: "Full list here.",
+      href: "/docs/product/access-review/directory",
+    },
+  },
+  {
+    icon: "ph-camera",
+    title: "A snapshot, frozen for the record",
+    description:
+      "Starting a campaign captures who had access to what at that moment, separate from live data that keeps changing under you.",
+  },
+  {
+    icon: "ph-check-circle",
+    title: "Decide in one click, at scale",
+    description:
+      "Approve, revoke, defer, or escalate accounts individually or in bulk, with a required note on anything you don't approve.",
+  },
+  {
+    icon: "ph-flag",
+    title: "Flags that surface risky accounts",
+    description:
+      "Probo flags orphaned, dormant, over-privileged, and shared accounts so reviewers look where it matters first.",
+  },
+  {
+    icon: "ph-arrows-clockwise",
+    title: "See what changed since last quarter",
+    description:
+      "Each campaign is diffed against the last, tagging every account as new, removed, or unchanged.",
+  },
+  {
+    icon: "ph-seal-check",
+    title: "Evidence auditors accept",
+    description:
+      "Close the campaign and export it as a PDF if you need. A complete record of who reviewed what, and why.",
+  },
+];
+
+const reviewSteps = [
+  {
+    title: "Connect every system once",
+    bullets: [
+      "Link providers over OAuth, API key, or client credentials.",
+      "Import a CSV for any tool without a connector yet, or ask Probo team to add it.",
+      "Reuse your sources across every future campaign.",
+    ],
+  },
+  {
+    title: "Capture the full picture of each account",
+    reverse: true,
+    bullets: [
+      "See role, admin rights, MFA status, and last login side by side.",
+      "Tell real people apart from service accounts and API keys.",
+      "Judge access on facts, not guesswork.",
+    ],
+  },
+  {
+    title: "Move through decisions fast",
+    bullets: [
+      "Approve, revoke, defer, or escalate. One account or many at once.",
+      "Require a justification on every account you don't approve.",
+      "Start on the accounts Probo has already flagged as risky.",
+    ],
+  },
+  {
+    title: "Close with proof auditors accept",
+    reverse: true,
+    bullets: [
+      "Close only when every account has a decision on record.",
+      "Track progress by decision, flag, and what changed since last time.",
+      "Export the finished campaign as evidence for your SOC 2 or ISO 27001 audit.",
+    ],
+  },
+];
+
+const publishCards = [
+  {
+    visual: "documents",
+    title: "Sources",
+    description: "Connect providers and reuse them across campaigns.",
+  },
+  {
+    visual: "protected-assets",
+    title: "Campaigns",
+    description:
+      "Scope a review to the systems that matter, then snapshot them in one click.",
+  },
+  {
+    visual: "audits",
+    title: "Access entries",
+    description:
+      "Every account with role, admin, MFA, and last login context to decide fast.",
+  },
+  {
+    visual: "subprocessors",
+    title: "Flags",
+    description:
+      "Orphaned, dormant, over-privileged, and shared accounts surfaced automatically.",
+  },
+  {
+    visual: "data-requests",
+    title: "Decisions",
+    description:
+      "Approve, revoke, defer, or escalate, with justifications kept on record.",
+  },
+  {
+    visual: "security-commitments",
+    title: "Statistics & export",
+    description:
+      "Live counts by decision and flag, plus a PDF record auditors accept.",
+  },
+];
+
+const trustedLogos = [
+  {
+    src: "/clients/trace_for_good.svg",
+    alt: "Trace for Good",
+    class: "trusted-logo--trace",
+    width: 1023,
+    height: 154,
+  },
+  {
+    src: "/clients/jimo.svg",
+    alt: "Jimo",
+    class: "trusted-logo--jimo",
+    width: 72,
+    height: 36,
+  },
+  {
+    src: "/clients/lucis.svg",
+    alt: "Lucis",
+    class: "trusted-logo--lucis",
+    width: 246,
+    height: 74,
+  },
+  {
+    src: "/clients/filz.svg",
+    alt: "Filiz",
+    class: "trusted-logo--filiz",
+    width: 598,
+    height: 240,
+  },
+  {
+    src: "/clients/ahrefs.svg",
+    alt: "Ahrefs",
+    class: "trusted-logo--ahrefs",
+    width: 74,
+    height: 19,
+  },
+];
+
+const faqs = [
+  {
+    question: "What systems can we connect?",
+    answer:
+      "Connect 60+ identity, cloud, source code, SaaS, and finance providers. Import a CSV for anything else.",
+  },
+  {
+    question: "What if a system has no connector?",
+    answer:
+      "Import a CSV export and review it alongside your connected sources. Replace the CSV before the next campaign whenever you need a fresher snapshot.",
+  },
+  {
+    question: "Can we review service accounts, not just people?",
+    answer:
+      "Yes. Probo marks service accounts separately from people when the provider or CSV identifies them, so reviewers can assess non-human credentials in the same campaign.",
+  },
+  {
+    question: "Can reviewers approve in bulk?",
+    answer:
+      "Yes. Select multiple accounts and apply a decision or flags in bulk. Revoke, Modify, and Escalate still require a note that stays with the review.",
+  },
+  {
+    question: "Is the review live data or a snapshot?",
+    answer:
+      "A campaign is a point-in-time snapshot. Provider data may keep changing, but the accounts, context, and decisions in that review stay preserved.",
+  },
+  {
+    question: "How does this help with SOC 2 or ISO 27001?",
+    answer:
+      "It gives you a preserved record of who had access, what reviewers decided, and why. Use that record as evidence for the access review controls in your SOC 2 or ISO 27001 audit.",
+  },
+  {
+    question: "How do we give auditors the evidence?",
+    answer:
+      "Complete the campaign after every account has a decision, then export the finished review as a PDF to share with your auditor.",
+  },
+  {
+    question: "How often should we run one?",
+    answer:
+      "Quarterly is a common baseline, with an additional campaign after material changes to roles, systems, or the organization. Confirm the final cadence with your policy and auditor.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
+const softwareApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Probo Access Review",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description: pageDescription,
+  url: "https://www.probo.com/products/access-review",
+  publisher: {
+    "@type": "Organization",
+    name: "Probo",
+    url: "https://www.probo.com",
+  },
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(softwareApplicationSchema)}
+  />
+  <main class="-mt-16 overflow-hidden pt-16">
+    <div class="relative isolate overflow-hidden">
+      <div
+        aria-hidden="true"
+        data-node-id="984:327"
+        class="trust-hero-orb pointer-events-none absolute top-[-1314px] left-1/2 z-0 size-[2265px] rounded-full border-[350px] border-[#E6FF03] blur-[96px]"
+      >
+      </div>
+
+      <section class="relative z-10 container py-16 text-center sm:py-24">
+        <div
+          class="border-border-low text-tertiary-foreground animate-perspective-in mx-auto mb-6 w-max rounded-lg border px-2 py-0.5 text-sm font-medium"
+          style="animation-delay: 100ms"
+        >
+          Access Review
+        </div>
+        <h1
+          class="mx-auto mb-6 max-w-[600px] text-[2.75rem] leading-none font-semibold tracking-[-1.4px] text-balance sm:text-5xl sm:tracking-[-1.6px]"
+          aria-label="Prove the right people have the right access."
+        >
+          <span aria-hidden="true" class="block overflow-hidden">
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 150ms">Prove the right people</span
+            >
+          </span>
+          <span aria-hidden="true" class="block overflow-hidden">
+            <span
+              class="animate-perspective-in block"
+              style="animation-delay: 200ms">have the right access.</span
+            >
+          </span>
+        </h1>
+        <p
+          class="text-muted-foreground animate-perspective-in mx-auto mb-8 max-w-[420px] text-base"
+          style="animation-delay: 350ms"
+        >
+          Pull every account from every tool into one review, spot the admins,
+          decide what stays and what goes, the missing MFA and the logins nobody
+          has used in months. While you record in Probo each decision as
+          evidence for audit.
+        </p>
+        <Button
+          href="/contact"
+          size="lg"
+          class="animate-perspective-in"
+          style="animation-delay: 400ms"
+        >
+          Book a demo
+        </Button>
+      </section>
+
+      <section class="relative z-10 container pb-0">
+        <img
+          src="/trust-center/browser.webp"
+          srcset="/trust-center/browser.webp 1146w, /trust-center/browser-2x.webp 2292w"
+          sizes="(min-width: 1120px) 1080px, calc(100vw - 40px)"
+          alt=""
+          aria-hidden="true"
+          width="1146"
+          height="786"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="animate-slide-in mx-auto h-auto w-full"
+          style="animation-delay: 600ms"
+        />
+      </section>
+    </div>
+
+    <section class="container pt-16 pb-0 text-center sm:pt-32">
+      <h2
+        class="mx-auto max-w-[552px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance text-[#141e12]"
+        data-trust-reveal
+      >
+        Every account, every system, reviewed in one place.
+      </h2>
+      <p
+        class="mx-auto mt-2 max-w-[504px] text-[16px] leading-6 text-[#6b716a]"
+        data-trust-reveal
+        style="--trust-reveal-delay: 100ms"
+      >
+        Give your compliance and security team one workflow to certify access
+        across your whole stack, while every decision is captured as
+        point-in-time evidence auditors accept.
+      </p>
+
+      <div class="overview-feature-grid mt-16">
+        {
+          overviewFeatures.map((feature, index) => (
+            <div
+              class="overview-feature"
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 70}ms`}
+            >
+              <i
+                class:list={["ph overview-feature-icon", feature.icon]}
+                aria-hidden="true"
+              />
+              <div class="overview-feature-copy">
+                <h3>{feature.title}</h3>
+                <p>
+                  {feature.description}{" "}
+                  {feature.link && (
+                    <a href={feature.link.href}>{feature.link.label}</a>
+                  )}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="how-it-works" class="pt-16 pb-0 sm:pt-32">
+      <div class="container mb-12 text-center sm:mb-16">
+        <h2
+          class="mx-auto max-w-[600px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+          data-trust-reveal
+        >
+          Run a review without the spreadsheet.
+        </h2>
+        <p
+          class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
+        >
+          Connect every system once, capture the full picture, move through
+          decisions fast, and close with proof auditors accept.
+        </p>
+      </div>
+
+      <div class="space-y-8 sm:space-y-12">
+        {
+          reviewSteps.map((feature, index) => (
+            <div
+              class:list={[
+                "container flex flex-col gap-8 lg:items-center lg:gap-16",
+                feature.reverse ? "lg:flex-row-reverse" : "lg:flex-row",
+              ]}
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 80}ms`}
+            >
+              <div
+                class="bg-subtle relative aspect-[508/664] w-full overflow-hidden rounded-2xl lg:w-[508px] lg:flex-none"
+                aria-hidden="true"
+              />
+
+              <div
+                class:list={[
+                  "w-full max-w-[508px] lg:w-[508px] lg:flex-none",
+                  feature.reverse ? "lg:pr-16" : "lg:pl-16",
+                ]}
+              >
+                <h3
+                  class:list={[
+                    "mb-6 font-semibold",
+                    feature.reverse
+                      ? "text-[20px] leading-7 tracking-[-0.4px]"
+                      : "text-[24px] leading-8 tracking-[-0.6px]",
+                  ]}
+                >
+                  {feature.title}
+                </h3>
+                <ul class="text-muted-foreground space-y-3 text-[16px] leading-6">
+                  {feature.bullets.map((bullet) => (
+                    <li class="flex gap-2">
+                      <i
+                        class="ph ph-check inline-flex size-6 shrink-0 items-center justify-center text-[24px] leading-none text-current"
+                        aria-hidden="true"
+                      />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container pt-16 pb-0 sm:pt-32">
+      <div class="mb-16 text-center">
+        <h2
+          class="mx-auto max-w-[560px] text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-balance"
+          data-trust-reveal
+        >
+          Everything a reviewer needs to judge access
+        </h2>
+        <p
+          class="text-muted-foreground mx-auto mt-2 max-w-[520px] text-[16px] leading-6"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
+        >
+          Sources, campaigns, access entries, flags, decisions, and statistics
+          keep every review moving.
+        </p>
+      </div>
+
+      <div class="grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          publishCards.map((card, index) => (
+            <article
+              class="flex flex-col gap-6"
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 70}ms`}
+            >
+              <div
+                class:list={[
+                  "trust-category-visual",
+                  `trust-category-visual--${card.visual}`,
+                ]}
+                aria-hidden="true"
+              >
+                <span class="trust-category-halo" />
+              </div>
+              <div class="flex flex-col gap-2">
+                <h3 class="text-[20px] leading-7 font-semibold tracking-[-0.4px]">
+                  {card.title}
+                </h3>
+                <p class="text-muted-foreground text-[16px] leading-6">
+                  {card.description}
+                </p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="container pt-16 pb-0 sm:pt-32">
+      <div class="pb-12 text-center sm:pb-16">
+        <h2
+          class="text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
+          data-trust-reveal
+        >
+          Trusted by 130+ companies
+        </h2>
+        <p
+          class="mx-auto mt-2 max-w-[504px] text-[16px] leading-6 text-[#6b716a]"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
+        >
+          Security teams use Probo to share the right materials, protect
+          sensitive documents, and keep access requests moving.
+        </p>
+      </div>
+
+      <div class="trusted-showcase">
+        <div
+          class="trusted-photo-card"
+          data-trust-reveal
+          style="--trust-reveal-delay: 100ms"
+        >
+          <Image
+            src={BlaxelFounders}
+            alt="Paul Sinai and the Blaxel team"
+            width={528}
+            height={528}
+            densities={[1, 2]}
+            class="trusted-photo"
+            loading="lazy"
+          />
+        </div>
+
+        <div
+          class="trusted-quote-card"
+          data-trust-reveal
+          style="--trust-reveal-delay: 180ms"
+        >
+          <span class="trusted-quote-halo" aria-hidden="true"></span>
+          <div class="trusted-quote-content">
+            <blockquote class="trusted-quote">
+              &ldquo;Probo handled our SOC 2 and compliance, so we could focus
+              on building.&rdquo;
+            </blockquote>
+
+            <div class="trusted-author">
+              <div class="trusted-author-copy">
+                <div class="trusted-author-name">Paul Sinai</div>
+                <div class="trusted-author-role">
+                  CEO &amp; Co-founder of Blaxel
+                </div>
+              </div>
+              <Image
+                src={PaulSinai}
+                alt="Paul Sinai"
+                width={48}
+                height={48}
+                densities={[1, 2]}
+                class="trusted-avatar"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <div class="trusted-logo-block">
+            <p>Trusted by teams building compliance-ready workflows</p>
+            <div class="trusted-logo-rail" aria-label="Trusted companies">
+              <LogosScroll class="trusted-logo-ticker" client:load>
+                {
+                  trustedLogos.map((logo) => (
+                    <span class:list={["trusted-logo-item", logo.class]}>
+                      <img
+                        src={logo.src}
+                        alt={logo.alt}
+                        width={logo.width}
+                        height={logo.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
+                  ))
+                }
+              </LogosScroll>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container pt-16 pb-16 sm:pt-32 sm:pb-24">
+      <h2
+        class="mb-6 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
+        data-trust-reveal
+      >
+        Frequently asked questions
+      </h2>
+      <div class="faq-accordion mx-auto max-w-[768px]" data-faq-accordion>
+        {
+          faqs.map((faq, index) => (
+            <div
+              class="faq-item"
+              data-faq-item
+              data-trust-reveal
+              style={`--trust-reveal-delay: ${index * 60}ms`}
+            >
+              <h3>
+                <button
+                  class="faq-trigger"
+                  type="button"
+                  id={`access-review-faq-trigger-${index}`}
+                  aria-expanded="false"
+                  aria-controls={`access-review-faq-panel-${index}`}
+                  data-faq-trigger
+                >
+                  <span>{faq.question}</span>
+                  <span class="faq-icon" aria-hidden="true">
+                    <i class="ph ph-plus faq-icon-plus" />
+                    <i class="ph ph-minus faq-icon-minus" />
+                  </span>
+                </button>
+              </h3>
+              <div
+                class="faq-panel"
+                id={`access-review-faq-panel-${index}`}
+                role="region"
+                aria-labelledby={`access-review-faq-trigger-${index}`}
+                aria-hidden="true"
+                data-faq-panel
+              >
+                <div class="faq-panel-inner">
+                  <p>{faq.answer}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  const initAccessReviewAnimations = () => {
+    const revealTargets = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-trust-reveal]"),
+    );
+
+    if (revealTargets.length === 0) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      revealTargets.forEach((target) => {
+        target.classList.add("is-visible");
+      });
+      return;
+    }
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    revealTargets.forEach((target) => {
+      if (target.dataset.revealReady === "true") {
+        return;
+      }
+
+      target.dataset.revealReady = "true";
+      target.classList.add("is-awaiting-reveal");
+      revealObserver.observe(target);
+    });
+  };
+
+  const initAccessReviewFaq = () => {
+    const faqAccordions = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-faq-accordion]"),
+    );
+
+    faqAccordions.forEach((faqAccordion) => {
+      if (faqAccordion.dataset.faqReady === "true") {
+        return;
+      }
+
+      faqAccordion.dataset.faqReady = "true";
+
+      const faqItems = Array.from(
+        faqAccordion.querySelectorAll<HTMLElement>("[data-faq-item]"),
+      );
+
+      const setFaqItemState = (item: HTMLElement, shouldOpen: boolean) => {
+        const trigger =
+          item.querySelector<HTMLButtonElement>("[data-faq-trigger]");
+        const panel = item.querySelector<HTMLElement>("[data-faq-panel]");
+
+        if (!trigger || !panel) {
+          return;
+        }
+
+        item.classList.toggle("is-open", shouldOpen);
+        trigger.setAttribute("aria-expanded", String(shouldOpen));
+        panel.setAttribute("aria-hidden", String(!shouldOpen));
+      };
+
+      faqItems.forEach((item, index) => {
+        const trigger =
+          item.querySelector<HTMLButtonElement>("[data-faq-trigger]");
+
+        if (!trigger) {
+          return;
+        }
+
+        trigger.addEventListener("click", () => {
+          const shouldOpen = !item.classList.contains("is-open");
+
+          faqItems.forEach((faqItem) => {
+            setFaqItemState(faqItem, faqItem === item && shouldOpen);
+          });
+        });
+
+        trigger.addEventListener("keydown", (event) => {
+          const lastIndex = faqItems.length - 1;
+          const nextIndex =
+            event.key === "ArrowDown"
+              ? Math.min(index + 1, lastIndex)
+              : event.key === "ArrowUp"
+                ? Math.max(index - 1, 0)
+                : event.key === "Home"
+                  ? 0
+                  : event.key === "End"
+                    ? lastIndex
+                    : index;
+
+          if (nextIndex === index) {
+            return;
+          }
+
+          event.preventDefault();
+          faqItems[nextIndex]
+            ?.querySelector<HTMLButtonElement>("[data-faq-trigger]")
+            ?.focus();
+        });
+      });
+    });
+  };
+
+  const initAccessReviewPage = () => {
+    initAccessReviewAnimations();
+    initAccessReviewFaq();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAccessReviewPage, {
+      once: true,
+    });
+  } else {
+    initAccessReviewPage();
+  }
+</script>
+
+<style>
+  .trust-hero-orb {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .trust-hero-orb {
+      animation: trust-hero-orb-scale-in cubic-bezier(0.785, 0.135, 0.15, 0.86)
+        3s both;
+      animation-delay: -1200ms;
+    }
+  }
+
+  @keyframes trust-hero-orb-scale-in {
+    from {
+      transform: translateX(-50%) scale(0);
+    }
+
+    to {
+      transform: translateX(-50%) scale(1);
+    }
+  }
+
+  [data-trust-reveal] {
+    --trust-reveal-delay: 0ms;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-trust-reveal].is-awaiting-reveal {
+      opacity: 0;
+      transform: translate3d(0, 50px, 0);
+    }
+
+    [data-trust-reveal].is-visible {
+      animation: trust-reveal-slide-in var(--spring-smooth) 850ms
+        var(--trust-reveal-delay) both;
+    }
+  }
+
+  @keyframes trust-reveal-slide-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 50px, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .overview-feature-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 48px;
+  }
+
+  .overview-feature {
+    display: flex;
+    width: min(100%, 328px);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .overview-feature-icon {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    color: #343330;
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .overview-feature-copy {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 3px 0;
+    color: #141e12;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    word-break: break-word;
+  }
+
+  .overview-feature-copy h3,
+  .overview-feature-copy p {
+    width: 100%;
+  }
+
+  .overview-feature-copy h3 {
+    color: #141e12;
+    font-weight: 500;
+  }
+
+  .overview-feature-copy p {
+    color: #6b716a;
+    font-weight: 400;
+  }
+
+  .overview-feature-copy a {
+    color: #343330;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (min-width: 640px) {
+    .overview-feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 48px;
+      row-gap: 56px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .overview-feature-grid {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 1080px;
+      height: 346px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .overview-feature {
+      position: absolute;
+      width: 328px;
+    }
+
+    .overview-feature:nth-child(1) {
+      top: 0;
+      left: 0;
+    }
+
+    .overview-feature:nth-child(1) .overview-feature-copy h3 {
+      max-width: 276px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .overview-feature:nth-child(2) {
+      top: 0;
+      left: 376px;
+    }
+
+    .overview-feature:nth-child(3) {
+      top: 0;
+      left: 752px;
+    }
+
+    .overview-feature:nth-child(4) {
+      top: 201px;
+      left: 0;
+    }
+
+    .overview-feature:nth-child(5) {
+      top: 201px;
+      left: 376px;
+    }
+
+    .overview-feature:nth-child(6) {
+      top: 201px;
+      left: 752px;
+    }
+  }
+
+  .trusted-showcase {
+    display: grid;
+    width: 100%;
+    max-width: 1080px;
+    gap: 24px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .trusted-photo-card,
+  .trusted-quote-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #f6f9f5;
+  }
+
+  .trusted-photo-card {
+    aspect-ratio: 1 / 1;
+  }
+
+  .trusted-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 28%;
+  }
+
+  .trusted-quote-card {
+    display: flex;
+    min-height: 420px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 72px 20px 32px;
+    text-align: center;
+  }
+
+  .trusted-quote-halo {
+    position: absolute;
+    top: -423px;
+    left: 50%;
+    z-index: 0;
+    width: 1010px;
+    height: 1010px;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .trusted-quote-halo::before {
+    position: absolute;
+    inset: -17%;
+    content: "";
+    background: url("/trust-center/quote-ellipse.svg") center / 100% 100%
+      no-repeat;
+    transform: rotate(180deg) scaleY(-1);
+  }
+
+  .trusted-quote-content,
+  .trusted-logo-block {
+    position: relative;
+    z-index: 1;
+  }
+
+  .trusted-quote-content {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .trusted-quote {
+    margin: 0;
+    color: #141e12;
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    text-align: center;
+    text-wrap: balance;
+    word-break: break-word;
+  }
+
+  .trusted-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .trusted-author-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 3px 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .trusted-author-name {
+    color: #141e12;
+    font-weight: 500;
+  }
+
+  .trusted-author-role {
+    color: #6b716a;
+    font-weight: 400;
+  }
+
+  .trusted-avatar {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    object-fit: cover;
+  }
+
+  .trusted-logo-block {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .trusted-logo-block p {
+    color: #6b716a;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .trusted-logo-rail {
+    width: 792px;
+    max-width: calc(100vw - 48px);
+    height: 24px;
+    overflow: hidden;
+  }
+
+  :global(.trusted-logo-ticker) {
+    height: 24px;
+    overflow: hidden;
+  }
+
+  :global(.trusted-logo-ticker .splide__track),
+  :global(.trusted-logo-ticker .splide__list) {
+    height: 24px;
+  }
+
+  :global(.trusted-logo-ticker .splide__slide) {
+    display: flex;
+    height: 24px;
+    align-items: center;
+  }
+
+  .trusted-logo-item {
+    display: flex;
+    height: 24px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    opacity: 0.6;
+  }
+
+  .trusted-logo-item img {
+    display: block;
+    width: 100%;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .trusted-logo--trace {
+    width: 190.5px;
+  }
+
+  .trusted-logo--jimo {
+    width: 78px;
+  }
+
+  .trusted-logo--lucis {
+    width: 109.5px;
+  }
+
+  .trusted-logo--filiz {
+    width: 115.5px;
+  }
+
+  .trusted-logo--ahrefs {
+    width: 123px;
+  }
+
+  @media (min-width: 1024px) {
+    .trusted-showcase {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .trusted-quote-card {
+      min-height: auto;
+      aspect-ratio: 1 / 1;
+      padding: 96px 32px 32px;
+    }
+
+    .trusted-quote {
+      font-size: 24px;
+      line-height: 32px;
+    }
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border-low);
+  }
+
+  .faq-item:last-child {
+    border-bottom: 0;
+  }
+
+  .faq-item h3 {
+    margin: 0;
+  }
+
+  .faq-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 0;
+    color: #141e12;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: padding 220ms ease;
+  }
+
+  .faq-trigger:focus-visible {
+    outline: 2px solid #141e12;
+    outline-offset: 4px;
+  }
+
+  .faq-trigger span:first-child {
+    flex: 1;
+  }
+
+  .faq-icon {
+    position: relative;
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+  }
+
+  .faq-icon i {
+    position: absolute;
+    font-size: 16px;
+    line-height: 1;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .faq-icon-minus {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.9);
+  }
+
+  .faq-item.is-open .faq-trigger {
+    padding-bottom: 8px;
+  }
+
+  .faq-item.is-open .faq-icon-plus {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.9);
+  }
+
+  .faq-item.is-open .faq-icon-minus {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 320ms ease;
+  }
+
+  .faq-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .faq-panel p {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 0 40px 16px 0;
+    color: #6b716a;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .faq-item.is-open .faq-panel {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-panel,
+    .faq-icon i,
+    .faq-trigger {
+      transition: none;
+    }
+  }
+
+  .trust-category-visual {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #f6f9f5;
+    isolation: isolate;
+  }
+
+  .trust-category-halo {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 670px;
+    height: 670px;
+    pointer-events: none;
+  }
+
+  .trust-category-halo::before {
+    position: absolute;
+    inset: -25.63%;
+    content: "";
+    background: url("/trust-center/ellipse.svg") center / 100% 100% no-repeat;
+  }
+
+  .trust-category-visual--documents .trust-category-halo {
+    top: 50%;
+    right: -45px;
+    transform: translateY(-50%);
+  }
+
+  .trust-category-visual--protected-assets .trust-category-halo {
+    top: 340px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .trust-category-visual--audits .trust-category-halo {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .trust-category-visual--subprocessors .trust-category-halo {
+    z-index: 5;
+    bottom: -29px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .trust-category-visual--data-requests .trust-category-halo {
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
+  .trust-category-visual--security-commitments .trust-category-halo {
+    right: -70px;
+    bottom: -70px;
+  }
+</style>
