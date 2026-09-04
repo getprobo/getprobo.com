@@ -55,7 +55,7 @@ export const menuGroups: MenuGroup[] = [
       },
       {
         label: "Access Review",
-        description: "Certify access across every system",
+        description: "Monitor user access across all your systems",
         href: "/products/access-review",
         icon: "list-checks",
       },
