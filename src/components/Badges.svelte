@@ -81,8 +81,9 @@
     <div
       class={clsx(
         "relative overflow-hidden text-center",
-        border &&
-          "aspect-square md:aspect-192/180 hover:bg-[#F4FCE6] transition-all",
+        border
+          ? "aspect-square md:aspect-192/180 hover:bg-[#F4FCE6] transition-all"
+          : "size-25",
       )}
     >
       {#key framework.badge}
