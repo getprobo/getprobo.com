@@ -2,6 +2,7 @@
 import "@phosphor-icons/web/regular";
 import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
+import ProductDiscovery from "../../components/block/ProductDiscovery.astro";
 import Button from "../../components/ui/Button.svelte";
 import LottiePlayer from "../../components/LottiePlayer.svelte";
 import LogosScroll from "../../components/LogosScroll.svelte";
@@ -740,7 +741,7 @@ const softwareApplicationSchema = {
       </div>
     </section>
 
-    <section class="container pt-16 pb-16 sm:pt-32 sm:pb-24">
+    <section class="container pt-16 sm:pt-32">
       <h2
         class="mb-6 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
         data-trust-reveal
@@ -789,6 +790,7 @@ const softwareApplicationSchema = {
         }
       </div>
     </section>
+    <ProductDiscovery />
   </main>
 </Layout>
 
@@ -979,17 +981,20 @@ const softwareApplicationSchema = {
     }
   }
 
-  [data-trust-reveal] {
+  [data-trust-reveal],
+  :global([data-product-discovery] [data-trust-reveal]) {
     --trust-reveal-delay: 0ms;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    [data-trust-reveal].is-awaiting-reveal {
+    [data-trust-reveal].is-awaiting-reveal,
+    :global([data-product-discovery] [data-trust-reveal].is-awaiting-reveal) {
       opacity: 0;
       transform: translate3d(0, 50px, 0);
     }
 
-    [data-trust-reveal].is-visible {
+    [data-trust-reveal].is-visible,
+    :global([data-product-discovery] [data-trust-reveal].is-visible) {
       animation: trust-reveal-slide-in var(--spring-smooth) 850ms
         var(--trust-reveal-delay) both;
     }

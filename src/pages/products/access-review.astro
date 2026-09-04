@@ -2,6 +2,7 @@
 import "@phosphor-icons/web/regular";
 import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
+import ProductDiscovery from "../../components/block/ProductDiscovery.astro";
 import Button from "../../components/ui/Button.svelte";
 import LogosScroll from "../../components/LogosScroll.svelte";
 import LottiePlayer from "../../components/LottiePlayer.svelte";
@@ -18,41 +19,37 @@ const overviewFeatures = [
     icon: "ph-plugs-connected",
     title: "Pull access from your whole stack",
     description:
-      "Connect all your tools, from Google Workspace and Okta to GitHub, cloud infra, Slack, and Brex, and pull every account into one review.",
-    link: {
-      label: "Full list here.",
-      href: "/docs/product/access-review/directory",
-    },
+      "Bring accounts from Google Workspace, Okta, GitHub, cloud infrastructure, Slack, and Brex into one review.",
   },
   {
     icon: "ph-camera",
     title: "A snapshot, frozen for the record",
     description:
-      "Starting a campaign captures who had access to what at that moment, separate from live data that keeps changing under you.",
+      "Freeze who had access to what when the campaign starts, regardless of later changes.",
   },
   {
     icon: "ph-check-circle",
     title: "Decide in one click, at scale",
     description:
-      "Approve, revoke, defer, or escalate accounts individually or in bulk, with a required note on anything you don't approve.",
+      "Approve, revoke, defer, or escalate, individually or in bulk. Notes are required except for approvals.",
   },
   {
     icon: "ph-flag",
     title: "Flags that surface risky accounts",
     description:
-      "Probo flags orphaned, dormant, over-privileged, and shared accounts so reviewers look where it matters first.",
+      "Probo flags orphaned, dormant, over-privileged, and shared accounts for priority review.",
   },
   {
     icon: "ph-arrows-clockwise",
     title: "See what changed since last quarter",
     description:
-      "Each campaign is diffed against the last, tagging every account as new, removed, or unchanged.",
+      "Each campaign tags accounts as new, removed, or unchanged since the last.",
   },
   {
     icon: "ph-seal-check",
     title: "Evidence auditors accept",
     description:
-      "Close the campaign and export it as a PDF if you need. A complete record of who reviewed what, and why.",
+      "Export a closed campaign as a PDF recording who reviewed what, and why.",
   },
 ];
 
@@ -385,9 +382,8 @@ const softwareApplicationSchema = {
         data-trust-reveal
         style="--trust-reveal-delay: 100ms"
       >
-        Give your compliance and security team one workflow to certify access
-        across your whole stack, while every decision is captured as
-        point-in-time evidence auditors accept.
+        Certify access across your stack in one workflow, with every decision
+        preserved as point-in-time audit evidence.
       </p>
 
       <div class="overview-feature-grid mt-16">
@@ -404,12 +400,7 @@ const softwareApplicationSchema = {
               />
               <div class="overview-feature-copy">
                 <h3>{feature.title}</h3>
-                <p>
-                  {feature.description}{" "}
-                  {feature.link && (
-                    <a href={feature.link.href}>{feature.link.label}</a>
-                  )}
-                </p>
+                <p>{feature.description}</p>
               </div>
             </div>
           ))
@@ -661,7 +652,7 @@ const softwareApplicationSchema = {
       </div>
     </section>
 
-    <section class="container pt-16 pb-16 sm:pt-32 sm:pb-24">
+    <section class="container pt-16 sm:pt-32">
       <h2
         class="mb-6 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px] text-[#141e12]"
         data-trust-reveal
@@ -710,6 +701,7 @@ const softwareApplicationSchema = {
         }
       </div>
     </section>
+    <ProductDiscovery />
   </main>
 </Layout>
 
@@ -915,17 +907,20 @@ const softwareApplicationSchema = {
     }
   }
 
-  [data-trust-reveal] {
+  [data-trust-reveal],
+  :global([data-product-discovery] [data-trust-reveal]) {
     --trust-reveal-delay: 0ms;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    [data-trust-reveal].is-awaiting-reveal {
+    [data-trust-reveal].is-awaiting-reveal,
+    :global([data-product-discovery] [data-trust-reveal].is-awaiting-reveal) {
       opacity: 0;
       transform: translate3d(0, 50px, 0);
     }
 
-    [data-trust-reveal].is-visible {
+    [data-trust-reveal].is-visible,
+    :global([data-product-discovery] [data-trust-reveal].is-visible) {
       animation: trust-reveal-slide-in var(--spring-smooth) 850ms
         var(--trust-reveal-delay) both;
     }

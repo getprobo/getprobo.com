@@ -1,0 +1,184 @@
+---
+import Icon from "../Icon.astro";
+
+const products = [
+  {
+    id: "compliance-service",
+    title: "Compliance Officer Service",
+    description: "Expert-led compliance, end to end",
+    href: "/",
+    asset: "/product-discovery/compliance-frameworks.svg",
+    width: 803,
+    height: 140,
+  },
+  {
+    id: "compliance-portal",
+    title: "Compliance Portal",
+    description: "Share security documents securely",
+    href: "/products/compliance-portal",
+    asset: "/product-discovery/compliance-documents.svg",
+    width: 360,
+    height: 216,
+  },
+  {
+    id: "access-review",
+    title: "Access Review",
+    description: "Certify access across every system",
+    href: "/products/access-review",
+    asset: "/product-discovery/access-decisions.svg",
+    width: 334,
+    height: 218,
+  },
+];
+---
+
+<section
+  class="container py-16 sm:py-32"
+  aria-labelledby="product-discovery-heading"
+  data-product-discovery
+>
+  <h2
+    id="product-discovery-heading"
+    class="text-foreground mb-8 text-center text-[1.875rem] leading-9 font-semibold tracking-[-1px]"
+    data-trust-reveal
+  >
+    Discover what else Probo can do
+  </h2>
+  <div
+    class="mx-auto grid max-w-[420px] grid-cols-1 gap-6 lg:max-w-none lg:grid-cols-3"
+  >
+    {
+      products.map((product, index) => (
+        <a
+          href={product.href}
+          aria-labelledby={`product-discovery-${product.id}`}
+          data-trust-reveal
+          style={`--trust-reveal-delay: ${index * 70}ms`}
+          class:list={[
+            "product-discovery-card relative isolate block h-[420px] min-w-0 overflow-hidden rounded-2xl bg-[#f6f9f5] p-8",
+            `product-discovery-card--${product.id}`,
+          ]}
+        >
+          <div class="relative z-3 flex flex-col gap-2">
+            <div class="flex items-start gap-2">
+              <h3
+                id={`product-discovery-${product.id}`}
+                class="text-foreground min-w-0 flex-1 text-[1.25rem] leading-7 font-semibold tracking-[-0.4px]"
+              >
+                {product.title}
+              </h3>
+              <Icon
+                name="arrow-right"
+                size={24}
+                class="product-discovery-arrow shrink-0 text-[#343330]"
+              />
+            </div>
+            <p class="text-muted-foreground text-[1rem] leading-6 tracking-normal">
+              {product.description}
+            </p>
+          </div>
+          <span class="product-discovery-halo" aria-hidden="true" />
+          <img
+            class="product-discovery-art"
+            src={product.asset}
+            alt=""
+            width={product.width}
+            height={product.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .product-discovery-card:focus-visible {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 4px;
+  }
+
+  .product-discovery-halo {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 670px;
+    height: 670px;
+    pointer-events: none;
+  }
+
+  .product-discovery-halo::before {
+    position: absolute;
+    inset: -63.367px;
+    border: 126.734px solid #e6ff03;
+    border-radius: 50%;
+    content: "";
+    filter: blur(40px);
+  }
+
+  .product-discovery-art {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    max-width: none;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .product-discovery-card--compliance-service .product-discovery-halo {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .product-discovery-card--compliance-service .product-discovery-art {
+    top: 201px;
+    left: 50%;
+    width: 802.667px;
+    height: 140px;
+    transform: translateX(-50%);
+  }
+
+  .product-discovery-card--compliance-portal .product-discovery-halo {
+    bottom: -130px;
+    left: -297px;
+  }
+
+  .product-discovery-card--compliance-portal .product-discovery-art {
+    top: 163px;
+    left: 22px;
+    width: 360px;
+    height: 216px;
+  }
+
+  .product-discovery-card--access-review .product-discovery-halo {
+    top: 149px;
+    left: 50%;
+    z-index: 0;
+    transform: translateX(-50%);
+  }
+
+  .product-discovery-card--access-review .product-discovery-art {
+    top: 162px;
+    left: 32px;
+    width: 334px;
+    height: 218px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .product-discovery-card :global(.product-discovery-arrow) {
+      transition: transform 180ms ease-out;
+    }
+
+    .product-discovery-card:focus-visible :global(.product-discovery-arrow) {
+      transform: translateX(3px);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .product-discovery-card:hover :global(.product-discovery-arrow) {
+      transform: translateX(3px);
+    }
+  }
+</style>
