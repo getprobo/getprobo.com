@@ -19,6 +19,7 @@ const ROOTS = [
   { directory: "public", maxWidth: 1600, maxBytes: 500 * 1024 },
   { directory: "src/assets", maxWidth: 2400, maxBytes: 1.5 * 1024 * 1024 },
 ];
+const SKIP_PATH_PREFIXES = ["public/navigation", "public/trust-center"];
 const SUPPORTED_EXTENSIONS = new Set([
   ".avif",
   ".jpeg",
@@ -101,6 +102,9 @@ if (CHECK_MODE) {
 async function collectImages(directory, root, output) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const file = path.join(directory, entry.name);
+    if (shouldSkipAsset(file)) {
+      continue;
+    }
     if (entry.isDirectory()) {
       await collectImages(file, root, output);
     } else if (
@@ -209,6 +213,13 @@ async function optimizeImage(file, options) {
     await unlink(temporaryFile).catch(() => {});
     throw error;
   }
+}
+
+function shouldSkipAsset(file) {
+  const normalized = file.split(path.sep).join("/");
+  return SKIP_PATH_PREFIXES.some(
+    (prefix) => normalized === prefix || normalized.startsWith(`${prefix}/`),
+  );
 }
 
 function isRetinaImage(file) {

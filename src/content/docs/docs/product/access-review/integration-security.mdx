@@ -69,7 +69,7 @@ Some provider APIs do not offer a read-only or narrowly scoped credential for li
 
 ## Network Restrictions
 
-Some providers can restrict API credentials to specific source IP addresses. For **Probo Cloud**, leave that restriction disabled unless Probo has supplied fixed egress addresses for your environment. For a **self-hosted deployment**, you can allowlist the fixed egress addresses configured by your infrastructure operator.
+Some providers can restrict API credentials to specific source IP addresses. For **Probo Cloud**, allowlist the [public egress address](/docs/deployment/ip-ranges) for your region, or leave the restriction disabled. For a **self-hosted deployment**, allowlist the fixed egress addresses configured by your infrastructure operator.
 
 An IP restriction that does not include the deployment's outbound address causes the connector test or campaign fetch to fail even when the credential itself is valid.
 
@@ -84,6 +84,7 @@ Connector OAuth application IDs and secrets for each provider are also deploymen
 - [Access Reviews overview](/docs/product/access-review/overview)
 - [Connector directory](/docs/product/access-review/directory)
 - [Amazon Web Services](/docs/product/access-review/aws)
+- [Public egress IP addresses](/docs/deployment/ip-ranges)
 - [Probo Cloud Infrastructure Security](/docs/deployment/infrastructure-security)
 - [Privacy Policy](https://www.probo.com/privacy)
 - [Compliance Portal](https://compliance.probo.com)

@@ -40,7 +40,7 @@ import { Steps, Badge } from "@astrojs/starlight/components";
 
 1. In the Okta Admin Console, signed in as an admin who can view **Users**, go to **Security** > **API** > **Tokens**.
 2. Click **Create token** and name the token in **What do you want your token to be named?** (e.g. `Probo Access Review`).
-3. For Probo Cloud, set **API calls made with this token must originate from** to **Any IP**. For a self-hosted deployment with fixed egress addresses, you can instead allowlist those addresses in an Okta network zone. Click **Create token**, then copy the token value and store it securely. Okta shows it only once.
+3. For Probo Cloud, restrict the token to the [egress IP](/docs/deployment/ip-ranges) for your region, or set **API calls made with this token must originate from** to **Any IP**. For a self-hosted deployment, allowlist that deployment's fixed egress addresses in an Okta network zone. Click **Create token**, then copy the token value and store it securely. Okta shows it only once.
 
 </Steps>
 
@@ -59,5 +59,5 @@ Probo names the source after your Okta org and pulls its users into your campaig
 
 - **Token rejected.** Confirm it is an Okta API token created under **Security** > **API** > **Tokens** rather than an OAuth 2.0 access token, and that the **Okta Domain** is the host of the org that issued it. A token authenticates only against its own org.
 - **A token that used to work stops working.** An Okta API token is valid for 30 days from its creation or its last use, so a token unused for 30 days expires. Okta also rejects a token once the admin who created it is deactivated. Create a new one from an account that stays active.
-- **No users appear.** The token carries the permissions of the admin who created it, so it must come from an admin who can view Users. For Probo Cloud, the token's network condition must allow **Any IP**. For a self-hosted deployment, it can instead allowlist that deployment's fixed egress addresses.
+- **No users appear.** The token carries the permissions of the admin who created it, so it must come from an admin who can view Users. For Probo Cloud, the token's network condition must allow the [Cloud egress IP](/docs/deployment/ip-ranges) for your region, or **Any IP**. For a self-hosted deployment, it can instead allowlist that deployment's fixed egress addresses.
 - **Deactivated users are missing.** Okta's users endpoint omits users whose status is `DEPROVISIONED` unless the request carries a filter or search query, and Probo sends neither, so accounts you deactivated in Okta do not reach the campaign.

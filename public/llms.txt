@@ -68,6 +68,8 @@ For a token-efficient Markdown version of a supported page, request its canonica
 
 - [Deployment overview](https://www.probo.com/docs/deployment)
 - [Probo Cloud](https://www.probo.com/docs/deployment/cloud)
+- [Public egress IP addresses](https://www.probo.com/docs/deployment/ip-ranges)
+- [IP ranges JSON](https://www.probo.com/ip-ranges.json)
 - [Self-hosting](https://www.probo.com/docs/deployment/self-hosting)
 - [Docker Compose](https://www.probo.com/docs/deployment/self-hosting/docker-compose)
 - [Kubernetes](https://www.probo.com/docs/deployment/self-hosting/kubernetes)

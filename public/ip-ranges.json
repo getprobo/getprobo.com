@@ -1,0 +1,17 @@
+{
+  "lastUpdated": "2026-09-03T00:00:00Z",
+  "items": [
+    {
+      "cidr": "52.48.143.113/32",
+      "environment": "prod",
+      "region": "eu",
+      "direction": ["egress"]
+    },
+    {
+      "cidr": "3.137.44.214/32",
+      "environment": "prod",
+      "region": "us",
+      "direction": ["egress"]
+    }
+  ]
+}

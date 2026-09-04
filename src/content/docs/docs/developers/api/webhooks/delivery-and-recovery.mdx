@@ -80,6 +80,7 @@ A unique index on `eventId` is the right idempotency primitive. The same ID on a
 ## Timeouts and status codes
 
 - The URL must use **HTTPS**.
+- If a firewall or WAF restricts inbound traffic by source IP, allowlist the [Probo Cloud egress address](/docs/deployment/ip-ranges) for the region that hosts the organization. Self-hosted Probo uses the outbound addresses of your own network.
 - The HTTP request times out after **15 seconds** (`PROBOD_WEBHOOK_REQUEST_TIMEOUT` on self-hosted). Return `2xx` before that, and do slow work after you acknowledge.
 - Any `2xx` (`200`–`299`) within that window is success.
 - Timeouts, network errors, `408`, `425`, `429`, and `5xx` are transient and are retried.
@@ -208,5 +209,10 @@ The 12-attempt limit is not configurable through these variables. See the [envir
     title="n8n Trigger"
     description="Start n8n workflows from Probo webhook events"
     href="/docs/developers/api/n8n/trigger"
+  />
+  <LinkCard
+    title="Egress IP addresses"
+    description="Allowlist the Cloud source addresses that deliver webhooks"
+    href="/docs/deployment/ip-ranges"
   />
 </CardGrid>
