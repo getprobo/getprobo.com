@@ -7,6 +7,7 @@ import LogosScroll from "../../components/LogosScroll.svelte";
 import LottiePlayer from "../../components/LottiePlayer.svelte";
 import PaulSinai from "../../assets/testimonial/paul-sinai.jpg";
 import BlaxelFounders from "../../assets/stories/blaxel-header.jpg";
+import toolLogos from "../../data/access-review-tools.json";
 
 const pageTitle = "Access Review Software for SOC 2 and ISO 27001";
 const pageDescription =
@@ -331,9 +332,43 @@ const softwareApplicationSchema = {
             loading="eager"
             decoding="async"
             fetchpriority="high"
-            class="animate-slide-in"
+            class="motion-safe:animate-slide-in"
             style="animation-delay: 600ms"
           />
+        </div>
+        <div
+          class="mx-auto flex w-full max-w-[636px] items-center gap-6 pt-8"
+          data-connect-tools
+        >
+          <p
+            class="text-muted-foreground shrink-0 text-sm leading-5 whitespace-nowrap"
+          >
+            Connect your tools
+          </p>
+          <LogosScroll
+            client:visible
+            class="h-6 min-w-0 flex-1 overflow-hidden"
+            label="Connected tools"
+            gap={32}
+            fadeEdges
+          >
+            {
+              toolLogos.map((logo) => (
+                <div class="flex h-6 shrink-0 items-center justify-center">
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={logo.width}
+                    height="24"
+                    loading="lazy"
+                    decoding="async"
+                    class="block h-6 max-w-none"
+                    style={`width: ${logo.width}px`}
+                  />
+                </div>
+              ))
+            }
+          </LogosScroll>
         </div>
       </section>
     </div>
@@ -407,7 +442,7 @@ const softwareApplicationSchema = {
               class:list={[
                 "container grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-16",
               ]}
-              data-trust-reveal
+              data-trust-reveal={index === 0 ? undefined : true}
               style={`--trust-reveal-delay: ${index * 80}ms`}
             >
               <div
@@ -416,6 +451,8 @@ const softwareApplicationSchema = {
                   feature.reverse && "lg:order-2",
                 ]}
                 data-review-visual
+                data-review-asset-visual
+                style={`--review-asset-x: ${feature.reverse ? "104px" : "-96px"}; --review-asset-y: ${index === 0 || feature.reverse ? "0px" : "64px"}; --review-asset-scale: ${index === 0 ? 1 : 0.98}; --review-asset-duration: ${feature.reverse ? "820ms" : "860ms"};`}
               >
                 <div
                   class="pointer-events-none absolute inset-0 z-0"
@@ -436,7 +473,7 @@ const softwareApplicationSchema = {
                   height={feature.overlay.height}
                   loading="lazy"
                   decoding="async"
-                  class="pointer-events-none absolute z-10 block h-auto max-w-none"
+                  class="review-asset pointer-events-none absolute z-10 block h-auto max-w-none"
                   style={`left: ${(feature.overlay.x / 508) * 100}%; top: ${(feature.overlay.y / 664) * 100}%; width: ${(feature.overlay.width / 508) * 100}%;`}
                 />
               </div>
@@ -446,6 +483,7 @@ const softwareApplicationSchema = {
                   "mx-auto w-full max-w-[508px] min-w-0",
                   feature.reverse ? "lg:order-1 lg:pr-16" : "lg:pl-16",
                 ]}
+                data-trust-reveal={index === 0 ? true : undefined}
               >
                 <h3
                   class:list={[
@@ -501,18 +539,23 @@ const softwareApplicationSchema = {
               data-trust-reveal
               style={`--trust-reveal-delay: ${index * 70}ms`}
             >
-              <img
-                src={`/access-review/${card.illustration}.webp`}
-                srcset={`/access-review/${card.illustration}.webp 344w, /access-review/${card.illustration}-2x.webp 688w, /access-review/${card.illustration}-3x.webp 1032w`}
-                sizes="(min-width: 1120px) 344px, (min-width: 1024px) calc((100vw - 88px) / 3), (min-width: 640px) calc((100vw - 64px) / 2), (min-width: 548px) 508px, calc(100vw - 40px)"
-                alt=""
-                aria-hidden="true"
-                width="344"
-                height="344"
-                loading="lazy"
-                decoding="async"
-                class="block aspect-square h-auto w-full"
-              />
+              <div
+                class="aspect-square w-full overflow-hidden"
+                data-review-asset-visual
+              >
+                <img
+                  src={`/access-review/${card.illustration}.webp`}
+                  srcset={`/access-review/${card.illustration}.webp 344w, /access-review/${card.illustration}-2x.webp 688w, /access-review/${card.illustration}-3x.webp 1032w`}
+                  sizes="(min-width: 1120px) 344px, (min-width: 1024px) calc((100vw - 88px) / 3), (min-width: 640px) calc((100vw - 64px) / 2), (min-width: 548px) 508px, calc(100vw - 40px)"
+                  alt=""
+                  aria-hidden="true"
+                  width="344"
+                  height="344"
+                  loading="lazy"
+                  decoding="async"
+                  class="review-asset block aspect-square h-auto w-full"
+                />
+              </div>
               <div class="flex flex-col gap-2">
                 <h3 class="text-[20px] leading-7 font-semibold tracking-[-0.4px]">
                   {card.title}
@@ -672,11 +715,14 @@ const softwareApplicationSchema = {
 
 <script>
   const initAccessReviewAnimations = () => {
+    const assetVisuals = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-review-asset-visual]"),
+    );
     const revealTargets = Array.from(
       document.querySelectorAll<HTMLElement>("[data-trust-reveal]"),
     );
 
-    if (revealTargets.length === 0) {
+    if (assetVisuals.length === 0 && revealTargets.length === 0) {
       return;
     }
 
@@ -685,6 +731,9 @@ const softwareApplicationSchema = {
     ).matches;
 
     if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      assetVisuals.forEach((visual) => {
+        visual.classList.add("is-visible");
+      });
       revealTargets.forEach((target) => {
         target.classList.add("is-visible");
       });
@@ -705,6 +754,20 @@ const softwareApplicationSchema = {
       { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
     );
 
+    const assetObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          assetObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.35 },
+    );
+
     revealTargets.forEach((target) => {
       if (target.dataset.revealReady === "true") {
         return;
@@ -713,6 +776,16 @@ const softwareApplicationSchema = {
       target.dataset.revealReady = "true";
       target.classList.add("is-awaiting-reveal");
       revealObserver.observe(target);
+    });
+
+    assetVisuals.forEach((visual) => {
+      if (visual.dataset.motionReady === "true") {
+        return;
+      }
+
+      visual.dataset.motionReady = "true";
+      visual.classList.add("is-awaiting-animation");
+      assetObserver.observe(visual);
     });
   };
 
@@ -867,6 +940,42 @@ const softwareApplicationSchema = {
     to {
       opacity: 1;
       transform: translate3d(0, 0, 0);
+    }
+  }
+
+  [data-review-asset-visual] {
+    --review-asset-x: 0px;
+    --review-asset-y: 42px;
+    --review-asset-duration: 760ms;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-review-asset-visual].is-awaiting-animation .review-asset {
+      opacity: 0;
+      transform: translate3d(var(--review-asset-x), var(--review-asset-y), 0)
+        scale(var(--review-asset-scale, 0.98));
+    }
+
+    [data-review-asset-visual].is-visible .review-asset {
+      animation: review-asset-enter var(--review-asset-duration)
+        cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+    }
+  }
+
+  @keyframes review-asset-enter {
+    0% {
+      opacity: 0;
+      transform: translate3d(var(--review-asset-x), var(--review-asset-y), 0)
+        scale(var(--review-asset-scale, 0.98));
+    }
+
+    42% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
     }
   }
 

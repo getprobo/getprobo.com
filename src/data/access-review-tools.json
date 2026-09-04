@@ -1,0 +1,212 @@
+[
+  {
+    "src": "/access-review/tools/amazon-web-services.svg",
+    "alt": "Amazon Web Services",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/anthropic.svg",
+    "alt": "Anthropic",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/openai.svg",
+    "alt": "OpenAI (ChatGPT)",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/resend.svg",
+    "alt": "Resend",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/cursor.svg",
+    "alt": "Cursor",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/openrouter.svg",
+    "alt": "OpenRouter",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/deepgram.svg",
+    "alt": "Deepgram",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/apollo-io.svg",
+    "alt": "Apollo.io",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/cloudflare.svg",
+    "alt": "Cloudflare",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/scaleway.svg",
+    "alt": "Scaleway",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/yousign.svg",
+    "alt": "Yousign",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/railway.svg",
+    "alt": "Railway",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/crisp.svg",
+    "alt": "Crisp",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/dotfile.svg",
+    "alt": "Dotfile",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/segment.svg",
+    "alt": "Segment",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/1password.svg",
+    "alt": "1Password",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/authentik.svg",
+    "alt": "authentik",
+    "width": 31.340782165527344
+  },
+  {
+    "src": "/access-review/tools/better-stack.svg",
+    "alt": "Better Stack",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/brex.svg",
+    "alt": "Brex",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/brevo.svg",
+    "alt": "Brevo",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/cal-com.svg",
+    "alt": "Cal.com",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/calendly.svg",
+    "alt": "Calendly",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/clickhouse-cloud.svg",
+    "alt": "ClickHouse Cloud",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/github.svg",
+    "alt": "GitHub",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/grafana.svg",
+    "alt": "Grafana",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/hubspot.svg",
+    "alt": "HubSpot",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/incident-io.svg",
+    "alt": "incident.io",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/langfuse.svg",
+    "alt": "Langfuse",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/mercury.svg",
+    "alt": "Mercury",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/metabase.svg",
+    "alt": "Metabase",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/neon.svg",
+    "alt": "Neon",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/nuki.svg",
+    "alt": "Nuki",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/okta.svg",
+    "alt": "Okta",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/pylon.svg",
+    "alt": "Pylon",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/qovery.svg",
+    "alt": "Qovery",
+    "width": 25.04347801208496
+  },
+  {
+    "src": "/access-review/tools/render.svg",
+    "alt": "Render",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/sendgrid.svg",
+    "alt": "SendGrid",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/signoz.svg",
+    "alt": "SigNoz",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/supabase.svg",
+    "alt": "Supabase",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/tailscale.svg",
+    "alt": "Tailscale",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/tally.svg",
+    "alt": "Tally",
+    "width": 24.774192810058594
+  },
+  {
+    "src": "/access-review/tools/upcloud.svg",
+    "alt": "UpCloud",
+    "width": 24
+  }
+]

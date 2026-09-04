@@ -6,7 +6,13 @@
   import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
   import { Intersection } from "@splidejs/splide-extension-intersection";
 
-  const props: { children: Snippet; class?: string } = $props();
+  const props: {
+    children: Snippet;
+    class?: string;
+    gap?: number;
+    fadeEdges?: boolean;
+    label?: string;
+  } = $props();
   let slider: HTMLDivElement | null = null;
   const createOptions = () => {
     const prefersReducedMotion = window.matchMedia(
@@ -15,7 +21,7 @@
 
     return {
       type: "loop",
-      gap: 16,
+      gap: props.gap ?? 16,
       arrows: false,
       autoWidth: true,
       pagination: false,
@@ -48,8 +54,24 @@
   });
 </script>
 
-<div class={clsx(props.class, "splide")} bind:this={slider}>
+<div
+  class={clsx(props.class, "splide", props.fadeEdges && "logos-scroll--fade")}
+  aria-label={props.label}
+  bind:this={slider}
+>
   <div class="splide__track">
     {@render props.children()}
   </div>
 </div>
+
+<style>
+  .logos-scroll--fade.is-overflow .splide__track {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 40px,
+      #000 calc(100% - 40px),
+      transparent
+    );
+  }
+</style>
