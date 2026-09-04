@@ -58,15 +58,18 @@ const overviewFeatures = [
 type ReviewStep = {
   title: string;
   lottie: string;
+  illustration: string;
+  overlay: { x: number; y: number; width: number; height: number };
   reverse?: boolean;
   bullets: string[];
-  overlay?: { src: string; alt: string };
 };
 
 const reviewSteps: ReviewStep[] = [
   {
     title: "Connect every system once",
     lottie: "/lottie/access-review/1.json",
+    illustration: "workflow-connect-systems",
+    overlay: { x: -97.5, y: 104.5, width: 704, height: 456 },
     bullets: [
       "Link providers over OAuth, API key, or client credentials.",
       "Import a CSV for any tool without a connector yet, or ask Probo team to add it.",
@@ -76,6 +79,8 @@ const reviewSteps: ReviewStep[] = [
   {
     title: "Capture the full picture of each account",
     lottie: "/lottie/access-review/2.json",
+    illustration: "workflow-account-context",
+    overlay: { x: 64, y: 64, width: 720, height: 654 },
     reverse: true,
     bullets: [
       "See role, admin rights, MFA status, and last login side by side.",
@@ -86,6 +91,9 @@ const reviewSteps: ReviewStep[] = [
   {
     title: "Move through decisions fast",
     lottie: "/lottie/access-review/3.json",
+    illustration: "workflow-review-decisions",
+    // The SVG includes 29px of shadow to the left of the UI's Figma x=102.
+    overlay: { x: 73, y: 65, width: 439, height: 607 },
     bullets: [
       "Approve, revoke, defer, or escalate. One account or many at once.",
       "Require a justification on every account you don't approve.",
@@ -95,6 +103,8 @@ const reviewSteps: ReviewStep[] = [
   {
     title: "Close with proof auditors accept",
     lottie: "/lottie/access-review/4.json",
+    illustration: "workflow-audit-evidence",
+    overlay: { x: 36, y: 103, width: 436, height: 458 },
     reverse: true,
     bullets: [
       "Close only when every account has a decision on record.",
@@ -106,36 +116,36 @@ const reviewSteps: ReviewStep[] = [
 
 const publishCards = [
   {
-    visual: "documents",
-    title: "Sources",
-    description: "Connect providers and reuse them across campaigns.",
-  },
-  {
-    visual: "protected-assets",
+    illustration: "capability-campaigns",
     title: "Campaigns",
     description:
       "Scope a review to the systems that matter, then snapshot them in one click.",
   },
   {
-    visual: "audits",
+    illustration: "capability-sources",
+    title: "Sources",
+    description: "Connect providers and reuse them across campaigns.",
+  },
+  {
+    illustration: "capability-access-entries",
     title: "Access entries",
     description:
       "Every account with role, admin, MFA, and last login context to decide fast.",
   },
   {
-    visual: "subprocessors",
+    illustration: "capability-flags",
     title: "Flags",
     description:
       "Orphaned, dormant, over-privileged, and shared accounts surfaced automatically.",
   },
   {
-    visual: "data-requests",
+    illustration: "capability-decisions",
     title: "Decisions",
     description:
       "Approve, revoke, defer, or escalate, with justifications kept on record.",
   },
   {
-    visual: "security-commitments",
+    illustration: "capability-statistics-export",
     title: "Statistics & export",
     description:
       "Live counts by decision and flag, plus a PDF record auditors accept.",
@@ -311,20 +321,20 @@ const softwareApplicationSchema = {
       </section>
 
       <section class="relative z-10 container pb-0">
-        <img
-          src="/trust-center/browser.webp"
-          srcset="/trust-center/browser.webp 1146w, /trust-center/browser-2x.webp 2292w"
-          sizes="(min-width: 1120px) 1080px, calc(100vw - 40px)"
-          alt=""
-          aria-hidden="true"
-          width="1146"
-          height="786"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-          class="animate-slide-in mx-auto h-auto w-full"
-          style="animation-delay: 600ms"
-        />
+        <div class="access-review-browser">
+          <img
+            src="/access-review/hero-access-review.svg"
+            alt=""
+            aria-hidden="true"
+            width="1146"
+            height="786"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            class="animate-slide-in"
+            style="animation-delay: 600ms"
+          />
+        </div>
       </section>
     </div>
 
@@ -395,13 +405,18 @@ const softwareApplicationSchema = {
           reviewSteps.map((feature, index) => (
             <div
               class:list={[
-                "container flex flex-col gap-8 lg:items-center lg:gap-16",
-                feature.reverse ? "lg:flex-row-reverse" : "lg:flex-row",
+                "container grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-16",
               ]}
               data-trust-reveal
               style={`--trust-reveal-delay: ${index * 80}ms`}
             >
-              <div class="bg-subtle relative isolate aspect-[508/664] w-full overflow-hidden rounded-2xl lg:w-[508px] lg:flex-none">
+              <div
+                class:list={[
+                  "bg-subtle relative isolate mx-auto aspect-[508/664] w-full max-w-[508px] overflow-hidden rounded-2xl",
+                  feature.reverse && "lg:order-2",
+                ]}
+                data-review-visual
+              >
                 <div
                   class="pointer-events-none absolute inset-0 z-0"
                   aria-hidden="true"
@@ -413,21 +428,23 @@ const softwareApplicationSchema = {
                     class="size-full origin-center scale-[1.12] transform-gpu"
                   />
                 </div>
-                {feature.overlay && (
-                  <img
-                    src={feature.overlay.src}
-                    alt={feature.overlay.alt}
-                    loading="lazy"
-                    decoding="async"
-                    class="pointer-events-none absolute inset-0 z-10 size-full object-contain"
-                  />
-                )}
+                <img
+                  src={`/access-review/${feature.illustration}-ui.svg`}
+                  alt=""
+                  aria-hidden="true"
+                  width={feature.overlay.width}
+                  height={feature.overlay.height}
+                  loading="lazy"
+                  decoding="async"
+                  class="pointer-events-none absolute z-10 block h-auto max-w-none"
+                  style={`left: ${(feature.overlay.x / 508) * 100}%; top: ${(feature.overlay.y / 664) * 100}%; width: ${(feature.overlay.width / 508) * 100}%;`}
+                />
               </div>
 
               <div
                 class:list={[
-                  "w-full max-w-[508px] lg:w-[508px] lg:flex-none",
-                  feature.reverse ? "lg:pr-16" : "lg:pl-16",
+                  "mx-auto w-full max-w-[508px] min-w-0",
+                  feature.reverse ? "lg:order-1 lg:pr-16" : "lg:pl-16",
                 ]}
               >
                 <h3
@@ -480,19 +497,22 @@ const softwareApplicationSchema = {
         {
           publishCards.map((card, index) => (
             <article
-              class="flex flex-col gap-6"
+              class="mx-auto flex w-full max-w-[508px] flex-col gap-6"
               data-trust-reveal
               style={`--trust-reveal-delay: ${index * 70}ms`}
             >
-              <div
-                class:list={[
-                  "trust-category-visual",
-                  `trust-category-visual--${card.visual}`,
-                ]}
+              <img
+                src={`/access-review/${card.illustration}.webp`}
+                srcset={`/access-review/${card.illustration}.webp 344w, /access-review/${card.illustration}-2x.webp 688w, /access-review/${card.illustration}-3x.webp 1032w`}
+                sizes="(min-width: 1120px) 344px, (min-width: 1024px) calc((100vw - 88px) / 3), (min-width: 640px) calc((100vw - 64px) / 2), (min-width: 548px) 508px, calc(100vw - 40px)"
+                alt=""
                 aria-hidden="true"
-              >
-                <span class="trust-category-halo" />
-              </div>
+                width="344"
+                height="344"
+                loading="lazy"
+                decoding="async"
+                class="block aspect-square h-auto w-full"
+              />
               <div class="flex flex-col gap-2">
                 <h3 class="text-[20px] leading-7 font-semibold tracking-[-0.4px]">
                   {card.title}
@@ -783,6 +803,21 @@ const softwareApplicationSchema = {
 </script>
 
 <style>
+  .access-review-browser {
+    position: relative;
+    aspect-ratio: 1080 / 720;
+  }
+
+  /* Figma's SVG includes 33px of shadow beyond the 1080×720 browser. */
+  .access-review-browser img {
+    position: absolute;
+    top: -4.583333%;
+    left: -3.055556%;
+    width: 106.111111%;
+    max-width: none;
+    height: auto;
+  }
+
   .trust-hero-orb {
     opacity: 1;
     transform: translateX(-50%) scale(1);
@@ -1277,66 +1312,5 @@ const softwareApplicationSchema = {
     .faq-trigger {
       transition: none;
     }
-  }
-
-  .trust-category-visual {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    border-radius: 10px;
-    background-color: #f6f9f5;
-    isolation: isolate;
-  }
-
-  .trust-category-halo {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 670px;
-    height: 670px;
-    pointer-events: none;
-  }
-
-  .trust-category-halo::before {
-    position: absolute;
-    inset: -25.63%;
-    content: "";
-    background: url("/trust-center/ellipse.svg") center / 100% 100% no-repeat;
-  }
-
-  .trust-category-visual--documents .trust-category-halo {
-    top: 50%;
-    right: -45px;
-    transform: translateY(-50%);
-  }
-
-  .trust-category-visual--protected-assets .trust-category-halo {
-    top: 340px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .trust-category-visual--audits .trust-category-halo {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .trust-category-visual--subprocessors .trust-category-halo {
-    z-index: 5;
-    bottom: -29px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .trust-category-visual--data-requests .trust-category-halo {
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-  }
-
-  .trust-category-visual--security-commitments .trust-category-halo {
-    right: -70px;
-    bottom: -70px;
   }
 </style>
