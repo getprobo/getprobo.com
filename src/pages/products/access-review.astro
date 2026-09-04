@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import Button from "../../components/ui/Button.svelte";
 import LogosScroll from "../../components/LogosScroll.svelte";
+import LottiePlayer from "../../components/LottiePlayer.svelte";
 import PaulSinai from "../../assets/testimonial/paul-sinai.jpg";
 import BlaxelFounders from "../../assets/stories/blaxel-header.jpg";
 
@@ -54,9 +55,18 @@ const overviewFeatures = [
   },
 ];
 
-const reviewSteps = [
+type ReviewStep = {
+  title: string;
+  lottie: string;
+  reverse?: boolean;
+  bullets: string[];
+  overlay?: { src: string; alt: string };
+};
+
+const reviewSteps: ReviewStep[] = [
   {
     title: "Connect every system once",
+    lottie: "/lottie/access-review/1.json",
     bullets: [
       "Link providers over OAuth, API key, or client credentials.",
       "Import a CSV for any tool without a connector yet, or ask Probo team to add it.",
@@ -65,6 +75,7 @@ const reviewSteps = [
   },
   {
     title: "Capture the full picture of each account",
+    lottie: "/lottie/access-review/2.json",
     reverse: true,
     bullets: [
       "See role, admin rights, MFA status, and last login side by side.",
@@ -74,6 +85,7 @@ const reviewSteps = [
   },
   {
     title: "Move through decisions fast",
+    lottie: "/lottie/access-review/3.json",
     bullets: [
       "Approve, revoke, defer, or escalate. One account or many at once.",
       "Require a justification on every account you don't approve.",
@@ -82,6 +94,7 @@ const reviewSteps = [
   },
   {
     title: "Close with proof auditors accept",
+    lottie: "/lottie/access-review/4.json",
     reverse: true,
     bullets: [
       "Close only when every account has a decision on record.",
@@ -388,10 +401,28 @@ const softwareApplicationSchema = {
               data-trust-reveal
               style={`--trust-reveal-delay: ${index * 80}ms`}
             >
-              <div
-                class="bg-subtle relative aspect-[508/664] w-full overflow-hidden rounded-2xl lg:w-[508px] lg:flex-none"
-                aria-hidden="true"
-              />
+              <div class="bg-subtle relative isolate aspect-[508/664] w-full overflow-hidden rounded-2xl lg:w-[508px] lg:flex-none">
+                <div
+                  class="pointer-events-none absolute inset-0 z-0"
+                  aria-hidden="true"
+                >
+                  <LottiePlayer
+                    client:visible
+                    src={feature.lottie}
+                    label={`${feature.title} animation`}
+                    class="size-full origin-center scale-[1.12] transform-gpu"
+                  />
+                </div>
+                {feature.overlay && (
+                  <img
+                    src={feature.overlay.src}
+                    alt={feature.overlay.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class="pointer-events-none absolute inset-0 z-10 size-full object-contain"
+                  />
+                )}
+              </div>
 
               <div
                 class:list={[
