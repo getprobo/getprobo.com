@@ -119,11 +119,15 @@ async function inspectImage(file, root) {
   const fileStat = await stat(file);
   const metadata = await sharp(file, { limitInputPixels: false }).metadata();
   const isOpenGraph = isOpenGraphImage(file);
+  const maxBytes =
+    isAccessReviewIllustration(file) && file.endsWith("-3x.webp")
+      ? 640 * 1024
+      : root.maxBytes;
   const maxWidth = isRetinaImage(file) ? root.maxWidth * 2 : root.maxWidth;
   const dimensionsInvalid = isOpenGraph
     ? metadata.width !== 1200 || metadata.height !== 630
     : (metadata.width ?? 0) > maxWidth;
-  const fileOversized = fileStat.size > root.maxBytes;
+  const fileOversized = fileStat.size > maxBytes;
   const violations = [];
 
   if (dimensionsInvalid) {
@@ -135,7 +139,7 @@ async function inspectImage(file, root) {
   }
   if (fileOversized) {
     violations.push(
-      `${file} is ${formatBytes(fileStat.size)} (maximum ${formatBytes(root.maxBytes)})`,
+      `${file} is ${formatBytes(fileStat.size)} (maximum ${formatBytes(maxBytes)})`,
     );
   }
 
@@ -177,7 +181,11 @@ async function optimizeImage(file, options) {
   } else if (options.extension === ".avif") {
     pipeline = pipeline.avif({ effort: 6, quality: 55 });
   } else if (options.extension === ".webp") {
-    pipeline = pipeline.webp({ alphaQuality: 90, effort: 6, quality: 82 });
+    pipeline = pipeline.webp(
+      isAccessReviewIllustration(file)
+        ? { lossless: true, effort: 6 }
+        : { alphaQuality: 90, effort: 6, quality: 82 },
+    );
   } else {
     pipeline = pipeline.jpeg({ mozjpeg: true, quality: 82 });
   }
@@ -216,6 +224,13 @@ function shouldSkipAsset(file) {
 
 function isRetinaImage(file) {
   return /(?:-2x|@2x)\./i.test(path.basename(file));
+}
+
+function isAccessReviewIllustration(file) {
+  return (
+    file.startsWith(path.join("public", "access-review") + path.sep) &&
+    path.extname(file).toLowerCase() === ".webp"
+  );
 }
 
 function isOpenGraphImage(file) {

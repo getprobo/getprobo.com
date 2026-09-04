@@ -8,6 +8,7 @@ export type MenuIconName =
   | "github-logo"
   | "handshake"
   | "heart"
+  | "list-checks"
   | "paint-brush"
   | "quotes"
   | "shield-check"
@@ -51,6 +52,12 @@ export const menuGroups: MenuGroup[] = [
         description: "Share security documents securely",
         href: "/products/compliance-portal",
         icon: "shield-check",
+      },
+      {
+        label: "Access Review",
+        description: "Certify access across every system",
+        href: "/products/access-review",
+        icon: "list-checks",
       },
       {
         label: "Open-source platform",
