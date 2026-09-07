@@ -96,6 +96,8 @@ const hub = defineCollection({
     description: z.string().min(120),
     /** Card label on the hub index (e.g. "Guide", "Comparison", "Checklist") */
     tag: z.string().default("Guide"),
+    /** Which hub index section the card appears in */
+    section: z.enum(["articles", "tool-recommendation"]).default("articles"),
     /** Tailwind gradient classes for the card accent */
     accentColor: z.string().default("from-emerald-400 to-teal-500"),
     /** FrameworkBadge names rendered next to the <h1> */
