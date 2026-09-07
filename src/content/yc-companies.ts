@@ -1,15 +1,10 @@
 import BlaxelLogo from "../assets/companies/blaxel.png";
 import WhalyLogo from "../assets/companies/whaly.png";
-import AirweaveLogo from "../assets/companies/airweave.png";
 import AlturLogo from "../assets/companies/altur.png";
-import FinntLogo from "../assets/companies/finnt.png";
 import GolfLogo from "../assets/companies/golf.png";
-import ReboltLogo from "../assets/companies/rebolt.png";
 import WolfiaLogo from "../assets/companies/wolfia.png";
 import VybeLogo from "../assets/companies/vybe.png";
 import AxoloLogo from "../assets/companies/axolo.png";
-import DenkiLogo from "../assets/companies/denki.png";
-import NovaflowLogo from "../assets/companies/novaflow.png";
 import TenXScienceLogo from "../assets/companies/10x-science.png";
 import AcoliteLogo from "../assets/companies/acolite.png";
 import AgentPhoneLogo from "../assets/companies/agentphone.png";
@@ -99,24 +94,10 @@ export const YCombinatorCompanies: YCombinatorCompany[] = [
     height: 38,
   },
   {
-    logo: AirweaveLogo,
-    badge: "X25",
-    name: "Airweave",
-    href: "https://airweave.ai",
-    height: 24,
-  },
-  {
     logo: AlturLogo,
     badge: "S25",
     name: "Altur",
     href: "https://www.altur.io",
-    height: 24,
-  },
-  {
-    logo: FinntLogo,
-    badge: "W22",
-    name: "Finnt",
-    href: "https://www.finnt.com",
     height: 24,
   },
   {
@@ -131,27 +112,6 @@ export const YCombinatorCompanies: YCombinatorCompany[] = [
     badge: "W21",
     name: "Axolo",
     href: "https://axolo.co",
-    height: 24,
-  },
-  {
-    logo: DenkiLogo,
-    badge: "F25",
-    name: "Denki",
-    href: "https://denki.ai",
-    height: 32,
-  },
-  {
-    logo: ReboltLogo,
-    badge: "W25",
-    name: "Rebolt",
-    href: "https://www.rebolt.ai",
-    height: 24,
-  },
-  {
-    logo: NovaflowLogo,
-    badge: "S25",
-    name: "Novaflow",
-    href: "https://www.novaflowapp.com",
     height: 24,
   },
   {
