@@ -10,9 +10,9 @@ import VybeLogo from "../assets/companies/vybe.png";
 import AxoloLogo from "../assets/companies/axolo.png";
 import DenkiLogo from "../assets/companies/denki.png";
 import NovaflowLogo from "../assets/companies/novaflow.png";
-import TenXScienceLogo from "../assets/companies/10x-science.svg";
-import AcoliteLogo from "../assets/companies/acolite.svg";
-import AgentPhoneLogo from "../assets/companies/agentphone.svg";
+import TenXScienceLogo from "../assets/companies/10x-science.png";
+import AcoliteLogo from "../assets/companies/acolite.png";
+import AgentPhoneLogo from "../assets/companies/agentphone.png";
 
 export interface YCombinatorCompany {
   logo: ImageMetadata;
