@@ -10,6 +10,9 @@ import VybeLogo from "../assets/companies/vybe.png";
 import AxoloLogo from "../assets/companies/axolo.png";
 import DenkiLogo from "../assets/companies/denki.png";
 import NovaflowLogo from "../assets/companies/novaflow.png";
+import TenXScienceLogo from "../assets/companies/10x-science.svg";
+import AcoliteLogo from "../assets/companies/acolite.svg";
+import AgentPhoneLogo from "../assets/companies/agentphone.svg";
 
 export interface YCombinatorCompany {
   logo: ImageMetadata;
@@ -20,6 +23,27 @@ export interface YCombinatorCompany {
 }
 
 export const YCombinatorCompanies: YCombinatorCompany[] = [
+  {
+    logo: TenXScienceLogo,
+    badge: "W26",
+    name: "10x Science",
+    href: "https://10xscience.com",
+    height: 24,
+  },
+  {
+    logo: AcoliteLogo,
+    badge: "X25",
+    name: "Acolite",
+    href: "https://acolite.ai",
+    height: 24,
+  },
+  {
+    logo: AgentPhoneLogo,
+    badge: "X26",
+    name: "AgentPhone",
+    href: "https://agentphone.ai",
+    height: 24,
+  },
   {
     logo: BlaxelLogo,
     badge: "X25",
