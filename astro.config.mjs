@@ -39,6 +39,7 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
+      include: ["lottie-web"],
       exclude: ["svelte-sonner"],
     },
     build: {

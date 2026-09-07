@@ -1,5 +1,10 @@
 [
   {
+    "src": "/access-review/tools/1password.svg",
+    "alt": "1Password",
+    "width": 24
+  },
+  {
     "src": "/access-review/tools/amazon-web-services.svg",
     "alt": "Amazon Web Services",
     "width": 24
@@ -10,73 +15,8 @@
     "width": 24
   },
   {
-    "src": "/access-review/tools/openai.svg",
-    "alt": "OpenAI (ChatGPT)",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/resend.svg",
-    "alt": "Resend",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/cursor.svg",
-    "alt": "Cursor",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/openrouter.svg",
-    "alt": "OpenRouter",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/deepgram.svg",
-    "alt": "Deepgram",
-    "width": 24
-  },
-  {
     "src": "/access-review/tools/apollo-io.svg",
     "alt": "Apollo.io",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/cloudflare.svg",
-    "alt": "Cloudflare",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/scaleway.svg",
-    "alt": "Scaleway",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/yousign.svg",
-    "alt": "Yousign",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/railway.svg",
-    "alt": "Railway",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/crisp.svg",
-    "alt": "Crisp",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/dotfile.svg",
-    "alt": "Dotfile",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/segment.svg",
-    "alt": "Segment",
-    "width": 24
-  },
-  {
-    "src": "/access-review/tools/1password.svg",
-    "alt": "1Password",
     "width": 24
   },
   {
@@ -85,18 +25,23 @@
     "width": 31.340782165527344
   },
   {
+    "src": "/access-review/tools/azure.svg",
+    "alt": "Azure",
+    "width": 24
+  },
+  {
     "src": "/access-review/tools/better-stack.svg",
     "alt": "Better Stack",
     "width": 24
   },
   {
-    "src": "/access-review/tools/brex.svg",
-    "alt": "Brex",
+    "src": "/access-review/tools/brevo.svg",
+    "alt": "Brevo",
     "width": 24
   },
   {
-    "src": "/access-review/tools/brevo.svg",
-    "alt": "Brevo",
+    "src": "/access-review/tools/brex.svg",
+    "alt": "Brex",
     "width": 24
   },
   {
@@ -115,8 +60,38 @@
     "width": 24
   },
   {
+    "src": "/access-review/tools/cloudflare.svg",
+    "alt": "Cloudflare",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/crisp.svg",
+    "alt": "Crisp",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/cursor.svg",
+    "alt": "Cursor",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/deepgram.svg",
+    "alt": "Deepgram",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/dotfile.svg",
+    "alt": "Dotfile",
+    "width": 24
+  },
+  {
     "src": "/access-review/tools/github.svg",
     "alt": "GitHub",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/google-cloud.svg",
+    "alt": "Google Cloud",
     "width": 24
   },
   {
@@ -165,6 +140,16 @@
     "width": 24
   },
   {
+    "src": "/access-review/tools/openai.svg",
+    "alt": "OpenAI",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/openrouter.svg",
+    "alt": "OpenRouter",
+    "width": 24
+  },
+  {
     "src": "/access-review/tools/pylon.svg",
     "alt": "Pylon",
     "width": 24
@@ -175,8 +160,28 @@
     "width": 25.04347801208496
   },
   {
+    "src": "/access-review/tools/railway.svg",
+    "alt": "Railway",
+    "width": 24
+  },
+  {
     "src": "/access-review/tools/render.svg",
     "alt": "Render",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/resend.svg",
+    "alt": "Resend",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/scaleway.svg",
+    "alt": "Scaleway",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/segment.svg",
+    "alt": "Segment",
     "width": 24
   },
   {
@@ -207,6 +212,11 @@
   {
     "src": "/access-review/tools/upcloud.svg",
     "alt": "UpCloud",
+    "width": 24
+  },
+  {
+    "src": "/access-review/tools/yousign.svg",
+    "alt": "Yousign",
     "width": 24
   }
 ]

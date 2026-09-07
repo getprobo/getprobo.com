@@ -1,10 +1,1 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_1060_935)">
-<path d="M21.333 9.99996H24V14H21.333V9.99996ZM16 1.33496H18.667V22.665H16V1.33496ZM10.667 1.33496H13.333V22.665H10.667V1.33496ZM0 22.665V1.33496H2.667V22.665H0ZM5.333 1.33496H8V22.665H5.333V1.33496Z" fill="#FAFF69"/>
-</g>
-<defs>
-<clipPath id="clip0_1060_935">
-<rect width="24" height="24" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+<svg fill="#FFCC01" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>ClickHouse</title><path d="M21.333 10H24v4h-2.667ZM16 1.335h2.667v21.33H16Zm-5.333 0h2.666v21.33h-2.666ZM0 22.665V1.335h2.667v21.33zm5.333-21.33H8v21.33H5.333Z"/></svg>

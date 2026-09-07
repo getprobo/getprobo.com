@@ -350,17 +350,20 @@ const softwareApplicationSchema = {
           >
             {
               toolLogos.map((logo) => (
-                <div class="flex h-6 shrink-0 items-center justify-center">
+                <div class="flex h-6 shrink-0 items-center gap-2 whitespace-nowrap">
                   <img
                     src={logo.src}
-                    alt={logo.alt}
+                    alt=""
                     width={logo.width}
                     height="24"
                     loading="lazy"
                     decoding="async"
-                    class="block h-6 max-w-none"
+                    class="block h-6 max-w-none shrink-0 object-contain"
                     style={`width: ${logo.width}px`}
                   />
+                  <span class="text-sm leading-5 font-medium text-[#21201c]">
+                    {logo.alt}
+                  </span>
                 </div>
               ))
             }
