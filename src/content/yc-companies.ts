@@ -7,6 +7,7 @@ import VybeLogo from "../assets/companies/vybe.png";
 import AxoloLogo from "../assets/companies/axolo.png";
 import TenXScienceLogo from "../assets/companies/10x-science.png";
 import AcoliteLogo from "../assets/companies/acolite.png";
+import BluejayLogo from "../assets/companies/bluejay.png";
 import AgentPhoneLogo from "../assets/companies/agentphone.png";
 import LucisLogo from "../assets/companies/lucis.png";
 import MotivesLogo from "../assets/companies/motives.png";
@@ -35,6 +36,13 @@ export const YCombinatorCompanies: YCombinatorCompany[] = [
     badge: "X25",
     name: "Acolite",
     href: "https://acolite.ai",
+    height: 24,
+  },
+  {
+    logo: BluejayLogo,
+    badge: "X25",
+    name: "Bluejay",
+    href: "https://getbluejay.ai",
     height: 24,
   },
   {
