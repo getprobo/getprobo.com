@@ -21,8 +21,10 @@ The table of contents on the left is generated automatically from your `##`
 ## How it works
 
 Create one `.mdx` file in `src/content/hub/`. The filename becomes the URL
-slug, so this file is served at `/hub/example-hub-article`. It appears in the
-"Articles & Comparisons" section of `/hub` automatically, sorted by `date`.
+slug, so this file is served at `/hub/example-hub-article`. Set `section` to
+`tool-recommendation` to appear under Tool Recommendations on `/hub`. The
+default is `articles`, which lands in Articles & Comparisons. Cards are
+sorted by `date`.
 
 ## Frontmatter reference
 
@@ -31,6 +33,7 @@ slug, so this file is served at `/hub/example-hub-article`. It appears in the
 - `eyebrow` — optional pill shown under the title.
 - `description` — the hub card text and meta description.
 - `tag` — the hub card label (e.g. "Guide", "Comparison", "Checklist").
+- `section` — `articles` (default) or `tool-recommendation`.
 - `accentColor` — Tailwind gradient classes for the card accent.
 - `badges` — optional framework badge names shown next to the title.
 - `date` / `dateModified` — used for sorting and `Article` schema.
