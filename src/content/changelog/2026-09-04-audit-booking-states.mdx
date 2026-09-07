@@ -1,0 +1,15 @@
+---
+title: "Audit States: To Book and Booked"
+description: "Audits now track two states ahead of Not Started: To Book and Audit Booked, and you can attach an audit firm right when you create or update an audit."
+date: 2026-09-04
+images: ["/changelog/2026-09-04-audit-booking-states-1.png"]
+tags: ["Audits"]
+---
+
+Before, an audit existed in "Not Started" from the moment you created it. There was no way to show you were still waiting on a firm to confirm dates, or that you'd already booked one before the work begins.
+
+Now audits can sit in "To Book" or "Audit Booked" ahead of "Not Started". Pick whichever matches where you actually are, whether you're still shopping for an auditor or you've already locked one in.
+
+You can also attach an audit firm right when you create the audit, or add one later from the update flow. Clearing the firm field drops the assignment, so swapping out an auditor doesn't leave a stale one behind.
+
+This ships across GraphQL, MCP, CLI, n8n, and the console, so the new states and firm field show up wherever you manage audits.
