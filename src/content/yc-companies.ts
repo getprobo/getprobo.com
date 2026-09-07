@@ -13,6 +13,11 @@ import NovaflowLogo from "../assets/companies/novaflow.png";
 import TenXScienceLogo from "../assets/companies/10x-science.png";
 import AcoliteLogo from "../assets/companies/acolite.png";
 import AgentPhoneLogo from "../assets/companies/agentphone.png";
+import LucisLogo from "../assets/companies/lucis.png";
+import MotivesLogo from "../assets/companies/motives.png";
+import PelicaLogo from "../assets/companies/pelica.png";
+import RationalLogo from "../assets/companies/rational.png";
+import TinfoilLogo from "../assets/companies/tinfoil.png";
 
 export interface YCombinatorCompany {
   logo: ImageMetadata;
@@ -42,6 +47,41 @@ export const YCombinatorCompanies: YCombinatorCompany[] = [
     badge: "X26",
     name: "AgentPhone",
     href: "https://agentphone.ai",
+    height: 24,
+  },
+  {
+    logo: LucisLogo,
+    badge: "X25",
+    name: "Lucis",
+    href: "https://lucis.life",
+    height: 24,
+  },
+  {
+    logo: MotivesLogo,
+    badge: "S25",
+    name: "Motives",
+    href: "https://motives.ai",
+    height: 24,
+  },
+  {
+    logo: PelicaLogo,
+    badge: "X25",
+    name: "Pelica",
+    href: "https://pelica.com",
+    height: 32,
+  },
+  {
+    logo: RationalLogo,
+    badge: "S26",
+    name: "Rational",
+    href: "https://rational.to",
+    height: 24,
+  },
+  {
+    logo: TinfoilLogo,
+    badge: "X25",
+    name: "Tinfoil",
+    href: "https://tinfoil.sh",
     height: 24,
   },
   {
